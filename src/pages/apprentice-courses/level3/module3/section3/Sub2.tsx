@@ -26,7 +26,9 @@ import {
   LearningOutcomes,
   ContentEyebrow,
   SectionRule,
+  VideoCard,
 } from '@/components/study-centre/learning';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE =
@@ -282,6 +284,14 @@ export default function Sub2() {
               Cable: 10 mm² 4-core SWA gives I_z ≈ 60 A clipped. 50 A 3-pole MCB type C.
             </p>
           </ConceptBlock>
+
+          <VideoCard
+            url={videos.threePhaseCalcs.url}
+            title={videos.threePhaseCalcs.title}
+            channel={videos.threePhaseCalcs.channel}
+            duration={videos.threePhaseCalcs.duration}
+            topic={videos.threePhaseCalcs.topic}
+          />
 
           <RegsCallout
             source="BS 7671:2018+A4:2026 — Section 433 (Protection against overload current)"

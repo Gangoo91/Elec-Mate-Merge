@@ -93,7 +93,7 @@ export function useAssessorActions() {
         title: 'Portfolio Feedback Received',
         message: `Your assessor has reviewed your portfolio submission. Grade: ${data.grade || 'Pending'}`,
         notification_type: 'portfolio',
-        action_url: '/apprentice/portfolio-hub?section=tutor',
+        action_url: '/apprentice/hub?section=tutor',
       });
     },
     onSuccess: () => {
@@ -218,7 +218,7 @@ export function useAssessorActions() {
           message:
             'Your assessor has requested additional evidence for your portfolio submission.',
           notification_type: 'portfolio',
-          action_url: '/apprentice/portfolio-hub?section=tutor',
+          action_url: '/apprentice/hub?section=tutor',
         });
       }
     },

@@ -179,7 +179,11 @@ export function useDashboardVerdict(): DashboardVerdict {
     } else {
       verdict =
         'All clear today — nothing overdue, every cert closed out. Use the calm to push a quote out.';
-      cta = { label: 'New quote', href: '/electrician/quotes/new' };
+      // Land on the quotes hub, not /quotes/new — that route never existed
+      // and rendered as a blank page for new users (the most common path
+      // into this branch). The hub shows the empty-state onboarding guide,
+      // which has its own "Create Quote Now" CTA into the wizard.
+      cta = { label: 'New quote', href: '/electrician/quotes' };
     }
 
     // Build queue from existing actions[] + a couple of derived items.

@@ -1,10 +1,14 @@
 /**
- * JobFilterPills - Merged category + filter pills in a single scrollable row
+ * JobFilterPills — editorial filter row.
+ *
+ * Single horizontally-scrolling row of pills. Drops the per-group colour
+ * palette (blue / amber / emerald / purple) for a unified elec-yellow
+ * selected state — group identity comes from a small uppercase label that
+ * sits above the strip on wider screens, not from colour.
  */
 
 import { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { SlidersHorizontal, Check } from 'lucide-react';
 import { pillVariants } from './animations/variants';
@@ -47,6 +51,15 @@ const SALARY_RANGES = [
 
 const DEFAULT_SOURCES = ['Reed', 'Adzuna', 'Apprenticeships', 'Indeed', 'TotalJobs'];
 
+const pillBase =
+  'flex-shrink-0 inline-flex items-center gap-1 px-3 py-2 rounded-full text-[11px] font-semibold uppercase tracking-[0.12em] border transition-colors duration-200 touch-manipulation whitespace-nowrap';
+const pillIdle = 'text-white/85 border-white/15 hover:border-white/30 bg-transparent';
+const pillSelected = 'text-elec-yellow border-elec-yellow/40 bg-elec-yellow/[0.08]';
+
+const Separator = () => (
+  <div className="w-px h-5 bg-white/[0.08] shrink-0" aria-hidden />
+);
+
 const JobFilterPills = ({
   filters,
   onFiltersChange,
@@ -70,206 +83,146 @@ const JobFilterPills = ({
 
   useEffect(() => {
     const ref = scrollRef.current;
-    if (ref) {
-      ref.addEventListener('scroll', handleScroll);
-      handleScroll();
-      return () => ref.removeEventListener('scroll', handleScroll);
-    }
+    if (!ref) return;
+    ref.addEventListener('scroll', handleScroll);
+    handleScroll();
+    return () => ref.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const toggleCategory = (id: string) => {
-    onFiltersChange({
-      ...filters,
-      category: filters.category === id ? null : id,
-    });
-  };
+  const toggleCategory = (id: string) =>
+    onFiltersChange({ ...filters, category: filters.category === id ? null : id });
 
   const toggleJobType = (id: string) => {
-    const newTypes = filters.jobTypes.includes(id)
+    const next = filters.jobTypes.includes(id)
       ? filters.jobTypes.filter((t) => t !== id)
       : [...filters.jobTypes, id];
-    onFiltersChange({ ...filters, jobTypes: newTypes });
+    onFiltersChange({ ...filters, jobTypes: next });
   };
 
   const toggleSalaryRange = (id: string) => {
-    const newRanges = filters.salaryRanges.includes(id)
+    const next = filters.salaryRanges.includes(id)
       ? filters.salaryRanges.filter((r) => r !== id)
       : [...filters.salaryRanges, id];
-    onFiltersChange({ ...filters, salaryRanges: newRanges });
+    onFiltersChange({ ...filters, salaryRanges: next });
   };
 
   const toggleSource = (id: string) => {
-    const newSources = filters.sources.includes(id)
+    const next = filters.sources.includes(id)
       ? filters.sources.filter((s) => s !== id)
       : [...filters.sources, id];
-    onFiltersChange({ ...filters, sources: newSources });
+    onFiltersChange({ ...filters, sources: next });
   };
 
-  const clearAllFilters = () => {
-    onFiltersChange({
-      category: null,
-      jobTypes: [],
-      salaryRanges: [],
-      sources: [],
-    });
-  };
-
-  const sourceOptions = availableSources.map((s) => ({ id: s, label: s }));
+  const clearAllFilters = () =>
+    onFiltersChange({ category: null, jobTypes: [], salaryRanges: [], sources: [] });
 
   let pillIndex = 0;
+  const renderPill = (
+    id: string,
+    label: string,
+    selected: boolean,
+    onClick: () => void,
+    showCheck = false
+  ) => {
+    const idx = pillIndex++;
+    return (
+      <motion.button
+        key={id}
+        type="button"
+        variants={pillVariants}
+        initial="initial"
+        animate="animate"
+        whileTap="tap"
+        custom={idx}
+        onClick={onClick}
+        className={cn(pillBase, selected ? pillSelected : pillIdle)}
+      >
+        {showCheck && selected && <Check className="h-3 w-3" />}
+        {label}
+      </motion.button>
+    );
+  };
 
   return (
     <div className={cn('relative', className)}>
-      {/* Scrollable row */}
       <div className="relative">
         <div
           ref={scrollRef}
           className="flex items-center gap-2 overflow-x-auto scrollbar-hide py-1 px-1"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-          {/* Filter icon + badge count (tap to clear) */}
+          {/* Filter glyph + active count (tap to clear) */}
           <button
+            type="button"
             onClick={activeCount > 0 ? clearAllFilters : undefined}
+            aria-label={activeCount > 0 ? 'Clear filters' : 'Filters'}
             className={cn(
-              'flex-shrink-0 flex items-center justify-center w-9 h-9 rounded-lg touch-manipulation',
+              'shrink-0 inline-flex items-center justify-center w-9 h-9 rounded-full border touch-manipulation transition-colors',
               activeCount > 0
-                ? 'bg-amber-500/20 border border-amber-500/40'
-                : 'bg-white/5 border border-white/10'
+                ? 'text-elec-yellow border-elec-yellow/40 bg-elec-yellow/[0.08]'
+                : 'text-white/85 border-white/15 hover:border-white/30 bg-transparent'
             )}
           >
             <div className="relative">
-              <SlidersHorizontal className={cn('h-4 w-4', activeCount > 0 ? 'text-amber-400' : 'text-white')} />
+              <SlidersHorizontal className="h-4 w-4" />
               {activeCount > 0 && (
-                <Badge className="absolute -top-2.5 -right-2.5 h-4 min-w-[16px] px-1 bg-amber-500 text-black border-0 text-[9px] font-bold flex items-center justify-center">
+                <span className="absolute -top-2 -right-2.5 h-4 min-w-[16px] px-1 rounded-full bg-elec-yellow text-black text-[9px] font-bold tabular-nums flex items-center justify-center">
                   {activeCount}
-                </Badge>
+                </span>
               )}
             </div>
           </button>
 
-          {/* Separator */}
-          <div className="w-px h-5 bg-white/10 flex-shrink-0" />
+          <Separator />
 
-          {/* Category pills */}
-          {CATEGORIES.map((cat) => {
-            const isSelected = filters.category === cat.id;
-            const idx = pillIndex++;
-            return (
-              <motion.button
-                key={cat.id}
-                variants={pillVariants}
-                initial="initial"
-                animate="animate"
-                whileTap="tap"
-                custom={idx}
-                onClick={() => toggleCategory(cat.id)}
-                className={cn(
-                  'flex-shrink-0 px-3 py-2 rounded-full text-xs font-medium',
-                  'border transition-all duration-200 touch-manipulation whitespace-nowrap',
-                  isSelected
-                    ? 'bg-blue-500/30 border-blue-500/50 text-blue-300'
-                    : 'bg-white/5 border-white/10 text-white'
-                )}
-              >
-                {cat.label}
-              </motion.button>
-            );
-          })}
+          {CATEGORIES.map((cat) =>
+            renderPill(cat.id, cat.label, filters.category === cat.id, () =>
+              toggleCategory(cat.id)
+            )
+          )}
 
-          {/* Separator */}
-          <div className="w-px h-5 bg-white/10 flex-shrink-0" />
+          <Separator />
 
-          {/* Job type pills */}
-          {JOB_TYPES.map((type) => {
-            const isSelected = filters.jobTypes.includes(type.id);
-            const idx = pillIndex++;
-            return (
-              <motion.button
-                key={type.id}
-                variants={pillVariants}
-                initial="initial"
-                animate="animate"
-                whileTap="tap"
-                custom={idx}
-                onClick={() => toggleJobType(type.id)}
-                className={cn(
-                  'flex-shrink-0 px-3 py-2 rounded-full text-xs font-medium',
-                  'border transition-all duration-200 touch-manipulation whitespace-nowrap',
-                  isSelected
-                    ? 'bg-amber-500/30 border-amber-500/50 text-amber-300'
-                    : 'bg-white/5 border-white/10 text-white'
-                )}
-              >
-                {isSelected && <Check className="h-3 w-3 mr-1 inline" />}
-                {type.label}
-              </motion.button>
-            );
-          })}
+          {JOB_TYPES.map((type) =>
+            renderPill(
+              type.id,
+              type.label,
+              filters.jobTypes.includes(type.id),
+              () => toggleJobType(type.id),
+              true
+            )
+          )}
 
-          {/* Separator */}
-          <div className="w-px h-5 bg-white/10 flex-shrink-0" />
+          <Separator />
 
-          {/* Salary range pills */}
-          {SALARY_RANGES.map((range) => {
-            const isSelected = filters.salaryRanges.includes(range.id);
-            const idx = pillIndex++;
-            return (
-              <motion.button
-                key={range.id}
-                variants={pillVariants}
-                initial="initial"
-                animate="animate"
-                whileTap="tap"
-                custom={idx}
-                onClick={() => toggleSalaryRange(range.id)}
-                className={cn(
-                  'flex-shrink-0 px-3 py-2 rounded-full text-xs font-medium',
-                  'border transition-all duration-200 touch-manipulation whitespace-nowrap',
-                  isSelected
-                    ? 'bg-emerald-500/30 border-emerald-500/50 text-emerald-300'
-                    : 'bg-white/5 border-white/10 text-white'
-                )}
-              >
-                {isSelected && <Check className="h-3 w-3 mr-1 inline" />}
-                {range.label}
-              </motion.button>
-            );
-          })}
+          {SALARY_RANGES.map((range) =>
+            renderPill(
+              range.id,
+              range.label,
+              filters.salaryRanges.includes(range.id),
+              () => toggleSalaryRange(range.id),
+              true
+            )
+          )}
 
-          {/* Separator */}
-          <div className="w-px h-5 bg-white/10 flex-shrink-0" />
+          <Separator />
 
-          {/* Source pills */}
-          {sourceOptions.map((source) => {
-            const isSelected = filters.sources.includes(source.id);
-            const idx = pillIndex++;
-            return (
-              <motion.button
-                key={source.id}
-                variants={pillVariants}
-                initial="initial"
-                animate="animate"
-                whileTap="tap"
-                custom={idx}
-                onClick={() => toggleSource(source.id)}
-                className={cn(
-                  'flex-shrink-0 px-3 py-2 rounded-full text-xs font-medium',
-                  'border transition-all duration-200 touch-manipulation whitespace-nowrap',
-                  isSelected
-                    ? 'bg-purple-500/30 border-purple-500/50 text-purple-300'
-                    : 'bg-white/5 border-white/10 text-white'
-                )}
-              >
-                {isSelected && <Check className="h-3 w-3 mr-1 inline" />}
-                {source.label}
-              </motion.button>
-            );
-          })}
+          {availableSources.map((source) =>
+            renderPill(
+              source,
+              source,
+              filters.sources.includes(source),
+              () => toggleSource(source),
+              true
+            )
+          )}
         </div>
 
-        {/* Right fade gradient (always visible when scrollable) */}
         {showRightFade && (
-          <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-background to-transparent pointer-events-none" />
+          <div
+            className="absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-[hsl(0_0%_8%)] to-transparent pointer-events-none"
+            aria-hidden
+          />
         )}
       </div>
     </div>

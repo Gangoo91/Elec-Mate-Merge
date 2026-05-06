@@ -1,3 +1,11 @@
+/**
+ * ExpandableSection — editorial collapsible section.
+ *
+ * Drops the icon avatar block and Card-style chrome for editorial gradient
+ * surface. Optional `icon` prop preserved for back-compat but no longer
+ * rendered (we want type-led, no icons).
+ */
+
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, LucideIcon } from 'lucide-react';
@@ -14,19 +22,8 @@ interface ExpandableSectionProps {
   headerClassName?: string;
 }
 
-/**
- * ExpandableSection - Animated collapsible section for progressive disclosure
- *
- * Features:
- * - Smooth height animation with framer-motion
- * - Optional icon with custom color
- * - Badge support for counts/status
- * - 48px touch target on header
- */
 export function ExpandableSection({
   title,
-  icon: Icon,
-  iconColor = 'text-elec-yellow',
   badge,
   defaultOpen = false,
   children,
@@ -38,42 +35,36 @@ export function ExpandableSection({
   return (
     <div
       className={cn(
-        'rounded-xl border border-border/50 bg-card/50 backdrop-blur-sm overflow-hidden',
+        'rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] overflow-hidden',
         className
       )}
     >
-      {/* Header - clickable */}
       <button
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          'w-full flex items-center justify-between gap-3 p-4',
-          'min-h-[56px] touch-manipulation',
-          'hover:bg-accent/30 active:bg-accent/50 transition-colors',
-          'text-left',
+          'w-full flex items-center justify-between gap-3 px-5 py-4 min-h-[56px] touch-manipulation',
+          'hover:bg-white/[0.02] active:bg-white/[0.04] transition-colors text-left',
           headerClassName
         )}
         aria-expanded={isOpen}
       >
         <div className="flex items-center gap-3 flex-1 min-w-0">
-          {Icon && (
-            <div className={cn('flex-shrink-0', iconColor)}>
-              <Icon className="h-5 w-5" />
-            </div>
-          )}
-          <span className="font-semibold text-white truncate">{title}</span>
-          {badge && <div className="flex-shrink-0">{badge}</div>}
+          <span className="text-[13.5px] font-semibold tracking-tight text-white truncate">
+            {title}
+          </span>
+          {badge && <div className="shrink-0">{badge}</div>}
         </div>
 
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.2 }}
-          className="flex-shrink-0 text-muted-foreground"
+          className="shrink-0 text-white/65"
         >
-          <ChevronDown className="h-5 w-5" />
+          <ChevronDown className="h-4 w-4" />
         </motion.div>
       </button>
 
-      {/* Content - animated */}
       <AnimatePresence initial={false}>
         {isOpen && (
           <motion.div
@@ -81,10 +72,9 @@ export function ExpandableSection({
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2, ease: 'easeInOut' }}
+            className="overflow-hidden"
           >
-            <div className="px-4 pb-4 pt-0">
-              <div className="border-t border-border/30 pt-4">{children}</div>
-            </div>
+            <div className="px-5 pb-5 pt-4 border-t border-white/[0.06]">{children}</div>
           </motion.div>
         )}
       </AnimatePresence>

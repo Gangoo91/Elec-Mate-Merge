@@ -11,7 +11,9 @@ import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR, ConceptBlock, RegsCallout, CommonMistake, Scenario,
   KeyTakeaways, FAQ, LearningOutcomes, ContentEyebrow, SectionRule,
+  VideoCard,
 } from '@/components/study-centre/learning';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Transformer losses — copper and iron | Level 3 Module 3.4.4 | Elec-Mate';
@@ -134,6 +136,14 @@ export default function Sub4() {
             <p>P_loss = 0.4 + 0.77 = 1.17 kW. P_in = 68 + 1.17 = 69.17 kW.</p>
             <p>η = 68 / 69.17 × 100 = 98.3 %.</p>
           </ConceptBlock>
+
+          <VideoCard
+            url={videos.transformers.url}
+            title={videos.transformers.title}
+            channel={videos.transformers.channel}
+            duration={videos.transformers.duration}
+            topic={videos.transformers.topic}
+          />
 
           <RegsCallout
             source="Ecodesign Regulation 548/2014 (UK retained law) — Tier 2 efficiency for power transformers"

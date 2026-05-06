@@ -1,5 +1,11 @@
-import { Button } from '@/components/ui/button';
-import { CheckCircle2, XCircle, AlertCircle, List } from 'lucide-react';
+/**
+ * VerificationFilter — editorial filter pills for verification check list.
+ *
+ * No icons. Active state uses elec-yellow; counts shown as semantic tones
+ * (red / amber / emerald / yellow) on the count badge only.
+ */
+
+import { cn } from '@/lib/utils';
 
 interface VerificationFilterProps {
   selectedFilter: 'all' | 'pass' | 'fail' | 'testing';
@@ -17,57 +23,52 @@ export const VerificationFilter = ({
   onFilterChange,
   counts,
 }: VerificationFilterProps) => {
-  const filters = [
-    { id: 'all' as const, label: 'All Checks', icon: List, count: counts.all },
+  const filters: Array<{
+    id: 'all' | 'pass' | 'fail' | 'testing';
+    label: string;
+    count: number;
+    countTone: string;
+  }> = [
+    { id: 'all', label: 'All', count: counts.all, countTone: 'text-white/85' },
+    { id: 'fail', label: 'Failed', count: counts.fail, countTone: 'text-red-300' },
     {
-      id: 'fail' as const,
-      label: 'Failed',
-      icon: XCircle,
-      count: counts.fail,
-      color: 'text-red-500',
-    },
-    {
-      id: 'testing' as const,
-      label: 'Testing Required',
-      icon: AlertCircle,
+      id: 'testing',
+      label: 'Testing required',
       count: counts.testing,
-      color: 'text-amber-500',
+      countTone: 'text-amber-300',
     },
-    {
-      id: 'pass' as const,
-      label: 'Passed',
-      icon: CheckCircle2,
-      count: counts.pass,
-      color: 'text-green-500',
-    },
+    { id: 'pass', label: 'Passed', count: counts.pass, countTone: 'text-emerald-300' },
   ];
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <ul className="flex flex-wrap gap-1.5">
       {filters.map((filter) => {
-        const Icon = filter.icon;
-        const isSelected = selectedFilter === filter.id;
-
+        const active = selectedFilter === filter.id;
         return (
-          <Button
-            key={filter.id}
-            variant={isSelected ? 'default' : 'outline'}
-            size="sm"
-            onClick={() => onFilterChange(filter.id)}
-            className={`touch-target ${!isSelected && filter.color ? filter.color : ''}`}
-          >
-            <Icon className="h-4 w-4 mr-2" />
-            {filter.label}
-            <span
-              className={`ml-2 px-1.5 py-0.5 rounded-full text-xs ${
-                isSelected ? 'bg-background/20' : 'bg-muted'
-              }`}
+          <li key={filter.id}>
+            <button
+              type="button"
+              onClick={() => onFilterChange(filter.id)}
+              className={cn(
+                'inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] rounded-full px-3 py-2 min-h-[40px] border transition-colors touch-manipulation',
+                active
+                  ? 'text-elec-yellow border-elec-yellow/40 bg-elec-yellow/[0.08]'
+                  : 'text-white/85 border-white/15 hover:border-white/30'
+              )}
             >
-              {filter.count}
-            </span>
-          </Button>
+              {filter.label}
+              <span
+                className={cn(
+                  'tabular-nums font-semibold',
+                  active ? 'text-elec-yellow' : filter.countTone
+                )}
+              >
+                {filter.count}
+              </span>
+            </button>
+          </li>
         );
       })}
-    </div>
+    </ul>
   );
 };

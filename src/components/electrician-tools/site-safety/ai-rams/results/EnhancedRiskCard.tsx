@@ -100,10 +100,23 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
           isExpanded ? 'bg-white/[0.02]' : 'bg-transparent hover:bg-white/[0.02]'
         )}
       >
-        {/* Collapsed Row - Native Mobile Design */}
-        <button
+        {/* Collapsed Row - Native Mobile Design.
+            role="button" instead of <button> so the inner Edit3 <Button>
+            (and any future controls in the row) doesn't trigger a nested
+            <button> DOM-validation warning. */}
+        <div
+          role="button"
+          tabIndex={0}
           onClick={() => !isEditing && setIsExpanded(!isExpanded)}
-          className="w-full p-4 sm:p-5 flex flex-col gap-3 text-left min-h-[80px] touch-manipulation active:bg-white/[0.04]"
+          onKeyDown={(e) => {
+            if (isEditing) return;
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              setIsExpanded(!isExpanded);
+            }
+          }}
+          aria-expanded={isExpanded}
+          className="w-full p-4 sm:p-5 flex flex-col gap-3 text-left min-h-[80px] touch-manipulation active:bg-white/[0.04] cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/40"
         >
           {/* Top Row: Number + Risk Badge */}
           <div className="flex items-center justify-between w-full">
@@ -183,7 +196,7 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
               </>
             )}
           </div>
-        </button>
+        </div>
 
         {/* Expanded Content */}
         {isExpanded && (

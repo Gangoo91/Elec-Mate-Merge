@@ -114,7 +114,7 @@ export function HeadlineStats({ number = '01', label = 'THIS MONTH' }: HeadlineS
 
       <motion.div
         variants={itemVariants}
-        className="relative grid grid-cols-2 lg:grid-cols-4 gap-px bg-white/[0.06] border border-white/[0.08] rounded-2xl overflow-hidden"
+        className="relative grid grid-cols-2 lg:grid-cols-4 gap-[2px] bg-black border border-white/[0.08] rounded-2xl overflow-hidden"
       >
         {/* Single yellow hairline along the top of the strip — gives the
             grid a brand-anchored ceiling without colouring each cell. */}

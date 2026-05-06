@@ -1,383 +1,80 @@
+/**
+ * WiringInstructionPage — editorial Wiring Guide screen.
+ *
+ * Drops the per-circuit colour configs (~60 colour declarations across
+ * domestic / commercial / industrial), the per-property gradient hero, and
+ * all the inline icons. Editorial eyebrows, type-led property + circuit
+ * pills, gradient-surface cards, elec-yellow CTA. All logic preserved
+ * (camera, upload, wiring-diagram-generator-rag edge function, results via
+ * WiringGuidanceDisplay).
+ */
+
 import { useState, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Textarea } from '@/components/ui/textarea';
-import {
-  ArrowLeft,
-  Camera,
-  Upload,
-  Wrench,
-  X,
-  Loader2,
-  Sparkles,
-  Zap,
-  Home,
-  Building,
-  Factory,
-  Car,
-  Lightbulb,
-  Flame,
-  Plug,
-  AirVent,
-  Server,
-  Warehouse,
-  ShowerHead,
-  Microwave,
-  Fan,
-  BatteryCharging,
-  Sun,
-  Heater,
-  Refrigerator,
-  Monitor,
-  ChevronRight,
-  Info,
-  Shield,
-  CircuitBoard,
-} from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowLeft, X, Loader2 } from 'lucide-react';
+import { Eyebrow } from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
 import WiringGuidanceDisplay from '@/components/electrician-tools/ai-tools/WiringGuidanceDisplay';
 
-// Property types with detailed info
 const propertyTypes = [
-  {
-    id: 'domestic',
-    label: 'Domestic',
-    icon: Home,
-    desc: 'Houses, flats, apartments',
-    color: 'text-blue-400',
-    bg: 'bg-blue-500/10',
-    border: 'border-blue-500/30',
-    gradient: 'from-blue-500/20 to-blue-500/5',
-  },
-  {
-    id: 'commercial',
-    label: 'Commercial',
-    icon: Building,
-    desc: 'Offices, shops, restaurants',
-    color: 'text-purple-400',
-    bg: 'bg-purple-500/10',
-    border: 'border-purple-500/30',
-    gradient: 'from-purple-500/20 to-purple-500/5',
-  },
-  {
-    id: 'industrial',
-    label: 'Industrial',
-    icon: Factory,
-    desc: 'Factories, warehouses, workshops',
-    color: 'text-orange-400',
-    bg: 'bg-orange-500/10',
-    border: 'border-orange-500/30',
-    gradient: 'from-orange-500/20 to-orange-500/5',
-  },
+  { id: 'domestic', label: 'Domestic', desc: 'Houses, flats, apartments' },
+  { id: 'commercial', label: 'Commercial', desc: 'Offices, shops, restaurants' },
+  { id: 'industrial', label: 'Industrial', desc: 'Factories, warehouses, workshops' },
 ];
 
-// Circuit types by property type
-const circuitsByProperty: Record<
-  string,
-  Array<{
-    id: string;
-    label: string;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    icon: any;
-    color: string;
-    border: string;
-    text: string;
-    gradient: string;
-  }>
-> = {
+const circuitsByProperty: Record<string, Array<{ id: string; label: string }>> = {
   domestic: [
-    {
-      id: 'consumer-unit',
-      label: 'Consumer Unit',
-      icon: Zap,
-      color: 'from-emerald-500/20 to-green-500/10',
-      border: 'border-emerald-500/30',
-      text: 'text-emerald-400',
-      gradient: 'from-emerald-500/20 to-green-500/10',
-    },
-    {
-      id: 'lighting',
-      label: 'Lighting Circuit',
-      icon: Lightbulb,
-      color: 'from-yellow-500/20 to-amber-500/10',
-      border: 'border-yellow-500/30',
-      text: 'text-yellow-400',
-      gradient: 'from-yellow-500/20 to-amber-500/10',
-    },
-    {
-      id: 'ring-main',
-      label: 'Ring Main',
-      icon: Plug,
-      color: 'from-blue-500/20 to-cyan-500/10',
-      border: 'border-blue-500/30',
-      text: 'text-blue-400',
-      gradient: 'from-blue-500/20 to-cyan-500/10',
-    },
-    {
-      id: 'cooker',
-      label: 'Cooker/Hob',
-      icon: Flame,
-      color: 'from-orange-500/20 to-red-500/10',
-      border: 'border-orange-500/30',
-      text: 'text-orange-400',
-      gradient: 'from-orange-500/20 to-red-500/10',
-    },
-    {
-      id: 'shower',
-      label: 'Electric Shower',
-      icon: ShowerHead,
-      color: 'from-cyan-500/20 to-blue-500/10',
-      border: 'border-cyan-500/30',
-      text: 'text-cyan-400',
-      gradient: 'from-cyan-500/20 to-blue-500/10',
-    },
-    {
-      id: 'ev-charger',
-      label: 'EV Charger',
-      icon: Car,
-      color: 'from-green-500/20 to-teal-500/10',
-      border: 'border-green-500/30',
-      text: 'text-green-400',
-      gradient: 'from-green-500/20 to-teal-500/10',
-    },
-    {
-      id: 'immersion',
-      label: 'Immersion Heater',
-      icon: Heater,
-      color: 'from-red-500/20 to-orange-500/10',
-      border: 'border-red-500/30',
-      text: 'text-red-400',
-      gradient: 'from-red-500/20 to-orange-500/10',
-    },
-    {
-      id: 'solar-pv',
-      label: 'Solar PV',
-      icon: Sun,
-      color: 'from-amber-500/20 to-yellow-500/10',
-      border: 'border-amber-500/30',
-      text: 'text-amber-400',
-      gradient: 'from-amber-500/20 to-yellow-500/10',
-    },
-    {
-      id: 'other',
-      label: 'Other',
-      icon: Wrench,
-      color: 'from-slate-500/20 to-gray-500/10',
-      border: 'border-slate-500/30',
-      text: 'text-slate-400',
-      gradient: 'from-slate-500/20 to-gray-500/10',
-    },
+    { id: 'consumer-unit', label: 'Consumer unit' },
+    { id: 'lighting', label: 'Lighting circuit' },
+    { id: 'ring-main', label: 'Ring main' },
+    { id: 'cooker', label: 'Cooker / hob' },
+    { id: 'shower', label: 'Electric shower' },
+    { id: 'ev-charger', label: 'EV charger' },
+    { id: 'immersion', label: 'Immersion heater' },
+    { id: 'solar-pv', label: 'Solar PV' },
+    { id: 'other', label: 'Other' },
   ],
   commercial: [
-    {
-      id: 'distribution-board',
-      label: 'Distribution Board',
-      icon: CircuitBoard,
-      color: 'from-purple-500/20 to-violet-500/10',
-      border: 'border-purple-500/30',
-      text: 'text-purple-400',
-      gradient: 'from-purple-500/20 to-violet-500/10',
-    },
-    {
-      id: 'three-phase',
-      label: '3-Phase Supply',
-      icon: Zap,
-      color: 'from-emerald-500/20 to-green-500/10',
-      border: 'border-emerald-500/30',
-      text: 'text-emerald-400',
-      gradient: 'from-emerald-500/20 to-green-500/10',
-    },
-    {
-      id: 'commercial-lighting',
-      label: 'Commercial Lighting',
-      icon: Lightbulb,
-      color: 'from-yellow-500/20 to-amber-500/10',
-      border: 'border-yellow-500/30',
-      text: 'text-yellow-400',
-      gradient: 'from-yellow-500/20 to-amber-500/10',
-    },
-    {
-      id: 'hvac',
-      label: 'HVAC Systems',
-      icon: AirVent,
-      color: 'from-cyan-500/20 to-blue-500/10',
-      border: 'border-cyan-500/30',
-      text: 'text-cyan-400',
-      gradient: 'from-cyan-500/20 to-blue-500/10',
-    },
-    {
-      id: 'commercial-kitchen',
-      label: 'Commercial Kitchen',
-      icon: Microwave,
-      color: 'from-orange-500/20 to-red-500/10',
-      border: 'border-orange-500/30',
-      text: 'text-orange-400',
-      gradient: 'from-orange-500/20 to-red-500/10',
-    },
-    {
-      id: 'server-room',
-      label: 'Server Room/IT',
-      icon: Server,
-      color: 'from-blue-500/20 to-indigo-500/10',
-      border: 'border-blue-500/30',
-      text: 'text-blue-400',
-      gradient: 'from-blue-500/20 to-indigo-500/10',
-    },
-    {
-      id: 'emergency-lighting',
-      label: 'Emergency Lighting',
-      icon: Shield,
-      color: 'from-red-500/20 to-orange-500/10',
-      border: 'border-red-500/30',
-      text: 'text-red-400',
-      gradient: 'from-red-500/20 to-orange-500/10',
-    },
-    {
-      id: 'refrigeration',
-      label: 'Refrigeration',
-      icon: Refrigerator,
-      color: 'from-teal-500/20 to-cyan-500/10',
-      border: 'border-teal-500/30',
-      text: 'text-teal-400',
-      gradient: 'from-teal-500/20 to-cyan-500/10',
-    },
-    {
-      id: 'other',
-      label: 'Other',
-      icon: Wrench,
-      color: 'from-slate-500/20 to-gray-500/10',
-      border: 'border-slate-500/30',
-      text: 'text-slate-400',
-      gradient: 'from-slate-500/20 to-gray-500/10',
-    },
+    { id: 'distribution-board', label: 'Distribution board' },
+    { id: 'three-phase', label: '3-phase supply' },
+    { id: 'commercial-lighting', label: 'Commercial lighting' },
+    { id: 'hvac', label: 'HVAC systems' },
+    { id: 'commercial-kitchen', label: 'Commercial kitchen' },
+    { id: 'server-room', label: 'Server room / IT' },
+    { id: 'emergency-lighting', label: 'Emergency lighting' },
+    { id: 'refrigeration', label: 'Refrigeration' },
+    { id: 'other', label: 'Other' },
   ],
   industrial: [
-    {
-      id: 'main-switchgear',
-      label: 'Main Switchgear',
-      icon: CircuitBoard,
-      color: 'from-orange-500/20 to-amber-500/10',
-      border: 'border-orange-500/30',
-      text: 'text-orange-400',
-      gradient: 'from-orange-500/20 to-amber-500/10',
-    },
-    {
-      id: 'motor-control',
-      label: 'Motor Control Centre',
-      icon: Fan,
-      color: 'from-blue-500/20 to-cyan-500/10',
-      border: 'border-blue-500/30',
-      text: 'text-blue-400',
-      gradient: 'from-blue-500/20 to-cyan-500/10',
-    },
-    {
-      id: 'high-voltage',
-      label: 'HV Systems',
-      icon: Zap,
-      color: 'from-red-500/20 to-orange-500/10',
-      border: 'border-red-500/30',
-      text: 'text-red-400',
-      gradient: 'from-red-500/20 to-orange-500/10',
-    },
-    {
-      id: 'industrial-lighting',
-      label: 'Industrial Lighting',
-      icon: Lightbulb,
-      color: 'from-yellow-500/20 to-amber-500/10',
-      border: 'border-yellow-500/30',
-      text: 'text-yellow-400',
-      gradient: 'from-yellow-500/20 to-amber-500/10',
-    },
-    {
-      id: 'ups-systems',
-      label: 'UPS Systems',
-      icon: BatteryCharging,
-      color: 'from-green-500/20 to-emerald-500/10',
-      border: 'border-green-500/30',
-      text: 'text-green-400',
-      gradient: 'from-green-500/20 to-emerald-500/10',
-    },
-    {
-      id: 'plc-automation',
-      label: 'PLC/Automation',
-      icon: Monitor,
-      color: 'from-purple-500/20 to-violet-500/10',
-      border: 'border-purple-500/30',
-      text: 'text-purple-400',
-      gradient: 'from-purple-500/20 to-violet-500/10',
-    },
-    {
-      id: 'crane-hoist',
-      label: 'Crane/Hoist Systems',
-      icon: Warehouse,
-      color: 'from-slate-500/20 to-gray-500/10',
-      border: 'border-slate-500/30',
-      text: 'text-slate-400',
-      gradient: 'from-slate-500/20 to-gray-500/10',
-    },
-    {
-      id: 'welding',
-      label: 'Welding Equipment',
-      icon: Flame,
-      color: 'from-amber-500/20 to-orange-500/10',
-      border: 'border-amber-500/30',
-      text: 'text-amber-400',
-      gradient: 'from-amber-500/20 to-orange-500/10',
-    },
-    {
-      id: 'other',
-      label: 'Other',
-      icon: Wrench,
-      color: 'from-slate-500/20 to-gray-500/10',
-      border: 'border-slate-500/30',
-      text: 'text-slate-400',
-      gradient: 'from-slate-500/20 to-gray-500/10',
-    },
+    { id: 'main-switchgear', label: 'Main switchgear' },
+    { id: 'motor-control', label: 'Motor control centre' },
+    { id: 'high-voltage', label: 'HV systems' },
+    { id: 'industrial-lighting', label: 'Industrial lighting' },
+    { id: 'ups-systems', label: 'UPS systems' },
+    { id: 'plc-automation', label: 'PLC / automation' },
+    { id: 'crane-hoist', label: 'Crane / hoist systems' },
+    { id: 'welding', label: 'Welding equipment' },
+    { id: 'other', label: 'Other' },
   ],
 };
 
-// Installation context
 const installContexts = [
-  { id: 'new', label: 'New Install', desc: 'First time installation' },
-  { id: 'replacement', label: 'Replacement', desc: 'Like for like swap' },
-  { id: 'upgrade', label: 'Upgrade', desc: 'Improving capacity' },
-  { id: 'extension', label: 'Extension', desc: 'Adding to existing' },
-  { id: 'fault-repair', label: 'Fault Repair', desc: 'Fixing issues' },
+  { id: 'new', label: 'New install' },
+  { id: 'replacement', label: 'Replacement' },
+  { id: 'upgrade', label: 'Upgrade' },
+  { id: 'extension', label: 'Extension' },
+  { id: 'fault-repair', label: 'Fault repair' },
 ];
 
-// Earthing systems
 const earthingSystems = [
   { id: 'tn-c-s', label: 'TN-C-S (PME)' },
   { id: 'tn-s', label: 'TN-S' },
   { id: 'tt', label: 'TT' },
   { id: 'unknown', label: 'Unknown' },
 ];
-
-// Static mapping for dynamic property-based classes (Tailwind requires full class names at build time)
-const propertyGradients: Record<
-  string,
-  { heroFrom: string; progressBg: string; captureBg: string }
-> = {
-  'text-blue-400': {
-    heroFrom: 'from-blue-400/10 via-card to-card/90',
-    progressBg: 'bg-blue-500',
-    captureBg: 'bg-blue-400 hover:opacity-90',
-  },
-  'text-purple-400': {
-    heroFrom: 'from-purple-400/10 via-card to-card/90',
-    progressBg: 'bg-purple-500',
-    captureBg: 'bg-purple-400 hover:opacity-90',
-  },
-  'text-orange-400': {
-    heroFrom: 'from-orange-400/10 via-card to-card/90',
-    progressBg: 'bg-orange-500',
-    captureBg: 'bg-orange-400 hover:opacity-90',
-  },
-};
 
 const WiringInstructionPage = () => {
   const navigate = useNavigate();
@@ -386,7 +83,6 @@ const WiringInstructionPage = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  // State
   const [images, setImages] = useState<File[]>([]);
   const [selectedProperty, setSelectedProperty] = useState<string>('domestic');
   const [selectedCircuit, setSelectedCircuit] = useState<string | null>(null);
@@ -400,12 +96,9 @@ const WiringInstructionPage = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [analysisResult, setAnalysisResult] = useState<any>(null);
   const [analysisProgress, setAnalysisProgress] = useState(0);
-
   const [inputTab, setInputTab] = useState<'photo' | 'describe'>('describe');
 
   const currentCircuits = circuitsByProperty[selectedProperty] || circuitsByProperty.domestic;
-  const selectedPropertyData = propertyTypes.find((p) => p.id === selectedProperty);
-  const selectedCircuitData = currentCircuits.find((c) => c.id === selectedCircuit);
 
   const currentStep = useMemo(() => {
     if (!selectedCircuit) return 2;
@@ -415,7 +108,6 @@ const WiringInstructionPage = () => {
   const hasInput = images.length > 0 || textDescription.trim().length > 0;
   const canGenerate = selectedCircuit && hasInput;
 
-  // Camera functions
   const startCamera = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -425,9 +117,9 @@ const WiringInstructionPage = () => {
         videoRef.current.srcObject = stream;
         setIsCameraActive(true);
       }
-    } catch (error) {
+    } catch {
       toast({
-        title: 'Camera Error',
+        title: 'Camera error',
         description: 'Unable to access camera',
         variant: 'destructive',
       });
@@ -478,7 +170,7 @@ const WiringInstructionPage = () => {
 
   const handlePropertyChange = (propertyId: string) => {
     setSelectedProperty(propertyId);
-    setSelectedCircuit(null); // Reset circuit when property changes
+    setSelectedCircuit(null);
   };
 
   const handleAnalysis = async () => {
@@ -487,7 +179,7 @@ const WiringInstructionPage = () => {
 
     if (!hasImage && !hasText) {
       toast({
-        title: 'No Input',
+        title: 'Add input',
         description: 'Upload a photo or describe the component',
         variant: 'destructive',
       });
@@ -504,7 +196,6 @@ const WiringInstructionPage = () => {
     try {
       let publicUrl: string | null = null;
 
-      // Upload image if provided
       if (hasImage) {
         const image = images[0];
         const {
@@ -515,7 +206,6 @@ const WiringInstructionPage = () => {
           .from('visual-uploads')
           .upload(fileName, image);
         if (uploadError) throw uploadError;
-
         const { data: urlData } = supabase.storage.from('visual-uploads').getPublicUrl(fileName);
         publicUrl = urlData.publicUrl;
       }
@@ -523,7 +213,6 @@ const WiringInstructionPage = () => {
       const circuitLabel = currentCircuits.find((c) => c.id === selectedCircuit)?.label || '';
       const earthingLabel = earthingSystems.find((e) => e.id === selectedEarthing)?.label || '';
 
-      // Call the RAG-powered wiring guidance generator
       const { data, error } = await supabase.functions.invoke('wiring-diagram-generator-rag', {
         body: {
           component_image_url: publicUrl,
@@ -537,16 +226,13 @@ const WiringInstructionPage = () => {
         },
       });
 
-      if (error) {
-        throw error;
-      }
+      if (error) throw error;
 
       const wiringData = data?.wiring_schematic;
-
       if (!wiringData) {
         toast({
-          title: 'Invalid Response',
-          description: "The analysis didn't return wiring instructions. Please try again.",
+          title: 'Invalid response',
+          description: "The analysis didn't return wiring instructions.",
           variant: 'destructive',
         });
         return;
@@ -556,7 +242,7 @@ const WiringInstructionPage = () => {
       setAnalysisResult(data);
     } catch (error) {
       console.error('Analysis error:', error);
-      toast({ title: 'Analysis Failed', description: 'Please try again', variant: 'destructive' });
+      toast({ title: 'Analysis failed', description: 'Please try again', variant: 'destructive' });
     } finally {
       clearInterval(progressInterval);
       setIsAnalyzing(false);
@@ -571,65 +257,43 @@ const WiringInstructionPage = () => {
     setAnalysisProgress(0);
   };
 
-  const stepLabels = ['Property', 'Circuit', 'Component'];
-
   return (
-    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
-      {/* Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
+    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-elec-dark min-h-screen pb-24">
+      {/* Sticky header */}
+      <div className="sticky top-0 z-40 bg-elec-dark/95 backdrop-blur-xl border-b border-white/[0.06]">
         <div className="px-4 py-2">
           <div className="flex items-center gap-3 h-11 max-w-5xl mx-auto">
-            <Button variant="ghost" size="icon" onClick={() => navigate('/electrician-tools/ai-tooling')} className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]">
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-            <div className="flex items-center gap-2.5 flex-1">
-              <div className="p-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
-                <Wrench className="h-4 w-4 text-emerald-500" />
-              </div>
-              <h1 className="text-base font-semibold text-white">Wiring Guide</h1>
-            </div>
+            <button
+              type="button"
+              onClick={() => navigate('/electrician-tools/ai-tooling')}
+              aria-label="Back"
+              className="text-white/85 hover:text-white border border-white/15 hover:border-white/30 rounded-full h-9 w-9 inline-flex items-center justify-center touch-manipulation transition-colors shrink-0"
+            >
+              <ArrowLeft className="h-4 w-4" />
+            </button>
+            <Eyebrow>WIRING GUIDE</Eyebrow>
 
-            {/* Step indicator */}
             {!analysisResult && !isAnalyzing && (
-              <div className="flex items-center gap-1.5">
-                {stepLabels.map((label, i) => {
-                  const stepNum = i + 1;
-                  const isActive = currentStep >= stepNum;
-                  const isCurrent = currentStep === stepNum;
-                  return (
-                    <div key={label} className="flex items-center gap-1.5">
-                      {i > 0 && (
-                        <div
-                          className={cn('w-4 h-px', isActive ? 'bg-emerald-500' : 'bg-white/20')}
-                        />
-                      )}
-                      <div className="flex items-center gap-1">
-                        <div
-                          className={cn(
-                            'w-2 h-2 rounded-full transition-all',
-                            isCurrent
-                              ? 'bg-emerald-500 scale-125'
-                              : isActive
-                                ? 'bg-emerald-500/60'
-                                : 'bg-white/20'
-                          )}
-                        />
-                        <span
-                          className={cn(
-                            'text-[10px] font-medium hidden sm:inline',
-                            isCurrent
-                              ? 'text-emerald-500'
-                              : isActive
-                                ? 'text-white'
-                                : 'text-white'
-                          )}
-                        >
-                          {label}
-                        </span>
-                      </div>
-                    </div>
-                  );
-                })}
+              <div className="ml-auto flex items-center gap-2">
+                {[1, 2, 3].map((s) => (
+                  <span
+                    key={s}
+                    className={cn(
+                      'inline-flex items-center text-[10px] font-semibold uppercase tracking-[0.14em] tabular-nums',
+                      currentStep >= s ? 'text-elec-yellow' : 'text-white/40'
+                    )}
+                  >
+                    0{s}
+                    {s < 3 && (
+                      <span
+                        className={cn(
+                          'ml-2 w-4 h-px',
+                          currentStep > s ? 'bg-elec-yellow/60' : 'bg-white/15'
+                        )}
+                      />
+                    )}
+                  </span>
+                ))}
               </div>
             )}
           </div>
@@ -638,11 +302,10 @@ const WiringInstructionPage = () => {
 
       <main
         className={cn(
-          'px-4 py-4 space-y-5 max-w-5xl mx-auto',
+          'px-4 sm:px-6 pt-6 pb-6 space-y-7 max-w-5xl mx-auto',
           canGenerate && !analysisResult && !isAnalyzing && 'pb-28'
         )}
       >
-        {/* Results */}
         {analysisResult?.wiring_schematic ? (
           <div className="space-y-4">
             <WiringGuidanceDisplay
@@ -652,7 +315,7 @@ const WiringInstructionPage = () => {
                 analysisResult.wiring_schematic.wiring_scenarios || [
                   {
                     scenario_id: 'default',
-                    scenario_name: 'Standard Installation',
+                    scenario_name: 'Standard installation',
                     use_case: 'Standard BS 7671 compliant installation',
                     complexity: 'simple',
                     recommended: true,
@@ -671,502 +334,332 @@ const WiringInstructionPage = () => {
               practicalTips={analysisResult.wiring_schematic.practical_tips}
               commonMistakes={analysisResult.wiring_schematic.common_mistakes}
             />
-            <Button onClick={resetAnalysis} variant="outline" className="w-full h-12">
-              Get New Wiring Guide
-            </Button>
+            <button
+              type="button"
+              onClick={resetAnalysis}
+              className="w-full text-[12px] font-semibold uppercase tracking-[0.14em] text-white/85 border border-white/15 hover:border-white/30 rounded-full px-4 py-3 min-h-[44px] inline-flex items-center justify-center touch-manipulation transition-colors"
+            >
+              Get a new wiring guide
+            </button>
           </div>
         ) : isAnalyzing ? (
-          /* Loading state */
-          <div className="bg-transparent border border-white/[0.08] rounded-2xl p-6 space-y-5">
-            <div className="flex items-center gap-4">
-              <div
-                className={cn(
-                  'p-3 rounded-xl',
-                  selectedPropertyData?.bg,
-                  selectedPropertyData?.border
-                )}
-              >
-                <Loader2 className={cn('h-6 w-6 animate-spin', selectedPropertyData?.color)} />
-              </div>
-              <div>
-                <h3 className="font-semibold text-white text-base">Generating Wiring Guide</h3>
-                <p className="text-sm text-white mt-0.5">
-                  {analysisProgress < 30
-                    ? 'Analysing component...'
-                    : analysisProgress < 60
-                      ? 'Searching BS 7671 regulations...'
-                      : analysisProgress < 90
-                        ? 'Creating step-by-step guide...'
-                        : 'Finalising...'}
-                </p>
-              </div>
+          <div className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-6 sm:p-8">
+            <div className="flex items-center gap-3">
+              <Loader2 className="h-4 w-4 text-elec-yellow animate-spin" aria-hidden />
+              <Eyebrow>GENERATING</Eyebrow>
             </div>
-            <div className="h-2 bg-white/5 rounded-full overflow-hidden">
+            <p className="mt-3 text-[14px] text-white">
+              {analysisProgress < 30
+                ? 'Analysing the component…'
+                : analysisProgress < 60
+                  ? 'Pulling matched BS 7671 regs…'
+                  : 'Composing the wiring guide…'}
+            </p>
+            <p className="mt-1 text-[11.5px] text-white/65">
+              BS 7671 cited · GN3 + manufacturer guidance referenced
+            </p>
+            <div className="mt-4 h-1 bg-white/[0.06] rounded-full overflow-hidden">
               <motion.div
-                className={cn(
-                  'h-full rounded-full',
-                  selectedProperty === 'domestic'
-                    ? 'bg-blue-500'
-                    : selectedProperty === 'commercial'
-                      ? 'bg-purple-500'
-                      : 'bg-orange-500'
-                )}
+                className="h-full bg-elec-yellow rounded-full"
                 initial={{ width: 0 }}
                 animate={{ width: `${analysisProgress}%` }}
-                transition={{ ease: 'easeOut' }}
               />
             </div>
+            <p className="mt-2 text-[10.5px] uppercase tracking-[0.14em] font-semibold text-white/65 tabular-nums text-right">
+              {Math.round(analysisProgress)}%
+            </p>
           </div>
         ) : (
           <>
-            {/* Step 1: Property Type */}
-            <section className="space-y-3">
-              <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
-                Property Type
-              </h2>
-              <div className="grid grid-cols-3 gap-3">
-                {propertyTypes.map((prop) => {
-                  const isSelected = selectedProperty === prop.id;
-                  const accentColors: Record<string, string> = {
-                    domestic: 'from-blue-500 via-blue-400 to-cyan-400',
-                    commercial: 'from-purple-500 via-violet-400 to-indigo-400',
-                    industrial: 'from-orange-500 via-amber-400 to-red-400',
-                  };
-                  return (
-                    <button
-                      key={prop.id}
-                      onClick={() => handlePropertyChange(prop.id)}
-                      className={cn(
-                        'group relative overflow-hidden touch-manipulation active:scale-[0.98] transition-all duration-200',
-                        'bg-transparent border border-white/[0.08] rounded-2xl min-h-[130px] flex flex-col items-center justify-center gap-3 p-4 hover:bg-white/[0.04] hover:border-white/[0.15]',
-                        isSelected &&
-                          cn('border-2', prop.border, 'bg-gradient-to-br', prop.gradient)
-                      )}
-                    >
-                      {/* Top accent line */}
-                      <div
-                        className={cn(
-                          'absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r transition-opacity duration-200',
-                          accentColors[prop.id],
-                          isSelected ? 'opacity-80' : 'opacity-20 group-hover:opacity-50'
-                        )}
-                      />
-
-                      <div
-                        className={cn(
-                          'p-2.5 rounded-xl border transition-all duration-200',
-                          isSelected
-                            ? cn(prop.bg, prop.border)
-                            : 'bg-white/[0.03] border-white/[0.08] group-hover:scale-110'
-                        )}
-                      >
-                        <prop.icon
-                          className={cn('h-6 w-6', isSelected ? prop.color : 'text-white')}
-                        />
-                      </div>
-                      <div className="text-center">
-                        <span
-                          className={cn(
-                            'text-sm font-semibold block',
-                            'text-white'
-                          )}
-                        >
-                          {prop.label}
-                        </span>
-                        <span className="text-[10px] text-white mt-0.5 block">{prop.desc}</span>
-                      </div>
-                      {isSelected && (
-                        <div
-                          className={cn(
-                            'absolute top-2.5 right-2.5 w-2 h-2 rounded-full animate-pulse',
-                            prop.color?.replace('text-', 'bg-')
-                          )}
-                        />
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
+            {/* Hero */}
+            <section className="space-y-2">
+              <Eyebrow>WHAT IT DOES</Eyebrow>
+              <h1 className="text-[28px] sm:text-[36px] font-semibold tracking-tight leading-[1.05]">
+                <span className="text-elec-yellow">Wire</span>{' '}
+                <span className="text-white">it right.</span>
+              </h1>
+              <p className="text-[13px] sm:text-[14px] leading-relaxed text-white/85 max-w-2xl">
+                Pick the property and circuit, drop in a photo or describe what you've got, get
+                step-by-step UK-compliant wiring with cited regs, terminal connections, safety
+                warnings, and the tests to run.
+              </p>
             </section>
 
-            {/* Step 2: Circuit Type */}
-            <motion.section
-              className="space-y-3"
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1, type: 'spring', stiffness: 300, damping: 24 }}
-            >
-              <div className="flex items-center justify-between px-0.5">
-                <h2 className="text-xs font-medium text-white uppercase tracking-wider">
-                  What are you wiring?
-                </h2>
-                <Badge variant="secondary" className="text-[10px] capitalize">
-                  {selectedProperty}
-                </Badge>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                {currentCircuits.map((circuit) => {
-                  const isSelected = selectedCircuit === circuit.id;
+            {/* 01 — Property */}
+            <section className="space-y-3">
+              <Eyebrow>01 · PROPERTY TYPE</Eyebrow>
+              <ul className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                {propertyTypes.map((prop) => {
+                  const active = selectedProperty === prop.id;
                   return (
-                    <button
-                      key={circuit.id}
-                      onClick={() => setSelectedCircuit(circuit.id)}
-                      className={cn(
-                        'group relative overflow-hidden touch-manipulation active:scale-[0.98] transition-all duration-200',
-                        'bg-transparent border border-white/[0.08] rounded-2xl min-h-[100px] flex flex-col items-center justify-center gap-2.5 p-4 hover:bg-white/[0.04] hover:border-white/[0.15]',
-                        isSelected &&
-                          cn('border-2', circuit.border, 'bg-gradient-to-br', circuit.gradient)
-                      )}
-                    >
-                      {/* Top accent */}
-                      <div
+                    <li key={prop.id}>
+                      <button
+                        type="button"
+                        onClick={() => handlePropertyChange(prop.id)}
                         className={cn(
-                          'absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r transition-opacity duration-200',
-                          circuit.gradient?.replace('/20', '').replace('/10', ''),
-                          isSelected ? 'opacity-80' : 'opacity-0 group-hover:opacity-40'
-                        )}
-                      />
-
-                      <div
-                        className={cn(
-                          'p-2 rounded-xl border transition-all',
-                          isSelected
-                            ? cn(`bg-gradient-to-br ${circuit.gradient}`, circuit.border)
-                            : 'bg-white/[0.03] border-white/[0.08] group-hover:scale-110'
+                          'w-full text-left rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-4 transition-colors touch-manipulation',
+                          active
+                            ? 'border-elec-yellow/40'
+                            : 'border-white/[0.10] hover:border-white/[0.20]'
                         )}
                       >
-                        <circuit.icon
-                          className={cn('h-5 w-5', isSelected ? circuit.text : 'text-white')}
-                        />
-                      </div>
-                      <span
+                        <Eyebrow>{prop.label.toUpperCase()}</Eyebrow>
+                        <p className="mt-1.5 text-[12px] text-white/85">{prop.desc}</p>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+
+            {/* 02 — Circuit */}
+            <section className="space-y-3">
+              <Eyebrow>02 · CIRCUIT TYPE</Eyebrow>
+              <ul className="flex flex-wrap gap-1.5">
+                {currentCircuits.map((circuit) => {
+                  const active = selectedCircuit === circuit.id;
+                  return (
+                    <li key={circuit.id}>
+                      <button
+                        type="button"
+                        onClick={() => setSelectedCircuit(active ? null : circuit.id)}
                         className={cn(
-                          'text-xs font-semibold text-center leading-tight',
-                          'text-white'
+                          'inline-flex items-center text-[11px] font-semibold uppercase tracking-[0.12em] rounded-full px-3 py-2 min-h-[40px] border transition-colors touch-manipulation',
+                          active
+                            ? 'text-elec-yellow border-elec-yellow/40 bg-elec-yellow/[0.08]'
+                            : 'text-white/85 border-white/15 hover:border-white/30'
                         )}
                       >
                         {circuit.label}
-                      </span>
-                      {isSelected && (
-                        <div className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-current animate-pulse" />
-                      )}
-                    </button>
+                      </button>
+                    </li>
                   );
                 })}
-              </div>
-            </motion.section>
+              </ul>
+            </section>
 
-            {/* Step 3: Component Input (appears after circuit selected) */}
-            <AnimatePresence>
-              {currentStep >= 3 && (
-                <motion.div
-                  className="space-y-4"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ type: 'spring', stiffness: 300, damping: 24 }}
-                >
-                  {/* Input method tabs */}
-                  <section className="space-y-3">
-                    <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
-                      Describe or Photograph Component
-                    </h2>
-                    <div className="bg-transparent border border-white/[0.08] rounded-2xl p-1.5 flex gap-1">
-                      <button
-                        onClick={() => setInputTab('describe')}
-                        className={cn(
-                          'flex-1 h-11 rounded-xl text-sm font-medium transition-all touch-manipulation flex items-center justify-center gap-2',
-                          inputTab === 'describe'
-                            ? 'bg-emerald-500 text-white'
-                            : 'text-white hover:bg-white/[0.06]'
-                        )}
-                      >
-                        <Sparkles className="h-4 w-4" />
-                        Describe It
-                      </button>
-                      <button
-                        onClick={() => setInputTab('photo')}
-                        className={cn(
-                          'flex-1 h-11 rounded-xl text-sm font-medium transition-all touch-manipulation flex items-center justify-center gap-2',
-                          inputTab === 'photo'
-                            ? 'bg-emerald-500 text-white'
-                            : 'text-white hover:bg-white/[0.06]'
-                        )}
-                      >
-                        <Camera className="h-4 w-4" />
-                        Take Photo
-                      </button>
-                    </div>
-
-                    {/* Describe tab */}
-                    {inputTab === 'describe' && (
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        className="bg-transparent border border-white/[0.08] rounded-2xl p-4 space-y-3"
-                      >
-                        <Textarea
-                          value={textDescription}
-                          onChange={(e) => setTextDescription(e.target.value)}
-                          placeholder="e.g. 2-gang 2-way light switch, Hager 18-way dual RCD consumer unit, shower pull cord isolator..."
-                          className="touch-manipulation text-base min-h-[100px] focus:ring-2 focus:ring-emerald-500/20 border-white/[0.08] focus:border-emerald-500 bg-transparent text-white"
-                        />
-                        <p className="text-[11px] text-white">
-                          Be specific — include manufacturer, model, or terminal markings if known
-                        </p>
-                      </motion.div>
-                    )}
-
-                    {/* Photo tab */}
-                    {inputTab === 'photo' && (
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        className="bg-transparent border border-white/[0.08] rounded-2xl p-4 space-y-4"
-                      >
-                        <AnimatePresence>
-                          {isCameraActive && (
-                            <motion.div
-                              initial={{ height: 0 }}
-                              animate={{ height: 'auto' }}
-                              exit={{ height: 0 }}
-                              className="space-y-3 overflow-hidden"
-                            >
-                              <div className="relative aspect-video bg-muted rounded-xl overflow-hidden">
-                                <video
-                                  ref={videoRef}
-                                  autoPlay
-                                  playsInline
-                                  muted
-                                  className="w-full h-full object-cover"
-                                />
-                                <div
-                                  className={cn(
-                                    'absolute inset-0 border-2 rounded-xl pointer-events-none',
-                                    selectedPropertyData?.border
-                                  )}
-                                />
-                              </div>
-                              <div className="flex gap-2">
-                                <Button
-                                  onClick={captureImage}
-                                  className={cn(
-                                    'flex-1 h-12 text-white',
-                                    selectedProperty === 'domestic'
-                                      ? 'bg-blue-500 hover:bg-blue-600'
-                                      : selectedProperty === 'commercial'
-                                        ? 'bg-purple-500 hover:bg-purple-600'
-                                        : 'bg-orange-500 hover:bg-orange-600'
-                                  )}
-                                >
-                                  <Camera className="h-5 w-5 mr-2" />
-                                  Capture
-                                </Button>
-                                <Button onClick={stopCamera} variant="outline" className="h-12">
-                                  <X className="h-5 w-5" />
-                                </Button>
-                              </div>
-                            </motion.div>
+            {/* 03 — Component (only after circuit picked) */}
+            {selectedCircuit && (
+              <>
+                {/* Tab switcher */}
+                <section className="space-y-3">
+                  <Eyebrow>03 · COMPONENT</Eyebrow>
+                  <div className="grid grid-cols-2 gap-1.5 p-1 rounded-full bg-white/[0.04] border border-white/[0.10]">
+                    {(['describe', 'photo'] as const).map((tab) => {
+                      const active = inputTab === tab;
+                      return (
+                        <button
+                          key={tab}
+                          type="button"
+                          onClick={() => setInputTab(tab)}
+                          className={cn(
+                            'inline-flex items-center justify-center text-[11px] font-semibold uppercase tracking-[0.14em] rounded-full px-3 py-2 min-h-[36px] transition-colors touch-manipulation',
+                            active
+                              ? 'text-black bg-elec-yellow'
+                              : 'text-white/85 hover:text-white'
                           )}
-                        </AnimatePresence>
-
-                        {!isCameraActive && (
-                          <div className="grid grid-cols-2 gap-3">
-                            <Button
-                              onClick={startCamera}
-                              className={cn(
-                                'h-14 text-white',
-                                selectedProperty === 'domestic'
-                                  ? 'bg-blue-500 hover:bg-blue-600'
-                                  : selectedProperty === 'commercial'
-                                    ? 'bg-purple-500 hover:bg-purple-600'
-                                    : 'bg-orange-500 hover:bg-orange-600'
-                              )}
-                            >
-                              <Camera className="h-5 w-5 mr-2" />
-                              Camera
-                            </Button>
-                            <Button
-                              onClick={() => fileInputRef.current?.click()}
-                              className="h-14 bg-white/[0.06] ring-1 ring-white/[0.08] text-white hover:bg-white/[0.1]"
-                            >
-                              <Upload className="h-5 w-5 mr-2" />
-                              Upload
-                            </Button>
-                          </div>
-                        )}
-
-                        <input
-                          ref={fileInputRef}
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => handleFileSelect(e.target.files)}
-                          className="hidden"
-                        />
-
-                        {images.length > 0 && (
-                          <div className="flex gap-2 overflow-x-auto pb-2">
-                            {images.map((img, idx) => (
-                              <div
-                                key={idx}
-                                className="relative flex-shrink-0 w-24 h-24 rounded-xl overflow-hidden border-2 border-emerald-500/30"
-                              >
-                                <img
-                                  src={URL.createObjectURL(img)}
-                                  alt=""
-                                  className="w-full h-full object-cover"
-                                  loading="lazy"
-                                />
-                                <button
-                                  onClick={() => removeImage(idx)}
-                                  className="absolute top-1 right-1 p-1 bg-red-500 rounded-full"
-                                >
-                                  <X className="h-3 w-3 text-white" />
-                                </button>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </motion.div>
-                    )}
-                  </section>
-
-                  {/* Technical Details — collapsible */}
-                  <div className="bg-transparent border border-white/[0.08] rounded-2xl overflow-hidden">
-                    <details className="group">
-                      <summary className="flex items-center justify-between p-4 cursor-pointer list-none touch-manipulation">
-                        <div className="flex items-center gap-2">
-                          <Info className="h-4 w-4 text-emerald-500" />
-                          <span className="font-medium text-white text-sm">Technical Details</span>
-                          <Badge variant="secondary" className="text-[10px]">
-                            Optional
-                          </Badge>
-                        </div>
-                        <ChevronRight className="h-4 w-4 text-white group-open:rotate-90 transition-transform" />
-                      </summary>
-                      <div className="px-4 pb-4 space-y-4 border-t border-white/[0.06] pt-4">
-                        {/* Installation Type */}
-                        <div className="space-y-2">
-                          <label className="text-xs font-medium text-white">
-                            Installation Type
-                          </label>
-                          <div className="flex flex-wrap gap-2">
-                            {installContexts.map((ctx) => (
-                              <button
-                                key={ctx.id}
-                                onClick={() => setSelectedContext(ctx.id)}
-                                className={cn(
-                                  'px-3 py-2 rounded-xl border text-xs font-medium transition-all min-h-[44px] touch-manipulation',
-                                  selectedContext === ctx.id
-                                    ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-400'
-                                    : 'border-white/[0.08] text-white hover:border-white/[0.15] bg-transparent'
-                                )}
-                              >
-                                {ctx.label}
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-
-                        {/* Earthing System */}
-                        <div className="space-y-2">
-                          <label className="text-xs font-medium text-white">
-                            Earthing System
-                          </label>
-                          <div className="flex flex-wrap gap-2">
-                            {earthingSystems.map((sys) => (
-                              <button
-                                key={sys.id}
-                                onClick={() => setSelectedEarthing(sys.id)}
-                                className={cn(
-                                  'px-3 py-2 rounded-lg border text-xs font-medium transition-all min-h-[44px] touch-manipulation',
-                                  selectedEarthing === sys.id
-                                    ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-400'
-                                    : 'border-white/[0.08] text-white hover:border-white/[0.15] bg-transparent'
-                                )}
-                              >
-                                {sys.label}
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-
-                        {/* Supply Rating */}
-                        <div className="space-y-2">
-                          <label className="text-xs font-medium text-white">
-                            Supply Rating (Amps)
-                          </label>
-                          <input
-                            type="text"
-                            placeholder={
-                              selectedProperty === 'domestic'
-                                ? 'e.g., 100A'
-                                : selectedProperty === 'commercial'
-                                  ? 'e.g., 200A'
-                                  : 'e.g., 400A'
-                            }
-                            value={supplyAmps}
-                            onChange={(e) => setSupplyAmps(e.target.value)}
-                            className="w-full h-11 px-4 rounded-xl border border-white/[0.08] bg-transparent text-white text-sm touch-manipulation"
-                            style={{ fontSize: '16px' }}
-                          />
-                        </div>
-
-                        {/* Additional Notes */}
-                        <div className="space-y-2">
-                          <label className="text-xs font-medium text-white">
-                            Additional Details
-                          </label>
-                          <input
-                            type="text"
-                            placeholder="e.g., existing circuit details, special requirements..."
-                            value={additionalNotes}
-                            onChange={(e) => setAdditionalNotes(e.target.value)}
-                            className="w-full h-11 px-4 rounded-xl border border-white/[0.08] bg-transparent text-white text-sm touch-manipulation"
-                            style={{ fontSize: '16px' }}
-                          />
-                        </div>
-                      </div>
-                    </details>
+                        >
+                          {tab === 'describe' ? 'Describe' : 'Photo'}
+                        </button>
+                      );
+                    })}
                   </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+
+                  {inputTab === 'describe' ? (
+                    <textarea
+                      placeholder="e.g. 'Hager 32A Type B MCB for ring main' or 'Schneider Acti9 RCBO'…"
+                      value={textDescription}
+                      onChange={(e) => setTextDescription(e.target.value)}
+                      className="w-full min-h-[100px] px-4 py-3 rounded-2xl border border-white/[0.10] bg-white/[0.04] text-white placeholder:text-white/65 focus-visible:border-elec-yellow/50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 resize-none"
+                      style={{ fontSize: '16px' }}
+                    />
+                  ) : (
+                    <>
+                      <AnimatePresence>
+                        {isCameraActive && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            className="space-y-3 overflow-hidden"
+                          >
+                            <div className="relative aspect-video bg-black rounded-2xl overflow-hidden border border-elec-yellow/30">
+                              <video
+                                ref={videoRef}
+                                autoPlay
+                                playsInline
+                                muted
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                            <div className="flex gap-2">
+                              <button
+                                type="button"
+                                onClick={captureImage}
+                                className="flex-1 text-[12px] font-semibold uppercase tracking-[0.14em] text-black bg-elec-yellow hover:bg-elec-yellow/90 rounded-full px-4 py-3 min-h-[44px] inline-flex items-center justify-center touch-manipulation transition-colors"
+                              >
+                                Capture
+                              </button>
+                              <button
+                                type="button"
+                                onClick={stopCamera}
+                                aria-label="Cancel"
+                                className="h-11 w-11 rounded-full inline-flex items-center justify-center border border-white/15 hover:border-white/30 text-white/85 touch-manipulation transition-colors shrink-0"
+                              >
+                                <X className="h-4 w-4" />
+                              </button>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+
+                      {!isCameraActive && (
+                        <div className="grid grid-cols-2 gap-2">
+                          <button
+                            type="button"
+                            onClick={startCamera}
+                            className="text-[12px] font-semibold uppercase tracking-[0.14em] text-black bg-elec-yellow hover:bg-elec-yellow/90 rounded-full px-4 py-3 min-h-[44px] inline-flex items-center justify-center touch-manipulation transition-colors"
+                          >
+                            Open camera
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => fileInputRef.current?.click()}
+                            className="text-[12px] font-semibold uppercase tracking-[0.14em] text-white/85 border border-white/15 hover:border-white/30 rounded-full px-4 py-3 min-h-[44px] inline-flex items-center justify-center touch-manipulation transition-colors"
+                          >
+                            Upload
+                          </button>
+                        </div>
+                      )}
+
+                      <input
+                        ref={fileInputRef}
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => handleFileSelect(e.target.files)}
+                        className="hidden"
+                      />
+
+                      {images.length > 0 && (
+                        <div className="grid grid-cols-4 gap-2">
+                          {images.map((img, idx) => (
+                            <div
+                              key={idx}
+                              className="relative aspect-square rounded-xl overflow-hidden border border-white/[0.10]"
+                            >
+                              <img
+                                src={URL.createObjectURL(img)}
+                                alt=""
+                                className="w-full h-full object-cover"
+                                loading="lazy"
+                              />
+                              <button
+                                type="button"
+                                onClick={() => removeImage(idx)}
+                                aria-label="Remove"
+                                className="absolute top-1 right-1 w-6 h-6 rounded-full bg-black/70 border border-white/20 flex items-center justify-center touch-manipulation"
+                              >
+                                <X className="h-3 w-3 text-white" />
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </>
+                  )}
+                </section>
+
+                {/* 04 — Context */}
+                <section className="space-y-3">
+                  <Eyebrow>04 · CONTEXT</Eyebrow>
+                  <ul className="flex flex-wrap gap-1.5">
+                    {installContexts.map((ctx) => {
+                      const active = selectedContext === ctx.id;
+                      return (
+                        <li key={ctx.id}>
+                          <button
+                            type="button"
+                            onClick={() => setSelectedContext(ctx.id)}
+                            className={cn(
+                              'inline-flex items-center text-[11px] font-semibold uppercase tracking-[0.12em] rounded-full px-3 py-2 min-h-[40px] border transition-colors touch-manipulation',
+                              active
+                                ? 'text-elec-yellow border-elec-yellow/40 bg-elec-yellow/[0.08]'
+                                : 'text-white/85 border-white/15 hover:border-white/30'
+                            )}
+                          >
+                            {ctx.label}
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </section>
+
+                {/* 05 — Earthing + supply */}
+                <section className="space-y-3">
+                  <Eyebrow>05 · EARTHING + SUPPLY</Eyebrow>
+                  <ul className="flex flex-wrap gap-1.5">
+                    {earthingSystems.map((sys) => {
+                      const active = selectedEarthing === sys.id;
+                      return (
+                        <li key={sys.id}>
+                          <button
+                            type="button"
+                            onClick={() => setSelectedEarthing(sys.id)}
+                            className={cn(
+                              'inline-flex items-center text-[11px] font-semibold uppercase tracking-[0.12em] rounded-full px-3 py-2 min-h-[40px] border transition-colors touch-manipulation',
+                              active
+                                ? 'text-elec-yellow border-elec-yellow/40 bg-elec-yellow/[0.08]'
+                                : 'text-white/85 border-white/15 hover:border-white/30'
+                            )}
+                          >
+                            {sys.label}
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  <input
+                    type="text"
+                    inputMode="numeric"
+                    placeholder="Supply amperage (e.g. 100A) — optional"
+                    value={supplyAmps}
+                    onChange={(e) => setSupplyAmps(e.target.value)}
+                    className="w-full h-12 px-4 rounded-2xl border border-white/[0.10] bg-white/[0.04] text-white placeholder:text-white/65 focus-visible:border-elec-yellow/50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 tabular-nums"
+                    style={{ fontSize: '16px' }}
+                  />
+                </section>
+
+                {/* 06 — Notes */}
+                <section className="space-y-3">
+                  <Eyebrow>06 · ADDITIONAL NOTES</Eyebrow>
+                  <input
+                    type="text"
+                    placeholder="Cable run, location, special conditions…"
+                    value={additionalNotes}
+                    onChange={(e) => setAdditionalNotes(e.target.value)}
+                    className="w-full h-12 px-4 rounded-2xl border border-white/[0.10] bg-white/[0.04] text-white placeholder:text-white/65 focus-visible:border-elec-yellow/50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30"
+                    style={{ fontSize: '16px' }}
+                  />
+                </section>
+              </>
+            )}
+
+            {/* Generate */}
+            {canGenerate && (
+              <button
+                type="button"
+                onClick={handleAnalysis}
+                className="w-full text-[13px] font-semibold uppercase tracking-[0.14em] text-black bg-elec-yellow hover:bg-elec-yellow/90 active:bg-elec-yellow/85 rounded-full px-5 py-4 min-h-[52px] inline-flex items-center justify-center gap-2 touch-manipulation transition-colors"
+              >
+                Generate wiring guide →
+              </button>
+            )}
           </>
         )}
 
         <canvas ref={canvasRef} className="hidden" />
       </main>
-
-      {/* Sticky generate button */}
-      <AnimatePresence>
-        {canGenerate && !analysisResult && !isAnalyzing && (
-          <motion.div
-            initial={{ y: 100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 100, opacity: 0 }}
-            transition={{ type: 'spring', stiffness: 300, damping: 28 }}
-            className="fixed bottom-0 inset-x-0 z-40 p-4 bg-background/95 backdrop-blur-xl border-t border-white/[0.06]"
-            style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}
-          >
-            <Button
-              onClick={handleAnalysis}
-              disabled={isAnalyzing}
-              className={cn(
-                'w-full h-14 rounded-xl text-white font-bold text-base touch-manipulation active:scale-[0.98] shadow-lg max-w-5xl mx-auto flex',
-                selectedProperty === 'domestic'
-                  ? 'bg-gradient-to-r from-blue-500 to-cyan-400 shadow-blue-500/20'
-                  : selectedProperty === 'commercial'
-                    ? 'bg-gradient-to-r from-purple-500 to-violet-400 shadow-purple-500/20'
-                    : 'bg-gradient-to-r from-orange-500 to-amber-400 shadow-orange-500/20'
-              )}
-            >
-              <Sparkles className="h-5 w-5 mr-2" />
-              Generate {selectedCircuitData?.label || ''} Wiring Guide
-            </Button>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 };

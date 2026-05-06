@@ -263,6 +263,7 @@ const ElectricalSymbolsChartPage = lazy(() => import('@/pages/seo/ElectricalSymb
 
 // Lazy-loaded route modules (with retry for chunk failures)
 const ApprenticeRoutes = lazyWithRetry(() => import('@/routes/ApprenticeRoutes'));
+const AttestOJT = lazyWithRetry(() => import('@/pages/AttestOJT'));
 const ElectricianHubRoutes = lazyWithRetry(() => import('@/routes/ElectricianHubRoutes'));
 const ElectricianRoutes = lazyWithRetry(() => import('@/routes/ElectricianRoutes'));
 const InspectionRoutes = lazyWithRetry(() => import('@/routes/InspectionRoutes'));
@@ -301,6 +302,17 @@ const AppRouter = () => {
           element={
             <LazyRoute>
               <LandingPage />
+            </LazyRoute>
+          }
+        />
+
+        {/* Employer attestation — public, no auth, supervisor opens
+            the link the apprentice shared and signs off OJT hours. */}
+        <Route
+          path="/attest-ojt/:id"
+          element={
+            <LazyRoute>
+              <AttestOJT />
             </LazyRoute>
           }
         />

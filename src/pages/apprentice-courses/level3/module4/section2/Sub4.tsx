@@ -30,7 +30,9 @@ import {
   LearningOutcomes,
   ContentEyebrow,
   SectionRule,
+  VideoCard,
 } from '@/components/study-centre/learning';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE =
@@ -311,6 +313,14 @@ export default function Sub4() {
               <li>Measure L–N at every socket on the ring — readings should be within 0.05 Ω of each other for a healthy ring.</li>
             </ul>
           </ConceptBlock>
+
+          <VideoCard
+            url={videos.ringFinalTest.url}
+            title={videos.ringFinalTest.title}
+            channel={videos.ringFinalTest.channel}
+            duration={videos.ringFinalTest.duration}
+            topic={videos.ringFinalTest.topic}
+          />
 
           <SectionRule />
 

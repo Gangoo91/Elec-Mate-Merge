@@ -1,6 +1,13 @@
-import { CheckSquare, AlertTriangle, Clock, Wrench } from 'lucide-react';
-import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+/**
+ * NextStepsChecklist — editorial post-analysis next steps.
+ *
+ * Drops red/amber/green flood backgrounds and inline icons. Each action
+ * gets a numbered eyebrow + priority chip + body. Recommendations list as
+ * a divided ordered list.
+ */
+
+import { Eyebrow } from '@/components/college/primitives';
+import { cn } from '@/lib/utils';
 
 interface NextStepsChecklistProps {
   failCount: number;
@@ -13,96 +20,98 @@ export const NextStepsChecklist = ({
   requiresTestingCount,
   recommendations,
 }: NextStepsChecklistProps) => {
-  const actionItems = [];
+  type Priority = 'critical' | 'high' | 'low';
+  const actionItems: Array<{
+    priority: Priority;
+    title: string;
+    description: string;
+    time: string;
+    tone: string;
+  }> = [];
 
   if (failCount > 0) {
     actionItems.push({
-      icon: AlertTriangle,
       priority: 'critical',
-      title: 'Address Failed Checks Immediately',
-      description: `${failCount} check${failCount > 1 ? 's' : ''} failed and require immediate attention to ensure safety and compliance.`,
-      time: 'Immediate action required',
-      color: 'text-red-500',
-      bg: 'bg-red-500/10',
+      title: 'Address failed checks immediately',
+      description: `${failCount} check${failCount > 1 ? 's' : ''} failed — immediate action required for safety + compliance.`,
+      time: 'Immediate',
+      tone: 'text-red-300 border-red-500/40 bg-red-500/[0.08]',
     });
   }
 
   if (requiresTestingCount > 0) {
     actionItems.push({
-      icon: Wrench,
       priority: 'high',
-      title: 'Schedule On-Site Testing',
-      description: `${requiresTestingCount} check${requiresTestingCount > 1 ? 's' : ''} require physical testing with appropriate instruments.`,
-      time: 'Schedule within 48 hours',
-      color: 'text-amber-500',
-      bg: 'bg-amber-500/10',
+      title: 'Schedule on-site testing',
+      description: `${requiresTestingCount} check${requiresTestingCount > 1 ? 's' : ''} need physical instrument testing.`,
+      time: 'Within 48 hours',
+      tone: 'text-amber-300 border-amber-500/40 bg-amber-500/[0.08]',
     });
   }
 
   if (failCount === 0 && requiresTestingCount === 0) {
     actionItems.push({
-      icon: CheckSquare,
       priority: 'low',
-      title: 'Complete Final Verification',
-      description:
-        'All visual checks passed. Proceed with comprehensive testing and certification.',
+      title: 'Complete final verification',
+      description: 'All visual checks passed. Proceed with full testing and certification.',
       time: 'At your convenience',
-      color: 'text-green-500',
-      bg: 'bg-green-500/10',
+      tone: 'text-emerald-300 border-emerald-500/40 bg-emerald-500/[0.08]',
     });
   }
 
   return (
-    <Card className="p-4 sm:p-6 bg-card border-border/40">
-      <div className="space-y-4">
-        <div className="flex items-center gap-2">
-          <CheckSquare className="h-5 w-5 text-primary" />
-          <h3 className="text-lg font-semibold text-foreground">Next Steps</h3>
-        </div>
+    <section className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 sm:p-6 space-y-4">
+      <Eyebrow>NEXT STEPS</Eyebrow>
 
-        <div className="space-y-3">
-          {actionItems.map((item, index) => {
-            const Icon = item.icon;
-            return (
-              <div
-                key={index}
-                className={`${item.bg} border border-current/20 rounded-lg p-4 space-y-2`}
-              >
-                <div className="flex items-start gap-3">
-                  <Icon className={`h-5 w-5 ${item.color} mt-0.5 shrink-0`} />
-                  <div className="flex-1 space-y-1">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <h4 className="font-medium text-foreground text-sm">{item.title}</h4>
-                      <Badge variant="outline" className={`text-xs ${item.color} border-current`}>
-                        {item.priority.toUpperCase()}
-                      </Badge>
-                    </div>
-                    <p className="text-sm text-muted-foreground">{item.description}</p>
-                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground pt-1">
-                      <Clock className="h-3 w-3" />
-                      {item.time}
-                    </div>
-                  </div>
+      <ol className="divide-y divide-white/[0.06]">
+        {actionItems.map((item, index) => (
+          <li key={index} className="py-4 first:pt-0 last:pb-0">
+            <div className="flex items-baseline gap-3">
+              <span className="text-[10.5px] tabular-nums font-semibold text-elec-yellow shrink-0 w-5">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-baseline justify-between gap-2 flex-wrap">
+                  <h4 className="text-[14px] font-semibold tracking-tight text-white">
+                    {item.title}
+                  </h4>
+                  <span
+                    className={cn(
+                      'text-[10px] uppercase tracking-[0.14em] font-semibold border rounded-md px-1.5 py-0.5',
+                      item.tone
+                    )}
+                  >
+                    {item.priority}
+                  </span>
                 </div>
+                <p className="mt-1 text-[12.5px] leading-relaxed text-white/85">
+                  {item.description}
+                </p>
+                <p className="mt-1.5 text-[10.5px] uppercase tracking-[0.14em] font-semibold text-white/65 tabular-nums">
+                  {item.time}
+                </p>
               </div>
-            );
-          })}
-        </div>
+            </div>
+          </li>
+        ))}
+      </ol>
 
-        {recommendations && recommendations.length > 0 && (
-          <div className="pt-4 border-t border-border/40 space-y-2">
-            <h4 className="text-sm font-medium text-foreground">Additional Recommendations</h4>
-            <ul className="space-y-2">
-              {recommendations.slice(0, 5).map((rec, idx) => (
-                <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-                  <span className="text-primary mt-1">•</span>
-                  <span className="flex-1">{rec}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
-    </Card>
+      {recommendations && recommendations.length > 0 && (
+        <div className="pt-4 border-t border-white/[0.06] space-y-3">
+          <Eyebrow>ALSO RECOMMENDED</Eyebrow>
+          <ul className="space-y-2">
+            {recommendations.slice(0, 5).map((rec, idx) => (
+              <li
+                key={idx}
+                className="flex items-baseline gap-2.5 text-[12.5px] leading-relaxed text-white"
+              >
+                <span className="w-1 h-1 rounded-full bg-elec-yellow shrink-0 self-center" aria-hidden />
+                <span className="flex-1">{rec}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </section>
   );
 };

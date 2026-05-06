@@ -49,26 +49,28 @@ const RegulationSources = ({
     searchMethod === 'direct'
       ? 'Direct match'
       : searchMethod === 'vector'
-        ? 'AI match'
+        ? 'Semantic match'
         : searchMethod === 'keyword'
           ? 'Keyword match'
           : null;
 
   return (
-    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
+    <div className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] overflow-hidden">
       {/* Header row */}
       <div className="px-5 pt-4 pb-3 flex items-center justify-between gap-3">
         <div className="min-w-0">
-          <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
-            Sources · {regulations.length}{' '}
-            {regulations.length === 1 ? 'regulation' : 'regulations'}
+          <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+            SOURCES · {regulations.length}{' '}
+            {regulations.length === 1 ? 'reg' : 'regs'}
           </div>
-          <div className="mt-0.5 text-[12px] text-white">
+          <div className="mt-1 text-[12px] text-white/85">
             BS 7671 A4:2026 cited in this answer
           </div>
         </div>
         {methodLabel && (
-          <span className="shrink-0 text-[11px] font-medium text-purple-400">{methodLabel}</span>
+          <span className="shrink-0 text-[10px] uppercase tracking-[0.14em] font-semibold text-white/65 border border-white/15 rounded-md px-1.5 py-0.5">
+            {methodLabel}
+          </span>
         )}
       </div>
 
@@ -148,8 +150,8 @@ const RegulationSources = ({
       )}
 
       {/* Footer line */}
-      <div className="border-t border-white/[0.06] px-5 py-3 text-[11px] text-white">
-        Sourced from BS 7671:2018 + A4:2026 database
+      <div className="border-t border-white/[0.06] px-5 py-3 text-[10px] uppercase tracking-[0.14em] font-semibold text-white/65">
+        BS 7671:2018 + A4:2026 · Every claim cited
       </div>
     </div>
   );

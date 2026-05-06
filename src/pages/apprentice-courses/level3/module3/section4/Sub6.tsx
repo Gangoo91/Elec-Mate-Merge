@@ -11,7 +11,9 @@ import { PageFrame, PageHero } from '@/components/college/primitives';
 import {
   TLDR, ConceptBlock, RegsCallout, CommonMistake, Scenario,
   KeyTakeaways, FAQ, LearningOutcomes, ContentEyebrow, SectionRule,
+  VideoCard,
 } from '@/components/study-centre/learning';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Transformer types and the UK grid | Level 3 Module 3.4.6 | Elec-Mate';
@@ -100,6 +102,15 @@ export default function Sub6() {
             <p>Each level is built around transformers — and the failure of any one isolates everyone downstream until repaired.</p>
           </ConceptBlock>
           <InlineCheck {...checks[0]} />
+
+          <VideoCard
+            url={videos.threePhaseTransformers.url}
+            title={videos.threePhaseTransformers.title}
+            channel={videos.threePhaseTransformers.channel}
+            duration={videos.threePhaseTransformers.duration}
+            topic={videos.threePhaseTransformers.topic}
+          />
+
           <SectionRule />
           <ContentEyebrow>Transformer applications</ContentEyebrow>
           <ConceptBlock title="Same physics, very different shapes" plainEnglish="Each application drives the design — voltage class, ratio, kVA, cooling, vector group, special features.">

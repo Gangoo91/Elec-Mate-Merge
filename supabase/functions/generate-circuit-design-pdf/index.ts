@@ -34,7 +34,7 @@ serve(async (req) => {
       );
     }
 
-    const { design, userId } = await req.json();
+    const { design, layout, stats, cost, a4, userId } = await req.json();
 
     if (!design) {
       return new Response(JSON.stringify({ error: 'Design data is required' }), {
@@ -88,16 +88,258 @@ serve(async (req) => {
       electricianName: design.electricianName,
       installationType: design.installationType,
 
-      // Consumer Unit
-      consumerUnit: design.consumerUnit,
-      voltage: design.consumerUnit?.incomingSupply?.voltage,
+      // === SUPPLY (the actual designer output uses `supply`, not
+      // `consumerUnit`). Build a synthetic consumerUnit for legacy
+      // template compat plus map every flat field the template needs. ===
+      voltage: design.supply?.voltage ?? design.consumerUnit?.incomingSupply?.voltage,
       phases:
-        design.consumerUnit?.incomingSupply?.phases === 'single' ? 'Single Phase' : 'Three Phase',
-      voltageDisplay: `${design.consumerUnit?.incomingSupply?.voltage}V ${design.consumerUnit?.incomingSupply?.phases === 'single' ? 'Single Phase' : 'Three Phase'}`,
-      earthingSystem: design.consumerUnit?.incomingSupply?.earthingSystem,
-      ze: design.consumerUnit?.incomingSupply?.Ze,
-      pscc: design.consumerUnit?.incomingSupply?.incomingPFC,
-      consumerUnitRating: design.consumerUnit?.mainSwitchRating,
+        (design.supply?.phases ?? design.consumerUnit?.incomingSupply?.phases) === 'single'
+          ? 'Single Phase'
+          : 'Three Phase',
+      voltageDisplay: `${design.supply?.voltage ?? design.consumerUnit?.incomingSupply?.voltage ?? 230}V ${
+        (design.supply?.phases ?? design.consumerUnit?.incomingSupply?.phases) === 'single'
+          ? 'Single Phase'
+          : 'Three Phase'
+      }`,
+      earthingSystem: design.supply?.earthingSystem ?? design.consumerUnit?.incomingSupply?.earthingSystem,
+      ze: design.supply?.ze ?? design.supply?.Ze ?? design.consumerUnit?.incomingSupply?.Ze,
+      pscc: design.supply?.pfc ?? design.supply?.pscc ?? design.consumerUnit?.incomingSupply?.incomingPFC,
+      mainSwitchRating: design.supply?.mainSwitchRating ?? design.consumerUnit?.mainSwitchRating,
+      consumerUnitRating: design.supply?.mainSwitchRating ?? design.consumerUnit?.mainSwitchRating,
+      consumerUnit: {
+        type: design.consumerUnit?.type ?? 'Consumer unit',
+        mainSwitchRating: design.supply?.mainSwitchRating ?? design.consumerUnit?.mainSwitchRating ?? 100,
+        ways: design.consumerUnit?.ways ?? design.circuits?.length ?? 0,
+        incomingSupply: {
+          voltage: design.supply?.voltage ?? design.consumerUnit?.incomingSupply?.voltage ?? 230,
+          phases: design.supply?.phases ?? design.consumerUnit?.incomingSupply?.phases ?? 'single',
+          earthingSystem: design.supply?.earthingSystem ?? design.consumerUnit?.incomingSupply?.earthingSystem ?? 'TN-S',
+          Ze: design.supply?.ze ?? design.supply?.Ze ?? design.consumerUnit?.incomingSupply?.Ze ?? 0,
+          incomingPFC: design.supply?.pfc ?? design.supply?.pscc ?? design.consumerUnit?.incomingSupply?.incomingPFC ?? 0,
+        },
+      },
+
+      // === DESIGN AUDIT (criticReview from designer agent) ===
+      criticReview: design.criticReview ?? null,
+      auditFindings: Array.isArray(design.criticReview?.findings)
+        ? design.criticReview.findings
+        : [],
+      auditFindingCount: Array.isArray(design.criticReview?.findings)
+        ? design.criticReview.findings.length
+        : 0,
+      auditErrorCount: Array.isArray(design.criticReview?.findings)
+        ? design.criticReview.findings.filter((f: any) => f.severity === 'error').length
+        : 0,
+      auditWarnCount: Array.isArray(design.criticReview?.findings)
+        ? design.criticReview.findings.filter((f: any) => f.severity === 'warning').length
+        : 0,
+
+      // === COMPLIANCE CONCERNS (failing circuits with reason) ===
+      // Only include circuits with an actual concrete reason — non-pass with
+      // no reason adds noise (rows of empty bars) and tells the reader nothing.
+      failingCircuits: (design.circuits ?? [])
+        .map((c: any, i: number) => {
+          if (c.complianceStatus === 'pass') return null;
+          const reasons: string[] = [];
+          if (c.calculations?.zs && c.calculations?.maxZs && c.calculations.zs >= c.calculations.maxZs) {
+            reasons.push(`Zs ${c.calculations.zs.toFixed(2)}Ω ≥ max ${c.calculations.maxZs.toFixed(2)}Ω`);
+          }
+          if (c.calculations?.voltageDrop?.compliant === false) {
+            reasons.push(`VD ${c.calculations.voltageDrop.percent?.toFixed(1)}% > limit`);
+          }
+          if (c.calculations?.Iz && c.protectionDevice?.rating && c.calculations.Iz < c.protectionDevice.rating) {
+            reasons.push(`Iz ${c.calculations.Iz.toFixed(0)}A < In ${c.protectionDevice.rating}A`);
+          }
+          (c.validationIssues ?? []).forEach((v: any) => {
+            if (typeof v === 'string') reasons.push(v);
+            else if (v?.message) reasons.push(v.message);
+          });
+          if (reasons.length === 0) return null;
+          return {
+            circuitNumber: i + 1,
+            name: c.name,
+            status: c.complianceStatus,
+            reasons: reasons.join(' · '),
+          };
+        })
+        .filter(Boolean),
+
+      // === COHERENCE WARNINGS (multi-board issues from layout) ===
+      coherenceWarnings: Array.isArray(layout?.warnings) ? layout.warnings : [],
+
+      // === HEADLINE STATS ===
+      stats: stats
+        ? (() => {
+            const total = stats.totalLoad ?? 0;
+            const diversified = stats.diversifiedLoad ?? 0;
+            // Fallback diversity factor from totals if upstream didn't set it.
+            const diversity =
+              stats.diversityFactor ?? (total > 0 ? diversified / total : null);
+            return {
+              totalLoad: total,
+              totalLoadKW: (total / 1000).toFixed(1),
+              diversifiedLoad: diversified,
+              diversifiedLoadKW: (diversified / 1000).toFixed(1),
+              diversityFactor: diversity,
+              diversityFactorPct:
+                diversity !== null && diversity !== undefined
+                  ? `${(diversity * 100).toFixed(1)}%`
+                  : null,
+              totalIb: stats.totalIb?.toFixed?.(1) ?? null,
+              passCount: stats.passCount ?? 0,
+              reviewCount: stats.reviewCount ?? 0,
+              failCount: stats.failCount ?? 0,
+              totalCount: stats.totalCount ?? design.circuits?.length ?? 0,
+            };
+          })()
+        : null,
+
+      // === COST TIERS ===
+      cost: cost
+        ? {
+            tier: cost.tier ?? 'standard',
+            tierLabel: cost.tierLabel ?? 'Standard',
+            tierDescription: cost.tierDescription ?? '',
+            grandTotal: cost.grandTotal ?? 0,
+            grandTotalGBP: cost.grandTotal
+              ? `£${cost.grandTotal.toLocaleString('en-GB', { maximumFractionDigits: 0 })}`
+              : null,
+            perBoard: Array.isArray(cost.perBoard)
+              ? cost.perBoard.map((b: any) => ({
+                  boardId: b.boardId,
+                  boardName: b.boardName,
+                  enclosureCost: b.enclosureCost,
+                  mainSwitchCost: b.mainSwitchCost,
+                  submainCost: b.submainCost,
+                  circuitsTotal: b.circuitsTotal,
+                  spdAllowance: b.spdAllowance,
+                  total: b.total,
+                  totalGBP: b.total
+                    ? `£${b.total.toLocaleString('en-GB', { maximumFractionDigits: 0 })}`
+                    : null,
+                }))
+              : [],
+          }
+        : null,
+
+      // === BS 7671 A4:2026 FEATURES (special-location + protective device summary) ===
+      a4Features: Array.isArray(a4?.features) ? a4.features : Array.isArray(a4) ? a4 : [],
+      a4FeatureCount: Array.isArray(a4?.features)
+        ? a4.features.length
+        : Array.isArray(a4)
+          ? a4.length
+          : 0,
+
+      // === BOARDS (multi-board layout from frontend recommendBoardLayout) ===
+      boards: Array.isArray(layout?.boards)
+        ? layout.boards.map((b: any, i: number) => {
+            // Phase balance: object → readable string.
+            const pb = b.phaseBalance;
+            let phaseBalanceText: string | null = null;
+            if (pb && typeof pb === 'object') {
+              const l1 = typeof pb.L1_W === 'number' ? (pb.L1_W / 1000).toFixed(1) : null;
+              const l2 = typeof pb.L2_W === 'number' ? (pb.L2_W / 1000).toFixed(1) : null;
+              const l3 = typeof pb.L3_W === 'number' ? (pb.L3_W / 1000).toFixed(1) : null;
+              const parts: string[] = [];
+              if (l1) parts.push(`L1 ${l1}kW`);
+              if (l2) parts.push(`L2 ${l2}kW`);
+              if (l3) parts.push(`L3 ${l3}kW`);
+              if (typeof pb.imbalancePercent === 'number') {
+                parts.push(`${pb.imbalancePercent.toFixed(0)}% imbalance`);
+              }
+              phaseBalanceText = parts.length > 0 ? parts.join(' · ') : null;
+            } else if (typeof pb === 'string') {
+              phaseBalanceText = pb;
+            }
+
+            // SPD: object → "Type X" label, rationale separate.
+            const spd = b.spd;
+            let spdLabel: string | null = null;
+            let spdRationale: string | null = null;
+            let spdReg: string | null = null;
+            if (spd && typeof spd === 'object') {
+              if (spd.required === false) {
+                spdLabel = 'Not required';
+              } else if (spd.type) {
+                spdLabel = String(spd.type);
+              }
+              if (spd.rationale) spdRationale = String(spd.rationale);
+              if (spd.reg) spdReg = String(spd.reg);
+            } else if (typeof spd === 'string') {
+              spdLabel = spd;
+            }
+
+            // Feed-from-parent: keep object shape for the row but format
+            // phases as a clean string (or omit) instead of "(three)".
+            let feedFromParent = b.feedFromParent ?? null;
+            if (feedFromParent && typeof feedFromParent === 'object') {
+              const fp = feedFromParent.feedPhases;
+              let feedPhasesText: string | null = null;
+              if (typeof fp === 'string') {
+                if (fp === 'three' || fp === '3') feedPhasesText = '3-phase';
+                else if (fp === 'single' || fp === '1') feedPhasesText = '1-phase';
+                else feedPhasesText = fp;
+              } else if (Array.isArray(fp) && fp.length > 0) {
+                feedPhasesText = fp.join('+');
+              }
+              feedFromParent = { ...feedFromParent, feedPhases: feedPhasesText };
+            }
+
+            return {
+              id: b.id ?? `board-${i + 1}`,
+              name: b.name ?? `Board ${i + 1}`,
+              location: b.location ?? '',
+              isOrigin: !!b.isOrigin,
+              mainSwitchRating: b.mainSwitchRating ?? null,
+              phaseBalance: phaseBalanceText,
+              zdb: b.zdb ?? null,
+              spd: spdLabel,
+              spdRationale,
+              spdReg,
+              feedFromParent,
+              circuitIndices: Array.isArray(b.circuitIndices) ? b.circuitIndices : [],
+              // Resolve circuit indices into the actual circuit rows for
+              // per-board schedule rendering in the template.
+              circuits: Array.isArray(b.circuitIndices)
+                ? b.circuitIndices
+                    .map((idx: number) => design.circuits?.[idx])
+                    .filter(Boolean)
+                    .map((c: any, j: number) => ({
+                      way: j + 1,
+                      name: c.name,
+                      loadType: c.loadType,
+                      cableSize: c.cableSize,
+                      cpcSize: c.cpcSize,
+                      protectionRating: c.protectionDevice?.rating,
+                      protectionType: c.protectionDevice?.type,
+                      protectionCurve: c.protectionDevice?.curve,
+                      rcdProtected: c.rcdProtected ? 'Yes' : 'No',
+                      afddRequired: c.afddRequired ? 'Yes' : 'No',
+                      designCurrent: c.calculations?.Ib?.toFixed(1),
+                      voltageDropPercent: c.calculations?.voltageDrop?.percent?.toFixed(1),
+                      zsActual: c.calculations?.zs?.toFixed(2),
+                      complianceStatus: c.complianceStatus ?? 'pass',
+                    }))
+                : [],
+            };
+          })
+        : [],
+      submainFeeds: Array.isArray(layout?.submainFeeds)
+        ? layout.submainFeeds.map((f: any) => {
+            const fp = f.feedPhases;
+            let feedPhasesText: string | null = null;
+            if (typeof fp === 'string') {
+              if (fp === 'three' || fp === '3') feedPhasesText = '3-phase';
+              else if (fp === 'single' || fp === '1') feedPhasesText = '1-phase';
+              else feedPhasesText = fp;
+            } else if (Array.isArray(fp) && fp.length > 0) {
+              feedPhasesText = fp.join('+');
+            }
+            return { ...f, feedPhases: feedPhasesText };
+          })
+        : [],
+      hasMultipleBoards: Array.isArray(layout?.boards) && layout.boards.length > 1,
+      boardCount: Array.isArray(layout?.boards) ? layout.boards.length : 1,
 
       // Load Assessment (direct from frontend)
       totalLoad: design.totalLoad,
@@ -162,7 +404,10 @@ serve(async (req) => {
         nominalCurrentIn: c.protectionDevice?.rating,
         cableCapacityIz: c.calculations?.Iz?.toFixed(0),
         deratedCapacity: c.calculations?.deratedCapacity?.toFixed(0),
-        safetyMargin: c.calculations?.safetyMargin?.toFixed(0),
+        safetyMargin:
+          typeof c.calculations?.safetyMargin === 'number'
+            ? c.calculations.safetyMargin.toFixed(0)
+            : null,
         voltageDrop: c.calculations?.voltageDrop
           ? `${c.calculations.voltageDrop.volts?.toFixed(1)}V (${c.calculations.voltageDrop.percent?.toFixed(1)}%)`
           : null,
@@ -177,8 +422,10 @@ serve(async (req) => {
             : 'No',
         calculations: c.calculations,
 
-        // Compliance Status (direct from Phase 5.5)
-        complianceStatus: c.complianceStatus,
+        // Compliance Status (direct from Phase 5.5).
+        // Default to 'pass' when undefined so status pills don't all
+        // fall through to red in the schedule + per-circuit blocks.
+        complianceStatus: c.complianceStatus ?? 'pass',
         complianceStatusText:
           c.complianceStatus === 'pass'
             ? '✓ PASS'
@@ -222,10 +469,8 @@ serve(async (req) => {
         // Earthing Requirements (direct pass-through)
         earthingRequirements: c.earthingRequirements,
 
-        // Installation Guidance (direct pass-through)
-        installationGuidance: c.installationGuidance,
-        fullInstallationGuidance: c.fullInstallationGuidance,
-        guidanceQualityMetrics: c.guidanceQualityMetrics,
+        // Installation Guidance — REMOVED from this PDF (now lives
+        // in the dedicated Installation Specialist agent + PDF).
 
         // Special Locations (direct pass-through)
         isSpecialLocation: c.specialLocationCompliance?.isSpecialLocation,

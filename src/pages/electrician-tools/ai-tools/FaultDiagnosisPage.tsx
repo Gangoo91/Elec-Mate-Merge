@@ -1,91 +1,34 @@
+/**
+ * FaultDiagnosisPage — editorial Fault Diagnosis screen.
+ *
+ * Drops the orange/red/amber gradient chrome and per-symptom icons.
+ * Editorial eyebrows, type-led chips with critical-tone accent for HIGH
+ * severity symptoms, gradient-surface cards, elec-yellow CTA. Logic
+ * preserved (visual-analysis with image; visual-fault-diagnosis-rag for
+ * text-only diagnosis).
+ */
+
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import {
-  ArrowLeft,
-  Camera,
-  Upload,
-  AlertTriangle,
-  X,
-  Loader2,
-  Sparkles,
-  Flame,
-  Zap,
-  Droplets,
-  ShieldAlert,
-  Clock,
-  Eye,
-  ThermometerSun,
-  Check,
-} from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowLeft, X, Loader2 } from 'lucide-react';
+import { Eyebrow } from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
 import VisualAnalysisResults from '@/components/electrician-tools/ai-tools/VisualAnalysisResults';
 
-// Symptoms with visual icons
 const symptoms = [
-  {
-    id: 'burning',
-    label: 'Burning/Scorching',
-    icon: Flame,
-    color: 'text-red-400 bg-red-500/10 border-red-500/30',
-    severity: 'high',
-  },
-  {
-    id: 'tripping',
-    label: 'Tripping/RCD',
-    icon: Zap,
-    color: 'text-orange-400 bg-orange-500/10 border-orange-500/30',
-    severity: 'high',
-  },
-  {
-    id: 'water',
-    label: 'Water Damage',
-    icon: Droplets,
-    color: 'text-blue-400 bg-blue-500/10 border-blue-500/30',
-    severity: 'high',
-  },
-  {
-    id: 'exposed',
-    label: 'Exposed Wiring',
-    icon: ShieldAlert,
-    color: 'text-red-400 bg-red-500/10 border-red-500/30',
-    severity: 'high',
-  },
-  {
-    id: 'old',
-    label: 'Old/Outdated',
-    icon: Clock,
-    color: 'text-amber-400 bg-amber-500/10 border-amber-500/30',
-    severity: 'medium',
-  },
-  {
-    id: 'damage',
-    label: 'Physical Damage',
-    icon: Eye,
-    color: 'text-purple-400 bg-purple-500/10 border-purple-500/30',
-    severity: 'medium',
-  },
-  {
-    id: 'overheating',
-    label: 'Overheating',
-    icon: ThermometerSun,
-    color: 'text-orange-400 bg-orange-500/10 border-orange-500/30',
-    severity: 'high',
-  },
-  {
-    id: 'other',
-    label: 'Other Issue',
-    icon: AlertTriangle,
-    color: 'text-slate-400 bg-slate-500/10 border-slate-500/30',
-    severity: 'medium',
-  },
+  { id: 'burning', label: 'Burning / scorching', severity: 'high' },
+  { id: 'tripping', label: 'Tripping / RCD', severity: 'high' },
+  { id: 'water', label: 'Water damage', severity: 'high' },
+  { id: 'exposed', label: 'Exposed wiring', severity: 'high' },
+  { id: 'old', label: 'Old / outdated', severity: 'medium' },
+  { id: 'damage', label: 'Physical damage', severity: 'medium' },
+  { id: 'overheating', label: 'Overheating', severity: 'high' },
+  { id: 'other', label: 'Other issue', severity: 'medium' },
 ];
 
-// When did it start options
 const timeframes = [
   { id: 'just-now', label: 'Just noticed', urgency: 'high' },
   { id: 'today', label: 'Today', urgency: 'high' },
@@ -94,13 +37,12 @@ const timeframes = [
   { id: 'unknown', label: "Don't know", urgency: 'medium' },
 ];
 
-// Location in property
 const locations = [
-  'Consumer Unit',
+  'Consumer unit',
   'Kitchen',
   'Bathroom',
   'Bedroom',
-  'Living Room',
+  'Living room',
   'Garage',
   'Outdoor',
   'Loft',
@@ -114,7 +56,6 @@ const FaultDiagnosisPage = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  // State
   const [images, setImages] = useState<File[]>([]);
   const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([]);
   const [selectedTimeframe, setSelectedTimeframe] = useState<string>('unknown');
@@ -126,21 +67,6 @@ const FaultDiagnosisPage = () => {
   const [analysisResult, setAnalysisResult] = useState<any>(null);
   const [analysisProgress, setAnalysisProgress] = useState(0);
 
-  // Calculate overall urgency
-  const getUrgencyLevel = () => {
-    const highSeveritySelected = selectedSymptoms.some(
-      (s) => symptoms.find((sym) => sym.id === s)?.severity === 'high'
-    );
-    const timeUrgency = timeframes.find((t) => t.id === selectedTimeframe)?.urgency;
-
-    if (highSeveritySelected && timeUrgency === 'high') return 'critical';
-    if (highSeveritySelected || timeUrgency === 'high') return 'high';
-    return 'medium';
-  };
-
-  const urgencyLevel = getUrgencyLevel();
-
-  // Camera functions
   const startCamera = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -150,9 +76,9 @@ const FaultDiagnosisPage = () => {
         videoRef.current.srcObject = stream;
         setIsCameraActive(true);
       }
-    } catch (error) {
+    } catch {
       toast({
-        title: 'Camera Error',
+        title: 'Camera error',
         description: 'Unable to access camera',
         variant: 'destructive',
       });
@@ -203,7 +129,6 @@ const FaultDiagnosisPage = () => {
     );
   };
 
-  // Text-only path — routes to visual-fault-diagnosis-rag when no image provided
   const handleTextOnlyFaultDiagnosis = async () => {
     const symptomLabels = selectedSymptoms
       .map((s) => symptoms.find((sym) => sym.id === s)?.label)
@@ -234,7 +159,6 @@ const FaultDiagnosisPage = () => {
       const faultCode = (data.fault_code as string) || 'FI';
       const isPass = faultCode === 'PASS';
 
-      // Map RAG response to the shape VisualAnalysisResults expects
       setAnalysisResult({
         findings: isPass
           ? []
@@ -274,7 +198,7 @@ const FaultDiagnosisPage = () => {
           : data.reasoning || '',
         rag_verified: true,
         verification_note:
-          'Text-based diagnostic — verified against BS 7671:2018+A3:2024 and GN3. Add a photo for visual confirmation.',
+          'Text-based diagnostic — verified against BS 7671:2018+A4:2026 and GN3. Add a photo for visual confirmation.',
       });
 
       setAnalysisProgress(100);
@@ -285,9 +209,8 @@ const FaultDiagnosisPage = () => {
           : `${faultCode} classification — see full diagnosis below.`,
         duration: 3000,
       });
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (err: any) {
-      toast({ title: 'Analysis Failed', description: 'Please try again', variant: 'destructive' });
+    } catch {
+      toast({ title: 'Analysis failed', description: 'Please try again', variant: 'destructive' });
     } finally {
       clearInterval(progressInterval);
       setIsAnalyzing(false);
@@ -295,13 +218,12 @@ const FaultDiagnosisPage = () => {
   };
 
   const handleAnalysis = async () => {
-    // Text-only path when no image — route to RAG function using symptoms + notes
     if (images.length === 0) {
       const hasDescription = selectedSymptoms.length > 0 || additionalNotes.trim().length > 0;
       if (!hasDescription) {
         toast({
           title: 'Describe the fault first',
-          description: 'Select symptoms or add a description, or upload a photo of the fault.',
+          description: 'Pick symptoms or add notes — or upload a photo.',
           variant: 'destructive',
         });
         return;
@@ -357,24 +279,13 @@ const FaultDiagnosisPage = () => {
         },
       });
 
-      console.log('🔍 Fault Diagnosis Response:', {
-        data,
-        error,
-        hasAnalysis: !!data?.analysis,
-        hasComplianceSummary: !!(data?.compliance_summary || data?.analysis?.compliance_summary),
-      });
-
-      if (error) {
-        console.error('❌ Fault diagnosis error:', error);
-        throw error;
-      }
+      if (error) throw error;
 
       setAnalysisProgress(100);
-      // Unwrap if wrapped in analysis
       setAnalysisResult(data?.analysis || data);
     } catch (error) {
       console.error('Analysis error:', error);
-      toast({ title: 'Analysis Failed', description: 'Please try again', variant: 'destructive' });
+      toast({ title: 'Analysis failed', description: 'Please try again', variant: 'destructive' });
     } finally {
       clearInterval(progressInterval);
       setIsAnalyzing(false);
@@ -389,26 +300,25 @@ const FaultDiagnosisPage = () => {
   };
 
   return (
-    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
-      {/* Sticky Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
+    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-elec-dark min-h-screen pb-24">
+      {/* Sticky header */}
+      <div className="sticky top-0 z-40 bg-elec-dark/95 backdrop-blur-xl border-b border-white/[0.06]">
         <div className="px-4 py-2">
           <div className="flex items-center gap-3 h-11">
-            <Button variant="ghost" size="icon" onClick={() => navigate('/electrician-tools/ai-tooling')} className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]">
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-            <div className="flex items-center gap-2.5">
-              <div className="p-1.5 rounded-lg bg-orange-500/10 border border-orange-500/20">
-                <AlertTriangle className="h-4 w-4 text-orange-500" />
-              </div>
-              <h1 className="text-base font-semibold text-white">Fault Diagnosis</h1>
-            </div>
+            <button
+              type="button"
+              onClick={() => navigate('/electrician-tools/ai-tooling')}
+              aria-label="Back"
+              className="text-white/85 hover:text-white border border-white/15 hover:border-white/30 rounded-full h-9 w-9 inline-flex items-center justify-center touch-manipulation transition-colors"
+            >
+              <ArrowLeft className="h-4 w-4" />
+            </button>
+            <Eyebrow>FAULT DIAGNOSIS</Eyebrow>
           </div>
         </div>
       </div>
 
-      <main className="px-4 py-4 space-y-5">
-        {/* Results */}
+      <main className="px-4 sm:px-6 pt-6 pb-6 space-y-7 max-w-5xl mx-auto">
         {analysisResult?.compliance_summary ? (
           <div className="space-y-4">
             <VisualAnalysisResults
@@ -420,246 +330,272 @@ const FaultDiagnosisPage = () => {
               }}
               onStartChat={() => {}}
             />
-            <Button onClick={resetAnalysis} variant="outline" className="w-full h-12">
-              Diagnose Another Fault
-            </Button>
+            <button
+              type="button"
+              onClick={resetAnalysis}
+              className="w-full text-[12px] font-semibold uppercase tracking-[0.14em] text-white/85 border border-white/15 hover:border-white/30 rounded-full px-4 py-3 min-h-[44px] inline-flex items-center justify-center touch-manipulation transition-colors"
+            >
+              Diagnose another fault
+            </button>
           </div>
         ) : isAnalyzing ? (
-          <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] p-6">
+          <div className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-6 sm:p-8">
             <div className="flex items-center gap-3">
-              <Loader2 className="h-6 w-6 animate-spin text-orange-500" />
-              <div>
-                <h3 className="font-semibold text-white">Analysing Fault...</h3>
-                <p className="text-xs text-white">Identifying issues and safety concerns</p>
-              </div>
+              <Loader2 className="h-4 w-4 text-elec-yellow animate-spin" aria-hidden />
+              <Eyebrow>DIAGNOSING</Eyebrow>
             </div>
-            <div className="h-2 bg-muted rounded-full overflow-hidden mt-4">
+            <p className="mt-3 text-[14px] text-white">
+              Cross-referencing fault patterns + BS 7671…
+            </p>
+            <p className="mt-1 text-[11.5px] text-white/65">
+              BS 7671 cited · GN3 guidance referenced
+            </p>
+            <div className="mt-4 h-1 bg-white/[0.06] rounded-full overflow-hidden">
               <motion.div
-                className="h-full bg-orange-500"
+                className="h-full bg-elec-yellow rounded-full"
                 initial={{ width: 0 }}
                 animate={{ width: `${analysisProgress}%` }}
               />
             </div>
+            <p className="mt-2 text-[10.5px] uppercase tracking-[0.14em] font-semibold text-white/65 tabular-nums text-right">
+              {Math.round(analysisProgress)}%
+            </p>
           </div>
         ) : (
           <>
-            {/* Symptom Selection */}
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">What symptoms do you see?</h2>
+            {/* Hero */}
+            <section className="space-y-2">
+              <Eyebrow>WHAT IT DOES</Eyebrow>
+              <h1 className="text-[28px] sm:text-[36px] font-semibold tracking-tight leading-[1.05]">
+                <span className="text-elec-yellow">What's</span>{' '}
+                <span className="text-white">wrong?</span>
+              </h1>
+              <p className="text-[13px] sm:text-[14px] leading-relaxed text-white/85 max-w-2xl">
+                Describe the symptoms or photograph the fault. Get the most likely cause, EICR
+                classification (C1/C2/C3/FI), the BS 7671 reg cited, and a clear fix path.
+              </p>
+            </section>
+
+            {/* 01 — Symptoms */}
+            <section className="space-y-3">
+              <div className="flex items-baseline justify-between gap-3">
+                <Eyebrow>01 · WHAT YOU SEE</Eyebrow>
                 {selectedSymptoms.length > 0 && (
-                  <Badge variant="secondary" className="text-xs">
+                  <span className="text-[10.5px] tabular-nums text-white/65">
                     {selectedSymptoms.length} selected
-                  </Badge>
+                  </span>
                 )}
               </div>
-              <div className="grid grid-cols-2 gap-3">
+              <ul className="grid grid-cols-2 gap-2">
                 {symptoms.map((symptom) => {
-                  const isSelected = selectedSymptoms.includes(symptom.id);
+                  const active = selectedSymptoms.includes(symptom.id);
+                  const isCritical = symptom.severity === 'high';
                   return (
-                    <button
-                      key={symptom.id}
-                      onClick={() => toggleSymptom(symptom.id)}
-                      className={cn(
-                        'relative p-4 rounded-xl transition-all touch-manipulation',
-                        'min-h-[80px] flex flex-col items-center justify-center gap-2',
-                        isSelected
-                          ? 'h-11 rounded-xl bg-orange-500/20 text-orange-400 ring-1 ring-orange-500/40 shadow-sm shadow-orange-500/10'
-                          : 'h-11 rounded-xl bg-white/[0.06] text-white ring-1 ring-white/[0.08] active:scale-[0.97] transition-all'
-                      )}
-                    >
-                      <symptom.icon
-                        className={cn('h-6 w-6', isSelected ? 'text-orange-400' : 'text-white')}
-                      />
-                      <span
+                    <li key={symptom.id}>
+                      <button
+                        type="button"
+                        onClick={() => toggleSymptom(symptom.id)}
                         className={cn(
-                          'text-sm font-medium text-center',
-                          isSelected ? 'text-orange-400' : 'text-white'
+                          'w-full inline-flex flex-col items-start text-left text-[12px] font-semibold uppercase tracking-[0.12em] rounded-2xl px-4 py-3 min-h-[64px] border transition-colors touch-manipulation',
+                          active
+                            ? 'text-elec-yellow border-elec-yellow/40 bg-elec-yellow/[0.08]'
+                            : 'text-white/85 border-white/15 hover:border-white/30'
                         )}
                       >
-                        {symptom.label}
-                      </span>
-                      {isSelected && (
-                        <div className="absolute top-2 right-2">
-                          <Check className="h-4 w-4 text-orange-400" />
-                        </div>
-                      )}
-                      {symptom.severity === 'high' && (
-                        <div className="absolute top-2 left-2">
-                          <ShieldAlert className="h-3 w-3 text-red-400" />
-                        </div>
-                      )}
-                    </button>
+                        <span className="leading-tight">{symptom.label}</span>
+                        {isCritical && (
+                          <span
+                            className={cn(
+                              'mt-1.5 text-[9.5px] uppercase tracking-[0.16em] font-semibold',
+                              active ? 'text-elec-yellow/85' : 'text-red-300'
+                            )}
+                          >
+                            High severity
+                          </span>
+                        )}
+                      </button>
+                    </li>
                   );
                 })}
-              </div>
-            </div>
+              </ul>
+            </section>
 
-            {/* When Did It Start */}
-            <div className="space-y-3">
-              <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">When did you first notice this?</h2>
-              <div className="flex flex-wrap gap-2">
-                {timeframes.map((time) => (
-                  <button
-                    key={time.id}
-                    onClick={() => setSelectedTimeframe(time.id)}
-                    className={cn(
-                      'px-4 py-2.5 text-sm font-medium transition-all min-h-[44px]',
-                      selectedTimeframe === time.id
-                        ? 'h-11 rounded-xl bg-orange-500/20 text-orange-400 ring-1 ring-orange-500/40 shadow-sm shadow-orange-500/10 touch-manipulation'
-                        : 'h-11 rounded-xl bg-white/[0.06] text-white ring-1 ring-white/[0.08] touch-manipulation active:scale-[0.97] transition-all'
-                    )}
-                  >
-                    {time.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Location Quick Select */}
-            <div className="space-y-3">
-              <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Location in Property</h2>
-              <div className="flex flex-wrap gap-2">
-                {locations.map((loc) => (
-                  <button
-                    key={loc}
-                    onClick={() => setSelectedLocation(loc)}
-                    className={cn(
-                      'px-3 py-2 text-xs font-medium transition-all min-h-[44px]',
-                      selectedLocation === loc
-                        ? 'h-11 rounded-xl bg-orange-500/20 text-orange-400 ring-1 ring-orange-500/40 shadow-sm shadow-orange-500/10 touch-manipulation'
-                        : 'h-11 rounded-xl bg-white/[0.06] text-white ring-1 ring-white/[0.08] touch-manipulation active:scale-[0.97] transition-all'
-                    )}
-                  >
-                    {loc}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Image Capture */}
-            <div className="space-y-3">
-              <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Photo Evidence</h2>
-              <div className="space-y-3">
-                <AnimatePresence>
-                  {isCameraActive && (
-                    <motion.div
-                      initial={{ height: 0 }}
-                      animate={{ height: 'auto' }}
-                      exit={{ height: 0 }}
-                      className="space-y-3 overflow-hidden"
-                    >
-                      <div className="relative aspect-video bg-muted rounded-xl overflow-hidden">
-                        <video
-                          ref={videoRef}
-                          autoPlay
-                          playsInline
-                          muted
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div className="flex gap-2">
-                        <Button
-                          onClick={captureImage}
-                          className="flex-1 h-12 bg-orange-500 hover:bg-orange-600"
-                        >
-                          Capture
-                        </Button>
-                        <Button onClick={stopCamera} variant="outline" className="h-12">
-                          <X className="h-5 w-5" />
-                        </Button>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-                {!isCameraActive && (
-                  <div className="grid grid-cols-2 gap-3">
-                    <Button
-                      onClick={startCamera}
-                      className="h-14 bg-orange-500 hover:bg-orange-600 text-white"
-                    >
-                      <Camera className="h-5 w-5 mr-2" />
-                      Camera
-                    </Button>
-                    <Button
-                      onClick={() => fileInputRef.current?.click()}
-                      variant="ghost"
-                      className="h-14 bg-white/[0.06] ring-1 ring-white/[0.08] text-white hover:text-white hover:bg-white/[0.1]"
-                    >
-                      <Upload className="h-5 w-5 mr-2" />
-                      Upload
-                    </Button>
-                  </div>
-                )}
-
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="image/*"
-                  multiple
-                  onChange={(e) => handleFileSelect(e.target.files)}
-                  className="hidden"
-                />
-
-                {images.length > 0 && (
-                  <div className="grid grid-cols-4 gap-2">
-                    {images.map((img, idx) => (
-                      <div
-                        key={idx}
-                        className="relative aspect-square rounded-xl overflow-hidden border border-white/[0.08]"
+            {/* 02 — Timeframe */}
+            <section className="space-y-3">
+              <Eyebrow>02 · WHEN STARTED</Eyebrow>
+              <ul className="flex flex-wrap gap-1.5">
+                {timeframes.map((time) => {
+                  const active = selectedTimeframe === time.id;
+                  return (
+                    <li key={time.id}>
+                      <button
+                        type="button"
+                        onClick={() => setSelectedTimeframe(time.id)}
+                        className={cn(
+                          'inline-flex items-center text-[11px] font-semibold uppercase tracking-[0.12em] rounded-full px-3 py-2 min-h-[40px] border transition-colors touch-manipulation',
+                          active
+                            ? 'text-elec-yellow border-elec-yellow/40 bg-elec-yellow/[0.08]'
+                            : 'text-white/85 border-white/15 hover:border-white/30'
+                        )}
                       >
-                        <img
-                          src={URL.createObjectURL(img)}
-                          alt=""
-                          className="w-full h-full object-cover"
-                          loading="lazy"
-                        />
-                        <button
-                          onClick={() => setImages((prev) => prev.filter((_, i) => i !== idx))}
-                          className="absolute top-1 right-1 p-1 bg-black/60 rounded-full"
-                        >
-                          <X className="h-3 w-3 text-white" />
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
+                        {time.label}
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
 
-            {/* Additional Notes */}
-            <div className="space-y-3">
-              <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Additional Details</h2>
-              <div className="space-y-3">
-                <input
-                  type="text"
-                  placeholder="Describe the fault, symptoms, or what you have already tested..."
-                  value={additionalNotes}
-                  onChange={(e) => setAdditionalNotes(e.target.value)}
-                  className="w-full h-12 px-4 rounded-xl border border-white/[0.08] bg-background/50 text-white"
-                  style={{ fontSize: '16px' }}
-                />
-                {images.length === 0 && (
-                  <p className="text-xs text-white">
-                    Add a photo above for visual analysis, or select symptoms and describe the
-                    fault here to get a text-based diagnosis without one.
-                  </p>
-                )}
-              </div>
-            </div>
+            {/* 03 — Location */}
+            <section className="space-y-3">
+              <Eyebrow>03 · LOCATION</Eyebrow>
+              <ul className="flex flex-wrap gap-1.5">
+                {locations.map((loc) => {
+                  const active = selectedLocation === loc;
+                  return (
+                    <li key={loc}>
+                      <button
+                        type="button"
+                        onClick={() => setSelectedLocation(active ? '' : loc)}
+                        className={cn(
+                          'inline-flex items-center text-[11px] font-semibold uppercase tracking-[0.12em] rounded-full px-3 py-2 min-h-[40px] border transition-colors touch-manipulation',
+                          active
+                            ? 'text-elec-yellow border-elec-yellow/40 bg-elec-yellow/[0.08]'
+                            : 'text-white/85 border-white/15 hover:border-white/30'
+                        )}
+                      >
+                        {loc}
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
 
-            {/* Analyse Button */}
+            {/* 04 — Photo */}
+            <section className="space-y-3">
+              <Eyebrow>04 · PHOTO EVIDENCE</Eyebrow>
+              <p className="text-[11.5px] text-white/65 -mt-1">
+                Optional — text-only diagnosis works, but a photo sharpens the call.
+              </p>
+
+              <AnimatePresence>
+                {isCameraActive && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    className="space-y-3 overflow-hidden"
+                  >
+                    <div className="relative aspect-video bg-black rounded-2xl overflow-hidden border border-elec-yellow/30">
+                      <video
+                        ref={videoRef}
+                        autoPlay
+                        playsInline
+                        muted
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        type="button"
+                        onClick={captureImage}
+                        className="flex-1 text-[12px] font-semibold uppercase tracking-[0.14em] text-black bg-elec-yellow hover:bg-elec-yellow/90 rounded-full px-4 py-3 min-h-[44px] inline-flex items-center justify-center touch-manipulation transition-colors"
+                      >
+                        Capture
+                      </button>
+                      <button
+                        type="button"
+                        onClick={stopCamera}
+                        aria-label="Cancel"
+                        className="h-11 w-11 rounded-full inline-flex items-center justify-center border border-white/15 hover:border-white/30 text-white/85 touch-manipulation transition-colors shrink-0"
+                      >
+                        <X className="h-4 w-4" />
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {!isCameraActive && (
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={startCamera}
+                    className="text-[12px] font-semibold uppercase tracking-[0.14em] text-black bg-elec-yellow hover:bg-elec-yellow/90 rounded-full px-4 py-3 min-h-[44px] inline-flex items-center justify-center touch-manipulation transition-colors"
+                  >
+                    Open camera
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    className="text-[12px] font-semibold uppercase tracking-[0.14em] text-white/85 border border-white/15 hover:border-white/30 rounded-full px-4 py-3 min-h-[44px] inline-flex items-center justify-center touch-manipulation transition-colors"
+                  >
+                    Upload
+                  </button>
+                </div>
+              )}
+
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={(e) => handleFileSelect(e.target.files)}
+                className="hidden"
+              />
+
+              {images.length > 0 && (
+                <div className="grid grid-cols-4 gap-2">
+                  {images.map((img, idx) => (
+                    <div
+                      key={idx}
+                      className="relative aspect-square rounded-xl overflow-hidden border border-white/[0.10]"
+                    >
+                      <img
+                        src={URL.createObjectURL(img)}
+                        alt=""
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setImages((prev) => prev.filter((_, i) => i !== idx))}
+                        aria-label="Remove"
+                        className="absolute top-1 right-1 w-6 h-6 rounded-full bg-black/70 border border-white/20 flex items-center justify-center touch-manipulation"
+                      >
+                        <X className="h-3 w-3 text-white" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </section>
+
+            {/* 05 — Notes */}
+            <section className="space-y-3">
+              <Eyebrow>05 · DETAILS</Eyebrow>
+              <input
+                type="text"
+                placeholder="Symptoms, what you've tested, anything unusual…"
+                value={additionalNotes}
+                onChange={(e) => setAdditionalNotes(e.target.value)}
+                className="w-full h-12 px-4 rounded-2xl border border-white/[0.10] bg-white/[0.04] text-white placeholder:text-white/65 focus-visible:border-elec-yellow/50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30"
+                style={{ fontSize: '16px' }}
+              />
+            </section>
+
+            {/* Diagnose */}
             {(images.length > 0 ||
               selectedSymptoms.length > 0 ||
               additionalNotes.trim().length > 0) && (
-              <Button
+              <button
+                type="button"
                 onClick={handleAnalysis}
-                className="w-full h-14 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold text-base touch-manipulation active:scale-[0.98] shadow-lg shadow-orange-500/20"
+                className="w-full text-[13px] font-semibold uppercase tracking-[0.14em] text-black bg-elec-yellow hover:bg-elec-yellow/90 active:bg-elec-yellow/85 rounded-full px-5 py-4 min-h-[52px] inline-flex items-center justify-center gap-2 touch-manipulation transition-colors"
               >
-                <AlertTriangle className="h-5 w-5 mr-2" />
-                {images.length === 0 ? 'Diagnose from Description' : 'Diagnose Fault'}
-              </Button>
+                {images.length === 0 ? 'Diagnose from description →' : 'Diagnose fault →'}
+              </button>
             )}
           </>
         )}

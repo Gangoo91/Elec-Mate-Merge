@@ -1,9 +1,18 @@
+/**
+ * CareerDetailModal — editorial topic modal.
+ *
+ * Type-led, gradient surface, eyebrow numbering. Single responsive layout
+ * (full-screen sheet on mobile, centred 3xl card on desktop). Sections
+ * rendered as a numbered list with hairline dividers; resources and tips
+ * follow the same editorial cadence used across the College Hub. Colour
+ * theme retained for legacy callers but applied as a single accent line —
+ * never as a flood-fill background.
+ */
+
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ChevronRight, ExternalLink, LucideIcon } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
+import { X, ExternalLink, ArrowRight, type LucideIcon } from 'lucide-react';
 import { useEffect, useCallback } from 'react';
+import { cn } from '@/lib/utils';
 
 interface ContentSection {
   title: string;
@@ -37,131 +46,41 @@ interface CareerDetailModalProps {
   ctaAction?: () => void;
 }
 
-const colorConfig = {
-  yellow: {
-    accent: 'bg-elec-yellow',
-    accentText: 'text-elec-yellow',
-    accentBg: 'bg-elec-yellow/10',
-    accentBorder: 'border-elec-yellow/30',
-    badge: 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30',
-    cta: 'bg-elec-yellow text-black hover:bg-elec-yellow/90',
-  },
-  blue: {
-    accent: 'bg-blue-500',
-    accentText: 'text-blue-400',
-    accentBg: 'bg-blue-500/10',
-    accentBorder: 'border-blue-500/30',
-    badge: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-    cta: 'bg-blue-500 text-white hover:bg-blue-600',
-  },
-  green: {
-    accent: 'bg-green-500',
-    accentText: 'text-green-400',
-    accentBg: 'bg-green-500/10',
-    accentBorder: 'border-green-500/30',
-    badge: 'bg-green-500/20 text-green-400 border-green-500/30',
-    cta: 'bg-green-500 text-white hover:bg-green-600',
-  },
-  purple: {
-    accent: 'bg-purple-500',
-    accentText: 'text-purple-400',
-    accentBg: 'bg-purple-500/10',
-    accentBorder: 'border-purple-500/30',
-    badge: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
-    cta: 'bg-purple-500 text-white hover:bg-purple-600',
-  },
-  orange: {
-    accent: 'bg-orange-500',
-    accentText: 'text-orange-400',
-    accentBg: 'bg-orange-500/10',
-    accentBorder: 'border-orange-500/30',
-    badge: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
-    cta: 'bg-orange-500 text-white hover:bg-orange-600',
-  },
-  amber: {
-    accent: 'bg-amber-500',
-    accentText: 'text-amber-400',
-    accentBg: 'bg-amber-500/10',
-    accentBorder: 'border-amber-500/30',
-    badge: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
-    cta: 'bg-amber-500 text-black hover:bg-amber-600',
-  },
-  red: {
-    accent: 'bg-red-500',
-    accentText: 'text-red-400',
-    accentBg: 'bg-red-500/10',
-    accentBorder: 'border-red-500/30',
-    badge: 'bg-red-500/20 text-red-400 border-red-500/30',
-    cta: 'bg-red-500 text-white hover:bg-red-600',
-  },
+const accentByColor: Record<NonNullable<CareerDetailModalProps['color']>, string> = {
+  yellow: 'bg-elec-yellow',
+  blue: 'bg-blue-500',
+  green: 'bg-emerald-500',
+  purple: 'bg-purple-500',
+  orange: 'bg-orange-500',
+  amber: 'bg-amber-500',
+  red: 'bg-red-500',
 };
 
-const backdropVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1 },
-};
+const Eyebrow = ({ children }: { children: React.ReactNode }) => (
+  <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+    {children}
+  </span>
+);
 
-const modalVariants = {
-  hidden: {
-    opacity: 0,
-    y: '100%',
-    scale: 0.95,
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      type: 'spring',
-      damping: 30,
-      stiffness: 300,
-    },
-  },
-  exit: {
-    opacity: 0,
-    y: '100%',
-    scale: 0.95,
-    transition: {
-      duration: 0.2,
-    },
-  },
-};
-
-const desktopModalVariants = {
-  hidden: {
-    opacity: 0,
-    scale: 0.9,
-  },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    transition: {
-      type: 'spring',
-      damping: 25,
-      stiffness: 300,
-    },
-  },
-  exit: {
-    opacity: 0,
-    scale: 0.9,
-    transition: {
-      duration: 0.15,
-    },
-  },
-};
-
-const contentVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: 0.1 + i * 0.05,
-      type: 'spring',
-      stiffness: 300,
-      damping: 24,
-    },
-  }),
+const renderBody = (body: string | string[]) => {
+  if (Array.isArray(body)) {
+    return (
+      <ul className="space-y-2">
+        {body.map((item, idx) => (
+          <li
+            key={idx}
+            className="flex items-baseline gap-2.5 text-[13px] leading-relaxed text-white"
+          >
+            <span className="text-[10px] tabular-nums font-semibold text-elec-yellow shrink-0 w-5">
+              {String(idx + 1).padStart(2, '0')}
+            </span>
+            <span className="min-w-0">{item}</span>
+          </li>
+        ))}
+      </ul>
+    );
+  }
+  return <p className="text-[13px] leading-relaxed text-white">{body}</p>;
 };
 
 const CareerDetailModal = ({
@@ -170,15 +89,13 @@ const CareerDetailModal = ({
   title,
   description,
   badge,
-  icon: Icon,
   color = 'yellow',
   content,
   ctaText,
   ctaAction,
 }: CareerDetailModalProps) => {
-  const colors = colorConfig[color];
+  const accent = accentByColor[color];
 
-  // Handle escape key
   const handleEscape = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -197,319 +114,179 @@ const CareerDetailModal = ({
     };
   }, [isOpen, handleEscape]);
 
-  const renderContent = (content: string | string[]) => {
-    if (Array.isArray(content)) {
-      return (
-        <ul className="space-y-2">
-          {content.map((item, idx) => (
-            <li key={idx} className="flex items-start gap-2 text-sm text-white">
-              <ChevronRight className="h-4 w-4 text-white flex-shrink-0 mt-0.5" />
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-      );
-    }
-    return <p className="text-sm text-white leading-relaxed">{content}</p>;
-  };
-
   return (
     <AnimatePresence>
       {isOpen && (
         <>
           {/* Backdrop */}
           <motion.div
-            variants={backdropVariants}
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm"
+            className="fixed inset-0 z-[90] bg-black/80 backdrop-blur-sm"
+            aria-hidden
           />
 
-          {/* Mobile: Full screen slide up */}
+          {/* Modal — full-screen on mobile, centred card on desktop */}
           <motion.div
-            variants={modalVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            className="fixed inset-0 z-50 sm:hidden flex flex-col bg-elec-gray"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 16 }}
+            transition={{ duration: 0.22 }}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="career-modal-title"
+            className="fixed inset-0 z-[100] flex items-stretch sm:items-center justify-center sm:p-4"
           >
-            {/* Sticky Header */}
-            <div className="sticky top-0 z-10 bg-elec-gray/95 backdrop-blur-lg border-b border-white/10">
-              <div className={cn('h-1', colors.accent)} />
-              <div className="flex items-center justify-between p-4">
-                <div className="flex items-center gap-3 flex-1 min-w-0">
-                  {Icon && (
-                    <div className={cn('p-2 rounded-lg', colors.accentBg)}>
-                      <Icon className={cn('h-5 w-5', colors.accentText)} />
-                    </div>
-                  )}
-                  <div className="flex-1 min-w-0">
-                    <h2 className="text-lg font-semibold text-white truncate">{title}</h2>
-                    {badge && (
-                      <Badge variant="outline" className={cn('text-[10px] mt-1', colors.badge)}>
-                        {badge}
-                      </Badge>
-                    )}
-                  </div>
-                </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={onClose}
-                  className="h-9 w-9 text-white hover:text-white hover:bg-white/10 flex-shrink-0"
-                >
-                  <X className="h-5 w-5" />
-                </Button>
-              </div>
-            </div>
+            <div
+              className={cn(
+                'w-full sm:max-w-3xl sm:max-h-[85vh] flex flex-col',
+                'bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)]',
+                'sm:rounded-2xl border border-white/[0.10] sm:shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]',
+                'overflow-hidden'
+              )}
+            >
+              {/* Accent line */}
+              <div className={cn('h-[2px] shrink-0', accent)} aria-hidden />
 
-            {/* Scrollable Content */}
-            <div className="flex-1 overflow-y-auto">
-              <div className="p-4 space-y-6 pb-24">
-                {/* Overview */}
-                <motion.div
-                  custom={0}
-                  variants={contentVariants}
-                  initial="hidden"
-                  animate="visible"
-                >
-                  <p className="text-sm text-white leading-relaxed">{content.overview}</p>
-                </motion.div>
-
-                {/* Sections */}
-                {content.sections.map((section, idx) => (
-                  <motion.div
-                    key={section.title}
-                    custom={idx + 1}
-                    variants={contentVariants}
-                    initial="hidden"
-                    animate="visible"
-                    className={cn('p-4 rounded-xl border', colors.accentBorder, colors.accentBg)}
-                  >
-                    <div className="flex items-center gap-2 mb-3">
-                      {section.icon && (
-                        <section.icon className={cn('h-4 w-4', colors.accentText)} />
-                      )}
-                      <h3 className="font-semibold text-white text-sm">{section.title}</h3>
-                    </div>
-                    {renderContent(section.content)}
-                  </motion.div>
-                ))}
-
-                {/* Tips */}
-                {content.tips && content.tips.length > 0 && (
-                  <motion.div
-                    custom={content.sections.length + 1}
-                    variants={contentVariants}
-                    initial="hidden"
-                    animate="visible"
-                    className="p-4 rounded-xl bg-white/5 border border-white/10"
-                  >
-                    <h3 className="font-semibold text-white text-sm mb-3">Pro Tips</h3>
-                    <ul className="space-y-2">
-                      {content.tips.map((tip, idx) => (
-                        <li key={idx} className="flex items-start gap-2 text-sm text-white">
-                          <span className={cn('text-xs font-bold mt-0.5', colors.accentText)}>
-                            {idx + 1}.
-                          </span>
-                          <span>{tip}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </motion.div>
-                )}
-
-                {/* Resources */}
-                {content.resources && content.resources.length > 0 && (
-                  <motion.div
-                    custom={content.sections.length + 2}
-                    variants={contentVariants}
-                    initial="hidden"
-                    animate="visible"
-                  >
-                    <h3 className="font-semibold text-white text-sm mb-3">Resources</h3>
-                    <div className="space-y-2">
-                      {content.resources.map((resource, idx) => (
-                        <a
-                          key={idx}
-                          href={resource.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors group"
-                        >
-                          <div>
-                            <div className="text-sm font-medium text-white group-hover:text-white">
-                              {resource.title}
-                            </div>
-                            {resource.description && (
-                              <div className="text-xs text-white">{resource.description}</div>
-                            )}
-                          </div>
-                          <ExternalLink className="h-4 w-4 text-white group-hover:text-white" />
-                        </a>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
-              </div>
-            </div>
-
-            {/* Fixed Bottom CTA */}
-            {ctaText && ctaAction && (
-              <div className="fixed bottom-0 left-0 right-0 p-4 bg-elec-gray/95 backdrop-blur-lg border-t border-white/10">
-                <Button onClick={ctaAction} className={cn('w-full', colors.cta)}>
-                  {ctaText}
-                </Button>
-              </div>
-            )}
-          </motion.div>
-
-          {/* Desktop: Centered modal */}
-          <motion.div
-            variants={desktopModalVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            className="fixed inset-0 z-50 hidden sm:flex items-center justify-center p-4"
-          >
-            <div className="w-full max-w-3xl max-h-[85vh] bg-elec-gray rounded-2xl border border-white/10 overflow-hidden flex flex-col shadow-2xl">
               {/* Header */}
-              <div className="flex-shrink-0 border-b border-white/10">
-                <div className={cn('h-1', colors.accent)} />
-                <div className="flex items-center justify-between p-5">
-                  <div className="flex items-center gap-4 flex-1 min-w-0">
-                    {Icon && (
-                      <div className={cn('p-3 rounded-xl', colors.accentBg)}>
-                        <Icon className={cn('h-6 w-6', colors.accentText)} />
-                      </div>
-                    )}
-                    <div className="flex-1 min-w-0">
-                      <h2 className="text-xl font-semibold text-white">{title}</h2>
-                      {description && <p className="text-sm text-white mt-1">{description}</p>}
-                      {badge && (
-                        <Badge variant="outline" className={cn('text-xs mt-2', colors.badge)}>
-                          {badge}
-                        </Badge>
-                      )}
-                    </div>
+              <div className="shrink-0 border-b border-white/[0.06] px-5 sm:px-6 py-4 sm:py-5 flex items-start gap-3">
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-baseline gap-2 flex-wrap">
+                    <Eyebrow>{badge ?? 'Topic'}</Eyebrow>
                   </div>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={onClose}
-                    className="h-10 w-10 text-white hover:text-white hover:bg-white/10 flex-shrink-0"
+                  <h2
+                    id="career-modal-title"
+                    className="mt-1.5 text-[22px] sm:text-[28px] font-semibold tracking-tight leading-tight text-white"
                   >
-                    <X className="h-5 w-5" />
-                  </Button>
+                    {title}
+                  </h2>
+                  {description && (
+                    <p className="mt-1.5 text-[12.5px] sm:text-[13px] leading-relaxed text-white/85">
+                      {description}
+                    </p>
+                  )}
                 </div>
+                <button
+                  type="button"
+                  onClick={onClose}
+                  aria-label="Close"
+                  className="text-white/65 hover:text-white border border-white/15 hover:border-white/30 rounded-full h-9 w-9 inline-flex items-center justify-center shrink-0 touch-manipulation transition-colors"
+                >
+                  <X className="h-4 w-4" />
+                </button>
               </div>
 
-              {/* Scrollable Content */}
+              {/* Scrollable body */}
               <div className="flex-1 overflow-y-auto">
-                <div className="p-5 space-y-6">
+                <div className="px-5 sm:px-6 py-5 sm:py-6 space-y-7 sm:space-y-8 pb-24 sm:pb-6">
                   {/* Overview */}
-                  <motion.div
-                    custom={0}
-                    variants={contentVariants}
-                    initial="hidden"
-                    animate="visible"
-                  >
-                    <p className="text-white leading-relaxed">{content.overview}</p>
-                  </motion.div>
+                  <section className="space-y-2">
+                    <Eyebrow>01 · OVERVIEW</Eyebrow>
+                    <p className="text-[13.5px] sm:text-[14px] leading-relaxed text-white">
+                      {content.overview}
+                    </p>
+                  </section>
 
-                  {/* Sections Grid */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {content.sections.map((section, idx) => (
-                      <motion.div
-                        key={section.title}
-                        custom={idx + 1}
-                        variants={contentVariants}
-                        initial="hidden"
-                        animate="visible"
-                        className={cn(
-                          'p-4 rounded-xl border',
-                          colors.accentBorder,
-                          colors.accentBg,
-                          content.sections.length === 1 ? 'md:col-span-2' : ''
-                        )}
-                      >
-                        <div className="flex items-center gap-2 mb-3">
-                          {section.icon && (
-                            <section.icon className={cn('h-4 w-4', colors.accentText)} />
-                          )}
-                          <h3 className="font-semibold text-white">{section.title}</h3>
-                        </div>
-                        {renderContent(section.content)}
-                      </motion.div>
-                    ))}
-                  </div>
+                  {/* Sections */}
+                  {content.sections.length > 0 && (
+                    <section className="space-y-4">
+                      <Eyebrow>02 · DETAIL</Eyebrow>
+                      <ul className="divide-y divide-white/[0.06]">
+                        {content.sections.map((section, idx) => (
+                          <li key={section.title} className="py-4 first:pt-0 last:pb-0">
+                            <div className="flex items-baseline gap-3">
+                              <span className="text-[10.5px] tabular-nums font-semibold text-elec-yellow shrink-0 w-5">
+                                {String(idx + 1).padStart(2, '0')}
+                              </span>
+                              <div className="min-w-0 flex-1">
+                                <h3 className="text-[14px] sm:text-[15px] font-semibold text-white">
+                                  {section.title}
+                                </h3>
+                                <div className="mt-2">{renderBody(section.content)}</div>
+                              </div>
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    </section>
+                  )}
 
                   {/* Tips */}
                   {content.tips && content.tips.length > 0 && (
-                    <motion.div
-                      custom={content.sections.length + 1}
-                      variants={contentVariants}
-                      initial="hidden"
-                      animate="visible"
-                      className="p-4 rounded-xl bg-white/5 border border-white/10"
-                    >
-                      <h3 className="font-semibold text-white mb-3">Pro Tips</h3>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <section className="space-y-3">
+                      <Eyebrow>
+                        {String(content.sections.length > 0 ? 3 : 2).padStart(2, '0')} · PRO TIPS
+                      </Eyebrow>
+                      <ol className="divide-y divide-white/[0.06]">
                         {content.tips.map((tip, idx) => (
-                          <div key={idx} className="flex items-start gap-2 text-sm text-white">
-                            <span className={cn('text-xs font-bold mt-0.5', colors.accentText)}>
-                              {idx + 1}.
-                            </span>
-                            <span>{tip}</span>
-                          </div>
+                          <li key={idx} className="py-3 first:pt-0 last:pb-0">
+                            <div className="flex items-baseline gap-3">
+                              <span className="text-[10.5px] tabular-nums font-semibold text-elec-yellow shrink-0 w-5">
+                                {String(idx + 1).padStart(2, '0')}
+                              </span>
+                              <p className="text-[13px] leading-relaxed text-white">{tip}</p>
+                            </div>
+                          </li>
                         ))}
-                      </div>
-                    </motion.div>
+                      </ol>
+                    </section>
                   )}
 
                   {/* Resources */}
                   {content.resources && content.resources.length > 0 && (
-                    <motion.div
-                      custom={content.sections.length + 2}
-                      variants={contentVariants}
-                      initial="hidden"
-                      animate="visible"
-                    >
-                      <h3 className="font-semibold text-white mb-3">Resources</h3>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <section className="space-y-3">
+                      <Eyebrow>
+                        {String(
+                          (content.sections.length > 0 ? 3 : 2) +
+                            (content.tips && content.tips.length > 0 ? 1 : 0)
+                        ).padStart(2, '0')}{' '}
+                        · RESOURCES
+                      </Eyebrow>
+                      <ul className="divide-y divide-white/[0.06]">
                         {content.resources.map((resource, idx) => (
-                          <a
-                            key={idx}
-                            href={resource.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors group"
-                          >
-                            <div>
-                              <div className="text-sm font-medium text-white group-hover:text-white">
-                                {resource.title}
+                          <li key={idx} className="py-3 first:pt-0 last:pb-0">
+                            <a
+                              href={resource.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="block group rounded-md -mx-1 px-1 py-1 hover:bg-white/[0.03] active:bg-white/[0.05] transition-colors touch-manipulation"
+                            >
+                              <div className="flex items-baseline justify-between gap-3">
+                                <h4 className="text-[13.5px] font-semibold text-white truncate">
+                                  {resource.title}
+                                </h4>
+                                <span className="text-[10.5px] uppercase tracking-[0.14em] text-white/65 group-hover:text-elec-yellow transition-colors shrink-0 inline-flex items-center gap-1">
+                                  Open
+                                  <ExternalLink className="h-3 w-3" />
+                                </span>
                               </div>
                               {resource.description && (
-                                <div className="text-xs text-white">{resource.description}</div>
+                                <p className="mt-0.5 text-[12px] leading-relaxed text-white/85">
+                                  {resource.description}
+                                </p>
                               )}
-                            </div>
-                            <ExternalLink className="h-4 w-4 text-white group-hover:text-white" />
-                          </a>
+                            </a>
+                          </li>
                         ))}
-                      </div>
-                    </motion.div>
+                      </ul>
+                    </section>
                   )}
                 </div>
               </div>
 
               {/* Footer CTA */}
               {ctaText && ctaAction && (
-                <div className="flex-shrink-0 p-5 border-t border-white/10 bg-elec-gray/50">
-                  <Button onClick={ctaAction} className={cn('w-full', colors.cta)}>
+                <div className="shrink-0 border-t border-white/[0.06] px-5 sm:px-6 py-4 bg-[hsl(0_0%_10%)]">
+                  <button
+                    type="button"
+                    onClick={ctaAction}
+                    className="w-full text-[13px] font-semibold uppercase tracking-[0.14em] text-black bg-elec-yellow hover:bg-elec-yellow/90 active:bg-elec-yellow/85 rounded-full px-4 py-3 min-h-[44px] inline-flex items-center justify-center gap-2 touch-manipulation transition-colors"
+                  >
                     {ctaText}
-                  </Button>
+                    <ArrowRight className="h-4 w-4" />
+                  </button>
                 </div>
               )}
             </div>

@@ -30,7 +30,9 @@ import {
   LearningOutcomes,
   ContentEyebrow,
   SectionRule,
+  VideoCard,
 } from '@/components/study-centre/learning';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE =
@@ -290,6 +292,14 @@ export default function Sub3() {
               <li><strong>8. Retest and restore.</strong> Continuity of CPC, ring continuity (if a ring), insulation resistance, polarity, then RCD trip-time on the protective device. Remove personal padlock, restore supply, document.</li>
             </ul>
           </ConceptBlock>
+
+          <VideoCard
+            url={videos.safeIsolation.url}
+            title={videos.safeIsolation.title}
+            channel={videos.safeIsolation.channel}
+            duration={videos.safeIsolation.duration}
+            topic={videos.safeIsolation.topic}
+          />
 
           <RegsCallout
             source="BS 7671:2018+A4:2026 — Regulations 462.1 (Provisions for isolation) and 537.2.4 (Devices for isolation — prevention of unwanted closure)"

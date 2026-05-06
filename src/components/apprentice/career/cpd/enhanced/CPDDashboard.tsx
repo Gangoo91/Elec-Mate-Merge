@@ -80,28 +80,28 @@ const CPDDashboard = ({ onAddEntry, onViewHistory, onManageGoals }: CPDDashboard
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1">
+        <div className="rounded-2xl border border-white/[0.10] bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 space-y-1">
           <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
             Hours this year
           </span>
           <div className="text-[20px] font-semibold text-white">{stats.hoursThisYear}</div>
           <p className="text-[12px] text-white/55">of {stats.targetHours} target</p>
         </div>
-        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1">
+        <div className="rounded-2xl border border-white/[0.10] bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 space-y-1">
           <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
             Progress
           </span>
           <div className="text-[20px] font-semibold text-white">{stats.completionPercentage}%</div>
           <p className="text-[12px] text-white/55">Target completion</p>
         </div>
-        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1">
+        <div className="rounded-2xl border border-white/[0.10] bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 space-y-1">
           <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
             Days remaining
           </span>
           <div className="text-[20px] font-semibold text-white">{stats.daysRemaining}</div>
           <p className="text-[12px] text-white/55">Until year end</p>
         </div>
-        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1">
+        <div className="rounded-2xl border border-white/[0.10] bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 space-y-1">
           <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
             Compliance
           </span>
@@ -110,7 +110,7 @@ const CPDDashboard = ({ onAddEntry, onViewHistory, onManageGoals }: CPDDashboard
         </div>
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+      <div className="rounded-2xl border border-white/[0.10] bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 sm:p-6 space-y-3">
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
           {new Date().getFullYear()} CPD progress
         </span>
@@ -150,7 +150,7 @@ const CPDDashboard = ({ onAddEntry, onViewHistory, onManageGoals }: CPDDashboard
         )}
       </div>
 
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+      <div className="rounded-2xl border border-white/[0.10] bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 sm:p-6 space-y-3">
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
           Hours by category
         </span>

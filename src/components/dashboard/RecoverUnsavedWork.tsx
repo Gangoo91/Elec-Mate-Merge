@@ -5,13 +5,14 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronRight, Trash2, X } from 'lucide-react';
+import { ArrowRight, ChevronRight, Trash2, X } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { reportCloud, CloudReport } from '@/utils/reportCloud';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { formatDistanceToNow } from 'date-fns';
+import { Eyebrow, containerVariants, itemVariants } from '@/components/college/primitives';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/ui/sheet';
 import {
   AlertDialog,
@@ -132,68 +133,82 @@ const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({ onNavigate, cla
 
   if (isDismissed || isLoading || !autoDrafts || autoDrafts.length === 0) return null;
 
-  // Unique type labels for the banner badges
-  const uniqueTypes = [...new Set(autoDrafts.map((d) => d.report_type))];
+  // Unique type labels surfaced inline in the banner copy (no coloured pills).
+  const uniqueTypes = [...new Set(autoDrafts.map((d) => d.report_type))]
+    .slice(0, 3)
+    .map(getTypeLabel)
+    .join(' · ');
 
   return (
     <>
-      {/* Banner card */}
-      <motion.div
-        initial={{ opacity: 0, y: -6 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -6 }}
-        transition={{ duration: 0.2 }}
-        className={cn(
-          'group relative overflow-hidden card-surface-interactive rounded-2xl',
-          className
-        )}
+      {/* Banner — editorial hairline cell, same DNA as Continue + tool grids */}
+      <motion.section
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className={cn('space-y-4', className)}
       >
-        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 opacity-50" />
+        <motion.div variants={itemVariants}>
+          <Eyebrow>UNSAVED DRAFTS</Eyebrow>
+        </motion.div>
 
-        {/* Main tappable row */}
-        <button
-          onClick={() => setShowSheet(true)}
-          className="w-full flex items-center gap-3.5 p-4 text-left active:scale-[0.98] transition-all touch-manipulation"
+        <motion.div
+          variants={itemVariants}
+          className="relative bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-2xl overflow-hidden"
         >
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-1 flex-wrap">
-              <span className="text-sm font-semibold text-white">
-                {autoDrafts.length} unsaved draft{autoDrafts.length !== 1 ? 's' : ''}
-              </span>
-              {uniqueTypes.slice(0, 4).map((type) => (
-                <span
-                  key={type}
-                  className={cn('text-[10px] font-bold px-1.5 py-0.5 rounded', getTypeBadgeStyle(type))}
-                >
-                  {getTypeLabel(type)}
-                </span>
-              ))}
-            </div>
-            <p className="text-[12px] text-white">Tap to see all and choose one</p>
-          </div>
-          <div className="w-6 h-6 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center group-hover:bg-elec-yellow group-hover:border-elec-yellow transition-all duration-200 flex-shrink-0">
-            <ChevronRight className="w-3.5 h-3.5 text-white group-hover:text-black transition-all" />
-          </div>
-        </button>
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none" />
 
-        {/* Actions bar */}
-        <div className="flex items-center border-t border-white/[0.06] px-4">
           <button
-            onClick={() => setDeleteAll(true)}
-            className="h-10 flex items-center gap-1.5 text-xs font-medium text-white hover:text-red-400 transition-colors touch-manipulation"
+            type="button"
+            onClick={() => setShowSheet(true)}
+            className="group w-full text-left p-5 sm:p-6 hover:bg-elec-yellow/[0.04] transition-colors touch-manipulation flex flex-col gap-3"
           >
-            <Trash2 className="h-3 w-3" />
-            Delete all
+            <div className="flex items-baseline gap-2">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
+                {autoDrafts.length}
+              </span>
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                · {uniqueTypes || 'Drafts'}
+              </span>
+            </div>
+            <h3 className="text-[18px] sm:text-[20px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors">
+              {autoDrafts.length} unsaved draft{autoDrafts.length !== 1 ? 's' : ''} waiting
+            </h3>
+            <p className="text-[13px] text-white/60">
+              Auto-saved before you closed the tab. Tap to pick one up.
+            </p>
+            <div className="mt-2 flex items-center justify-between pt-3 border-t border-white/[0.05]">
+              <span className="text-[11px] text-white/55 uppercase tracking-[0.14em]">
+                See all and choose
+              </span>
+              <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-elec-yellow">
+                Open
+                <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+              </span>
+            </div>
           </button>
-          <button
-            onClick={() => setIsDismissed(true)}
-            className="h-10 flex items-center gap-1.5 text-xs font-medium text-white ml-auto hover:text-white transition-colors touch-manipulation"
-          >
-            Dismiss
-            <X className="h-3 w-3" />
-          </button>
-        </div>
-      </motion.div>
+
+          {/* Inline action bar — quiet, no chrome */}
+          <div className="flex items-center border-t border-white/[0.05] px-5">
+            <button
+              type="button"
+              onClick={() => setDeleteAll(true)}
+              className="h-10 flex items-center gap-1.5 text-[11px] uppercase tracking-[0.14em] font-medium text-white/55 hover:text-red-300 transition-colors touch-manipulation"
+            >
+              <Trash2 className="h-3 w-3" />
+              Delete all
+            </button>
+            <button
+              type="button"
+              onClick={() => setIsDismissed(true)}
+              className="h-10 flex items-center gap-1.5 text-[11px] uppercase tracking-[0.14em] font-medium text-white/55 ml-auto hover:text-white transition-colors touch-manipulation"
+            >
+              Dismiss
+              <X className="h-3 w-3" />
+            </button>
+          </div>
+        </motion.div>
+      </motion.section>
 
       {/* Drafts selection sheet */}
       <Sheet open={showSheet} onOpenChange={setShowSheet}>

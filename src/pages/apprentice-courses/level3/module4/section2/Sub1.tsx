@@ -29,7 +29,9 @@ import {
   LearningOutcomes,
   ContentEyebrow,
   SectionRule,
+  VideoCard,
 } from '@/components/study-centre/learning';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE =
@@ -366,6 +368,14 @@ export default function Sub1() {
               <li><strong>7. VDE screwdriver set</strong> — Wera Kraftform Plus 7-piece (~£60), Wiha SoftFinish 7-piece (~£70), CK Dextro 8-piece (~£50).</li>
             </ul>
           </ConceptBlock>
+
+          <VideoCard
+            url={videos.multimeter.url}
+            title={videos.multimeter.title}
+            channel={videos.multimeter.channel}
+            duration={videos.multimeter.duration}
+            topic={videos.multimeter.topic}
+          />
 
           <RegsCallout
             source="BS EN 61010-1 — Measurement category definitions"

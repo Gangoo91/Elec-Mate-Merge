@@ -1,20 +1,27 @@
 /**
  * ApprenticeHubNav
  *
- * Spacious mobile-first navigation bar with back button.
- * Clean layout: back arrow | tab pills | yellow add button.
+ * Editorial top nav for the apprentice portfolio workspace.
+ *
+ * Design notes:
+ *   • Back arrow + minimal label (eyebrow style) — calm, modern
+ *   • Tabs use a thin underline indicator on the active tab — no shouty
+ *     yellow pill. Inactive tabs are muted, active is white with a yellow
+ *     hairline beneath it.
+ *   • The yellow accent reserved for the primary action (Add evidence).
+ *   • OJT/hours intentionally NOT a tab here — OJT has its own surface
+ *     at /apprentice/ojt-hub.
  */
 
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-export type ApprenticeHubTab = 'home' | 'work' | 'hours' | 'progress' | 'me';
+export type ApprenticeHubTab = 'home' | 'work' | 'progress' | 'me';
 
 const navItems: { id: ApprenticeHubTab; label: string }[] = [
-  { id: 'home', label: 'Home' },
-  { id: 'work', label: 'My Work' },
-  { id: 'hours', label: 'Hours' },
+  { id: 'home', label: 'Portfolio' },
+  { id: 'work', label: 'My work' },
   { id: 'progress', label: 'Progress' },
   { id: 'me', label: 'Me' },
 ];
@@ -29,47 +36,60 @@ export function ApprenticeHubNav({ activeTab, onTabChange, onCapture }: Apprenti
   const navigate = useNavigate();
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-xl border-b border-white/[0.06]">
-      <div className="flex items-center gap-2 h-14 px-3 lg:max-w-4xl lg:mx-auto">
-        {/* Back button */}
-        <button
-          onClick={() => navigate('/dashboard')}
-          className="flex items-center justify-center h-11 w-11 rounded-xl text-white hover:text-white active:scale-95 transition-all touch-manipulation flex-shrink-0"
-          aria-label="Back to dashboard"
-        >
-          <ArrowLeft className="h-5 w-5" />
-        </button>
+    <nav className="sticky top-0 z-50 w-full bg-background/85 backdrop-blur-xl border-b border-white/[0.06]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center gap-3 sm:gap-5 h-14">
+          {/* Back */}
+          <button
+            onClick={() => navigate('/dashboard')}
+            className="flex items-center gap-2 text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation flex-shrink-0 h-11 -ml-1"
+            aria-label="Back"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            <span className="hidden sm:inline">Back</span>
+          </button>
 
-        {/* Tab pills — scrollable row */}
-        <div className="flex-1 flex items-center gap-1.5 overflow-x-auto scrollbar-hide">
-          {navItems.map((item) => {
-            const isActive = activeTab === item.id;
+          <span aria-hidden className="hidden sm:block h-5 w-px bg-white/10" />
 
-            return (
-              <button
-                key={item.id}
-                onClick={() => onTabChange(item.id)}
-                className={cn('px-4 h-9 rounded-full whitespace-nowrap text-[13px] font-semibold',
-                  'touch-manipulation active:scale-95 transition-all',
-                  isActive
-                    ? 'bg-elec-yellow text-black'
-                    : 'text-white hover:bg-white/[0.06]'
-                )}
-              >
-                {item.label}
-              </button>
-            );
-          })}
+          {/* Tabs — editorial: text only, hairline underline on active */}
+          <div className="flex-1 flex items-center gap-1 sm:gap-2 overflow-x-auto scrollbar-hide -mx-1 px-1">
+            {navItems.map((item) => {
+              const isActive = activeTab === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => onTabChange(item.id)}
+                  className={cn(
+                    'relative flex items-center h-14 px-2.5 sm:px-3.5 text-[13px] sm:text-[13.5px] font-medium tracking-tight whitespace-nowrap touch-manipulation transition-colors',
+                    isActive
+                      ? 'text-white'
+                      : 'text-white/55 hover:text-white/85'
+                  )}
+                  aria-current={isActive ? 'page' : undefined}
+                >
+                  {item.label}
+                  <span
+                    aria-hidden
+                    className={cn(
+                      'absolute left-2.5 right-2.5 sm:left-3.5 sm:right-3.5 bottom-0 h-px transition-all',
+                      isActive ? 'bg-elec-yellow' : 'bg-transparent'
+                    )}
+                  />
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Primary action */}
+          <button
+            onClick={onCapture}
+            className="inline-flex items-center gap-1.5 h-9 px-3 sm:px-4 rounded-md bg-elec-yellow text-black text-[12.5px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.97] transition-all touch-manipulation flex-shrink-0"
+            aria-label="Add evidence"
+          >
+            <Plus className="h-4 w-4" strokeWidth={2.5} />
+            <span className="hidden sm:inline">Add evidence</span>
+          </button>
         </div>
-
-        {/* Add button — always visible */}
-        <button
-          onClick={onCapture}
-          className="flex items-center justify-center h-11 w-11 rounded-xl bg-elec-yellow text-black active:scale-90 transition-transform touch-manipulation shadow-md shadow-elec-yellow/25 flex-shrink-0"
-          aria-label="Add evidence"
-        >
-          <Plus className="h-5 w-5" strokeWidth={2.5} />
-        </button>
       </div>
     </nav>
   );

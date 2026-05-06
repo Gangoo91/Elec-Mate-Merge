@@ -1,11 +1,15 @@
+/**
+ * EnhancedCPDDashboard — editorial CPD compliance dashboard.
+ *
+ * Type-led compliance overview: hero strip with overall %, category
+ * breakdown, three-cell stat strip (entries / verified / pending), action
+ * row, renewal reminder. Drops the stock Card chrome and the bg-yellow-50
+ * (light) alert card for editorial gradient surfaces + tabular numbers.
+ */
+
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
-  Award,
   BookOpen,
   Clock,
   Download,
@@ -15,6 +19,7 @@ import {
   CheckCircle,
   AlertCircle,
   Calendar,
+  ArrowRight,
 } from 'lucide-react';
 import {
   professionalBodyService,
@@ -24,6 +29,8 @@ import { enhancedCPDService, CPDComplianceStats } from '@/services/enhancedCPDSe
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import ProfessionalBodySelector from './ProfessionalBodySelector';
+import { Eyebrow } from '@/components/college/primitives';
+import { cn } from '@/lib/utils';
 
 interface EnhancedCPDDashboardProps {
   onAddEntry?: () => void;
@@ -65,10 +72,8 @@ const EnhancedCPDDashboard: React.FC<EnhancedCPDDashboardProps> = ({
         setLoading(false);
         return;
       }
-
       const userMemberships = await professionalBodyService.getUserMemberships(user.id);
       setMemberships(userMemberships);
-
       if (userMemberships.length === 0) {
         setShowSelector(true);
       } else {
@@ -92,7 +97,6 @@ const EnhancedCPDDashboard: React.FC<EnhancedCPDDashboardProps> = ({
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) return;
-
       const stats = await enhancedCPDService.getComplianceStats(user.id, professionalBodyId);
       setComplianceStats(stats);
     } catch (error) {
@@ -113,23 +117,20 @@ const EnhancedCPDDashboard: React.FC<EnhancedCPDDashboardProps> = ({
 
   const handleGeneratePortfolio = async () => {
     if (!selectedMembership) return;
-
     try {
       const {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) return;
-
       const title = `${selectedMembership.professional_body?.name} CPD Portfolio ${new Date().getFullYear()}`;
       await enhancedCPDService.generatePortfolio(
         user.id,
         selectedMembership.professional_body_id,
         title
       );
-
       toast({
         title: 'Portfolio generated',
-        description: 'Your CPD portfolio has been created and is ready for export.',
+        description: 'Your CPD portfolio is ready to export.',
       });
     } catch (error) {
       console.error('Error generating portfolio:', error);
@@ -144,7 +145,7 @@ const EnhancedCPDDashboard: React.FC<EnhancedCPDDashboardProps> = ({
   if (loading) {
     return (
       <div className="flex items-center justify-center p-8">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-elec-yellow"></div>
       </div>
     );
   }
@@ -155,204 +156,249 @@ const EnhancedCPDDashboard: React.FC<EnhancedCPDDashboardProps> = ({
 
   if (!selectedMembership || !complianceStats) {
     return (
-      <div className="text-center space-y-4 p-8">
-        <AlertCircle className="h-12 w-12 text-yellow-500 mx-auto" />
-        <h3 className="text-lg font-semibold">Loading CPD Dashboard</h3>
-        <p className="text-white">Please wait while we load your compliance data...</p>
+      <div className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-8 text-center">
+        <AlertCircle className="h-8 w-8 text-elec-yellow mx-auto" />
+        <h3 className="mt-3 text-[18px] font-semibold tracking-tight text-white">
+          Loading CPD dashboard…
+        </h3>
+        <p className="mt-1 text-[12.5px] text-white/85">Pulling your latest compliance data.</p>
       </div>
     );
   }
 
-  const getComplianceColor = (percentage: number) => {
-    if (percentage >= 100) return 'text-green-600';
-    if (percentage >= 75) return 'text-yellow-600';
-    return 'text-red-600';
-  };
+  const overallPct = complianceStats.compliance_percentage;
+  const overallTone =
+    overallPct >= 100
+      ? 'text-emerald-300'
+      : overallPct >= 75
+        ? 'text-amber-300'
+        : 'text-red-300';
 
-  const getComplianceIcon = (percentage: number) => {
-    if (percentage >= 100) return <CheckCircle className="h-5 w-5 text-green-600" />;
-    if (percentage >= 75) return <Clock className="h-5 w-5 text-yellow-600" />;
-    return <AlertCircle className="h-5 w-5 text-red-600" />;
-  };
+  const renewalDate = selectedMembership.renewal_date
+    ? new Date(selectedMembership.renewal_date)
+    : null;
+  const daysToRenewal = renewalDate
+    ? Math.ceil((renewalDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24))
+    : null;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 sm:space-y-8">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold">CPD Tracker</h2>
-          <p className="text-white">
-            Track your professional development against {selectedMembership.professional_body?.name}{' '}
-            requirements
-          </p>
-        </div>
+      <section className="space-y-2">
+        <Eyebrow>{selectedMembership.professional_body?.code ?? 'CPD'} · COMPLIANCE</Eyebrow>
+        <h2 className="text-[26px] sm:text-[32px] font-semibold tracking-tight leading-tight">
+          <span className="text-elec-yellow">Track</span>{' '}
+          <span className="text-white">to your scheme.</span>
+        </h2>
+        <p className="text-[13px] leading-relaxed text-white/85 max-w-2xl">
+          Hours, evidence and category split for{' '}
+          <span className="text-white font-semibold">
+            {selectedMembership.professional_body?.name}
+          </span>
+          .
+        </p>
 
         {memberships.length > 1 && (
-          <Tabs
-            value={selectedMembership.id}
-            onValueChange={(value) => {
-              const membership = memberships.find((m) => m.id === value);
-              if (membership) setSelectedMembership(membership);
-            }}
-          >
-            <TabsList>
-              {memberships.map((membership) => (
-                <TabsTrigger key={membership.id} value={membership.id}>
-                  {membership.professional_body?.code}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </Tabs>
+          <div className="flex flex-wrap gap-1.5 pt-2">
+            {memberships.map((m) => {
+              const isActive = m.id === selectedMembership.id;
+              return (
+                <button
+                  key={m.id}
+                  type="button"
+                  onClick={() => setSelectedMembership(m)}
+                  className={cn(
+                    'inline-flex items-center text-[11px] font-semibold uppercase tracking-[0.12em] border rounded-full px-3 py-1.5 touch-manipulation transition-colors',
+                    isActive
+                      ? 'text-elec-yellow border-elec-yellow/40 bg-elec-yellow/[0.08]'
+                      : 'text-white/85 border-white/15 hover:border-white/30'
+                  )}
+                >
+                  {m.professional_body?.code}
+                </button>
+              );
+            })}
+          </div>
         )}
-      </div>
+      </section>
 
-      {/* Overall Progress */}
-      <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <div>
-              <CardTitle className="flex items-center space-x-2">
-                {getComplianceIcon(complianceStats.compliance_percentage)}
-                <span>Overall Compliance</span>
-              </CardTitle>
-              <CardDescription>
-                {complianceStats.total_hours} of {complianceStats.required_hours} hours completed
-              </CardDescription>
-            </div>
-            <Badge
-              variant={complianceStats.compliance_percentage >= 100 ? 'default' : 'secondary'}
-              className="text-lg px-3 py-1"
-            >
-              {complianceStats.compliance_percentage}%
-            </Badge>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <Progress value={complianceStats.compliance_percentage} className="w-full h-3" />
-          <div className="flex justify-between mt-2 text-sm text-white">
-            <span>0 hours</span>
-            <span className={getComplianceColor(complianceStats.compliance_percentage)}>
-              {complianceStats.total_hours} hours
-            </span>
-            <span>{complianceStats.required_hours} hours</span>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Overall progress */}
+      <section className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 sm:p-6">
+        <div className="flex items-baseline justify-between gap-3 flex-wrap">
+          <Eyebrow>OVERALL</Eyebrow>
+          <span className={cn('text-[28px] sm:text-[34px] font-semibold tabular-nums', overallTone)}>
+            {overallPct}%
+          </span>
+        </div>
+        <Progress value={Math.min(overallPct, 100)} className="mt-3 w-full h-1.5" />
+        <div className="mt-3 flex items-baseline justify-between text-[11.5px] tabular-nums text-white/85">
+          <span>0h</span>
+          <span className="text-white">
+            <span className="text-white font-semibold">{complianceStats.total_hours}</span> of{' '}
+            <span className="font-semibold">{complianceStats.required_hours}</span>h
+          </span>
+          <span>{complianceStats.required_hours}h</span>
+        </div>
+      </section>
 
-      {/* Category Breakdown */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Category Requirements</CardTitle>
-          <CardDescription>
-            Progress by CPD category for {selectedMembership.professional_body?.name}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {complianceStats.categories.map((category) => (
-            <div key={category.id} className="space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="font-medium">{category.name}</span>
-                <Badge variant={category.percentage >= 100 ? 'default' : 'secondary'}>
-                  {category.completed_hours}h / {category.required_hours}h
-                </Badge>
+      {/* Categories */}
+      <section className="space-y-4">
+        <Eyebrow>BY CATEGORY</Eyebrow>
+        <div className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 sm:p-6 divide-y divide-white/[0.06]">
+          {complianceStats.categories.map((category) => {
+            const pct = Math.min(category.percentage, 100);
+            const tone =
+              category.percentage >= 100
+                ? 'text-emerald-300'
+                : category.percentage >= 75
+                  ? 'text-amber-300'
+                  : 'text-red-300';
+            return (
+              <div key={category.id} className="py-3 first:pt-0 last:pb-0 space-y-2">
+                <div className="flex items-baseline justify-between gap-3">
+                  <span className="text-[13.5px] font-semibold text-white truncate">
+                    {category.name}
+                  </span>
+                  <span className="text-[12px] tabular-nums text-white/85">
+                    <span className={cn('font-semibold', tone)}>{category.completed_hours}</span>h /{' '}
+                    {category.required_hours}h
+                  </span>
+                </div>
+                <Progress value={pct} className="w-full h-1.5" />
+                <div className="text-[10.5px] uppercase tracking-[0.14em] font-semibold text-white/65 tabular-nums">
+                  {category.percentage}% complete
+                </div>
               </div>
-              <Progress value={Math.min(category.percentage, 100)} className="w-full h-2" />
-              <div className="text-sm text-white">{category.percentage}% complete</div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Stat strip */}
+      <section>
+        <Eyebrow>ACTIVITY</Eyebrow>
+        <dl className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <StatCell
+            icon={FileText}
+            label="Entries"
+            value={complianceStats.entries_count}
+            subtitle="logged"
+          />
+          <StatCell
+            icon={CheckCircle}
+            label="Verified"
+            value={complianceStats.verified_entries}
+            subtitle="evidence accepted"
+            accent
+          />
+          <StatCell
+            icon={Clock}
+            label="Pending"
+            value={complianceStats.pending_verification}
+            subtitle="awaiting review"
+          />
+        </dl>
+      </section>
+
+      {/* Actions */}
+      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+        <ActionButton primary icon={Plus} label="Add entry" onClick={onAddEntry} />
+        <ActionButton icon={BookOpen} label="History" onClick={onViewHistory} />
+        <ActionButton icon={Download} label="Export portfolio" onClick={handleGeneratePortfolio} />
+        <ActionButton icon={Target} label="Manage goals" onClick={onManageGoals} />
+      </section>
+
+      {/* Renewal reminder */}
+      {renewalDate && (
+        <section className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 sm:p-6">
+          <div className="flex items-start gap-3">
+            <Calendar className="h-4 w-4 text-elec-yellow shrink-0 self-center" aria-hidden />
+            <div className="min-w-0 flex-1">
+              <Eyebrow>RENEWAL</Eyebrow>
+              <p className="mt-1.5 text-[13.5px] leading-relaxed text-white">
+                <span className="text-white font-semibold">
+                  {selectedMembership.professional_body?.name}
+                </span>{' '}
+                renews{' '}
+                <span className="text-elec-yellow font-semibold tabular-nums">
+                  {renewalDate.toLocaleDateString('en-GB', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric',
+                  })}
+                </span>
+                {daysToRenewal !== null && daysToRenewal >= 0 && (
+                  <span className="text-white/65"> · {daysToRenewal} day{daysToRenewal === 1 ? '' : 's'} away</span>
+                )}
+              </p>
             </div>
-          ))}
-        </CardContent>
-      </Card>
-
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Entries</CardTitle>
-            <FileText className="h-4 w-4 text-white" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{complianceStats.entries_count}</div>
-            <p className="text-xs text-white">CPD activities recorded</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Verified</CardTitle>
-            <CheckCircle className="h-4 w-4 text-white" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-green-600">
-              {complianceStats.verified_entries}
-            </div>
-            <p className="text-xs text-white">Evidence verified</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Pending</CardTitle>
-            <Clock className="h-4 w-4 text-white" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-yellow-600">
-              {complianceStats.pending_verification}
-            </div>
-            <p className="text-xs text-white">Awaiting verification</p>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Action Buttons */}
-      <div className="flex flex-wrap gap-3">
-        <Button onClick={onAddEntry} className="flex-1 min-w-[200px]">
-          <Plus className="h-4 w-4 mr-2" />
-          Add CPD Entry
-        </Button>
-
-        <Button variant="outline" onClick={onViewHistory} className="flex-1 min-w-[200px]">
-          <BookOpen className="h-4 w-4 mr-2" />
-          View History
-        </Button>
-
-        <Button
-          variant="outline"
-          onClick={handleGeneratePortfolio}
-          className="flex-1 min-w-[200px]"
-        >
-          <Download className="h-4 w-4 mr-2" />
-          Export Portfolio
-        </Button>
-
-        <Button variant="outline" onClick={onManageGoals} className="flex-1 min-w-[200px]">
-          <Target className="h-4 w-4 mr-2" />
-          Manage Goals
-        </Button>
-      </div>
-
-      {/* Next Renewal Reminder */}
-      {selectedMembership.renewal_date && (
-        <Card className="border-yellow-200 bg-yellow-50">
-          <CardHeader>
-            <CardTitle className="flex items-center space-x-2 text-yellow-800">
-              <Calendar className="h-5 w-5" />
-              <span>Upcoming Renewal</span>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-yellow-700">
-              Your {selectedMembership.professional_body?.name} membership renews on{' '}
-              {new Date(selectedMembership.renewal_date).toLocaleDateString('en-GB', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric',
-              })}
-            </p>
-          </CardContent>
-        </Card>
+          </div>
+        </section>
       )}
     </div>
   );
 };
+
+const StatCell = ({
+  icon: Icon,
+  label,
+  value,
+  subtitle,
+  accent,
+}: {
+  icon: React.ElementType;
+  label: string;
+  value: number;
+  subtitle: string;
+  accent?: boolean;
+}) => (
+  <div className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-4 sm:p-5">
+    <div className="flex items-baseline justify-between gap-2">
+      <Icon
+        className={cn('h-3.5 w-3.5', accent ? 'text-emerald-300' : 'text-elec-yellow')}
+        aria-hidden
+      />
+      <span className="text-[9.5px] uppercase tracking-[0.14em] font-semibold text-white/65">
+        {label}
+      </span>
+    </div>
+    <div
+      className={cn(
+        'mt-2 text-[28px] font-semibold tabular-nums',
+        accent ? 'text-emerald-300' : 'text-white'
+      )}
+    >
+      {value}
+    </div>
+    <div className="mt-0.5 text-[11px] text-white/65">{subtitle}</div>
+  </div>
+);
+
+const ActionButton = ({
+  primary,
+  icon: Icon,
+  label,
+  onClick,
+}: {
+  primary?: boolean;
+  icon: React.ElementType;
+  label: string;
+  onClick?: () => void;
+}) => (
+  <button
+    type="button"
+    onClick={onClick}
+    className={cn(
+      'inline-flex items-center justify-center gap-2 text-[11.5px] font-semibold uppercase tracking-[0.14em] rounded-full px-4 py-2.5 min-h-[44px] touch-manipulation transition-colors',
+      primary
+        ? 'text-black bg-elec-yellow hover:bg-elec-yellow/90 active:bg-elec-yellow/85'
+        : 'text-white/85 border border-white/15 hover:border-white/30'
+    )}
+  >
+    <Icon className="h-4 w-4" />
+    {label}
+    {primary && <ArrowRight className="h-4 w-4" />}
+  </button>
+);
 
 export default EnhancedCPDDashboard;

@@ -332,260 +332,284 @@ export function ProfileSection() {
   };
 
   return (
-    <div className="px-4 py-6 space-y-6 lg:px-6">
-      {/* Profile Header */}
-      <Card className="bg-card border-border">
-        <CardContent className="p-6">
-          <div className="flex items-center gap-4">
-            <Avatar className="h-16 w-16">
-              <AvatarImage src={profile?.avatar_url} />
-              <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow text-xl font-bold">
-                {initials}
-              </AvatarFallback>
-            </Avatar>
-            <div className="flex-1 min-w-0">
-              <h2 className="text-xl font-bold text-foreground">{fullName}</h2>
-              <p className="text-sm text-white">Apprentice Electrician</p>
-              <div className="flex items-center gap-2 mt-2">
-                <Badge variant="outline" className="text-xs border-elec-yellow/30 text-elec-yellow">
-                  <GraduationCap className="h-3 w-3 mr-1" />
-                  {qualification}
-                </Badge>
-              </div>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-6 lg:py-8 space-y-7 lg:space-y-10">
+      {/* ─── Editorial profile hero ─── */}
+      <header className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-5 sm:p-6">
+        <div className="flex items-start gap-4 sm:gap-5">
+          <Avatar className="h-14 w-14 sm:h-16 sm:w-16 border border-white/[0.06] flex-shrink-0">
+            <AvatarImage src={profile?.avatar_url} />
+            <AvatarFallback className="bg-white/[0.04] text-elec-yellow text-[18px] font-semibold">
+              {initials}
+            </AvatarFallback>
+          </Avatar>
+          <div className="flex-1 min-w-0 space-y-1">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Apprentice · Electrical
+            </span>
+            <h2 className="text-[24px] sm:text-[28px] font-semibold tracking-tight text-white leading-none">
+              {fullName}
+            </h2>
+            {user?.email && (
+              <p className="text-[12px] text-white/55 font-mono truncate">{user.email}</p>
+            )}
+            <div className="pt-1.5">
+              <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-elec-yellow border border-elec-yellow/30 bg-elec-yellow/[0.04] px-2.5 py-1 rounded-md">
+                <GraduationCap className="h-3 w-3" />
+                {qualification}
+              </span>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </header>
 
-      {/* Tutor Communication */}
-      <Card className="bg-card border-border">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-base font-semibold flex items-center gap-2">
-            <MessageSquare className="h-4 w-4 text-elec-yellow" />
-            Tutor Communication
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="pt-0 space-y-2">
-          {/* Action Required */}
-          <button
-            onClick={() => setShowMessages(true)}
-            className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors active:scale-[0.98] touch-manipulation"
-          >
-            <div
-              className={cn('p-2 rounded-lg',
-                actionRequiredCount > 0 ? 'bg-white/[0.02]' : 'bg-white/[0.02]'
-              )}
-            >
-              <AlertCircle
-                className={cn('h-4 w-4',
-                  actionRequiredCount > 0 ? 'text-white/85' : 'text-white/85'
+      <div className="lg:grid lg:grid-cols-2 lg:gap-7 space-y-7 lg:space-y-0">
+        {/* ─── Tutor communication ─── */}
+        <section className="space-y-3">
+          <div className="space-y-1">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Tutor communication
+            </span>
+            <h3 className="text-[16px] sm:text-[18px] font-medium text-white">From your college</h3>
+          </div>
+          <ul className="space-y-2">
+            <li>
+              <button
+                onClick={() => setShowMessages(true)}
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] hover:bg-white/[0.04] transition-colors touch-manipulation text-left"
+              >
+                <AlertCircle
+                  className={cn(
+                    'h-4 w-4 flex-shrink-0',
+                    actionRequiredCount > 0 ? 'text-red-300' : 'text-white/40'
+                  )}
+                />
+                <div className="flex-1 min-w-0 space-y-0.5">
+                  <p className="text-[13px] font-medium text-white">Actions required</p>
+                  <p className="text-[11.5px] text-white/55">
+                    {actionRequiredCount > 0
+                      ? `${actionRequiredCount} item${actionRequiredCount !== 1 ? 's' : ''} need a reply`
+                      : 'All caught up'}
+                  </p>
+                </div>
+                {actionRequiredCount > 0 && (
+                  <span className="text-[11px] font-mono text-red-300 px-1.5 py-0 rounded-md border border-red-500/30 bg-red-500/[0.06]">
+                    {actionRequiredCount}
+                  </span>
                 )}
-              />
-            </div>
-            <div className="flex-1 text-left">
-              <p className="text-sm font-medium text-foreground">Actions Required</p>
-              <p className="text-xs text-white">
-                {actionRequiredCount > 0
-                  ? `${actionRequiredCount} item${actionRequiredCount !== 1 ? 's' : ''} need attention`
-                  : 'All caught up!'}
-              </p>
-            </div>
-            {actionRequiredCount > 0 && (
-              <Badge variant="destructive" className="text-xs">
-                {actionRequiredCount}
-              </Badge>
-            )}
-            <ChevronRight className="h-4 w-4 text-white" />
-          </button>
+                <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0" />
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => setShowMessages(true)}
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] hover:bg-white/[0.04] transition-colors touch-manipulation text-left"
+              >
+                <Bell
+                  className={cn(
+                    'h-4 w-4 flex-shrink-0',
+                    unreadCount > 0 ? 'text-elec-yellow' : 'text-white/40'
+                  )}
+                />
+                <div className="flex-1 min-w-0 space-y-0.5">
+                  <p className="text-[13px] font-medium text-white">Unread comments</p>
+                  <p className="text-[11.5px] text-white/55">
+                    {unreadCount > 0
+                      ? `${unreadCount} new comment${unreadCount !== 1 ? 's' : ''}`
+                      : 'No new messages'}
+                  </p>
+                </div>
+                {unreadCount > 0 && (
+                  <span className="text-[11px] font-mono text-elec-yellow px-1.5 py-0 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06]">
+                    {unreadCount}
+                  </span>
+                )}
+                <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0" />
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => setShowDirectMessages(true)}
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] hover:bg-white/[0.04] transition-colors touch-manipulation text-left"
+              >
+                <MessageSquare className="h-4 w-4 text-white/40 flex-shrink-0" />
+                <div className="flex-1 min-w-0 space-y-0.5">
+                  <p className="text-[13px] font-medium text-white">Message tutor</p>
+                  <p className="text-[11.5px] text-white/55">
+                    {connections.length > 0
+                      ? `${connections.length} conversation${connections.length !== 1 ? 's' : ''}`
+                      : 'Send a message to your tutor'}
+                  </p>
+                </div>
+                {messageUnreadCount > 0 && (
+                  <span className="text-[11px] font-mono text-elec-yellow px-1.5 py-0 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06]">
+                    {messageUnreadCount}
+                  </span>
+                )}
+                <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0" />
+              </button>
+            </li>
+          </ul>
+        </section>
 
-          {/* Unread Messages */}
-          <button
-            onClick={() => setShowMessages(true)}
-            className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors active:scale-[0.98] touch-manipulation"
-          >
-            <div className="p-2 rounded-lg bg-white/[0.02]">
-              <Bell className="h-4 w-4 text-white/85" />
-            </div>
-            <div className="flex-1 text-left">
-              <p className="text-sm font-medium text-foreground">Unread Messages</p>
-              <p className="text-xs text-white">
-                {unreadCount > 0
-                  ? `${unreadCount} new comment${unreadCount !== 1 ? 's' : ''}`
-                  : 'No new messages'}
-              </p>
-            </div>
-            {unreadCount > 0 && <Badge className="text-xs bg-white/[0.02]">{unreadCount}</Badge>}
-            <ChevronRight className="h-4 w-4 text-white" />
-          </button>
+        {/* ─── Progress shortcuts ─── */}
+        <section className="space-y-3">
+          <div className="space-y-1">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Progress
+            </span>
+            <h3 className="text-[16px] sm:text-[18px] font-medium text-white">Where you stand</h3>
+          </div>
+          <ul className="space-y-2">
+            <li>
+              <button
+                onClick={() => setShowKSBMap(true)}
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] hover:bg-white/[0.04] transition-colors touch-manipulation text-left"
+              >
+                <Shield className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+                <div className="flex-1 min-w-0 space-y-0.5">
+                  <p className="text-[13px] font-medium text-white">KSB coverage map</p>
+                  <p className="text-[11.5px] text-white/55">
+                    Knowledge, skills &amp; behaviours covered through your ACs
+                  </p>
+                </div>
+                <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0" />
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => setShowEPAStatus(true)}
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] hover:bg-white/[0.04] transition-colors touch-manipulation text-left"
+              >
+                <GraduationCap className="h-4 w-4 text-white/40 flex-shrink-0" />
+                <div className="flex-1 min-w-0 space-y-0.5">
+                  <p className="text-[13px] font-medium text-white">EPA gateway status</p>
+                  <p className="text-[11.5px] text-white/55">
+                    End-point assessment readiness across the 5 gates
+                  </p>
+                </div>
+                <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0" />
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => navigate('/apprentice/hub?tab=progress')}
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] hover:bg-white/[0.04] transition-colors touch-manipulation text-left"
+              >
+                <Trophy className="h-4 w-4 text-white/40 flex-shrink-0" />
+                <div className="flex-1 min-w-0 space-y-0.5">
+                  <p className="text-[13px] font-medium text-white">Learning tracker</p>
+                  <p className="text-[11.5px] text-white/55">
+                    Quizzes, flashcards, predicted grade, achievements
+                  </p>
+                </div>
+                <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0" />
+              </button>
+            </li>
+          </ul>
+        </section>
+      </div>
 
-          {/* Message Tutor */}
-          <button
-            onClick={() => setShowDirectMessages(true)}
-            className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors active:scale-[0.98] touch-manipulation"
-          >
-            <div className="p-2 rounded-lg bg-white/[0.02]">
-              <MessageSquare className="h-4 w-4 text-white/85" />
-            </div>
-            <div className="flex-1 text-left">
-              <p className="text-sm font-medium text-foreground">Message Tutor</p>
-              <p className="text-xs text-white">
-                {connections.length > 0
-                  ? `${connections.length} conversation${connections.length !== 1 ? 's' : ''}`
-                  : 'Send a message to your tutor'}
-              </p>
-            </div>
-            {messageUnreadCount > 0 && (
-              <Badge className="bg-white/[0.02] text-white text-xs">{messageUnreadCount}</Badge>
-            )}
-            <ChevronRight className="h-4 w-4 text-white" />
-          </button>
-        </CardContent>
-      </Card>
-
-      {/* Progress & Achievements */}
-      <Card className="bg-card border-border">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-base font-semibold flex items-center gap-2">
-            <Trophy className="h-4 w-4 text-elec-yellow" />
-            Progress
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="pt-0 space-y-2">
-          <button
-            onClick={() => setShowKSBMap(true)}
-            className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors active:scale-[0.98] touch-manipulation"
-          >
-            <div className="p-2 rounded-lg bg-elec-yellow/10">
-              <Shield className="h-4 w-4 text-elec-yellow" />
-            </div>
-            <div className="flex-1 text-left">
-              <p className="text-sm font-medium text-foreground">KSB Coverage Map</p>
-              <p className="text-xs text-white">
-                View your knowledge, skills & behaviours progress
-              </p>
-            </div>
-            <ChevronRight className="h-4 w-4 text-white" />
-          </button>
-
-          <button
-            onClick={() => setShowEPAStatus(true)}
-            className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors active:scale-[0.98] touch-manipulation"
-          >
-            <div className="p-2 rounded-lg bg-white/[0.02]">
-              <GraduationCap className="h-4 w-4 text-white/85" />
-            </div>
-            <div className="flex-1 text-left">
-              <p className="text-sm font-medium text-foreground">EPA Gateway Status</p>
-              <p className="text-xs text-white">Check your end-point assessment readiness</p>
-            </div>
-            <ChevronRight className="h-4 w-4 text-white" />
-          </button>
-        </CardContent>
-      </Card>
-
-      {/* Share & Export */}
-      <Card className="bg-card border-border">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-base font-semibold flex items-center gap-2">
-            <Share2 className="h-4 w-4 text-elec-yellow" />
-            Share & Export
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="pt-0 space-y-2">
-          <button
-            onClick={() => setShowShare(true)}
-            className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors active:scale-[0.98] touch-manipulation"
-          >
-            <div className="p-2 rounded-lg bg-white/[0.02]">
-              <Link2 className="h-4 w-4 text-white/85" />
-            </div>
-            <div className="flex-1 text-left">
-              <p className="text-sm font-medium text-foreground">Share Portfolio Link</p>
-              <p className="text-xs text-white">
-                {shares.length > 0
-                  ? `${shares.length} active link${shares.length !== 1 ? 's' : ''}`
-                  : 'Generate a link to share with tutors'}
-              </p>
-            </div>
-            {shares.length > 0 && (
-              <Badge variant="outline" className="text-xs">
-                {shares.length}
-              </Badge>
-            )}
-            <ChevronRight className="h-4 w-4 text-white" />
-          </button>
-
-          <button
-            onClick={handleExportPDF}
-            disabled={isExportingPDF}
-            className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors active:scale-[0.98] touch-manipulation disabled:opacity-50"
-          >
-            <div className="p-2 rounded-lg bg-red-500/10">
+      {/* ─── Share & export ─── */}
+      <section className="space-y-3">
+        <div className="space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Share &amp; export
+          </span>
+          <h3 className="text-[16px] sm:text-[18px] font-medium text-white">
+            Send your portfolio out
+          </h3>
+          <p className="text-[12px] text-white/55 leading-relaxed">
+            Generate a tutor-shareable link, export a PDF, or download every file as a zip.
+          </p>
+        </div>
+        <ul className="grid grid-cols-1 md:grid-cols-3 gap-2">
+          <li>
+            <button
+              onClick={() => setShowShare(true)}
+              className="w-full h-full flex items-center gap-3 px-4 py-4 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] hover:bg-white/[0.04] transition-colors touch-manipulation text-left"
+            >
+              <Link2 className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+              <div className="flex-1 min-w-0 space-y-0.5">
+                <p className="text-[13px] font-medium text-white">Share link</p>
+                <p className="text-[11.5px] text-white/55">
+                  {shares.length > 0
+                    ? `${shares.length} active`
+                    : 'Generate a private link'}
+                </p>
+              </div>
+              <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0" />
+            </button>
+          </li>
+          <li>
+            <button
+              onClick={handleExportPDF}
+              disabled={isExportingPDF}
+              className="w-full h-full flex items-center gap-3 px-4 py-4 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] hover:bg-white/[0.04] transition-colors touch-manipulation text-left disabled:opacity-50"
+            >
               {isExportingPDF ? (
-                <Loader2 className="h-4 w-4 text-red-500 animate-spin" />
+                <Loader2 className="h-4 w-4 text-elec-yellow animate-spin flex-shrink-0" />
               ) : (
-                <FileText className="h-4 w-4 text-red-500" />
+                <FileText className="h-4 w-4 text-white/55 flex-shrink-0" />
               )}
-            </div>
-            <div className="flex-1 text-left">
-              <p className="text-sm font-medium text-foreground">Export to PDF</p>
-              <p className="text-xs text-white">
-                {isExportingPDF ? 'Generating PDF...' : 'Download your portfolio as a PDF'}
-              </p>
-            </div>
-            <ChevronRight className="h-4 w-4 text-white" />
-          </button>
-
-          <button
-            onClick={handleDownloadAll}
-            disabled={isDownloadingAll}
-            className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors active:scale-[0.98] touch-manipulation disabled:opacity-50"
-          >
-            <div className="p-2 rounded-lg bg-muted">
+              <div className="flex-1 min-w-0 space-y-0.5">
+                <p className="text-[13px] font-medium text-white">Export PDF</p>
+                <p className="text-[11.5px] text-white/55">
+                  {isExportingPDF ? 'Generating…' : 'Single document for review'}
+                </p>
+              </div>
+              <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0" />
+            </button>
+          </li>
+          <li>
+            <button
+              onClick={handleDownloadAll}
+              disabled={isDownloadingAll}
+              className="w-full h-full flex items-center gap-3 px-4 py-4 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] hover:bg-white/[0.04] transition-colors touch-manipulation text-left disabled:opacity-50"
+            >
               {isDownloadingAll ? (
-                <Loader2 className="h-4 w-4 text-white animate-spin" />
+                <Loader2 className="h-4 w-4 text-elec-yellow animate-spin flex-shrink-0" />
               ) : (
-                <Download className="h-4 w-4 text-white" />
+                <Download className="h-4 w-4 text-white/55 flex-shrink-0" />
               )}
-            </div>
-            <div className="flex-1 text-left">
-              <p className="text-sm font-medium text-foreground">Download All Evidence</p>
-              <p className="text-xs text-white">
-                {isDownloadingAll ? 'Creating zip file...' : 'Get a zip of all your files'}
-              </p>
-            </div>
-            <ChevronRight className="h-4 w-4 text-white" />
-          </button>
-        </CardContent>
-      </Card>
+              <div className="flex-1 min-w-0 space-y-0.5">
+                <p className="text-[13px] font-medium text-white">Download all</p>
+                <p className="text-[11.5px] text-white/55">
+                  {isDownloadingAll ? 'Creating zip…' : 'Every evidence file as a zip'}
+                </p>
+              </div>
+              <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0" />
+            </button>
+          </li>
+        </ul>
+      </section>
 
-      {/* Settings */}
-      <Card className="bg-card border-border">
-        <CardContent className="p-0">
-          <button
-            onClick={() => navigate('/settings')}
-            className="w-full flex items-center gap-3 p-4 hover:bg-muted/50 transition-colors active:scale-[0.98] touch-manipulation"
-          >
-            <div className="p-2 rounded-lg bg-muted">
-              <Settings className="h-4 w-4 text-white" />
-            </div>
-            <span className="text-sm font-medium text-foreground">Settings</span>
-            <ChevronRight className="h-4 w-4 text-white ml-auto" />
-          </button>
-
-          <div className="border-t border-border" />
-
-          <button
-            onClick={handleSignOut}
-            className="w-full flex items-center gap-3 p-4 hover:bg-muted/50 transition-colors text-destructive active:scale-[0.98] touch-manipulation"
-          >
-            <div className="p-2 rounded-lg bg-destructive/10">
-              <LogOut className="h-4 w-4" />
-            </div>
-            <span className="text-sm font-medium">Sign Out</span>
-          </button>
-        </CardContent>
-      </Card>
+      {/* ─── Account ─── */}
+      <section className="space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Account
+        </span>
+        <ul className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] divide-y divide-white/[0.04] overflow-hidden">
+          <li>
+            <button
+              onClick={() => navigate('/settings')}
+              className="w-full flex items-center gap-3 px-4 py-3.5 hover:bg-white/[0.04] transition-colors touch-manipulation text-left"
+            >
+              <Settings className="h-4 w-4 text-white/55 flex-shrink-0" />
+              <span className="text-[13px] font-medium text-white flex-1">Settings</span>
+              <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0" />
+            </button>
+          </li>
+          <li>
+            <button
+              onClick={handleSignOut}
+              className="w-full flex items-center gap-3 px-4 py-3.5 hover:bg-red-500/[0.04] transition-colors touch-manipulation text-left"
+            >
+              <LogOut className="h-4 w-4 text-red-300/85 flex-shrink-0" />
+              <span className="text-[13px] font-medium text-red-300/85 flex-1">Sign out</span>
+            </button>
+          </li>
+        </ul>
+      </section>
 
       {/* Share Sheet */}
       <Sheet open={showShare} onOpenChange={setShowShare}>

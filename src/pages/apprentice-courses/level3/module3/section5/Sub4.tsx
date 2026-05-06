@@ -26,8 +26,10 @@ import {
   LearningOutcomes,
   ContentEyebrow,
   SectionRule,
+  VideoCard,
 } from '@/components/study-centre/learning';
 import { ContactorSymbol } from '@/components/study-centre/diagrams';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Synchronous motors, VFDs, and motor control | Level 3 Module 3.5.4 (AC 3.4) | Elec-Mate';
@@ -264,6 +266,14 @@ export default function Sub4() {
           </ConceptBlock>
 
           <InlineCheck {...checks[0]} />
+
+          <VideoCard
+            url={videos.acGenerator.url}
+            title={videos.acGenerator.title}
+            channel={videos.acGenerator.channel}
+            duration={videos.acGenerator.duration}
+            topic={videos.acGenerator.topic}
+          />
 
           <ConceptBlock
             title="Synchronous variants — wound-rotor, PMSM and reluctance motors"

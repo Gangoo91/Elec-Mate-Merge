@@ -177,7 +177,7 @@ export function EditorialHubGrid({ number = '03', label = 'YOUR HUBS' }: Editori
         <motion.div
           variants={itemVariants}
           className={cn(
-            'relative grid gap-px bg-white/[0.06] border border-white/[0.08] rounded-2xl overflow-hidden',
+            'relative grid gap-[2px] bg-black border border-white/[0.08] rounded-2xl overflow-hidden',
             visible.length >= 4
               ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4'
               : visible.length === 3

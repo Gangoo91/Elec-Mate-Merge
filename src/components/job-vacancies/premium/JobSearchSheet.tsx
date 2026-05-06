@@ -1,29 +1,29 @@
 /**
- * JobSearchSheet - Full-screen smart search experience
- * Recent searches, location input, quick filters, live results preview
+ * JobSearchSheet — editorial smart-search sheet.
+ *
+ * Type-led full-screen sheet. Title + supporting copy, two inputs (role +
+ * location), AI-match toggle, primary search action. Recent searches +
+ * popular roles + tips below, all rendered with eyebrows + hairline
+ * dividers + tabular nums. Drops the amber/orange gradient chrome.
  */
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Drawer } from 'vaul';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import {
   Search,
   X,
   MapPin,
-  Clock,
-  TrendingUp,
   Sparkles,
-  Zap,
   ChevronRight,
-  Trash2,
-  Briefcase,
+  ArrowRight,
 } from 'lucide-react';
 import { fadeUpVariants, pillVariants, listItemVariants } from './animations/variants';
+import { Eyebrow } from '@/components/college/primitives';
 
 interface JobSearchSheetProps {
   isOpen: boolean;
@@ -33,23 +33,20 @@ interface JobSearchSheetProps {
   initialLocation?: string;
 }
 
-// Recent searches storage key
 const RECENT_SEARCHES_KEY = 'elecmate-job-recent-searches';
 const MAX_RECENT_SEARCHES = 8;
 
-// Popular search terms
 const POPULAR_SEARCHES = [
   'Electrician',
-  'Solar Installer',
-  'EV Technician',
+  'Solar installer',
+  'EV technician',
   'Apprentice',
-  'Site Manager',
-  'Maintenance Engineer',
-  'Fire Alarm',
-  'Data Installer',
+  'Site manager',
+  'Maintenance engineer',
+  'Fire alarm',
+  'Data installer',
 ];
 
-// Quick location suggestions
 const LOCATION_SUGGESTIONS = [
   'London',
   'Manchester',
@@ -66,14 +63,20 @@ interface RecentSearch {
   timestamp: number;
 }
 
-// Load recent searches from storage
-const loadRecentSearches = (): RecentSearch[] => {
-  return storageGetJSONSync<RecentSearch[]>(RECENT_SEARCHES_KEY, []);
-};
+const loadRecentSearches = (): RecentSearch[] =>
+  storageGetJSONSync<RecentSearch[]>(RECENT_SEARCHES_KEY, []);
 
-// Save recent searches to storage
-const saveRecentSearches = (searches: RecentSearch[]) => {
+const saveRecentSearches = (searches: RecentSearch[]) =>
   storageSetJSONSync(RECENT_SEARCHES_KEY, searches);
+
+const formatTimeAgo = (timestamp: number) => {
+  const diff = Date.now() - timestamp;
+  const mins = Math.floor(diff / 60000);
+  const hours = Math.floor(diff / 3600000);
+  const days = Math.floor(diff / 86400000);
+  if (mins < 60) return `${mins}m ago`;
+  if (hours < 24) return `${hours}h ago`;
+  return `${days}d ago`;
 };
 
 const JobSearchSheet = ({
@@ -90,132 +93,109 @@ const JobSearchSheet = ({
   const [isAISearchEnabled, setIsAISearchEnabled] = useState(false);
   const queryInputRef = useRef<HTMLInputElement>(null);
 
-  // Load recent searches on mount
   useEffect(() => {
     setRecentSearches(loadRecentSearches());
   }, []);
 
-  // Focus input when sheet opens
   useEffect(() => {
-    if (isOpen) {
-      setTimeout(() => queryInputRef.current?.focus(), 100);
-    }
+    if (isOpen) setTimeout(() => queryInputRef.current?.focus(), 100);
   }, [isOpen]);
 
-  // Reset form when initial values change
   useEffect(() => {
     setQuery(initialQuery);
     setLocation(initialLocation);
   }, [initialQuery, initialLocation]);
 
-  // Handle search submission
+  const persist = useCallback(
+    (q: string, loc: string) => {
+      const next: RecentSearch = { query: q, location: loc, timestamp: Date.now() };
+      const updated = [
+        next,
+        ...recentSearches.filter((s) => s.query !== next.query || s.location !== next.location),
+      ].slice(0, MAX_RECENT_SEARCHES);
+      setRecentSearches(updated);
+      saveRecentSearches(updated);
+    },
+    [recentSearches]
+  );
+
   const handleSearch = useCallback(() => {
-    if (!query.trim()) return;
-
-    // Add to recent searches
-    const newSearch: RecentSearch = {
-      query: query.trim(),
-      location: location.trim(),
-      timestamp: Date.now(),
-    };
-
-    const updated = [
-      newSearch,
-      ...recentSearches.filter(
-        (s) => s.query !== newSearch.query || s.location !== newSearch.location
-      ),
-    ].slice(0, MAX_RECENT_SEARCHES);
-
-    setRecentSearches(updated);
-    saveRecentSearches(updated);
-
-    onSearch(query.trim(), location.trim());
+    const q = query.trim();
+    if (!q) return;
+    const loc = location.trim();
+    persist(q, loc);
+    onSearch(q, loc);
     onClose();
-  }, [query, location, recentSearches, onSearch, onClose]);
+  }, [query, location, persist, onSearch, onClose]);
 
-  // Handle quick search from popular/recent
-  const handleQuickSearch = (searchQuery: string, searchLocation: string = '') => {
+  const handleQuickSearch = (searchQuery: string, searchLocation = '') => {
     setQuery(searchQuery);
     setLocation(searchLocation);
-    // Trigger search immediately
-    const newSearch: RecentSearch = {
-      query: searchQuery,
-      location: searchLocation,
-      timestamp: Date.now(),
-    };
-
-    const updated = [
-      newSearch,
-      ...recentSearches.filter((s) => s.query !== searchQuery || s.location !== searchLocation),
-    ].slice(0, MAX_RECENT_SEARCHES);
-
-    setRecentSearches(updated);
-    saveRecentSearches(updated);
-
+    persist(searchQuery, searchLocation);
     onSearch(searchQuery, searchLocation);
     onClose();
   };
 
-  // Clear recent searches
   const clearRecentSearches = () => {
     setRecentSearches([]);
     saveRecentSearches([]);
   };
 
-  // Remove single recent search
   const removeRecentSearch = (index: number) => {
     const updated = recentSearches.filter((_, i) => i !== index);
     setRecentSearches(updated);
     saveRecentSearches(updated);
   };
 
-  // Format time ago
-  const formatTimeAgo = (timestamp: number) => {
-    const diff = Date.now() - timestamp;
-    const mins = Math.floor(diff / 60000);
-    const hours = Math.floor(diff / 3600000);
-    const days = Math.floor(diff / 86400000);
-
-    if (mins < 60) return `${mins}m ago`;
-    if (hours < 24) return `${hours}h ago`;
-    return `${days}d ago`;
-  };
-
   return (
-    <Drawer.Root shouldScaleBackground={false} noBodyStyles open={isOpen} onOpenChange={(open) => !open && onClose()}>
+    <Drawer.Root
+      shouldScaleBackground={false}
+      noBodyStyles
+      open={isOpen}
+      onOpenChange={(open) => !open && onClose()}
+    >
       <Drawer.Portal>
-        <Drawer.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" />
-        <Drawer.Content className="fixed bottom-0 left-0 right-0 z-50 flex flex-col rounded-t-3xl bg-background max-h-[95vh] outline-none">
+        <Drawer.Overlay className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[90]" />
+        <Drawer.Content className="fixed bottom-0 left-0 right-0 z-[100] flex flex-col rounded-t-3xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border-t border-white/[0.10] max-h-[95vh] outline-none">
+          <VisuallyHidden>
+            <Drawer.Title>Search jobs</Drawer.Title>
+            <Drawer.Description>
+              Search the unified job feed by role, location, and quick filters
+            </Drawer.Description>
+          </VisuallyHidden>
           {/* Drag handle */}
-          <div className="flex justify-center pt-4 pb-2">
-            <div className="w-12 h-1.5 rounded-full bg-white/20" />
+          <div className="flex justify-center pt-3 pb-1">
+            <div className="w-12 h-1.5 rounded-full bg-white/15" />
           </div>
 
           {/* Header */}
-          <div className="flex items-center justify-between px-6 pb-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500/30 to-orange-500/30 border border-amber-400/30 flex items-center justify-center">
-                <Search className="h-5 w-5 text-amber-300" />
-              </div>
-              <div>
-                <h2 className="text-lg font-bold text-white">Search Jobs</h2>
-                <p className="text-xs text-white">Find your perfect role</p>
-              </div>
+          <div className="flex items-start justify-between gap-3 px-5 sm:px-6 pt-2 pb-4">
+            <div className="space-y-1">
+              <Eyebrow>SEARCH</Eyebrow>
+              <h2 className="text-[24px] sm:text-[28px] font-semibold tracking-tight leading-tight">
+                <span className="text-elec-yellow">Find</span>{' '}
+                <span className="text-white">your fit.</span>
+              </h2>
+              <p className="text-[12.5px] text-white/85">Role, location, or both — start anywhere.</p>
             </div>
             <button
+              type="button"
               onClick={onClose}
-              className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:text-white hover:bg-white/20 transition-colors"
+              aria-label="Close"
+              className="text-white/65 hover:text-white border border-white/15 hover:border-white/30 rounded-full h-9 w-9 inline-flex items-center justify-center shrink-0 touch-manipulation transition-colors"
             >
-              <X className="h-5 w-5" />
+              <X className="h-4 w-4" />
             </button>
           </div>
 
-          {/* Search Form */}
-          <div className="px-6 pb-4 space-y-3">
-            {/* Job Search Input */}
+          {/* Search form */}
+          <div className="px-5 sm:px-6 pb-4 space-y-3">
             <div className="relative">
               {!query && (
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white pointer-events-none" />
+                <Search
+                  className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-white/65 pointer-events-none"
+                  aria-hidden
+                />
               )}
               <Input
                 ref={queryInputRef}
@@ -224,16 +204,18 @@ const JobSearchSheet = ({
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                 placeholder="Job title, skill, or company"
                 className={cn(
-                  'h-12 pr-4 bg-white/5 border-white/10 text-white placeholder:text-white rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20',
-                  !query && 'pl-12'
+                  'h-12 pr-4 bg-white/[0.04] border-white/[0.10] text-white placeholder:text-white/65 rounded-xl focus-visible:border-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/30',
+                  !query && 'pl-11'
                 )}
               />
             </div>
 
-            {/* Location Input */}
             <div className="relative">
               {!location && (
-                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white pointer-events-none" />
+                <MapPin
+                  className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-white/65 pointer-events-none"
+                  aria-hidden
+                />
               )}
               <Input
                 value={location}
@@ -241,213 +223,224 @@ const JobSearchSheet = ({
                 onFocus={() => setShowLocationSuggestions(true)}
                 onBlur={() => setTimeout(() => setShowLocationSuggestions(false), 200)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                placeholder="Location (city, postcode, or remote)"
+                placeholder="Location, postcode, or remote"
                 className={cn(
-                  'h-12 pr-4 bg-white/5 border-white/10 text-white placeholder:text-white rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20',
-                  !location && 'pl-12'
+                  'h-12 pr-4 bg-white/[0.04] border-white/[0.10] text-white placeholder:text-white/65 rounded-xl focus-visible:border-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/30',
+                  !location && 'pl-11'
                 )}
               />
 
-              {/* Location Suggestions Dropdown */}
               <AnimatePresence>
                 {showLocationSuggestions && (
                   <motion.div
-                    initial={{ opacity: 0, y: -10 }}
+                    initial={{ opacity: 0, y: -8 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    className="absolute top-full left-0 right-0 mt-2 bg-card/95 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden z-10"
+                    exit={{ opacity: 0, y: -8 }}
+                    className="absolute top-full left-0 right-0 mt-2 rounded-xl bg-[linear-gradient(180deg,hsl(0_0%_15%)_0%,hsl(0_0%_11%)_100%)] border border-white/[0.10] overflow-hidden z-10 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
                   >
-                    {LOCATION_SUGGESTIONS.map((loc) => (
-                      <button
-                        key={loc}
-                        onClick={() => {
-                          setLocation(loc);
-                          setShowLocationSuggestions(false);
-                        }}
-                        className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-white/5 transition-colors"
-                      >
-                        <MapPin className="h-4 w-4 text-white" />
-                        <span className="text-sm text-white">{loc}</span>
-                      </button>
-                    ))}
+                    <ul className="divide-y divide-white/[0.06]">
+                      {LOCATION_SUGGESTIONS.map((loc) => (
+                        <li key={loc}>
+                          <button
+                            type="button"
+                            onMouseDown={(e) => e.preventDefault()}
+                            onClick={() => {
+                              setLocation(loc);
+                              setShowLocationSuggestions(false);
+                            }}
+                            className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-white/[0.04] transition-colors"
+                          >
+                            <MapPin className="h-3.5 w-3.5 text-white/65" aria-hidden />
+                            <span className="text-[13px] text-white">{loc}</span>
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
 
-            {/* AI Search Toggle */}
+            {/* AI match toggle */}
             <button
+              type="button"
               onClick={() => setIsAISearchEnabled(!isAISearchEnabled)}
               className={cn(
-                'w-full flex items-center justify-between px-4 py-3 rounded-xl border transition-all',
+                'w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl border touch-manipulation transition-colors',
                 isAISearchEnabled
-                  ? 'bg-purple-500/20 border-purple-500/30'
-                  : 'bg-white/5 border-white/10'
+                  ? 'border-elec-yellow/40 bg-elec-yellow/[0.08]'
+                  : 'border-white/[0.10] bg-white/[0.02] hover:border-white/[0.20]'
               )}
             >
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 min-w-0">
                 <Sparkles
-                  className={cn('h-5 w-5', isAISearchEnabled ? 'text-purple-400' : 'text-white')}
+                  className={cn(
+                    'h-4 w-4 shrink-0',
+                    isAISearchEnabled ? 'text-elec-yellow' : 'text-white/65'
+                  )}
+                  aria-hidden
                 />
-                <div className="text-left">
+                <div className="text-left min-w-0">
                   <span
                     className={cn(
-                      'text-sm font-medium',
-                      isAISearchEnabled ? 'text-purple-300' : 'text-white'
+                      'block text-[13px] font-semibold',
+                      isAISearchEnabled ? 'text-elec-yellow' : 'text-white'
                     )}
                   >
-                    AI Job Match
+                    AI job match
                   </span>
-                  <p className="text-xs text-white">Match jobs to your profile</p>
+                  <span className="block text-[11px] text-white/65">
+                    Reorders results to your profile
+                  </span>
                 </div>
               </div>
               <div
                 className={cn(
-                  'w-10 h-6 rounded-full flex items-center transition-all',
-                  isAISearchEnabled
-                    ? 'bg-purple-500 justify-end pr-1'
-                    : 'bg-white/20 justify-start pl-1'
+                  'w-9 h-5 rounded-full flex items-center transition-all shrink-0',
+                  isAISearchEnabled ? 'bg-elec-yellow justify-end pr-0.5' : 'bg-white/15 justify-start pl-0.5'
                 )}
               >
-                <div className="w-4 h-4 rounded-full bg-white shadow" />
+                <div
+                  className={cn(
+                    'w-4 h-4 rounded-full transition-colors',
+                    isAISearchEnabled ? 'bg-black' : 'bg-white'
+                  )}
+                />
               </div>
             </button>
 
-            {/* Search Button */}
-            <Button
+            <button
+              type="button"
               onClick={handleSearch}
               disabled={!query.trim()}
-              className="w-full h-12 bg-gradient-to-r from-amber-500 to-orange-500 text-black hover:from-amber-400 hover:to-orange-400 font-semibold shadow-lg shadow-amber-500/25 rounded-xl disabled:opacity-50"
+              className="w-full text-[13px] font-semibold uppercase tracking-[0.14em] text-black bg-elec-yellow hover:bg-elec-yellow/90 active:bg-elec-yellow/85 rounded-full px-4 py-3 min-h-[44px] inline-flex items-center justify-center gap-2 touch-manipulation transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
             >
-              <Search className="h-5 w-5 mr-2" />
-              Search Jobs
-            </Button>
+              <Search className="h-4 w-4" />
+              Search jobs
+              <ArrowRight className="h-4 w-4" />
+            </button>
           </div>
 
-          {/* Scrollable Content */}
-          <div className="flex-1 overflow-y-auto px-6 pb-8">
-            {/* Recent Searches */}
+          {/* Scrollable content */}
+          <div className="flex-1 overflow-y-auto px-5 sm:px-6 pb-8 space-y-7">
+            {/* Recent searches */}
             {recentSearches.length > 0 && (
-              <motion.div
-                variants={fadeUpVariants}
-                initial="initial"
-                animate="animate"
-                className="mb-6"
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-2">
-                    <Clock className="h-4 w-4 text-white" />
-                    <span className="text-sm font-medium text-white">Recent Searches</span>
-                  </div>
+              <motion.section variants={fadeUpVariants} initial="initial" animate="animate" className="space-y-3">
+                <div className="flex items-baseline justify-between gap-3">
+                  <Eyebrow>RECENT</Eyebrow>
                   <button
+                    type="button"
                     onClick={clearRecentSearches}
-                    className="text-xs text-white hover:text-red-400 transition-colors"
+                    className="text-[10.5px] uppercase tracking-[0.14em] font-semibold text-white/65 hover:text-red-300 transition-colors"
                   >
                     Clear all
                   </button>
                 </div>
 
-                <div className="space-y-2">
+                <ul className="divide-y divide-white/[0.06]">
                   {recentSearches.slice(0, 5).map((search, index) => (
-                    <motion.div
+                    <motion.li
                       key={`${search.query}-${search.timestamp}`}
                       variants={listItemVariants}
-                      className="group flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/5 hover:border-white/10 hover:bg-white/[0.05] transition-all cursor-pointer"
-                      onClick={() => handleQuickSearch(search.query, search.location)}
+                      className="group"
                     >
-                      <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center">
-                        <Search className="h-4 w-4 text-white" />
+                      <div className="flex items-center gap-3 py-3 first:pt-0 last:pb-0">
+                        <button
+                          type="button"
+                          onClick={() => handleQuickSearch(search.query, search.location)}
+                          className="flex-1 min-w-0 inline-flex items-center gap-3 text-left rounded-md -mx-1 px-1 py-1 hover:bg-white/[0.03] active:bg-white/[0.05] transition-colors touch-manipulation"
+                        >
+                          <Search className="h-3.5 w-3.5 text-white/65 shrink-0" aria-hidden />
+                          <div className="flex-1 min-w-0">
+                            <p className="text-[13.5px] font-semibold text-white truncate">
+                              {search.query}
+                            </p>
+                            {search.location && (
+                              <p className="text-[11.5px] text-white/65 truncate inline-flex items-center gap-1">
+                                <MapPin className="h-3 w-3" aria-hidden />
+                                {search.location}
+                              </p>
+                            )}
+                          </div>
+                          <span className="text-[10.5px] tabular-nums uppercase tracking-[0.14em] text-white/65 shrink-0">
+                            {formatTimeAgo(search.timestamp)}
+                          </span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            removeRecentSearch(index);
+                          }}
+                          aria-label="Remove"
+                          className="opacity-60 group-hover:opacity-100 text-white/65 hover:text-white p-1 rounded transition-all"
+                        >
+                          <X className="h-4 w-4" />
+                        </button>
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm text-white font-medium truncate">{search.query}</p>
-                        {search.location && (
-                          <p className="text-xs text-white truncate flex items-center gap-1">
-                            <MapPin className="h-3 w-3" />
-                            {search.location}
-                          </p>
-                        )}
-                      </div>
-                      <span className="text-xs text-white">
-                        {formatTimeAgo(search.timestamp)}
-                      </span>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          removeRecentSearch(index);
-                        }}
-                        className="opacity-0 group-hover:opacity-100 p-1 hover:bg-white/10 rounded transition-all"
-                      >
-                        <X className="h-4 w-4 text-white" />
-                      </button>
-                    </motion.div>
+                    </motion.li>
                   ))}
-                </div>
-              </motion.div>
+                </ul>
+              </motion.section>
             )}
 
-            {/* Popular Searches */}
-            <motion.div
+            {/* Popular */}
+            <motion.section
               variants={fadeUpVariants}
               initial="initial"
               animate="animate"
               transition={{ delay: 0.1 }}
+              className="space-y-3"
             >
-              <div className="flex items-center gap-2 mb-3">
-                <TrendingUp className="h-4 w-4 text-amber-400" />
-                <span className="text-sm font-medium text-white">Popular Searches</span>
-              </div>
-
-              <div className="flex flex-wrap gap-2">
+              <Eyebrow>POPULAR ROLES</Eyebrow>
+              <ul className="flex flex-wrap gap-1.5">
                 {POPULAR_SEARCHES.map((term, index) => (
-                  <motion.button
+                  <motion.li
                     key={term}
                     variants={pillVariants}
                     initial="initial"
                     animate="animate"
-                    whileTap="tap"
                     custom={index}
-                    onClick={() => handleQuickSearch(term)}
-                    className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-white hover:bg-amber-500/20 hover:text-amber-300 hover:border-amber-500/30 transition-all"
                   >
-                    <Briefcase className="h-3.5 w-3.5" />
-                    {term}
-                  </motion.button>
+                    <button
+                      type="button"
+                      onClick={() => handleQuickSearch(term)}
+                      className="inline-flex items-center text-[11px] font-semibold uppercase tracking-[0.12em] text-white/85 border border-white/15 hover:border-elec-yellow/40 hover:text-elec-yellow rounded-full px-3 py-1.5 transition-colors touch-manipulation"
+                    >
+                      {term}
+                    </button>
+                  </motion.li>
                 ))}
-              </div>
-            </motion.div>
+              </ul>
+            </motion.section>
 
-            {/* Quick Tips */}
-            <motion.div
+            {/* Tips */}
+            <motion.section
               variants={fadeUpVariants}
               initial="initial"
               animate="animate"
               transition={{ delay: 0.2 }}
-              className="mt-6 p-4 rounded-xl bg-gradient-to-br from-amber-500/10 to-orange-500/10 border border-amber-500/20"
+              className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_15%)_0%,hsl(0_0%_11%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5"
             >
-              <div className="flex items-center gap-2 mb-2">
-                <Zap className="h-4 w-4 text-amber-400" />
-                <span className="text-sm font-medium text-amber-300">Search Tips</span>
-              </div>
-              <ul className="space-y-1.5 text-xs text-white">
-                <li className="flex items-center gap-2">
-                  <ChevronRight className="h-3 w-3 text-amber-400" />
-                  Use specific job titles for better matches
-                </li>
-                <li className="flex items-center gap-2">
-                  <ChevronRight className="h-3 w-3 text-amber-400" />
-                  Try "Remote" or "Nationwide" for flexible roles
-                </li>
-                <li className="flex items-center gap-2">
-                  <ChevronRight className="h-3 w-3 text-amber-400" />
-                  Enable AI Match to find jobs suited to your skills
-                </li>
-              </ul>
-            </motion.div>
+              <Eyebrow>SEARCH TIPS</Eyebrow>
+              <ol className="mt-3 divide-y divide-white/[0.06]">
+                <Tip>Use a specific job title — "Solar PV installer" beats "engineer".</Tip>
+                <Tip>"Remote" or "Nationwide" pulls flexible roles UK-wide.</Tip>
+                <Tip>AI match reorders results against your profile + saved roles.</Tip>
+              </ol>
+            </motion.section>
           </div>
         </Drawer.Content>
       </Drawer.Portal>
     </Drawer.Root>
   );
 };
+
+const Tip = ({ children }: { children: React.ReactNode }) => (
+  <li className="flex items-baseline gap-2.5 py-2.5 first:pt-0 last:pb-0">
+    <ChevronRight className="h-3.5 w-3.5 text-elec-yellow shrink-0 self-center" aria-hidden />
+    <p className="text-[12.5px] leading-relaxed text-white/85">{children}</p>
+  </li>
+);
 
 export default JobSearchSheet;

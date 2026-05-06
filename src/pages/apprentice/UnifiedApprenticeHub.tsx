@@ -1,11 +1,11 @@
 /**
  * UnifiedApprenticeHub
  *
- * Main page combining Portfolio, OJT, and Progress into one unified hub.
+ * Apprentice portfolio workspace. Hours/OJT moved out — now lives at
+ * /apprentice/ojt-hub as its own surface.
  * Routes:
- * - /apprentice/hub (default: home tab)
+ * - /apprentice/hub (default: portfolio dashboard)
  * - /apprentice/hub?tab=work
- * - /apprentice/hub?tab=hours
  * - /apprentice/hub?tab=progress
  * - /apprentice/hub?tab=me
  */
@@ -18,24 +18,26 @@ import { ApprenticeHubShell } from '@/components/apprentice-hub/ApprenticeHubShe
 import { ApprenticeHubTab } from '@/components/apprentice-hub/ApprenticeHubNav';
 import { UnifiedDashboard } from '@/components/apprentice-hub/UnifiedDashboard';
 import { PortfolioGrid } from '@/components/apprentice-hub/PortfolioGrid';
-import { OJTProgressSection } from '@/components/apprentice-hub/OJTProgressSection';
 import { ProfileSection } from '@/components/apprentice-hub/ProfileSection';
 import { UnifiedCaptureSheet } from '@/components/apprentice-hub/UnifiedCaptureSheet';
 import { ProgressDashboard } from '@/components/apprentice/progress/ProgressDashboard';
 
+const VALID_TABS: ApprenticeHubTab[] = ['home', 'work', 'progress', 'me'];
+const isValidTab = (t: string | null): t is ApprenticeHubTab =>
+  !!t && (VALID_TABS as string[]).includes(t);
+
 export default function UnifiedApprenticeHub() {
   useSEO({
-    title: 'Apprentice Hub',
-    description:
-      'Track your electrical apprenticeship. Portfolio evidence, OJT hours, and progress tracking.',
+    title: 'Apprentice Portfolio',
+    description: 'Your apprenticeship portfolio — AC coverage, evidence, EPA gateway readiness.',
     noindex: true,
   });
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // Get tab from URL or default to 'home'
-  const tabParam = searchParams.get('tab') as ApprenticeHubTab | null;
+  // Get tab from URL or default to 'home'. Old ?tab=hours redirects to ojt-hub.
+  const tabParam = searchParams.get('tab');
   const [activeTab, setActiveTab] = useState<ApprenticeHubTab>(
-    tabParam && ['home', 'work', 'hours', 'progress', 'me'].includes(tabParam) ? tabParam : 'home'
+    isValidTab(tabParam) ? tabParam : 'home'
   );
 
   // Capture sheet state
@@ -51,11 +53,16 @@ export default function UnifiedApprenticeHub() {
     setSearchParams(searchParams, { replace: false });
   }, [activeTab, searchParams, setSearchParams]);
 
-  // Sync active tab with URL on mount
+  // Sync active tab with URL on mount; deep-links with ?tab=hours redirect to OJT.
   useEffect(() => {
-    if (tabParam && ['home', 'work', 'hours', 'progress', 'me'].includes(tabParam)) {
+    if (tabParam === 'hours') {
+      window.location.replace('/apprentice/ojt-hub');
+      return;
+    }
+    if (isValidTab(tabParam)) {
       setActiveTab(tabParam);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleTabChange = (tab: ApprenticeHubTab) => {
@@ -64,10 +71,6 @@ export default function UnifiedApprenticeHub() {
 
   const handleCapture = () => {
     setShowCapture(true);
-  };
-
-  const handleCaptureClose = () => {
-    setShowCapture(false);
   };
 
   const handleCaptureComplete = () => {
@@ -90,8 +93,6 @@ export default function UnifiedApprenticeHub() {
         return <UnifiedDashboard onNavigate={handleTabChange} onCapture={handleCapture} />;
       case 'work':
         return <PortfolioGrid onCapture={handleCapture} />;
-      case 'hours':
-        return <OJTProgressSection />;
       case 'progress':
         return <ProgressDashboard />;
       case 'me':

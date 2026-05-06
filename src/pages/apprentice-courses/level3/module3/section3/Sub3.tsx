@@ -26,8 +26,10 @@ import {
   LearningOutcomes,
   ContentEyebrow,
   SectionRule,
+  VideoCard,
 } from '@/components/study-centre/learning';
 import { PowerTriangle } from '@/components/study-centre/diagrams';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE =
@@ -283,6 +285,14 @@ export default function Sub3() {
               cosine is the same number; you just remember which way the current is offset.
             </p>
           </ConceptBlock>
+
+          <VideoCard
+            url={videos.capacitors.url}
+            title={videos.capacitors.title}
+            channel={videos.capacitors.channel}
+            duration={videos.capacitors.duration}
+            topic={videos.capacitors.topic}
+          />
 
           <RegsCallout
             source="Engineering Recommendation P28/2 (DNO power factor requirement)"

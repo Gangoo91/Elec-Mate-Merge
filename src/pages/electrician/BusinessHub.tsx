@@ -1,61 +1,405 @@
-import { useState } from 'react';
+/**
+ * BusinessHub — editorial redesign matching ElectricianHub / SiteSafety.
+ *
+ * Sticky text-only masthead, date-eyebrow Hero with thematic two-tone
+ * headline + state-aware verdict + CTA, `01 · AT A GLANCE` HeadlineStats
+ * (Paid this month · Outstanding · Overdue · Win rate), then numbered
+ * hairline tool grids:
+ *   02 · YOUR DAY
+ *   03 · FINANCIALS
+ *   04 · ON THE JOB
+ *   05 · MONEY & STOCK
+ *   06 · GROW
+ *   07 · INSIGHTS  (live analytics, inline)
+ *
+ * BusinessCard chrome and the Insights collapsible are gone — uniform
+ * hairline cells, single yellow accent per row, mobile-flat per the project
+ * working agreement.
+ */
+import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
-import {
-  ArrowLeft,
-  Calculator,
-  FileText,
-  Package,
-  PoundSterling,
-  TrendingUp,
-  Users,
-  Wrench,
-  Receipt,
-  ChevronDown,
-  ChevronUp,
-  BarChart3,
-  Briefcase,
-  ClipboardList,
-  ClipboardCheck,
-  Camera,
-  CalendarDays,
-  FolderKanban,
-  AlertTriangle,
-  Share2,
-  Timer,
-  PenTool,
-  BookOpen,
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { BusinessCard, BusinessKPIStrip } from '@/components/business-hub';
+import { ArrowRight } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { Eyebrow, containerVariants, itemVariants } from '@/components/college/primitives';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { QuoteInvoiceAnalytics } from '@/components/electrician/analytics/QuoteInvoiceAnalytics';
 import { useBusinessHubData } from '@/hooks/useBusinessHubData';
-import { useSparkTaskOverdueCount } from '@/hooks/useSparkTaskOverdueCount';
 import { useSparkProjects } from '@/hooks/useSparkProjects';
 import { useSnags } from '@/hooks/useSnags';
 import { useTimeTracker, formatDuration } from '@/hooks/useTimeTracker';
 import { shareContent } from '@/utils/share';
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.04 },
-  },
+// ─────────────────────────────────────────────────────────────────────────
+// Editorial helpers
+// ─────────────────────────────────────────────────────────────────────────
+
+const partOfDay = (): 'MORNING' | 'AFTERNOON' | 'EVENING' => {
+  const h = new Date().getHours();
+  if (h < 12) return 'MORNING';
+  if (h < 18) return 'AFTERNOON';
+  return 'EVENING';
 };
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 8 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.25 } },
+const dateEyebrow = (): string => {
+  const d = new Date();
+  const weekday = d.toLocaleDateString('en-GB', { weekday: 'long' }).toUpperCase();
+  const day = d.getDate();
+  const month = d.toLocaleDateString('en-GB', { month: 'long' }).toUpperCase();
+  return `${weekday} · ${day} ${month} · ${partOfDay()}`;
 };
+
+interface HeroHeadline {
+  yellow: string;
+  white: string;
+}
+
+const HEADLINES_OVERDUE: HeroHeadline[] = [
+  { yellow: 'Time', white: 'to follow up.' },
+  { yellow: 'Close', white: 'the open invoices.' },
+  { yellow: 'Tidy', white: 'the books.' },
+];
+
+const HEADLINES_PIPELINE: HeroHeadline[] = [
+  { yellow: 'Quote', white: 'into job.' },
+  { yellow: 'Pipeline', white: 'in motion.' },
+  { yellow: 'Send', white: 'today, win Friday.' },
+];
+
+const HEADLINES_HEALTHY: HeroHeadline[] = [
+  { yellow: 'Stay', white: 'in the black.' },
+  { yellow: 'Quiet', white: 'books, sharp moves.' },
+  { yellow: 'Push', white: 'a quote out.' },
+  { yellow: 'Run', white: 'the business right.' },
+];
+
+const HEADLINES_EMPTY: HeroHeadline[] = [
+  { yellow: 'First', white: 'quote, first job.' },
+  { yellow: 'Start', white: 'the books.' },
+];
+
+const pickHeadline = (pool: HeroHeadline[]): HeroHeadline => {
+  const now = new Date();
+  const hour = now.getHours();
+  const dayOfYear = Math.floor(
+    (now.getTime() - new Date(now.getFullYear(), 0, 0).getTime()) / 86400000
+  );
+  return pool[(hour + dayOfYear) % pool.length];
+};
+
+// ─────────────────────────────────────────────────────────────────────────
+// Sticky masthead — College pattern
+// ─────────────────────────────────────────────────────────────────────────
+
+const PageMasthead = () => {
+  const navigate = useNavigate();
+  return (
+    <div className="sticky top-0 z-50 bg-elec-dark/95 backdrop-blur-sm border-b border-white/[0.06]">
+      <div className="mx-auto max-w-7xl px-4">
+        <div className="flex items-center h-12 gap-4 sm:gap-6">
+          <button
+            type="button"
+            onClick={() => navigate('/electrician')}
+            className="text-[12.5px] font-medium text-white hover:text-white transition-colors touch-manipulation whitespace-nowrap"
+          >
+            ← Back
+          </button>
+          <div className="flex-1 min-w-0 flex items-baseline gap-2.5">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white hidden sm:inline">
+              Electrician
+            </span>
+            <span className="hidden sm:inline h-3 w-px bg-white/10" aria-hidden />
+            <h1 className="text-[13px] sm:text-sm font-semibold text-white truncate tracking-tight">
+              Business Hub
+            </h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ─────────────────────────────────────────────────────────────────────────
+// Hero
+// ─────────────────────────────────────────────────────────────────────────
+
+const Hero = ({
+  headline,
+  verdict,
+  cta,
+}: {
+  headline: HeroHeadline;
+  verdict: string;
+  cta?: { label: string; onClick: () => void };
+}) => (
+  <motion.section
+    variants={containerVariants}
+    initial="hidden"
+    animate="visible"
+    className="relative pt-2 sm:pt-4"
+  >
+    <motion.div variants={itemVariants}>
+      <Eyebrow>{dateEyebrow()}</Eyebrow>
+    </motion.div>
+
+    <motion.h1
+      variants={itemVariants}
+      className="mt-3 font-semibold tracking-tight leading-[1.05] text-[34px] sm:text-[44px] lg:text-[56px]"
+    >
+      <span className="text-elec-yellow">{headline.yellow}</span>{' '}
+      <span className="text-white">{headline.white}</span>
+    </motion.h1>
+
+    <motion.p
+      variants={itemVariants}
+      className="mt-3 sm:mt-4 text-[14px] sm:text-[15px] leading-relaxed text-white/90 max-w-2xl"
+    >
+      {verdict}
+    </motion.p>
+
+    {cta && (
+      <motion.div variants={itemVariants} className="mt-5 sm:mt-6">
+        <button
+          type="button"
+          onClick={cta.onClick}
+          className={cn(
+            'group inline-flex items-center gap-2 h-10 px-4 rounded-full',
+            'border border-elec-yellow/25 bg-elec-yellow/10 hover:bg-elec-yellow/20',
+            'text-[13px] font-medium text-elec-yellow touch-manipulation transition-colors'
+          )}
+        >
+          <span>{cta.label}</span>
+          <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
+        </button>
+      </motion.div>
+    )}
+  </motion.section>
+);
+
+// ─────────────────────────────────────────────────────────────────────────
+// HeadlineStats — business variant
+// ─────────────────────────────────────────────────────────────────────────
+
+interface BusinessStat {
+  label: string;
+  value: string;
+  sub?: string;
+  accent?: boolean;
+  onClick: () => void;
+}
+
+const BusinessHeadlineStats = ({
+  stats,
+  number = '01',
+  label = 'AT A GLANCE',
+}: {
+  stats: BusinessStat[];
+  number?: string;
+  label?: string;
+}) => (
+  <motion.section
+    variants={containerVariants}
+    initial="hidden"
+    animate="visible"
+    className="space-y-4"
+  >
+    <motion.div variants={itemVariants}>
+      <Eyebrow>
+        {number} · {label}
+      </Eyebrow>
+    </motion.div>
+
+    <motion.div
+      variants={itemVariants}
+      className="relative grid grid-cols-2 lg:grid-cols-4 gap-[2px] bg-black border border-white/[0.08] rounded-2xl overflow-hidden"
+    >
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none" />
+
+      {stats.map((stat) => {
+        const valueStr = String(stat.value);
+        const isNumericish = /^[\d.,+\-/%hkm£]+$/i.test(valueStr);
+        const sizeClass =
+          isNumericish || valueStr.length <= 5
+            ? 'text-4xl sm:text-5xl lg:text-[56px]'
+            : valueStr.length <= 8
+              ? 'text-3xl sm:text-4xl lg:text-5xl'
+              : 'text-2xl sm:text-3xl lg:text-4xl';
+
+        return (
+          <button
+            key={stat.label}
+            type="button"
+            onClick={stat.onClick}
+            className={cn(
+              'group relative bg-[hsl(0_0%_10%)] px-5 py-6 sm:px-7 sm:py-8 flex flex-col text-left touch-manipulation',
+              'hover:bg-elec-yellow/[0.04] transition-colors',
+              stat.accent &&
+                'bg-gradient-to-br from-elec-yellow/[0.06] via-amber-500/[0.02] to-transparent hover:from-elec-yellow/[0.10]'
+            )}
+          >
+            <div
+              className={cn(
+                'text-[10px] font-medium uppercase tracking-[0.18em]',
+                stat.accent ? 'text-elec-yellow/80' : 'text-white/50'
+              )}
+            >
+              {stat.label}
+            </div>
+            <span
+              className={cn(
+                'mt-3 sm:mt-4 font-semibold tabular-nums tracking-tight leading-none',
+                sizeClass,
+                stat.accent ? 'text-elec-yellow' : 'text-white'
+              )}
+            >
+              {stat.value}
+            </span>
+            {stat.sub && (
+              <span className="mt-3 text-[11.5px] text-white/55 group-hover:text-white/75 transition-colors">
+                {stat.sub}
+              </span>
+            )}
+          </button>
+        );
+      })}
+    </motion.div>
+  </motion.section>
+);
+
+// ─────────────────────────────────────────────────────────────────────────
+// EditorialToolGrid — supports either a real route (`to`) or callback
+// (`onClick`) per card, since Booking Link is a share action.
+// ─────────────────────────────────────────────────────────────────────────
+
+interface ToolCard {
+  id: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  to?: string;
+  onClick?: () => void;
+  meta?: string;
+  alert?: boolean;
+}
+
+const EditorialToolGrid = ({
+  number,
+  label,
+  cards,
+  columns = 'three',
+}: {
+  number: string;
+  label: string;
+  cards: ToolCard[];
+  columns?: 'two' | 'three';
+}) => {
+  const navigate = useNavigate();
+  if (cards.length === 0) return null;
+
+  const colClass =
+    columns === 'two'
+      ? 'grid-cols-1 sm:grid-cols-2'
+      : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3';
+
+  // Pad the final row with non-interactive filler cells so the rounded grid
+  // never shows the bleed-through grey from `bg-white/[0.12]` between gaps.
+  // Filler count is computed at the largest breakpoint (3 cols) since that
+  // is where empty trailing cells become visible. At narrower breakpoints
+  // (1/2 cols) the cards reflow and the filler is harmless.
+  const largestColCount = columns === 'two' ? 2 : 3;
+  const fillerCount = (largestColCount - (cards.length % largestColCount)) % largestColCount;
+
+  return (
+    <motion.section
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="space-y-4"
+    >
+      <motion.div variants={itemVariants}>
+        <Eyebrow>
+          {number} · {label}
+        </Eyebrow>
+      </motion.div>
+
+      <motion.div
+        variants={itemVariants}
+        className={cn(
+          'relative grid auto-rows-[220px] sm:auto-rows-[240px] gap-[2px] bg-black border border-white/[0.08] rounded-2xl overflow-hidden',
+          colClass
+        )}
+      >
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
+
+        {cards.map((card, i) => (
+          <button
+            key={card.id}
+            type="button"
+            onClick={() => {
+              if (card.onClick) card.onClick();
+              else if (card.to) navigate(card.to);
+            }}
+            className="group relative bg-[hsl(0_0%_10%)] hover:bg-elec-yellow/[0.04] transition-colors p-5 sm:p-6 lg:p-7 text-left touch-manipulation flex flex-col h-full"
+          >
+            <div className="flex items-baseline justify-between gap-2">
+              <div className="flex items-baseline gap-2">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  · {card.eyebrow}
+                </span>
+              </div>
+              {card.alert && (
+                <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-red-300 border border-red-400/30 bg-red-500/10 px-1.5 py-0.5 rounded">
+                  Action
+                </span>
+              )}
+            </div>
+
+            <h3 className="mt-3 sm:mt-4 text-[20px] sm:text-[22px] lg:text-[24px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors">
+              {card.title}
+            </h3>
+            <p className="mt-2 text-[12.5px] leading-relaxed text-white/60 max-w-[34ch]">
+              {card.description}
+            </p>
+
+            <div className="flex-grow" />
+
+            <div className="mt-5 flex items-center justify-between gap-3 pt-3 border-t border-white/[0.05]">
+              <span className="text-[11px] text-white/55 truncate tabular-nums">
+                {card.meta ?? 'Open'}
+              </span>
+              <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-elec-yellow shrink-0">
+                Open
+                <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+              </span>
+            </div>
+          </button>
+        ))}
+
+        {/* Trailing filler cells — match active-cell bg so the row looks
+            complete instead of revealing the white/0.12 grid background. */}
+        {Array.from({ length: fillerCount }).map((_, i) => (
+          <div
+            key={`filler-${i}`}
+            aria-hidden
+            className="hidden lg:block bg-[hsl(0_0%_10%)]"
+          />
+        ))}
+      </motion.div>
+    </motion.section>
+  );
+};
+
+// ─────────────────────────────────────────────────────────────────────────
+// Main page
+// ─────────────────────────────────────────────────────────────────────────
 
 const BusinessHub = () => {
   const navigate = useNavigate();
-  const [insightsOpen, setInsightsOpen] = useState(false);
 
   const {
     revenue,
@@ -70,13 +414,12 @@ const BusinessHub = () => {
     refresh,
     formatCurrency,
   } = useBusinessHubData();
-  const overdueCount = useSparkTaskOverdueCount();
   const { counts: projectCounts } = useSparkProjects('active');
   const { counts: snagCounts } = useSnags();
   const { activeSession, elapsedSeconds } = useTimeTracker();
 
   const timeTrackerSubtitle = activeSession
-    ? `\u23F1 Running \u00B7 ${formatDuration(elapsedSeconds)}`
+    ? `Running · ${formatDuration(elapsedSeconds)}`
     : 'Log hours';
 
   const handleShareBookingLink = async () => {
@@ -95,16 +438,258 @@ const BusinessHub = () => {
     });
   };
 
-  const todayFormatted = new Date().toLocaleDateString('en-GB', {
-    weekday: 'short',
-    day: 'numeric',
-    month: 'short',
-  });
+  // ── Hero state ───────────────────────────────────────────────────────
+  const { headline, verdict, cta } = useMemo(() => {
+    const overduePounds = formatCurrency(overdueAmount);
+    const outstandingPounds = formatCurrency(outstanding);
+    const paidPounds = formatCurrency(paidThisMonth);
+
+    if (overdueAmount > 0) {
+      return {
+        headline: pickHeadline(HEADLINES_OVERDUE),
+        verdict: `${overduePounds} overdue across your books — a single chase email today turns into payment next week.`,
+        cta: { label: 'View overdue', onClick: () => navigate('/electrician/invoices?filter=overdue') },
+      };
+    }
+    if (outstanding > 0) {
+      return {
+        headline: pickHeadline(HEADLINES_PIPELINE),
+        verdict: `${outstandingPounds} out for payment, nothing overdue. Push a quote out while the books are quiet.`,
+        cta: { label: 'New quote', onClick: () => navigate('/electrician/quotes') },
+      };
+    }
+    if (revenue > 0) {
+      return {
+        headline: pickHeadline(HEADLINES_HEALTHY),
+        verdict: `${paidPounds} paid this month, books all closed out. Plan the next quote, line up the next job.`,
+        cta: { label: 'Open quotes', onClick: () => navigate('/electrician/quotes') },
+      };
+    }
+    return {
+      headline: pickHeadline(HEADLINES_EMPTY),
+      verdict:
+        'Set up your first quote and invoice — Elec-Mate handles the maths, the formatting, and the chase.',
+      cta: { label: 'New quote', onClick: () => navigate('/electrician/quotes') },
+    };
+  }, [overdueAmount, outstanding, revenue, paidThisMonth, formatCurrency, navigate]);
+
+  // ── Stats ────────────────────────────────────────────────────────────
+  const stats: BusinessStat[] = [
+    {
+      label: 'Paid · month',
+      value: formatCurrency(paidThisMonth),
+      sub: 'Cleared',
+      accent: true,
+      onClick: () => navigate('/electrician/invoices?filter=paid'),
+    },
+    {
+      label: 'Outstanding',
+      value: formatCurrency(outstanding),
+      sub: outstanding > 0 ? 'Waiting on payment' : 'All clear',
+      onClick: () => navigate('/electrician/invoices?filter=outstanding'),
+    },
+    {
+      label: 'Overdue',
+      value: formatCurrency(overdueAmount),
+      sub: overdueAmount > 0 ? 'Chase today' : 'Nothing overdue',
+      onClick: () => navigate('/electrician/invoices?filter=overdue'),
+    },
+    {
+      label: 'Win rate',
+      value: winRate != null ? `${winRate}%` : '—',
+      sub: winRate != null ? 'Quotes → won' : 'No data yet',
+      onClick: () => navigate('/electrician/quotes'),
+    },
+  ];
+
+  // ── Tool grids ───────────────────────────────────────────────────────
+  const yourDay: ToolCard[] = [
+    {
+      id: 'tasks',
+      eyebrow: 'Tasks',
+      title: 'Tasks',
+      description: 'To-dos, reminders and follow-ups.',
+      to: '/electrician/tasks',
+      meta: 'Open list',
+    },
+    {
+      id: 'calendar',
+      eyebrow: 'Calendar',
+      title: 'Calendar',
+      description: 'Jobs, appointments and bookings.',
+      to: '/electrician/business/calendar',
+      meta: new Date().toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' }),
+    },
+    {
+      id: 'time-tracker',
+      eyebrow: 'Hours',
+      title: 'Time Tracker',
+      description: 'Log hours on site, billable or otherwise.',
+      to: '/electrician/time-tracker',
+      meta: timeTrackerSubtitle,
+    },
+  ];
+
+  const financials: ToolCard[] = [
+    {
+      id: 'quotes',
+      eyebrow: 'Quotes',
+      title: 'Quotes',
+      description: 'Build, send and track quotes.',
+      to: '/electrician/quotes',
+      meta: 'Open quotes',
+    },
+    {
+      id: 'invoices',
+      eyebrow: 'Invoices',
+      title: 'Invoices',
+      description: 'Billing, payments and reminders.',
+      to: '/electrician/invoices',
+      meta:
+        overdueAmount > 0
+          ? `${formatCurrency(overdueAmount)} overdue`
+          : outstanding > 0
+            ? `${formatCurrency(outstanding)} out`
+            : 'Nothing outstanding',
+      alert: overdueAmount > 0,
+    },
+    {
+      id: 'customers',
+      eyebrow: 'Clients',
+      title: 'Customers',
+      description: 'Client records and job history.',
+      to: '/customers',
+      meta: 'Open list',
+    },
+    {
+      id: 'projects',
+      eyebrow: 'Projects',
+      title: 'Projects',
+      description: 'Group jobs, tasks and snags.',
+      to: '/electrician/projects',
+      meta:
+        projectCounts.active > 0 ? `${projectCounts.active} active` : 'Start a project',
+    },
+    {
+      id: 'booking-link',
+      eyebrow: 'Share',
+      title: 'Booking Link',
+      description: 'Public booking page to share with clients.',
+      onClick: handleShareBookingLink,
+      meta: 'Share link',
+    },
+  ];
+
+  const onTheJob: ToolCard[] = [
+    {
+      id: 'site-visits',
+      eyebrow: 'Visits',
+      title: 'Site Visits',
+      description: 'Pre-job and post-job site visit records.',
+      to: '/electrician/site-visits',
+      meta: 'New visit',
+    },
+    {
+      id: 'photo-docs',
+      eyebrow: 'Photos',
+      title: 'Photo Docs',
+      description: 'Project photos with timestamps and notes.',
+      to: '/electrician/photo-docs',
+      meta: 'Capture',
+    },
+    {
+      id: 'snagging',
+      eyebrow: 'Snags',
+      title: 'Snagging',
+      description: 'Track and resolve outstanding snags.',
+      to: '/electrician/snagging',
+      meta: snagCounts.open > 0 ? `${snagCounts.open} open` : 'All clear',
+      alert: snagCounts.open > 0,
+    },
+    {
+      id: 'room-planner',
+      eyebrow: 'Plans',
+      title: 'Room Planner',
+      description: 'Quick electrical floor plans and layouts.',
+      to: '/electrician/business/room-planner',
+      meta: 'Open planner',
+    },
+  ];
+
+  const moneyAndStock: ToolCard[] = [
+    {
+      id: 'expenses',
+      eyebrow: 'Expenses',
+      title: 'Expenses',
+      description: 'Receipts, mileage and reimbursables.',
+      to: '/electrician/expenses',
+      meta: 'Log an expense',
+    },
+    {
+      id: 'materials',
+      eyebrow: 'Stock',
+      title: 'Materials',
+      description: 'Stock and inventory levels.',
+      to: '/electrician/materials',
+      meta: 'Open stock',
+    },
+    {
+      id: 'tools',
+      eyebrow: 'Tools',
+      title: 'Tools',
+      description: 'Equipment and asset tracking.',
+      to: '/electrician/tools',
+      meta: 'Open tools',
+    },
+    {
+      id: 'live-pricing',
+      eyebrow: 'Pricing',
+      title: 'Live Pricing',
+      description: 'Real-time market rates from suppliers.',
+      to: '/electrician/live-pricing',
+      meta: 'Check rates',
+    },
+    {
+      id: 'price-book',
+      eyebrow: 'Markup',
+      title: 'Price Book',
+      description: 'Materials, markup and labour rates.',
+      to: '/electrician/price-book',
+      meta: 'Edit rates',
+    },
+    {
+      id: 'stock-tracker',
+      eyebrow: 'Inventory',
+      title: 'Stock Tracker',
+      description: 'Van and garage stock levels.',
+      to: '/electrician/inventory',
+      meta: 'Open inventory',
+    },
+  ];
+
+  const grow: ToolCard[] = [
+    {
+      id: 'start-grow',
+      eyebrow: 'Guides',
+      title: 'Start & Grow',
+      description: 'Business guides for sole traders and Ltds.',
+      to: '/electrician/business-development',
+      meta: 'Read guides',
+    },
+    {
+      id: 'calculators',
+      eyebrow: 'Numbers',
+      title: 'Calculators',
+      description: 'Day rate, take-home, breakeven and more.',
+      to: '/electrician/business-development/tools',
+      meta: 'Run a calc',
+    },
+  ];
 
   const canonical = `${window.location.origin}/electrician/business`;
 
   return (
-    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
+    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-elec-dark min-h-screen pb-24">
       <Helmet>
         <title>Business Hub for Electricians | Quotes, Invoices & More</title>
         <meta
@@ -114,331 +699,48 @@ const BusinessHub = () => {
         <link rel="canonical" href={canonical} />
       </Helmet>
 
-      {/* Sticky Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border/50">
-        <div className="px-4 py-2">
-          <div className="flex items-center gap-3 h-11">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => navigate('/electrician')}
-              className="text-foreground hover:bg-accent rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-            <div className="flex items-center gap-2.5">
-              <div className="p-1.5 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
-                <Briefcase className="h-4 w-4 text-elec-yellow" />
-              </div>
-              <h1 className="text-base font-semibold text-foreground">Business Hub</h1>
-            </div>
-          </div>
-        </div>
+      <PageMasthead />
+
+      <div className="px-4 py-4 space-y-12 sm:space-y-16 max-w-7xl mx-auto">
+        <Hero headline={headline} verdict={verdict} cta={cta} />
+
+        <BusinessHeadlineStats stats={stats} />
+
+        <EditorialToolGrid number="02" label="YOUR DAY" cards={yourDay} columns="three" />
+
+        <EditorialToolGrid number="03" label="FINANCIALS" cards={financials} columns="three" />
+
+        <EditorialToolGrid number="04" label="ON THE JOB" cards={onTheJob} columns="three" />
+
+        <EditorialToolGrid number="05" label="MONEY & STOCK" cards={moneyAndStock} columns="three" />
+
+        <EditorialToolGrid number="06" label="GROW" cards={grow} columns="two" />
+
+        {/* 07 · INSIGHTS — live quote/invoice analytics, no collapsible */}
+        <motion.section
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="space-y-4"
+        >
+          <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
+            <Eyebrow>07 · INSIGHTS</Eyebrow>
+            <span className="text-[11px] text-white/55 tabular-nums">
+              {formatCurrency(revenue)} revenue
+            </span>
+          </motion.div>
+          <motion.div variants={itemVariants}>
+            <QuoteInvoiceAnalytics
+              quotes={quotes}
+              invoices={invoices}
+              formatCurrency={formatCurrency}
+              lastUpdated={lastUpdated}
+              onRefresh={refresh}
+              isLoading={isLoading}
+            />
+          </motion.div>
+        </motion.section>
       </div>
-
-      {/* Main Content */}
-      <motion.main
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="px-4 py-4 space-y-5"
-      >
-        {/* KPI Strip */}
-        <motion.div variants={itemVariants}>
-          <BusinessKPIStrip
-            paidThisMonth={paidThisMonth}
-            outstanding={outstanding}
-            overdueAmount={overdueAmount}
-            winRate={winRate}
-            isLoading={isLoading}
-            formatCurrency={formatCurrency}
-          />
-        </motion.div>
-
-        {/* YOUR DAY */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <h2 className="text-xs font-medium text-muted-foreground uppercase tracking-wider px-0.5">
-            Your Day
-          </h2>
-          <div className="grid grid-cols-3 gap-3">
-            <BusinessCard
-              title="Tasks"
-              description="To-dos & reminders"
-              icon={ClipboardCheck}
-              href="/electrician/tasks"
-              variant="compact"
-              accentColor="from-elec-yellow via-amber-400 to-orange-400"
-              iconColor="text-elec-yellow"
-              iconBg="bg-elec-yellow/10 border border-elec-yellow/20"
-            />
-            <BusinessCard
-              title="Calendar"
-              description="Jobs & appointments"
-              icon={CalendarDays}
-              href="/electrician/business/calendar"
-              variant="compact"
-              accentColor="from-blue-500 via-blue-400 to-cyan-400"
-              iconColor="text-blue-400"
-              iconBg="bg-blue-500/10 border border-blue-500/20"
-              liveSubtitle={todayFormatted}
-            />
-            <BusinessCard
-              title="Time Tracker"
-              description="Log hours on site"
-              icon={Timer}
-              href="/electrician/time-tracker"
-              variant="compact"
-              accentColor="from-amber-500 via-orange-400 to-orange-500"
-              iconColor="text-amber-400"
-              iconBg="bg-amber-500/10 border border-amber-500/20"
-              liveSubtitle={timeTrackerSubtitle}
-            />
-          </div>
-        </motion.section>
-
-        {/* FINANCIALS */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <h2 className="text-xs font-medium text-muted-foreground uppercase tracking-wider px-0.5">
-            Financials
-          </h2>
-          <div className="grid grid-cols-2 gap-3">
-            <BusinessCard
-              title="Quotes"
-              description="Create & manage"
-              icon={FileText}
-              href="/electrician/quotes"
-              accentColor="from-emerald-500 via-emerald-400 to-green-400"
-              iconColor="text-emerald-400"
-              iconBg="bg-emerald-500/10 border border-emerald-500/20"
-            />
-            <BusinessCard
-              title="Invoices"
-              description="Billing & payments"
-              icon={PoundSterling}
-              href="/electrician/invoices"
-              accentColor="from-emerald-500 via-teal-400 to-cyan-400"
-              iconColor="text-teal-400"
-              iconBg="bg-teal-500/10 border border-teal-500/20"
-            />
-            <BusinessCard
-              title="Customers"
-              description="Clients & history"
-              icon={Users}
-              href="/customers"
-              accentColor="from-blue-500 via-blue-400 to-cyan-400"
-              iconColor="text-blue-400"
-              iconBg="bg-blue-500/10 border border-blue-500/20"
-            />
-            <BusinessCard
-              title="Booking Link"
-              description="Share with clients"
-              icon={Share2}
-              onClick={handleShareBookingLink}
-              accentColor="from-violet-500 via-purple-400 to-indigo-400"
-              iconColor="text-violet-400"
-              iconBg="bg-violet-500/10 border border-violet-500/20"
-            />
-            <BusinessCard
-              title="Projects"
-              description={
-                projectCounts.active > 0 ? `${projectCounts.active} active` : 'Group jobs & tasks'
-              }
-              icon={FolderKanban}
-              href="/electrician/projects"
-              accentColor="from-elec-yellow via-amber-400 to-orange-400"
-              iconColor="text-elec-yellow"
-              iconBg="bg-elec-yellow/10 border border-elec-yellow/20"
-            />
-          </div>
-        </motion.section>
-
-        {/* ON THE JOB */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <h2 className="text-xs font-medium text-muted-foreground uppercase tracking-wider px-0.5">
-            On the Job
-          </h2>
-          <div className="grid grid-cols-2 gap-3">
-            <BusinessCard
-              title="Site Visits"
-              description="Pre & post-site"
-              icon={ClipboardList}
-              href="/electrician/site-visits"
-              accentColor="from-emerald-500 via-emerald-400 to-green-400"
-              iconColor="text-emerald-400"
-              iconBg="bg-emerald-500/10 border border-emerald-500/20"
-            />
-            <BusinessCard
-              title="Photo Docs"
-              description="Project photos"
-              icon={Camera}
-              href="/electrician/photo-docs"
-              accentColor="from-blue-500 via-blue-400 to-cyan-400"
-              iconColor="text-blue-400"
-              iconBg="bg-blue-500/10 border border-blue-500/20"
-            />
-            <BusinessCard
-              title="Snagging"
-              description="Track & resolve"
-              icon={AlertTriangle}
-              href="/electrician/snagging"
-              accentColor="from-orange-500 via-amber-400 to-yellow-400"
-              iconColor="text-orange-400"
-              iconBg="bg-orange-500/10 border border-orange-500/20"
-              liveSubtitle={snagCounts.open > 0 ? `${snagCounts.open} open` : 'All clear'}
-            />
-            <BusinessCard
-              title="Room Planner"
-              description="Electrical floor plans"
-              icon={PenTool}
-              href="/electrician/business/room-planner"
-              accentColor="from-indigo-500 via-violet-400 to-purple-400"
-              iconColor="text-indigo-400"
-              iconBg="bg-indigo-500/10 border border-indigo-500/20"
-            />
-          </div>
-        </motion.section>
-
-        {/* MONEY & STOCK */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <h2 className="text-xs font-medium text-muted-foreground uppercase tracking-wider px-0.5">
-            Money & Stock
-          </h2>
-          <div className="grid grid-cols-2 gap-3">
-            <BusinessCard
-              title="Expenses"
-              description="Receipts & mileage"
-              icon={Receipt}
-              href="/electrician/expenses"
-              variant="compact"
-              accentColor="from-rose-500 via-pink-400 to-red-400"
-              iconColor="text-rose-400"
-              iconBg="bg-rose-500/10 border border-rose-500/20"
-            />
-            <BusinessCard
-              title="Materials"
-              description="Stock & inventory"
-              icon={Package}
-              href="/electrician/materials"
-              variant="compact"
-              accentColor="from-amber-500 via-orange-400 to-red-400"
-              iconColor="text-amber-400"
-              iconBg="bg-amber-500/10 border border-amber-500/20"
-            />
-            <BusinessCard
-              title="Tools"
-              description="Equipment tracking"
-              icon={Wrench}
-              href="/electrician/tools"
-              variant="compact"
-              accentColor="from-elec-yellow via-amber-400 to-orange-400"
-              iconColor="text-elec-yellow"
-              iconBg="bg-elec-yellow/10 border border-elec-yellow/20"
-            />
-            <BusinessCard
-              title="Live Pricing"
-              description="Market rates"
-              icon={PoundSterling}
-              href="/electrician/live-pricing"
-              variant="compact"
-              accentColor="from-emerald-500 via-teal-400 to-cyan-400"
-              iconColor="text-emerald-400"
-              iconBg="bg-emerald-500/10 border border-emerald-500/20"
-            />
-            <BusinessCard
-              title="Price Book"
-              description="Materials & markup"
-              icon={BookOpen}
-              href="/electrician/price-book"
-              variant="compact"
-              accentColor="from-violet-500 via-purple-400 to-indigo-400"
-              iconColor="text-violet-400"
-              iconBg="bg-violet-500/10 border border-violet-500/20"
-            />
-            <BusinessCard
-              title="Stock Tracker"
-              description="Van & garage stock"
-              icon={ClipboardList}
-              href="/electrician/inventory"
-              variant="compact"
-              accentColor="from-teal-500 via-cyan-400 to-blue-400"
-              iconColor="text-teal-400"
-              iconBg="bg-teal-500/10 border border-teal-500/20"
-            />
-          </div>
-        </motion.section>
-
-        {/* GROW YOUR BUSINESS */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <h2 className="text-xs font-medium text-muted-foreground uppercase tracking-wider px-0.5">
-            Grow Your Business
-          </h2>
-          <div className="grid grid-cols-2 gap-3">
-            <BusinessCard
-              title="Start & Grow"
-              description="Business guides"
-              icon={TrendingUp}
-              href="/electrician/business-development"
-              variant="compact"
-              accentColor="from-elec-yellow via-amber-400 to-orange-400"
-              iconColor="text-elec-yellow"
-              iconBg="bg-elec-yellow/10 border border-elec-yellow/20"
-            />
-            <BusinessCard
-              title="Calculators"
-              description="Financial planning"
-              icon={Calculator}
-              href="/electrician/business-development/tools"
-              variant="compact"
-              accentColor="from-violet-500 via-purple-400 to-indigo-400"
-              iconColor="text-violet-400"
-              iconBg="bg-violet-500/10 border border-violet-500/20"
-            />
-          </div>
-        </motion.section>
-
-        {/* Business Insights — collapsed by default */}
-        <motion.div variants={itemVariants}>
-          <Collapsible open={insightsOpen} onOpenChange={setInsightsOpen}>
-            <CollapsibleTrigger asChild>
-              <button className="w-full flex items-center justify-between card-surface-interactive p-4 touch-manipulation h-14 active:scale-[0.98] transition-all">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center">
-                    <BarChart3 className="h-5 w-5 text-elec-yellow" />
-                  </div>
-                  <div className="text-left">
-                    <p className="text-[15px] font-semibold text-white">Business Insights</p>
-                    <p className="text-[13px] text-white">{formatCurrency(revenue)} revenue</p>
-                  </div>
-                </div>
-                {insightsOpen ? (
-                  <ChevronUp className="h-5 w-5 text-white" />
-                ) : (
-                  <ChevronDown className="h-5 w-5 text-white" />
-                )}
-              </button>
-            </CollapsibleTrigger>
-            <CollapsibleContent className="mt-4">
-              <QuoteInvoiceAnalytics
-                quotes={quotes}
-                invoices={invoices}
-                formatCurrency={formatCurrency}
-                lastUpdated={lastUpdated}
-                onRefresh={refresh}
-                isLoading={isLoading}
-              />
-            </CollapsibleContent>
-          </Collapsible>
-        </motion.div>
-
-        {/* Disclaimer */}
-        <motion.div variants={itemVariants} className="card-surface p-4">
-          <p className="text-xs text-white leading-relaxed">
-            The information provided is for general guidance only and does not constitute financial,
-            legal, or business advice. Always consult with qualified professionals regarding your
-            specific business circumstances.
-          </p>
-        </motion.div>
-      </motion.main>
     </div>
   );
 };

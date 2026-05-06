@@ -513,7 +513,7 @@ export const searchablePages: SearchablePage[] = [
   },
   {
     name: 'Portfolio Hub',
-    path: '/apprentice/portfolio-hub',
+    path: '/apprentice/hub',
     keywords: ['portfolio', 'evidence', 'work', 'record'],
     icon: FolderKanban,
     category: 'Apprentice',

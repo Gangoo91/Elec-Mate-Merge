@@ -29,7 +29,9 @@ import {
   LearningOutcomes,
   ContentEyebrow,
   SectionRule,
+  VideoCard,
 } from '@/components/study-centre/learning';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE =
@@ -385,6 +387,14 @@ export default function Sub4() {
               </>
             }
             cite="Source: BS 7671:2018+A4:2026 — Reg 643.3 (RCD testing redraft)."
+          />
+
+          <VideoCard
+            url={videos.faultFinding.url}
+            title={videos.faultFinding.title}
+            channel={videos.faultFinding.channel}
+            duration={videos.faultFinding.duration}
+            topic={videos.faultFinding.topic}
           />
 
           <SectionRule />

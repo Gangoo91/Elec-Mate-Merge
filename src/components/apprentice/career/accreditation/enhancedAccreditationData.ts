@@ -136,7 +136,7 @@ export const enhancedAccreditationOptions: AccreditationOption[] = [
       'Industry recognition',
     ],
     requirements: [
-      'Electrical qualifications (City & Guilds 2391/2392)',
+      'Electrical qualifications (City & Guilds 2391/2392) + 18th Edition A4:2026',
       'Minimum 3 years electrical experience',
       'Public liability insurance',
       'Initial assessment process',

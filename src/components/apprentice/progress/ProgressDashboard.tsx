@@ -1,189 +1,259 @@
 /**
- * ProgressDashboard
+ * ProgressDashboard — Apprentice learning tracker.
  *
- * Unified "My Progress" tab combining XP, skills, flashcards,
- * OJT hours, achievements, and recent activity.
+ * Pure learning-side surface. Portfolio AC coverage, OJT hours, KSB
+ * tracking and EPA readiness all live on dedicated pages now —
+ * duplicating them here was noise. This page focuses on what the other
+ * surfaces don't:
+ *
+ *   • Predicted EPA grade band (from quiz + mastery + trajectory)
+ *   • Per-topic mastery with quiz × flashcard blended score
+ *   • Skill radar — strong/weak by category
+ *   • Flashcard mastery wheel — set-by-set
+ *   • XP / streak gamification
+ *   • Recent activity
+ *
+ * Editorial style: single yellow accent, monochrome chrome, monospace
+ * numbers. Wide on desktop.
  */
 
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { XPHeroCard } from './XPHeroCard';
 import { SkillRadarChart } from './SkillRadarChart';
 import { FlashcardMasteryWheel } from './FlashcardMasteryWheel';
 import { RecentActivityFeed } from './RecentActivityFeed';
+import { EPAGradePredictor } from './EPAGradePredictor';
+import { TopicMasteryList, type TopicRow } from './TopicMasteryList';
 import { useUnifiedProgress } from '@/hooks/useUnifiedProgress';
 import { useAchievementChecker } from '@/hooks/useAchievementChecker';
+import { useQuizResults } from '@/hooks/useQuizResults';
+import { useFlashcardProgress } from '@/hooks/useFlashcardProgress';
+import { flashcardSetMeta } from '@/data/flashcards';
+import { getFlashcardsForCategory } from '@/data/contentMapping';
+import {
+  Eyebrow,
+  SectionHeader,
+} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 
 export function ProgressDashboard() {
   const {
     loading,
-    overallPercent,
     skillRadar,
     flashcardInsights,
     totalMasteredCards,
     totalFlashcards,
-    ojtHours,
     quizStats,
     streak,
-    componentScores,
   } = useUnifiedProgress();
 
+  const { results: quizResults, getPerformanceByCategory } = useQuizResults();
+  const { getSetProgress } = useFlashcardProgress();
   const { checkAchievements, getUnlockedCount, getTotalCount } = useAchievementChecker();
 
-  // Check achievements on mount
   useEffect(() => {
     checkAchievements();
   }, [checkAchievements]);
 
+  /* ─── Derive recent score + trend for the predictor ──────────────── */
+  const recentQuizScore = useMemo<number | null>(() => {
+    if (!quizResults?.length) return null;
+    return quizResults[0]?.score ?? null;
+  }, [quizResults]);
+
+  const trend = useMemo<'improving' | 'declining' | 'stable' | 'no-data'>(() => {
+    if (!quizResults || quizResults.length < 4) return 'no-data';
+    const recent = quizResults.slice(0, 3);
+    const prior = quizResults.slice(3, 6);
+    if (!prior.length) return 'no-data';
+    const avg = (xs: typeof recent) => xs.reduce((s, q) => s + (q.score || 0), 0) / xs.length;
+    const r = avg(recent);
+    const p = avg(prior);
+    if (r - p > 5) return 'improving';
+    if (p - r > 5) return 'declining';
+    return 'stable';
+  }, [quizResults]);
+
+  /* ─── Build topic rows: blend quiz % and flashcard mastery ───────── */
+  const topics = useMemo<TopicRow[]>(() => {
+    const perCat = getPerformanceByCategory();
+    const rows: TopicRow[] = perCat.map((cat) => {
+      const related = getFlashcardsForCategory(cat.subject);
+      const setIds = related.map((r) => r.flashcardSetId);
+      let masteryPct: number | null = null;
+      let lastStudiedAt: string | null = null;
+      let setIdForCta: string | null = null;
+      if (setIds.length) {
+        let totalMastered = 0;
+        let totalCards = 0;
+        for (const setId of setIds) {
+          const meta = flashcardSetMeta.find((s) => s.id === setId);
+          if (!meta) continue;
+          const progress = getSetProgress(setId, meta.count);
+          totalMastered += progress.masteredCards;
+          totalCards += meta.count;
+          if (!setIdForCta) setIdForCta = setId;
+          if (progress.lastStudiedAt) {
+            const candidate = progress.lastStudiedAt;
+            if (!lastStudiedAt || candidate > lastStudiedAt) lastStudiedAt = candidate;
+          }
+        }
+        if (totalCards > 0) {
+          masteryPct = Math.round((totalMastered / totalCards) * 100);
+        }
+      }
+      return {
+        label: cat.subject,
+        quizScore: cat.score > 0 ? cat.score : null,
+        masteryPct,
+        flashcardSetId: setIdForCta,
+        lastStudiedAt,
+      };
+    });
+    return rows;
+  }, [getPerformanceByCategory, getSetProgress]);
+
+  const weakestTopic = useMemo<string | null>(() => {
+    const scored = topics
+      .filter((t) => t.quizScore != null)
+      .sort((a, b) => (a.quizScore ?? 0) - (b.quizScore ?? 0));
+    return scored[0]?.label ?? null;
+  }, [topics]);
+
+  const flashcardMasteryPct =
+    totalFlashcards > 0 ? Math.round((totalMasteredCards / totalFlashcards) * 100) : 0;
+
+  /* ─── Loading state ──────────────────────────────────────────────── */
   if (loading) {
     return (
-      <div className="p-4 space-y-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 space-y-4">
         {[1, 2, 3, 4].map((i) => (
-          <div key={i} className="h-32 bg-white/[0.03] rounded-2xl animate-pulse" />
+          <div
+            key={i}
+            className="h-32 bg-white/[0.03] rounded-xl border border-white/[0.06] animate-pulse"
+          />
         ))}
       </div>
     );
   }
 
   return (
-    <div className="p-4 pb-20 space-y-4 max-w-5xl mx-auto">
-      <XPHeroCard />
-
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
-        <div className="flex items-baseline justify-between">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-            Overall progress
-          </span>
-          <span className="text-2xl font-mono text-white">{overallPercent}%</span>
-        </div>
-
-        <div className="h-1 bg-white/5 rounded-full overflow-hidden">
-          <div
-            className="h-full bg-elec-yellow rounded-full transition-all duration-700"
-            style={{ width: `${overallPercent}%` }}
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-6 lg:py-8 space-y-7 lg:space-y-10">
+      {/* Top fold — 2-column on lg: XP + KPIs left, EPA predictor right */}
+      <div className="lg:grid lg:grid-cols-[380px_minmax(0,1fr)] lg:gap-8 space-y-5 lg:space-y-0">
+        <div className="space-y-5">
+          <XPHeroCard />
+          <KpiStrip
+            quizCount={quizStats.totalQuizzes}
+            quizAvg={quizStats.averageScore}
+            mastered={totalMasteredCards}
+            totalCards={totalFlashcards}
+            streakDays={streak.currentStreak}
+            achievementsUnlocked={getUnlockedCount()}
+            achievementsTotal={getTotalCount()}
           />
         </div>
 
-        <div className="grid grid-cols-4 gap-2">
-          <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-2 text-center">
-            <div className="text-[16px] font-mono text-white">{quizStats.totalQuizzes}</div>
-            <div className="text-[10px] uppercase tracking-[0.18em] text-white/55 mt-0.5">
-              Quizzes
-            </div>
-          </div>
-          <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-2 text-center">
-            <div className="text-[16px] font-mono text-white">{totalMasteredCards}</div>
-            <div className="text-[10px] uppercase tracking-[0.18em] text-white/55 mt-0.5">
-              Cards
-            </div>
-          </div>
-          <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-2 text-center">
-            <div className="text-[16px] font-mono text-white">{ojtHours.logged}h</div>
-            <div className="text-[10px] uppercase tracking-[0.18em] text-white/55 mt-0.5">OJT</div>
-          </div>
-          <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-2 text-center">
-            <div className="text-[16px] font-mono text-white">{streak.currentStreak}</div>
-            <div className="text-[10px] uppercase tracking-[0.18em] text-white/55 mt-0.5">
-              Streak
-            </div>
-          </div>
-        </div>
-
-        <div className="space-y-2 pt-3 border-t border-white/[0.06]">
-          {[
-            { label: 'Quizzes', value: Math.round(componentScores.quizScore), weight: '25%' },
-            { label: 'Flashcards', value: Math.round(componentScores.flashcardScore), weight: '15%' },
-            { label: 'OJT hours', value: Math.round(componentScores.ojtScore), weight: '15%' },
-            { label: 'Portfolio ACs', value: Math.round(componentScores.portfolioScore), weight: '15%' },
-            { label: 'KSBs', value: Math.round(componentScores.ksbScore), weight: '10%' },
-            { label: 'Study streak', value: Math.round(componentScores.streakScore), weight: '10%' },
-            { label: 'EPA readiness', value: Math.round(componentScores.epaScore), weight: '10%' },
-          ].map((item) => (
-            <div key={item.label} className="flex items-center gap-2">
-              <span className="text-[12px] text-white/85 w-24 shrink-0 truncate">
-                {item.label}
-              </span>
-              <div className="flex-1 h-1 bg-white/5 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-elec-yellow rounded-full transition-all duration-500"
-                  style={{ width: `${item.value}%` }}
-                />
-              </div>
-              <span className="text-[11px] text-white/85 w-8 text-right font-mono">
-                {item.value}%
-              </span>
-              <span className="text-[10px] text-white/55 w-7 text-right font-mono">
-                {item.weight}
-              </span>
-            </div>
-          ))}
+        <div className="mt-5 lg:mt-0">
+          <EPAGradePredictor
+            quizAverage={quizStats.averageScore}
+            flashcardMasteryPct={flashcardMasteryPct}
+            recentQuizScore={recentQuizScore}
+            trend={trend}
+            weakestTopic={weakestTopic}
+          />
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <SkillRadarChart data={skillRadar} />
+      {/* Topic mastery — full width */}
+      <TopicMasteryList topics={topics} />
 
+      {/* Charts side-by-side on lg+ */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-7">
+        <SkillRadarChart data={skillRadar} />
         <FlashcardMasteryWheel
           sets={flashcardInsights}
           totalMastered={totalMasteredCards}
           totalCards={totalFlashcards}
         />
-
-        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-            OJT hours
-          </span>
-
-          <div className="flex items-end gap-4">
-            <div className="flex-1">
-              <div className="text-3xl font-mono text-white">{ojtHours.logged}</div>
-              <div className="text-[12px] text-white/55 font-mono">
-                of {ojtHours.target.toLocaleString()} hours
-              </div>
-            </div>
-            <div className="text-right">
-              <div className="text-2xl font-mono text-elec-yellow">
-                {ojtHours.percentComplete}%
-              </div>
-              <div className="text-[10px] uppercase tracking-[0.18em] text-white/55 mt-0.5">
-                Complete
-              </div>
-            </div>
-          </div>
-
-          <div className="h-1 bg-white/5 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-elec-yellow rounded-full transition-all duration-700"
-              style={{ width: `${Math.min(ojtHours.percentComplete, 100)}%` }}
-            />
-          </div>
-        </div>
-
-        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-          <div className="flex items-baseline justify-between">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-              Achievements
-            </span>
-            <span className="text-[14px] text-elec-yellow font-mono">
-              {getUnlockedCount()}/{getTotalCount()}
-            </span>
-          </div>
-          <div className="h-1 bg-white/5 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-elec-yellow rounded-full transition-all duration-500"
-              style={{ width: `${(getUnlockedCount() / getTotalCount()) * 100}%` }}
-            />
-          </div>
-          <p className="text-[12px] text-white/55 leading-relaxed">
-            {getUnlockedCount() === 0
-              ? 'Start learning to unlock achievements'
-              : `${getTotalCount() - getUnlockedCount()} achievements remaining`}
-          </p>
-        </div>
       </div>
 
+      {/* Recent activity */}
       <RecentActivityFeed />
     </div>
   );
 }
+
+/* ─── KPI strip — 4-cell grid, monospace numbers ──────────────────── */
+
+function KpiStrip({
+  quizCount,
+  quizAvg,
+  mastered,
+  totalCards,
+  streakDays,
+  achievementsUnlocked,
+  achievementsTotal,
+}: {
+  quizCount: number;
+  quizAvg: number;
+  mastered: number;
+  totalCards: number;
+  streakDays: number;
+  achievementsUnlocked: number;
+  achievementsTotal: number;
+}) {
+  return (
+    <div className="grid grid-cols-2 gap-2">
+      <Cell
+        label="Quizzes"
+        value={quizCount}
+        sub={quizCount > 0 ? `${Math.round(quizAvg)}% avg` : 'No attempts yet'}
+      />
+      <Cell
+        label="Cards mastered"
+        value={mastered}
+        sub={totalCards > 0 ? `of ${totalCards}` : 'Start a set'}
+      />
+      <Cell
+        label="Study streak"
+        value={`${streakDays}${streakDays > 0 ? 'd' : ''}`}
+        sub={streakDays >= 7 ? 'On a roll' : streakDays > 0 ? 'Keep it going' : 'Study today'}
+        highlight={streakDays >= 7}
+      />
+      <Cell
+        label="Achievements"
+        value={`${achievementsUnlocked}/${achievementsTotal}`}
+        sub={achievementsUnlocked > 0 ? 'Unlocked' : 'Earn your first'}
+      />
+    </div>
+  );
+}
+
+function Cell({
+  label,
+  value,
+  sub,
+  highlight,
+}: {
+  label: string;
+  value: string | number;
+  sub?: string;
+  highlight?: boolean;
+}) {
+  return (
+    <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-3 sm:p-4 space-y-1.5">
+      <Eyebrow>{label}</Eyebrow>
+      <div
+        className={`text-[22px] sm:text-[26px] font-mono font-semibold tabular-nums leading-none ${highlight ? 'text-elec-yellow' : 'text-white'}`}
+      >
+        {value}
+      </div>
+      {sub && <span className="text-[11px] text-white/55 block">{sub}</span>}
+    </div>
+  );
+}
+
+// Re-export so the SectionHeader symbol isn't tree-shaken away unused
+export { SectionHeader };
 
 export default ProgressDashboard;

@@ -5,7 +5,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
   Select,
@@ -50,22 +49,22 @@ interface ApplyToVacancyDialogProps {
   onSuccess?: () => void;
 }
 
-// Verification tier badge component
+// Verification tier badge component — editorial chip
 const VerificationBadge = ({ tier }: { tier: string }) => {
-  const tierConfig: Record<string, { label: string; color: string; icon: React.ReactNode }> = {
+  const tierConfig: Record<string, { label: string; tone: string; icon: React.ReactNode }> = {
     basic: {
       label: 'Basic',
-      color: 'bg-slate-500/20 text-slate-300 border-slate-500/30',
+      tone: 'text-white/85 border-white/15 bg-transparent',
       icon: <Shield className="h-3 w-3" />,
     },
     verified: {
       label: 'Verified',
-      color: 'bg-blue-500/20 text-blue-300 border-blue-500/30',
+      tone: 'text-blue-300 border-blue-500/40 bg-blue-500/[0.08]',
       icon: <BadgeCheck className="h-3 w-3" />,
     },
     premium: {
       label: 'Premium',
-      color: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
+      tone: 'text-emerald-300 border-emerald-500/40 bg-emerald-500/[0.08]',
       icon: <Award className="h-3 w-3" />,
     },
   };
@@ -73,10 +72,15 @@ const VerificationBadge = ({ tier }: { tier: string }) => {
   const config = tierConfig[tier] || tierConfig.basic;
 
   return (
-    <Badge className={cn('text-xs', config.color)}>
+    <span
+      className={cn(
+        'inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-[0.14em] border rounded-md px-1.5 py-0.5',
+        config.tone
+      )}
+    >
       {config.icon}
-      <span className="ml-1">{config.label}</span>
-    </Badge>
+      {config.label}
+    </span>
   );
 };
 
@@ -249,104 +253,105 @@ export function ApplyToVacancyDialog({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="bottom"
-        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden flex flex-col"
+        className="h-[85vh] p-0 rounded-t-3xl overflow-hidden flex flex-col bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border-t border-white/[0.10]"
       >
-        {/* Drag Handle - Native App Feel */}
-        <div className="flex justify-center pt-3 pb-2 touch-manipulation">
-          <div className="w-10 h-1 bg-muted-foreground/30 rounded-full" />
+        {/* Drag Handle */}
+        <div className="flex justify-center pt-3 pb-1 touch-manipulation">
+          <div className="w-12 h-1.5 rounded-full bg-white/15" />
         </div>
 
         {/* Header */}
-        <SheetHeader className="px-4 pb-3 border-b border-border">
-          <SheetTitle className="flex items-center gap-2 text-lg">
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center">
-              <Send className="h-5 w-5 text-emerald-400" />
-            </div>
-            <div>
-              <span className="block">Apply to Vacancy</span>
-              <span className="text-sm font-normal text-white">
-                Submit your application
-              </span>
-            </div>
+        <SheetHeader className="px-5 sm:px-6 pt-2 pb-4 border-b border-white/[0.06] text-left">
+          <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-emerald-300 inline-flex items-center gap-1.5">
+            <Shield className="h-3 w-3" />
+            Direct application
+          </span>
+          <SheetTitle className="text-[22px] sm:text-[24px] font-semibold tracking-tight leading-tight text-white mt-1.5">
+            Apply with Elec-ID.
           </SheetTitle>
+          <p className="text-[12.5px] text-white/85 mt-0.5">
+            Your verified profile gets shared directly with the hiring team.
+          </p>
         </SheetHeader>
 
         {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
+        <div className="flex-1 overflow-y-auto px-5 sm:px-6 py-5 space-y-5">
           {/* Vacancy Info Card */}
-          <Card className="bg-muted/50 border-border">
-            <CardContent className="p-4">
-              <div className="flex items-start gap-3">
-                <Avatar className="h-14 w-14 rounded-xl">
-                  <AvatarImage src={vacancy.employer?.logo_url || undefined} />
-                  <AvatarFallback className="rounded-xl bg-emerald-500/20 text-emerald-400 font-bold text-lg">
-                    {companyInitials}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-foreground text-base">{vacancy.title}</p>
-                  <p className="text-sm text-white flex items-center gap-1.5 mt-0.5">
-                    <Building2 className="h-4 w-4" />
-                    {vacancy.employer?.company_name || 'Employer'}
-                  </p>
-                  <div className="flex flex-wrap items-center gap-2 mt-2">
-                    <Badge variant="outline" className="text-xs h-6">
-                      <MapPin className="h-3 w-3 mr-1" />
-                      {vacancy.location}
-                    </Badge>
-                    <Badge variant="outline" className="text-xs h-6">
-                      <Briefcase className="h-3 w-3 mr-1" />
-                      {vacancy.type}
-                    </Badge>
-                    {salaryDisplay && (
-                      <Badge className="text-xs h-6 bg-emerald-500/20 text-emerald-400 border-emerald-500/30">
-                        {salaryDisplay}
-                      </Badge>
-                    )}
-                  </div>
+          <div className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_15%)_0%,hsl(0_0%_11%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-4 sm:p-5">
+            <div className="flex items-start gap-3">
+              <Avatar className="h-12 w-12 rounded-xl">
+                <AvatarImage src={vacancy.employer?.logo_url || undefined} />
+                <AvatarFallback className="rounded-xl bg-emerald-500/[0.08] border border-emerald-500/30 text-emerald-300 font-semibold text-[11px] tabular-nums">
+                  {companyInitials}
+                </AvatarFallback>
+              </Avatar>
+              <div className="flex-1 min-w-0">
+                <p className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-emerald-300 inline-flex items-center gap-1">
+                  <Building2 className="h-3 w-3" aria-hidden />
+                  {vacancy.employer?.company_name || 'Employer'}
+                </p>
+                <h3 className="mt-1 text-[15px] sm:text-[16px] font-semibold tracking-tight text-white leading-snug">
+                  {vacancy.title}
+                </h3>
+                <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                  <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-[0.12em] font-semibold text-white/85 border border-white/15 rounded-md px-1.5 py-0.5">
+                    <MapPin className="h-3 w-3" />
+                    {vacancy.location}
+                  </span>
+                  <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-[0.12em] font-semibold text-white/85 border border-white/15 rounded-md px-1.5 py-0.5">
+                    <Briefcase className="h-3 w-3" />
+                    {vacancy.type}
+                  </span>
+                  {salaryDisplay && (
+                    <span className="inline-flex items-center text-[10px] uppercase tracking-[0.12em] font-semibold text-elec-yellow border border-elec-yellow/40 bg-elec-yellow/[0.08] rounded-md px-1.5 py-0.5 tabular-nums">
+                      {salaryDisplay}
+                    </span>
+                  )}
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
 
           {/* Elec-ID Profile Preview */}
           {profileLoading ? (
-            <div className="flex items-center gap-3 p-4 bg-muted rounded-xl">
-              <Loader2 className="h-5 w-5 animate-spin text-white" />
-              <span className="text-sm text-white">Loading your Elec-ID...</span>
+            <div className="flex items-center gap-3 p-4 rounded-2xl border border-white/[0.10] bg-white/[0.02]">
+              <Loader2 className="h-4 w-4 animate-spin text-elec-yellow" />
+              <span className="text-[13px] text-white/85">Loading your Elec-ID…</span>
             </div>
           ) : elecIdProfile ? (
             <div className="space-y-3">
               {/* Profile Header */}
-              <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl">
-                <div className="flex items-start justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center">
-                      <Shield className="h-6 w-6 text-emerald-400" />
+              <div className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_15%)_0%,hsl(0_0%_11%)_100%)] border border-emerald-500/30 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-4 sm:p-5">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="w-10 h-10 rounded-xl bg-emerald-500/[0.08] border border-emerald-500/30 flex items-center justify-center shrink-0">
+                      <Shield className="h-4 w-4 text-emerald-300" />
                     </div>
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <p className="font-semibold text-foreground">Elec-ID</p>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <p className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-emerald-300">
+                          Elec-ID
+                        </p>
                         <VerificationBadge tier={elecIdProfile.verification_tier} />
                       </div>
-                      <p className="text-sm text-emerald-400 font-mono">
+                      <p className="mt-0.5 text-[13px] text-white font-mono tabular-nums truncate">
                         {elecIdProfile.elec_id_number}
                       </p>
                     </div>
                   </div>
-                  <CheckCircle2 className="h-5 w-5 text-emerald-400" />
+                  <CheckCircle2 className="h-4 w-4 text-emerald-300 shrink-0 self-center" aria-hidden />
                 </div>
 
                 {/* Toggle to show preview */}
                 <button
                   type="button"
                   onClick={() => setShowProfilePreview(!showProfilePreview)}
-                  className="mt-3 w-full h-11 flex items-center justify-between text-sm text-emerald-300 active:text-emerald-200 transition-colors touch-manipulation rounded-lg px-2 -mx-2 active:bg-emerald-500/10"
+                  className="mt-4 pt-3 border-t border-white/[0.06] w-full flex items-center justify-between text-[11px] uppercase tracking-[0.14em] font-semibold text-emerald-300 hover:text-emerald-200 transition-colors touch-manipulation"
                 >
-                  <span>What will be shared with employer</span>
+                  <span>What gets shared with the employer</span>
                   <ChevronDown
                     className={cn(
-                      'h-4 w-4 transition-transform',
+                      'h-3.5 w-3.5 transition-transform',
                       showProfilePreview && 'rotate-180'
                     )}
                   />
@@ -435,14 +440,16 @@ export function ApplyToVacancyDialog({
               </div>
             </div>
           ) : (
-            <div className="p-4 bg-destructive/10 border border-destructive/20 rounded-xl">
-              <div className="flex gap-3">
-                <AlertCircle className="h-5 w-5 text-destructive shrink-0 mt-0.5" />
-                <div>
-                  <p className="font-semibold text-destructive">Elec-ID Required</p>
-                  <p className="text-sm text-white mt-1">
-                    Please complete your Elec-ID profile before applying. Your profile helps
-                    employers verify your credentials.
+            <div className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_15%)_0%,hsl(0_0%_11%)_100%)] border border-red-500/30 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-4">
+              <div className="flex items-start gap-3">
+                <AlertCircle className="h-4 w-4 text-red-300 shrink-0 self-center" aria-hidden />
+                <div className="min-w-0">
+                  <p className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-red-300">
+                    Elec-ID Required
+                  </p>
+                  <p className="mt-1 text-[12.5px] leading-relaxed text-white/85">
+                    Complete your Elec-ID profile before applying — employers use it to verify your
+                    credentials.
                   </p>
                 </div>
               </div>
@@ -523,25 +530,24 @@ export function ApplyToVacancyDialog({
                 Cover Letter (Optional)
               </Label>
               {elecIdProfile && (
-                <Button
+                <button
                   type="button"
-                  variant="outline"
                   onClick={generateCoverLetter}
                   disabled={isGeneratingCoverLetter}
-                  className="gap-2 h-10 text-sm bg-gradient-to-r from-purple-500/10 to-pink-500/10 border-purple-500/30 text-purple-400 active:bg-purple-500/20 active:text-purple-300 touch-manipulation"
+                  className="inline-flex items-center gap-1.5 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-elec-yellow border border-elec-yellow/40 bg-elec-yellow/[0.08] hover:bg-elec-yellow/[0.12] rounded-full px-3 py-1.5 min-h-[36px] touch-manipulation transition-colors disabled:opacity-50"
                 >
                   {isGeneratingCoverLetter ? (
                     <>
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                      Writing...
+                      <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                      Writing…
                     </>
                   ) : (
                     <>
-                      <Sparkles className="h-4 w-4" />
-                      AI Write
+                      <Sparkles className="h-3.5 w-3.5" />
+                      AI write
                     </>
                   )}
-                </Button>
+                </button>
               )}
             </div>
             <Textarea
@@ -580,32 +586,36 @@ export function ApplyToVacancyDialog({
         </div>
 
         {/* Sticky Footer - Action Buttons */}
-        <div className="border-t border-border bg-background p-4 pb-6 flex gap-3">
-          <Button
-            variant="outline"
-            className="flex-1 h-12 text-base touch-manipulation active:scale-[0.98] transition-transform"
+        <div
+          className="border-t border-white/[0.08] bg-[hsl(0_0%_8%)]/95 backdrop-blur-xl px-5 py-4 flex gap-2"
+          style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}
+        >
+          <button
+            type="button"
             onClick={() => onOpenChange(false)}
             disabled={applyMutation.isPending}
+            className="flex-1 text-[12px] font-semibold uppercase tracking-[0.14em] text-white/85 border border-white/15 hover:border-white/30 rounded-full px-4 py-3 min-h-[44px] inline-flex items-center justify-center gap-2 touch-manipulation transition-colors disabled:opacity-50"
           >
             Cancel
-          </Button>
-          <Button
-            className="flex-1 h-12 text-base bg-emerald-500 active:bg-emerald-400 text-white touch-manipulation active:scale-[0.98] transition-transform"
+          </button>
+          <button
+            type="button"
             onClick={handleApply}
             disabled={applyMutation.isPending || !elecIdProfile || !shareProfile}
+            className="flex-1 text-[12px] font-semibold uppercase tracking-[0.14em] text-black bg-emerald-400 hover:bg-emerald-300 active:bg-emerald-300/90 rounded-full px-4 py-3 min-h-[44px] inline-flex items-center justify-center gap-2 touch-manipulation transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
           >
             {applyMutation.isPending ? (
               <>
-                <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-                Applying...
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Applying…
               </>
             ) : (
               <>
-                <Send className="h-5 w-5 mr-2" />
+                <Send className="h-4 w-4" />
                 Apply with Elec-ID
               </>
             )}
-          </Button>
+          </button>
         </div>
       </SheetContent>
     </Sheet>

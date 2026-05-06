@@ -237,8 +237,8 @@ const CPDGoals = () => {
       </div>
 
       {goals.length === 0 ? (
-        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-8 text-center space-y-3">
-          <h3 className="text-[16px] font-semibold text-white">No goals set yet</h3>
+        <div className="rounded-2xl border border-white/[0.10] bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-8 text-center space-y-3">
+          <h3 className="text-[18px] font-semibold tracking-tight text-white">No goals set yet.</h3>
           <p className="text-[14px] text-white/70 leading-relaxed max-w-md mx-auto">
             Create your first CPD goal to start tracking your professional development progress
             and stay on track with your career objectives.
@@ -256,7 +256,7 @@ const CPDGoals = () => {
           {goals.map((goal) => (
             <div
               key={goal.id}
-              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3"
+              className="rounded-2xl border border-white/[0.10] bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 space-y-3"
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="space-y-1 flex-1 min-w-0">
@@ -288,7 +288,7 @@ const CPDGoals = () => {
                 </div>
               </div>
 
-              <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
+              <div className="rounded-lg border border-white/[0.10] bg-white/[0.02] p-3 space-y-2">
                 <div className="flex justify-between text-[13px]">
                   <span className="text-white/55">Progress</span>
                   <span className="text-white font-mono">

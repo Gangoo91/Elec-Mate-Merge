@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
@@ -52,6 +53,7 @@ const STATUS_LABEL: Record<AcStatus, string> = {
 };
 
 export function MyAcCoverageCard() {
+  const navigate = useNavigate();
   const [rows, setRows] = useState<CoverageRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [studentId, setStudentId] = useState<string | null>(null);
@@ -210,6 +212,15 @@ export function MyAcCoverageCard() {
             of your course evidenced or beyond
           </span>
         </div>
+
+        {/* Deep link into the workspace AC heatmap */}
+        <button
+          type="button"
+          onClick={() => navigate('/apprentice/hub#ac-heatmap')}
+          className="mt-3 inline-flex items-center gap-1 text-[11.5px] font-semibold text-elec-yellow hover:text-elec-yellow/85 transition-colors touch-manipulation"
+        >
+          Open the full coverage map →
+        </button>
 
         {/* Stacked progress bar */}
         <div className="mt-4 h-2.5 rounded-full bg-white/[0.05] overflow-hidden flex">

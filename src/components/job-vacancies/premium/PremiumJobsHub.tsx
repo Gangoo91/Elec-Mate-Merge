@@ -11,8 +11,6 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import {
   Briefcase,
-  Bookmark,
-  BarChart3,
   Search,
   RefreshCw,
   Loader2,
@@ -47,13 +45,12 @@ type TabId = 'explore' | 'saved' | 'insights';
 interface Tab {
   id: TabId;
   label: string;
-  icon: typeof Briefcase;
 }
 
 const TABS: Tab[] = [
-  { id: 'explore', label: 'Explore', icon: Briefcase },
-  { id: 'saved', label: 'Saved', icon: Bookmark },
-  { id: 'insights', label: 'Insights', icon: BarChart3 },
+  { id: 'explore', label: 'Explore' },
+  { id: 'saved', label: 'Saved' },
+  { id: 'insights', label: 'Insights' },
 ];
 
 // Default filters
@@ -380,28 +377,34 @@ const PremiumJobsHub = () => {
       className="min-h-screen bg-background"
     >
       {/* Tab bar + actions */}
-      <div className="border-b border-white/5">
+      <div className="border-b border-white/[0.06]">
         <div className="flex items-center gap-1 px-3 sm:px-4 py-2 sm:py-3">
           {TABS.map((tab) => {
-            const Icon = tab.icon;
             const isActive = activeTab === tab.id;
             const count = tab.id === 'saved' ? savedCount : undefined;
 
             return (
               <button
                 key={tab.id}
+                type="button"
                 onClick={() => setActiveTab(tab.id)}
                 className={cn(
-                  'flex-1 flex items-center justify-center gap-2 h-11 min-h-[44px] rounded-xl text-sm font-medium transition-all touch-manipulation',
+                  'flex-1 inline-flex items-center justify-center gap-2 h-11 min-h-[44px] rounded-full text-[11.5px] font-semibold uppercase tracking-[0.14em] border transition-colors touch-manipulation',
                   isActive
-                    ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30'
-                    : 'text-white hover:text-white hover:bg-white/5'
+                    ? 'text-elec-yellow border-elec-yellow/40 bg-elec-yellow/[0.08]'
+                    : 'text-white/85 border-transparent hover:border-white/15 hover:text-white'
                 )}
               >
-                <Icon className="h-4 w-4" />
                 <span>{tab.label}</span>
                 {count !== undefined && count > 0 && (
-                  <span className="ml-1 px-1.5 py-0.5 text-xs bg-blue-500/30 rounded-full">
+                  <span
+                    className={cn(
+                      'ml-0.5 inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full text-[9.5px] font-bold tabular-nums',
+                      isActive
+                        ? 'bg-elec-yellow text-black'
+                        : 'bg-white/10 text-white/85'
+                    )}
+                  >
                     {count}
                   </span>
                 )}

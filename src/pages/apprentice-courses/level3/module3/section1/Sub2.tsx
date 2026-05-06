@@ -326,7 +326,7 @@ export default function Sub2() {
                 verification record requires.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026, Regulation 132.2(c)(i)–(iv) — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026, Regulation 132.2(c)(i)–(iv) — supply characteristics."
           />
 
           <RegsCallout

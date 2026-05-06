@@ -104,7 +104,7 @@ export function MyActivityFeedCard() {
 
 function handleNavigate(item: CollegeActivityItem, navigate: ReturnType<typeof useNavigate>) {
   if (item.target.type === 'submission') {
-    navigate('/apprentice/portfolio-hub?section=tutor');
+    navigate('/apprentice/hub?section=tutor');
   } else if (item.target.type === 'goal') {
     navigate('/apprentice/college-plan#plan');
   } else if (item.target.type === 'observation') {

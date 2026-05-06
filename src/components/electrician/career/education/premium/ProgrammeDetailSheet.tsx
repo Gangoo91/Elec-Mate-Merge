@@ -1,36 +1,37 @@
 /**
- * ProgrammeDetailSheet - Bottom sheet with programme details
- * Parallax hero, collapsible sections, sticky CTA bar
+ * ProgrammeDetailSheet — editorial bottom sheet.
+ *
+ * Drops the Unsplash parallax hero. Type-led header with institution mark +
+ * initials, eyebrow + title + provider, fact strip (rating / employed /
+ * duration / mode), then numbered sections (overview, topics, entry,
+ * funding, progression, outcomes). Similar programmes rail at bottom.
+ * Sticky CTA bar (Enquire + Apply).
  */
 
-import { useState, useRef } from 'react';
 import { openExternalUrl } from '@/utils/open-external-url';
 import { motion } from 'framer-motion';
-import { Drawer, DrawerContent, DrawerClose } from '@/components/ui/drawer';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import {
+  Drawer,
+  DrawerContent,
+  DrawerClose,
+  DrawerTitle,
+  DrawerDescription,
+} from '@/components/ui/drawer';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { cn } from '@/lib/utils';
 import {
   X,
   Star,
-  Clock,
-  GraduationCap,
-  MapPin,
-  ChevronDown,
-  ChevronRight,
-  Calendar,
-  PoundSterling,
   TrendingUp,
-  BookOpen,
-  Award,
-  Users,
   ExternalLink,
   Bookmark,
   Share2,
   GitCompare,
+  ArrowRight,
+  MapPin,
+  Calendar,
 } from 'lucide-react';
-import { fadeUpVariants } from './animations/variants';
+import { Eyebrow } from '@/components/college/primitives';
 import type { LiveEducationData } from '@/hooks/useLiveEducationData';
 
 interface ProgrammeDetailSheetProps {
@@ -45,68 +46,23 @@ interface ProgrammeDetailSheetProps {
   onSelectSimilar?: (programme: LiveEducationData) => void;
 }
 
-// Collapsible section component
-const Section = ({
-  title,
-  icon: Icon,
-  defaultOpen = false,
-  children,
-}: {
-  title: string;
-  icon: typeof BookOpen;
-  defaultOpen?: boolean;
-  children: React.ReactNode;
-}) => {
-  const [isOpen, setIsOpen] = useState(defaultOpen);
+const initialsOf = (institution: string): string =>
+  institution
+    .split(/\s+/)
+    .map((w) => w[0])
+    .filter(Boolean)
+    .slice(0, 3)
+    .join('')
+    .toUpperCase();
 
-  return (
-    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <CollapsibleTrigger className="w-full flex items-center justify-between p-3.5 bg-white/[0.04] rounded-xl border border-white/[0.08] hover:bg-white/[0.06] transition-colors touch-manipulation">
-        <div className="flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-lg bg-elec-yellow/10 flex items-center justify-center">
-            <Icon className="h-3.5 w-3.5 text-elec-yellow" />
-          </div>
-          <span className="font-medium text-white text-sm">{title}</span>
-        </div>
-        <ChevronDown
-          className={cn(
-            'h-4 w-4 text-white transition-transform duration-200',
-            isOpen && 'rotate-180'
-          )}
-        />
-      </CollapsibleTrigger>
-      <CollapsibleContent>
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="px-3.5 py-3 mt-1.5"
-        >
-          {children}
-        </motion.div>
-      </CollapsibleContent>
-    </Collapsible>
-  );
-};
-
-// Category image fallbacks
-const getCategoryImage = (category: string) => {
-  const images: Record<string, string> = {
-    Degree:
-      'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&h=400&fit=crop&auto=format',
-    Certificate:
-      'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&h=400&fit=crop&auto=format',
-    Diploma:
-      'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=800&h=400&fit=crop&auto=format',
-    Apprenticeship:
-      'https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=800&h=400&fit=crop&auto=format',
-    Foundation:
-      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=400&fit=crop&auto=format',
-    Master:
-      'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=400&fit=crop&auto=format',
-    HNC: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=400&fit=crop&auto=format',
-    HND: 'https://images.unsplash.com/photo-1574188041339-3d9d896ce7f8?w=800&h=400&fit=crop&auto=format',
-  };
-  return images[category] || images.Degree;
+const formatDuration = (duration: string) => {
+  const yr = duration.match(/(\d+)\s*years?/i);
+  if (yr) return `${yr[1]}yr${parseInt(yr[1]) > 1 ? 's' : ''}`;
+  const mo = duration.match(/(\d+)\s*months?/i);
+  if (mo) return `${mo[1]}mo`;
+  const wk = duration.match(/(\d+)\s*weeks?/i);
+  if (wk) return `${wk[1]}wk${parseInt(wk[1]) > 1 ? 's' : ''}`;
+  return duration;
 };
 
 const ProgrammeDetailSheet = ({
@@ -120,15 +76,6 @@ const ProgrammeDetailSheet = ({
   similarProgrammes = [],
   onSelectSimilar,
 }: ProgrammeDetailSheetProps) => {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [scrollY, setScrollY] = useState(0);
-
-  // Handle scroll for parallax effect
-  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
-    const target = e.target as HTMLDivElement;
-    setScrollY(target.scrollTop);
-  };
-
   if (!programme) return null;
 
   const handleShare = async () => {
@@ -136,335 +83,335 @@ const ProgrammeDetailSheet = ({
       try {
         await navigator.share({
           title: programme.title,
-          text: `Check out this programme: ${programme.title} at ${programme.institution}`,
+          text: `${programme.title} at ${programme.institution}`,
           url: programme.courseUrl || window.location.href,
         });
       } catch {
-        // User cancelled
+        // user cancelled
       }
     }
   };
 
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
-      <DrawerContent className="h-[95vh] rounded-t-3xl overflow-hidden">
-        {/* Custom scroll area with parallax */}
-        <div ref={scrollRef} onScroll={handleScroll} className="h-full overflow-y-auto">
-          {/* Hero Image with Parallax */}
-          <div className="relative h-52 sm:h-60 overflow-hidden">
-            <motion.img
-              src={programme.imageUrl || getCategoryImage(programme.category)}
-              alt={programme.title}
-              className="w-full h-full object-cover"
-              style={{
-                transform: `translateY(${scrollY * 0.3}px) scale(${1 + scrollY * 0.0005})`,
-              }}
-              onError={(e) => {
-                e.currentTarget.src = getCategoryImage(programme.category);
-              }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
-
-            {/* Close button */}
-            <DrawerClose className="absolute top-3 right-3 h-9 w-9 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center hover:bg-black/70 transition-colors touch-manipulation">
-              <X className="h-4 w-4 text-white" />
-            </DrawerClose>
-
-            {/* Badges */}
-            <div className="absolute top-3 left-3 flex gap-1.5">
-              <Badge className="bg-elec-yellow/90 text-elec-dark border-elec-yellow/90 backdrop-blur-sm text-xs font-semibold">
-                {programme.category}
-              </Badge>
-              <Badge className="bg-white/20 text-white border-white/20 backdrop-blur-sm text-xs">
-                {programme.level}
-              </Badge>
+      <DrawerContent className="h-[95vh] rounded-t-3xl overflow-hidden bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border-white/[0.10]">
+        <VisuallyHidden>
+          <DrawerTitle>{programme.title}</DrawerTitle>
+          <DrawerDescription>
+            Programme details for {programme.title} at {programme.institution}
+          </DrawerDescription>
+        </VisuallyHidden>
+        <div className="h-full overflow-y-auto pb-32">
+          <div className="px-5 sm:px-6 pt-5 sm:pt-6">
+            {/* Close */}
+            <div className="flex items-start justify-between gap-3">
+              <Eyebrow>{programme.category}</Eyebrow>
+              <DrawerClose
+                aria-label="Close"
+                className="text-white/65 hover:text-white border border-white/15 hover:border-white/30 rounded-full h-9 w-9 inline-flex items-center justify-center shrink-0 touch-manipulation transition-colors"
+              >
+                <X className="h-4 w-4" />
+              </DrawerClose>
             </div>
 
-            {/* Title overlay */}
-            <div className="absolute bottom-3 left-3 right-3">
-              <h1 className="text-lg sm:text-xl font-bold text-white leading-tight">
-                {programme.title}
-              </h1>
-              <p className="text-elec-yellow font-medium text-sm mt-1">{programme.institution}</p>
-            </div>
-          </div>
-
-          {/* Content */}
-          <div className="px-4 py-4 space-y-4 pb-28">
-            {/* Stats — 2x2 grid on mobile, clean and readable */}
-            <motion.div
-              variants={fadeUpVariants}
-              initial="initial"
-              animate="animate"
-              className="grid grid-cols-2 gap-2"
-            >
-              <div className="bg-white/[0.04] rounded-xl p-3 border border-white/[0.06]">
-                <div className="flex items-center gap-2 mb-1">
-                  <Star className="h-3.5 w-3.5 text-amber-400" />
-                  <span className="text-[11px] text-white uppercase tracking-wide">Rating</span>
-                </div>
-                <span className="text-lg font-bold text-white">
-                  {(programme.rating || 0).toFixed(1)}
+            {/* Header */}
+            <div className="mt-4 flex items-start gap-3">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center bg-elec-yellow/[0.08] border border-elec-yellow/30 shrink-0">
+                <span className="text-[11px] sm:text-[12px] font-semibold tabular-nums text-elec-yellow">
+                  {initialsOf(programme.institution)}
                 </span>
               </div>
-              <div className="bg-white/[0.04] rounded-xl p-3 border border-white/[0.06]">
-                <div className="flex items-center gap-2 mb-1">
-                  <TrendingUp className="h-3.5 w-3.5 text-emerald-400" />
-                  <span className="text-[11px] text-white uppercase tracking-wide">Employed</span>
+              <div className="min-w-0 flex-1">
+                <h1 className="text-[22px] sm:text-[28px] font-semibold tracking-tight leading-tight text-white">
+                  {programme.title}
+                </h1>
+                <p className="mt-1 text-[13px] text-elec-yellow truncate">
+                  {programme.institution}
+                </p>
+                <div className="mt-2 flex flex-wrap gap-1.5">
+                  <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white/85 border border-white/15 rounded-md px-1.5 py-0.5">
+                    {programme.level}
+                  </span>
+                  {programme.locations.length > 0 && (
+                    <span className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-white/85 border border-white/15 rounded-md px-1.5 py-0.5">
+                      <MapPin className="h-3 w-3" aria-hidden />
+                      {programme.locations[0]}
+                      {programme.locations.length > 1 && ` +${programme.locations.length - 1}`}
+                    </span>
+                  )}
+                  {programme.nextIntake && (
+                    <span className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-white/85 border border-white/15 rounded-md px-1.5 py-0.5">
+                      <Calendar className="h-3 w-3" aria-hidden />
+                      {programme.nextIntake}
+                    </span>
+                  )}
                 </div>
-                <span className="text-lg font-bold text-white">
-                  {programme.employmentRate || 0}%
-                </span>
               </div>
-              <div className="bg-white/[0.04] rounded-xl p-3 border border-white/[0.06]">
-                <div className="flex items-center gap-2 mb-1">
-                  <Clock className="h-3.5 w-3.5 text-blue-400" />
-                  <span className="text-[11px] text-white uppercase tracking-wide">Duration</span>
-                </div>
-                <span className="text-sm font-semibold text-white">{programme.duration}</span>
-              </div>
-              <div className="bg-white/[0.04] rounded-xl p-3 border border-white/[0.06]">
-                <div className="flex items-center gap-2 mb-1">
-                  <BookOpen className="h-3.5 w-3.5 text-elec-yellow" />
-                  <span className="text-[11px] text-white uppercase tracking-wide">Mode</span>
-                </div>
-                <span className="text-sm font-semibold text-white">{programme.studyMode}</span>
-              </div>
-            </motion.div>
-
-            {/* Quick Info */}
-            <div className="flex flex-wrap gap-2">
-              {programme.locations.length > 0 && (
-                <Badge variant="outline" className="bg-white/[0.04] border-white/10 text-white">
-                  <MapPin className="h-3 w-3 mr-1" />
-                  {programme.locations[0]}
-                  {programme.locations.length > 1 && ` +${programme.locations.length - 1}`}
-                </Badge>
-              )}
-              {programme.nextIntake && (
-                <Badge variant="outline" className="bg-white/[0.04] border-white/10 text-white">
-                  <Calendar className="h-3 w-3 mr-1" />
-                  {programme.nextIntake}
-                </Badge>
-              )}
             </div>
 
-            {/* Action Buttons */}
-            <div className="flex gap-2">
+            {/* Fact strip */}
+            <dl className="mt-5 pt-4 border-t border-white/[0.06] grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-3 text-[11px]">
+              <Stat
+                label="Rating"
+                value={
+                  <span className="inline-flex items-center gap-1">
+                    <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" aria-hidden />
+                    {(programme.rating || 0).toFixed(1)}
+                  </span>
+                }
+              />
+              <Stat
+                label="Employed"
+                value={
+                  <span className="inline-flex items-center gap-1">
+                    <TrendingUp className="h-3.5 w-3.5 text-emerald-400" aria-hidden />
+                    {programme.employmentRate || 0}%
+                  </span>
+                }
+              />
+              <Stat label="Duration" value={formatDuration(programme.duration)} />
+              <Stat label="Mode" value={programme.studyMode} />
+            </dl>
+
+            {/* Action row */}
+            <div className="mt-5 grid grid-cols-3 gap-2">
               {onBookmark && (
-                <Button
-                  variant="outline"
+                <button
+                  type="button"
                   onClick={() => onBookmark(programme.id)}
                   className={cn(
-                    'flex-1 h-10 border-white/15 hover:bg-white/10 text-white hover:text-white rounded-xl touch-manipulation',
-                    isBookmarked &&
-                      'bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow hover:text-elec-yellow'
+                    'inline-flex items-center justify-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] border rounded-full px-3 py-2 min-h-[40px] touch-manipulation transition-colors',
+                    isBookmarked
+                      ? 'text-elec-yellow border-elec-yellow/40 bg-elec-yellow/[0.08]'
+                      : 'text-white/85 border-white/15 hover:border-white/30'
                   )}
                 >
-                  <Bookmark className={cn('h-4 w-4 mr-1.5', isBookmarked && 'fill-current')} />
+                  <Bookmark className={cn('h-3.5 w-3.5', isBookmarked && 'fill-current')} />
                   {isBookmarked ? 'Saved' : 'Save'}
-                </Button>
+                </button>
               )}
               {onAddToCompare && (
-                <Button
-                  variant="outline"
+                <button
+                  type="button"
                   onClick={() => onAddToCompare(programme)}
                   className={cn(
-                    'flex-1 h-10 border-white/15 hover:bg-white/10 text-white hover:text-white rounded-xl touch-manipulation',
-                    isInCompare &&
-                      'bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow hover:text-elec-yellow'
+                    'inline-flex items-center justify-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] border rounded-full px-3 py-2 min-h-[40px] touch-manipulation transition-colors',
+                    isInCompare
+                      ? 'text-elec-yellow border-elec-yellow/40 bg-elec-yellow/[0.08]'
+                      : 'text-white/85 border-white/15 hover:border-white/30'
                   )}
                 >
-                  <GitCompare className="h-4 w-4 mr-1.5" />
+                  <GitCompare className="h-3.5 w-3.5" />
                   {isInCompare ? 'Added' : 'Compare'}
-                </Button>
+                </button>
               )}
-              <Button
-                variant="outline"
-                size="icon"
+              <button
+                type="button"
                 onClick={handleShare}
-                className="h-10 w-10 border-white/15 hover:bg-white/10 text-white hover:text-white rounded-xl touch-manipulation"
+                className="inline-flex items-center justify-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-white/85 border border-white/15 hover:border-white/30 rounded-full px-3 py-2 min-h-[40px] touch-manipulation transition-colors"
               >
-                <Share2 className="h-4 w-4" />
-              </Button>
+                <Share2 className="h-3.5 w-3.5" />
+                Share
+              </button>
             </div>
 
-            {/* Collapsible Sections */}
-            <div className="space-y-2.5">
-              {/* Overview */}
-              <Section title="Programme Overview" icon={BookOpen} defaultOpen>
-                <p className="text-white text-sm leading-relaxed">{programme.description}</p>
-              </Section>
+            {/* Sections */}
+            <div className="mt-8 space-y-7">
+              {/* 01 — Overview */}
+              <section className="space-y-2">
+                <Eyebrow>01 · OVERVIEW</Eyebrow>
+                <p className="text-[14px] leading-relaxed text-white">{programme.description}</p>
+              </section>
 
-              {/* Key Topics */}
+              {/* 02 — Key topics */}
               {programme.keyTopics && programme.keyTopics.length > 0 && (
-                <Section title="Key Topics" icon={Award}>
-                  <div className="flex flex-wrap gap-1.5">
-                    {programme.keyTopics.map((topic, index) => (
-                      <Badge
-                        key={index}
-                        variant="outline"
-                        className="bg-elec-yellow/10 border-elec-yellow/20 text-elec-yellow text-xs"
+                <section className="space-y-3">
+                  <Eyebrow>02 · KEY TOPICS</Eyebrow>
+                  <ul className="flex flex-wrap gap-1.5">
+                    {programme.keyTopics.map((topic, idx) => (
+                      <li
+                        key={idx}
+                        className="text-[10.5px] uppercase tracking-[0.12em] text-elec-yellow border border-elec-yellow/35 bg-elec-yellow/[0.08] rounded-md px-2 py-0.5"
                       >
                         {topic}
-                      </Badge>
+                      </li>
                     ))}
-                  </div>
-                </Section>
+                  </ul>
+                </section>
               )}
 
-              {/* Entry Requirements */}
+              {/* 03 — Entry requirements */}
               {programme.entryRequirements && programme.entryRequirements.length > 0 && (
-                <Section title="Entry Requirements" icon={GraduationCap}>
-                  <ul className="space-y-2">
-                    {programme.entryRequirements.map((req, index) => (
-                      <li key={index} className="flex items-start gap-2 text-sm text-white">
-                        <ChevronRight className="h-3.5 w-3.5 mt-0.5 text-elec-yellow flex-shrink-0" />
-                        <span>{req}</span>
+                <section className="space-y-3">
+                  <Eyebrow>03 · ENTRY REQUIREMENTS</Eyebrow>
+                  <ol className="divide-y divide-white/[0.06]">
+                    {programme.entryRequirements.map((req, idx) => (
+                      <li key={idx} className="py-3 first:pt-0 last:pb-0">
+                        <div className="flex items-baseline gap-3">
+                          <span className="text-[10.5px] tabular-nums font-semibold text-elec-yellow shrink-0 w-5">
+                            {String(idx + 1).padStart(2, '0')}
+                          </span>
+                          <p className="text-[13px] leading-relaxed text-white">{req}</p>
+                        </div>
                       </li>
                     ))}
-                  </ul>
-                </Section>
+                  </ol>
+                </section>
               )}
 
-              {/* Funding & Fees */}
-              <Section title="Funding & Fees" icon={PoundSterling}>
-                <div className="space-y-2.5">
-                  <div className="flex items-center justify-between py-2 border-b border-white/[0.06]">
-                    <span className="text-sm text-white">Tuition Fees</span>
-                    <span className="text-sm font-semibold text-white">
-                      {programme.tuitionFees}
-                    </span>
-                  </div>
+              {/* 04 — Funding & fees */}
+              <section className="space-y-3">
+                <Eyebrow>04 · FUNDING + FEES</Eyebrow>
+                <dl className="divide-y divide-white/[0.06] text-[13px]">
+                  <FeeRow label="Tuition" value={programme.tuitionFees} />
                   {programme.averageStartingSalary && (
-                    <div className="flex items-center justify-between py-2 border-b border-white/[0.06]">
-                      <span className="text-sm text-white">Avg Starting Salary</span>
-                      <span className="text-sm font-semibold text-emerald-400">
-                        {programme.averageStartingSalary}
-                      </span>
-                    </div>
+                    <FeeRow
+                      label="Avg starting salary"
+                      value={
+                        <span className="text-emerald-300 tabular-nums">
+                          {programme.averageStartingSalary}
+                        </span>
+                      }
+                    />
                   )}
-                  {programme.fundingOptions && programme.fundingOptions.length > 0 && (
-                    <div className="pt-1">
-                      <p className="text-xs text-white mb-2">Funding Options:</p>
-                      <div className="flex flex-wrap gap-1.5">
-                        {programme.fundingOptions.map((option, index) => (
-                          <Badge
-                            key={index}
-                            variant="outline"
-                            className="bg-emerald-500/10 border-emerald-500/20 text-emerald-400 text-xs"
-                          >
-                            {option}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </Section>
+                </dl>
+                {programme.fundingOptions && programme.fundingOptions.length > 0 && (
+                  <div className="pt-2">
+                    <p className="text-[10.5px] uppercase tracking-[0.14em] font-semibold text-white/65 mb-2">
+                      Funding options
+                    </p>
+                    <ul className="flex flex-wrap gap-1.5">
+                      {programme.fundingOptions.map((option, idx) => (
+                        <li
+                          key={idx}
+                          className="text-[10.5px] uppercase tracking-[0.12em] text-emerald-300 border border-emerald-500/35 bg-emerald-500/[0.08] rounded-md px-2 py-0.5"
+                        >
+                          {option}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </section>
 
-              {/* Progression Options */}
+              {/* 05 — Progression */}
               {programme.progressionOptions && programme.progressionOptions.length > 0 && (
-                <Section title="Progression Options" icon={TrendingUp}>
-                  <ul className="space-y-2">
-                    {programme.progressionOptions.map((option, index) => (
-                      <li key={index} className="flex items-start gap-2 text-sm text-white">
-                        <ChevronRight className="h-3.5 w-3.5 mt-0.5 text-emerald-400 flex-shrink-0" />
-                        <span>{option}</span>
+                <section className="space-y-3">
+                  <Eyebrow>05 · PROGRESSION</Eyebrow>
+                  <ol className="divide-y divide-white/[0.06]">
+                    {programme.progressionOptions.map((option, idx) => (
+                      <li key={idx} className="py-3 first:pt-0 last:pb-0">
+                        <div className="flex items-baseline gap-3">
+                          <span className="text-[10.5px] tabular-nums font-semibold text-elec-yellow shrink-0 w-5">
+                            {String(idx + 1).padStart(2, '0')}
+                          </span>
+                          <p className="text-[13px] leading-relaxed text-white">{option}</p>
+                        </div>
                       </li>
                     ))}
-                  </ul>
-                </Section>
+                  </ol>
+                </section>
               )}
 
-              {/* Career Outcomes */}
+              {/* 06 — Career outcomes */}
               {programme.careerOutcomes && (programme.careerOutcomes as string[]).length > 0 && (
-                <Section title="Career Outcomes" icon={Users}>
-                  <ul className="space-y-2">
-                    {(programme.careerOutcomes as string[]).map(
-                      (outcome: string, index: number) => (
-                        <li key={index} className="flex items-start gap-2 text-sm text-white">
-                          <TrendingUp className="h-3.5 w-3.5 mt-0.5 text-emerald-400 flex-shrink-0" />
-                          <span>{outcome}</span>
-                        </li>
-                      )
-                    )}
-                  </ul>
-                </Section>
+                <section className="space-y-3">
+                  <Eyebrow>06 · CAREER OUTCOMES</Eyebrow>
+                  <ol className="divide-y divide-white/[0.06]">
+                    {(programme.careerOutcomes as string[]).map((outcome, idx) => (
+                      <li key={idx} className="py-3 first:pt-0 last:pb-0">
+                        <div className="flex items-baseline gap-3">
+                          <span className="text-[10.5px] tabular-nums font-semibold text-elec-yellow shrink-0 w-5">
+                            {String(idx + 1).padStart(2, '0')}
+                          </span>
+                          <p className="text-[13px] leading-relaxed text-white">{outcome}</p>
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+                </section>
               )}
-            </div>
 
-            {/* Similar Programmes */}
-            {similarProgrammes.length > 0 && onSelectSimilar && (
-              <div className="pt-2">
-                <h3 className="text-xs font-medium text-white uppercase tracking-wider mb-2.5">
-                  Similar Programmes
-                </h3>
-                <div className="flex gap-2.5 overflow-x-auto scrollbar-hide -mx-4 px-4 pb-2">
-                  {similarProgrammes.slice(0, 4).map((similar) => (
-                    <button
-                      key={similar.id}
-                      onClick={() => onSelectSimilar(similar)}
-                      className="min-w-[180px] bg-white/[0.04] rounded-xl border border-white/[0.08] overflow-hidden hover:border-elec-yellow/30 transition-colors text-left touch-manipulation active:scale-[0.98]"
-                    >
-                      <div className="h-20 overflow-hidden">
-                        <img
-                          src={similar.imageUrl || getCategoryImage(similar.category)}
-                          alt=""
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div className="p-2.5">
-                        <h4 className="text-xs font-medium text-white line-clamp-1">
+              {/* Similar programmes rail */}
+              {similarProgrammes.length > 0 && onSelectSimilar && (
+                <section className="space-y-3">
+                  <Eyebrow>SIMILAR ROUTES</Eyebrow>
+                  <div className="flex gap-2.5 overflow-x-auto scrollbar-hide -mx-5 sm:-mx-6 px-5 sm:px-6 pb-2">
+                    {similarProgrammes.slice(0, 4).map((similar) => (
+                      <motion.button
+                        key={similar.id}
+                        type="button"
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => onSelectSimilar(similar)}
+                        className="min-w-[200px] text-left rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_15%)_0%,hsl(0_0%_11%)_100%)] border border-white/[0.10] hover:border-elec-yellow/40 active:bg-white/[0.04] transition-colors p-4 touch-manipulation"
+                      >
+                        <Eyebrow>{similar.category}</Eyebrow>
+                        <h4 className="mt-2 text-[13.5px] font-semibold text-white leading-tight line-clamp-2">
                           {similar.title}
                         </h4>
-                        <p className="text-[11px] text-elec-yellow mt-0.5">{similar.institution}</p>
-                        <div className="flex items-center gap-1.5 mt-1.5 text-[11px] text-white">
-                          <Star className="h-3 w-3 fill-amber-400 text-amber-400" />
-                          {similar.rating?.toFixed(1)}
+                        <p className="mt-1 text-[11.5px] text-elec-yellow truncate">
+                          {similar.institution}
+                        </p>
+                        <div className="mt-2 inline-flex items-center gap-1 text-[11px] text-white">
+                          <Star className="h-3 w-3 fill-amber-400 text-amber-400" aria-hidden />
+                          <span className="tabular-nums">
+                            {(similar.rating || 0).toFixed(1)}
+                          </span>
                         </div>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
+                      </motion.button>
+                    ))}
+                  </div>
+                </section>
+              )}
+            </div>
           </div>
         </div>
 
-        {/* Sticky CTA Bar */}
+        {/* Sticky CTA */}
         <div
-          className="absolute bottom-0 left-0 right-0 p-4 bg-elec-dark/95 backdrop-blur-xl border-t border-white/10"
+          className="absolute bottom-0 left-0 right-0 px-5 sm:px-6 py-4 bg-[hsl(0_0%_8%)]/95 backdrop-blur-xl border-t border-white/[0.08]"
           style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}
         >
           <div className="flex gap-2.5">
-            <Button
-              variant="outline"
-              className="flex-1 h-12 border-white/15 hover:bg-white/10 text-white hover:text-white rounded-xl touch-manipulation font-medium"
-              onClick={() => {
-                if (programme.courseUrl) {
-                  openExternalUrl(programme.courseUrl);
-                }
-              }}
+            <button
+              type="button"
+              onClick={() => programme.courseUrl && openExternalUrl(programme.courseUrl)}
+              className="flex-1 text-[12px] font-semibold uppercase tracking-[0.14em] text-white/85 border border-white/15 hover:border-white/30 rounded-full px-4 py-3 min-h-[44px] inline-flex items-center justify-center gap-1.5 touch-manipulation transition-colors"
             >
               Enquire
-            </Button>
-            <Button
-              className="flex-1 h-12 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 rounded-xl touch-manipulation font-semibold shadow-lg shadow-elec-yellow/15"
-              onClick={() => {
-                if (programme.courseUrl) {
-                  openExternalUrl(programme.courseUrl);
-                }
-              }}
+            </button>
+            <button
+              type="button"
+              onClick={() => programme.courseUrl && openExternalUrl(programme.courseUrl)}
+              className="flex-1 text-[12px] font-semibold uppercase tracking-[0.14em] text-black bg-elec-yellow hover:bg-elec-yellow/90 active:bg-elec-yellow/85 rounded-full px-4 py-3 min-h-[44px] inline-flex items-center justify-center gap-1.5 touch-manipulation transition-colors"
             >
-              Apply Now
-              <ExternalLink className="h-4 w-4 ml-2" />
-            </Button>
+              Apply
+              <ArrowRight className="h-4 w-4" />
+              <ExternalLink className="h-3.5 w-3.5" />
+            </button>
           </div>
         </div>
       </DrawerContent>
     </Drawer>
   );
 };
+
+const Stat = ({ label, value }: { label: string; value: React.ReactNode }) => (
+  <div className="min-w-0">
+    <dt className="text-[9.5px] uppercase tracking-[0.14em] font-semibold text-white/65">
+      {label}
+    </dt>
+    <dd className="mt-0.5 text-[14px] sm:text-[15px] tabular-nums truncate text-white font-semibold">
+      {value}
+    </dd>
+  </div>
+);
+
+const FeeRow = ({ label, value }: { label: string; value: React.ReactNode }) => (
+  <div className="flex items-baseline justify-between gap-3 py-2.5 first:pt-0 last:pb-0">
+    <dt className="text-[12px] text-white/85">{label}</dt>
+    <dd className="text-[13px] font-semibold text-white tabular-nums">{value}</dd>
+  </div>
+);
 
 export default ProgrammeDetailSheet;

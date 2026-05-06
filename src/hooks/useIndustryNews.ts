@@ -18,6 +18,8 @@ export interface NewsArticle {
   created_at: string;
   updated_at: string;
   external_url?: string;
+  /** VPS scraper writes article URL here (legacy rows used external_url) */
+  source_url?: string;
   image_url?: string;
 }
 
@@ -63,40 +65,24 @@ export const useIndustryNews = () => {
   });
 
   /**
-   * Force a real refresh:
-   *   1. Fire the daily-news-update edge function (fire-and-forget — it may
-   *      take 30–60s to finish scraping).
-   *   2. Immediately refetch the DB to pull any rows already ingested by the
-   *      last cron run.
-   *   3. After a short delay, refetch again to pick up rows that arrive while
-   *      the scraper is still running.
+   * Re-pull the latest articles from the database.
+   *
+   * The actual scraper runs on the VPS (crawl4ai) on a daily cron — there is
+   * no Supabase edge function to trigger it. Refresh here just re-queries
+   * the DB so any rows the scraper has ingested since the last fetch land
+   * in the UI immediately.
    */
   const refresh = async () => {
     setRefreshSuccess(false);
     setRefreshError(null);
     setIsTriggeringScrape(true);
 
-    // Fire the scraper trigger — don't await the body, just kick it off.
-    // If the function is missing/404s we swallow the error and still refetch.
-    supabase.functions
-      .invoke('daily-news-update', { body: { source: 'manual_refresh' } })
-      .catch((e) => {
-        console.warn('daily-news-update trigger failed (non-fatal)', e);
-      });
-
     try {
-      // Immediate refetch
       await queryClient.refetchQueries({
         queryKey: ['industry-news'],
         type: 'active',
       });
       setRefreshSuccess(true);
-
-      // Second refetch after 8s to capture rows the scraper writes
-      // during the user's current visit.
-      setTimeout(() => {
-        queryClient.invalidateQueries({ queryKey: ['industry-news'] });
-      }, 8000);
     } catch (e) {
       setRefreshError((e as Error).message);
     } finally {

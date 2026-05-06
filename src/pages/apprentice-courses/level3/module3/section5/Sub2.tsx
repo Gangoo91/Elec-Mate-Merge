@@ -27,7 +27,9 @@ import {
   LearningOutcomes,
   ContentEyebrow,
   SectionRule,
+  VideoCard,
 } from '@/components/study-centre/learning';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Single-phase AC motors | Level 3 Module 3.5.2 (AC 3.2, 3.3) | Elec-Mate';
@@ -456,6 +458,14 @@ export default function Sub2() {
               sheet before specifying the protective device.
             </p>
           </ConceptBlock>
+
+          <VideoCard
+            url={videos.inductionMotor.url}
+            title={videos.inductionMotor.title}
+            channel={videos.inductionMotor.channel}
+            duration={videos.inductionMotor.duration}
+            topic={videos.inductionMotor.topic}
+          />
 
           <RegsCallout
             source="BS EN 60034-30-1:2014 — Efficiency classes for line-operated AC induction motors"

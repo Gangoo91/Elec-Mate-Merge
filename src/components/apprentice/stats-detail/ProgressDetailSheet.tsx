@@ -1,31 +1,24 @@
 /**
  * ProgressDetailSheet
  *
- * Green-themed 85vh bottom sheet with:
- * - XP ring hero with level + daily goal progress
- * - Overall progress from unified 6-factor formula
- * - Quiz performance bars with trend indicators + navigation
- * - Strongest/weakest category highlights
- * - Flashcard mastery with animated bars
- * - OJT hours animated progress
- * - Personalised insight card with decorative blob
- * - Smart cross-feature recommendations
- * - Go to Study Centre CTA
- * - Empty state CTA
+ * Editorial detail sheet for the apprentice progress stat tile.
+ *
+ * Layout: header → editorial hero (XP ring + headline + subtitle) → KPI strip
+ * → quiz performance → flashcards → OJT hours → insight → empty/recs.
+ *
+ * Drops the centered icon hero and chunky stat cards for the same editorial
+ * pattern used across Portfolio / OJT Hub / Diary.
  */
 
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/ui/sheet';
 import {
   Target,
-  ChevronDown,
   ChevronRight,
   BookOpen,
   Clock,
-  Award,
   TrendingUp,
   TrendingDown,
   Minus,
-  Lightbulb,
   Brain,
   AlertCircle,
   RotateCcw,
@@ -33,6 +26,7 @@ import {
   ClipboardCheck,
   ArrowRight,
   PenLine,
+  X,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -41,7 +35,10 @@ import { useUnifiedProgress, type QuizTrend } from '@/hooks/useUnifiedProgress';
 import { useSmartRecommendations, type SmartRecommendation } from '@/hooks/useSmartRecommendations';
 import { XPProgressRing } from '@/components/apprentice/XPProgressRing';
 import { RecommendationCard } from './RecommendationCard';
-import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
+import {
+  Eyebrow,
+  SectionHeader,
+} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 import type { LucideIcon } from 'lucide-react';
 
 interface ProgressDetailSheetProps {
@@ -70,7 +67,6 @@ const trendLabels: Record<QuizTrend, string> = {
   'no-data': '',
 };
 
-/** Map smart recommendation icon strings to Lucide components */
 const smartIconMap: Record<string, LucideIcon> = {
   RotateCcw,
   Layers,
@@ -88,7 +84,6 @@ function getSmartIcon(rec: SmartRecommendation): LucideIcon {
   return smartIconMap[rec.icon] || BookOpen;
 }
 
-/** Map smart recommendation type to card variant colour */
 function getSmartVariant(
   rec: SmartRecommendation
 ): 'green' | 'orange' | 'purple' | 'yellow' | 'blue' {
@@ -132,304 +127,331 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
     ojtHours,
     insightText,
     xp,
-    loading,
   } = useUnifiedProgress();
 
   const { recommendations: smartRecs } = useSmartRecommendations(4);
 
-  const quizBarColours: Record<string, string> = {
-    Regulations: 'bg-elec-yellow',
-    Safety: 'bg-elec-yellow',
-    Testing: 'bg-elec-yellow',
-    Design: 'bg-elec-yellow',
-  };
-
   const TrendIcon = trendIcons[quizTrend];
+
+  // Quiz average (skip categories with 0 score)
+  const scoredCats = quizCategories.filter((c) => c.score > 0);
+  const quizAvg =
+    scoredCats.length > 0
+      ? Math.round(scoredCats.reduce((s, c) => s + c.score, 0) / scoredCats.length)
+      : 0;
+
+  const flashPct =
+    totalFlashcards > 0 ? Math.round((totalMasteredCards / totalFlashcards) * 100) : 0;
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <div className="flex flex-col h-full bg-[hsl(240,5.9%,10%)]">
-          {/* Header */}
+      <SheetContent
+        side="bottom"
+        className="h-[90vh] sm:h-[85vh] p-0 rounded-t-3xl overflow-hidden bg-[hsl(0_0%_8%)] border-white/[0.06]"
+      >
+        <div className="flex flex-col h-full">
           <SheetHeader className="flex-shrink-0 relative">
             <div className="flex justify-center pt-2.5 pb-1">
-              <div className="h-1 w-10 rounded-full bg-white/20" />
+              <div className="h-1 w-10 rounded-full bg-white/15" />
             </div>
-            <SheetTitle className="sr-only">Progress Details</SheetTitle>
+            <SheetTitle className="sr-only">Progress detail</SheetTitle>
             <button
               onClick={() => onOpenChange(false)}
-              className="absolute right-2 top-1.5 h-11 w-11 flex items-center justify-center rounded-full active:bg-white/10 touch-manipulation z-10"
+              className="absolute right-2 top-2 h-11 w-11 flex items-center justify-center rounded-full active:bg-white/10 touch-manipulation z-10"
+              aria-label="Close"
             >
-              <ChevronDown className="h-5 w-5 text-white" />
+              <X className="h-5 w-5 text-white/70" />
             </button>
           </SheetHeader>
 
-          {/* Scrollable content */}
-          <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-4 space-y-6">
-            {/* ── Hero: XP ring + overall progress ── */}
-            <div className="flex flex-col items-center text-center pt-2 pb-1">
-              <div className="relative">
+          <div className="flex-1 overflow-y-auto overscroll-contain px-4 sm:px-6 pt-2 pb-10 space-y-7 sm:space-y-8">
+            {/* ── Editorial hero with XP ring on the right ────────── */}
+            <motion.section
+              initial={{ opacity: 0, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.18 }}
+              className="flex items-start gap-4 sm:gap-6 pt-1"
+            >
+              <div className="flex-1 min-w-0 space-y-2">
+                <Eyebrow>Apprenticeship progress</Eyebrow>
+                <h2 className="text-[24px] sm:text-[28px] lg:text-[30px] font-semibold tracking-tight text-white leading-[1.05]">
+                  <span className="font-mono tabular-nums">{overallPercent}%</span>{' '}
+                  through the programme
+                </h2>
+                <p className="text-[13px] text-white/70 leading-relaxed">
+                  Quizzes · flashcards · OJT · portfolio · streak · EPA — combined
+                  into one signal.
+                </p>
+                <button
+                  onClick={goToStudyCentre}
+                  className="inline-flex items-center justify-center gap-1.5 h-11 px-4 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation mt-1"
+                >
+                  <BookOpen className="h-4 w-4" />
+                  Study Centre
+                  <ChevronRight className="h-4 w-4" />
+                </button>
+              </div>
+              <div className="flex-shrink-0">
                 <XPProgressRing
                   xpToday={xp.xpToday}
                   dailyGoal={xp.dailyGoal}
                   level={xp.level}
                   levelTitle={xp.levelTitle}
                   totalXP={xp.totalXP}
-                  size={140}
+                  size={108}
                   showLevel
                 />
               </div>
-              <motion.div
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.25 }}
-                className="mt-3 flex items-center gap-3"
-              >
-                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.06]">
-                  <span className="text-[12px] font-bold text-elec-yellow">{overallPercent}%</span>
-                  <span className="text-[12px] text-elec-yellow/70">overall</span>
-                </div>
-                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-white/10 bg-white/[0.03]">
-                  <span className="text-[12px] text-white/85">
-                    {xp.xpToday}/{xp.dailyGoal} XP today
-                  </span>
-                </div>
-              </motion.div>
-              <motion.p
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="text-xs text-white mt-2"
-              >
-                Quizzes · Flashcards · OJT · Portfolio · Streak · EPA
-              </motion.p>
-              <motion.button
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.35 }}
-                onClick={goToStudyCentre}
-                className="mt-4 flex items-center gap-2 px-6 h-11 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[14px] font-semibold touch-manipulation active:scale-[0.98] transition-all"
-              >
-                <BookOpen className="h-4 w-4" />
-                Go to Study Centre
-                <ChevronRight className="h-4 w-4" />
-              </motion.button>
+            </motion.section>
+
+            {/* ── KPI strip ───────────────────────────────────────── */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
+              <KpiCell
+                label="Overall"
+                value={`${overallPercent}%`}
+                sub="6-factor signal"
+                bar={overallPercent}
+                highlight={overallPercent >= 50}
+              />
+              <KpiCell
+                label="Quiz avg"
+                value={quizAvg > 0 ? `${quizAvg}%` : '—'}
+                sub={
+                  quizStats.totalQuizzes > 0
+                    ? `${quizStats.totalQuizzes} quiz${quizStats.totalQuizzes === 1 ? '' : 'zes'}`
+                    : 'Take your first'
+                }
+                bar={quizAvg}
+                highlight={quizAvg >= 70}
+              />
+              <KpiCell
+                label="Flashcards"
+                value={`${totalMasteredCards}`}
+                sub={`of ${totalFlashcards} mastered`}
+                bar={flashPct}
+                highlight={flashPct >= 60}
+              />
+              <KpiCell
+                label="OJT hours"
+                value={ojtHours.logged}
+                sub={`${ojtHours.percentComplete}% of ${ojtHours.target}h`}
+                bar={Math.min(ojtHours.percentComplete, 100)}
+                highlight={ojtHours.percentComplete >= 50}
+              />
             </div>
 
-            {/* ── Quiz Performance with trend ── */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.15 }}
-            >
-              <div className="flex items-center gap-2 mb-3">
-                <Target className="h-4 w-4 text-white" />
-                <span className="text-sm font-semibold text-white">Quiz Performance</span>
-                <div className="flex items-center gap-1.5 ml-auto">
-                  {quizTrend !== 'no-data' && (
-                    <>
-                      <TrendIcon className={cn('h-3.5 w-3.5', trendColours[quizTrend])} />
-                      <span className={cn('text-xs font-medium', trendColours[quizTrend])}>
-                        {trendLabels[quizTrend]}
-                      </span>
-                    </>
-                  )}
-                  {quizStats.totalQuizzes > 0 && quizTrend === 'no-data' && (
-                    <span className="text-xs text-white">
-                      {quizStats.totalQuizzes} quiz{quizStats.totalQuizzes !== 1 ? 'zes' : ''}
+            {/* ── Quiz performance ────────────────────────────────── */}
+            <section className="space-y-3">
+              <SectionHeader
+                eyebrow="Quiz performance"
+                title={
+                  quizStats.totalQuizzes === 0
+                    ? 'No quizzes yet'
+                    : strongestCategory && strongestCategory.score > 0
+                      ? `Strongest in ${strongestCategory.subject}`
+                      : 'Mixed signal'
+                }
+                meta={
+                  quizTrend !== 'no-data'
+                    ? trendLabels[quizTrend]
+                    : `${quizStats.totalQuizzes} attempt${quizStats.totalQuizzes === 1 ? '' : 's'}`
+                }
+                action={
+                  quizTrend !== 'no-data' && (
+                    <span
+                      className={cn(
+                        'inline-flex items-center gap-1 text-[11px] font-medium',
+                        trendColours[quizTrend]
+                      )}
+                    >
+                      <TrendIcon className="h-3.5 w-3.5" />
+                      {trendLabels[quizTrend]}
                     </span>
-                  )}
-                </div>
-              </div>
-              <div className="space-y-3.5">
-                {quizCategories.map((cat, catIndex) => (
-                  <div key={cat.subject}>
-                    <div className="flex items-center justify-between mb-1.5">
-                      <div className="flex items-center gap-2">
-                        <button
-                          onClick={goToStudyCentre}
-                          className="text-sm text-white font-medium touch-manipulation active:text-elec-yellow transition-colors"
-                        >
-                          {cat.subject}
-                        </button>
-                        {strongestCategory?.subject === cat.subject && cat.score > 0 && (
-                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
-                            Best
+                  )
+                }
+              />
+              <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
+                {quizCategories.length === 0 ? (
+                  <p className="text-[13px] text-white/55 leading-relaxed">
+                    No quiz data yet. Take a topic quiz from the Study Centre to
+                    seed this panel.
+                  </p>
+                ) : (
+                  <ul className="space-y-3">
+                    {quizCategories.map((cat, i) => (
+                      <li key={cat.subject} className="space-y-1.5">
+                        <div className="flex items-baseline justify-between gap-3">
+                          <button
+                            onClick={goToStudyCentre}
+                            className="text-[13.5px] text-white text-left flex items-baseline gap-2 min-w-0 truncate touch-manipulation active:text-elec-yellow transition-colors"
+                          >
+                            <span className="truncate">{cat.subject}</span>
+                            {strongestCategory?.subject === cat.subject &&
+                              cat.score > 0 && (
+                                <span className="text-[9.5px] font-medium uppercase tracking-[0.14em] text-elec-yellow flex-shrink-0">
+                                  Best
+                                </span>
+                              )}
+                            {weakestCategory?.subject === cat.subject &&
+                              cat.score > 0 && (
+                                <span className="text-[9.5px] font-medium uppercase tracking-[0.14em] text-red-300 flex-shrink-0">
+                                  Focus
+                                </span>
+                              )}
+                          </button>
+                          <span className="text-[12.5px] font-mono text-white tabular-nums flex-shrink-0">
+                            {cat.score}%
                           </span>
-                        )}
-                        {weakestCategory?.subject === cat.subject && cat.score > 0 && (
-                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
-                            Focus
+                        </div>
+                        <div className="h-1.5 rounded-full bg-white/[0.04] overflow-hidden">
+                          <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: `${cat.score}%` }}
+                            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.05 * i }}
+                            className={cn(
+                              'h-full rounded-full',
+                              cat.score >= 70 ? 'bg-elec-yellow' : 'bg-white/30'
+                            )}
+                          />
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {daysSinceLastQuiz !== null && daysSinceLastQuiz >= 7 && (
+                  <div className="flex items-center gap-2 px-3 py-2.5 rounded-md border border-white/[0.06] bg-white/[0.02]">
+                    <AlertCircle className="h-3.5 w-3.5 text-white/55 flex-shrink-0" />
+                    <span className="text-[12px] text-white/85">
+                      Last quiz was {daysSinceLastQuiz} days ago
+                    </span>
+                  </div>
+                )}
+              </div>
+            </section>
+
+            {/* ── Flashcard mastery ───────────────────────────────── */}
+            {flashcardInsights.length > 0 && (
+              <section className="space-y-3">
+                <SectionHeader
+                  eyebrow="Flashcard mastery"
+                  title="Sets in progress"
+                  meta={`${totalMasteredCards} / ${totalFlashcards} mastered`}
+                />
+                <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+                  <ul className="space-y-3">
+                    {flashcardInsights.map((set, i) => (
+                      <li key={set.id} className="space-y-1.5">
+                        <div className="flex items-baseline justify-between gap-3">
+                          <span className="text-[13px] text-white truncate flex-1 min-w-0">
+                            {set.title}
                           </span>
-                        )}
-                      </div>
-                      <span className="text-sm font-bold text-white">{cat.score}%</span>
-                    </div>
-                    <div className="h-3 rounded-full bg-white/[0.08] overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: `${cat.score}%` }}
-                        transition={{ duration: 0.8, ease: 'easeOut', delay: 0.3 + catIndex * 0.1 }}
-                        className={cn(
-                          'h-full rounded-full',
-                          quizBarColours[cat.subject] || 'bg-white/30'
-                        )}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-              {daysSinceLastQuiz !== null && daysSinceLastQuiz >= 7 && (
-                <div className="flex items-center gap-2 mt-4 px-4 py-3 rounded-xl border border-white/[0.06] bg-white/[0.02]">
-                  <AlertCircle className="h-4 w-4 text-white/55 flex-shrink-0" />
-                  <span className="text-[13px] text-white/85">
-                    Last quiz was {daysSinceLastQuiz} days ago
-                  </span>
+                          <span className="text-[12px] font-mono text-white tabular-nums flex-shrink-0">
+                            {set.progressPercent}%
+                          </span>
+                        </div>
+                        <div className="h-1.5 rounded-full bg-white/[0.04] overflow-hidden">
+                          <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: `${set.progressPercent}%` }}
+                            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.05 * i }}
+                            className={cn(
+                              'h-full rounded-full',
+                              set.progressPercent >= 80
+                                ? 'bg-elec-yellow'
+                                : set.progressPercent >= 40
+                                  ? 'bg-elec-yellow/60'
+                                  : 'bg-white/25'
+                            )}
+                          />
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              )}
-            </motion.div>
+              </section>
+            )}
 
-            {/* ── Flashcard Mastery ── */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-            >
-              <div className="flex items-center gap-2 mb-3">
-                <BookOpen className="h-4 w-4 text-white" />
-                <span className="text-sm font-semibold text-white">Flashcard Mastery</span>
-                <span className="text-xs text-white ml-auto">
-                  {totalMasteredCards} / {totalFlashcards} mastered
-                </span>
-              </div>
-              <div className="space-y-3">
-                {flashcardInsights.map((set, setIndex) => (
-                  <div key={set.id} className="flex items-center gap-3">
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm text-white">{set.title}</p>
-                    </div>
-                    <div className="flex items-center gap-2.5 flex-shrink-0">
-                      <div className="w-24 h-2.5 rounded-full bg-white/[0.08] overflow-hidden">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          animate={{ width: `${set.progressPercent}%` }}
-                          transition={{
-                            duration: 0.8,
-                            ease: 'easeOut',
-                            delay: 0.4 + setIndex * 0.08,
-                          }}
-                          className={cn(
-                            'h-full rounded-full',
-                            set.progressPercent >= 80
-                              ? 'bg-elec-yellow'
-                              : set.progressPercent >= 40
-                                ? 'bg-elec-yellow/60'
-                                : 'bg-white/25'
-                          )}
-                        />
-                      </div>
-                      <span className="text-xs font-bold text-white w-9 text-right">
-                        {set.progressPercent}%
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* ── OJT Hours ── */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-            >
-              <div className="flex items-center gap-2 mb-3">
-                <Clock className="h-4 w-4 text-white" />
-                <span className="text-sm font-semibold text-white">On-the-Job Hours</span>
-              </div>
-              <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
-                <div className="flex items-baseline justify-between mb-2.5">
+            {/* ── OJT hours ───────────────────────────────────────── */}
+            <section className="space-y-3">
+              <SectionHeader
+                eyebrow="On-the-job"
+                title={
+                  ojtHours.logged === 0
+                    ? 'No hours logged yet'
+                    : `${ojtHours.logged}h on the record`
+                }
+                meta={`${ojtHours.percentComplete}% of the ${ojtHours.target}h gateway target`}
+              />
+              <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+                <div className="flex items-baseline justify-between gap-3">
                   <div className="flex items-baseline gap-1.5">
-                    <AnimatedCounter
-                      value={ojtHours.logged}
-                      className="text-2xl font-bold text-white"
-                    />
-                    <span className="text-sm text-white">
-                      / {ojtHours.target.toLocaleString('en-GB')} hrs
+                    <span className="text-[26px] sm:text-[30px] font-mono font-semibold tabular-nums leading-none text-white">
+                      {ojtHours.logged}
+                    </span>
+                    <span className="text-[13px] text-white/40 font-mono">
+                      / {ojtHours.target.toLocaleString('en-GB')}h
                     </span>
                   </div>
-                  <span className="text-sm font-bold text-elec-yellow">
+                  <span
+                    className={cn(
+                      'text-[14px] font-mono tabular-nums',
+                      ojtHours.percentComplete >= 50 ? 'text-elec-yellow' : 'text-white/85'
+                    )}
+                  >
                     {ojtHours.percentComplete}%
                   </span>
                 </div>
-                <div className="h-3.5 rounded-full bg-white/[0.08] overflow-hidden">
+                <div className="h-2 rounded-full bg-white/[0.04] overflow-hidden">
                   <motion.div
                     initial={{ width: 0 }}
-                    animate={{ width: `${Math.min(ojtHours.percentComplete, 100)}%` }}
-                    transition={{ duration: 0.8, ease: 'easeOut', delay: 0.5 }}
+                    animate={{
+                      width: `${Math.min(ojtHours.percentComplete, 100)}%`,
+                    }}
+                    transition={{ duration: 0.7, ease: 'easeOut' }}
                     className="h-full rounded-full bg-elec-yellow"
                   />
                 </div>
               </div>
-            </motion.div>
+            </section>
 
-            {/* ── Personalised insight ── */}
+            {/* ── Insight ─────────────────────────────────────────── */}
             {insightText && (
               <motion.div
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.45 }}
-                className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-2"
+                transition={{ delay: 0.2 }}
+                className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-1.5"
               >
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
-                  Insight
-                </span>
-                <p className="text-[14px] text-white/85 leading-relaxed">{insightText}</p>
+                <Eyebrow className="text-elec-yellow/85">Insight</Eyebrow>
+                <p className="text-[13.5px] text-white/85 leading-relaxed">
+                  {insightText}
+                </p>
               </motion.div>
             )}
 
-            {/* ── Empty state CTA ── */}
+            {/* ── Empty state ─────────────────────────────────────── */}
             {overallPercent === 0 && quizCategories.length === 0 && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="flex flex-col items-center text-center py-6"
-              >
-                <div className="p-4 rounded-2xl border border-white/[0.06] bg-white/[0.02] mb-4">
-                  <Target className="h-7 w-7 text-elec-yellow" />
-                </div>
-                <h3 className="text-[16px] font-semibold text-white mb-1">Start learning</h3>
-                <p className="text-[14px] text-white/70 max-w-[260px] mb-5 leading-relaxed">
-                  Take a quiz, review flashcards, or log your on-the-job hours to track your
-                  progress
+              <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-6 sm:p-7 text-center space-y-3">
+                <Eyebrow>Nothing to show yet</Eyebrow>
+                <p className="text-[14px] text-white/85 leading-relaxed max-w-[300px] mx-auto">
+                  Take a topic quiz, review a flashcard set, or log on-the-job
+                  hours and this panel fills out automatically.
                 </p>
                 <button
                   onClick={goToStudyCentre}
-                  className="flex items-center gap-2 px-6 h-11 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[14px] font-semibold touch-manipulation active:scale-[0.98] transition-all"
+                  className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation"
                 >
-                  Go to Study Centre
+                  Open Study Centre
                   <ChevronRight className="h-4 w-4" />
                 </button>
-              </motion.div>
+              </div>
             )}
 
-            {/* ── Smart Recommendations ── */}
+            {/* ── Smart recommendations ───────────────────────────── */}
             {smartRecs.length > 0 && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
-              >
-                <div className="flex items-center gap-3 pt-1 mb-4">
-                  <div className="flex-1 border-t border-white/[0.06]" />
-                  <span className="text-[11px] font-semibold text-white uppercase tracking-wider">
-                    What to do next
-                  </span>
-                  <div className="flex-1 border-t border-white/[0.06]" />
-                </div>
-
-                <div className="space-y-3 pb-6">
+              <section className="space-y-3">
+                <SectionHeader eyebrow="What to do next" title="Smart suggestions" />
+                <div className="space-y-2.5">
                   {smartRecs.map((rec) => (
                     <RecommendationCard
                       key={rec.id}
@@ -443,11 +465,57 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                     />
                   ))}
                 </div>
-              </motion.div>
+              </section>
             )}
           </div>
         </div>
       </SheetContent>
     </Sheet>
+  );
+}
+
+/* ─────────────────── KPI cell ─────────────────── */
+
+function KpiCell({
+  label,
+  value,
+  sub,
+  bar,
+  highlight,
+}: {
+  label: string;
+  value: string | number;
+  sub?: string;
+  bar?: number;
+  highlight?: boolean;
+}) {
+  return (
+    <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-3.5 sm:p-5 space-y-1.5">
+      <Eyebrow className="text-[9.5px] sm:text-[10px]">{label}</Eyebrow>
+      <div
+        className={cn(
+          'text-[22px] sm:text-[26px] font-mono font-semibold tabular-nums leading-none',
+          highlight ? 'text-elec-yellow' : 'text-white'
+        )}
+      >
+        {value}
+      </div>
+      {bar !== undefined && (
+        <div className="h-1 w-full bg-white/[0.04] rounded-full overflow-hidden">
+          <div
+            className={cn(
+              'h-full rounded-full transition-all duration-700',
+              highlight ? 'bg-elec-yellow' : 'bg-white/55'
+            )}
+            style={{ width: `${Math.min(bar, 100)}%` }}
+          />
+        </div>
+      )}
+      {sub && (
+        <span className="text-[10.5px] sm:text-[11px] text-white/55 block leading-snug">
+          {sub}
+        </span>
+      )}
+    </div>
   );
 }

@@ -25,7 +25,9 @@ import {
   LearningOutcomes,
   ContentEyebrow,
   SectionRule,
+  VideoCard,
 } from '@/components/study-centre/learning';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE =
@@ -267,6 +269,14 @@ export default function Sub3() {
           </ConceptBlock>
 
           <InlineCheck {...checks[0]} />
+
+          <VideoCard
+            url={videos.transformers.url}
+            title={videos.transformers.title}
+            channel={videos.transformers.channel}
+            duration={videos.transformers.duration}
+            topic={videos.transformers.topic}
+          />
 
           <SectionRule />
 

@@ -1,23 +1,17 @@
 /**
  * EPAReadinessDashboard
  *
- * Hero progress ring, 4 component cards, gate banner, gap list, and CTAs.
+ * Editorial readiness view: monospace headline score + 4 component bars
+ * + prioritised gaps + Weak ACs panel pulling from qualification ACs and
+ * portfolio coverage. Single yellow accent. Red kept only for the genuine
+ * "not gateway ready" warning.
  */
 
-import { Badge } from '@/components/ui/badge';
+import { useEffect, useMemo, useState, useCallback } from 'react';
+import { Loader2, RefreshCw } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import {
-  Target,
-  Sparkles,
-  MessageSquare,
-  FileText,
-  AlertTriangle,
-  Loader2,
-  RefreshCw,
-  ChevronRight,
-  Zap,
-  ShieldCheck,
-} from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
 import {
   useEPAReadiness,
   type ReadinessComponent,
@@ -29,382 +23,433 @@ interface EPAReadinessDashboardProps {
   qualificationId?: string | null;
   onStartDiscussion: () => void;
   onStartKnowledgeTest: () => void;
+  onTargetAC?: (acRef: string, acText: string, unitCode?: string) => void;
 }
-
-const STATUS_COLOURS: Record<
-  ReadinessStatus,
-  { bg: string; text: string; border: string; ring: string }
-> = {
-  ready: {
-    bg: 'bg-emerald-500/10',
-    text: 'text-emerald-400',
-    border: 'border-emerald-500/30',
-    ring: 'stroke-emerald-500',
-  },
-  nearly_ready: {
-    bg: 'bg-blue-500/10',
-    text: 'text-blue-400',
-    border: 'border-blue-500/30',
-    ring: 'stroke-blue-500',
-  },
-  needs_work: {
-    bg: 'bg-amber-500/10',
-    text: 'text-amber-400',
-    border: 'border-amber-500/30',
-    ring: 'stroke-amber-500',
-  },
-  not_ready: {
-    bg: 'bg-red-500/10',
-    text: 'text-red-400',
-    border: 'border-red-500/30',
-    ring: 'stroke-red-500',
-  },
-};
 
 const STATUS_LABELS: Record<ReadinessStatus, string> = {
   ready: 'Ready for EPA',
-  nearly_ready: 'Nearly Ready',
-  needs_work: 'Needs Work',
-  not_ready: 'Not Ready',
+  nearly_ready: 'Nearly ready',
+  needs_work: 'Needs work',
+  not_ready: 'Not ready',
 };
 
-const COMPONENT_ICONS: Record<string, typeof Target> = {
-  portfolio: FileText,
-  evidenceQuality: Sparkles,
-  mockDiscussion: MessageSquare,
-  mockKnowledge: FileText,
-};
+const PRIORITY_LABELS = {
+  high: 'High',
+  medium: 'Medium',
+  low: 'Low',
+} as const;
 
-const COMPONENT_ACCENT: Record<string, string> = {
-  portfolio: 'border-l-blue-500 bg-blue-500/10 text-blue-400',
-  evidenceQuality: 'border-l-amber-500 bg-amber-500/10 text-amber-400',
-  mockDiscussion: 'border-l-pink-500 bg-pink-500/10 text-pink-400',
-  mockKnowledge: 'border-l-cyan-500 bg-cyan-500/10 text-cyan-400',
-};
+/* ──────────── Building blocks ─────────────────────────────────────── */
 
-/** Radial SVG progress ring */
-function RadialRing({
-  score,
-  size = 140,
-  strokeWidth = 10,
-  className,
-  ringClass,
-  children,
-}: {
-  score: number;
-  size?: number;
-  strokeWidth?: number;
-  className?: string;
-  ringClass?: string;
-  children?: React.ReactNode;
-}) {
-  const radius = (size - strokeWidth) / 2;
-  const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (score / 100) * circumference;
+function Eyebrow({ children, className }: { children: React.ReactNode; className?: string }) {
+  return (
+    <span
+      className={cn(
+        'text-[10px] font-medium uppercase tracking-[0.18em] text-white/55',
+        className
+      )}
+    >
+      {children}
+    </span>
+  );
+}
+
+function ComponentBar({ component }: { component: ReadinessComponent }) {
+  const score = component.score;
+  const fillClass = score >= 70 ? 'bg-elec-yellow' : score >= 40 ? 'bg-white/55' : 'bg-white/30';
 
   return (
-    <div className={cn('relative inline-flex items-center justify-center', className)}>
-      <svg width={size} height={size} className="-rotate-90">
-        {/* Background track */}
-        <circle
-          cx={size / 2}
-          cy={size / 2}
-          r={radius}
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={strokeWidth}
-          className="text-white/10"
+    <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2">
+      <div className="flex items-baseline justify-between gap-3">
+        <Eyebrow>{component.label}</Eyebrow>
+        <span className="text-[10px] uppercase tracking-[0.18em] text-white/40 font-mono">
+          {Math.round(component.weight * 100)}%
+        </span>
+      </div>
+      <div className="flex items-baseline justify-between gap-3">
+        <span className="text-[28px] sm:text-[32px] font-mono font-semibold text-white leading-none tabular-nums">
+          {score}
+        </span>
+        {component.detail && (
+          <span className="text-[12px] text-white/70 leading-snug text-right">
+            {component.detail}
+          </span>
+        )}
+      </div>
+      <div className="h-1 w-full bg-white/[0.04] rounded-full overflow-hidden">
+        <div
+          className={cn('h-full rounded-full transition-all duration-700', fillClass)}
+          style={{ width: `${Math.min(score, 100)}%` }}
         />
-        {/* Progress arc */}
-        <circle
-          cx={size / 2}
-          cy={size / 2}
-          r={radius}
-          fill="none"
-          strokeWidth={strokeWidth}
-          strokeLinecap="round"
-          className={cn('transition-all duration-1000 ease-out', ringClass)}
-          strokeDasharray={circumference}
-          strokeDashoffset={offset}
-        />
-      </svg>
-      <div className="absolute inset-0 flex flex-col items-center justify-center">{children}</div>
+      </div>
     </div>
   );
 }
+
+/* ──────────── Weak ACs panel — pulls qualification ACs vs portfolio ── */
+
+interface WeakAC {
+  acRef: string;
+  acText: string;
+  unitCode?: string;
+  unitTitle?: string;
+  status: 'no-evidence' | 'claimed-only';
+}
+
+function useWeakACs(qualificationCode: string | undefined) {
+  const { user } = useAuth();
+  const [weak, setWeak] = useState<WeakAC[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!user || !qualificationCode) return;
+    let cancelled = false;
+    setLoading(true);
+
+    (async () => {
+      try {
+        const [{ data: allACs }, { data: items }] = await Promise.all([
+          supabase.rpc('get_qualification_acs', { p_qualification_code: qualificationCode }),
+          supabase
+            .from('portfolio_items')
+            .select('assessment_criteria_met, evidence_count, storage_urls, is_supervisor_verified')
+            .eq('user_id', user.id),
+        ]);
+
+        if (cancelled) return;
+        if (!allACs?.length) {
+          setWeak([]);
+          setLoading(false);
+          return;
+        }
+
+        type PortfolioItemRow = {
+          assessment_criteria_met?: string[] | null;
+          evidence_count?: number | null;
+          storage_urls?: unknown[] | null;
+          is_supervisor_verified?: boolean | null;
+        };
+        type ACRow = {
+          ac_ref?: string;
+          criterion_ref?: string;
+          ref?: string;
+          ac_code?: string;
+          ac_text?: string;
+          criterion_text?: string;
+          description?: string;
+          unit_code?: string;
+          unit_title?: string;
+        };
+
+        const claimed = new Set<string>();
+        const evidenced = new Set<string>();
+        (items as PortfolioItemRow[] | null)?.forEach((it) => {
+          const acs: string[] = it.assessment_criteria_met || [];
+          const hasFiles =
+            (it.evidence_count ?? 0) > 0 ||
+            (Array.isArray(it.storage_urls) && it.storage_urls.length > 0);
+          const isVerified = it.is_supervisor_verified === true;
+          acs.forEach((ac) => {
+            claimed.add(ac);
+            if (hasFiles || isVerified) evidenced.add(ac);
+          });
+        });
+
+        const result: WeakAC[] = [];
+        for (const ac of allACs as ACRow[]) {
+          const ref: string = ac.ac_ref || ac.ac_code || ac.criterion_ref || ac.ref || '';
+          const text: string = ac.ac_text || ac.criterion_text || ac.description || '';
+          if (!ref) continue;
+          if (evidenced.has(ref)) continue;
+          result.push({
+            acRef: ref,
+            acText: text,
+            unitCode: ac.unit_code,
+            unitTitle: ac.unit_title,
+            status: claimed.has(ref) ? 'claimed-only' : 'no-evidence',
+          });
+          if (result.length >= 5) break;
+        }
+
+        setWeak(result);
+      } catch {
+        if (!cancelled) setWeak([]);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [user, qualificationCode]);
+
+  return { weak, loading };
+}
+
+function WeakACsPanel({
+  qualificationCode,
+  onTargetAC,
+}: {
+  qualificationCode: string;
+  onTargetAC?: (acRef: string, acText: string, unitCode?: string) => void;
+}) {
+  const { weak, loading } = useWeakACs(qualificationCode);
+
+  if (loading) {
+    return (
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 flex items-center gap-3">
+        <Loader2 className="h-4 w-4 animate-spin text-white/55" />
+        <Eyebrow>Loading weak ACs…</Eyebrow>
+      </div>
+    );
+  }
+
+  if (!weak.length) {
+    return (
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2">
+        <Eyebrow>Where to focus</Eyebrow>
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          Every assessment criterion in your course has at least one piece of evidence — strong
+          coverage. Keep adding depth and quality.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-3">
+      <div className="flex items-baseline justify-between gap-3">
+        <Eyebrow>Where to focus · top {weak.length}</Eyebrow>
+        <span className="text-[11px] text-white/40 font-mono">
+          weakest ACs · uncovered or claimed-only
+        </span>
+      </div>
+      <ul className="space-y-2">
+        {weak.map((w, i) => (
+          <li
+            key={w.acRef}
+            className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-5 sm:py-4 space-y-2"
+          >
+            <div className="flex items-baseline gap-3">
+              <span className="text-[11px] font-mono text-elec-yellow/85 flex-shrink-0">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <div className="flex-1 min-w-0 space-y-1">
+                <div className="flex items-baseline gap-2 flex-wrap">
+                  <span className="text-[11px] font-mono text-white/85">{w.acRef}</span>
+                  {w.unitCode && (
+                    <span className="text-[10px] uppercase tracking-[0.14em] text-white/45">
+                      Unit {w.unitCode}
+                    </span>
+                  )}
+                  <span
+                    className={cn(
+                      'text-[10px] font-medium uppercase tracking-[0.14em] px-1.5 py-0 rounded-md border',
+                      w.status === 'no-evidence'
+                        ? 'border-white/[0.08] text-white/55'
+                        : 'border-elec-yellow/30 text-elec-yellow'
+                    )}
+                  >
+                    {w.status === 'no-evidence' ? 'No evidence' : 'Claimed only'}
+                  </span>
+                </div>
+                <p className="text-[13px] text-white/85 leading-snug">{w.acText}</p>
+              </div>
+            </div>
+            {onTargetAC && (
+              <div className="pl-7">
+                <button
+                  type="button"
+                  onClick={() => onTargetAC(w.acRef, w.acText, w.unitCode)}
+                  className="inline-flex items-center h-8 px-3 rounded-md bg-elec-yellow text-black text-[11.5px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
+                >
+                  Drill this AC →
+                </button>
+              </div>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+/* ──────────── Main dashboard ──────────────────────────────────────── */
 
 export function EPAReadinessDashboard({
   qualificationCode,
   qualificationId,
   onStartDiscussion,
   onStartKnowledgeTest,
+  onTargetAC,
 }: EPAReadinessDashboardProps) {
   const { data, isLoading, recalculate } = useEPAReadiness(qualificationCode, qualificationId);
 
-  if (isLoading) {
+  const allGood = useMemo(
+    () => data && Object.values(data.components).every((c) => c.score >= 70),
+    [data]
+  );
+
+  const [recalcing, setRecalcing] = useState(false);
+  const handleRecalc = useCallback(async () => {
+    setRecalcing(true);
+    try {
+      await recalculate();
+    } finally {
+      setRecalcing(false);
+    }
+  }, [recalculate]);
+
+  if (isLoading && !data) {
     return (
-      <div className="flex items-center gap-4 py-16 px-4">
-        <Loader2 className="h-8 w-8 animate-spin text-elec-yellow shrink-0" />
-        <div>
-          <p className="text-sm font-medium text-white">Calculating readiness...</p>
-          <p className="text-xs text-white mt-1">
-            Analysing portfolio, evidence quality, and mock results
-          </p>
-        </div>
+      <div className="px-4 sm:px-6 py-12 flex items-center gap-3">
+        <Loader2 className="h-4 w-4 animate-spin text-white/55" />
+        <Eyebrow>Calculating readiness — analysing portfolio &amp; mocks</Eyebrow>
       </div>
     );
   }
 
   if (!data) {
     return (
-      <div className="py-12 px-4 space-y-4">
-        <div className="flex items-center gap-3">
-          <div className="h-12 w-12 rounded-xl bg-elec-yellow/10 flex items-center justify-center shrink-0">
-            <Target className="h-6 w-6 text-elec-yellow" />
-          </div>
-          <div>
-            <p className="text-sm font-medium text-white">EPA Readiness Score</p>
-            <p className="text-xs text-white mt-1">
-              Start building your portfolio and taking mock assessments to see your readiness score.
-            </p>
-          </div>
-        </div>
+      <div className="px-4 sm:px-6 py-12 space-y-4">
+        <Eyebrow>EPA readiness</Eyebrow>
+        <p className="text-[14px] text-white/85 leading-relaxed max-w-md">
+          Start building your portfolio and taking mock assessments to see your readiness score.
+        </p>
         <button
-          onClick={recalculate}
-          className="h-11 px-6 rounded-xl bg-elec-yellow text-black font-medium text-sm touch-manipulation active:scale-95"
+          onClick={handleRecalc}
+          className="h-11 px-4 rounded-lg bg-elec-yellow text-black font-semibold text-[13px] hover:bg-elec-yellow/90 transition-colors touch-manipulation"
         >
-          Calculate Readiness
+          Calculate readiness
         </button>
       </div>
     );
   }
 
-  const statusColour = STATUS_COLOURS[data.overallStatus];
-  const allGood = Object.values(data.components).every((c) => c.score >= 70);
-
   return (
-    <div className="space-y-5 px-4 py-5">
-      {/* Score Hero — Radial Ring */}
-      <div className="p-5 rounded-xl bg-elec-gray border border-white/10">
-        <div className="flex items-center justify-between mb-4">
-          <p className="text-sm font-medium text-white">EPA Readiness Score</p>
+    <div className="space-y-6 sm:space-y-8 px-4 sm:px-6 py-6">
+      {/* Hero — editorial score */}
+      <section className="space-y-3">
+        <div className="flex items-baseline justify-between gap-3">
+          <Eyebrow>Readiness · {STATUS_LABELS[data.overallStatus]}</Eyebrow>
           <button
-            onClick={recalculate}
-            className="flex items-center gap-1 text-xs text-white touch-manipulation h-11"
+            onClick={handleRecalc}
+            disabled={recalcing}
+            className="inline-flex items-center gap-1.5 h-7 px-2 rounded-md text-[11px] text-white/55 hover:text-white/85 hover:bg-white/[0.04] transition-colors touch-manipulation disabled:opacity-50"
           >
-            <RefreshCw className="h-3.5 w-3.5" />
+            <RefreshCw className={cn('h-3 w-3', recalcing && 'animate-spin')} />
             Recalculate
           </button>
         </div>
+        <div className="flex items-baseline gap-2">
+          <span className="text-[64px] sm:text-[80px] font-mono font-semibold text-white leading-none tabular-nums">
+            {data.overallScore}
+          </span>
+          <span className="text-[20px] text-white/40 font-mono">/ 100</span>
+        </div>
+        <p className="text-[14px] text-white/70 leading-relaxed max-w-xl">
+          {data.overallScore >= 70
+            ? 'You meet the gateway threshold across the weighted components. Keep momentum on the areas below 70 to push toward distinction.'
+            : 'Some components are below the 70 % gateway threshold. Use the focus list and drill the weakest areas before requesting your gateway review.'}
+        </p>
 
-        <div className="flex items-center gap-5">
-          <RadialRing
-            score={data.overallScore}
-            size={130}
-            strokeWidth={10}
-            ringClass={statusColour.ring}
-          >
-            <span className={cn('text-4xl font-bold', statusColour.text)}>{data.overallScore}</span>
-            <span className="text-xs text-white">/100</span>
-          </RadialRing>
-
-          <div className="flex-1 space-y-2">
-            <Badge
-              className={cn('text-xs', statusColour.bg, statusColour.text, statusColour.border)}
-            >
-              {STATUS_LABELS[data.overallStatus]}
-            </Badge>
-            <p className="text-sm text-white">
-              {data.overallScore >= 70
-                ? 'You are on track for your EPA gateway'
-                : 'Keep working on the areas below to hit gateway readiness'}
+        {/* Gateway state — only red when genuinely not ready */}
+        {!allGood && (
+          <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-1.5">
+            <Eyebrow className="text-red-300">Not gateway ready yet</Eyebrow>
+            <p className="text-[14px] text-white/85 leading-relaxed">
+              At least one component is below 70 %. The component bars below show where you stand
+              and the focus list is sorted by impact.
             </p>
           </div>
-        </div>
-      </div>
-
-      {/* Gate Banner */}
-      {allGood ? (
-        <div className="p-4 rounded-xl bg-gradient-to-r from-emerald-500/15 to-emerald-500/5 border border-emerald-500/30 flex items-center gap-3">
-          <ShieldCheck className="h-7 w-7 text-emerald-400 shrink-0" />
-          <div>
-            <p className="text-sm font-semibold text-emerald-400">EPA Gateway Ready</p>
-            <p className="text-xs text-white">
-              All components at 70%+ — you meet the gateway threshold
+        )}
+        {allGood && (
+          <div className="rounded-xl border border-elec-yellow/30 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-1.5">
+            <Eyebrow className="text-elec-yellow">Gateway ready</Eyebrow>
+            <p className="text-[14px] text-white/85 leading-relaxed">
+              Every component sits at 70 % or above. You meet the gateway threshold — talk to your
+              tutor about booking your EPA.
             </p>
           </div>
-        </div>
-      ) : (
-        <div className="p-4 rounded-xl bg-gradient-to-r from-amber-500/15 to-amber-500/5 border border-amber-500/30 flex items-center gap-3">
-          <AlertTriangle className="h-7 w-7 text-amber-400 shrink-0" />
-          <div>
-            <p className="text-sm font-semibold text-amber-400">Not Gateway Ready Yet</p>
-            <p className="text-xs text-white">
-              Some components are below the 70% threshold — see gaps below
-            </p>
-          </div>
-        </div>
-      )}
+        )}
+      </section>
 
-      {/* Component Cards — Full-width stacked */}
-      <div className="space-y-2">
-        {Object.entries(data.components).map(([key, comp]) => (
-          <ComponentCard key={key} componentKey={key} component={comp} />
-        ))}
-      </div>
+      {/* Component bars */}
+      <section className="space-y-3">
+        <Eyebrow>Components</Eyebrow>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
+          {Object.entries(data.components).map(([key, comp]) => (
+            <ComponentBar key={key} component={comp} />
+          ))}
+        </div>
+      </section>
 
-      {/* Gaps */}
+      {/* Gaps — prioritised */}
       {data.gaps.length > 0 && (
-        <div className="space-y-2">
-          <h3 className="text-xs font-semibold text-white uppercase tracking-wider">
-            Gaps to Address
-          </h3>
-          {data.gaps.map((gap, i) => {
-            const priorityColour =
-              gap.priority === 'high'
-                ? 'border-l-red-500 bg-red-500/5'
-                : gap.priority === 'medium'
-                  ? 'border-l-amber-500 bg-amber-500/5'
-                  : 'border-l-blue-500 bg-blue-500/5';
-            const priorityText =
-              gap.priority === 'high'
-                ? 'text-red-400'
-                : gap.priority === 'medium'
-                  ? 'text-amber-400'
-                  : 'text-blue-400';
-
-            return (
-              <div
+        <section className="space-y-3">
+          <Eyebrow>Gaps · prioritised</Eyebrow>
+          <ul className="space-y-2">
+            {data.gaps.map((gap, i) => (
+              <li
                 key={i}
-                className={cn('p-3.5 rounded-xl border border-white/10 border-l-4', priorityColour)}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-5 sm:py-4"
               >
-                <div className="flex items-start gap-3">
-                  <span
-                    className={cn(
-                      'flex items-center justify-center h-6 w-6 rounded-full bg-white/10 text-xs font-bold shrink-0',
-                      priorityText
-                    )}
-                  >
-                    {i + 1}
+                <div className="flex items-baseline gap-3">
+                  <span className="text-[11px] font-mono text-elec-yellow/85 flex-shrink-0">
+                    {String(i + 1).padStart(2, '0')}
                   </span>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      <p className="text-sm font-medium text-white">{gap.area}</p>
-                      <Badge variant="outline" className={cn('text-[10px] shrink-0', priorityText)}>
-                        {gap.priority}
-                      </Badge>
+                  <div className="flex-1 min-w-0 space-y-1.5">
+                    <div className="flex items-baseline gap-2 flex-wrap">
+                      <span className="text-[14px] font-medium text-white">{gap.area}</span>
+                      <span
+                        className={cn(
+                          'text-[10px] font-medium uppercase tracking-[0.14em] px-1.5 py-0 rounded-md border',
+                          gap.priority === 'high'
+                            ? 'border-red-500/30 text-red-300 bg-red-500/[0.05]'
+                            : gap.priority === 'medium'
+                              ? 'border-elec-yellow/30 text-elec-yellow bg-elec-yellow/[0.05]'
+                              : 'border-white/[0.08] text-white/55'
+                        )}
+                      >
+                        {PRIORITY_LABELS[gap.priority]}
+                      </span>
                     </div>
-                    <p className="text-xs text-white mt-1">{gap.description}</p>
-                    <p className="text-xs text-white mt-1 font-medium">{gap.action}</p>
+                    <p className="text-[13px] text-white/85 leading-relaxed">{gap.description}</p>
+                    <p className="text-[13px] text-white/85 leading-relaxed">{gap.action}</p>
                   </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
+              </li>
+            ))}
+          </ul>
+        </section>
       )}
 
-      {/* CTA Buttons */}
-      <div className="space-y-2">
+      {/* Weak ACs panel — pulls from get_qualification_acs */}
+      <section>
+        <WeakACsPanel qualificationCode={qualificationCode} onTargetAC={onTargetAC} />
+      </section>
+
+      {/* CTAs */}
+      <section className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
         <button
           onClick={onStartDiscussion}
-          className="w-full h-12 rounded-xl bg-purple-500/20 border border-purple-500/40 text-purple-300 font-medium text-sm touch-manipulation active:scale-[0.98] flex items-center gap-3 px-4"
+          className="h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation"
         >
-          <MessageSquare className="h-5 w-5 shrink-0" />
-          <span className="flex-1 text-left">Start Mock Discussion</span>
-          <ChevronRight className="h-4 w-4 shrink-0" />
+          Start mock discussion
         </button>
         <button
           onClick={onStartKnowledgeTest}
-          className="w-full h-12 rounded-xl bg-blue-500/20 border border-blue-500/40 text-blue-300 font-medium text-sm touch-manipulation active:scale-[0.98] flex items-center gap-3 px-4"
+          className="h-12 rounded-xl border border-white/[0.08] bg-white/[0.02] text-white text-[14px] font-semibold hover:bg-white/[0.04] transition-colors touch-manipulation"
         >
-          <Zap className="h-5 w-5 shrink-0" />
-          <span className="flex-1 text-left">Take Knowledge Test</span>
-          <ChevronRight className="h-4 w-4 shrink-0" />
+          Take knowledge test
         </button>
-      </div>
+      </section>
 
-      <p className="text-[10px] text-white">
+      <p className="text-[10px] text-white/40 font-mono">
         Last calculated{' '}
-        {data.calculatedAt.toLocaleTimeString('en-GB', {
-          hour: '2-digit',
-          minute: '2-digit',
-        })}
+        {data.calculatedAt.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}
       </p>
-    </div>
-  );
-}
-
-// Full-width Component Card with accent border
-function ComponentCard({
-  componentKey,
-  component,
-}: {
-  componentKey: string;
-  component: ReadinessComponent;
-}) {
-  // Show claimed vs validated warning for portfolio when they differ
-  const showValidationSplit =
-    componentKey === 'portfolio' &&
-    component.claimedCount !== undefined &&
-    component.validatedCount !== undefined &&
-    component.claimedCount !== component.validatedCount;
-  const Icon = COMPONENT_ICONS[componentKey] || Target;
-  const accent = COMPONENT_ACCENT[componentKey] || 'border-l-white/30 bg-white/5 text-white';
-  const accentParts = accent.split(' ');
-  const iconColour = accentParts[2] || 'text-white';
-  const bgColour = accentParts[1] || 'bg-white/5';
-  const borderColour = accentParts[0] || 'border-l-white/30';
-
-  const barColour =
-    component.score >= 70
-      ? 'bg-emerald-500'
-      : component.score >= 40
-        ? 'bg-amber-500'
-        : 'bg-red-500';
-
-  return (
-    <div
-      className={cn(
-        'flex items-center gap-3 p-3.5 rounded-xl bg-elec-gray border border-white/10 border-l-4',
-        borderColour
-      )}
-    >
-      {/* Icon */}
-      <div
-        className={cn('h-10 w-10 rounded-lg flex items-center justify-center shrink-0', bgColour)}
-      >
-        <Icon className={cn('h-5 w-5', iconColour)} />
-      </div>
-
-      {/* Label + detail */}
-      <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-white">{component.label}</p>
-        {component.detail && <p className="text-xs text-white truncate">{component.detail}</p>}
-        {showValidationSplit && (
-          <p className="text-[10px] text-amber-400 mt-0.5">
-            {component.claimedCount! - component.validatedCount!} ACs claimed without evidence
-          </p>
-        )}
-        <p className="text-xs text-white">{Math.round(component.weight * 100)}% weight</p>
-      </div>
-
-      {/* Score + mini bar */}
-      <div className="shrink-0 w-16 text-right">
-        {component.score === 0 ? (
-          <p className="text-sm text-white italic">N/A</p>
-        ) : (
-          <>
-            <p className="text-xl font-bold text-white">{component.score}</p>
-            <div className="h-1.5 rounded-full bg-white/10 overflow-hidden mt-1">
-              <div
-                className={cn('h-full rounded-full transition-all duration-500', barColour)}
-                style={{ width: `${component.score}%` }}
-              />
-            </div>
-          </>
-        )}
-      </div>
     </div>
   );
 }

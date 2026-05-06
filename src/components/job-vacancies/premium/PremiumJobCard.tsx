@@ -1,25 +1,15 @@
 /**
- * PremiumJobCard - Premium swipeable job card
- * Native app feel with swipe actions, touch feedback, and smooth animations
+ * PremiumJobCard — editorial job card.
+ *
+ * Type-led, no stock-photo header. Company mark beside title (initials),
+ * source + freshness chips, key facts strip (location, type, posted),
+ * salary + CTA. Swipe-to-save / swipe-to-apply on mobile via SwipeableCard.
  */
 
 import { motion } from 'framer-motion';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { SwipeableCard } from '@/components/ui/SwipeableCard';
 import { cn } from '@/lib/utils';
-import {
-  Briefcase,
-  MapPin,
-  Clock,
-  Building2,
-  TrendingUp,
-  ChevronRight,
-  Bookmark,
-  ExternalLink,
-  Star,
-  Zap,
-} from 'lucide-react';
+import { ChevronRight, Bookmark, ExternalLink, MapPin } from 'lucide-react';
 import { cardPressSubtleVariants, listItemVariants } from './animations/variants';
 import type { UnifiedJob } from '@/hooks/job-vacancies/useUnifiedJobSearch';
 
@@ -33,77 +23,35 @@ interface PremiumJobCardProps {
   className?: string;
 }
 
-// Company logo fallback with initials
-const CompanyInitials = ({ company }: { company: string }) => {
-  const initials = company
-    .split(' ')
-    .slice(0, 2)
-    .map((word) => word[0])
+const initialsOf = (company: string): string =>
+  company
+    .split(/\s+/)
+    .map((w) => w[0])
+    .filter(Boolean)
+    .slice(0, 3)
     .join('')
     .toUpperCase();
 
-  return (
-    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-slate-600/40 to-slate-700/40 border border-slate-500/30 flex items-center justify-center">
-      <span className="text-sm font-bold text-slate-300">{initials}</span>
-    </div>
-  );
-};
-
-// Match score badge with color coding
-const MatchScoreBadge = ({ score }: { score: number }) => {
-  const getScoreColor = () => {
-    if (score >= 85)
-      return 'bg-gradient-to-r from-emerald-500/30 to-green-500/30 border-emerald-400/40 text-emerald-300';
-    if (score >= 70)
-      return 'bg-gradient-to-r from-blue-500/30 to-cyan-500/30 border-blue-400/40 text-blue-300';
-    return 'bg-gradient-to-r from-slate-500/30 to-slate-600/30 border-slate-400/40 text-slate-300';
-  };
-
-  return (
-    <Badge className={cn('text-[10px] font-semibold backdrop-blur-sm', getScoreColor())}>
-      <Star className="h-3 w-3 mr-1 fill-current" />
-      {score}% Match
-    </Badge>
-  );
-};
-
-// Format salary for display
-const formatSalary = (salary: string | null) => {
-  if (!salary || salary === 'Not specified') return null;
-  return salary;
-};
-
-// Check if job is fresh (within 24 hours)
 const isJobFresh = (postedDate: string) => {
   const posted = new Date(postedDate);
   const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
   return posted > oneDayAgo;
 };
 
-// Format posted date
 const formatPostedDate = (date: string) => {
   const posted = new Date(date);
-  const now = new Date();
-  const diffMs = now.getTime() - posted.getTime();
+  const diffMs = Date.now() - posted.getTime();
   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-
   if (diffDays === 0) return 'Today';
-  if (diffDays === 1) return 'Yesterday';
-  if (diffDays < 7) return `${diffDays} days ago`;
-  if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
+  if (diffDays === 1) return '1d ago';
+  if (diffDays < 7) return `${diffDays}d ago`;
+  if (diffDays < 30) return `${Math.floor(diffDays / 7)}w ago`;
   return posted.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 };
 
-// Source badge color
-const getSourceColor = (source: string) => {
-  const colors: Record<string, string> = {
-    Reed: 'bg-blue-500/20 border-blue-500/30 text-blue-300',
-    Indeed: 'bg-purple-500/20 border-purple-500/30 text-purple-300',
-    TotalJobs: 'bg-green-500/20 border-green-500/30 text-green-300',
-    'CV Library': 'bg-orange-500/20 border-orange-500/30 text-orange-300',
-    'Jobs.co.uk': 'bg-cyan-500/20 border-cyan-500/30 text-cyan-300',
-  };
-  return colors[source] || 'bg-white/10 border-white/20 text-white';
+const formatSalary = (salary: string | null) => {
+  if (!salary || salary === 'Not specified') return null;
+  return salary;
 };
 
 const PremiumJobCard = ({
@@ -117,6 +65,22 @@ const PremiumJobCard = ({
 }: PremiumJobCardProps) => {
   const isFresh = isJobFresh(job.posted_date);
   const salary = formatSalary(job.salary);
+  const hasStrongMatch = typeof matchScore === 'number' && matchScore >= 85;
+
+  // Single status pill — pick the most signal-rich one
+  const statusPill: { label: string; tone: string } | null = hasStrongMatch
+    ? {
+        label: `${matchScore}% match`,
+        tone: 'text-emerald-300 border-emerald-500/40 bg-emerald-500/[0.08]',
+      }
+    : isFresh
+      ? { label: 'New', tone: 'text-amber-300 border-amber-500/40 bg-amber-500/[0.08]' }
+      : typeof matchScore === 'number'
+        ? {
+            label: `${matchScore}% match`,
+            tone: 'text-blue-300 border-blue-500/40 bg-blue-500/[0.08]',
+          }
+        : null;
 
   const cardContent = (
     <motion.div
@@ -124,141 +88,112 @@ const PremiumJobCard = ({
       whileTap={cardPressSubtleVariants.tap}
       onClick={() => onSelect(job)}
       className={cn(
-        'group relative bg-card/80 backdrop-blur-sm',
-        'rounded-2xl border border-white/10 overflow-hidden cursor-pointer',
-        'hover:border-blue-500/40 transition-all duration-300',
-        'hover:shadow-2xl hover:shadow-blue-500/10',
-        'hover:-translate-y-1',
-        'active:scale-[0.98]',
+        'group relative cursor-pointer rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] hover:border-elec-yellow/40 active:bg-white/[0.04] transition-colors p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] touch-manipulation flex flex-col',
         className
       )}
     >
-      {/* Subtle gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-
-      {/* Glowing accent line at top */}
-      <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-
-      <div className="relative p-4 space-y-3">
-        {/* Header: Logo + Badges */}
-        <div className="flex items-start justify-between gap-3">
-          {/* Company Logo */}
+      {/* Top row — company mark + meta */}
+      <div className="flex items-start gap-3">
+        <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-elec-yellow/[0.08] border border-elec-yellow/30 shrink-0 overflow-hidden">
           {job.image_url ? (
             <img
               src={job.image_url}
-              alt={job.company}
-              className="w-12 h-12 rounded-xl object-cover border border-white/10"
+              alt={`${job.company} logo`}
+              className="w-full h-full object-contain"
+              loading="lazy"
+              decoding="async"
+              referrerPolicy="no-referrer"
               onError={(e) => {
-                e.currentTarget.style.display = 'none';
-                e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                const target = e.currentTarget as HTMLImageElement;
+                target.style.display = 'none';
+                const parent = target.parentElement;
+                if (parent) {
+                  parent.innerHTML = `<span class="text-[10.5px] font-semibold tabular-nums text-elec-yellow">${initialsOf(job.company)}</span>`;
+                }
               }}
             />
           ) : (
-            <CompanyInitials company={job.company} />
+            <span className="text-[10.5px] font-semibold tabular-nums text-elec-yellow">
+              {initialsOf(job.company)}
+            </span>
           )}
-          <div className="hidden">
-            <CompanyInitials company={job.company} />
-          </div>
-
-          {/* Badges */}
-          <div className="flex flex-wrap gap-1.5 flex-1 justify-end">
-            {isFresh && (
-              <Badge className="bg-gradient-to-r from-emerald-500/30 to-green-500/30 border-emerald-400/40 text-emerald-300 text-[10px] font-semibold backdrop-blur-sm">
-                <Zap className="h-3 w-3 mr-1" />
-                New
-              </Badge>
-            )}
-            {matchScore && <MatchScoreBadge score={matchScore} />}
+        </div>
+        <div className="min-w-0 flex-1">
+          <div className="flex items-baseline justify-between gap-2 flex-wrap">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-elec-yellow/85">
+              {job.type}
+            </span>
             {job.source && (
-              <Badge
-                className={cn(
-                  'text-[10px] font-medium backdrop-blur-sm',
-                  getSourceColor(job.source)
-                )}
-              >
+              <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white/85 border border-white/15 rounded-md px-1.5 py-0.5">
                 {job.source}
-              </Badge>
+              </span>
             )}
           </div>
+          <h3 className="mt-1.5 text-[15px] sm:text-[16px] font-semibold tracking-tight text-white leading-tight line-clamp-2">
+            {job.title}
+          </h3>
+          <p className="mt-0.5 text-[11.5px] text-elec-yellow truncate">{job.company}</p>
         </div>
-
-        {/* Job Title */}
-        <h3 className="font-bold text-white line-clamp-2 leading-snug text-base group-hover:text-blue-200 transition-colors">
-          {job.title}
-        </h3>
-
-        {/* Company */}
-        <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-            <Building2 className="h-3.5 w-3.5 text-blue-400" />
-          </div>
-          <p className="text-blue-400 text-sm font-medium line-clamp-1">{job.company}</p>
-        </div>
-
-        {/* Stats Row */}
-        <div className="flex items-center flex-wrap gap-3 text-xs text-white">
-          {/* Location */}
-          <span className="flex items-center gap-1.5">
-            <MapPin className="h-3.5 w-3.5" />
-            <span className="line-clamp-1 max-w-[120px]">{job.location}</span>
-          </span>
-
-          {/* Job Type */}
-          <span className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-white/5">
-            <Briefcase className="h-3.5 w-3.5" />
-            {job.type}
-          </span>
-
-          {/* Posted */}
-          <span className="flex items-center gap-1.5 ml-auto">
-            <Clock className="h-3.5 w-3.5" />
-            {formatPostedDate(job.posted_date)}
-          </span>
-        </div>
-
-        {/* Footer: Salary + CTA */}
-        <div className="flex items-center justify-between pt-3 border-t border-white/5">
-          <div>
-            {salary ? (
-              <>
-                <span className="text-xs text-white block">Salary</span>
-                <span className="text-base font-bold text-white">{salary}</span>
-              </>
-            ) : (
-              <span className="text-sm text-white">Salary not specified</span>
-            )}
-          </div>
-          <Button
-            size="sm"
-            className="h-9 px-4 bg-blue-500 hover:bg-blue-400 text-white font-medium shadow-lg shadow-blue-500/25 group-hover:shadow-blue-500/40 transition-all"
-            onClick={(e) => {
-              e.stopPropagation();
-              onSelect(job);
-            }}
-          >
-            <span className="text-sm">View Details</span>
-            <ChevronRight className="h-4 w-4 ml-1 group-hover:translate-x-0.5 transition-transform" />
-          </Button>
-        </div>
-
-        {/* Saved indicator */}
         {isSaved && (
-          <div className="absolute top-4 right-4">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-blue-500/30">
-              <Bookmark className="h-4 w-4 text-white fill-current" />
-            </div>
-          </div>
+          <Bookmark className="h-4 w-4 text-elec-yellow fill-current shrink-0" aria-hidden />
         )}
+      </div>
+
+      {/* Status pill */}
+      {statusPill && (
+        <div className="mt-3">
+          <span
+            className={cn(
+              'inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-[0.14em] border rounded-full px-2 py-0.5',
+              statusPill.tone
+            )}
+          >
+            {statusPill.label}
+          </span>
+        </div>
+      )}
+
+      {/* Key facts row */}
+      <dl className="mt-3 pt-3 border-t border-white/[0.06] grid grid-cols-2 gap-x-4 gap-y-1.5 text-[11px]">
+        <Fact
+          label="Location"
+          value={
+            <span className="inline-flex items-center gap-1 truncate">
+              <MapPin className="h-3 w-3 text-white/65 shrink-0" aria-hidden />
+              <span className="truncate">{job.location}</span>
+            </span>
+          }
+        />
+        <Fact label="Posted" value={formatPostedDate(job.posted_date)} />
+      </dl>
+
+      {/* Footer — salary + CTA */}
+      <div className="mt-auto pt-3 border-t border-white/[0.06] flex items-baseline justify-between gap-2">
+        <div className="min-w-0">
+          <span className="text-[9.5px] uppercase tracking-[0.14em] font-semibold text-white/65">
+            {salary ? 'Salary' : ''}
+          </span>
+          <div className="text-[15px] font-semibold tabular-nums text-white truncate">
+            {salary ?? <span className="text-white/65 text-[12px] font-normal">Not specified</span>}
+          </div>
+        </div>
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            onSelect(job);
+          }}
+          className="text-[11px] font-semibold uppercase tracking-[0.14em] text-black bg-elec-yellow hover:bg-elec-yellow/90 active:bg-elec-yellow/85 rounded-full px-3 py-1.5 min-h-[32px] inline-flex items-center gap-1 touch-manipulation transition-colors"
+        >
+          Details
+          <ChevronRight className="h-3 w-3" />
+        </button>
       </div>
     </motion.div>
   );
 
-  // If no swipe actions, return card directly
-  if (!onSave && !onApply) {
-    return cardContent;
-  }
+  if (!onSave && !onApply) return cardContent;
 
-  // Wrap in SwipeableCard for swipe actions
   return (
     <SwipeableCard
       leftAction={
@@ -275,7 +210,7 @@ const PremiumJobCard = ({
         onSave
           ? {
               icon: <Bookmark className={cn('h-5 w-5', isSaved && 'fill-current')} />,
-              bgColor: 'bg-blue-500',
+              bgColor: 'bg-elec-yellow',
               label: isSaved ? 'Saved' : 'Save',
               onAction: () => onSave(job.id),
             }
@@ -288,5 +223,14 @@ const PremiumJobCard = ({
     </SwipeableCard>
   );
 };
+
+const Fact = ({ label, value }: { label: string; value: React.ReactNode }) => (
+  <div className="inline-flex items-baseline gap-1.5 min-w-0">
+    <dt className="text-[9.5px] uppercase tracking-[0.14em] font-semibold text-white/65 shrink-0">
+      {label}
+    </dt>
+    <dd className="text-white tabular-nums truncate">{value}</dd>
+  </div>
+);
 
 export default PremiumJobCard;

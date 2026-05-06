@@ -1,21 +1,25 @@
 /**
- * ApprenticeHub
+ * ApprenticeHub — editorial redesign matching ElectricianHub / SiteSafety /
+ * BusinessHub / Inspection & Testing / Study Centre.
  *
- * Editorial hub layout matching the College Hub design system —
- * PageHero / StatStrip / SectionHeader / HubGrid / HubCard. Same dark
- * cards, elec-yellow accents, tone gradients, numbered cards.
+ * Sticky text-only masthead, date-eyebrow Hero with rotating thematic
+ * two-tone tagline + verdict + CTA, numbered hairline-grid sections:
+ *   01 · AT A GLANCE        (Streak / Progress / Videos / Diary)
+ *   02 · FROM YOUR COLLEGE  (College plan + assigned quizzes)
+ *   03 · CORE LEARNING      (Study Centre · Inspection & Testing)
+ *   04 · EXAM PREP          (EPA Simulator · AM2 Simulator)
+ *   05 · PORTFOLIO & OJT    (Evidence · OJT hours)
+ *   06 · LEARNING VIDEOS    (existing widget, unchanged)
+ *   07 · TOOLS              (8 quick-access tiles)
  *
- * Reuses primitives from `@/components/college/primitives` because they
- * are general-purpose editorial components that just happen to live
- * under the college folder. Naming is incidental — same theme.
+ * Black 2px hairline gaps, single yellow accent per row, mobile-flat per the
+ * project working agreement.
  */
-
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
 import useSEO from '@/hooks/useSEO';
-import { ArrowLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { useApprenticeData } from '@/hooks/useApprenticeData';
 import { useMyIlp } from '@/hooks/useMyIlp';
 import { useMyAssignedQuizzes } from '@/hooks/useMyAssignedQuizzes';
@@ -28,292 +32,302 @@ import { DiaryEntriesDetailSheet } from '@/components/apprentice/stats-detail/Di
 import { StudyStreakDetailSheet } from '@/components/apprentice/stats-detail/StudyStreakDetailSheet';
 import { ProgressDetailSheet } from '@/components/apprentice/stats-detail/ProgressDetailSheet';
 import { cn } from '@/lib/utils';
-import {
-  PageFrame,
-  PageHero,
-  SectionHeader,
-  HubGrid,
-  HubCard,
-  Pill,
-  itemVariants,
-} from '@/components/college/primitives';
+import { Eyebrow, containerVariants, itemVariants } from '@/components/college/primitives';
 
-/* ──────────────────────────────────────────────────────────────────
-   Greeting helpers
-   ────────────────────────────────────────────────────────────────── */
+// ─────────────────────────────────────────────────────────────────────────
+// Editorial helpers
+// ─────────────────────────────────────────────────────────────────────────
 
-function getGreeting(): string {
-  const hour = new Date().getHours();
-  if (hour < 12) return 'Good morning';
-  if (hour < 18) return 'Good afternoon';
-  return 'Good evening';
+const partOfDay = (): 'MORNING' | 'AFTERNOON' | 'EVENING' => {
+  const h = new Date().getHours();
+  if (h < 12) return 'MORNING';
+  if (h < 18) return 'AFTERNOON';
+  return 'EVENING';
+};
+
+const dateEyebrow = (): string => {
+  const d = new Date();
+  const weekday = d.toLocaleDateString('en-GB', { weekday: 'long' }).toUpperCase();
+  const day = d.getDate();
+  const month = d.toLocaleDateString('en-GB', { month: 'long' }).toUpperCase();
+  return `${weekday} · ${day} ${month} · ${partOfDay()}`;
+};
+
+interface HeroHeadline {
+  yellow: string;
+  white: string;
 }
 
-function getDescription(streak: number, progress: number, hasOverdue: boolean): string {
-  if (hasOverdue) return 'Pick up where you left off — your tutor sent something that needs your attention.';
-  if (streak >= 7) return `${streak} days on the trot — keep the streak alive.`;
-  if (progress >= 75) return 'Final stretch — you’re close to the line. Keep going.';
-  if (progress >= 25) return 'Steady progress. Pick a card below to keep building.';
-  return 'Welcome back. Pick a card below to start your session.';
-}
+const HEADLINES_OVERDUE: HeroHeadline[] = [
+  { yellow: "Tutor's", white: 'set work.' },
+  { yellow: 'Stuff', white: 'to catch up on.' },
+  { yellow: 'Work', white: 'waiting from college.' },
+];
 
-/* ──────────────────────────────────────────────────────────────────
-   College plan — featured priority card with live ILP / quiz state
-   ────────────────────────────────────────────────────────────────── */
+const HEADLINES_STREAK: HeroHeadline[] = [
+  { yellow: 'Same', white: 'time tomorrow.' },
+  { yellow: 'Day', white: 'after day.' },
+  { yellow: 'Keep', white: 'going.' },
+];
 
-function CollegePlanCard() {
-  const { ilp, rollUp, hasCollegeLink } = useMyIlp();
-  const { quizzes } = useMyAssignedQuizzes();
+const HEADLINES_HEALTHY: HeroHeadline[] = [
+  { yellow: 'Your', white: 'apprenticeship.' },
+  { yellow: 'Course,', white: 'site, log.' },
+  { yellow: "What's", white: 'on today.' },
+  { yellow: 'Training', white: 'in one place.' },
+  { yellow: 'Crack', white: 'on.' },
+];
 
-  const pendingQuizzes = quizzes.filter((q) => q.status !== 'completed');
-  const overdueQuizzes = pendingQuizzes.filter((q) => q.status === 'overdue');
-  const notStartedQuizzes = pendingQuizzes.filter((q) => q.status === 'not_started');
-  const inProgressQuizzes = pendingQuizzes.filter((q) => q.status === 'in_progress');
+const HEADLINES_EMPTY: HeroHeadline[] = [
+  { yellow: 'Year', white: 'one.' },
+  { yellow: 'Start', white: 'here.' },
+];
 
-  const description = !hasCollegeLink
-    ? 'Connect with your college to see goals from your tutor and tick them off here.'
-    : pendingQuizzes.length > 0
-      ? overdueQuizzes.length > 0
-        ? `${overdueQuizzes.length} overdue · ${notStartedQuizzes.length + inProgressQuizzes.length} more pending`
-        : notStartedQuizzes.length === 1 && inProgressQuizzes.length === 0
-          ? `New from your tutor: ${notStartedQuizzes[0].title}`
-          : `${pendingQuizzes.length} ${pendingQuizzes.length === 1 ? 'item' : 'items'} from your tutor — tap to start.`
-      : ilp
-        ? (ilp.headline_focus ??
-          `${rollUp.completed}/${rollUp.total_goals} goals complete · set by your tutor`)
-        : 'Your tutor will set goals here you can tick off and reply to.';
-
-  const newCount =
-    notStartedQuizzes.length + rollUp.unread_tutor_comments + (rollUp.needs_acknowledgement || 0);
-  const hasOverdue = overdueQuizzes.length > 0;
-  const meta = ilp ? `${rollUp.completed}/${rollUp.total_goals} goals complete` : 'Tap to open';
-  const navigate = useNavigate();
-
-  return (
-    <HubGrid columns={1}>
-      <HubCard
-        eyebrow="My College Plan"
-        title={hasCollegeLink ? 'Your goals & quizzes from college' : 'Connect with your college'}
-        description={description}
-        meta={meta}
-        tone="blue"
-        onClick={() => navigate('/apprentice/college-plan')}
-        cta={ilp ? 'Open plan' : 'Open'}
-        badge={
-          hasOverdue ? (
-            <Pill tone="red">{overdueQuizzes.length} overdue</Pill>
-          ) : newCount > 0 ? (
-            <Pill tone="yellow">{newCount} new</Pill>
-          ) : undefined
-        }
-      />
-    </HubGrid>
+const pickHeadline = (pool: HeroHeadline[]): HeroHeadline => {
+  const now = new Date();
+  const hour = now.getHours();
+  const dayOfYear = Math.floor(
+    (now.getTime() - new Date(now.getFullYear(), 0, 0).getTime()) / 86400000
   );
-}
+  return pool[(hour + dayOfYear) % pool.length];
+};
 
-/* ──────────────────────────────────────────────────────────────────
-   Stat strip — editorial values with detail-sheet drill-in
-   ────────────────────────────────────────────────────────────────── */
+// ─────────────────────────────────────────────────────────────────────────
+// Sticky masthead
+// ─────────────────────────────────────────────────────────────────────────
 
-/* Custom stat strip — grey cells with subtle yellow tints, white values.
-   The college StatStrip primitive uses full tone-coloured values which
-   was too loud; this keeps the hairline grid + numbered eyebrow style
-   but tones the cells down to the editorial dashboard look. */
-interface ApprenticeStat {
-  number: string;
+const PageMasthead = () => {
+  const navigate = useNavigate();
+  return (
+    <div className="sticky top-0 z-50 bg-elec-dark/95 backdrop-blur-sm border-b border-white/[0.06]">
+      <div className="mx-auto max-w-7xl px-4">
+        <div className="flex items-center h-12 gap-4 sm:gap-6">
+          <button
+            type="button"
+            onClick={() => navigate('/dashboard')}
+            className="text-[12.5px] font-medium text-white hover:text-white transition-colors touch-manipulation whitespace-nowrap"
+          >
+            ← Back
+          </button>
+          <div className="flex-1 min-w-0 flex items-baseline gap-2.5">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white hidden sm:inline">
+              Apprentice
+            </span>
+            <span className="hidden sm:inline h-3 w-px bg-white/10" aria-hidden />
+            <h1 className="text-[13px] sm:text-sm font-semibold text-white truncate tracking-tight">
+              Apprentice Hub
+            </h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ─────────────────────────────────────────────────────────────────────────
+// HeadlineStats
+// ─────────────────────────────────────────────────────────────────────────
+
+interface AppStat {
   label: string;
   value: string | number;
-  sub: string;
+  sub?: string;
+  accent?: boolean;
   onClick: () => void;
 }
 
-function ApprenticeStatStrip() {
-  const { stats } = useApprenticeData();
-  const { watchedCount, totalVideos } = useVideoInsights();
-  const { entries } = useSiteDiaryEntries();
-  const [streakOpen, setStreakOpen] = useState(false);
-  const [progressOpen, setProgressOpen] = useState(false);
-  const [videosOpen, setVideosOpen] = useState(false);
-  const [diaryOpen, setDiaryOpen] = useState(false);
+const ApprenticeHeadlineStats = ({ stats }: { stats: AppStat[] }) => (
+  <motion.section
+    variants={containerVariants}
+    initial="hidden"
+    animate="visible"
+    className="space-y-4"
+  >
+    <motion.div variants={itemVariants}>
+      <Eyebrow>01 · AT A GLANCE</Eyebrow>
+    </motion.div>
 
-  const cells: ApprenticeStat[] = [
-    {
-      number: '01',
-      label: 'Streak',
-      value:
-        stats.learning.currentStreak === 1
-          ? '1 day'
-          : `${stats.learning.currentStreak} days`,
-      sub: stats.learning.currentStreak >= 7 ? 'On a roll' : 'Keep it going',
-      onClick: () => setStreakOpen(true),
-    },
-    {
-      number: '02',
-      label: 'Progress',
-      value: `${stats.progress.overallPercent}%`,
-      sub: 'Course completion',
-      onClick: () => setProgressOpen(true),
-    },
-    {
-      number: '03',
-      label: 'Videos',
-      value: totalVideos > 0 ? `${watchedCount}/${totalVideos}` : `${watchedCount}`,
-      sub: 'Watched this term',
-      onClick: () => setVideosOpen(true),
-    },
-    {
-      number: '04',
-      label: 'Diary',
-      value: entries.length,
-      sub: 'Site logbook',
-      onClick: () => setDiaryOpen(true),
-    },
-  ];
+    <motion.div
+      variants={itemVariants}
+      className="relative grid grid-cols-2 lg:grid-cols-4 gap-[2px] bg-black border border-white/[0.08] rounded-2xl overflow-hidden"
+    >
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none" />
 
-  return (
-    <>
-      <div className="relative grid grid-cols-2 lg:grid-cols-4 gap-px bg-white/[0.06] border border-white/[0.08] rounded-2xl overflow-hidden">
-        {/* Single subtle yellow hairline ceiling — the only colour accent */}
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/50 to-elec-yellow/0 pointer-events-none z-10" />
+      {stats.map((stat) => {
+        const valueStr = String(stat.value);
+        const isNumericish =
+          typeof stat.value === 'number' || /^[\d.,+\-/%hkm£\s]+$/i.test(valueStr);
+        const sizeClass =
+          isNumericish && valueStr.length <= 6
+            ? 'text-4xl sm:text-5xl lg:text-[56px]'
+            : valueStr.length <= 10
+              ? 'text-3xl sm:text-4xl lg:text-5xl'
+              : 'text-2xl sm:text-3xl lg:text-4xl';
 
-        {cells.map((stat) => {
-          const valueStr = String(stat.value);
-          const isNumericish =
-            typeof stat.value === 'number' || /^[\d.,+\-/%hkm\s]+$/i.test(valueStr);
-          const sizeClass =
-            isNumericish && valueStr.length <= 6
-              ? 'text-4xl sm:text-5xl lg:text-[56px]'
-              : valueStr.length <= 10
-                ? 'text-3xl sm:text-4xl lg:text-5xl'
-                : 'text-2xl sm:text-3xl lg:text-4xl';
-
-          return (
-            <button
-              key={stat.number}
-              type="button"
-              onClick={stat.onClick}
+        return (
+          <button
+            key={stat.label}
+            type="button"
+            onClick={stat.onClick}
+            className={cn(
+              'group relative bg-[hsl(0_0%_10%)] px-5 py-6 sm:px-7 sm:py-8 flex flex-col text-left touch-manipulation',
+              'hover:bg-elec-yellow/[0.04] transition-colors',
+              stat.accent &&
+                'bg-gradient-to-br from-elec-yellow/[0.06] via-amber-500/[0.02] to-transparent hover:from-elec-yellow/[0.10]'
+            )}
+          >
+            <div
               className={cn(
-                'group relative bg-[hsl(0_0%_10%)] hover:bg-elec-yellow/[0.04] transition-colors',
-                'px-5 py-6 sm:px-7 sm:py-8 flex flex-col text-left touch-manipulation'
+                'text-[10px] font-medium uppercase tracking-[0.18em]',
+                stat.accent ? 'text-elec-yellow/80' : 'text-white/50'
               )}
             >
-              <div className="flex items-baseline gap-2 whitespace-nowrap">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
-                  {stat.number}
-                </span>
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 truncate">
-                  · {stat.label}
-                </span>
-              </div>
-              <span
-                className={cn(
-                  'mt-3 sm:mt-4 font-semibold tabular-nums tracking-tight leading-none text-white',
-                  sizeClass
-                )}
-              >
-                {stat.value}
-              </span>
+              {stat.label}
+            </div>
+            <span
+              className={cn(
+                'mt-3 sm:mt-4 font-semibold tabular-nums tracking-tight leading-none',
+                sizeClass,
+                stat.accent ? 'text-elec-yellow' : 'text-white'
+              )}
+            >
+              {stat.value}
+            </span>
+            {stat.sub && (
               <span className="mt-3 text-[11.5px] text-white/55 group-hover:text-white/75 transition-colors">
                 {stat.sub}
               </span>
-            </button>
-          );
-        })}
-      </div>
+            )}
+          </button>
+        );
+      })}
+    </motion.div>
+  </motion.section>
+);
 
-      <StudyStreakDetailSheet open={streakOpen} onOpenChange={setStreakOpen} />
-      <ProgressDetailSheet open={progressOpen} onOpenChange={setProgressOpen} />
-      <VideosWatchedDetailSheet open={videosOpen} onOpenChange={setVideosOpen} />
-      <DiaryEntriesDetailSheet
-        open={diaryOpen}
-        onOpenChange={setDiaryOpen}
-        entries={entries}
-      />
-    </>
-  );
-}
+// ─────────────────────────────────────────────────────────────────────────
+// EditorialToolGrid
+// ─────────────────────────────────────────────────────────────────────────
 
-/* ──────────────────────────────────────────────────────────────────
-   Tools & references catalogue — small numbered cards
-   ────────────────────────────────────────────────────────────────── */
-
-const QUICK_TOOLS: Array<{
-  number: string;
+interface ToolCard {
+  id: string;
   eyebrow: string;
   title: string;
   description: string;
-  link: string;
-  tone: 'blue' | 'emerald' | 'amber' | 'cyan' | 'purple' | 'indigo' | 'yellow';
-}> = [
-  {
-    number: '01',
-    eyebrow: 'AI tutor',
-    title: 'Study assistant',
-    description: 'Instant help with theory and exams.',
-    link: '/apprentice/advanced-help',
-    tone: 'yellow',
-  },
-  {
-    number: '02',
-    eyebrow: 'Logbook',
-    title: 'Site diary',
-    description: 'Log daily site activities and hours.',
-    link: '/apprentice/site-diary',
-    tone: 'amber',
-  },
-  {
-    number: '03',
-    eyebrow: 'Calculations',
-    title: 'Calculators',
-    description: 'Cable sizing, voltage drop, and more.',
-    link: '/apprentice/calculators',
-    tone: 'blue',
-  },
-  {
-    number: '04',
-    eyebrow: 'Daily work',
-    title: 'On-the-job tools',
-    description: 'Quick references for site tasks.',
-    link: '/apprentice/on-job-tools',
-    tone: 'emerald',
-  },
-  {
-    number: '05',
-    eyebrow: 'Wellbeing',
-    title: 'Mental health',
-    description: 'Wellbeing resources and support.',
-    link: '/apprentice/mental-health',
-    tone: 'indigo',
-  },
-  {
-    number: '06',
-    eyebrow: 'Career',
-    title: 'Progression',
-    description: 'Plan your career pathway.',
-    link: '/apprentice/professional-development',
-    tone: 'purple',
-  },
-  {
-    number: '07',
-    eyebrow: 'Reference',
-    title: 'Guidance area',
-    description: 'Tips, guides and best practices.',
-    link: '/apprentice/toolbox',
-    tone: 'cyan',
-  },
-  {
-    number: '08',
-    eyebrow: 'Account',
-    title: 'Settings',
-    description: 'Subscription, notifications and accessibility.',
-    link: '/settings',
-    tone: 'yellow',
-  },
-];
+  to?: string;
+  onClick?: () => void;
+  meta?: string;
+  alert?: boolean;
+}
 
-/* ──────────────────────────────────────────────────────────────────
-   Main page
-   ────────────────────────────────────────────────────────────────── */
+const EditorialToolGrid = ({
+  number,
+  label,
+  cards,
+  columns = 'three',
+}: {
+  number: string;
+  label: string;
+  cards: ToolCard[];
+  columns?: 'two' | 'three' | 'four';
+}) => {
+  const navigate = useNavigate();
+  if (cards.length === 0) return null;
+
+  const colClass =
+    columns === 'two'
+      ? 'grid-cols-1 sm:grid-cols-2'
+      : columns === 'four'
+        ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4'
+        : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3';
+
+  const largestColCount = columns === 'two' ? 2 : columns === 'four' ? 4 : 3;
+  const fillerCount = (largestColCount - (cards.length % largestColCount)) % largestColCount;
+
+  return (
+    <motion.section
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="space-y-4"
+    >
+      <motion.div variants={itemVariants}>
+        <Eyebrow>
+          {number} · {label}
+        </Eyebrow>
+      </motion.div>
+
+      <motion.div
+        variants={itemVariants}
+        className={cn(
+          'relative grid auto-rows-[220px] sm:auto-rows-[240px] gap-[2px] bg-black border border-white/[0.08] rounded-2xl overflow-hidden',
+          colClass
+        )}
+      >
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
+
+        {cards.map((card, i) => (
+          <button
+            key={card.id}
+            type="button"
+            onClick={() => {
+              if (card.onClick) card.onClick();
+              else if (card.to) navigate(card.to);
+            }}
+            className="group relative bg-[hsl(0_0%_10%)] hover:bg-elec-yellow/[0.04] transition-colors p-5 sm:p-6 lg:p-7 text-left touch-manipulation flex flex-col h-full"
+          >
+            <div className="flex items-baseline justify-between gap-2">
+              <div className="flex items-baseline gap-2">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  · {card.eyebrow}
+                </span>
+              </div>
+              {card.alert && (
+                <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-red-300 border border-red-400/30 bg-red-500/10 px-1.5 py-0.5 rounded">
+                  Action
+                </span>
+              )}
+            </div>
+
+            <h3 className="mt-3 sm:mt-4 text-[18px] sm:text-[20px] lg:text-[22px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors">
+              {card.title}
+            </h3>
+            <p className="mt-2 text-[12.5px] leading-relaxed text-white/60 max-w-[34ch]">
+              {card.description}
+            </p>
+
+            <div className="flex-grow" />
+
+            <div className="mt-5 flex items-center justify-between gap-3 pt-3 border-t border-white/[0.05]">
+              <span className="text-[11px] text-white/55 truncate tabular-nums">
+                {card.meta ?? 'Open'}
+              </span>
+              <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-elec-yellow shrink-0">
+                Open
+                <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+              </span>
+            </div>
+          </button>
+        ))}
+
+        {Array.from({ length: fillerCount }).map((_, i) => (
+          <div
+            key={`filler-${i}`}
+            aria-hidden
+            className="hidden lg:block bg-[hsl(0_0%_10%)]"
+          />
+        ))}
+      </motion.div>
+    </motion.section>
+  );
+};
+
+// ─────────────────────────────────────────────────────────────────────────
+// Main page
+// ─────────────────────────────────────────────────────────────────────────
 
 export default function ApprenticeHub() {
   useSEO({
@@ -330,147 +344,374 @@ export default function ApprenticeHub() {
   });
 
   const navigate = useNavigate();
-  const { user, stats } = useApprenticeData();
+  const { stats } = useApprenticeData();
+  const { ilp, rollUp, hasCollegeLink } = useMyIlp();
   const { quizzes } = useMyAssignedQuizzes();
-  const hasOverdue = quizzes.some((q) => q.status === 'overdue');
-  const greeting = getGreeting();
-  const description = getDescription(
-    stats.learning.currentStreak,
-    stats.progress.overallPercent,
-    hasOverdue
-  );
+  const { watchedCount, totalVideos } = useVideoInsights();
+  const { entries } = useSiteDiaryEntries();
+
+  const [streakOpen, setStreakOpen] = useState(false);
+  const [progressOpen, setProgressOpen] = useState(false);
+  const [videosOpen, setVideosOpen] = useState(false);
+  const [diaryOpen, setDiaryOpen] = useState(false);
+
+  const pendingQuizzes = quizzes.filter((q) => q.status !== 'completed');
+  const overdueQuizzes = pendingQuizzes.filter((q) => q.status === 'overdue');
+  const notStartedQuizzes = pendingQuizzes.filter((q) => q.status === 'not_started');
+  const inProgressQuizzes = pendingQuizzes.filter((q) => q.status === 'in_progress');
+  const newCount =
+    notStartedQuizzes.length + rollUp.unread_tutor_comments + (rollUp.needs_acknowledgement || 0);
+  const hasOverdue = overdueQuizzes.length > 0;
+
+  // ── Hero state ───────────────────────────────────────────────────────
+  const { headline, verdict, cta } = useMemo(() => {
+    if (hasOverdue) {
+      return {
+        headline: pickHeadline(HEADLINES_OVERDUE),
+        verdict: `${overdueQuizzes.length} ${overdueQuizzes.length === 1 ? 'item' : 'items'} overdue from your tutor. Catch up to keep your progress on track.`,
+        cta: { label: 'Open college plan', onClick: () => navigate('/apprentice/college-plan') },
+      };
+    }
+    if (stats.learning.currentStreak >= 2) {
+      return {
+        headline: pickHeadline(HEADLINES_STREAK),
+        verdict: `Day ${stats.learning.currentStreak} of your run. One section keeps it alive.`,
+        cta: { label: 'Resume study', onClick: () => navigate('/study-centre/apprentice') },
+      };
+    }
+    if (stats.progress.overallPercent > 0 || entries.length > 0) {
+      return {
+        headline: pickHeadline(HEADLINES_HEALTHY),
+        verdict: `${stats.progress.overallPercent}% of your course complete · ${entries.length} diary ${entries.length === 1 ? 'entry' : 'entries'} logged.`,
+        cta: { label: 'Resume study', onClick: () => navigate('/study-centre/apprentice') },
+      };
+    }
+    return {
+      headline: pickHeadline(HEADLINES_EMPTY),
+      verdict: 'Pick a card below to get started.',
+      cta: { label: 'Open Study Centre', onClick: () => navigate('/study-centre/apprentice') },
+    };
+  }, [hasOverdue, overdueQuizzes.length, stats.learning.currentStreak, stats.progress.overallPercent, entries.length, navigate]);
+
+  // ── Stats ────────────────────────────────────────────────────────────
+  const statCells: AppStat[] = [
+    {
+      label: 'Streak',
+      value:
+        stats.learning.currentStreak === 1
+          ? '1 day'
+          : `${stats.learning.currentStreak} days`,
+      sub: stats.learning.currentStreak >= 7 ? 'On a roll' : 'Keep it going',
+      accent: true,
+      onClick: () => setStreakOpen(true),
+    },
+    {
+      label: 'Progress',
+      value: `${stats.progress.overallPercent}%`,
+      sub: 'Course completion',
+      onClick: () => setProgressOpen(true),
+    },
+    {
+      label: 'Videos',
+      value: totalVideos > 0 ? `${watchedCount}/${totalVideos}` : `${watchedCount}`,
+      sub: 'Watched this term',
+      onClick: () => setVideosOpen(true),
+    },
+    {
+      label: 'Diary',
+      value: entries.length,
+      sub: 'Site logbook',
+      onClick: () => setDiaryOpen(true),
+    },
+  ];
+
+  // ── College plan card ────────────────────────────────────────────────
+  const collegeDescription = !hasCollegeLink
+    ? 'Connect with your college to see goals from your tutor and tick them off here.'
+    : pendingQuizzes.length > 0
+      ? overdueQuizzes.length > 0
+        ? `${overdueQuizzes.length} overdue · ${notStartedQuizzes.length + inProgressQuizzes.length} more pending`
+        : notStartedQuizzes.length === 1 && inProgressQuizzes.length === 0
+          ? `New from your tutor: ${notStartedQuizzes[0].title}`
+          : `${pendingQuizzes.length} ${pendingQuizzes.length === 1 ? 'item' : 'items'} from your tutor — tap to start.`
+      : ilp
+        ? (ilp.headline_focus ??
+          `${rollUp.completed}/${rollUp.total_goals} goals complete · set by your tutor`)
+        : 'Your tutor will set goals here you can tick off and reply to.';
+  const collegeMeta = ilp ? `${rollUp.completed}/${rollUp.total_goals} goals` : 'Tap to open';
+
+  // ── Tool grids ───────────────────────────────────────────────────────
+  const coreLearning: ToolCard[] = [
+    {
+      id: 'study-centre',
+      eyebrow: 'Apprenticeship',
+      title: 'Study Centre',
+      description: 'Level 2 & 3 courses, practice questions and exam prep — at your own pace.',
+      to: '/study-centre/apprentice',
+      meta: 'Active course',
+    },
+    {
+      id: 'inspection-testing',
+      eyebrow: 'BS 7671',
+      title: 'Inspection & Testing',
+      description: 'Comprehensive guides, quizzes and BS 7671 regulations.',
+      to: '/apprentice/inspection-testing-hub',
+      meta: '6 modules',
+    },
+  ];
+
+  const examPrep: ToolCard[] = [
+    {
+      id: 'epa',
+      eyebrow: 'EPA',
+      title: 'EPA Simulator',
+      description: 'Mock professional discussions and knowledge tests with AI scoring.',
+      to: '/apprentice/epa-simulator',
+      meta: 'AI-scored',
+    },
+    {
+      id: 'am2',
+      eyebrow: 'AM2',
+      title: 'AM2 Simulator',
+      description: 'Safe isolation, fault finding and testing simulations.',
+      to: '/apprentice/am2-simulator',
+      meta: 'Practice tasks',
+    },
+  ];
+
+  const portfolio: ToolCard[] = [
+    {
+      id: 'portfolio',
+      eyebrow: 'Evidence',
+      title: 'Portfolio',
+      description:
+        'Assessment criteria, evidence quality, EPA gateway readiness, tutor sign-offs — all in one workspace.',
+      to: '/apprentice/hub',
+      meta: 'Open portfolio',
+    },
+    {
+      id: 'ojt',
+      eyebrow: 'OTJ',
+      title: 'Off-the-job hours',
+      description:
+        'Track the 20% off-the-job hours, weekly compliance pace, and evidence behind every entry.',
+      to: '/apprentice/ojt-hub',
+      meta: 'Open OJT hub',
+    },
+  ];
+
+  const tools: ToolCard[] = [
+    {
+      id: 'ai-tutor',
+      eyebrow: 'AI tutor',
+      title: 'Study assistant',
+      description: 'Instant help with theory and exams.',
+      to: '/apprentice/advanced-help',
+      meta: 'Ask anything',
+    },
+    {
+      id: 'site-diary',
+      eyebrow: 'Logbook',
+      title: 'Site diary',
+      description: 'Log daily site activities and hours.',
+      to: '/apprentice/site-diary',
+      meta: `${entries.length} ${entries.length === 1 ? 'entry' : 'entries'}`,
+    },
+    {
+      id: 'calculators',
+      eyebrow: 'Calculations',
+      title: 'Calculators',
+      description: 'Cable sizing, voltage drop, and more.',
+      to: '/apprentice/calculators',
+      meta: 'Open tools',
+    },
+    {
+      id: 'on-job',
+      eyebrow: 'Daily work',
+      title: 'On-the-job tools',
+      description: 'Quick references for site tasks.',
+      to: '/apprentice/on-job-tools',
+      meta: 'Open',
+    },
+    {
+      id: 'mental-health',
+      eyebrow: 'Wellbeing',
+      title: 'Mental health',
+      description: 'Wellbeing resources and support.',
+      to: '/apprentice/mental-health',
+      meta: 'Open',
+    },
+    {
+      id: 'progression',
+      eyebrow: 'Career',
+      title: 'Progression',
+      description: 'Plan your career pathway.',
+      to: '/apprentice/professional-development',
+      meta: 'Open',
+    },
+    {
+      id: 'toolbox',
+      eyebrow: 'Reference',
+      title: 'Guidance area',
+      description: 'Tips, guides and best practices.',
+      to: '/apprentice/toolbox',
+      meta: 'Browse',
+    },
+    {
+      id: 'settings',
+      eyebrow: 'Account',
+      title: 'Settings',
+      description: 'Subscription, notifications and accessibility.',
+      to: '/settings',
+      meta: 'Manage',
+    },
+  ];
 
   return (
-    <PageFrame className="px-4 sm:px-6 lg:px-8">
-      {/* Back navigation */}
-      <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/dashboard')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-elec-dark min-h-screen pb-24">
+      <PageMasthead />
+
+      <div className="px-4 py-4 space-y-12 sm:space-y-16 max-w-7xl mx-auto">
+        {/* Hero */}
+        <motion.section
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="relative pt-2 sm:pt-4"
         >
-          <ArrowLeft className="mr-2 h-5 w-5" />
-          Back to Dashboard
-        </Button>
-      </motion.div>
+          <motion.div variants={itemVariants}>
+            <Eyebrow>{dateEyebrow()}</Eyebrow>
+          </motion.div>
 
-      {/* HERO — editorial */}
-      <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow="Apprentice · Welcome back"
-          title={`${greeting}, ${user.firstName}`}
-          description={description}
-          tone="yellow"
-        />
-      </motion.div>
+          <motion.h1
+            variants={itemVariants}
+            className="mt-3 font-semibold tracking-tight leading-[1.05] text-[34px] sm:text-[44px] lg:text-[56px]"
+          >
+            <span className="text-elec-yellow">{headline.yellow}</span>{' '}
+            <span className="text-white">{headline.white}</span>
+          </motion.h1>
 
-      {/* AT A GLANCE — stat strip */}
-      <motion.div variants={itemVariants}>
-        <ApprenticeStatStrip />
-      </motion.div>
+          <motion.p
+            variants={itemVariants}
+            className="mt-3 sm:mt-4 text-[14px] sm:text-[15px] leading-relaxed text-white/90 max-w-2xl"
+          >
+            {verdict}
+          </motion.p>
 
-      {/* PRIORITY — College plan */}
-      <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
-        <SectionHeader eyebrow="Priority" title="From your college" />
-        <CollegePlanCard />
-      </motion.section>
+          {cta && (
+            <motion.div variants={itemVariants} className="mt-5 sm:mt-6">
+              <button
+                type="button"
+                onClick={cta.onClick}
+                className={cn(
+                  'group inline-flex items-center gap-2 h-10 px-4 rounded-full',
+                  'border border-elec-yellow/25 bg-elec-yellow/10 hover:bg-elec-yellow/20',
+                  'text-[13px] font-medium text-elec-yellow touch-manipulation transition-colors'
+                )}
+              >
+                <span>{cta.label}</span>
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
+              </button>
+            </motion.div>
+          )}
+        </motion.section>
 
-      {/* CORE LEARNING */}
-      <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
-        <SectionHeader eyebrow="Core Learning" title="Study & exam prep" />
-        <HubGrid columns={2}>
-          <HubCard
-            number="01"
-            eyebrow="Apprenticeship"
-            title="Study Centre"
-            description="Level 2 & 3 courses, practice questions and exam prep — at your own pace."
-            meta="Active course"
-            tone="emerald"
-            onClick={() => navigate('/study-centre/apprentice')}
-          />
-          <HubCard
-            number="02"
-            eyebrow="BS 7671"
-            title="Inspection & Testing"
-            description="Comprehensive guides, quizzes and BS 7671 regulations."
-            meta="6 modules"
-            tone="amber"
-            onClick={() => navigate('/apprentice/inspection-testing-hub')}
-          />
-        </HubGrid>
-      </motion.section>
+        <ApprenticeHeadlineStats stats={statCells} />
 
-      {/* EXAM PREP */}
-      <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
-        <SectionHeader eyebrow="Exam Prep" title="Mock the real thing" />
-        <HubGrid columns={2}>
-          <HubCard
-            number="03"
-            eyebrow="EPA"
-            title="EPA Simulator"
-            description="Mock professional discussions and knowledge tests with AI scoring."
-            meta="AI-scored"
-            tone="purple"
-            onClick={() => navigate('/apprentice/epa-simulator')}
-            badge={<Pill tone="purple">AI</Pill>}
-          />
-          <HubCard
-            number="04"
-            eyebrow="AM2"
-            title="AM2 Simulator"
-            description="Safe isolation, fault finding and testing simulations."
-            meta="Practice tasks"
-            tone="cyan"
-            onClick={() => navigate('/apprentice/am2-simulator')}
-          />
-        </HubGrid>
-      </motion.section>
+        {/* 02 · FROM YOUR COLLEGE — single hairline cell */}
+        <motion.section
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="space-y-4"
+        >
+          <motion.div variants={itemVariants}>
+            <Eyebrow>02 · FROM YOUR COLLEGE</Eyebrow>
+          </motion.div>
 
-      {/* PORTFOLIO */}
-      <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
-        <SectionHeader eyebrow="Evidence" title="Your portfolio" />
-        <HubGrid columns={1}>
-          <HubCard
-            number="05"
-            eyebrow="Apprenticeship portfolio"
-            title="Track your evidence & OJT"
-            description="Build your apprenticeship portfolio — assessment criteria, OJT hours, evidence and reflections."
-            meta="Open portfolio"
-            tone="indigo"
-            onClick={() => navigate('/apprentice/hub')}
-          />
-        </HubGrid>
-      </motion.section>
+          <motion.div
+            variants={itemVariants}
+            className="relative bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-2xl overflow-hidden"
+          >
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none" />
+            <button
+              type="button"
+              onClick={() => navigate('/apprentice/college-plan')}
+              className="group w-full text-left p-5 sm:p-6 lg:p-7 hover:bg-elec-yellow/[0.04] transition-colors touch-manipulation flex flex-col gap-3"
+            >
+              <div className="flex items-baseline justify-between gap-3">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
+                    My college plan
+                  </span>
+                </div>
+                {hasOverdue ? (
+                  <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-red-300 border border-red-400/30 bg-red-500/10 px-1.5 py-0.5 rounded">
+                    {overdueQuizzes.length} overdue
+                  </span>
+                ) : newCount > 0 ? (
+                  <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-elec-yellow border border-elec-yellow/30 bg-elec-yellow/10 px-1.5 py-0.5 rounded">
+                    {newCount} new
+                  </span>
+                ) : null}
+              </div>
+              <h3 className="text-[20px] sm:text-[22px] lg:text-[24px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors">
+                {hasCollegeLink
+                  ? 'Your goals & quizzes from college'
+                  : 'Connect with your college'}
+              </h3>
+              <p className="text-[13px] text-white/60">{collegeDescription}</p>
+              <div className="mt-2 flex items-center justify-between pt-3 border-t border-white/[0.05]">
+                <span className="text-[11px] text-white/55 uppercase tracking-[0.14em]">
+                  {collegeMeta}
+                </span>
+                <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-elec-yellow">
+                  Open
+                  <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+                </span>
+              </div>
+            </button>
+          </motion.div>
+        </motion.section>
 
-      {/* ELEC-ID BANNER */}
-      <motion.section variants={itemVariants}>
-        <ElecIdBanner variant="apprentice" />
-      </motion.section>
+        <EditorialToolGrid number="03" label="CORE LEARNING" cards={coreLearning} columns="two" />
 
-      {/* LEARNING VIDEOS */}
-      <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
-        <SectionHeader eyebrow="On Demand" title="Learning videos" />
-        <LearningVideosSection />
-      </motion.section>
+        <EditorialToolGrid number="04" label="EXAM PREP" cards={examPrep} columns="two" />
 
-      {/* TOOLS & REFERENCES */}
-      <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
-        <SectionHeader eyebrow="Tools & References" title="Quick access" />
-        <HubGrid columns={4}>
-          {QUICK_TOOLS.map((t) => (
-            <HubCard
-              key={t.link}
-              size="sm"
-              number={t.number}
-              eyebrow={t.eyebrow}
-              title={t.title}
-              description={t.description}
-              tone={t.tone}
-              onClick={() => navigate(t.link)}
-            />
-          ))}
-        </HubGrid>
-      </motion.section>
-    </PageFrame>
+        <EditorialToolGrid number="05" label="PORTFOLIO & OTJ" cards={portfolio} columns="two" />
+
+        {/* Elec-ID banner — kept, since it's a high-value account CTA */}
+        <motion.section variants={itemVariants}>
+          <ElecIdBanner variant="apprentice" />
+        </motion.section>
+
+        {/* 06 · LEARNING VIDEOS — existing widget, untouched */}
+        <motion.section
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="space-y-4"
+        >
+          <motion.div variants={itemVariants}>
+            <Eyebrow>06 · LEARNING VIDEOS</Eyebrow>
+          </motion.div>
+          <motion.div variants={itemVariants}>
+            <LearningVideosSection />
+          </motion.div>
+        </motion.section>
+
+        <EditorialToolGrid number="07" label="TOOLS" cards={tools} columns="four" />
+      </div>
+
+      {/* Stat detail sheets */}
+      <StudyStreakDetailSheet open={streakOpen} onOpenChange={setStreakOpen} />
+      <ProgressDetailSheet open={progressOpen} onOpenChange={setProgressOpen} />
+      <VideosWatchedDetailSheet open={videosOpen} onOpenChange={setVideosOpen} />
+      <DiaryEntriesDetailSheet
+        open={diaryOpen}
+        onOpenChange={setDiaryOpen}
+        entries={entries}
+      />
+    </div>
   );
 }

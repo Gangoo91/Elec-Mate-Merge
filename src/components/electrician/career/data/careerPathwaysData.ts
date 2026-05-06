@@ -420,7 +420,7 @@ const careerOverviewItems: ContentItem[] = [
     id: 'industry-context',
     title: 'Industry Context & Trends',
     description: 'Understanding the UK electrical industry landscape',
-    badge: '2024-2025',
+    badge: '2026',
     icon: Globe,
     color: 'yellow',
     stats: [
@@ -1014,11 +1014,13 @@ const professionalDevelopmentItems: ContentItem[] = [
           title: 'Essential Qualifications',
           icon: CheckCircle,
           content: [
-            '18th Edition Amendment updates (A3:2024)',
+            '18th Edition + A4:2026 amendment update (mandatory by 2026 review)',
             'Inspection & Testing (2391-52)',
-            'EV Charging (2919) certification',
-            'Solar PV (2399) installation',
-            'PAT Testing certification',
+            'EV Charging (2919) — OZEV-aligned for grant work',
+            'Solar PV (2399) + battery storage upskill',
+            'AFDD installation + commissioning (new under A4:2026)',
+            'TN-C-S (PNB) restrictions for EV/PV installs (A4:2026)',
+            'PAT Testing certification (2377-22)',
           ],
         },
         {
@@ -1574,8 +1576,8 @@ const industryInsightsItems: ContentItem[] = [
   {
     id: 'market-trends',
     title: 'Market Trends & Growth Areas',
-    description: 'Where the industry is heading 2024-2030',
-    badge: '2024-2030',
+    description: 'Where the industry is heading 2026-2030',
+    badge: '2026-2030',
     icon: TrendingUp,
     color: 'purple',
     stats: [
@@ -1805,19 +1807,20 @@ const careerTimelineItems: ContentItem[] = [
     color: 'orange',
     stats: [
       { label: 'Duration', value: '4 years' },
-      { label: 'Salary', value: '£15-27k' },
+      { label: 'Salary', value: '£16-30k' },
     ],
     content: {
       overview:
-        'The apprenticeship stage is where you build foundational skills through structured learning combining college study with practical on-site experience.',
+        'The apprenticeship stage is where you build foundational skills through structured learning combining college study with practical on-site experience. JIB Year 1 to Year 4 rates apply nationally.',
       sections: [
         {
           title: 'Key Qualifications',
           icon: GraduationCap,
           content: [
-            'Level 2/3 NVQ Diploma in Electrical Installation',
-            '18th Edition BS 7671 (2382-22)',
+            'Level 2/3 NVQ Diploma in Electrical Installation (5357 or 5393)',
+            '18th Edition BS 7671 (2382-22) + A4:2026 amendment update',
             'ECS Health & Safety Assessment',
+            'AM2/AM2E end-point assessment',
             'Functional Skills (if required)',
           ],
         },
@@ -1833,13 +1836,13 @@ const careerTimelineItems: ContentItem[] = [
           ],
         },
         {
-          title: 'Salary by Region',
+          title: 'Salary by Region (2026, JIB-aligned)',
           icon: DollarSign,
           content: [
-            'London: £19,000 - £27,000',
-            'South East: £17,000 - £25,000',
-            'Midlands: £16,000 - £23,000',
-            'North: £15,000 - £22,000',
+            'London: £20,000 - £30,000',
+            'South East: £18,000 - £27,000',
+            'Midlands: £17,000 - £25,000',
+            'North: £16,000 - £24,000',
           ],
         },
       ],
@@ -1859,7 +1862,7 @@ const careerTimelineItems: ContentItem[] = [
     color: 'orange',
     stats: [
       { label: 'Duration', value: '1-2 years' },
-      { label: 'Salary', value: '£22-35k' },
+      { label: 'Salary', value: '£24-38k' },
     ],
     content: {
       overview:
@@ -1870,8 +1873,8 @@ const careerTimelineItems: ContentItem[] = [
           icon: GraduationCap,
           content: [
             'Level 3 NVQ Diploma completed or near completion',
-            '18th Edition current',
-            'Working toward AM2/AM2S assessment',
+            '18th Edition + A4:2026 amendment update',
+            'Working toward AM2/AM2E assessment',
             'ECS Card at Improver level',
           ],
         },
@@ -1887,13 +1890,13 @@ const careerTimelineItems: ContentItem[] = [
           ],
         },
         {
-          title: 'Salary by Region',
+          title: 'Salary by Region (2026, JIB-aligned)',
           icon: DollarSign,
           content: [
-            'London: £27,000 - £35,000',
-            'South East: £25,000 - £33,000',
-            'Midlands: £23,000 - £30,000',
-            'North: £22,000 - £28,000',
+            'London: £30,000 - £38,000',
+            'South East: £27,000 - £36,000',
+            'Midlands: £25,000 - £32,000',
+            'North: £24,000 - £30,000',
           ],
         },
       ],
@@ -1913,20 +1916,20 @@ const careerTimelineItems: ContentItem[] = [
     color: 'orange',
     stats: [
       { label: 'Duration', value: 'Career level' },
-      { label: 'Salary', value: '£27-46k' },
+      { label: 'Salary', value: '£32-52k' },
     ],
     content: {
       overview:
-        'The Gold Card represents full qualification as an electrician. You can work independently and are responsible for the quality and safety of your work.',
+        'The Gold Card represents full qualification as an electrician. You can work independently and are responsible for the quality and safety of your work. Day rates increasingly tied to specialist add-ons (EV, PV, AFDD competence).',
       sections: [
         {
           title: 'Key Qualifications',
           icon: GraduationCap,
           content: [
             'Level 3 NVQ Diploma',
-            'AM2/AM2S Assessment passed',
-            '18th Edition current',
-            'ECS Gold Card',
+            'AM2/AM2E Assessment passed',
+            '18th Edition + A4:2026 amendment update',
+            'ECS Gold Card (renews every 3 years)',
           ],
         },
         {
@@ -1941,20 +1944,20 @@ const careerTimelineItems: ContentItem[] = [
           ],
         },
         {
-          title: 'Salary by Region',
+          title: 'Salary by Region (2026)',
           icon: DollarSign,
           content: [
-            'London: £35,000 - £46,000',
-            'South East: £33,000 - £44,000',
-            'Midlands: £29,000 - £40,000',
-            'North: £27,000 - £38,000',
+            'London: £40,000 - £52,000',
+            'South East: £38,000 - £50,000',
+            'Midlands: £33,000 - £45,000',
+            'North: £32,000 - £42,000',
           ],
         },
       ],
       tips: [
-        'Gain 2391 (Inspection & Testing) for advancement',
-        'Build specialist expertise',
-        'Consider NICEIC/NAPIT registration',
+        'Gain 2391-52 (Inspection & Testing) for Approved status',
+        'Add EV (2919) or PV (2399) for the OZEV/MCS premium',
+        'Consider NICEIC/NAPIT registration to self-certify Part-P work',
       ],
     },
   },
@@ -1967,11 +1970,11 @@ const careerTimelineItems: ContentItem[] = [
     color: 'orange',
     stats: [
       { label: 'Duration', value: 'Career level' },
-      { label: 'Salary', value: '£28-49k' },
+      { label: 'Salary', value: '£35-58k' },
     ],
     content: {
       overview:
-        'Approved Electrician status recognizes enhanced competence in testing, inspection, and installation oversight.',
+        'Approved Electrician status recognises enhanced competence in testing, inspection, and installation oversight. Required for most NICEIC/NAPIT registered contractor roles.',
       sections: [
         {
           title: 'Key Qualifications',
@@ -1995,20 +1998,20 @@ const careerTimelineItems: ContentItem[] = [
           ],
         },
         {
-          title: 'Salary by Region',
+          title: 'Salary by Region (2026)',
           icon: DollarSign,
           content: [
-            'London: £38,000 - £49,000',
-            'South East: £35,000 - £46,000',
-            'Midlands: £30,000 - £41,000',
-            'North: £28,000 - £39,000',
+            'London: £45,000 - £58,000',
+            'South East: £42,000 - £55,000',
+            'Midlands: £37,000 - £48,000',
+            'North: £35,000 - £46,000',
           ],
         },
       ],
       tips: [
-        'Consider Qualified Supervisor pathway',
-        'Develop project management skills',
-        'Explore business ownership options',
+        'Consider Qualified Supervisor pathway for NICEIC/NAPIT registration',
+        'Develop project management skills (SSSTS / SMSTS)',
+        'Explore business ownership — sole trader rates +£280-£380/day',
       ],
     },
   },
@@ -2021,11 +2024,11 @@ const careerTimelineItems: ContentItem[] = [
     color: 'orange',
     stats: [
       { label: 'Duration', value: 'Senior level' },
-      { label: 'Salary', value: '£38-72k' },
+      { label: 'Salary', value: '£45-85k' },
     ],
     content: {
       overview:
-        'Supervisors lead teams, manage projects, and ensure quality and safety across multiple work areas.',
+        'Supervisors lead teams, manage projects, and ensure quality and safety across multiple work areas. Data centre + commissioning roles command the highest premium.',
       sections: [
         {
           title: 'Key Qualifications',
@@ -2033,7 +2036,7 @@ const careerTimelineItems: ContentItem[] = [
           content: [
             'Approved Electrician status',
             'SSSTS/SMSTS certification',
-            'IOSH Managing Safely',
+            'IOSH Managing Safely / NEBOSH General',
             'HNC/HND preferred for senior roles',
           ],
         },
@@ -2049,20 +2052,20 @@ const careerTimelineItems: ContentItem[] = [
           ],
         },
         {
-          title: 'Salary by Region',
+          title: 'Salary by Region (2026)',
           icon: DollarSign,
           content: [
-            'London: £49,000 - £72,000',
-            'South East: £46,000 - £66,000',
-            'Midlands: £41,000 - £60,000',
-            'North: £38,000 - £55,000',
+            'London: £58,000 - £85,000',
+            'South East: £54,000 - £78,000',
+            'Midlands: £48,000 - £70,000',
+            'North: £45,000 - £65,000',
           ],
         },
       ],
       tips: [
-        'Develop business management skills',
-        'Build industry network',
-        'Consider contracts management pathway',
+        'Develop business management skills (PRINCE2 / APM)',
+        'Build industry network (ECA, IET membership)',
+        'Consider contracts management or M&E lead roles',
       ],
     },
   },
@@ -2081,32 +2084,33 @@ const jibGradesItems: ContentItem[] = [
     icon: BookOpen,
     color: 'amber',
     stats: [
-      { label: 'Hourly', value: '£8.00+' },
-      { label: 'Day Rate', value: '£60-65' },
+      { label: 'Hourly', value: '£7.55+' },
+      { label: 'Day Rate', value: '£60-110' },
     ],
     content: {
       overview:
-        'The apprentice grade covers those enrolled on approved Level 3 apprenticeship programmes, with protected minimum wages and structured progression.',
+        'The apprentice grade covers those enrolled on approved Level 3 apprenticeship programmes, with protected minimum wages and structured progression. Year 4 rates approach Improver level.',
       sections: [
         {
           title: 'Requirements',
           icon: CheckCircle,
           content: [
-            'Enrolled on approved Level 3 apprenticeship programme',
-            'Working towards 2357/5357 NVQ Diploma',
-            'Health & Safety test passed',
-            'Monthly college attendance',
+            'Enrolled on approved Level 3 apprenticeship programme (5357 / 5393)',
+            'Working towards NVQ Diploma + AM2/AM2E end-point',
+            'ECS Health & Safety test passed',
+            'College attendance per provider schedule',
             'Employer mentorship',
           ],
         },
         {
-          title: 'Pay Rates (2024)',
+          title: 'Pay Rates (2026, JIB-aligned)',
           icon: DollarSign,
           content: [
-            'Hourly: £8.00 minimum (apprentice national minimum)',
-            'Day rate: £60-65/day typical',
-            'Increases with each year of apprenticeship',
-            'Regional variations apply',
+            'Year 1: £7.55/hr (apprentice NMW from 1 April 2026)',
+            'Year 2: ~£11.50/hr (~£21k FTE)',
+            'Year 3: ~£13.40/hr (~£24k FTE)',
+            'Year 4: ~£16.20/hr (~£29k FTE)',
+            'Day rate: £60-110/day depending on year',
           ],
         },
         {
@@ -2129,8 +2133,8 @@ const jibGradesItems: ContentItem[] = [
     icon: TrendingUp,
     color: 'amber',
     stats: [
-      { label: 'Hourly', value: '£16-22' },
-      { label: 'Day Rate', value: '£160-220' },
+      { label: 'Hourly', value: '£18-25' },
+      { label: 'Day Rate', value: '£180-250' },
     ],
     content: {
       overview:
@@ -2141,18 +2145,18 @@ const jibGradesItems: ContentItem[] = [
           icon: CheckCircle,
           content: [
             'Level 3 NVQ Diploma completed',
-            '18th Edition BS 7671 certificate current',
-            'Working towards AM2/AM2S assessment',
+            '18th Edition BS 7671 + A4:2026 update current',
+            'Working towards AM2/AM2E assessment',
             'Minimum 6 months post-qualification experience',
             'ECS Health & Safety test passed',
           ],
         },
         {
-          title: 'Pay Rates (2024)',
+          title: 'Pay Rates (2026)',
           icon: DollarSign,
           content: [
-            'Hourly: £16-22/hr typical',
-            'Day rate: £160-220/day',
+            'Hourly: £18-25/hr typical',
+            'Day rate: £180-250/day',
             'London premium: +10-15%',
             'Contractor rates: +15-25%',
           ],
@@ -2177,8 +2181,8 @@ const jibGradesItems: ContentItem[] = [
     icon: Award,
     color: 'amber',
     stats: [
-      { label: 'Hourly', value: '£24-30' },
-      { label: 'Day Rate', value: '£200-320' },
+      { label: 'Hourly', value: '£26-35' },
+      { label: 'Day Rate', value: '£240-380' },
     ],
     content: {
       overview:
@@ -2189,20 +2193,21 @@ const jibGradesItems: ContentItem[] = [
           icon: CheckCircle,
           content: [
             'Level 3 NVQ Diploma completed',
-            'AM2/AM2S assessment passed',
-            '18th Edition BS 7671 current',
+            'AM2/AM2E assessment passed',
+            '18th Edition BS 7671 + A4:2026 update current',
             'ECS Health & Safety test valid',
             'Minimum 2 years post-qualification experience',
           ],
         },
         {
-          title: 'Pay Rates (2024)',
+          title: 'Pay Rates (2026)',
           icon: DollarSign,
           content: [
-            'Hourly: £24-30/hr base',
-            'Day rate: £200-320/day',
+            'Hourly: £26-35/hr base',
+            'Day rate: £240-380/day',
             'London/SE premium: +15-25%',
             'Contractor rates: +20-30%',
+            'Data centre / EV / solar specialism: +£40-100/day',
           ],
         },
         {
@@ -2227,12 +2232,12 @@ const jibGradesItems: ContentItem[] = [
     icon: CheckCircle,
     color: 'amber',
     stats: [
-      { label: 'Hourly', value: '£25-32' },
-      { label: 'Day Rate', value: '£220-330' },
+      { label: 'Hourly', value: '£28-38' },
+      { label: 'Day Rate', value: '£260-420' },
     ],
     content: {
       overview:
-        'Approved Electrician status recognizes enhanced competence in inspection, testing, and quality assurance.',
+        'Approved Electrician status recognises enhanced competence in inspection, testing, and quality assurance. Required for most NICEIC/NAPIT Approved Contractor self-certification roles.',
       sections: [
         {
           title: 'Requirements',
@@ -2242,16 +2247,16 @@ const jibGradesItems: ContentItem[] = [
             '2391-52 Inspection & Testing',
             'Minimum 3 years post-Gold Card experience',
             'Demonstrated complex installation competence',
-            'JIB membership and CPD compliance',
+            'JIB membership and CPD compliance (latest A4:2026 update)',
           ],
         },
         {
-          title: 'Pay Rates (2024)',
+          title: 'Pay Rates (2026)',
           icon: DollarSign,
           content: [
-            'Hourly: £25-32/hr enhanced',
-            'Day rate: £220-330/day',
-            'Testing/inspection work commands premium',
+            'Hourly: £28-38/hr enhanced',
+            'Day rate: £260-420/day',
+            'EICR + commissioning work commands premium',
             'Contractor rates: +20-35%',
           ],
         },
@@ -2276,12 +2281,12 @@ const jibGradesItems: ContentItem[] = [
     icon: Settings,
     color: 'amber',
     stats: [
-      { label: 'Hourly', value: '£28-36' },
-      { label: 'Day Rate', value: '£240-360' },
+      { label: 'Hourly', value: '£32-44' },
+      { label: 'Day Rate', value: '£300-450' },
     ],
     content: {
       overview:
-        'Technician Electricians hold advanced technical responsibilities including design, commissioning, and technical leadership.',
+        'Technician Electricians hold advanced technical responsibilities including design, commissioning, and technical leadership. Data centre commissioning roles top the band.',
       sections: [
         {
           title: 'Requirements',
@@ -2289,18 +2294,18 @@ const jibGradesItems: ContentItem[] = [
           content: [
             'Approved Electrician status',
             'HNC/HND Electrical Engineering preferred',
-            '2391-52 plus design qualifications',
+            '2391-52 plus design qualifications (2396 or HNC)',
             'Proven design and inspection competence',
             'Minimum 5 years advanced experience',
           ],
         },
         {
-          title: 'Pay Rates (2024)',
+          title: 'Pay Rates (2026)',
           icon: DollarSign,
           content: [
-            'Hourly: £28-36/hr premium',
-            'Day rate: £240-360/day',
-            'Design work commands premium',
+            'Hourly: £32-44/hr premium',
+            'Day rate: £300-450/day',
+            'Design + commissioning work commands top of band',
             'Contractor rates: +25-40%',
           ],
         },
@@ -2326,8 +2331,8 @@ const jibGradesItems: ContentItem[] = [
     icon: Users,
     color: 'amber',
     stats: [
-      { label: 'Hourly', value: '£32-45' },
-      { label: 'Day Rate', value: '£280-400' },
+      { label: 'Hourly', value: '£38-52' },
+      { label: 'Day Rate', value: '£340-480' },
     ],
     content: {
       overview:
@@ -2339,18 +2344,18 @@ const jibGradesItems: ContentItem[] = [
           content: [
             'Approved or Technician Electrician status',
             'SSSTS/SMSTS certification',
-            'IOSH Managing Safely or equivalent',
+            'IOSH Managing Safely or NEBOSH General',
             'Proven team leadership experience',
             'First Aid at Work certification',
           ],
         },
         {
-          title: 'Pay Rates (2024)',
+          title: 'Pay Rates (2026)',
           icon: DollarSign,
           content: [
-            'Hourly: £32-45/hr management',
-            'Day rate: £280-400/day',
-            'Salary: £49,000-72,000/year',
+            'Hourly: £38-52/hr management',
+            'Day rate: £340-480/day',
+            'Salary: £58,000-85,000/year',
             'Bonus potential on projects',
           ],
         },
@@ -2430,7 +2435,7 @@ const regionalMarketsItems: ContentItem[] = [
     icon: DollarSign,
     color: 'red',
     stats: [
-      { label: 'Updated', value: '2024' },
+      { label: 'Updated', value: '2026' },
       { label: 'Bands', value: '6' },
     ],
     content: {
@@ -2438,15 +2443,15 @@ const regionalMarketsItems: ContentItem[] = [
         'JIB sets national wage rates with regional variations and allowances for different working conditions.',
       sections: [
         {
-          title: 'Base Rates (2024)',
+          title: 'Base Rates (2026, JIB-aligned)',
           icon: DollarSign,
           content: [
-            'Apprentice: £8.00+ minimum',
-            'Improver: £16-22/hr',
-            'Electrician: £24-30/hr',
-            'Approved: £25-32/hr',
-            'Technician: £28-36/hr',
-            'Supervisor: £32-45/hr',
+            'Apprentice Y1: £7.55/hr (NMW from April 2026)',
+            'Improver: £18-25/hr',
+            'Electrician: £26-35/hr',
+            'Approved: £28-38/hr',
+            'Technician: £32-44/hr',
+            'Supervisor: £38-52/hr',
           ],
         },
         {

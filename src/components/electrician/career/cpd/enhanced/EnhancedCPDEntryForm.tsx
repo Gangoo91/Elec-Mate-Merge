@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -14,11 +13,10 @@ import { Label } from '@/components/ui/label';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import FileUpload from '@/components/shared/FileUpload';
-import { CalendarIcon, Plus, Save, Upload, AlertCircle, X, FileText, Download } from 'lucide-react';
+import { CalendarIcon, Plus, Save, AlertCircle, X, FileText } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { useUnifiedCPD } from '@/hooks/cpd/useUnifiedCPD';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useHaptic } from '@/hooks/useHaptic';
@@ -231,42 +229,44 @@ const EnhancedCPDEntryForm = ({ onSuccess }: EnhancedCPDEntryFormProps = {}) => 
 
   if (loading) {
     return (
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardContent className="p-8 text-center">
-          <div className="text-white">Loading CPD system...</div>
-        </CardContent>
-      </Card>
+      <div className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-8 text-center">
+        <div className="text-[13px] text-white/85">Loading CPD system…</div>
+      </div>
     );
   }
 
   return (
-    <div className="space-y-6">
-      {/* Professional Body Status */}
+    <div className="space-y-5">
+      {/* Body status */}
       {(!activeMembership || memberships.length === 0) && (
-        <Alert className="border-amber-500/50 bg-amber-500/10">
-          <AlertCircle className="h-4 w-4" />
-          <AlertDescription className="text-amber-200">
-            {memberships.length === 0
-              ? 'Please set up your professional body membership in settings to enable CPD tracking.'
-              : 'No active professional body selected. CPD entries will be saved but may not count towards compliance.'}
-          </AlertDescription>
-        </Alert>
+        <div className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-amber-500/30 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-4">
+          <div className="flex items-start gap-3">
+            <AlertCircle className="h-4 w-4 text-amber-300 shrink-0 self-center" aria-hidden />
+            <p className="text-[12.5px] leading-relaxed text-white">
+              {memberships.length === 0
+                ? 'Set up your professional body membership in settings to enable compliance tracking.'
+                : 'No active body selected — entries will save but may not count towards compliance.'}
+            </p>
+          </div>
+        </div>
       )}
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Plus className="h-5 w-5 text-elec-yellow" />
-            Log CPD Activity
-          </CardTitle>
-          {activeMembership && (
-            <p className="text-sm text-white">
-              Recording for {activeMembership.professional_body?.name}
-            </p>
-          )}
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 sm:p-6">
+        <div className="flex items-baseline gap-2 mb-4">
+          <Plus className="h-3.5 w-3.5 text-elec-yellow self-center" aria-hidden />
+          <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+            LOG ACTIVITY
+          </span>
+        </div>
+        {activeMembership && (
+          <p className="text-[11.5px] text-white/85 mb-5 -mt-3">
+            Recording for{' '}
+            <span className="text-white font-semibold">
+              {activeMembership.professional_body?.name}
+            </span>
+          </p>
+        )}
+        <form onSubmit={handleSubmit} className="space-y-5">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Activity Title */}
               <div className="space-y-2">
@@ -275,8 +275,8 @@ const EnhancedCPDEntryForm = ({ onSuccess }: EnhancedCPDEntryFormProps = {}) => 
                   id="title"
                   value={formData.title}
                   onChange={(e) => handleInputChange('title', e.target.value)}
-                  placeholder="e.g., BS 7671 18th Edition Update Course"
-                  className="bg-elec-dark border-elec-yellow/20 text-foreground"
+                  placeholder="e.g. BS 7671 A4:2026 Amendment Update"
+                  className="h-11 bg-white/[0.04] border-white/[0.10] text-white placeholder:text-white/65 focus-visible:border-elec-yellow/50"
                   required
                 />
               </div>
@@ -314,7 +314,7 @@ const EnhancedCPDEntryForm = ({ onSuccess }: EnhancedCPDEntryFormProps = {}) => 
                   value={formData.hours}
                   onChange={(e) => handleInputChange('hours', e.target.value)}
                   placeholder="e.g., 3.5"
-                  className="bg-elec-dark border-elec-yellow/20 text-foreground"
+                  className="h-11 bg-white/[0.04] border-white/[0.10] text-white placeholder:text-white/65 focus-visible:border-elec-yellow/50"
                   required
                 />
               </div>
@@ -327,12 +327,16 @@ const EnhancedCPDEntryForm = ({ onSuccess }: EnhancedCPDEntryFormProps = {}) => 
                   onValueChange={(value) => handleInputChange('category', value)}
                   required
                 >
-                  <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-foreground">
+                  <SelectTrigger className="h-11 bg-white/[0.04] border-white/[0.10] text-white focus-visible:border-elec-yellow/50">
                     <SelectValue placeholder="Select category" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-[hsl(0_0%_11%)] border-white/[0.10]">
                     {categories.map((category) => (
-                      <SelectItem key={category.id} value={category.id}>
+                      <SelectItem
+                        key={category.id}
+                        value={category.id}
+                        className="text-white hover:bg-white/10"
+                      >
                         {category.name}
                       </SelectItem>
                     ))}
@@ -351,9 +355,13 @@ const EnhancedCPDEntryForm = ({ onSuccess }: EnhancedCPDEntryFormProps = {}) => 
                   <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-foreground">
                     <SelectValue placeholder="Select type" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-[hsl(0_0%_11%)] border-white/[0.10]">
                     {activityTypes.map((type) => (
-                      <SelectItem key={type.id} value={type.id}>
+                      <SelectItem
+                        key={type.id}
+                        value={type.id}
+                        className="text-white hover:bg-white/10"
+                      >
                         {type.name}
                       </SelectItem>
                     ))}
@@ -402,48 +410,45 @@ const EnhancedCPDEntryForm = ({ onSuccess }: EnhancedCPDEntryFormProps = {}) => 
                 multiple
               />
 
-              {/* Show uploaded files */}
               {evidenceFiles.length > 0 && (
                 <div className="space-y-2 mt-4">
-                  <div className="text-sm font-medium text-foreground">Evidence Files:</div>
-                  <div className="space-y-2">
+                  <span className="text-[10.5px] uppercase tracking-[0.14em] font-semibold text-white/65">
+                    Attached
+                  </span>
+                  <ul className="divide-y divide-white/[0.06] rounded-xl border border-white/[0.10] bg-white/[0.02]">
                     {evidenceFiles.map((evidenceFile) => (
-                      <div
+                      <li
                         key={evidenceFile.id}
-                        className="flex items-center justify-between p-3 bg-elec-dark/50 rounded border border-elec-yellow/10"
+                        className="flex items-center justify-between gap-3 p-3"
                       >
-                        <div className="flex items-center space-x-3">
-                          <FileText className="h-4 w-4 text-elec-yellow" />
-                          <div>
-                            <div className="text-sm font-medium text-foreground">
+                        <div className="flex items-center gap-3 min-w-0">
+                          <FileText className="h-4 w-4 text-elec-yellow shrink-0" aria-hidden />
+                          <div className="min-w-0">
+                            <div className="text-[13px] font-semibold text-white truncate">
                               {evidenceFile.file.name}
                             </div>
-                            <div className="text-xs text-white">
-                              {(evidenceFile.file.size / 1024 / 1024).toFixed(2)} MB •{' '}
-                              {evidenceFile.type}
+                            <div className="text-[11px] tabular-nums text-white/65">
+                              {(evidenceFile.file.size / 1024 / 1024).toFixed(2)}MB · {evidenceFile.type}
+                              {evidenceFile.uploading && ' · uploading…'}
                             </div>
                           </div>
-                          {evidenceFile.uploading && (
-                            <div className="text-xs text-elec-yellow">Uploading...</div>
-                          )}
                         </div>
-                        <Button
+                        <button
                           type="button"
-                          variant="ghost"
-                          size="sm"
                           onClick={() => handleRemoveFile(evidenceFile.id)}
-                          className="text-red-400 hover:text-red-300"
+                          aria-label="Remove"
+                          className="text-white/65 hover:text-red-300 inline-flex items-center justify-center h-7 w-7 rounded-md border border-white/15 hover:border-red-500/40 transition-colors touch-manipulation shrink-0"
                         >
-                          <X className="h-4 w-4" />
-                        </Button>
-                      </div>
+                          <X className="h-3.5 w-3.5" />
+                        </button>
+                      </li>
                     ))}
-                  </div>
+                  </ul>
                 </div>
               )}
             </div>
 
-            <Button
+            <button
               type="submit"
               disabled={
                 isSubmitting ||
@@ -453,15 +458,14 @@ const EnhancedCPDEntryForm = ({ onSuccess }: EnhancedCPDEntryFormProps = {}) => 
                 !formData.category ||
                 !formData.type
               }
-              className="w-full bg-elec-yellow text-elec-dark hover:bg-amber-400 disabled:opacity-50"
+              className="w-full inline-flex items-center justify-center gap-2 text-[12px] font-semibold uppercase tracking-[0.14em] text-black bg-elec-yellow hover:bg-elec-yellow/90 active:bg-elec-yellow/85 rounded-full px-4 py-3 min-h-[44px] touch-manipulation transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <Save className="mr-2 h-4 w-4" />
-              {isSubmitting ? 'Saving...' : 'Save CPD Entry'}
-            </Button>
+              <Save className="h-4 w-4" />
+              {isSubmitting ? 'Saving…' : 'Save CPD entry'}
+            </button>
           </form>
-        </CardContent>
-      </Card>
-    </div>
+        </div>
+      </div>
   );
 };
 

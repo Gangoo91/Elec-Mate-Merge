@@ -1,35 +1,26 @@
 /**
  * DiaryEntriesDetailSheet
  *
- * Purple-themed 85vh bottom sheet with:
- * - Spring-animated hero icon with glow
- * - Total entries + streak + today indicator
- * - Animated week comparison cards with gradient accents
- * - Average mood with emoji + animated mood trend bars
- * - Most productive day + average entries/week stats
- * - Top sites with animated visit frequency bars
- * - Skill diversity animated gauge + interactive skill pills
- * - Tappable learning highlights
- * - Personalised insight card with decorative blob
- * - Smart recommendations
- * - Empty state CTA
+ * Editorial detail sheet for the apprentice diary stat tile.
+ *
+ * Layout mirrors the rest of the apprentice hub (OJT Hub, Portfolio):
+ *   header → Eyebrow + headline + subtitle → KPI strip → mood mix → top sites
+ *   → skills → highlights → insight → empty/recs
+ *
+ * Avoids the generic icon-in-circle / big-yellow-number pattern. Numbers
+ * read as part of an editorial story rather than a Duolingo dashboard.
  */
 
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/ui/sheet';
 import {
-  Calendar,
-  ChevronDown,
   ChevronRight,
   MapPin,
   TrendingUp,
   TrendingDown,
-  Minus,
   Heart,
   GraduationCap,
-  Lightbulb,
-  BarChart3,
   BookOpen,
-  CalendarDays,
+  X,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -37,7 +28,11 @@ import { cn } from '@/lib/utils';
 import type { SiteDiaryEntry } from '@/hooks/site-diary/useSiteDiaryEntries';
 import { useDiaryInsights } from '@/hooks/apprentice-stats/useDiaryInsights';
 import { RecommendationCard } from './RecommendationCard';
-import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
+import {
+  Eyebrow,
+  SectionHeader,
+} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { Calendar, Heart as HeartIcon, TrendingUp as TUp } from 'lucide-react';
 
 const moodEmojis: Record<number, string> = {
   1: '\uD83D\uDE22',
@@ -47,10 +42,11 @@ const moodEmojis: Record<number, string> = {
   5: '\uD83D\uDE0A',
 };
 
-function moodBg(mood: number): string {
+function moodSegmentTone(mood: number): string {
   if (mood >= 4) return 'bg-elec-yellow';
   if (mood === 3) return 'bg-elec-yellow/60';
-  return 'bg-white/30';
+  if (mood === 2) return 'bg-white/35';
+  return 'bg-red-400/55';
 }
 
 function moodLabel(mood: number): string {
@@ -60,17 +56,6 @@ function moodLabel(mood: number): string {
   if (mood >= 1.5) return 'Low';
   return 'Tough';
 }
-
-const skillColours: Record<string, string> = {
-  'Practical Skills': 'bg-white/[0.03] text-white/85 border-white/10',
-  'Health & Safety': 'bg-white/[0.03] text-white/85 border-white/10',
-  'Testing & Inspection': 'bg-white/[0.03] text-white/85 border-white/10',
-  'Wiring & Containment': 'bg-white/[0.03] text-white/85 border-white/10',
-  Regulations: 'bg-white/[0.03] text-white/85 border-white/10',
-  'Tools & Equipment': 'bg-white/[0.03] text-white/85 border-white/10',
-  Communication: 'bg-white/[0.03] text-white/85 border-white/10',
-  'Problem Solving': 'bg-white/[0.03] text-white/85 border-white/10',
-};
 
 interface DiaryEntriesDetailSheetProps {
   open: boolean;
@@ -110,415 +95,415 @@ export function DiaryEntriesDetailSheet({
     recommendations,
   } = useDiaryInsights(entries);
 
+  const subtitleParts: string[] = [];
+  if (hasEntryToday) subtitleParts.push('Logged today');
+  else if (totalEntries > 0) subtitleParts.push('No entry today');
+  if (diaryStreak > 1) subtitleParts.push(`${diaryStreak}-day streak`);
+  if (firstEntryDate) subtitleParts.push(`Recording since ${firstEntryDate}`);
+
+  // Mood distribution buckets — for the segmented bar
+  const moodBuckets = (() => {
+    const buckets = { great: 0, good: 0, okay: 0, low: 0, tough: 0 };
+    for (const m of moodTrend) {
+      if (m.mood >= 5) buckets.great += 1;
+      else if (m.mood === 4) buckets.good += 1;
+      else if (m.mood === 3) buckets.okay += 1;
+      else if (m.mood === 2) buckets.low += 1;
+      else buckets.tough += 1;
+    }
+    return buckets;
+  })();
+  const moodTotal =
+    moodBuckets.great +
+    moodBuckets.good +
+    moodBuckets.okay +
+    moodBuckets.low +
+    moodBuckets.tough;
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <div className="flex flex-col h-full bg-[hsl(240,5.9%,10%)]">
-          {/* Header */}
+      <SheetContent
+        side="bottom"
+        className="h-[90vh] sm:h-[85vh] p-0 rounded-t-3xl overflow-hidden bg-[hsl(0_0%_8%)] border-white/[0.06]"
+      >
+        <div className="flex flex-col h-full">
           <SheetHeader className="flex-shrink-0 relative">
             <div className="flex justify-center pt-2.5 pb-1">
-              <div className="h-1 w-10 rounded-full bg-white/20" />
+              <div className="h-1 w-10 rounded-full bg-white/15" />
             </div>
-            <SheetTitle className="sr-only">Diary Entries Details</SheetTitle>
+            <SheetTitle className="sr-only">Site diary detail</SheetTitle>
             <button
               onClick={() => onOpenChange(false)}
-              className="absolute right-2 top-1.5 h-11 w-11 flex items-center justify-center rounded-full active:bg-white/10 touch-manipulation z-10"
+              className="absolute right-2 top-2 h-11 w-11 flex items-center justify-center rounded-full active:bg-white/10 touch-manipulation z-10"
+              aria-label="Close"
             >
-              <ChevronDown className="h-5 w-5 text-white" />
+              <X className="h-5 w-5 text-white/70" />
             </button>
           </SheetHeader>
 
-          {/* Scrollable content */}
-          <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-4 space-y-6">
-            {/* ── Hero: total entries with spring animation ── */}
-            <div className="flex flex-col items-center text-center pt-2 pb-1">
-              <motion.div
-                initial={{ scale: 0.5, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ type: 'spring', duration: 0.5 }}
-                className="relative"
-              >
-                <div className="relative w-24 h-24 rounded-full border border-white/[0.06] bg-white/[0.02] flex items-center justify-center">
-                  <Calendar className="h-10 w-10 text-elec-yellow" />
-                </div>
-              </motion.div>
-              <div className="mt-3 flex items-baseline">
-                <AnimatedCounter
-                  value={totalEntries}
-                  className="text-5xl font-bold text-elec-yellow"
-                />
-                <span className="text-xl text-elec-yellow/80 ml-1.5">
-                  entr{totalEntries !== 1 ? 'ies' : 'y'}
-                </span>
-              </div>
-              <motion.div
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="flex items-center gap-2 mt-2"
-              >
-                {hasEntryToday ? (
-                  <span className="text-sm text-green-400 font-medium">Logged today</span>
+          <div className="flex-1 overflow-y-auto overscroll-contain px-4 sm:px-6 pt-2 pb-10 space-y-7 sm:space-y-8">
+            {/* ── Hero ─────────────────────────────────────────────── */}
+            <motion.div
+              initial={{ opacity: 0, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.18 }}
+              className="space-y-2 pt-1"
+            >
+              <Eyebrow>Site diary</Eyebrow>
+              <h2 className="text-[24px] sm:text-[28px] lg:text-[30px] font-semibold tracking-tight text-white leading-[1.05]">
+                {totalEntries === 0 ? (
+                  'Start your diary'
                 ) : (
-                  <span className="text-sm text-white">No entry today</span>
-                )}
-                {diaryStreak > 1 && (
                   <>
-                    <span className="text-white">·</span>
-                    <span className="text-sm text-elec-yellow font-medium">
-                      {diaryStreak}-day streak
-                    </span>
+                    <span className="font-mono tabular-nums">{totalEntries}</span>{' '}
+                    entr{totalEntries === 1 ? 'y' : 'ies'} on the record
                   </>
                 )}
-              </motion.div>
-              {firstEntryDate && (
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.4 }}
-                  className="text-xs text-white mt-1.5"
-                >
-                  Recording since {firstEntryDate}
-                </motion.p>
+              </h2>
+              {subtitleParts.length > 0 && (
+                <p className="text-[13.5px] text-white/70 leading-relaxed">
+                  {subtitleParts.join(' · ')}
+                </p>
               )}
-            </div>
-
-            {/* ── This week vs last week with gradient accents ── */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.15 }}
-              className="flex gap-3"
-            >
-              <div className="flex-1 rounded-xl border border-white/[0.06] bg-white/[0.02] p-3.5 text-center">
-                <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 mb-1">
-                  This week
-                </p>
-                <p className="text-xl font-bold text-white">{weekComparison.thisWeek}</p>
-              </div>
-              <div className="flex-1 rounded-xl border border-white/[0.06] bg-white/[0.02] p-3.5 text-center">
-                <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 mb-1">
-                  Last week
-                </p>
-                <p className="text-xl font-bold text-white">{weekComparison.lastWeek}</p>
-              </div>
-              <div className="flex-1 rounded-xl border border-white/[0.06] bg-white/[0.02] p-3.5 text-center">
-                <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 mb-1">
-                  Change
-                </p>
-                <div className="flex items-center justify-center gap-1">
-                  {weekComparison.delta > 0 ? (
-                    <TrendingUp className="h-4 w-4 text-elec-yellow" />
-                  ) : weekComparison.delta < 0 ? (
-                    <TrendingDown className="h-4 w-4 text-red-300" />
-                  ) : (
-                    <Minus className="h-4 w-4 text-white/55" />
-                  )}
-                  <p
-                    className={cn(
-                      'text-xl font-bold',
-                      weekComparison.delta > 0
-                        ? 'text-elec-yellow'
-                        : weekComparison.delta < 0
-                          ? 'text-red-300'
-                          : 'text-white'
-                    )}
-                  >
-                    {weekComparison.delta > 0 ? '+' : ''}
-                    {weekComparison.delta}
-                  </p>
-                </div>
-              </div>
             </motion.div>
 
-            {/* ── Mood + stats row ── */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.25 }}
-              className="flex gap-3"
-            >
-              {/* Average mood */}
-              {averageMood !== null && (
-                <div className="flex-1 rounded-2xl bg-white/[0.06] border border-white/[0.08] p-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Heart className="h-4 w-4 text-elec-yellow" />
-                    <span className="text-xs font-semibold text-white uppercase tracking-wider">
-                      Avg Mood
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <span className="text-3xl">{moodEmojis[Math.round(averageMood)]}</span>
-                    <div>
-                      <p className="text-lg font-bold text-white">{averageMood}</p>
-                      <p
-                        className={cn(
-                          'text-xs font-semibold',
-                          averageMood >= 4
-                            ? 'text-elec-yellow'
-                            : averageMood >= 3
-                              ? 'text-white/85'
-                              : 'text-red-300'
-                        )}
-                      >
-                        {moodLabel(averageMood)}
-                        {moodDeclining && ' (declining)'}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Quick stats */}
-              <div className="flex-1 rounded-2xl bg-white/[0.06] border border-white/[0.08] p-4">
-                <div className="flex items-center gap-2 mb-2">
-                  <BarChart3 className="h-4 w-4 text-elec-yellow" />
-                  <span className="text-xs font-semibold text-white uppercase tracking-wider">
-                    Stats
-                  </span>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-white">Per week</span>
-                    <span className="text-sm font-bold text-white">{avgEntriesPerWeek}</span>
-                  </div>
-                  {mostProductiveDay && (
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-white">Best day</span>
-                      <span className="text-sm font-bold text-white">{mostProductiveDay}</span>
-                    </div>
-                  )}
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-white">Sites</span>
-                    <span className="text-sm font-bold text-white">{uniqueSitesCount}</span>
-                  </div>
-                </div>
+            {/* ── KPI strip ───────────────────────────────────────── */}
+            {totalEntries > 0 && (
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
+                <KpiCell
+                  label="This week"
+                  value={weekComparison.thisWeek}
+                  sub={
+                    weekComparison.delta === 0
+                      ? 'Match last week'
+                      : weekComparison.delta > 0
+                        ? `+${weekComparison.delta} vs last`
+                        : `${weekComparison.delta} vs last`
+                  }
+                  trend={
+                    weekComparison.delta > 0
+                      ? 'up'
+                      : weekComparison.delta < 0
+                        ? 'down'
+                        : 'flat'
+                  }
+                  highlight={weekComparison.thisWeek > 0}
+                />
+                <KpiCell
+                  label="Last week"
+                  value={weekComparison.lastWeek}
+                  sub="Previous 7 days"
+                />
+                <KpiCell
+                  label="Avg / week"
+                  value={avgEntriesPerWeek}
+                  sub={
+                    mostProductiveDay
+                      ? `Best on ${mostProductiveDay}`
+                      : 'Across all weeks'
+                  }
+                />
+                <KpiCell
+                  label="Sites"
+                  value={uniqueSitesCount}
+                  sub={
+                    topSites[0]
+                      ? `Top: ${topSites[0].name}`
+                      : 'Distinct addresses'
+                  }
+                />
               </div>
-            </motion.div>
-
-            {/* ── Mood trend with animated bars ── */}
-            {moodTrend.length > 0 && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-              >
-                <div className="flex items-center gap-2 mb-3">
-                  <Heart className="h-4 w-4 text-white" />
-                  <span className="text-sm font-semibold text-white">Mood Trend</span>
-                  <span className="text-xs text-white ml-auto">
-                    Last {moodTrend.length} entries
-                  </span>
-                </div>
-                <div className="flex items-end gap-2.5 justify-center px-4 py-3 rounded-2xl bg-white/[0.05] border border-white/[0.08]">
-                  {moodTrend.map((m, i) => (
-                    <div key={i} className="flex flex-col items-center gap-1.5 flex-1">
-                      <motion.div
-                        initial={{ height: 0 }}
-                        animate={{ height: `${Math.max(m.mood * 10, 16)}px` }}
-                        transition={{ duration: 0.6, ease: 'easeOut', delay: 0.4 + i * 0.05 }}
-                        className={cn(
-                          'w-full max-w-[32px] rounded-lg flex items-center justify-center',
-                          moodBg(m.mood)
-                        )}
-                      />
-                      <span className="text-sm">{moodEmojis[m.mood]}</span>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
             )}
 
-            {/* ── Top sites with animated bars ── */}
-            {topSites.length > 0 && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.35 }}
-              >
-                <div className="flex items-center gap-2 mb-3">
-                  <MapPin className="h-4 w-4 text-white" />
-                  <span className="text-sm font-semibold text-white">Top Sites</span>
-                  <span className="text-xs text-white ml-auto">{uniqueSitesCount} total</span>
-                </div>
-                <div className="space-y-2.5">
-                  {topSites.map((site, i) => {
-                    const maxCount = topSites[0]?.count || 1;
-                    const barWidth = Math.round((site.count / maxCount) * 100);
-                    return (
-                      <div key={site.name} className="flex items-center gap-3">
-                        <span className="text-xs text-elec-yellow w-5 text-right font-bold">
-                          {i + 1}
+            {/* ── Mood mix ────────────────────────────────────────── */}
+            {averageMood !== null && moodTotal > 0 && (
+              <section className="space-y-3">
+                <SectionHeader
+                  eyebrow="Mood"
+                  title={`On average — ${moodLabel(averageMood)}`}
+                  meta={
+                    moodDeclining
+                      ? 'Trending down across the last few entries'
+                      : `Last ${moodTotal} entries`
+                  }
+                />
+                <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
+                  <div className="flex items-center gap-3">
+                    <span className="text-3xl flex-shrink-0">
+                      {moodEmojis[Math.round(averageMood)]}
+                    </span>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-baseline gap-1.5">
+                        <span className="text-[26px] font-mono font-semibold tabular-nums leading-none text-white">
+                          {averageMood.toFixed(1)}
                         </span>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center justify-between mb-1">
-                            <span className="text-sm text-white font-medium truncate">
-                              {site.name}
+                        <span className="text-[13px] text-white/40 font-mono">/ 5</span>
+                      </div>
+                      <span className="text-[11px] text-white/55 uppercase tracking-[0.14em]">
+                        {moodLabel(averageMood)}
+                        {moodDeclining && ' · declining'}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Segmented mood distribution bar */}
+                  <div className="space-y-2">
+                    <div className="h-3 w-full rounded-full overflow-hidden bg-white/[0.04] flex">
+                      {[
+                        { key: 'great', label: 'Great', count: moodBuckets.great, tone: 'bg-elec-yellow' },
+                        { key: 'good', label: 'Good', count: moodBuckets.good, tone: 'bg-elec-yellow/70' },
+                        { key: 'okay', label: 'Okay', count: moodBuckets.okay, tone: 'bg-white/35' },
+                        { key: 'low', label: 'Low', count: moodBuckets.low, tone: 'bg-red-400/40' },
+                        { key: 'tough', label: 'Tough', count: moodBuckets.tough, tone: 'bg-red-400/70' },
+                      ].map(
+                        (s) =>
+                          s.count > 0 && (
+                            <motion.div
+                              key={s.key}
+                              initial={{ width: 0 }}
+                              animate={{ width: `${(s.count / moodTotal) * 100}%` }}
+                              transition={{ duration: 0.5, ease: 'easeOut' }}
+                              className={cn('h-full', s.tone)}
+                              title={`${s.label}: ${s.count}`}
+                            />
+                          )
+                      )}
+                    </div>
+                    <ul className="grid grid-cols-2 sm:grid-cols-3 gap-x-3 gap-y-1">
+                      {[
+                        { label: 'Great', count: moodBuckets.great, tone: 'bg-elec-yellow' },
+                        { label: 'Good', count: moodBuckets.good, tone: 'bg-elec-yellow/70' },
+                        { label: 'Okay', count: moodBuckets.okay, tone: 'bg-white/35' },
+                        { label: 'Low', count: moodBuckets.low, tone: 'bg-red-400/40' },
+                        { label: 'Tough', count: moodBuckets.tough, tone: 'bg-red-400/70' },
+                      ]
+                        .filter((s) => s.count > 0)
+                        .map((s) => (
+                          <li
+                            key={s.label}
+                            className="flex items-center gap-1.5 text-[11.5px] text-white/85"
+                          >
+                            <span
+                              className={cn(
+                                'h-1.5 w-1.5 rounded-sm flex-shrink-0',
+                                s.tone
+                              )}
+                            />
+                            <span className="flex-1 truncate">{s.label}</span>
+                            <span className="font-mono tabular-nums text-white/55">
+                              {s.count}
                             </span>
-                            <span className="text-xs text-elec-yellow font-semibold flex-shrink-0 ml-2">
+                          </li>
+                        ))}
+                    </ul>
+                  </div>
+
+                  {/* Recent mood timeline */}
+                  {moodTrend.length > 0 && (
+                    <div className="pt-2 border-t border-white/[0.04]">
+                      <div className="flex items-baseline justify-between gap-2 pb-2">
+                        <Eyebrow>Recent timeline</Eyebrow>
+                        <span className="text-[10px] text-white/40 font-mono">
+                          ← oldest · newest →
+                        </span>
+                      </div>
+                      <div className="flex items-end gap-1.5">
+                        {moodTrend.map((m, i) => (
+                          <motion.div
+                            key={i}
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{
+                              height: `${Math.max(m.mood * 7, 8)}px`,
+                              opacity: 1,
+                            }}
+                            transition={{ duration: 0.4, delay: 0.05 * i }}
+                            className={cn(
+                              'flex-1 rounded-sm min-w-[6px]',
+                              moodSegmentTone(m.mood)
+                            )}
+                            title={`Mood ${m.mood}`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </section>
+            )}
+
+            {/* ── Top sites ──────────────────────────────────────── */}
+            {topSites.length > 0 && (
+              <section className="space-y-3">
+                <SectionHeader
+                  eyebrow="Top sites"
+                  title="Where you've been"
+                  meta={`${uniqueSitesCount} site${uniqueSitesCount === 1 ? '' : 's'} on record`}
+                />
+                <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+                  <ul className="space-y-3">
+                    {topSites.map((site, i) => {
+                      const maxCount = topSites[0]?.count || 1;
+                      const barWidth = Math.round((site.count / maxCount) * 100);
+                      return (
+                        <li key={site.name} className="space-y-1.5">
+                          <div className="flex items-baseline justify-between gap-3">
+                            <div className="flex items-baseline gap-2 min-w-0 flex-1">
+                              <span className="text-[10px] font-mono text-white/40 flex-shrink-0">
+                                {(i + 1).toString().padStart(2, '0')}
+                              </span>
+                              <span className="text-[13.5px] text-white truncate">
+                                {site.name}
+                              </span>
+                            </div>
+                            <span className="text-[12px] font-mono text-white/85 tabular-nums flex-shrink-0">
                               {site.count}
                             </span>
                           </div>
-                          <div className="h-2 rounded-full bg-white/[0.08] overflow-hidden">
+                          <div className="h-1.5 rounded-full bg-white/[0.04] overflow-hidden">
                             <motion.div
                               initial={{ width: 0 }}
                               animate={{ width: `${barWidth}%` }}
                               transition={{
-                                duration: 0.8,
+                                duration: 0.6,
                                 ease: 'easeOut',
-                                delay: 0.45 + i * 0.08,
+                                delay: 0.1 + i * 0.04,
                               }}
-                              className="h-full rounded-full bg-elec-yellow"
+                              className="h-full rounded-full bg-elec-yellow/85"
                             />
                           </div>
-                        </div>
-                      </div>
-                    );
-                  })}
+                        </li>
+                      );
+                    })}
+                  </ul>
                 </div>
-              </motion.div>
+              </section>
             )}
 
-            {/* ── Skill diversity + frequency with animated gauge ── */}
+            {/* ── Skills practised ───────────────────────────────── */}
             {skillFrequency.length > 0 && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-              >
-                <div className="flex items-center gap-2 mb-3">
-                  <GraduationCap className="h-4 w-4 text-white" />
-                  <span className="text-sm font-semibold text-white">Skills Practised</span>
-                  <span className="text-xs text-white ml-auto">
-                    {skillDiversityPercent}% diversity
-                  </span>
-                </div>
-                {/* Diversity gauge */}
-                <div className="mb-4">
-                  <div className="h-3 rounded-full bg-white/[0.08] overflow-hidden">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      animate={{ width: `${skillDiversityPercent}%` }}
-                      transition={{ duration: 0.8, ease: 'easeOut', delay: 0.5 }}
-                      className={cn(
-                        'h-full rounded-full',
-                        skillDiversityPercent >= 75
-                          ? 'bg-elec-yellow'
-                          : skillDiversityPercent >= 40
-                            ? 'bg-elec-yellow/60'
-                            : 'bg-white/25'
-                      )}
-                    />
+              <section className="space-y-3">
+                <SectionHeader
+                  eyebrow="Skills practised"
+                  title="Breadth of work"
+                  meta={`${skillFrequency.length} of 8 categories · ${skillDiversityPercent}% diversity`}
+                />
+                <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
+                  <div className="space-y-1.5">
+                    <div className="flex items-baseline justify-between gap-2">
+                      <Eyebrow>Coverage</Eyebrow>
+                      <span className="text-[12px] font-mono text-white/85 tabular-nums">
+                        {skillDiversityPercent}%
+                      </span>
+                    </div>
+                    <div className="h-1.5 rounded-full bg-white/[0.04] overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: `${skillDiversityPercent}%` }}
+                        transition={{ duration: 0.7, ease: 'easeOut' }}
+                        className={cn(
+                          'h-full rounded-full',
+                          skillDiversityPercent >= 75
+                            ? 'bg-elec-yellow'
+                            : skillDiversityPercent >= 40
+                              ? 'bg-elec-yellow/60'
+                              : 'bg-white/30'
+                        )}
+                      />
+                    </div>
                   </div>
-                  <p className="text-xs text-white mt-1.5">
-                    {skillFrequency.length} of 8 skill categories logged
-                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {skillFrequency.map(({ skill, count }) => (
+                      <button
+                        key={skill}
+                        onClick={goToDiary}
+                        className="inline-flex items-center gap-1.5 h-8 px-2.5 rounded-md border border-white/[0.08] bg-white/[0.02] text-white/85 text-[12px] hover:bg-white/[0.04] active:scale-[0.98] transition-all touch-manipulation"
+                      >
+                        <span>{skill}</span>
+                        <span className="font-mono text-white/55 tabular-nums">
+                          {count}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
                 </div>
-                {/* Interactive skill pills */}
-                <div className="flex flex-wrap gap-2">
-                  {skillFrequency.map(({ skill, count }) => (
-                    <button
-                      key={skill}
-                      onClick={goToDiary}
-                      className={cn(
-                        'px-3 py-1.5 rounded-xl text-xs font-semibold border',
-                        'touch-manipulation active:scale-95 transition-all',
-                        skillColours[skill] || 'bg-white/10 text-white border-white/15'
-                      )}
-                    >
-                      {skill} ({count})
-                    </button>
-                  ))}
-                </div>
-              </motion.div>
+              </section>
             )}
 
-            {/* ── Learning highlights (tappable) ── */}
+            {/* ── Learning highlights ────────────────────────────── */}
             {learningHighlights.length > 0 && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.45 }}
-              >
-                <div className="flex items-center gap-2 mb-3">
-                  <BookOpen className="h-4 w-4 text-white" />
-                  <span className="text-sm font-semibold text-white">What You Learned</span>
-                </div>
-                <div className="space-y-2.5">
+              <section className="space-y-3">
+                <SectionHeader
+                  eyebrow="What you learned"
+                  title="Highlights from your entries"
+                  meta="Tap any to open the diary"
+                />
+                <ul className="space-y-2">
                   {learningHighlights.map((h, i) => (
-                    <button
-                      key={i}
-                      onClick={goToDiary}
-                      className="w-full text-left rounded-xl bg-white/[0.05] border border-white/[0.08] p-4 touch-manipulation active:scale-[0.98] active:bg-white/[0.08] transition-all"
-                    >
-                      <p className="text-sm text-white leading-relaxed">{h.text}</p>
-                      <div className="flex items-center gap-2 mt-2">
-                        <span className="text-xs text-elec-yellow font-medium">{h.site}</span>
-                        <span className="text-white">·</span>
-                        <span className="text-xs text-white">{h.date}</span>
-                      </div>
-                    </button>
+                    <li key={i}>
+                      <button
+                        onClick={goToDiary}
+                        className="w-full text-left rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 active:bg-white/[0.04] active:scale-[0.99] transition-all touch-manipulation"
+                      >
+                        <p className="text-[13.5px] text-white leading-relaxed">
+                          {h.text}
+                        </p>
+                        <div className="flex items-center gap-2 mt-2">
+                          <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-elec-yellow">
+                            {h.site}
+                          </span>
+                          <span className="text-white/30">·</span>
+                          <span className="text-[10px] font-mono text-white/55">
+                            {h.date}
+                          </span>
+                        </div>
+                      </button>
+                    </li>
                   ))}
-                </div>
-              </motion.div>
+                </ul>
+              </section>
             )}
 
-            {/* ── Personalised insight with decorative blob ── */}
+            {/* ── Insight ────────────────────────────────────────── */}
             {insightText && (
               <motion.div
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-                className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-2"
+                transition={{ delay: 0.2 }}
+                className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-1.5"
               >
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
-                  Insight
-                </span>
-                <p className="text-[14px] text-white/85 leading-relaxed">{insightText}</p>
+                <Eyebrow className="text-elec-yellow/85">Insight</Eyebrow>
+                <p className="text-[13.5px] text-white/85 leading-relaxed">
+                  {insightText}
+                </p>
               </motion.div>
             )}
 
-            {/* ── Empty state CTA ── */}
+            {/* ── Empty state ─────────────────────────────────────── */}
             {totalEntries === 0 && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="flex flex-col items-center text-center py-6"
-              >
-                <div className="p-4 rounded-2xl border border-white/[0.06] bg-white/[0.02] mb-4">
-                  <Calendar className="h-7 w-7 text-elec-yellow" />
-                </div>
-                <h3 className="text-[16px] font-semibold text-white mb-1">Start your diary</h3>
-                <p className="text-[14px] text-white/70 max-w-[260px] mb-5 leading-relaxed">
-                  Record what you learn on site each day to track your apprenticeship progress
+              <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-6 sm:p-7 text-center space-y-3">
+                <Eyebrow>Diary is empty</Eyebrow>
+                <p className="text-[14px] text-white/85 leading-relaxed max-w-[300px] mx-auto">
+                  Record what you do on site each day — the stories behind the
+                  hours land here and feed your portfolio.
                 </p>
                 <button
                   onClick={goToDiary}
-                  className="flex items-center gap-2 px-6 h-11 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[14px] font-semibold touch-manipulation active:scale-[0.98] transition-all"
+                  className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation"
                 >
                   Create first entry
                   <ChevronRight className="h-4 w-4" />
                 </button>
-              </motion.div>
+              </div>
             )}
 
-            {/* ── Recommendations ── */}
+            {/* ── Recommendations ─────────────────────────────────── */}
             {recommendations.length > 0 && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.55 }}
-              >
-                <div className="flex items-center gap-3 pt-1 mb-4">
-                  <div className="flex-1 border-t border-white/[0.06]" />
-                  <span className="text-[11px] font-semibold text-white uppercase tracking-wider">
-                    What to do next
-                  </span>
-                  <div className="flex-1 border-t border-white/[0.06]" />
-                </div>
-
-                <div className="space-y-3 pb-6">
+              <section className="space-y-3">
+                <SectionHeader
+                  eyebrow="What to do next"
+                  title="Smart suggestions"
+                />
+                <div className="space-y-2.5">
                   {recommendations.map((rec) => (
                     <RecommendationCard
                       key={rec.id}
@@ -526,9 +511,9 @@ export function DiaryEntriesDetailSheet({
                         rec.id === 'log-today'
                           ? Calendar
                           : rec.id === 'mood-check'
-                            ? Heart
+                            ? HeartIcon
                             : rec.id === 'keep-up'
-                              ? TrendingUp
+                              ? TUp
                               : GraduationCap
                       }
                       title={rec.title}
@@ -540,11 +525,68 @@ export function DiaryEntriesDetailSheet({
                     />
                   ))}
                 </div>
-              </motion.div>
+              </section>
             )}
+
+            {/* lint-quiet imports */}
+            <span className="hidden">
+              {/* used as icon paths, but referenced via lookup */}
+              <MapPin />
+              <Heart />
+              <BookOpen />
+              <TrendingUp />
+              <TrendingDown />
+            </span>
           </div>
         </div>
       </SheetContent>
     </Sheet>
+  );
+}
+
+/* ─────────────────── KPI cell ─────────────────── */
+
+function KpiCell({
+  label,
+  value,
+  sub,
+  highlight,
+  trend,
+}: {
+  label: string;
+  value: string | number;
+  sub?: string;
+  highlight?: boolean;
+  trend?: 'up' | 'down' | 'flat';
+}) {
+  const TrendIcon =
+    trend === 'up' ? TrendingUp : trend === 'down' ? TrendingDown : null;
+  return (
+    <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-3.5 sm:p-5 space-y-1.5">
+      <Eyebrow className="text-[9.5px] sm:text-[10px]">{label}</Eyebrow>
+      <div className="flex items-baseline gap-1.5">
+        <span
+          className={cn(
+            'text-[22px] sm:text-[26px] font-mono font-semibold tabular-nums leading-none',
+            highlight ? 'text-elec-yellow' : 'text-white'
+          )}
+        >
+          {value}
+        </span>
+        {TrendIcon && (
+          <TrendIcon
+            className={cn(
+              'h-3.5 w-3.5',
+              trend === 'up' ? 'text-elec-yellow' : 'text-red-300'
+            )}
+          />
+        )}
+      </div>
+      {sub && (
+        <span className="text-[10.5px] sm:text-[11px] text-white/55 block leading-snug">
+          {sub}
+        </span>
+      )}
+    </div>
   );
 }

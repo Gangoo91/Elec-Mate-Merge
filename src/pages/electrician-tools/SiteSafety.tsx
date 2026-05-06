@@ -1,56 +1,35 @@
-import { useState, useEffect, lazy, Suspense } from 'react';
+/**
+ * SiteSafety — editorial redesign matching ElectricianHub / CollegeDashboard.
+ *
+ * Sticky text-only masthead, date-eyebrow Hero with safety verdict + CTA,
+ * `01 · AT A GLANCE` HeadlineStats strip, then numbered hairline tool grids:
+ *   02 · RECENT (when there are saved docs)
+ *   03 · CORE TOOLS
+ *   04 · SAFETY & RECORDING
+ *   05 · COMPLIANCE & PERMITS
+ *   06 · RESOURCES
+ *
+ * Drops the previous BusinessCard chrome, alert/analytics collapsibles. Score
+ * lives in the stats strip; equipment + COSHH alerts surface as `meta` text on
+ * their cards. Active-view state machine for individual tools is unchanged.
+ */
+import { useState, useEffect, useMemo, lazy, Suspense } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { Badge } from '@/components/ui/badge';
-import {
-  Shield,
-  FileText,
-  AlertTriangle,
-  Camera,
-  Users,
-  Wrench,
-  Phone,
-  ArrowLeft,
-  FolderOpen,
-  Loader2,
-  FlaskConical,
-  ClipboardCheck,
-  BookOpen,
-  Lock,
-  Library,
-  Zap,
-  Eye,
-  CalendarDays,
-  Flame,
-  Bell,
-  FolderArchive,
-  ChevronDown,
-  ChevronRight,
-  BarChart3,
-  Sparkles,
-  type LucideIcon,
-} from 'lucide-react';
-import BusinessCard from '@/components/business-hub/BusinessCard';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
+import { Eyebrow, containerVariants, itemVariants } from '@/components/college/primitives';
 import { RAMSProvider } from '@/components/electrician-tools/site-safety/rams/RAMSContext';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible';
 import { SectionSkeleton } from '@/components/ui/page-skeleton';
-import { SafetyDashboard } from '@/components/electrician-tools/site-safety/SafetyDashboard';
 import { useSafetyDashboardStats, useRecentDocuments } from '@/hooks/useSafetyDashboardStats';
-import { SafetyStreakCard } from '@/components/electrician-tools/site-safety/SafetyStreakCard';
-import { SafetyTrendsCard } from '@/components/electrician-tools/site-safety/charts/SafetyTrendsCard';
-import { WeeklySummaryCard } from '@/components/electrician-tools/site-safety/WeeklySummaryCard';
-import { useSafetyStreak } from '@/hooks/useSafetyStreak';
-import { useSafetyTrends } from '@/hooks/useSafetyTrends';
-import { ScoreBreakdownCard } from '@/components/electrician-tools/site-safety/charts/ScoreBreakdownCard';
-import { EquipmentAlertsCard } from '@/components/electrician-tools/site-safety/EquipmentAlertsCard';
-import { COSHHAlertsCard } from '@/components/electrician-tools/site-safety/COSHHAlertsCard';
 import { useSafetyEquipment } from '@/hooks/useSafetyEquipment';
-import { useCOSHHOverdueReviews, useCOSHHUpcomingReviews } from '@/hooks/useCOSHH';
-import { WeeklyReportCard } from '@/components/electrician-tools/site-safety/WeeklyReportCard';
+import { useCOSHHOverdueReviews } from '@/hooks/useCOSHH';
 import { useWeeklySafetySummary } from '@/hooks/useWeeklySafetySummary';
-import { SignatureTrackingDashboard } from '@/components/electrician-tools/site-safety/SignatureTrackingDashboard';
 
-// Lazy-loaded tool components for code splitting
+// ─────────────────────────────────────────────────────────────────────────
+// Lazy-loaded tool components (full-page sub-views)
+// ─────────────────────────────────────────────────────────────────────────
+
 const RAMSGenerator = lazy(
   () => import('@/components/electrician-tools/site-safety/RAMSGenerator')
 );
@@ -114,16 +93,12 @@ const DigitalAccidentBook = lazy(() =>
 );
 const SafetyTemplateLibrary = lazy(() =>
   import('@/components/electrician-tools/site-safety/templates/SafetyTemplateLibrary').then(
-    (m) => ({
-      default: m.SafetyTemplateLibrary,
-    })
+    (m) => ({ default: m.SafetyTemplateLibrary })
   )
 );
 const SafeIsolationRecord = lazy(() =>
   import('@/components/electrician-tools/site-safety/safe-isolation/SafeIsolationRecord').then(
-    (m) => ({
-      default: m.SafeIsolationRecord,
-    })
+    (m) => ({ default: m.SafeIsolationRecord })
   )
 );
 const PreUseCheckTool = lazy(() =>
@@ -133,16 +108,12 @@ const PreUseCheckTool = lazy(() =>
 );
 const SafetyObservationCard = lazy(() =>
   import('@/components/electrician-tools/site-safety/observations/SafetyObservationCard').then(
-    (m) => ({
-      default: m.SafetyObservationCard,
-    })
+    (m) => ({ default: m.SafetyObservationCard })
   )
 );
 const ElectricianSiteDiary = lazy(() =>
   import('@/components/electrician-tools/site-safety/site-diary/ElectricianSiteDiary').then(
-    (m) => ({
-      default: m.ElectricianSiteDiary,
-    })
+    (m) => ({ default: m.ElectricianSiteDiary })
   )
 );
 const FireWatchTimer = lazy(() =>
@@ -157,88 +128,689 @@ const SafetyAlertsFeed = lazy(() =>
 );
 const SafetyResourceLibrary = lazy(() =>
   import('@/components/electrician-tools/site-safety/resources/SafetyResourceLibrary').then(
-    (m) => ({
-      default: m.SafetyResourceLibrary,
-    })
+    (m) => ({ default: m.SafetyResourceLibrary })
   )
 );
 
-// Animation variants (spring-based, matching ElectricalHub)
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.04, delayChildren: 0 },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 12 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { type: 'spring', stiffness: 300, damping: 24 },
-  },
-};
-
-// Skeleton loader for lazy components
 const ToolLoader = SectionSkeleton;
 
-// Stats card — minimal, clean
-function SafetyStatCard({ label, value, icon: Icon, variant }: {
-  label: string;
-  value: number;
-  icon: LucideIcon;
-  variant?: 'success' | 'danger';
-}) {
-  const color = variant === 'success' ? 'text-green-400'
-    : variant === 'danger' ? 'text-red-400' : 'text-white';
+// ─────────────────────────────────────────────────────────────────────────
+// Editorial helpers — same pattern as ElectricianHub
+// ─────────────────────────────────────────────────────────────────────────
+
+const partOfDay = (): 'MORNING' | 'AFTERNOON' | 'EVENING' => {
+  const h = new Date().getHours();
+  if (h < 12) return 'MORNING';
+  if (h < 18) return 'AFTERNOON';
+  return 'EVENING';
+};
+
+const dateEyebrow = (): string => {
+  const d = new Date();
+  const weekday = d.toLocaleDateString('en-GB', { weekday: 'long' }).toUpperCase();
+  const day = d.getDate();
+  const month = d.toLocaleDateString('en-GB', { month: 'long' }).toUpperCase();
+  return `${weekday} · ${day} ${month} · ${partOfDay()}`;
+};
+
+// ─────────────────────────────────────────────────────────────────────────
+// Sticky masthead — College pattern
+// ─────────────────────────────────────────────────────────────────────────
+
+const PageMasthead = () => {
+  const navigate = useNavigate();
   return (
-    <div className="text-center py-3">
-      <Icon className={`h-4 w-4 mx-auto mb-1.5 ${variant === 'danger' ? 'text-red-400' : variant === 'success' ? 'text-green-400' : 'text-white'}`} />
-      <p className={`text-lg font-bold ${color}`}>{value}</p>
-      <p className="text-[10px] text-white mt-0.5">{label}</p>
+    <div className="sticky top-0 z-50 bg-elec-dark/95 backdrop-blur-sm border-b border-white/[0.06]">
+      <div className="mx-auto max-w-7xl px-4">
+        <div className="flex items-center h-12 gap-4 sm:gap-6">
+          <button
+            type="button"
+            onClick={() => navigate('/electrician')}
+            className="text-[12.5px] font-medium text-white hover:text-white transition-colors touch-manipulation whitespace-nowrap"
+          >
+            ← Back
+          </button>
+          <div className="flex-1 min-w-0 flex items-baseline gap-2.5">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white hidden sm:inline">
+              Electrician
+            </span>
+            <span className="hidden sm:inline h-3 w-px bg-white/10" aria-hidden />
+            <h1 className="text-[13px] sm:text-sm font-semibold text-white truncate tracking-tight">
+              Site Safety
+            </h1>
+          </div>
+        </div>
+      </div>
     </div>
   );
+};
+
+// ─────────────────────────────────────────────────────────────────────────
+// Hero — date eyebrow + thematic two-tone headline + verdict + CTA.
+//
+// Same shape as AITooling ("Power up the work.") — a yellow opener and a
+// white tail. Headline picks from a context-aware set so the page never
+// reads the same twice in a row, and changes tone when there's something
+// overdue.
+// ─────────────────────────────────────────────────────────────────────────
+
+interface HeroHeadline {
+  yellow: string;
+  white: string;
 }
 
-// Section header matching ElectricalHub/BusinessHub pattern
-function SectionHeader({ title }: { title: string }) {
-  return (
-    <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
-      {title}
-    </h2>
+const HEADLINES_OVERDUE: HeroHeadline[] = [
+  { yellow: 'Close', white: 'out the overdue.' },
+  { yellow: 'Tighten', white: 'the safety up.' },
+  { yellow: 'Action', white: 'the gaps.' },
+];
+
+const HEADLINES_PERMITS: HeroHeadline[] = [
+  { yellow: 'Eyes', white: 'on the job.' },
+  { yellow: 'Live', white: 'work, locked off.' },
+  { yellow: 'Permit', white: 'in. Boots on.' },
+];
+
+const HEADLINES_CLEAR: HeroHeadline[] = [
+  { yellow: 'Stay', white: 'sharp on site.' },
+  { yellow: 'Plan it.', white: 'Brief it. Run it.' },
+  { yellow: 'Watch', white: 'the volts.' },
+  { yellow: 'Sign on,', white: 'switch off, work safe.' },
+  { yellow: 'Safety', white: 'is the spec.' },
+];
+
+const HEADLINES_EMPTY: HeroHeadline[] = [
+  { yellow: 'Start', white: 'with a RAMS.' },
+  { yellow: 'First', white: 'job. First brief.' },
+];
+
+const pickHeadline = (pool: HeroHeadline[]): HeroHeadline => {
+  // Rotate by hour so the page changes feel during the day but stays stable
+  // across renders within the same hour. Hashing on the day-of-year too means
+  // tomorrow opens with a different word.
+  const now = new Date();
+  const hour = now.getHours();
+  const dayOfYear = Math.floor(
+    (now.getTime() - new Date(now.getFullYear(), 0, 0).getTime()) / 86400000
   );
+  return pool[(hour + dayOfYear) % pool.length];
+};
+
+const Hero = ({
+  headline,
+  verdict,
+  cta,
+}: {
+  headline: HeroHeadline;
+  verdict: string;
+  cta?: { label: string; onClick: () => void };
+}) => (
+  <motion.section
+    variants={containerVariants}
+    initial="hidden"
+    animate="visible"
+    className="relative pt-2 sm:pt-4"
+  >
+    <motion.div variants={itemVariants}>
+      <Eyebrow>{dateEyebrow()}</Eyebrow>
+    </motion.div>
+
+    <motion.h1
+      variants={itemVariants}
+      className="mt-3 font-semibold tracking-tight leading-[1.05] text-[34px] sm:text-[44px] lg:text-[56px]"
+    >
+      <span className="text-elec-yellow">{headline.yellow}</span>{' '}
+      <span className="text-white">{headline.white}</span>
+    </motion.h1>
+
+    <motion.p
+      variants={itemVariants}
+      className="mt-3 sm:mt-4 text-[14px] sm:text-[15px] leading-relaxed text-white/90 max-w-2xl"
+    >
+      {verdict}
+    </motion.p>
+
+    {cta && (
+      <motion.div variants={itemVariants} className="mt-5 sm:mt-6">
+        <button
+          type="button"
+          onClick={cta.onClick}
+          className={cn(
+            'group inline-flex items-center gap-2 h-10 px-4 rounded-full',
+            'border border-elec-yellow/25 bg-elec-yellow/10 hover:bg-elec-yellow/20',
+            'text-[13px] font-medium text-elec-yellow touch-manipulation transition-colors'
+          )}
+        >
+          <span>{cta.label}</span>
+          <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
+        </button>
+      </motion.div>
+    )}
+  </motion.section>
+);
+
+// ─────────────────────────────────────────────────────────────────────────
+// HeadlineStats — safety variant, mirrors dashboard HeadlineStats visuals
+// ─────────────────────────────────────────────────────────────────────────
+
+interface SafetyStat {
+  label: string;
+  value: string | number;
+  sub?: string;
+  accent?: boolean;
+  onClick: () => void;
 }
+
+const SafetyHeadlineStats = ({
+  stats,
+  number = '01',
+  label = 'AT A GLANCE',
+}: {
+  stats: SafetyStat[];
+  number?: string;
+  label?: string;
+}) => (
+  <motion.section
+    variants={containerVariants}
+    initial="hidden"
+    animate="visible"
+    className="space-y-4"
+  >
+    <motion.div variants={itemVariants}>
+      <Eyebrow>
+        {number} · {label}
+      </Eyebrow>
+    </motion.div>
+
+    <motion.div
+      variants={itemVariants}
+      className="relative grid grid-cols-2 lg:grid-cols-4 gap-[2px] bg-black border border-white/[0.08] rounded-2xl overflow-hidden"
+    >
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none" />
+
+      {stats.map((stat) => {
+        const valueStr = String(stat.value);
+        const isNumericish =
+          typeof stat.value === 'number' || /^[\d.,+\-/%hkm£]+$/i.test(valueStr);
+        const sizeClass =
+          isNumericish || valueStr.length <= 4
+            ? 'text-4xl sm:text-5xl lg:text-[56px]'
+            : valueStr.length <= 8
+              ? 'text-3xl sm:text-4xl lg:text-5xl'
+              : 'text-2xl sm:text-3xl lg:text-4xl';
+
+        return (
+          <button
+            key={stat.label}
+            type="button"
+            onClick={stat.onClick}
+            className={cn(
+              'group relative bg-[hsl(0_0%_10%)] px-5 py-6 sm:px-7 sm:py-8 flex flex-col text-left touch-manipulation',
+              'hover:bg-elec-yellow/[0.04] transition-colors',
+              stat.accent &&
+                'bg-gradient-to-br from-elec-yellow/[0.06] via-amber-500/[0.02] to-transparent hover:from-elec-yellow/[0.10]'
+            )}
+          >
+            <div
+              className={cn(
+                'text-[10px] font-medium uppercase tracking-[0.18em]',
+                stat.accent ? 'text-elec-yellow/80' : 'text-white/50'
+              )}
+            >
+              {stat.label}
+            </div>
+            <span
+              className={cn(
+                'mt-3 sm:mt-4 font-semibold tabular-nums tracking-tight leading-none',
+                sizeClass,
+                stat.accent ? 'text-elec-yellow' : 'text-white'
+              )}
+            >
+              {stat.value}
+            </span>
+            {stat.sub && (
+              <span className="mt-3 text-[11.5px] text-white/55 group-hover:text-white/75 transition-colors">
+                {stat.sub}
+              </span>
+            )}
+          </button>
+        );
+      })}
+    </motion.div>
+  </motion.section>
+);
+
+// ─────────────────────────────────────────────────────────────────────────
+// EditorialToolGrid — same DNA as ElectricianHub but click-driven
+// (cards trigger setActiveView, not router navigation)
+// ─────────────────────────────────────────────────────────────────────────
+
+interface ToolCard {
+  id: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  onClick: () => void;
+  meta?: string;
+  alert?: boolean;
+}
+
+const EditorialToolGrid = ({
+  number,
+  label,
+  cards,
+  columns = 'three',
+}: {
+  number: string;
+  label: string;
+  cards: ToolCard[];
+  columns?: 'two' | 'three';
+}) => {
+  if (cards.length === 0) return null;
+
+  const colClass =
+    columns === 'two'
+      ? 'grid-cols-1 sm:grid-cols-2'
+      : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3';
+
+  // Pad the final row at the largest breakpoint so the rounded grid never
+  // shows the bleed-through grey from the `bg-white/[0.12]` background.
+  const largestColCount = columns === 'two' ? 2 : 3;
+  const fillerCount = (largestColCount - (cards.length % largestColCount)) % largestColCount;
+
+  return (
+    <motion.section
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="space-y-4"
+    >
+      <motion.div variants={itemVariants}>
+        <Eyebrow>
+          {number} · {label}
+        </Eyebrow>
+      </motion.div>
+
+      <motion.div
+        variants={itemVariants}
+        className={cn(
+          'relative grid auto-rows-[220px] sm:auto-rows-[240px] gap-[2px] bg-black border border-white/[0.08] rounded-2xl overflow-hidden',
+          colClass
+        )}
+      >
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
+
+        {cards.map((card, i) => (
+          <button
+            key={card.id}
+            type="button"
+            onClick={card.onClick}
+            className="group relative bg-[hsl(0_0%_10%)] hover:bg-elec-yellow/[0.04] transition-colors p-5 sm:p-6 lg:p-7 text-left touch-manipulation flex flex-col h-full"
+          >
+            <div className="flex items-baseline justify-between gap-2">
+              <div className="flex items-baseline gap-2">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  · {card.eyebrow}
+                </span>
+              </div>
+              {card.alert && (
+                <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-red-300 border border-red-400/30 bg-red-500/10 px-1.5 py-0.5 rounded">
+                  Action
+                </span>
+              )}
+            </div>
+
+            <h3 className="mt-3 sm:mt-4 text-[20px] sm:text-[22px] lg:text-[24px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors">
+              {card.title}
+            </h3>
+            <p className="mt-2 text-[12.5px] leading-relaxed text-white/60 max-w-[34ch]">
+              {card.description}
+            </p>
+
+            <div className="flex-grow" />
+
+            <div className="mt-5 flex items-center justify-between gap-3 pt-3 border-t border-white/[0.05]">
+              <span className="text-[11px] text-white/55 truncate tabular-nums">
+                {card.meta ?? 'Open'}
+              </span>
+              <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-elec-yellow shrink-0">
+                Open
+                <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+              </span>
+            </div>
+          </button>
+        ))}
+
+        {Array.from({ length: fillerCount }).map((_, i) => (
+          <div
+            key={`filler-${i}`}
+            aria-hidden
+            className="hidden lg:block bg-[hsl(0_0%_10%)]"
+          />
+        ))}
+      </motion.div>
+    </motion.section>
+  );
+};
+
+// ─────────────────────────────────────────────────────────────────────────
+// Main page
+// ─────────────────────────────────────────────────────────────────────────
 
 const SiteSafety = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [activeView, setActiveView] = useState<string | null>(null);
-  const [alertsOpen, setAlertsOpen] = useState(false);
-  const [analyticsOpen, setAnalyticsOpen] = useState(false);
 
-  // Data for dashboard
-  const { stats: dashboardStats, isLoading: dashboardLoading } = useSafetyDashboardStats();
+  const { stats: dashboardStats } = useSafetyDashboardStats();
   const { data: recentDocuments } = useRecentDocuments();
-  const { data: streakData } = useSafetyStreak();
-  const { data: trendsData } = useSafetyTrends();
   const { overdueItems: equipmentOverdue, dueSoonItems: equipmentDueSoon } = useSafetyEquipment();
   const { data: coshhOverdue = [] } = useCOSHHOverdueReviews();
-  const { data: coshhUpcoming = [] } = useCOSHHUpcomingReviews();
-  const { data: weeklySummary, isLoading: weeklyLoading } = useWeeklySafetySummary();
+  const { data: weeklySummary } = useWeeklySafetySummary();
 
   useEffect(() => {
     const tab = searchParams.get('tab');
-    if (tab === 'briefings') {
-      setActiveView('team-briefing');
-    } else if (tab === 'saved-rams' || tab === 'documents') {
-      setActiveView('documents');
-    }
+    if (tab === 'briefings') setActiveView('team-briefing');
+    else if (tab === 'saved-rams' || tab === 'documents') setActiveView('documents');
   }, [searchParams]);
 
-  const equipmentBadge = dashboardStats.equipmentDue + dashboardStats.equipmentOverdue;
+  const equipmentDueCount = equipmentOverdue.length + equipmentDueSoon.length;
 
+  // Verdict — pick the most action-worthy signal first.
+  const { headline, verdict, cta } = useMemo(() => {
+    if (coshhOverdue.length > 0) {
+      return {
+        headline: pickHeadline(HEADLINES_OVERDUE),
+        verdict: `${coshhOverdue.length} COSHH ${coshhOverdue.length === 1 ? 'review' : 'reviews'} overdue. Closing those out keeps the score green.`,
+        cta: { label: 'Open COSHH', onClick: () => setActiveView('coshh') },
+      };
+    }
+    if (equipmentOverdue.length > 0) {
+      return {
+        headline: pickHeadline(HEADLINES_OVERDUE),
+        verdict: `${equipmentOverdue.length} ${equipmentOverdue.length === 1 ? 'item' : 'items'} of equipment overdue an inspection.`,
+        cta: { label: 'Open equipment', onClick: () => setActiveView('equipment') },
+      };
+    }
+    if (dashboardStats.activePermits > 0) {
+      return {
+        headline: pickHeadline(HEADLINES_PERMITS),
+        verdict: `${dashboardStats.activePermits} active ${dashboardStats.activePermits === 1 ? 'permit' : 'permits'} on site, nothing overdue. Steady ship.`,
+        cta: { label: 'View permits', onClick: () => setActiveView('permit-to-work') },
+      };
+    }
+    if (dashboardStats.totalDocuments > 0) {
+      return {
+        headline: pickHeadline(HEADLINES_CLEAR),
+        verdict: `${dashboardStats.totalDocuments} safety ${dashboardStats.totalDocuments === 1 ? 'document' : 'documents'} on file. Pull a RAMS together for tomorrow's job in under a minute.`,
+        cta: { label: 'New RAMS', onClick: () => setActiveView('ai-rams') },
+      };
+    }
+    return {
+      headline: pickHeadline(HEADLINES_EMPTY),
+      verdict: 'No safety docs yet. Generate your first RAMS in under a minute — AI handles the boilerplate.',
+      cta: { label: 'New RAMS', onClick: () => setActiveView('ai-rams') },
+    };
+  }, [coshhOverdue.length, equipmentOverdue.length, dashboardStats.activePermits, dashboardStats.totalDocuments]);
+
+  const safetyScore = weeklySummary?.safetyScore ?? null;
+  const stats: SafetyStat[] = [
+    {
+      label: 'Score',
+      value: safetyScore != null ? `${safetyScore}` : '—',
+      sub:
+        safetyScore == null
+          ? 'No data yet'
+          : safetyScore >= 80
+            ? 'Strong'
+            : safetyScore >= 60
+              ? 'Steady'
+              : 'Needs attention',
+      accent: true,
+      onClick: () => setActiveView('documents'),
+    },
+    {
+      label: 'Documents',
+      value: dashboardStats.totalDocuments,
+      sub: 'On file',
+      onClick: () => setActiveView('documents'),
+    },
+    {
+      label: 'Permits',
+      value: dashboardStats.activePermits,
+      sub: dashboardStats.activePermits === 1 ? '1 active' : 'Active now',
+      onClick: () => setActiveView('permit-to-work'),
+    },
+    {
+      label: 'Equipment',
+      value: equipmentDueCount,
+      sub:
+        equipmentOverdue.length > 0
+          ? `${equipmentOverdue.length} overdue`
+          : equipmentDueCount > 0
+            ? 'Due soon'
+            : 'All clear',
+      onClick: () => setActiveView('equipment'),
+    },
+  ];
+
+  // Tool grids
+  const recentCards: ToolCard[] = (recentDocuments ?? []).slice(0, 3).map((doc) => {
+    const d = new Date(doc.date);
+    const now = new Date();
+    const diff = Math.floor((now.getTime() - d.getTime()) / 86400000);
+    const dateLabel =
+      diff === 0
+        ? 'Today'
+        : diff === 1
+          ? '1d ago'
+          : diff < 7
+            ? `${diff}d ago`
+            : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+    return {
+      id: `recent-${doc.type}-${doc.id}`,
+      eyebrow: doc.type,
+      title: doc.title,
+      description: 'Open in Documents Hub.',
+      meta: dateLabel,
+      onClick: () => setActiveView('documents'),
+    };
+  });
+
+  const coreTools: ToolCard[] = [
+    {
+      id: 'ai-rams',
+      eyebrow: 'AI',
+      title: 'RAMS Generator',
+      description: 'AI-powered risk assessments and method statements.',
+      onClick: () => setActiveView('ai-rams'),
+      meta: 'Start a RAMS',
+    },
+    {
+      id: 'documents',
+      eyebrow: 'Hub',
+      title: 'Documents Hub',
+      description: 'Every saved RAMS, permit and assessment in one place.',
+      onClick: () => setActiveView('documents'),
+      meta:
+        dashboardStats.totalDocuments > 0
+          ? `${dashboardStats.totalDocuments} saved`
+          : 'Empty',
+    },
+    {
+      id: 'safety-templates',
+      eyebrow: 'Library',
+      title: 'Safety Templates',
+      description: 'UK electrical safety document templates.',
+      onClick: () => setActiveView('safety-templates'),
+      meta: 'Browse templates',
+    },
+  ];
+
+  const recordingTools: ToolCard[] = [
+    {
+      id: 'hazard-database',
+      eyebrow: 'Hazards',
+      title: 'Hazard Database',
+      description: 'Comprehensive electrical hazard reference.',
+      onClick: () => setActiveView('hazard-database'),
+      meta: 'Browse hazards',
+    },
+    {
+      id: 'photo-docs',
+      eyebrow: 'Photos',
+      title: 'Photo Documentation',
+      description: 'Document conditions on site with timestamps.',
+      onClick: () => setActiveView('photo-docs'),
+      meta: 'Capture',
+    },
+    {
+      id: 'team-briefing',
+      eyebrow: 'Briefings',
+      title: 'Team Briefing',
+      description: 'Pre-work safety briefings and toolbox talks.',
+      onClick: () => setActiveView('team-briefing'),
+      meta:
+        dashboardStats.upcomingBriefings > 0
+          ? `${dashboardStats.upcomingBriefings} upcoming`
+          : 'Schedule one',
+    },
+    {
+      id: 'near-miss',
+      eyebrow: 'Incidents',
+      title: 'Near Miss',
+      description: 'Report and track close-calls before they bite.',
+      onClick: () => setActiveView('near-miss'),
+      meta: 'Log a near miss',
+    },
+    {
+      id: 'safety-observations',
+      eyebrow: 'Behaviour',
+      title: 'Safety Observations',
+      description: 'Log positive behaviours and improvements seen on site.',
+      onClick: () => setActiveView('safety-observations'),
+      meta: 'New observation',
+    },
+    {
+      id: 'site-diary',
+      eyebrow: 'CDM',
+      title: 'Site Diary',
+      description: 'Daily site log for CDM compliance.',
+      onClick: () => setActiveView('site-diary'),
+      meta: 'Open diary',
+    },
+  ];
+
+  const complianceTools: ToolCard[] = [
+    {
+      id: 'permit-to-work',
+      eyebrow: 'Permits',
+      title: 'Permit to Work',
+      description: 'Issue and manage live work permits.',
+      onClick: () => setActiveView('permit-to-work'),
+      meta:
+        dashboardStats.activePermits > 0
+          ? `${dashboardStats.activePermits} active`
+          : 'Issue a permit',
+    },
+    {
+      id: 'coshh',
+      eyebrow: 'COSHH',
+      title: 'COSHH Assessments',
+      description: 'Chemical substance hazard assessments.',
+      onClick: () => setActiveView('coshh'),
+      meta:
+        coshhOverdue.length > 0
+          ? `${coshhOverdue.length} overdue`
+          : 'All current',
+      alert: coshhOverdue.length > 0,
+    },
+    {
+      id: 'inspection-checklists',
+      eyebrow: 'Inspections',
+      title: 'Inspection Checklists',
+      description: 'Standardised safety inspection forms.',
+      onClick: () => setActiveView('inspection-checklists'),
+      meta: 'Run an inspection',
+    },
+    {
+      id: 'accident-book',
+      eyebrow: 'RIDDOR',
+      title: 'Accident Book',
+      description: 'RIDDOR-compliant incident records.',
+      onClick: () => setActiveView('accident-book'),
+      meta:
+        dashboardStats.accidentCount30Days > 0
+          ? `${dashboardStats.accidentCount30Days} this month`
+          : 'No incidents',
+    },
+    {
+      id: 'safe-isolation',
+      eyebrow: 'GS38',
+      title: 'Safe Isolation',
+      description: 'Step-by-step GS38 isolation records.',
+      onClick: () => setActiveView('safe-isolation'),
+      meta: 'New record',
+    },
+    {
+      id: 'pre-use-checks',
+      eyebrow: 'PUWER',
+      title: 'Pre-Use Checks',
+      description: 'PUWER 1998 equipment inspection.',
+      onClick: () => setActiveView('pre-use-checks'),
+      meta: 'New check',
+    },
+    {
+      id: 'fire-watch',
+      eyebrow: 'Hot work',
+      title: 'Fire Watch',
+      description: 'Hot-work fire-watch timer and checklist.',
+      onClick: () => setActiveView('fire-watch'),
+      meta: 'Start watch',
+    },
+  ];
+
+  const resourceTools: ToolCard[] = [
+    {
+      id: 'equipment',
+      eyebrow: 'PPE',
+      title: 'Equipment Tracker',
+      description: 'Track PPE and safety equipment inspections.',
+      onClick: () => setActiveView('equipment'),
+      meta:
+        equipmentDueCount > 0 ? `${equipmentDueCount} due` : 'All clear',
+      alert: equipmentOverdue.length > 0,
+    },
+    {
+      id: 'emergency',
+      eyebrow: 'Emergency',
+      title: 'Emergency Procedures',
+      description: 'Quick access to emergency protocols.',
+      onClick: () => setActiveView('emergency'),
+      meta: 'View protocols',
+    },
+    {
+      id: 'safety-alerts',
+      eyebrow: 'Alerts',
+      title: 'Safety Alerts',
+      description: 'Latest industry safety notices.',
+      onClick: () => setActiveView('safety-alerts'),
+      meta: 'Browse alerts',
+    },
+    {
+      id: 'safety-resources',
+      eyebrow: 'Resources',
+      title: 'Safety Resources',
+      description: 'Guidance notes, posters and HSE publications.',
+      onClick: () => setActiveView('safety-resources'),
+      meta: 'Open library',
+    },
+  ];
+
+  // ── Active sub-view ──────────────────────────────────────────────────
   const renderToolContent = () => {
     switch (activeView) {
       case 'ai-rams':
@@ -293,41 +865,40 @@ const SiteSafety = () => {
   };
 
   if (activeView) {
-    // Full-width views render without max-width container
-    const isFullWidth =
-      activeView === 'equipment' ||
-      activeView === 'photo-docs' ||
-      activeView === 'ai-rams' ||
-      activeView === 'permit-to-work' ||
-      activeView === 'coshh' ||
-      activeView === 'inspection-checklists' ||
-      activeView === 'accident-book' ||
-      activeView === 'safety-templates' ||
-      activeView === 'safe-isolation' ||
-      activeView === 'pre-use-checks' ||
-      activeView === 'safety-observations' ||
-      activeView === 'site-diary' ||
-      activeView === 'fire-watch' ||
-      activeView === 'safety-alerts' ||
-      activeView === 'safety-resources' ||
-      activeView === 'documents';
+    const isFullWidth = [
+      'equipment',
+      'photo-docs',
+      'ai-rams',
+      'permit-to-work',
+      'coshh',
+      'inspection-checklists',
+      'accident-book',
+      'safety-templates',
+      'safe-isolation',
+      'pre-use-checks',
+      'safety-observations',
+      'site-diary',
+      'fire-watch',
+      'safety-alerts',
+      'safety-resources',
+      'documents',
+    ].includes(activeView);
 
     return (
       <RAMSProvider>
-        <div className="bg-background animate-fade-in">
+        <div className="bg-elec-dark min-h-screen animate-fade-in">
           {isFullWidth ? (
-            // Edge-to-edge layout for native mobile feel
             <Suspense fallback={<ToolLoader />}>{renderToolContent()}</Suspense>
           ) : (
-            // Standard contained layout for other views
-            <div className="px-4 py-4 sm:py-6">
+            <div className="px-4 py-4 sm:py-6 max-w-7xl mx-auto">
               <div className="mb-4 sm:mb-6">
                 <button
+                  type="button"
                   onClick={() => setActiveView(null)}
                   className="flex items-center gap-2 text-white active:opacity-70 active:scale-[0.98] transition-all touch-manipulation h-11 -ml-2 px-2 rounded-lg"
                 >
                   <ArrowLeft className="h-5 w-5" />
-                  <span className="text-sm font-medium">Back to Safety Tools</span>
+                  <span className="text-sm font-medium">Back to Site Safety</span>
                 </button>
               </div>
               <Suspense fallback={<ToolLoader />}>{renderToolContent()}</Suspense>
@@ -338,415 +909,54 @@ const SiteSafety = () => {
     );
   }
 
+  // ── Default editorial dashboard ──────────────────────────────────────
   return (
     <RAMSProvider>
-      <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
-        {/* Sticky Header */}
-        <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
-          <div className="px-4 py-2">
-            <button
-              onClick={() => navigate('/electrician')}
-              className="flex items-center gap-2 text-white active:opacity-70 active:scale-[0.98] transition-all touch-manipulation h-11 -ml-2 px-2 rounded-lg"
-            >
-              <ArrowLeft className="h-5 w-5" />
-              <span className="text-sm font-medium">Electrician Hub</span>
-            </button>
-          </div>
-        </div>
+      <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-elec-dark min-h-screen pb-24">
+        <PageMasthead />
 
-        <motion.main
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="px-4 py-4 space-y-6"
-        >
-          {/* Page Title */}
-          <motion.div variants={itemVariants}>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-              Site Safety
-            </h1>
-            <p className="text-sm text-white/50 mt-1">RAMS, compliance, and documentation</p>
-          </motion.div>
+        <div className="px-4 py-4 space-y-12 sm:space-y-16 max-w-7xl mx-auto">
+          <Hero headline={headline} verdict={verdict} cta={cta} />
 
-          {/* Recent Documents */}
-          {recentDocuments && recentDocuments.length > 0 && (
-            <motion.section variants={itemVariants} className="space-y-3">
-              <SectionHeader title="Recent Documents" />
-              <motion.div variants={containerVariants} className="grid grid-cols-2 gap-3">
-                {recentDocuments.slice(0, 2).map((doc) => {
-                  const d = new Date(doc.date);
-                  const now = new Date();
-                  const diff = Math.floor((now.getTime() - d.getTime()) / 86400000);
-                  const dateLabel = diff === 0 ? 'Today' : diff === 1 ? 'Yesterday' : diff < 7 ? `${diff}d ago` : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
-                  return (
-                    <BusinessCard
-                      key={`${doc.type}-${doc.id}`}
-                      title={doc.title}
-                      description={doc.type}
-                      icon={FileText}
-                      onClick={() => setActiveView('documents')}
-                      variant="compact"
-                      accentColor="from-amber-400 via-yellow-400 to-orange-400"
-                      iconColor="text-amber-400"
-                      iconBg="bg-amber-500/10 border border-amber-500/20"
-                      liveSubtitle={dateLabel}
-                    />
-                  );
-                })}
-              </motion.div>
-            </motion.section>
+          <SafetyHeadlineStats stats={stats} />
+
+          {recentCards.length > 0 && (
+            <EditorialToolGrid
+              number="02"
+              label="RECENT"
+              cards={recentCards}
+              columns="three"
+            />
           )}
 
-          {/* Core Tools */}
-          <motion.section variants={itemVariants} className="space-y-3">
-            <SectionHeader title="Core Tools" />
-            <motion.div variants={containerVariants} className="grid grid-cols-2 gap-3">
-              <BusinessCard
-                title="RAMS Generator"
-                description="AI-powered risk assessments"
-                icon={Sparkles}
-                onClick={() => setActiveView('ai-rams')}
-                variant="hero"
-                accentColor="from-orange-400 via-red-400 to-rose-500"
-                iconColor="text-orange-400"
-                iconBg="bg-orange-500/10 border border-orange-500/20"
-                badge="AI"
-              />
-              <BusinessCard
-                title="Documents Hub"
-                description="All safety documents in one place"
-                icon={FolderOpen}
-                onClick={() => setActiveView('documents')}
-                variant="hero"
-                accentColor="from-purple-400 via-violet-400 to-indigo-400"
-                iconColor="text-purple-400"
-                iconBg="bg-purple-500/10 border border-purple-500/20"
-              />
-              <div className="col-span-2">
-                <BusinessCard
-                  title="Safety Templates"
-                  description="UK electrical safety document templates"
-                  icon={Library}
-                  onClick={() => setActiveView('safety-templates')}
-                  variant="hero"
-                  accentColor="from-teal-400 via-cyan-400 to-blue-400"
-                  iconColor="text-teal-400"
-                  iconBg="bg-teal-500/10 border border-teal-500/20"
-                  badge="New"
-                />
-              </div>
-            </motion.div>
-          </motion.section>
+          <EditorialToolGrid
+            number={recentCards.length > 0 ? '03' : '02'}
+            label="CORE TOOLS"
+            cards={coreTools}
+            columns="three"
+          />
 
-          {/* Safety & Recording */}
-          <motion.section variants={itemVariants} className="space-y-3">
-            <SectionHeader title="Safety & Recording" />
-            <motion.div variants={containerVariants} className="grid grid-cols-2 gap-3">
-              <BusinessCard
-                title="Hazard Database"
-                description="Comprehensive electrical hazard info"
-                icon={Shield}
-                onClick={() => setActiveView('hazard-database')}
-                accentColor="from-blue-400 via-blue-500 to-indigo-400"
-                iconColor="text-blue-400"
-                iconBg="bg-blue-500/10 border border-blue-500/20"
-              />
-              <BusinessCard
-                title="Photo Documentation"
-                description="Document safety conditions on site"
-                icon={Camera}
-                onClick={() => setActiveView('photo-docs')}
-                accentColor="from-emerald-400 via-green-400 to-teal-400"
-                iconColor="text-emerald-400"
-                iconBg="bg-emerald-500/10 border border-emerald-500/20"
-              />
-              <BusinessCard
-                title="Team Briefing"
-                description="Pre-work safety briefings & toolbox talks"
-                icon={Users}
-                onClick={() => setActiveView('team-briefing')}
-                accentColor="from-purple-400 via-violet-400 to-indigo-400"
-                iconColor="text-purple-400"
-                iconBg="bg-purple-500/10 border border-purple-500/20"
-                liveSubtitle={dashboardStats.upcomingBriefings > 0 ? `${dashboardStats.upcomingBriefings} upcoming` : undefined}
-              />
-              <BusinessCard
-                title="Near Miss Reports"
-                description="Report and track safety incidents"
-                icon={AlertTriangle}
-                onClick={() => setActiveView('near-miss')}
-                accentColor="from-red-400 via-rose-400 to-pink-400"
-                iconColor="text-red-400"
-                iconBg="bg-red-500/10 border border-red-500/20"
-              />
-              <BusinessCard
-                title="Safety Observations"
-                description="Log positive behaviours and improvements"
-                icon={Eye}
-                onClick={() => setActiveView('safety-observations')}
-                accentColor="from-lime-400 via-green-400 to-emerald-400"
-                iconColor="text-lime-400"
-                iconBg="bg-lime-500/10 border border-lime-500/20"
-              />
-              <BusinessCard
-                title="Site Diary"
-                description="Professional daily log for CDM compliance"
-                icon={CalendarDays}
-                onClick={() => setActiveView('site-diary')}
-                accentColor="from-violet-400 via-purple-400 to-indigo-400"
-                iconColor="text-violet-400"
-                iconBg="bg-violet-500/10 border border-violet-500/20"
-              />
-            </motion.div>
-          </motion.section>
+          <EditorialToolGrid
+            number={recentCards.length > 0 ? '04' : '03'}
+            label="SAFETY & RECORDING"
+            cards={recordingTools}
+            columns="three"
+          />
 
-          {/* Compliance & Permits */}
-          <motion.section variants={itemVariants} className="space-y-3">
-            <SectionHeader title="Compliance & Permits" />
-            <motion.div variants={containerVariants} className="grid grid-cols-2 gap-3">
-              <BusinessCard
-                title="Permit to Work"
-                description="Issue and manage work permits"
-                icon={Lock}
-                onClick={() => setActiveView('permit-to-work')}
-                accentColor="from-amber-400 via-amber-500 to-orange-400"
-                iconColor="text-amber-400"
-                iconBg="bg-amber-500/10 border border-amber-500/20"
-                liveSubtitle={dashboardStats.activePermits > 0 ? `${dashboardStats.activePermits} active` : undefined}
-              />
-              <BusinessCard
-                title="COSHH Assessments"
-                description="Chemical substance hazard assessments"
-                icon={FlaskConical}
-                onClick={() => setActiveView('coshh')}
-                accentColor="from-green-400 via-emerald-400 to-teal-400"
-                iconColor="text-green-400"
-                iconBg="bg-green-500/10 border border-green-500/20"
-                liveSubtitle={dashboardStats.coshhOverdueReviews > 0 ? `${dashboardStats.coshhOverdueReviews} overdue` : undefined}
-              />
-              <BusinessCard
-                title="Inspection Checklists"
-                description="Standardised safety inspection forms"
-                icon={ClipboardCheck}
-                onClick={() => setActiveView('inspection-checklists')}
-                accentColor="from-indigo-400 via-indigo-500 to-blue-400"
-                iconColor="text-indigo-400"
-                iconBg="bg-indigo-500/10 border border-indigo-500/20"
-              />
-              <BusinessCard
-                title="Accident Book"
-                description="RIDDOR-compliant incident records"
-                icon={BookOpen}
-                onClick={() => setActiveView('accident-book')}
-                accentColor="from-red-500 via-rose-500 to-pink-400"
-                iconColor="text-red-400"
-                iconBg="bg-red-500/10 border border-red-500/20"
-                liveSubtitle={dashboardStats.accidentCount30Days > 0 ? `${dashboardStats.accidentCount30Days} this month` : undefined}
-              />
-              <BusinessCard
-                title="Safe Isolation (GS38)"
-                description="Step-by-step GS38 isolation records"
-                icon={Zap}
-                onClick={() => setActiveView('safe-isolation')}
-                accentColor="from-red-400 via-orange-400 to-amber-400"
-                iconColor="text-red-400"
-                iconBg="bg-red-500/10 border border-red-500/20"
-              />
-              <BusinessCard
-                title="Pre-Use Checks"
-                description="PUWER 1998 equipment inspection"
-                icon={ClipboardCheck}
-                onClick={() => setActiveView('pre-use-checks')}
-                accentColor="from-sky-400 via-blue-400 to-indigo-400"
-                iconColor="text-sky-400"
-                iconBg="bg-sky-500/10 border border-sky-500/20"
-              />
-              <div className="col-span-2">
-                <BusinessCard
-                  title="Fire Watch"
-                  description="Hot work fire watch timer and checklist"
-                  icon={Flame}
-                  onClick={() => setActiveView('fire-watch')}
-                  accentColor="from-orange-500 via-amber-400 to-yellow-400"
-                  iconColor="text-orange-400"
-                  iconBg="bg-orange-500/10 border border-orange-500/20"
-                />
-              </div>
-            </motion.div>
-          </motion.section>
+          <EditorialToolGrid
+            number={recentCards.length > 0 ? '05' : '04'}
+            label="COMPLIANCE & PERMITS"
+            cards={complianceTools}
+            columns="three"
+          />
 
-          {/* Resources & Equipment */}
-          <motion.section variants={itemVariants} className="space-y-3">
-            <SectionHeader title="Resources & Equipment" />
-            <motion.div variants={containerVariants} className="grid grid-cols-2 gap-3">
-              <BusinessCard
-                title="Equipment Tracker"
-                description="Track PPE and safety equipment"
-                icon={Wrench}
-                onClick={() => setActiveView('equipment')}
-                variant="compact"
-                accentColor="from-cyan-400 via-teal-400 to-emerald-400"
-                iconColor="text-cyan-400"
-                iconBg="bg-cyan-500/10 border border-cyan-500/20"
-                liveSubtitle={equipmentBadge > 0 ? `${equipmentBadge} due` : 'All clear'}
-              />
-              <BusinessCard
-                title="Emergency Procedures"
-                description="Quick access to emergency protocols"
-                icon={Phone}
-                onClick={() => setActiveView('emergency')}
-                variant="compact"
-                accentColor="from-pink-400 via-rose-400 to-red-400"
-                iconColor="text-pink-400"
-                iconBg="bg-pink-500/10 border border-pink-500/20"
-              />
-              <BusinessCard
-                title="Safety Alerts"
-                description="Latest safety alerts and industry notices"
-                icon={Bell}
-                onClick={() => setActiveView('safety-alerts')}
-                variant="compact"
-                accentColor="from-rose-400 via-red-400 to-pink-400"
-                iconColor="text-rose-400"
-                iconBg="bg-rose-500/10 border border-rose-500/20"
-              />
-              <BusinessCard
-                title="Safety Resources"
-                description="Guidance notes, posters, and HSE publications"
-                icon={FolderArchive}
-                onClick={() => setActiveView('safety-resources')}
-                variant="compact"
-                accentColor="from-slate-400 via-gray-400 to-zinc-400"
-                iconColor="text-slate-400"
-                iconBg="bg-slate-500/10 border border-slate-500/20"
-              />
-            </motion.div>
-          </motion.section>
-
-          {/* Overview Stats */}
-          <motion.section variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
-              <div className="grid grid-cols-4 divide-x divide-white/[0.06]">
-                <SafetyStatCard label="Documents" value={dashboardStats.totalDocuments} icon={FileText} />
-                <SafetyStatCard
-                  label="Equipment"
-                  value={dashboardStats.equipmentDue + dashboardStats.equipmentOverdue}
-                  icon={Wrench}
-                  variant={dashboardStats.equipmentOverdue > 0 ? 'danger' : 'success'}
-                />
-                <SafetyStatCard
-                  label="Score"
-                  value={weeklySummary?.safetyScore ?? 0}
-                  icon={Shield}
-                  variant={(weeklySummary?.safetyScore ?? 0) >= 80 ? 'success' : (weeklySummary?.safetyScore ?? 0) >= 60 ? undefined : 'danger'}
-                />
-                <SafetyStatCard label="Permits" value={dashboardStats.activePermits} icon={Lock} />
-              </div>
-            </div>
-          </motion.section>
-
-          {/* Alerts */}
-          <motion.section variants={itemVariants}>
-            <Collapsible open={alertsOpen} onOpenChange={setAlertsOpen}>
-              <CollapsibleTrigger asChild>
-                <button className="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation h-12 active:bg-white/[0.06] transition-colors">
-                  <div className="flex items-center gap-2">
-                    <AlertTriangle className="h-4 w-4 text-amber-400" />
-                    <span className="text-sm font-semibold text-white">Alerts</span>
-                    {equipmentOverdue.length + coshhOverdue.length > 0 && (
-                      <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-red-500/15 text-red-400">
-                        {equipmentOverdue.length + coshhOverdue.length}
-                      </span>
-                    )}
-                  </div>
-                  <motion.div
-                    animate={{ rotate: alertsOpen ? 180 : 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <ChevronDown className="h-4 w-4 text-white" />
-                  </motion.div>
-                </button>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <div className="mt-3 space-y-3">
-                  <EquipmentAlertsCard
-                    overdueItems={equipmentOverdue}
-                    dueSoonItems={equipmentDueSoon}
-                    onTap={() => setActiveView('equipment')}
-                  />
-                  <COSHHAlertsCard
-                    overdueAssessments={coshhOverdue}
-                    upcomingAssessments={coshhUpcoming}
-                    onTap={() => setActiveView('coshh')}
-                    onRenew={() => setActiveView('coshh')}
-                  />
-                </div>
-              </CollapsibleContent>
-            </Collapsible>
-          </motion.section>
-
-          {/* Analytics */}
-          <motion.section variants={itemVariants}>
-            <Collapsible open={analyticsOpen} onOpenChange={setAnalyticsOpen}>
-              <CollapsibleTrigger asChild>
-                <button className="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation h-12 active:bg-white/[0.06] transition-colors">
-                  <div className="flex items-center gap-2">
-                    <BarChart3 className="h-4 w-4 text-indigo-400" />
-                    <span className="text-sm font-semibold text-white">Analytics</span>
-                    {weeklySummary?.safetyScore != null && (
-                      <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
-                        weeklySummary.safetyScore >= 80
-                          ? 'bg-green-500/15 text-green-400'
-                          : weeklySummary.safetyScore >= 60
-                            ? 'bg-amber-500/15 text-amber-400'
-                            : 'bg-red-500/15 text-red-400'
-                      }`}>
-                        {weeklySummary.safetyScore}%
-                      </span>
-                    )}
-                  </div>
-                  <motion.div
-                    animate={{ rotate: analyticsOpen ? 180 : 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <ChevronDown className="h-4 w-4 text-white" />
-                  </motion.div>
-                </button>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <div className="mt-3 space-y-3">
-                  <SafetyDashboard
-                    stats={dashboardStats}
-                    isLoading={dashboardLoading}
-                    onCardTap={(section) => setActiveView(section)}
-                    overrideScore={
-                      trendsData?.scoreBreakdown
-                        ? trendsData.scoreBreakdown.reduce((sum, b) => sum + b.score, 0)
-                        : undefined
-                    }
-                  />
-
-                  {streakData && <SafetyStreakCard streak={streakData} />}
-
-                  <WeeklySummaryCard
-                    stats={dashboardStats}
-                    weekOverWeekChange={trendsData?.weekOverWeekChange}
-                  />
-
-                  <WeeklyReportCard summary={weeklySummary} isLoading={weeklyLoading} />
-
-                  {trendsData && <SafetyTrendsCard trends={trendsData} />}
-
-                  {trendsData?.scoreBreakdown && (
-                    <ScoreBreakdownCard breakdown={trendsData.scoreBreakdown} />
-                  )}
-
-                  <SignatureTrackingDashboard onTap={(docType) => setActiveView(docType)} />
-                </div>
-              </CollapsibleContent>
-            </Collapsible>
-          </motion.section>
-        </motion.main>
+          <EditorialToolGrid
+            number={recentCards.length > 0 ? '06' : '05'}
+            label="RESOURCES"
+            cards={resourceTools}
+            columns="two"
+          />
+        </div>
       </div>
     </RAMSProvider>
   );

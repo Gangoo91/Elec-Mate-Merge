@@ -181,7 +181,7 @@ export function useMyCollegeOverview(): MyCollegeOverview {
           kind: 'portfolio_action',
           title: 'Tutor needs your response',
           detail: c.content?.slice(0, 140) ?? null,
-          href: '/apprentice/portfolio-hub?section=tutor',
+          href: '/apprentice/hub?section=tutor',
         });
       }
     } else {

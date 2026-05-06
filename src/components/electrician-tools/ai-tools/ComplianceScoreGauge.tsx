@@ -1,6 +1,15 @@
-import { Card } from '@/components/ui/card';
-import { CheckCircle2, XCircle, AlertCircle, TrendingUp } from 'lucide-react';
+/**
+ * ComplianceScoreGauge — editorial compliance overview gauge.
+ *
+ * Drops the green/red/amber flood backgrounds and inline icons. Three-cell
+ * stat strip (pass / fail / testing) with semantic text accents only,
+ * bar trio with elec-yellow primary + semantic toned bars, prominent
+ * tabular-num overall score.
+ */
+
 import { Progress } from '@/components/ui/progress';
+import { Eyebrow } from '@/components/college/primitives';
+import { cn } from '@/lib/utils';
 
 interface ComplianceScoreGaugeProps {
   passCount: number;
@@ -20,97 +29,83 @@ export const ComplianceScoreGauge = ({
   const testingPercentage =
     totalChecks > 0 ? Math.round((requiresTestingCount / totalChecks) * 100) : 0;
 
-  const getOverallStatus = () => {
-    if (failCount > 0)
-      return { text: 'Action Required', color: 'text-red-500', bg: 'bg-red-500/10' };
-    if (requiresTestingCount > 0)
-      return { text: 'Testing Required', color: 'text-amber-500', bg: 'bg-amber-500/10' };
-    return { text: 'Compliant', color: 'text-green-500', bg: 'bg-green-500/10' };
-  };
-
-  const status = getOverallStatus();
+  const status =
+    failCount > 0
+      ? { label: 'Action required', tone: 'text-red-300 border-red-500/40 bg-red-500/[0.08]' }
+      : requiresTestingCount > 0
+        ? {
+            label: 'Testing required',
+            tone: 'text-amber-300 border-amber-500/40 bg-amber-500/[0.08]',
+          }
+        : {
+            label: 'Compliant',
+            tone: 'text-emerald-300 border-emerald-500/40 bg-emerald-500/[0.08]',
+          };
 
   return (
-    <Card className="p-4 sm:p-6 bg-card border-border/40">
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold text-foreground">Compliance Overview</h3>
-          <div className={`px-3 py-1 rounded-full ${status.bg}`}>
-            <span className={`text-sm font-medium ${status.color}`}>{status.text}</span>
-          </div>
-        </div>
-
-        {/* Visual breakdown */}
-        <div className="grid grid-cols-3 gap-3">
-          <div className="text-center space-y-1">
-            <div className="bg-green-500/10 p-3 rounded-lg">
-              <CheckCircle2 className="h-6 w-6 text-green-500 mx-auto" />
-            </div>
-            <p className="text-2xl font-bold text-foreground">{passCount}</p>
-            <p className="text-xs text-muted-foreground">Passed</p>
-          </div>
-          <div className="text-center space-y-1">
-            <div className="bg-red-500/10 p-3 rounded-lg">
-              <XCircle className="h-6 w-6 text-red-500 mx-auto" />
-            </div>
-            <p className="text-2xl font-bold text-foreground">{failCount}</p>
-            <p className="text-xs text-muted-foreground">Failed</p>
-          </div>
-          <div className="text-center space-y-1">
-            <div className="bg-amber-500/10 p-3 rounded-lg">
-              <AlertCircle className="h-6 w-6 text-amber-500 mx-auto" />
-            </div>
-            <p className="text-2xl font-bold text-foreground">{requiresTestingCount}</p>
-            <p className="text-xs text-muted-foreground">Testing Needed</p>
-          </div>
-        </div>
-
-        {/* Progress bars */}
-        <div className="space-y-3 pt-2">
-          <div>
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-xs text-muted-foreground">Pass Rate</span>
-              <span className="text-xs font-medium text-green-500">{passPercentage}%</span>
-            </div>
-            <Progress value={passPercentage} className="h-2 bg-muted/30" />
-          </div>
-
-          {failCount > 0 && (
-            <div>
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-xs text-muted-foreground">Failures</span>
-                <span className="text-xs font-medium text-red-500">{failPercentage}%</span>
-              </div>
-              <Progress value={failPercentage} className="h-2 bg-muted/30 [&>div]:bg-red-500" />
-            </div>
+    <section className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 sm:p-6">
+      {/* Header */}
+      <div className="flex items-baseline justify-between gap-3 flex-wrap">
+        <Eyebrow>COMPLIANCE OVERVIEW</Eyebrow>
+        <span
+          className={cn(
+            'inline-flex items-center text-[10px] font-semibold uppercase tracking-[0.14em] border rounded-md px-1.5 py-0.5',
+            status.tone
           )}
+        >
+          {status.label}
+        </span>
+      </div>
 
-          {requiresTestingCount > 0 && (
-            <div>
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-xs text-muted-foreground">Requires Testing</span>
-                <span className="text-xs font-medium text-amber-500">{testingPercentage}%</span>
-              </div>
-              <Progress
-                value={testingPercentage}
-                className="h-2 bg-muted/30 [&>div]:bg-amber-500"
-              />
-            </div>
-          )}
-        </div>
+      {/* Stat strip */}
+      <dl className="mt-4 grid grid-cols-3 gap-3 text-center">
+        <Cell value={passCount} label="Passed" tone="text-emerald-300" />
+        <Cell value={failCount} label="Failed" tone="text-red-300" />
+        <Cell value={requiresTestingCount} label="Testing" tone="text-amber-300" />
+      </dl>
 
-        {/* Overall score */}
-        <div className="pt-4 border-t border-border/40">
-          <div className="flex items-center gap-2">
-            <TrendingUp className="h-4 w-4 text-primary" />
-            <span className="text-sm font-medium text-foreground">Overall Compliance Score</span>
-          </div>
-          <div className="mt-2 flex items-baseline gap-2">
-            <span className="text-3xl font-bold text-foreground">{passPercentage}%</span>
-            <span className="text-sm text-muted-foreground">of checks passed</span>
-          </div>
+      {/* Bars */}
+      <div className="mt-5 pt-4 border-t border-white/[0.06] space-y-3">
+        <Bar label="Pass rate" value={passPercentage} tone="text-emerald-300" />
+        {failCount > 0 && (
+          <Bar label="Failures" value={failPercentage} tone="text-red-300" />
+        )}
+        {requiresTestingCount > 0 && (
+          <Bar label="Requires testing" value={testingPercentage} tone="text-amber-300" />
+        )}
+      </div>
+
+      {/* Overall */}
+      <div className="mt-5 pt-4 border-t border-white/[0.06]">
+        <Eyebrow>OVERALL SCORE</Eyebrow>
+        <div className="mt-1.5 flex items-baseline gap-2">
+          <span className="text-[34px] sm:text-[40px] font-semibold tabular-nums text-elec-yellow">
+            {passPercentage}%
+          </span>
+          <span className="text-[11.5px] text-white/65">of checks passed</span>
         </div>
       </div>
-    </Card>
+    </section>
   );
 };
+
+const Cell = ({ value, label, tone }: { value: number; label: string; tone: string }) => (
+  <div>
+    <dd className={cn('text-[24px] font-semibold tabular-nums', tone)}>{value}</dd>
+    <dt className="mt-0.5 text-[10px] uppercase tracking-[0.14em] font-semibold text-white/65">
+      {label}
+    </dt>
+  </div>
+);
+
+const Bar = ({ label, value, tone }: { label: string; value: number; tone: string }) => (
+  <div>
+    <div className="flex items-baseline justify-between gap-2">
+      <span className="text-[10.5px] uppercase tracking-[0.14em] font-semibold text-white/65">
+        {label}
+      </span>
+      <span className={cn('text-[11.5px] font-semibold tabular-nums', tone)}>{value}%</span>
+    </div>
+    <Progress value={value} className="mt-1.5 h-1.5" />
+  </div>
+);

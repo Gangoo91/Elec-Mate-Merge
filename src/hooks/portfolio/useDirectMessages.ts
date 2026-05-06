@@ -51,30 +51,50 @@ export function useDirectMessages() {
   const [isSending, setIsSending] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
 
-  // Fetch mentor connections for the current user
+  // Fetch mentor connections for the current user.
+  // The embedded `profiles!mentor_connections_mentor_id_fkey` join 400s on
+  // PostgREST when the FK isn't named that way in the schema cache. Two-step
+  // lookup is robust regardless of how the FK is named.
   const fetchConnections = useCallback(async () => {
     if (!user) return;
 
     try {
-      const { data, error } = await supabase
+      const { data: connRows, error: connErr } = await supabase
         .from('mentor_connections')
-        .select(
-          `
-          *,
-          mentor:profiles!mentor_connections_mentor_id_fkey(
-            id,
-            full_name,
-            avatar_url,
-            role
-          )
-        `
-        )
+        .select('*')
         .eq('apprentice_id', user.id)
         .eq('status', 'active')
         .order('updated_at', { ascending: false });
 
-      if (error) throw error;
-      setConnections((data as MentorConnection[]) || []);
+      if (connErr) throw connErr;
+      const baseConns = (connRows || []) as Array<MentorConnection & { mentor_id: string }>;
+
+      if (baseConns.length === 0) {
+        setConnections([]);
+        return;
+      }
+
+      const mentorIds = Array.from(new Set(baseConns.map((c) => c.mentor_id).filter(Boolean)));
+      let mentorMap = new Map<
+        string,
+        { id: string; full_name: string | null; avatar_url: string | null; role: string | null }
+      >();
+      if (mentorIds.length > 0) {
+        const { data: mentorRows, error: mentorErr } = await supabase
+          .from('profiles')
+          .select('id, full_name, avatar_url, role')
+          .in('id', mentorIds);
+        if (mentorErr) throw mentorErr;
+        mentorMap = new Map(
+          (mentorRows || []).map((m: { id: string; full_name: string | null; avatar_url: string | null; role: string | null }) => [m.id, m])
+        );
+      }
+
+      const merged = baseConns.map((c) => ({
+        ...c,
+        mentor: mentorMap.get(c.mentor_id) || null,
+      })) as MentorConnection[];
+      setConnections(merged);
     } catch (err) {
       console.error('Error fetching connections:', err);
     }

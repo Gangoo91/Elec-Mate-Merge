@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { BookOpen, Search } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import PremiumCourseCard from './PremiumCourseCard';
 import type { EnhancedCareerCourse } from '@/components/apprentice/career/courses/enhancedCoursesData';
 
@@ -29,30 +28,39 @@ const ModernCoursesGrid = ({
 }: ModernCoursesGridProps) => {
   const filteredCourses = excludeId ? courses.filter((course) => course.id !== excludeId) : courses;
 
-  // Loading State — horizontal skeletons on mobile, vertical on desktop
+  // Loading state — editorial skeletons matching the rewritten card
   if (isLoading) {
     return (
       <div className="flex flex-col gap-3 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-4">
         {Array.from({ length: 6 }).map((_, idx) => (
           <div
             key={idx}
-            className="rounded-xl border border-white/[0.08] bg-[#111113] overflow-hidden animate-pulse"
+            className="rounded-2xl border border-white/[0.10] bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 animate-pulse flex flex-col"
           >
-            {/* Visual header skeleton */}
-            <div className="h-24 bg-white/[0.04]" />
-            {/* Card body skeleton */}
-            <div className="p-4 space-y-3">
-              <div className="h-4 bg-white/[0.06] rounded w-4/5" />
-              <div className="h-3 bg-white/[0.06] rounded w-1/2" />
-              <div className="flex gap-1.5">
-                <div className="h-7 bg-white/[0.04] rounded-lg w-16" />
-                <div className="h-7 bg-white/[0.04] rounded-lg w-16" />
-                <div className="h-7 bg-white/[0.04] rounded-lg w-20" />
+            <div className="flex items-start gap-3">
+              <div className="w-12 h-12 rounded-xl bg-white/[0.06] shrink-0" />
+              <div className="min-w-0 flex-1 space-y-2">
+                <div className="flex items-baseline justify-between gap-2">
+                  <div className="h-3 w-20 bg-white/[0.06] rounded" />
+                  <div className="h-4 w-12 bg-white/[0.06] rounded-md" />
+                </div>
+                <div className="h-4 w-full bg-white/[0.06] rounded" />
+                <div className="h-4 w-4/5 bg-white/[0.06] rounded" />
+                <div className="h-3 w-1/2 bg-white/[0.06] rounded" />
               </div>
-              <div className="flex items-center justify-between pt-2 border-t border-white/[0.06]">
-                <div className="h-5 bg-white/[0.06] rounded w-16" />
-                <div className="h-7 bg-elec-yellow/10 rounded-full w-16" />
+            </div>
+            <div className="mt-3 pt-3 border-t border-white/[0.06] grid grid-cols-2 gap-x-4 gap-y-2">
+              <div className="h-3 w-20 bg-white/[0.06] rounded" />
+              <div className="h-3 w-24 bg-white/[0.06] rounded" />
+              <div className="h-3 w-16 bg-white/[0.06] rounded" />
+              <div className="h-3 w-20 bg-white/[0.06] rounded" />
+            </div>
+            <div className="mt-3 pt-3 border-t border-white/[0.06] flex items-baseline justify-between gap-2">
+              <div className="space-y-1.5">
+                <div className="h-2.5 w-10 bg-white/[0.06] rounded" />
+                <div className="h-4 w-20 bg-white/[0.06] rounded" />
               </div>
+              <div className="h-8 w-20 bg-elec-yellow/10 rounded-full" />
             </div>
           </div>
         ))}
@@ -60,30 +68,31 @@ const ModernCoursesGrid = ({
     );
   }
 
-  // Empty State
+  // Empty state
   if (filteredCourses.length === 0) {
     return (
       <motion.div
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center py-16"
+        className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-8 sm:p-10 text-center"
       >
-        <div className="p-4 rounded-full bg-blue-500/10 w-fit mx-auto mb-4">
-          <Search className="h-12 w-12 text-blue-400" />
+        <div className="w-12 h-12 mx-auto rounded-xl bg-elec-yellow/[0.08] border border-elec-yellow/30 inline-flex items-center justify-center">
+          <Search className="h-5 w-5 text-elec-yellow" aria-hidden />
         </div>
-        <h3 className="text-xl font-bold text-white mb-2">No courses found</h3>
-        <p className="text-white mb-6 max-w-lg mx-auto">
-          Try adjusting your search criteria or explore different categories to find the right
-          training for you.
+        <h3 className="mt-4 text-[20px] sm:text-[24px] font-semibold tracking-tight text-white">
+          No courses match.
+        </h3>
+        <p className="mt-2 text-[13px] leading-relaxed text-white/85 max-w-md mx-auto">
+          Loosen the filters, drop the postcode, or browse a different category to widen the field.
         </p>
-        <Button
-          variant="outline"
-          className="border-white/20 text-white hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98]"
+        <button
+          type="button"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="mt-5 inline-flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.14em] text-black bg-elec-yellow hover:bg-elec-yellow/90 active:bg-elec-yellow/85 rounded-full px-4 py-2.5 min-h-[40px] touch-manipulation transition-colors"
         >
-          <BookOpen className="h-4 w-4 mr-2" />
-          Browse All Courses
-        </Button>
+          <BookOpen className="h-4 w-4" />
+          Browse all courses
+        </button>
       </motion.div>
     );
   }
@@ -93,7 +102,7 @@ const ModernCoursesGrid = ({
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="flex flex-col gap-3 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-4"
+      className="flex flex-col gap-3 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-4 sm:auto-rows-fr"
     >
       {filteredCourses.map((course, index) => (
         <PremiumCourseCard

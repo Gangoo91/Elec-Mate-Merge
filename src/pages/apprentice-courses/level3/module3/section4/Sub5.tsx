@@ -119,7 +119,7 @@ export default function Sub5() {
             source="BS 7671:2018+A4:2026 — Regulation 132.2(c)(iv) (Prospective fault current)"
             clause="The documentation shall include prospective fault current. Designers shall determine and record the prospective (available) fault current at relevant points to select protective devices and ensure disconnection requirements are achievable."
             meaning={<>Reg 132.2(c)(iv) is the supply-characteristics record that puts PSCC on the design pack. Transformer per-unit impedance feeds the PSCC declaration on the EIC, derived from the upstream transformer Z<sub>pu</sub> and any cable between transformer and origin. A transformer datasheet that quotes regulation, R<sub>pu</sub> and X<sub>pu</sub> separately is what you need to discharge Reg 132.2(c)(iv) properly on commercial supply work.</>}
-            cite="Source: BS 7671:2018+A4:2026 Regulation 132.2(c)(iv) — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 132.2(c)(iv) — prospective fault current declaration."
           />
 
           <RegsCallout

@@ -784,25 +784,44 @@ const EditorialDesignResults = ({ design, onReset }: EditorialDesignResultsProps
     setIsExporting(true);
     const loadingToast = toast.loading('Building PDF schedule…');
     try {
+      // Pass the full rendered context so the PDF can mirror the
+      // on-screen experience: criticReview audit, compliance concerns,
+      // headline stats, cost tiers and A4:2026 feature checks all live
+      // outside `design` itself.
       const { data, error } = await supabase.functions.invoke('generate-circuit-design-pdf', {
-        body: { design, userId: user?.id },
+        body: {
+          design,
+          layout,
+          stats,
+          cost,
+          a4,
+          userId: user?.id,
+        },
       });
       if (error) throw error;
-      if (data?.url) {
-        await openOrDownloadPdf(data.url, `${projectName} — Design Schedule.pdf`);
+      // Edge fn returns `downloadUrl` (PDFMonkey response shape). Older
+      // builds returned `url`. Accept either to stay forward-compatible.
+      const pdfUrl = data?.downloadUrl ?? data?.url;
+      if (pdfUrl) {
+        await openOrDownloadPdf(pdfUrl, `${projectName} — Design Schedule.pdf`);
         toast.success('PDF downloaded', { id: loadingToast });
         return;
       }
-      // Fallback: client-side jsPDF
-      const schedule = generateEICSchedule(circuits, design, design?.projectInfo);
-      downloadEICPDF(schedule, `${projectName} — Design Schedule.pdf`);
-      toast.success('PDF downloaded (fallback)', { id: loadingToast });
+      throw new Error(data?.error ?? 'PDF service returned no URL');
     } catch (err: any) {
+      // Last-resort client-side fallback using jsPDF. generateEICSchedule
+      // expects (MultiCircuitDesign, ProjectInfo, SiteInfo) — pass `design`
+      // directly because it has `.circuits` and the rest of the shape.
       try {
-        const schedule = generateEICSchedule(circuits, design, design?.projectInfo);
+        const schedule = generateEICSchedule(
+          design as any,
+          (design as any)?.projectInfo ?? {},
+          (design as any)?.projectInfo ?? {}
+        );
         downloadEICPDF(schedule, `${projectName} — Design Schedule.pdf`);
         toast.success('PDF downloaded (offline build)', { id: loadingToast });
       } catch (fallbackErr) {
+        console.error('[CircuitDesigner] PDF generation failed', { err, fallbackErr });
         toast.error('PDF generation failed', {
           id: loadingToast,
           description: err?.message ?? 'Please try again',

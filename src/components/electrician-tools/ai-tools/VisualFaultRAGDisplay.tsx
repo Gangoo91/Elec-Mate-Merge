@@ -1,8 +1,15 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { CheckCircle2, AlertTriangle, Info, FileText } from 'lucide-react';
+/**
+ * VisualFaultRAGDisplay — editorial fault classification display.
+ *
+ * Drops the destructive/orange/yellow/blue badge floods and inline icons
+ * for editorial gradient surface with semantic text accents only. Code
+ * (C1/C2/C3/FI) shown in big tabular nums with tone-coloured headline.
+ */
+
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { useState } from 'react';
+import { Eyebrow } from '@/components/college/primitives';
+import { cn } from '@/lib/utils';
 
 interface RegulationReference {
   number: string;
@@ -21,6 +28,41 @@ interface VisualFaultRAGDisplayProps {
   verificationStatus?: string;
 }
 
+const codeMeta = (code: string) => {
+  switch (code) {
+    case 'C1':
+      return {
+        tone: 'text-red-300',
+        accent: 'border-red-500/40 bg-red-500/[0.08]',
+        title: 'Danger — act now',
+      };
+    case 'C2':
+      return {
+        tone: 'text-orange-300',
+        accent: 'border-orange-500/40 bg-orange-500/[0.08]',
+        title: 'Urgent remedial required',
+      };
+    case 'C3':
+      return {
+        tone: 'text-amber-300',
+        accent: 'border-amber-500/40 bg-amber-500/[0.08]',
+        title: 'Improvement recommended',
+      };
+    case 'FI':
+      return {
+        tone: 'text-blue-300',
+        accent: 'border-blue-500/40 bg-blue-500/[0.08]',
+        title: 'Investigation required',
+      };
+    default:
+      return {
+        tone: 'text-white',
+        accent: 'border-white/15 bg-white/[0.04]',
+        title: '',
+      };
+  }
+};
+
 const VisualFaultRAGDisplay = ({
   faultCode,
   regulationReferences,
@@ -30,172 +72,122 @@ const VisualFaultRAGDisplay = ({
   verificationStatus,
 }: VisualFaultRAGDisplayProps) => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const getCodeColor = (code: string) => {
-    switch (code) {
-      case 'C1':
-        return 'bg-destructive text-destructive-foreground';
-      case 'C2':
-        return 'bg-orange-500 text-foreground';
-      case 'C3':
-        return 'bg-yellow-500 text-black';
-      case 'FI':
-        return 'bg-blue-500 text-foreground';
-      default:
-        return 'bg-muted text-muted-foreground';
-    }
-  };
-
-  const getCodeIcon = (code: string) => {
-    switch (code) {
-      case 'C1':
-        return <AlertTriangle className="h-4 w-4" />;
-      case 'C2':
-        return <AlertTriangle className="h-4 w-4" />;
-      case 'C3':
-        return <Info className="h-4 w-4" />;
-      case 'FI':
-        return <FileText className="h-4 w-4" />;
-      default:
-        return null;
-    }
-  };
-
-  const getCodeDescription = (code: string) => {
-    switch (code) {
-      case 'C1':
-        return '⚠️ Danger - Act Now';
-      case 'C2':
-        return '⚡ Urgent Remedial Required';
-      case 'C3':
-        return '📋 Improvement Recommended';
-      case 'FI':
-        return '🔍 Investigation Required';
-      default:
-        return '';
-    }
-  };
+  const meta = codeMeta(faultCode);
+  const confidencePct = Math.round(confidence * 100);
 
   return (
-    <Card className="border border-border">
-      <CardHeader className="pb-4 space-y-3">
-        <div className="flex flex-col gap-3">
-          <div className="flex items-center gap-2.5 flex-wrap">
-            <Badge
-              className={`${getCodeColor(faultCode)} text-base sm:text-lg px-4 py-1.5 w-fit font-bold`}
-            >
-              {faultCode}
-            </Badge>
-            <Badge
-              variant="outline"
-              className="text-sm sm:text-base whitespace-nowrap px-3 py-1.5 w-fit"
-            >
-              {(confidence * 100).toFixed(0)}% confident
-            </Badge>
-          </div>
-          <CardTitle className="text-base sm:text-lg leading-snug">Classification</CardTitle>
+    <div className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 sm:p-6 space-y-5">
+      {/* Header */}
+      <div>
+        <Eyebrow>CLASSIFICATION</Eyebrow>
+        <div className="mt-2 flex items-baseline gap-3 flex-wrap">
+          <span className={cn('text-[40px] sm:text-[48px] font-semibold tabular-nums leading-none', meta.tone)}>
+            {faultCode}
+          </span>
+          <h3 className="text-[18px] sm:text-[20px] font-semibold tracking-tight text-white">
+            {meta.title}
+          </h3>
         </div>
-        <CardDescription className="text-base sm:text-lg leading-relaxed font-medium">
-          {getCodeDescription(faultCode)}
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-5 sm:space-y-6">
-        {verificationStatus ? (
-          <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
-            <p className="text-sm sm:text-base text-green-700 dark:text-green-400 font-medium leading-relaxed">
-              {verificationStatus}
-            </p>
-          </div>
-        ) : (
-          <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-4">
-            <p className="text-sm sm:text-base text-amber-700 dark:text-amber-400 font-medium leading-relaxed">
-              Manual verification required - AI classification pending review
-            </p>
-          </div>
+        <p className="mt-2 text-[10.5px] uppercase tracking-[0.14em] font-semibold text-white/65 tabular-nums">
+          {confidencePct}% confidence
+        </p>
+      </div>
+
+      {/* Verification status */}
+      <div
+        className={cn(
+          'rounded-xl border px-4 py-3',
+          verificationStatus
+            ? 'border-emerald-500/30 bg-emerald-500/[0.05]'
+            : 'border-amber-500/30 bg-amber-500/[0.05]'
         )}
+      >
+        <p
+          className={cn(
+            'text-[12.5px] leading-relaxed',
+            verificationStatus ? 'text-emerald-200' : 'text-amber-200'
+          )}
+        >
+          {verificationStatus || 'Manual verification required — AI classification pending review.'}
+        </p>
+      </div>
 
-        <div className="space-y-3">
-          <h4 className="text-sm sm:text-base font-semibold text-foreground">AI Reasoning</h4>
-          <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">{reasoning}</p>
-        </div>
+      {/* Reasoning */}
+      <section className="space-y-2 pt-3 border-t border-white/[0.06]">
+        <Eyebrow>AI REASONING</Eyebrow>
+        <p className="text-[13px] leading-relaxed text-white">{reasoning}</p>
+      </section>
 
-        {gn3Guidance && gn3Guidance !== 'No specific GN3 guidance found' && (
-          <div className="bg-blue-500/5 border border-blue-500/20 rounded-lg p-4 space-y-2">
-            <h4 className="text-sm sm:text-base font-semibold text-blue-700 dark:text-blue-400">
-              GN3 Guidance (Inspection & Testing)
-            </h4>
-            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-              {gn3Guidance}
-            </p>
-          </div>
-        )}
+      {/* GN3 guidance */}
+      {gn3Guidance && gn3Guidance !== 'No specific GN3 guidance found' && (
+        <section className="space-y-2 pt-3 border-t border-white/[0.06]">
+          <Eyebrow>GN3 GUIDANCE · INSPECTION + TESTING</Eyebrow>
+          <p className="text-[13px] leading-relaxed text-white">{gn3Guidance}</p>
+        </section>
+      )}
 
-        {regulationReferences &&
-          regulationReferences.length > 0 &&
-          regulationReferences[0]?.number !== 'N/A' && (
-            <div className="space-y-3">
-              <h4 className="text-sm sm:text-base font-semibold text-foreground">
-                BS 7671 Regulations:
-              </h4>
-              <div className="flex flex-wrap gap-2 mb-3">
-                {regulationReferences.map((reg, idx) => (
-                  <Badge
-                    key={idx}
-                    variant="secondary"
-                    className="text-sm sm:text-base px-3 py-1.5 font-mono"
-                  >
-                    Reg {reg.number}
-                  </Badge>
-                ))}
-              </div>
-              <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-                <CollapsibleTrigger className="flex items-center justify-between w-full p-4 bg-muted/50 hover:bg-muted rounded-lg transition-colors min-h-[48px] touch-manipulation">
-                  <span className="text-sm sm:text-base font-semibold">
-                    View Regulation Details ({regulationReferences.length})
-                  </span>
-                  <Badge variant="secondary" className="text-sm px-3 py-1.5">
-                    {isOpen ? 'Hide' : 'Show'}
-                  </Badge>
-                </CollapsibleTrigger>
-                <CollapsibleContent className="mt-3 space-y-3">
-                  {regulationReferences.map((reg, idx) => (
+      {/* Regulation refs */}
+      {regulationReferences &&
+        regulationReferences.length > 0 &&
+        regulationReferences[0]?.number !== 'N/A' && (
+          <section className="space-y-3 pt-3 border-t border-white/[0.06]">
+            <Eyebrow>BS 7671 REGS · {regulationReferences.length}</Eyebrow>
+            <ul className="flex flex-wrap gap-1.5">
+              {regulationReferences.map((reg, idx) => (
+                <li
+                  key={idx}
+                  className="inline-flex items-center text-[10.5px] uppercase tracking-[0.14em] font-mono font-semibold text-elec-yellow border border-elec-yellow/40 bg-elec-yellow/[0.08] rounded-md px-2 py-1"
+                >
+                  Reg {reg.number}
+                </li>
+              ))}
+            </ul>
+
+            <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+              <CollapsibleTrigger className="w-full flex items-center justify-between rounded-xl border border-white/[0.10] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.20] px-4 py-3 touch-manipulation transition-colors">
+                <span className="text-[11px] uppercase tracking-[0.14em] font-semibold text-white/85">
+                  {isOpen ? 'Hide details' : 'View regulation details'}
+                </span>
+                <span className="text-[10.5px] uppercase tracking-[0.14em] font-semibold text-elec-yellow">
+                  {isOpen ? 'Close' : 'Open'}
+                </span>
+              </CollapsibleTrigger>
+              <CollapsibleContent className="mt-2 space-y-2">
+                {regulationReferences.map((reg, idx) => {
+                  const relevance = Math.round(reg.similarity * 100);
+                  return (
                     <div
                       key={idx}
-                      className="bg-card border border-border rounded-lg p-4 space-y-3"
+                      className="rounded-xl bg-[linear-gradient(180deg,hsl(0_0%_15%)_0%,hsl(0_0%_11%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-4 space-y-3"
                     >
-                      <div className="flex flex-col gap-2">
-                        <Badge
-                          variant="outline"
-                          className="font-mono text-sm sm:text-base w-fit px-3 py-1.5"
-                        >
-                          Regulation {reg.number}
-                        </Badge>
-                        <Badge variant="secondary" className="text-xs sm:text-sm w-fit">
-                          {(reg.similarity * 100).toFixed(0)}% relevance
-                        </Badge>
+                      <div className="flex items-baseline justify-between gap-2 flex-wrap">
+                        <span className="font-mono text-[12px] uppercase tracking-[0.14em] font-semibold text-elec-yellow">
+                          Reg {reg.number}
+                        </span>
+                        <span className="text-[10.5px] uppercase tracking-[0.14em] font-semibold text-white/65 tabular-nums">
+                          {relevance}% relevance
+                        </span>
                       </div>
-                      <div className="space-y-2">
-                        <h5 className="text-sm sm:text-base font-semibold text-foreground leading-snug">
-                          {reg.section}
-                        </h5>
-                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed border-l-2 border-muted pl-4">
-                          {reg.content}
-                        </p>
-                      </div>
-                      <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
-                        <p className="text-sm sm:text-base text-amber-700 dark:text-amber-400 leading-relaxed">
-                          <strong className="font-semibold">Why this matters:</strong>{' '}
+                      <h5 className="text-[14px] font-semibold tracking-tight text-white leading-snug">
+                        {reg.section}
+                      </h5>
+                      <p className="text-[12.5px] leading-relaxed text-white/85 border-l-2 border-white/[0.08] pl-3">
+                        {reg.content}
+                      </p>
+                      <div className="rounded-lg border border-amber-500/30 bg-amber-500/[0.05] px-3 py-2">
+                        <Eyebrow>WHY IT MATTERS</Eyebrow>
+                        <p className="mt-1 text-[12.5px] leading-relaxed text-amber-200">
                           {reg.severity_justification}
                         </p>
                       </div>
                     </div>
-                  ))}
-                </CollapsibleContent>
-              </Collapsible>
-            </div>
-          )}
-      </CardContent>
-    </Card>
+                  );
+                })}
+              </CollapsibleContent>
+            </Collapsible>
+          </section>
+        )}
+    </div>
   );
 };
 

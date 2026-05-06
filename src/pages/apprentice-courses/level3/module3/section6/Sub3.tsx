@@ -8,8 +8,9 @@ import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { PageFrame, PageHero } from '@/components/college/primitives';
-import { TLDR, ConceptBlock, RegsCallout, CommonMistake, Scenario, KeyTakeaways, FAQ, LearningOutcomes, ContentEyebrow, SectionRule } from '@/components/study-centre/learning';
+import { TLDR, ConceptBlock, RegsCallout, CommonMistake, Scenario, KeyTakeaways, FAQ, LearningOutcomes, ContentEyebrow, SectionRule, VideoCard } from '@/components/study-centre/learning';
 import { DiodeSymbol, ZenerDiodeSymbol, LEDSymbol, TransistorSymbol, ThermistorSymbol, LDRSymbol, BridgeRectifier, HalfWaveRectified, FullWaveRectified } from '@/components/study-centre/diagrams';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Electronic components and semiconductors | Level 3 Module 3.6.3 | Elec-Mate';
@@ -82,6 +83,15 @@ export default function Sub3() {
           <BridgeRectifier />
           <HalfWaveRectified />
           <FullWaveRectified />
+
+          <VideoCard
+            url={videos.diodes.url}
+            title={videos.diodes.title}
+            channel={videos.diodes.channel}
+            duration={videos.diodes.duration}
+            topic={videos.diodes.topic}
+          />
+
           <ConceptBlock title="Smoothing, ripple and the DC bus capacitor — turning rectified AC into useful DC" plainEnglish="A bridge rectifier on its own delivers a 'full-wave' DC output that still pulses up and down at 100 Hz (twice supply frequency on UK 50 Hz). For most loads (motors, electronics) you need a steadier DC. Add a large capacitor across the rectifier output and it charges to the peak voltage at each pulse, then discharges into the load between pulses — flattening the ripple.">
             <p>For a 230 V AC input, peak DC bus voltage = 230 × √2 = 325 V. With load drawn between pulses, voltage sags by an amount called <strong>ripple</strong> — typically aim for less than 5% of bus voltage. Required capacitance for a given ripple: C ≈ I_load / (f × V_ripple), where f is twice supply frequency. A 1 A load with 5% (16 V) ripple at 100 Hz needs about 625 µF.</p>
             <p>This is why VFDs, switching power supplies and EV chargers all carry a bank of large electrolytic capacitors visible inside the case — they're the DC bus smoothing. The 'DC bus' in any modern power-electronic device is just the smoothed output of an internal bridge rectifier on the mains input.</p>

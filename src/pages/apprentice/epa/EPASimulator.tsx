@@ -9,7 +9,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Target, MessageSquare, FileText, Clock, Send, Check } from 'lucide-react';
+import { ArrowLeft, Send, Check } from 'lucide-react';
 import { PageHero, itemVariants } from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
@@ -23,18 +23,21 @@ import type { PortfolioEntry } from '@/types/portfolio';
 
 type TabId = 'readiness' | 'discussion' | 'knowledge' | 'history';
 
-const TABS: { id: TabId; label: string; icon: typeof Target }[] = [
-  { id: 'readiness', label: 'Readiness', icon: Target },
-  { id: 'discussion', label: 'Discussion', icon: MessageSquare },
-  { id: 'knowledge', label: 'Knowledge', icon: FileText },
-  { id: 'history', label: 'History', icon: Clock },
+const TABS: { id: TabId; label: string }[] = [
+  { id: 'readiness', label: 'Readiness' },
+  { id: 'discussion', label: 'Discussion' },
+  { id: 'knowledge', label: 'Knowledge' },
+  { id: 'history', label: 'History' },
 ];
 
 const EPASimulator = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const activeTab = (searchParams.get('tab') as TabId) || 'readiness';
-  const setActiveTab = (tab: TabId) => setSearchParams({ tab }, { replace: false });
+  const setActiveTab = useCallback(
+    (tab: TabId) => setSearchParams({ tab }, { replace: false }),
+    [setSearchParams]
+  );
 
   const { user } = useAuth();
   const { qualificationCode, qualificationId } = useStudentQualification();
@@ -46,6 +49,19 @@ const EPASimulator = () => {
   const invalidateReadiness = useCallback(() => {
     setReadinessKey((k) => k + 1);
   }, []);
+  // Target AC for "Drill this AC" deep-link from readiness → knowledge tab
+  const [targetAC, setTargetAC] = useState<{
+    acRef: string;
+    acText: string;
+    unitCode?: string;
+  } | null>(null);
+  const handleTargetAC = useCallback(
+    (acRef: string, acText: string, unitCode?: string) => {
+      setTargetAC({ acRef, acText, unitCode });
+      setActiveTab('knowledge');
+    },
+    [setActiveTab]
+  );
 
   // Fetch portfolio entries for discussion
   useEffect(() => {
@@ -121,7 +137,7 @@ const EPASimulator = () => {
   }, [activeTab, user]);
 
   return (
-    <div className="max-w-2xl mx-auto animate-fade-in pb-20">
+    <div className="max-w-7xl mx-auto animate-fade-in pb-20">
       {/* Header */}
       <div className="px-4 sm:px-6 lg:px-8 pt-4 pb-2 space-y-6">
         <motion.div variants={itemVariants}>
@@ -145,24 +161,26 @@ const EPASimulator = () => {
         </motion.div>
       </div>
 
-      {/* Tab Bar */}
-      <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm border-b border-white/5">
-        <div className="flex px-2">
-          {TABS.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={cn(
-                'flex-1 flex flex-col items-center gap-0.5 py-3 text-xs font-medium touch-manipulation transition-colors',
-                activeTab === tab.id
-                  ? 'text-elec-yellow border-b-2 border-elec-yellow'
-                  : 'text-white'
-              )}
-            >
-              <tab.icon className="h-4 w-4" />
-              {tab.label}
-            </button>
-          ))}
+      {/* Tab Bar — editorial pill row */}
+      <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
+        <div className="flex gap-1.5 px-4 sm:px-6 py-2.5 overflow-x-auto scrollbar-hide">
+          {TABS.map((tab) => {
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={cn(
+                  'h-9 px-3.5 rounded-full text-[12px] font-medium border transition-colors touch-manipulation flex-shrink-0',
+                  isActive
+                    ? 'bg-elec-yellow text-black border-elec-yellow'
+                    : 'bg-white/[0.02] text-white/85 border-white/[0.08] hover:bg-white/[0.04]'
+                )}
+              >
+                {tab.label}
+              </button>
+            );
+          })}
         </div>
       </div>
 
@@ -175,12 +193,16 @@ const EPASimulator = () => {
             qualificationId={qualificationId}
             onStartDiscussion={() => setActiveTab('discussion')}
             onStartKnowledgeTest={() => setActiveTab('knowledge')}
+            onTargetAC={handleTargetAC}
           />
         )}
 
         {activeTab === 'readiness' && !qualificationCode && (
-          <div className="flex flex-col items-center justify-center py-16 px-4">
-            <p className="text-sm text-white text-center">
+          <div className="px-4 sm:px-6 py-12 space-y-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Setup needed
+            </span>
+            <p className="text-[14px] text-white/85 leading-relaxed max-w-md">
               Set your qualification in your profile to see EPA readiness data.
             </p>
           </div>
@@ -197,6 +219,8 @@ const EPASimulator = () => {
         {activeTab === 'knowledge' && (
           <EPAKnowledgeQuiz
             qualificationCode={qualificationCode || ''}
+            targetAC={targetAC}
+            onClearTargetAC={() => setTargetAC(null)}
             onSessionComplete={invalidateReadiness}
           />
         )}
@@ -219,9 +243,9 @@ interface HistoryItem {
 }
 
 const GRADE_COLOURS: Record<string, string> = {
-  distinction: 'text-emerald-400',
-  pass: 'text-amber-400',
-  fail: 'text-red-400',
+  distinction: 'text-elec-yellow',
+  pass: 'text-white/85',
+  fail: 'text-red-300',
 };
 
 function HistoryTab({ items, isLoading }: { items: HistoryItem[]; isLoading: boolean }) {
@@ -330,105 +354,111 @@ function HistoryTab({ items, isLoading }: { items: HistoryItem[]; isLoading: boo
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-16">
-        <div className="animate-spin h-8 w-8 border-2 border-elec-yellow border-t-transparent rounded-full" />
+        <div className="animate-spin h-5 w-5 border-2 border-elec-yellow border-t-transparent rounded-full" />
       </div>
     );
   }
 
   if (items.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-16 px-4 space-y-3">
-        <Clock className="h-10 w-10 text-white" />
-        <p className="text-sm text-white text-center">
-          No mock sessions completed yet. Start a discussion or knowledge test to see your history.
+      <div className="px-4 sm:px-6 py-12 space-y-2">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          History
+        </span>
+        <p className="text-[14px] text-white/85 leading-relaxed max-w-md">
+          No mock sessions completed yet. Start a discussion or knowledge test and your past
+          attempts will land here.
         </p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-2 px-4 py-5">
-      <h3 className="text-xs font-semibold text-white uppercase tracking-wider">Past Sessions</h3>
+    <div className="px-4 sm:px-6 py-6 space-y-3">
+      <div className="flex items-baseline justify-between gap-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Past sessions · {items.length}
+        </span>
+      </div>
       {collegeStudent && (
-        <p className="text-[11px] text-white/65 leading-snug pb-1">
-          Tap "Submit to tutor" on a session to have it appear as your self-assessment on your tutor's dashboard.
+        <p className="text-[12px] text-white/55 leading-snug">
+          Submit a session to surface it as your self-assessment alongside the tutor and AI verdicts.
         </p>
       )}
-      {items.map((item) => {
-        const isSubmitted = submittedSessionId === item.id;
-        const isWorking = submitting === item.id;
-        return (
-          <div
-            key={item.id}
-            className={cn(
-              'flex flex-col gap-2 p-3 rounded-xl border',
-              isSubmitted
-                ? 'bg-emerald-500/[0.05] border-emerald-400/30'
-                : 'bg-white/[0.03] border-white/10'
-            )}
-          >
-            <div className="flex items-center gap-3">
-              {item.type === 'professional_discussion' ? (
-                <MessageSquare className="h-5 w-5 text-purple-400 shrink-0" />
-              ) : (
-                <FileText className="h-5 w-5 text-blue-400 shrink-0" />
-              )}
-              <div className="flex-1 min-w-0">
-                <p className="text-sm text-foreground">
-                  {item.type === 'professional_discussion'
-                    ? 'Professional Discussion'
-                    : 'Knowledge Test'}
-                </p>
-                <p className="text-[10px] text-white">
+      <ul className="space-y-2">
+        {items.map((item) => {
+          const isSubmitted = submittedSessionId === item.id;
+          const isWorking = submitting === item.id;
+          const gradeLabel =
+            item.grade === 'not_yet_ready'
+              ? 'Fail'
+              : item.grade === 'merit'
+                ? 'Pass'
+                : item.grade?.replace('_', ' ');
+          return (
+            <li
+              key={item.id}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 py-3 sm:px-5 sm:py-4 space-y-3"
+            >
+              <div className="flex items-baseline gap-3">
+                <span className="text-[11px] font-mono text-white/40 flex-shrink-0">
                   {item.completedAt.toLocaleDateString('en-GB', {
-                    day: 'numeric',
+                    day: '2-digit',
                     month: 'short',
-                    year: 'numeric',
-                  })}{' '}
-                  · {Math.floor(item.timeSpent / 60)}m
-                </p>
+                  })}
+                </span>
+                <div className="flex-1 min-w-0 space-y-0.5">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-white/55 block">
+                    {item.type === 'professional_discussion' ? 'Discussion' : 'Knowledge'} ·{' '}
+                    {Math.floor(item.timeSpent / 60)}m
+                  </span>
+                  <span
+                    className={cn(
+                      'text-[13px] capitalize font-medium',
+                      GRADE_COLOURS[item.grade] || 'text-white/85'
+                    )}
+                  >
+                    {gradeLabel}
+                  </span>
+                </div>
+                <div className="text-right shrink-0">
+                  <span className="text-[24px] font-mono font-semibold text-white tabular-nums leading-none">
+                    {item.score}
+                  </span>
+                  <span className="text-[11px] text-white/40 font-mono ml-0.5">/100</span>
+                </div>
               </div>
-              <div className="text-right shrink-0">
-                <p className="text-lg font-bold text-foreground">{item.score}</p>
-                <p className={cn('text-[10px] capitalize', GRADE_COLOURS[item.grade] || 'text-white')}>
-                  {item.grade === 'not_yet_ready'
-                    ? 'Fail'
-                    : item.grade === 'merit'
-                      ? 'Pass'
-                      : item.grade?.replace('_', ' ')}
-                </p>
-              </div>
-            </div>
-            {collegeStudent && (
-              <button
-                type="button"
-                onClick={() => submit(item)}
-                disabled={isSubmitted || isWorking}
-                className={cn(
-                  'h-9 rounded-lg text-[12px] font-semibold tracking-tight inline-flex items-center justify-center gap-1.5 transition-colors touch-manipulation',
-                  isSubmitted
-                    ? 'bg-emerald-500/[0.12] border border-emerald-400/30 text-emerald-200 cursor-default'
-                    : 'bg-elec-yellow/[0.10] border border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/[0.18]'
-                )}
-              >
-                {isSubmitted ? (
-                  <>
-                    <Check className="h-3.5 w-3.5" strokeWidth={2.5} />
-                    Submitted to tutor
-                  </>
-                ) : isWorking ? (
-                  'Submitting…'
-                ) : (
-                  <>
-                    <Send className="h-3.5 w-3.5" />
-                    Submit as my self-assessment
-                  </>
-                )}
-              </button>
-            )}
-          </div>
-        );
-      })}
+              {collegeStudent && (
+                <button
+                  type="button"
+                  onClick={() => submit(item)}
+                  disabled={isSubmitted || isWorking}
+                  className={cn(
+                    'w-full h-9 rounded-md text-[12px] font-semibold inline-flex items-center justify-center gap-1.5 transition-colors touch-manipulation',
+                    isSubmitted
+                      ? 'border border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow cursor-default'
+                      : 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
+                  )}
+                >
+                  {isSubmitted ? (
+                    <>
+                      <Check className="h-3.5 w-3.5" strokeWidth={2.5} />
+                      Submitted to tutor
+                    </>
+                  ) : isWorking ? (
+                    'Submitting…'
+                  ) : (
+                    <>
+                      <Send className="h-3.5 w-3.5" />
+                      Submit as my self-assessment
+                    </>
+                  )}
+                </button>
+              )}
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }

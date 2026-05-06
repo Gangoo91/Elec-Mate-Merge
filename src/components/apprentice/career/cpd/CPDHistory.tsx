@@ -73,7 +73,7 @@ const CPDHistory = () => {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+      <div className="rounded-2xl border border-white/[0.10] bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 sm:p-6 space-y-3">
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
           Filter CPD records
         </span>
@@ -156,15 +156,15 @@ const CPDHistory = () => {
       </div>
 
       {loading ? (
-        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-8 text-center">
-          <Loader2 className="h-6 w-6 animate-spin mx-auto mb-3 text-white/55" />
-          <p className="text-[14px] text-white/70">Loading CPD entries...</p>
+        <div className="rounded-2xl border border-white/[0.10] bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-8 text-center">
+          <Loader2 className="h-6 w-6 animate-spin mx-auto mb-3 text-elec-yellow" />
+          <p className="text-[13px] text-white/85">Loading CPD entries…</p>
         </div>
       ) : filteredEntries.length === 0 ? (
-        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-8 text-center space-y-2">
-          <h3 className="text-[16px] font-semibold text-white">No entries found</h3>
-          <p className="text-[14px] text-white/70 leading-relaxed">
-            No CPD entries match your current filters. Try adjusting your search criteria.
+        <div className="rounded-2xl border border-white/[0.10] bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-8 text-center space-y-2">
+          <h3 className="text-[18px] font-semibold tracking-tight text-white">No entries match.</h3>
+          <p className="text-[13px] leading-relaxed text-white/85 max-w-md mx-auto">
+            Loosen the filters or clear the search to widen the results.
           </p>
         </div>
       ) : (
@@ -172,7 +172,7 @@ const CPDHistory = () => {
           {filteredEntries.map((entry) => (
             <div
               key={entry.id}
-              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 group"
+              className="rounded-2xl border border-white/[0.10] bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 group"
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="space-y-2 flex-1 min-w-0">

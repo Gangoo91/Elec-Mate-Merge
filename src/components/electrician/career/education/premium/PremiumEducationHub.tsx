@@ -249,19 +249,26 @@ const PremiumEducationHub = ({ onBack }: PremiumEducationHubProps) => {
                       </p>
                     </div>
 
-                    {displayedProgrammes.map((programme) => (
-                      <motion.div key={programme.id} variants={listItemVariants}>
-                        <ProgrammeCard
-                          programme={programme}
-                          onSelect={handleSelectProgramme}
-                          onBookmark={toggleBookmark}
-                          onAddToCompare={handleAddToCompare}
-                          isBookmarked={isBookmarked(programme.id)}
-                          isInCompare={isInCompare(programme.id)}
-                          compareDisabled={isCompareFull}
-                        />
-                      </motion.div>
-                    ))}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 lg:auto-rows-fr">
+                      {displayedProgrammes.map((programme) => (
+                        <motion.div
+                          key={programme.id}
+                          variants={listItemVariants}
+                          className="h-full"
+                        >
+                          <ProgrammeCard
+                            programme={programme}
+                            onSelect={handleSelectProgramme}
+                            onBookmark={toggleBookmark}
+                            onAddToCompare={handleAddToCompare}
+                            isBookmarked={isBookmarked(programme.id)}
+                            isInCompare={isInCompare(programme.id)}
+                            compareDisabled={isCompareFull}
+                            className="h-full"
+                          />
+                        </motion.div>
+                      ))}
+                    </div>
                   </motion.div>
                 )}
               </>
@@ -300,10 +307,14 @@ const PremiumEducationHub = ({ onBack }: PremiumEducationHubProps) => {
                 variants={listContainerVariants}
                 initial="initial"
                 animate="animate"
-                className="space-y-4"
+                className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 lg:auto-rows-fr"
               >
                 {savedProgrammes.map((programme) => (
-                  <motion.div key={programme.id} variants={listItemVariants}>
+                  <motion.div
+                    key={programme.id}
+                    variants={listItemVariants}
+                    className="h-full"
+                  >
                     <ProgrammeCard
                       programme={programme}
                       onSelect={handleSelectProgramme}
@@ -312,6 +323,7 @@ const PremiumEducationHub = ({ onBack }: PremiumEducationHubProps) => {
                       isBookmarked={true}
                       isInCompare={isInCompare(programme.id)}
                       compareDisabled={isCompareFull}
+                      className="h-full"
                     />
                   </motion.div>
                 ))}

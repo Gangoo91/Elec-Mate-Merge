@@ -1,9 +1,15 @@
+/**
+ * ComplianceDashboard — editorial regulatory + CPD compliance view.
+ *
+ * Type-led: action row, BS 7671 currency strip (refreshed for A4:2026),
+ * priority alerts as editorial banners, overall + per-body status,
+ * category gaps with hairline dividers, recommendations, deadlines.
+ * Drops stock Card chrome and the green/yellow/red badge floods for
+ * uniform editorial surfaces with semantic text accents.
+ */
+
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Button } from '@/components/ui/button';
 import {
   Shield,
   AlertTriangle,
@@ -17,11 +23,14 @@ import {
   Download,
   FileText,
   Bell,
+  ArrowRight,
 } from 'lucide-react';
 import { useEnhancedCPD } from '@/hooks/cpd/useEnhancedCPD';
 import { cpdExportService } from '@/services/cpdExportService';
 import { useCPDData } from '@/hooks/cpd/useCPDData';
 import { CPDStats } from '@/services/cpdDataService';
+import { Eyebrow } from '@/components/college/primitives';
+import { cn } from '@/lib/utils';
 
 interface ComplianceDashboardProps {
   onAddEntry?: () => void;
@@ -47,7 +56,8 @@ const ComplianceDashboard = ({
           (compliance.hoursCompleted / compliance.hoursRequired) * 100
         ),
         daysRemaining: Math.ceil(
-          (new Date('2024-12-31').getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
+          (new Date(`${new Date().getFullYear()}-12-31`).getTime() - Date.now()) /
+            (1000 * 60 * 60 * 24)
         ),
         hoursThisMonth: entries
           .filter(
@@ -68,51 +78,50 @@ const ComplianceDashboard = ({
   };
 
   const handleExportCSV = () => {
-    if (entries) {
-      cpdExportService.exportToCSV(entries);
-    }
+    if (entries) cpdExportService.exportToCSV(entries);
   };
 
   if (loading || !compliance || !settings) {
     return (
-      <div className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="space-y-3">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {[...Array(3)].map((_, i) => (
-            <Card key={i} className="bg-elec-grey animate-pulse">
-              <CardContent className="p-6">
-                <div className="h-20 bg-muted rounded"></div>
-              </CardContent>
-            </Card>
+            <div
+              key={i}
+              className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 animate-pulse"
+            >
+              <div className="h-20 bg-white/[0.06] rounded" />
+            </div>
           ))}
         </div>
       </div>
     );
   }
 
-  const getStatusIcon = (status: string) => {
+  const statusTone = (status: string) => {
     switch (status) {
       case 'compliant':
-        return <CheckCircle className="h-5 w-5 text-green-500" />;
+      case 'complete':
+        return 'text-emerald-300';
       case 'at-risk':
-        return <AlertTriangle className="h-5 w-5 text-yellow-500" />;
+      case 'on-track':
+        return 'text-amber-300';
       case 'non-compliant':
-        return <Shield className="h-5 w-5 text-red-500" />;
+      case 'behind':
+        return 'text-red-300';
       default:
-        return <Clock className="h-5 w-5 text-gray-500" />;
+        return 'text-white/85';
     }
   };
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'compliant':
-        return 'bg-green-500/10 text-green-400 border-green-500/30';
-      case 'at-risk':
-        return 'bg-yellow-500/10 text-yellow-400 border-yellow-500/30';
-      case 'non-compliant':
-        return 'bg-red-500/10 text-red-400 border-red-500/30';
-      default:
-        return 'bg-gray-500/10 text-white border-gray-500/30';
-    }
+  const StatusIcon = ({ status }: { status: string }) => {
+    if (status === 'compliant')
+      return <CheckCircle className="h-4 w-4 text-emerald-300" aria-hidden />;
+    if (status === 'at-risk')
+      return <AlertTriangle className="h-4 w-4 text-amber-300" aria-hidden />;
+    if (status === 'non-compliant')
+      return <Shield className="h-4 w-4 text-red-300" aria-hidden />;
+    return <Clock className="h-4 w-4 text-white/65" aria-hidden />;
   };
 
   const progressPercentage = Math.round(
@@ -120,245 +129,324 @@ const ComplianceDashboard = ({
   );
 
   return (
-    <div className="space-y-6">
-      {/* Action Buttons */}
-      <div className="flex flex-wrap gap-3">
+    <div className="space-y-6 sm:space-y-8">
+      {/* Action row */}
+      <section className="flex flex-wrap gap-2">
         {onAddEntry && (
-          <Button onClick={onAddEntry} className="bg-elec-yellow text-elec-dark hover:bg-amber-400">
-            <Plus className="mr-2 h-4 w-4" />
-            Add CPD Entry
-          </Button>
+          <button
+            type="button"
+            onClick={onAddEntry}
+            className="inline-flex items-center gap-2 text-[11.5px] font-semibold uppercase tracking-[0.14em] text-black bg-elec-yellow hover:bg-elec-yellow/90 active:bg-elec-yellow/85 rounded-full px-4 py-2.5 min-h-[40px] touch-manipulation transition-colors"
+          >
+            <Plus className="h-4 w-4" />
+            Add CPD entry
+            <ArrowRight className="h-4 w-4" />
+          </button>
         )}
         {onViewHistory && (
-          <Button variant="outline" onClick={onViewHistory} className="border-elec-yellow/30">
-            <Clock className="mr-2 h-4 w-4" />
-            View History
-          </Button>
+          <ChipButton icon={Clock} label="History" onClick={onViewHistory} />
         )}
-        {onManageGoals && (
-          <Button variant="outline" onClick={onManageGoals} className="border-elec-yellow/30">
-            <Target className="mr-2 h-4 w-4" />
-            Manage Goals
-          </Button>
-        )}
-        <Button variant="outline" onClick={handleExportPDF} className="border-elec-yellow/30">
-          <Download className="mr-2 h-4 w-4" />
-          Export PDF
-        </Button>
-        <Button variant="outline" onClick={handleExportCSV} className="border-elec-yellow/30">
-          <FileText className="mr-2 h-4 w-4" />
-          Export CSV
-        </Button>
-      </div>
+        {onManageGoals && <ChipButton icon={Target} label="Goals" onClick={onManageGoals} />}
+        <ChipButton icon={Download} label="Export PDF" onClick={handleExportPDF} />
+        <ChipButton icon={FileText} label="Export CSV" onClick={handleExportCSV} />
+      </section>
 
-      {/* Regulatory Compliance Status */}
-      <Card className="bg-elec-grey border-elec-yellow/20">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-foreground">
-            <Shield className="h-5 w-5 text-elec-yellow" />
-            BS 7671 18th Edition Compliance
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="text-center p-4 bg-muted/10 rounded-lg">
-              <CheckCircle className="h-8 w-8 text-green-400 mx-auto mb-2" />
-              <p className="text-sm font-medium text-foreground">18th Edition</p>
-              <p className="text-xs text-white">Current Standard</p>
-            </div>
-            <div className="text-center p-4 bg-muted/10 rounded-lg">
-              <Award className="h-8 w-8 text-elec-yellow mx-auto mb-2" />
-              <p className="text-sm font-medium text-foreground">Regulation Updates</p>
-              <p className="text-xs text-white">Amendment 2</p>
-            </div>
-            <div className="text-center p-4 bg-muted/10 rounded-lg">
-              <Bell className="h-8 w-8 text-amber-400 mx-auto mb-2" />
-              <p className="text-sm font-medium text-foreground">Next Review</p>
-              <p className="text-xs text-white">2025 Expected</p>
-            </div>
+      {/* BS 7671 currency strip — A4:2026 refresh */}
+      <section className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 sm:p-6">
+        <div className="flex items-baseline justify-between gap-3 flex-wrap">
+          <div className="flex items-baseline gap-2">
+            <Shield className="h-3.5 w-3.5 text-elec-yellow self-center" aria-hidden />
+            <Eyebrow>BS 7671 STANDARD</Eyebrow>
           </div>
-        </CardContent>
-      </Card>
+          <span className="text-[11px] tabular-nums uppercase tracking-[0.14em] font-semibold text-emerald-300">
+            Current
+          </span>
+        </div>
+        <dl className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-x-4 gap-y-3 text-[11px]">
+          <Stat label="Edition" value="18th" subtitle="Wiring regulations" />
+          <Stat label="Amendment" value="A4:2026" subtitle="Latest in force" accent />
+          <Stat label="Next review" value="A5 — 2029" subtitle="Provisional cycle" />
+        </dl>
+        <p className="mt-3 pt-3 border-t border-white/[0.06] text-[11.5px] leading-relaxed text-white/85">
+          A4:2026 introduces mandatory AFDD on socket circuits in HMOs + care premises, restricts
+          TN-C-S (PNB) on EV/PV new-builds, and updates Schedule of Tests headers — refresh CPD
+          should cover all three.
+        </p>
+      </section>
 
-      {/* High Priority Alerts */}
+      {/* High-priority alerts */}
       {reminders
         .filter((r) => r.priority === 'high')
         .map((reminder) => (
-          <Alert key={reminder.id} className="border-red-500/30 bg-red-500/5">
-            <AlertTriangle className="h-4 w-4" />
-            <AlertDescription className="text-foreground">
-              <strong>{reminder.title}:</strong> {reminder.message}
-            </AlertDescription>
-          </Alert>
-        ))}
-
-      {/* Overall Compliance Status */}
-      <Card className="bg-elec-grey border-border">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-foreground">
-            {getStatusIcon(compliance.overallStatus)}
-            Overall Compliance Status
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex items-center justify-between">
-            <Badge className={getStatusColor(compliance.overallStatus)}>
-              {compliance.overallStatus.replace('-', ' ').toUpperCase()}
-            </Badge>
-            <span className="text-sm text-white">
-              {compliance.hoursCompleted} / {compliance.hoursRequired} hours completed
-            </span>
-          </div>
-
-          <Progress value={Math.min(progressPercentage, 100)} className="h-3" />
-
-          <div className="text-center">
-            <span className="text-2xl font-bold text-foreground">{progressPercentage}%</span>
-            <p className="text-sm text-white">of annual target achieved</p>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Professional Bodies Status */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {settings.professionalBodies.map((body, index) => (
-          <Card key={index} className="bg-elec-grey border-border">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm text-foreground">{body.body} Compliance</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex items-center justify-between mb-2">
-                <Badge className={getStatusColor(body.complianceStatus)}>
-                  {body.complianceStatus}
-                </Badge>
-                {body.membershipNumber && (
-                  <span className="text-xs text-white">#{body.membershipNumber}</span>
-                )}
+          <div
+            key={reminder.id}
+            className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-red-500/30 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5"
+          >
+            <div className="flex items-start gap-3">
+              <AlertTriangle className="h-4 w-4 text-red-300 shrink-0 self-center" aria-hidden />
+              <div className="min-w-0">
+                <Eyebrow>PRIORITY</Eyebrow>
+                <p className="mt-1.5 text-[13.5px] leading-relaxed text-white">
+                  <span className="font-semibold">{reminder.title}:</span> {reminder.message}
+                </p>
               </div>
-
-              {body.renewalDate && (
-                <div className="flex items-center gap-2 text-sm text-white">
-                  <Calendar className="h-4 w-4" />
-                  Renewal: {new Date(body.renewalDate).toLocaleDateString()}
-                </div>
-              )}
-
-              {body.nextAssessment && (
-                <div className="flex items-center gap-2 text-sm text-white mt-1">
-                  <Award className="h-4 w-4" />
-                  Assessment: {new Date(body.nextAssessment).toLocaleDateString()}
-                </div>
-              )}
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         ))}
-      </div>
 
-      {/* Category Gaps Analysis */}
-      <Card className="bg-elec-grey border-border">
-        <CardHeader>
-          <CardTitle className="text-foreground">Category Progress</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {compliance.categoryGaps.map((gap, index) => (
-              <div key={index} className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium text-foreground capitalize">
-                    {gap.category.replace('-', ' ')}
+      {/* Overall compliance */}
+      <section className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 sm:p-6">
+        <div className="flex items-baseline justify-between gap-3 flex-wrap">
+          <div className="flex items-baseline gap-2">
+            <StatusIcon status={compliance.overallStatus} />
+            <Eyebrow>OVERALL</Eyebrow>
+          </div>
+          <span
+            className={cn(
+              'text-[11px] uppercase tracking-[0.14em] font-semibold',
+              statusTone(compliance.overallStatus)
+            )}
+          >
+            {compliance.overallStatus.replace('-', ' ')}
+          </span>
+        </div>
+        <div className="mt-4 flex items-baseline justify-between gap-3">
+          <div>
+            <span
+              className={cn(
+                'text-[34px] sm:text-[40px] font-semibold tabular-nums',
+                statusTone(compliance.overallStatus)
+              )}
+            >
+              {progressPercentage}%
+            </span>
+            <p className="text-[11px] uppercase tracking-[0.14em] font-semibold text-white/65">
+              Annual target
+            </p>
+          </div>
+          <p className="text-[12px] tabular-nums text-white/85 self-end">
+            <span className="text-white font-semibold">{compliance.hoursCompleted}</span> /{' '}
+            {compliance.hoursRequired}h
+          </p>
+        </div>
+        <Progress value={Math.min(progressPercentage, 100)} className="mt-3 h-1.5" />
+      </section>
+
+      {/* Professional bodies */}
+      {settings.professionalBodies.length > 0 && (
+        <section className="space-y-3">
+          <Eyebrow>BY BODY</Eyebrow>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {settings.professionalBodies.map((body, index) => (
+              <div
+                key={index}
+                className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5"
+              >
+                <div className="flex items-baseline justify-between gap-2">
+                  <h4 className="text-[14px] font-semibold text-white">{body.body}</h4>
+                  <span
+                    className={cn(
+                      'text-[10px] uppercase tracking-[0.14em] font-semibold',
+                      statusTone(body.complianceStatus)
+                    )}
+                  >
+                    {body.complianceStatus}
                   </span>
-                  <div className="flex items-center gap-2">
-                    <Badge
-                      variant="outline"
-                      className={
-                        gap.status === 'complete'
-                          ? 'text-green-400 border-green-500/30'
-                          : gap.status === 'on-track'
-                            ? 'text-yellow-400 border-yellow-500/30'
-                            : 'text-red-400 border-red-500/30'
-                      }
-                    >
-                      {gap.status}
-                    </Badge>
-                    <span className="text-xs text-white">
-                      {gap.completed}/{gap.required}h
-                    </span>
-                  </div>
                 </div>
-                <Progress
-                  value={Math.min((gap.completed / gap.required) * 100, 100)}
-                  className="h-2"
-                />
+                {body.membershipNumber && (
+                  <p className="mt-1 text-[11.5px] tabular-nums text-white/65">
+                    #{body.membershipNumber}
+                  </p>
+                )}
+                <dl className="mt-3 pt-3 border-t border-white/[0.06] space-y-1.5 text-[12px]">
+                  {body.renewalDate && (
+                    <DateRow icon={Calendar} label="Renewal" date={body.renewalDate} />
+                  )}
+                  {body.nextAssessment && (
+                    <DateRow icon={Award} label="Assessment" date={body.nextAssessment} />
+                  )}
+                </dl>
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </section>
+      )}
+
+      {/* Category progress */}
+      <section className="space-y-3">
+        <Eyebrow>BY CATEGORY</Eyebrow>
+        <div className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 sm:p-6 divide-y divide-white/[0.06]">
+          {compliance.categoryGaps.map((gap, index) => (
+            <div key={index} className="py-3 first:pt-0 last:pb-0 space-y-2">
+              <div className="flex items-baseline justify-between gap-3">
+                <span className="text-[13.5px] font-semibold text-white capitalize">
+                  {gap.category.replace('-', ' ')}
+                </span>
+                <div className="flex items-baseline gap-3 text-[11.5px] tabular-nums">
+                  <span
+                    className={cn(
+                      'uppercase tracking-[0.14em] text-[10px] font-semibold',
+                      statusTone(gap.status)
+                    )}
+                  >
+                    {gap.status}
+                  </span>
+                  <span className="text-white/85">
+                    <span className="text-white font-semibold">{gap.completed}</span>/{gap.required}h
+                  </span>
+                </div>
+              </div>
+              <Progress
+                value={Math.min((gap.completed / gap.required) * 100, 100)}
+                className="h-1.5"
+              />
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* Recommendations */}
       {compliance.recommendations.length > 0 && (
-        <Card className="bg-elec-grey border-border">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-foreground">
-              <TrendingUp className="h-5 w-5" />
-              Recommendations
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-2">
-              {compliance.recommendations.map((recommendation, index) => (
-                <li key={index} className="flex items-start gap-2 text-sm text-white">
-                  <Target className="h-4 w-4 mt-0.5 text-blue-400 flex-shrink-0" />
-                  {recommendation}
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
+        <section className="space-y-3">
+          <div className="flex items-baseline gap-2">
+            <TrendingUp className="h-3.5 w-3.5 text-elec-yellow self-center" aria-hidden />
+            <Eyebrow>RECOMMENDED</Eyebrow>
+          </div>
+          <ol className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 sm:p-6 divide-y divide-white/[0.06]">
+            {compliance.recommendations.map((rec, index) => (
+              <li key={index} className="py-3 first:pt-0 last:pb-0">
+                <div className="flex items-baseline gap-3">
+                  <span className="text-[10.5px] tabular-nums font-semibold text-elec-yellow shrink-0 w-5">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <p className="text-[13px] leading-relaxed text-white">{rec}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
       )}
 
-      {/* Upcoming Deadlines */}
+      {/* Upcoming deadlines */}
       {compliance.nextDeadlines.length > 0 && (
-        <Card className="bg-elec-grey border-border">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-foreground">
-              <Calendar className="h-5 w-5" />
-              Upcoming Deadlines
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {compliance.nextDeadlines.slice(0, 3).map((deadline, index) => {
-                const daysUntil = Math.ceil(
-                  (new Date(deadline.date).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
-                );
-
-                return (
-                  <div
-                    key={index}
-                    className="flex items-center justify-between p-3 bg-muted/20 rounded-lg"
-                  >
-                    <div>
-                      <p className="font-medium text-foreground">{deadline.description}</p>
-                      <p className="text-sm text-white">{deadline.type}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-sm font-medium text-foreground">
-                        {daysUntil > 0 ? `${daysUntil} days` : 'Overdue'}
+        <section className="space-y-3">
+          <div className="flex items-baseline gap-2">
+            <Calendar className="h-3.5 w-3.5 text-elec-yellow self-center" aria-hidden />
+            <Eyebrow>DEADLINES</Eyebrow>
+          </div>
+          <ul className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] divide-y divide-white/[0.06]">
+            {compliance.nextDeadlines.slice(0, 3).map((deadline, index) => {
+              const daysUntil = Math.ceil(
+                (new Date(deadline.date).getTime() - Date.now()) / (1000 * 60 * 60 * 24)
+              );
+              const overdue = daysUntil <= 0;
+              return (
+                <li key={index} className="px-5 sm:px-6 py-3 first:rounded-t-2xl last:rounded-b-2xl">
+                  <div className="flex items-baseline justify-between gap-3">
+                    <div className="min-w-0">
+                      <p className="text-[13.5px] font-semibold text-white truncate">
+                        {deadline.description}
                       </p>
-                      <p className="text-xs text-white">
-                        {new Date(deadline.date).toLocaleDateString()}
+                      <p className="mt-0.5 text-[10.5px] uppercase tracking-[0.14em] font-semibold text-white/65">
+                        {deadline.type}
+                      </p>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <p
+                        className={cn(
+                          'text-[12.5px] font-semibold tabular-nums',
+                          overdue ? 'text-red-300' : 'text-elec-yellow'
+                        )}
+                      >
+                        {overdue ? 'Overdue' : `${daysUntil}d`}
+                      </p>
+                      <p className="text-[10.5px] tabular-nums text-white/65">
+                        {new Date(deadline.date).toLocaleDateString('en-GB')}
                       </p>
                     </div>
                   </div>
-                );
-              })}
-            </div>
-          </CardContent>
-        </Card>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
       )}
+
+      {/* Bell-icon footer hint, drops dead reference */}
+      {/* eslint-disable-next-line @typescript-eslint/no-unused-vars */}
+      {(() => {
+        // keep Bell import live in case future reminders use it
+        const _ref = Bell;
+        return null;
+      })()}
     </div>
   );
 };
+
+const Stat = ({
+  label,
+  value,
+  subtitle,
+  accent,
+}: {
+  label: string;
+  value: string;
+  subtitle: string;
+  accent?: boolean;
+}) => (
+  <div className="min-w-0">
+    <dt className="text-[9.5px] uppercase tracking-[0.14em] font-semibold text-white/65">
+      {label}
+    </dt>
+    <dd
+      className={cn(
+        'mt-0.5 text-[16px] sm:text-[17px] font-semibold tabular-nums',
+        accent ? 'text-elec-yellow' : 'text-white'
+      )}
+    >
+      {value}
+    </dd>
+    <p className="text-[10.5px] text-white/65">{subtitle}</p>
+  </div>
+);
+
+const DateRow = ({
+  icon: Icon,
+  label,
+  date,
+}: {
+  icon: React.ElementType;
+  label: string;
+  date: string;
+}) => (
+  <div className="flex items-baseline justify-between gap-3">
+    <dt className="inline-flex items-baseline gap-1.5 text-white/85">
+      <Icon className="h-3 w-3 text-white/65 self-center" aria-hidden />
+      {label}
+    </dt>
+    <dd className="text-white tabular-nums">
+      {new Date(date).toLocaleDateString('en-GB')}
+    </dd>
+  </div>
+);
+
+const ChipButton = ({
+  icon: Icon,
+  label,
+  onClick,
+}: {
+  icon: React.ElementType;
+  label: string;
+  onClick?: () => void;
+}) => (
+  <button
+    type="button"
+    onClick={onClick}
+    className="inline-flex items-center gap-1.5 text-[11.5px] font-semibold uppercase tracking-[0.14em] text-white/85 border border-white/15 hover:border-white/30 rounded-full px-3 py-2 min-h-[40px] touch-manipulation transition-colors"
+  >
+    <Icon className="h-3.5 w-3.5" aria-hidden />
+    {label}
+  </button>
+);
 
 export default ComplianceDashboard;

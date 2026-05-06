@@ -1,4 +1,12 @@
-import { Card } from '@/components/ui/card';
+/**
+ * TerminalConnectionCard — editorial wire connection card.
+ *
+ * Drops Card chrome for editorial gradient surface. Wire colour swatch
+ * preserved (it's load-bearing — the actual cable colour matters), but
+ * sized smaller and paired with terminal monogram + connection description.
+ */
+
+import { Eyebrow } from '@/components/college/primitives';
 
 interface TerminalConnectionCardProps {
   terminal: string;
@@ -30,31 +38,43 @@ export const TerminalConnectionCard = ({
   notes,
 }: TerminalConnectionCardProps) => {
   return (
-    <Card className="p-4 bg-card border-border/50 hover:border-elec-yellow/30 transition-colors">
-      <div className="space-y-3 text-left">
-        {/* Terminal Label - Prominent */}
-        <div className="flex items-center justify-between gap-3">
-          <div className="font-mono text-lg font-bold text-elec-yellow">{terminal}</div>
-          <div
-            className="h-10 w-10 rounded-full border-2 border-white/20 shadow-lg flex-shrink-0"
-            style={{ background: getWireColor(wireColour) }}
-            aria-label={`Wire colour: ${wireColour}`}
-          />
-        </div>
-
-        {/* Wire Colour Name */}
-        <div className="text-base font-semibold text-foreground">{wireColour}</div>
-
-        {/* Connection Description */}
-        <div className="text-sm text-foreground/80 leading-relaxed">{connectionPoint}</div>
-
-        {/* Technical Notes */}
-        {notes && (
-          <div className="pt-2 border-t border-border/30">
-            <p className="text-sm text-foreground/70 italic leading-relaxed">ℹ️ {notes}</p>
+    <div className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] hover:border-elec-yellow/30 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-4 sm:p-5 transition-colors">
+      {/* Terminal label + colour swatch */}
+      <div className="flex items-center justify-between gap-3">
+        <div>
+          <Eyebrow>TERMINAL</Eyebrow>
+          <div className="mt-1 font-mono text-[18px] font-semibold tabular-nums text-elec-yellow">
+            {terminal}
           </div>
-        )}
+        </div>
+        <div
+          className="h-9 w-9 rounded-full border border-white/20 shadow-lg shrink-0"
+          style={{ background: getWireColor(wireColour) }}
+          aria-label={`Wire colour: ${wireColour}`}
+        />
       </div>
-    </Card>
+
+      {/* Wire colour */}
+      <div className="mt-3 pt-3 border-t border-white/[0.06]">
+        <Eyebrow>WIRE</Eyebrow>
+        <div className="mt-0.5 text-[14px] font-semibold text-white capitalize">
+          {wireColour}
+        </div>
+      </div>
+
+      {/* Connection */}
+      <div className="mt-3 pt-3 border-t border-white/[0.06]">
+        <Eyebrow>CONNECT TO</Eyebrow>
+        <p className="mt-0.5 text-[12.5px] leading-relaxed text-white">{connectionPoint}</p>
+      </div>
+
+      {/* Notes */}
+      {notes && (
+        <div className="mt-3 pt-3 border-t border-white/[0.06]">
+          <Eyebrow>NOTES</Eyebrow>
+          <p className="mt-0.5 text-[12px] leading-relaxed text-white/85">{notes}</p>
+        </div>
+      )}
+    </div>
   );
 };

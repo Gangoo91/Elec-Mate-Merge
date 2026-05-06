@@ -1,560 +1,378 @@
-import { useState } from 'react';
+/**
+ * ElectricianAccreditationDetailView — editorial detail view.
+ *
+ * Drops the pill-tab UI in favour of a single scrollable editorial layout
+ * matching the College Hub cadence: numbered eyebrows (01 OVERVIEW, 02
+ * BENEFITS, 03 REQUIREMENTS, 04 GET STARTED). Type-led, gradient hero card,
+ * tabular-nums stat strip, hairline dividers between sections.
+ */
+
+import { motion } from 'framer-motion';
+import { ArrowLeft, ExternalLink, ArrowRight } from 'lucide-react';
 import { openExternalUrl } from '@/utils/open-external-url';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import {
-  ArrowLeft,
-  ExternalLink,
-  Clock,
-  PoundSterling,
-  Award,
-  CheckCircle,
-  TrendingUp,
-  MapPin,
-  Star,
-  ChevronRight,
-  Briefcase,
-  BookOpen,
-  Shield,
-  Users,
-} from 'lucide-react';
-import { AccreditationOption } from '../../../apprentice/career/accreditation/enhancedAccreditationData';
-import { getBrandInfo, getLogoUrl, getInitials } from './accreditationBranding';
+import { Eyebrow } from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
+import { AccreditationOption } from '../../../apprentice/career/accreditation/enhancedAccreditationData';
+import { getInitials, getLogoUrl } from './accreditationBranding';
 
 interface ElectricianAccreditationDetailViewProps {
   accreditation: AccreditationOption;
   onBack: () => void;
 }
 
-// Animation variants
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.02, delayChildren: 0 },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 8 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.2, ease: 'easeOut' },
-  },
-};
-
-type TabType = 'overview' | 'benefits' | 'requirements' | 'process';
-
 const ElectricianAccreditationDetailView = ({
   accreditation,
   onBack,
 }: ElectricianAccreditationDetailViewProps) => {
-  const [activeTab, setActiveTab] = useState<TabType>('overview');
-  const brandInfo = getBrandInfo(accreditation.accreditationBody);
   const logoUrl = getLogoUrl(accreditation.accreditationBody, accreditation.website);
+  const popularityTone =
+    accreditation.popularity >= 90
+      ? 'text-emerald-300'
+      : accreditation.popularity >= 75
+        ? 'text-elec-yellow'
+        : 'text-amber-300';
 
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty) {
-      case 'Entry Level':
-        return 'bg-green-500/20 text-green-400 border-green-500/30';
-      case 'Intermediate':
-        return 'bg-amber-500/20 text-amber-400 border-amber-500/30';
-      case 'Advanced':
-        return 'bg-red-500/20 text-red-400 border-red-500/30';
-      case 'Expert':
-        return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
-      default:
-        return 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30';
-    }
-  };
-
-  const tabs = [
-    { id: 'overview' as TabType, label: 'Overview', icon: Award },
-    { id: 'benefits' as TabType, label: 'Benefits', icon: Star },
-    { id: 'requirements' as TabType, label: 'Requirements', icon: BookOpen },
-    { id: 'process' as TabType, label: 'Get Started', icon: ChevronRight },
+  const documents = [
+    'Qualification certificates',
+    'Work portfolio + references',
+    'CPD records (last 12 months)',
+    'Public liability insurance',
+    'Business registration / UTR',
+    'Character references',
   ];
 
   return (
-    <div className="space-y-4 sm:space-y-6">
-      {/* Back Button */}
-      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, x: 0 }}>
-        <Button
-          variant="ghost"
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.22 }}
+      className="space-y-8 sm:space-y-10 pb-24 sm:pb-6"
+    >
+      {/* Back */}
+      <div>
+        <button
+          type="button"
           onClick={onBack}
-          className="gap-2 text-white hover:text-white hover:bg-white/10 -ml-2"
+          className="text-white/85 hover:text-white inline-flex items-center gap-1.5 text-[12px] uppercase tracking-[0.14em] font-semibold border border-white/15 hover:border-white/30 rounded-full px-3 py-1 min-h-[32px] touch-manipulation"
         >
-          <ArrowLeft className="h-4 w-4" />
-          Back
-        </Button>
-      </motion.div>
+          <ArrowLeft className="h-3.5 w-3.5" />
+          Schemes
+        </button>
+      </div>
 
-      {/* Hero Card */}
-      <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="relative overflow-hidden bg-elec-gray/50 border rounded-2xl"
-        style={{ borderColor: brandInfo.brandColor + '40' }}
-      >
-        {/* Gradient accent line */}
-        <div
-          className="absolute inset-x-0 top-0 h-[2px]"
-          style={{
-            background: `linear-gradient(to right, ${brandInfo.brandColor}60, ${brandInfo.brandColor}, ${brandInfo.brandColor}60)`,
-          }}
-        />
-
-        <div className="p-4 sm:p-6">
-          <div className="flex flex-col sm:flex-row sm:items-start gap-4">
-            {/* Logo */}
-            <div
-              className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl flex items-center justify-center border-2 bg-white/5 flex-shrink-0"
-              style={{ borderColor: brandInfo.brandColor + '60' }}
-            >
-              {logoUrl ? (
-                <img
-                  src={logoUrl}
-                  alt={`${accreditation.accreditationBody} logo`}
-                  className="w-10 h-10 sm:w-12 sm:h-12 object-contain"
-                  loading="lazy"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                  }}
-                />
-              ) : (
-                <span className="text-lg font-bold" style={{ color: brandInfo.brandColor }}>
-                  {getInitials(accreditation.accreditationBody)}
+      {/* Hero */}
+      <section className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 sm:p-6">
+        <div className="flex items-start gap-4">
+          <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center bg-elec-yellow/[0.08] border border-elec-yellow/30 shrink-0 overflow-hidden">
+            {logoUrl ? (
+              <img
+                src={logoUrl}
+                alt={`${accreditation.accreditationBody} logo`}
+                className="w-10 h-10 sm:w-12 sm:h-12 object-contain"
+                loading="lazy"
+                decoding="async"
+                referrerPolicy="no-referrer"
+                onError={(e) => {
+                  const target = e.currentTarget as HTMLImageElement;
+                  target.style.display = 'none';
+                  const parent = target.parentElement;
+                  if (parent) {
+                    parent.innerHTML = `<span class="text-[13px] font-semibold text-elec-yellow">${getInitials(
+                      accreditation.accreditationBody
+                    )}</span>`;
+                  }
+                }}
+              />
+            ) : (
+              <span className="text-[13px] font-semibold text-elec-yellow">
+                {getInitials(accreditation.accreditationBody)}
+              </span>
+            )}
+          </div>
+          <div className="min-w-0 flex-1">
+            <Eyebrow>{accreditation.category}</Eyebrow>
+            <h1 className="mt-1.5 text-[24px] sm:text-[32px] font-semibold tracking-tight leading-tight text-white">
+              {accreditation.title}
+            </h1>
+            <p className="mt-1 text-[12.5px] sm:text-[13px] text-elec-yellow truncate">
+              {accreditation.provider}
+            </p>
+            <div className="mt-3 flex flex-wrap gap-1.5">
+              <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white/85 border border-white/15 rounded-md px-1.5 py-0.5">
+                {accreditation.level}
+              </span>
+              <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white/85 border border-white/15 rounded-md px-1.5 py-0.5">
+                {accreditation.difficulty}
+              </span>
+              {accreditation.onlineAvailable && (
+                <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-blue-300 border border-blue-500/40 bg-blue-500/[0.08] rounded-md px-1.5 py-0.5">
+                  Online available
                 </span>
               )}
             </div>
+          </div>
+        </div>
 
-            {/* Title & Info */}
-            <div className="flex-1 min-w-0">
-              <div className="flex flex-wrap gap-2 mb-2">
-                <Badge variant="outline" className={getDifficultyColor(accreditation.difficulty)}>
-                  {accreditation.level}
-                </Badge>
-                {accreditation.onlineAvailable && (
-                  <Badge
-                    variant="outline"
-                    className="bg-blue-500/20 text-blue-400 border-blue-500/30"
+        {/* Stat strip */}
+        <dl className="mt-5 pt-4 border-t border-white/[0.06] grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-3 text-[11px]">
+          <Stat label="Duration" value={accreditation.duration} />
+          <Stat label="Cost" value={accreditation.cost} accent />
+          <Stat
+            label="Locations"
+            value={
+              accreditation.locations.length > 1
+                ? `UK-wide · ${accreditation.locations.length}`
+                : (accreditation.locations[0] ?? '—')
+            }
+          />
+          <Stat
+            label="Take-up"
+            value={
+              <span className={cn('tabular-nums font-semibold', popularityTone)}>
+                {accreditation.popularity}%
+              </span>
+            }
+          />
+        </dl>
+      </section>
+
+      {/* 01 — Overview + career impact */}
+      <section className="space-y-3">
+        <Eyebrow>01 · OVERVIEW</Eyebrow>
+        <p className="text-[14px] sm:text-[15px] leading-relaxed text-white max-w-3xl">
+          {accreditation.description}
+        </p>
+        <div className="mt-2 rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5">
+          <Eyebrow>CAREER IMPACT</Eyebrow>
+          <p className="mt-2 text-[13px] leading-relaxed text-white">
+            {accreditation.careerImpact}
+          </p>
+        </div>
+      </section>
+
+      {/* 02 — Benefits */}
+      {accreditation.benefits.length > 0 && (
+        <section className="space-y-4">
+          <div className="flex items-baseline justify-between gap-3 flex-wrap">
+            <Eyebrow>02 · BENEFITS</Eyebrow>
+            <span className="text-[11px] tabular-nums text-white/65">
+              {accreditation.benefits.length} listed
+            </span>
+          </div>
+          <div className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 sm:p-6">
+            <ol className="divide-y divide-white/[0.06]">
+              {accreditation.benefits.map((benefit, idx) => (
+                <li key={idx} className="py-3 first:pt-0 last:pb-0">
+                  <div className="flex items-baseline gap-3">
+                    <span className="text-[10.5px] tabular-nums font-semibold text-elec-yellow shrink-0 w-5">
+                      {String(idx + 1).padStart(2, '0')}
+                    </span>
+                    <p className="text-[13px] leading-relaxed text-white">{benefit}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+      )}
+
+      {/* 03 — Requirements */}
+      <section className="space-y-4">
+        <Eyebrow>03 · REQUIREMENTS</Eyebrow>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+          {/* Essential */}
+          <div className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 sm:p-6">
+            <Eyebrow>ESSENTIAL</Eyebrow>
+            <ol className="mt-4 divide-y divide-white/[0.06]">
+              {accreditation.requirements.map((req, idx) => (
+                <li key={idx} className="py-3 first:pt-0 last:pb-0">
+                  <div className="flex items-baseline gap-3">
+                    <span className="text-[10.5px] tabular-nums font-semibold text-elec-yellow shrink-0 w-5">
+                      {String(idx + 1).padStart(2, '0')}
+                    </span>
+                    <p className="text-[13px] leading-relaxed text-white">{req}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          {/* Documentation + experience */}
+          <div className="space-y-4 sm:space-y-6">
+            <div className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 sm:p-6">
+              <Eyebrow>DOCUMENTATION</Eyebrow>
+              <ul className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
+                {documents.map((doc, idx) => (
+                  <li
+                    key={idx}
+                    className="flex items-baseline gap-2.5 text-[12.5px] text-white"
                   >
-                    Online Available
-                  </Badge>
-                )}
-              </div>
+                    <span className="w-1 h-1 rounded-full bg-elec-yellow shrink-0" aria-hidden />
+                    <span>{doc}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-              <h1 className="text-xl sm:text-2xl font-bold text-white mb-1">
-                {accreditation.title}
-              </h1>
-              <p className="text-sm sm:text-base" style={{ color: brandInfo.brandColor }}>
-                {accreditation.provider}
+            <div className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 sm:p-6">
+              <Eyebrow>BASELINE</Eyebrow>
+              <dl className="mt-4 grid grid-cols-3 gap-3 text-[11px]">
+                <BaselineCell value="2-4yr" label="Experience" />
+                <BaselineCell value="BS 7671" label="Compliance" />
+                <BaselineCell value="£2m+" label="PL insurance" />
+              </dl>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 04 — Get started */}
+      <section className="space-y-4">
+        <Eyebrow>04 · GET STARTED</Eyebrow>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+          <div className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 sm:p-6">
+            <Eyebrow>APPLICATION STEPS</Eyebrow>
+            <ol className="mt-4 divide-y divide-white/[0.06]">
+              {accreditation.nextSteps.map((step, idx) => (
+                <li key={idx} className="py-3 first:pt-0 last:pb-0">
+                  <div className="flex items-baseline gap-3">
+                    <span className="text-[10.5px] tabular-nums font-semibold text-elec-yellow shrink-0 w-5">
+                      {String(idx + 1).padStart(2, '0')}
+                    </span>
+                    <p className="text-[13px] leading-relaxed text-white">{step}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          <div className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 sm:p-6">
+            <Eyebrow>TIMELINE</Eyebrow>
+            <ol className="mt-4 divide-y divide-white/[0.06]">
+              <TimelineRow stage="Preparation" detail="2-4 weeks gathering documents" idx={1} />
+              <TimelineRow stage="Assessment" detail="1-6 weeks for review + on-site visit" idx={2} />
+              <TimelineRow stage="Approval" detail="1-2 weeks final decision" idx={3} />
+              {accreditation.renewalPeriod && (
+                <TimelineRow
+                  stage="Renewal"
+                  detail={`Re-assessed every ${accreditation.renewalPeriod}`}
+                  idx={4}
+                />
+              )}
+            </ol>
+
+            <div className="mt-5 pt-4 border-t border-white/[0.06]">
+              <Eyebrow>INVESTMENT</Eyebrow>
+              <div className="mt-3 grid grid-cols-2 gap-4">
+                <div>
+                  <div className="text-[20px] font-semibold tabular-nums text-elec-yellow">
+                    {accreditation.cost}
+                  </div>
+                  <div className="text-[10.5px] uppercase tracking-[0.14em] text-white/65 mt-0.5">
+                    Initial cost
+                  </div>
+                </div>
+                <div>
+                  <div className="text-[20px] font-semibold tabular-nums text-emerald-300">
+                    +15-25%
+                  </div>
+                  <div className="text-[10.5px] uppercase tracking-[0.14em] text-white/65 mt-0.5">
+                    Day-rate premium
+                  </div>
+                </div>
+              </div>
+              <p className="mt-3 text-[11.5px] leading-relaxed text-white/85">
+                Typical recoup within 2-3 contracts on premium pricing alone.
               </p>
             </div>
           </div>
-
-          {/* Quick Stats */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-5">
-            <div className="bg-white/5 rounded-xl p-3 text-center">
-              <Clock className="h-5 w-5 text-elec-yellow mx-auto mb-1" />
-              <div className="text-sm font-medium text-white truncate">
-                {accreditation.duration}
-              </div>
-              <div className="text-[10px] text-white">Duration</div>
-            </div>
-            <div className="bg-white/5 rounded-xl p-3 text-center">
-              <PoundSterling className="h-5 w-5 text-green-400 mx-auto mb-1" />
-              <div className="text-sm font-medium text-white truncate">{accreditation.cost}</div>
-              <div className="text-[10px] text-white">Investment</div>
-            </div>
-            <div className="bg-white/5 rounded-xl p-3 text-center">
-              <MapPin className="h-5 w-5 text-blue-400 mx-auto mb-1" />
-              <div className="text-sm font-medium text-white truncate">
-                {accreditation.locations.length > 1 ? 'UK-wide' : accreditation.locations[0]}
-              </div>
-              <div className="text-[10px] text-white">Locations</div>
-            </div>
-            <div className="bg-white/5 rounded-xl p-3 text-center">
-              <TrendingUp className="h-5 w-5 text-purple-400 mx-auto mb-1" />
-              <div className="text-sm font-medium text-white">{accreditation.popularity}%</div>
-              <div className="text-[10px] text-white">Popularity</div>
-            </div>
-          </div>
         </div>
-      </motion.div>
+      </section>
 
-      {/* Tab Navigation - Mobile-Friendly Horizontal Scroll */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0"
-      >
-        {tabs.map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={cn(
-              'flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium whitespace-nowrap transition-all flex-shrink-0',
-              activeTab === tab.id
-                ? 'bg-elec-yellow text-black'
-                : 'bg-white/5 text-white hover:bg-white/10 hover:text-white'
-            )}
-          >
-            <tab.icon className="h-4 w-4" />
-            {tab.label}
-          </button>
-        ))}
-      </motion.div>
-
-      {/* Tab Content */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={activeTab}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.2 }}
-        >
-          {activeTab === 'overview' && (
-            <motion.div
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              className="space-y-4"
-            >
-              {/* Description */}
-              <motion.div
-                variants={itemVariants}
-                className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5"
-              >
-                <p className="text-white leading-relaxed">{accreditation.description}</p>
-              </motion.div>
-
-              {/* Career Impact */}
-              <motion.div
-                variants={itemVariants}
-                className="bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/20 rounded-xl p-4 sm:p-5"
-              >
-                <div className="flex items-start gap-3">
-                  <div className="p-2 rounded-lg bg-elec-yellow/20">
-                    <TrendingUp className="h-5 w-5 text-elec-yellow" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-elec-yellow mb-1">Career Impact</h3>
-                    <p className="text-sm text-white">{accreditation.careerImpact}</p>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Key Benefits Preview */}
-              <motion.div
-                variants={itemVariants}
-                className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5"
-              >
-                <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400" />
-                  Key Benefits
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  {accreditation.benefits.slice(0, 4).map((benefit, idx) => (
-                    <div key={idx} className="flex items-start gap-2 text-sm">
-                      <div className="w-1.5 h-1.5 rounded-full bg-green-400 mt-1.5 flex-shrink-0" />
-                      <span className="text-white">{benefit}</span>
-                    </div>
-                  ))}
-                </div>
-                {accreditation.benefits.length > 4 && (
-                  <button
-                    onClick={() => setActiveTab('benefits')}
-                    className="mt-3 text-sm text-elec-yellow hover:text-elec-yellow/80 flex items-center gap-1"
-                  >
-                    View all {accreditation.benefits.length} benefits
-                    <ChevronRight className="h-4 w-4" />
-                  </button>
-                )}
-              </motion.div>
-            </motion.div>
-          )}
-
-          {activeTab === 'benefits' && (
-            <motion.div
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              className="space-y-4"
-            >
-              {/* Professional Recognition */}
-              <motion.div
-                variants={itemVariants}
-                className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5"
-              >
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="p-2 rounded-lg bg-purple-500/20">
-                    <Award className="h-5 w-5 text-purple-400" />
-                  </div>
-                  <h3 className="font-semibold text-white">Professional Recognition</h3>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div className="bg-white/5 rounded-lg p-3">
-                    <h4 className="text-sm font-medium text-purple-300 mb-1">Industry Standing</h4>
-                    <p className="text-xs text-white">
-                      Instant credibility and recognition within the electrical industry
-                    </p>
-                  </div>
-                  <div className="bg-white/5 rounded-lg p-3">
-                    <h4 className="text-sm font-medium text-purple-300 mb-1">Consumer Trust</h4>
-                    <p className="text-xs text-white">
-                      Customers actively seek accredited professionals
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Business Advantages */}
-              <motion.div
-                variants={itemVariants}
-                className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5"
-              >
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="p-2 rounded-lg bg-green-500/20">
-                    <Briefcase className="h-5 w-5 text-green-400" />
-                  </div>
-                  <h3 className="font-semibold text-white">Business Advantages</h3>
-                </div>
-                <div className="grid grid-cols-1 gap-3">
-                  <div className="flex items-start gap-3 bg-green-500/10 rounded-lg p-3">
-                    <PoundSterling className="h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" />
-                    <div>
-                      <h4 className="text-sm font-medium text-green-300">Higher Rates</h4>
-                      <p className="text-xs text-white">
-                        Command 15-25% premium pricing over non-accredited competitors
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3 bg-blue-500/10 rounded-lg p-3">
-                    <Users className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
-                    <div>
-                      <h4 className="text-sm font-medium text-blue-300">Marketing Edge</h4>
-                      <p className="text-xs text-white">
-                        Use accreditation logos and materials to win more contracts
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3 bg-purple-500/10 rounded-lg p-3">
-                    <Shield className="h-5 w-5 text-purple-400 flex-shrink-0 mt-0.5" />
-                    <div>
-                      <h4 className="text-sm font-medium text-purple-300">Insurance Discounts</h4>
-                      <p className="text-xs text-white">
-                        Access reduced premiums through accreditation body partnerships
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* All Benefits List */}
-              <motion.div
-                variants={itemVariants}
-                className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5"
-              >
-                <h3 className="font-semibold text-white mb-4">All Benefits</h3>
-                <div className="space-y-2">
-                  {accreditation.benefits.map((benefit, idx) => (
-                    <div key={idx} className="flex items-start gap-3 p-2 bg-white/5 rounded-lg">
-                      <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                      <span className="text-sm text-white">{benefit}</span>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-            </motion.div>
-          )}
-
-          {activeTab === 'requirements' && (
-            <motion.div
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              className="space-y-4"
-            >
-              {/* Essential Requirements */}
-              <motion.div
-                variants={itemVariants}
-                className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5"
-              >
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="p-2 rounded-lg bg-amber-500/20">
-                    <BookOpen className="h-5 w-5 text-amber-400" />
-                  </div>
-                  <h3 className="font-semibold text-white">Essential Requirements</h3>
-                </div>
-                <div className="space-y-2">
-                  {accreditation.requirements.map((req, idx) => (
-                    <div key={idx} className="flex items-start gap-3 p-3 bg-white/5 rounded-lg">
-                      <div className="w-6 h-6 rounded-full bg-amber-500/20 flex items-center justify-center flex-shrink-0">
-                        <span className="text-xs font-medium text-amber-400">{idx + 1}</span>
-                      </div>
-                      <span className="text-sm text-white">{req}</span>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-
-              {/* Experience */}
-              <motion.div
-                variants={itemVariants}
-                className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5"
-              >
-                <h3 className="font-semibold text-white mb-4">Experience Requirements</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  <div className="bg-blue-500/10 rounded-lg p-3 text-center">
-                    <div className="text-2xl font-bold text-blue-400">2-4</div>
-                    <div className="text-xs text-white">Years Experience</div>
-                  </div>
-                  <div className="bg-purple-500/10 rounded-lg p-3 text-center">
-                    <div className="text-2xl font-bold text-purple-400">BS 7671</div>
-                    <div className="text-xs text-white">Compliance</div>
-                  </div>
-                  <div className="bg-green-500/10 rounded-lg p-3 text-center">
-                    <div className="text-2xl font-bold text-green-400">£2m+</div>
-                    <div className="text-xs text-white">Insurance</div>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Documentation */}
-              <motion.div
-                variants={itemVariants}
-                className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5"
-              >
-                <h3 className="font-semibold text-white mb-3">Documentation Needed</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  {[
-                    'Qualification certificates',
-                    'Work portfolio & references',
-                    'CPD records',
-                    'Insurance documents',
-                    'Business registration',
-                    'Character references',
-                  ].map((doc, idx) => (
-                    <div key={idx} className="flex items-center gap-2 text-sm text-white">
-                      <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                      {doc}
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-            </motion.div>
-          )}
-
-          {activeTab === 'process' && (
-            <motion.div
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              className="space-y-4"
-            >
-              {/* Steps */}
-              <motion.div
-                variants={itemVariants}
-                className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5"
-              >
-                <h3 className="font-semibold text-white mb-4">Application Steps</h3>
-                <div className="space-y-3">
-                  {accreditation.nextSteps.map((step, idx) => (
-                    <div key={idx} className="flex gap-3">
-                      <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-                        <span className="text-sm font-semibold text-elec-yellow">{idx + 1}</span>
-                      </div>
-                      <div className="flex-1 pt-1">
-                        <p className="text-sm text-white">{step}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-
-              {/* Timeline */}
-              <motion.div
-                variants={itemVariants}
-                className="bg-elec-gray/50 border border-white/10 rounded-xl p-4 sm:p-5"
-              >
-                <h3 className="font-semibold text-white mb-4">Typical Timeline</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
-                    <div className="text-sm font-medium text-blue-300 mb-1">Preparation</div>
-                    <div className="text-xs text-white">2-4 weeks to gather documents</div>
-                  </div>
-                  <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
-                    <div className="text-sm font-medium text-amber-300 mb-1">Assessment</div>
-                    <div className="text-xs text-white">1-6 weeks for review</div>
-                  </div>
-                  <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
-                    <div className="text-sm font-medium text-green-300 mb-1">Approval</div>
-                    <div className="text-xs text-white">1-2 weeks final decision</div>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Investment */}
-              <motion.div
-                variants={itemVariants}
-                className="bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/20 rounded-xl p-4 sm:p-5"
-              >
-                <h3 className="font-semibold text-white mb-4">Investment</h3>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <div className="text-2xl font-bold text-elec-yellow">{accreditation.cost}</div>
-                    <div className="text-xs text-white">Initial Cost</div>
-                  </div>
-                  <div>
-                    <div className="text-2xl font-bold text-green-400">+15-25%</div>
-                    <div className="text-xs text-white">Premium Rates</div>
-                  </div>
-                </div>
-                <p className="text-xs text-white mt-3">
-                  Most professionals recoup costs within 2-3 contracts through premium pricing
-                </p>
-              </motion.div>
-
-              {/* CTA */}
-              <motion.div variants={itemVariants}>
-                {accreditation.website && (
-                  <Button
-                    onClick={() => openExternalUrl(accreditation.website)}
-                    className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 h-12 text-base font-medium"
-                  >
-                    <ExternalLink className="mr-2 h-5 w-5" />
-                    Apply on Provider Website
-                  </Button>
-                )}
-              </motion.div>
-            </motion.div>
-          )}
-        </motion.div>
-      </AnimatePresence>
-
-      {/* Fixed Bottom CTA for Mobile */}
+      {/* Desktop CTA */}
       {accreditation.website && (
-        <div className="fixed bottom-0 left-0 right-0 p-4 bg-elec-dark/95 backdrop-blur-lg border-t border-white/10 sm:hidden z-50">
-          <Button
+        <div className="hidden sm:block">
+          <button
+            type="button"
             onClick={() => openExternalUrl(accreditation.website)}
-            className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 h-12"
+            className="text-[13px] font-semibold uppercase tracking-[0.14em] text-black bg-elec-yellow hover:bg-elec-yellow/90 active:bg-elec-yellow/85 rounded-full px-5 py-3 min-h-[44px] inline-flex items-center gap-2 touch-manipulation transition-colors"
           >
-            <ExternalLink className="mr-2 h-4 w-4" />
-            Visit Provider Website
-          </Button>
+            Apply on provider website
+            <ExternalLink className="h-4 w-4" />
+          </button>
         </div>
       )}
 
-      {/* Bottom padding for fixed button on mobile */}
-      <div className="h-20 sm:hidden" />
-    </div>
+      {/* Mobile fixed CTA */}
+      {accreditation.website && (
+        <div className="fixed bottom-0 left-0 right-0 p-4 bg-elec-dark/95 backdrop-blur-lg border-t border-white/10 sm:hidden z-40">
+          <button
+            type="button"
+            onClick={() => openExternalUrl(accreditation.website)}
+            className="w-full text-[13px] font-semibold uppercase tracking-[0.14em] text-black bg-elec-yellow hover:bg-elec-yellow/90 active:bg-elec-yellow/85 rounded-full px-4 py-3 min-h-[44px] inline-flex items-center justify-center gap-2 touch-manipulation transition-colors"
+          >
+            Apply on provider website
+            <ArrowRight className="h-4 w-4" />
+          </button>
+        </div>
+      )}
+    </motion.div>
   );
 };
+
+const Stat = ({
+  label,
+  value,
+  accent,
+}: {
+  label: string;
+  value: React.ReactNode;
+  accent?: boolean;
+}) => (
+  <div className="min-w-0">
+    <dt className="text-[9.5px] uppercase tracking-[0.14em] font-semibold text-white/65">
+      {label}
+    </dt>
+    <dd
+      className={cn(
+        'mt-0.5 text-[14px] sm:text-[15px] tabular-nums truncate',
+        accent ? 'text-elec-yellow font-semibold' : 'text-white font-semibold'
+      )}
+    >
+      {value}
+    </dd>
+  </div>
+);
+
+const BaselineCell = ({ value, label }: { value: string; label: string }) => (
+  <div className="text-center rounded-lg border border-white/[0.10] bg-white/[0.02] p-2.5">
+    <div className="text-[14px] font-semibold tabular-nums text-elec-yellow">{value}</div>
+    <div className="mt-0.5 text-[9.5px] uppercase tracking-[0.14em] text-white/65">
+      {label}
+    </div>
+  </div>
+);
+
+const TimelineRow = ({
+  stage,
+  detail,
+  idx,
+}: {
+  stage: string;
+  detail: string;
+  idx: number;
+}) => (
+  <li className="py-3 first:pt-0 last:pb-0">
+    <div className="flex items-baseline gap-3">
+      <span className="text-[10.5px] tabular-nums font-semibold text-elec-yellow shrink-0 w-5">
+        {String(idx).padStart(2, '0')}
+      </span>
+      <div className="min-w-0">
+        <h4 className="text-[13.5px] font-semibold text-white">{stage}</h4>
+        <p className="mt-0.5 text-[12px] leading-relaxed text-white/85">{detail}</p>
+      </div>
+    </div>
+  </li>
+);
 
 export default ElectricianAccreditationDetailView;

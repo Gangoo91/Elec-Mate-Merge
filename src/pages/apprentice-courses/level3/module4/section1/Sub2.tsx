@@ -33,7 +33,9 @@ import {
   LearningOutcomes,
   ContentEyebrow,
   SectionRule,
+  VideoCard,
 } from '@/components/study-centre/learning';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE =
@@ -327,6 +329,14 @@ export default function Sub2() {
               Multimeters do NOT prove dead. Socket testers do NOT prove dead. Neon screwdrivers do NOT prove dead. Only a GS38-compliant voltage tester does.
             </p>
           </ConceptBlock>
+
+          <VideoCard
+            url={videos.safeIsolation.url}
+            title={videos.safeIsolation.title}
+            channel={videos.safeIsolation.channel}
+            duration={videos.safeIsolation.duration}
+            topic={videos.safeIsolation.topic}
+          />
 
           <RegsCallout
             source="HSE Guidance Note GS38 (4th ed) — Electrical test equipment for use on low voltage systems"

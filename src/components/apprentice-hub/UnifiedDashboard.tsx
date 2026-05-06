@@ -1,33 +1,24 @@
 /**
- * UnifiedDashboard
+ * UnifiedDashboard — Apprentice Portfolio Home
  *
- * Home tab — smart course-focused dashboard.
- * Shows greeting, course overview, unit progress with LOs/ACs,
- * quick actions, and recent activity.
+ * Pure portfolio dashboard: AC coverage, evidence quality, EPA gateway
+ * readiness. OJT/hours moved out — own surface in the apprentice hub.
+ *
+ * Layout:
+ *   • Mobile  → single editorial flow
+ *   • Desktop → 2-column (sticky left rail + scrollable right rail)
+ *
+ * Compliance focus (UK ST0152 / ESFA / EPA gateway):
+ *   • Every AC visible with status
+ *   • Recent evidence + audit trail surfaced
+ *   • Quality grade and tutor sync visible
+ *   • Smart "Today's focus" ranks ACs to capture next
  */
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  Clock,
-  Briefcase,
-  Target,
-  AlertTriangle,
-  ChevronRight,
-  ChevronDown,
-  FileCheck,
-  Timer,
-  Plus,
-  GraduationCap,
-  BookOpen,
-  Layers,
-  FileText,
-  CheckCircle2,
-  Share2,
-} from 'lucide-react';
+import { Plus, FileCheck, FileText, ChevronRight, Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import {
   Sheet,
   SheetContent,
@@ -35,109 +26,91 @@ import {
   SheetTitle,
   SheetDescription,
 } from '@/components/ui/sheet';
-import { cn } from '@/lib/utils';
 import type { PortfolioEntry } from '@/types/portfolio';
 import { parseEvidencedACs } from '@/utils/parseEvidencedACs';
 import { useHaptic } from '@/hooks/useHaptic';
 import { useAuth } from '@/contexts/AuthContext';
-import { XPProgressRing } from '@/components/apprentice/XPProgressRing';
-import { useLearningXP } from '@/hooks/useLearningXP';
 import { usePortfolioData } from '@/hooks/portfolio/usePortfolioData';
 import { usePortfolioComments } from '@/hooks/portfolio/usePortfolioComments';
-import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
-import { useComplianceTracking } from '@/hooks/time-tracking/useComplianceTracking';
 import { useQualifications } from '@/hooks/qualification/useQualifications';
 import { useQualificationACs } from '@/hooks/qualification/useQualificationACs';
+import { usePortfolioFocus } from '@/hooks/portfolio/usePortfolioFocus';
+import { useACSignoffs } from '@/hooks/portfolio/useACSignoffs';
+import { SubmissionReadiness } from './portfolio/SubmissionReadiness';
+import { FromCollegeCallout } from './portfolio/FromCollegeCallout';
 import { ApprenticeHubTab } from './ApprenticeHubNav';
 import QualificationSelector from '@/components/apprentice/qualification/QualificationSelector';
 import { SharePortfolioSheet } from './SharePortfolioSheet';
+import {
+  Eyebrow,
+  KpiCell,
+  PrimaryAction,
+  SecondaryAction,
+  SectionHeader,
+} from './portfolio/PortfolioPrimitives';
+import { TodaysFocusPanel } from './portfolio/TodaysFocusPanel';
+import { ACHeatmap } from './portfolio/ACHeatmap';
+import { EPAGatewayPulse } from './portfolio/EPAGatewayPulse';
+import { CourseRequirementsList } from './portfolio/CourseRequirementsList';
+import { ACAuditTimeline } from './portfolio/ACAuditTimeline';
 
 interface UnifiedDashboardProps {
   onNavigate: (tab: ApprenticeHubTab) => void;
   onCapture: () => void;
 }
 
-/** Mini progress ring for unit AC coverage */
-function ProgressRing({
-  progress,
-  size = 28,
-  strokeWidth = 2.5,
-}: {
-  progress: number;
-  size?: number;
-  strokeWidth?: number;
-}) {
-  const radius = (size - strokeWidth) / 2;
-  const circumference = 2 * Math.PI * radius;
-  const offset = circumference - Math.min(progress, 1) * circumference;
-
-  return (
-    <svg width={size} height={size} className="flex-shrink-0 -rotate-90">
-      <circle
-        cx={size / 2}
-        cy={size / 2}
-        r={radius}
-        fill="none"
-        stroke="rgba(255,255,255,0.08)"
-        strokeWidth={strokeWidth}
-      />
-      <motion.circle
-        cx={size / 2}
-        cy={size / 2}
-        r={radius}
-        fill="none"
-        stroke={progress >= 1 ? '#4ade80' : '#facc15'}
-        strokeWidth={strokeWidth}
-        strokeLinecap="round"
-        strokeDasharray={circumference}
-        initial={{ strokeDashoffset: circumference }}
-        animate={{ strokeDashoffset: offset }}
-        transition={{ type: 'spring', stiffness: 60, damping: 15, delay: 0.1 }}
-      />
-    </svg>
-  );
-}
-
-/** Thumbnail for evidence files */
 function EvidenceThumbnail({ entry }: { entry: PortfolioEntry }) {
   const imageFile = entry.evidenceFiles?.find(
     (f) => f.type?.startsWith('image/') || f.url?.match(/\.(jpg|jpeg|png|webp|gif)$/i)
   );
-
   if (imageFile?.url) {
     return (
-      <div className="w-10 h-10 rounded-xl overflow-hidden bg-white/[0.06] flex-shrink-0">
+      <div className="w-10 h-10 rounded-lg overflow-hidden bg-white/[0.06] flex-shrink-0">
         <img src={imageFile.url} alt="" className="w-full h-full object-cover" loading="lazy" />
       </div>
     );
   }
-
   return (
-    <div className="p-2 rounded-xl bg-white/[0.06] flex-shrink-0">
-      <FileCheck className="h-4 w-4 text-white" />
+    <div className="p-2 rounded-lg bg-white/[0.06] flex-shrink-0">
+      <FileCheck className="h-4 w-4 text-white/85" />
     </div>
   );
+}
+
+function formatRelativeDate(date: Date): string {
+  const now = new Date();
+  const diff = now.getTime() - date.getTime();
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  if (days === 0) return 'Today';
+  if (days === 1) return 'Yesterday';
+  if (days < 7) return `${days} days ago`;
+  return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 }
 
 export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProps) {
   const { user, profile } = useAuth();
   const haptic = useHaptic();
-  const xp = useLearningXP();
   const { entries: portfolioEntries } = usePortfolioData();
-  const { actionRequiredCount } = usePortfolioComments();
-  const { entries: timeEntries, totalTime } = useTimeEntries();
-  const { otjGoal } = useComplianceTracking();
+  const { actionRequiredCount, comments } = usePortfolioComments();
   const { userSelection, loading: qualLoading } = useQualifications();
   const courseCode = userSelection?.qualification?.code ?? null;
+  const courseId = userSelection?.qualification_id ?? null;
   const { tree, isLoading: acLoading } = useQualificationACs(courseCode);
+  const {
+    getByAC: getSignoff,
+    records: signoffRecords,
+  } = useACSignoffs(courseCode);
 
   const [showCourseSelector, setShowCourseSelector] = useState(false);
-  const [expandedUnits, setExpandedUnits] = useState<Set<string>>(new Set());
-  const [selectedAC, setSelectedAC] = useState<{ code: string; text: string } | null>(null);
+  const [selectedAC, setSelectedAC] = useState<{
+    code: string;
+    text: string;
+    unitCode?: string;
+  } | null>(null);
   const [showACEvidence, setShowACEvidence] = useState(false);
   const [showShareSheet, setShowShareSheet] = useState(false);
 
-  // Build AC → evidence lookup from portfolio entries (normalised keys)
+  /* ─── Build AC → evidence map (normalised refs) ────────────────────── */
   const acEvidenceMap = useMemo(() => {
     const map = new Map<string, PortfolioEntry[]>();
     if (!portfolioEntries) return map;
@@ -153,7 +126,22 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
     return map;
   }, [portfolioEntries]);
 
-  // Overall AC progress
+  /* ─── Build claimed-only set (refs claimed but no real backing) ────── */
+  const claimedOnlyRefs = useMemo(() => {
+    const claimed = new Set<string>();
+    portfolioEntries?.forEach((e) => {
+      const hasFiles = (e.evidenceFiles?.length ?? 0) > 0;
+      const hasBacking = hasFiles; // could add supervisor sign-off / AI validation later
+      (e.assessmentCriteria || []).forEach((ref) => {
+        if (!hasBacking) claimed.add(ref);
+      });
+    });
+    // Subtract anything already evidenced
+    for (const ref of acEvidenceMap.keys()) claimed.delete(ref);
+    return claimed;
+  }, [portfolioEntries, acEvidenceMap]);
+
+  /* ─── Aggregates ──────────────────────────────────────────────────── */
   const { evidencedCount, overallPercent } = useMemo(() => {
     const allACs = tree.units.flatMap((u) =>
       u.learningOutcomes.flatMap((lo) => lo.assessmentCriteria)
@@ -165,398 +153,164 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
     return { evidencedCount: count, overallPercent: pct };
   }, [tree, acEvidenceMap]);
 
-  // Find next un-evidenced AC for the smart nudge
-  const nextAC = useMemo(() => {
-    if (tree.totalACs === 0) return null;
-    for (const unit of tree.units) {
-      for (const lo of unit.learningOutcomes) {
-        for (const ac of lo.assessmentCriteria) {
-          if (!acEvidenceMap.has(ac.acRef) && !acEvidenceMap.has(ac.acFullRef)) {
-            return {
-              unitCode: unit.unitCode,
-              acRef: ac.acRef,
-              acText: ac.acText.replace(`${ac.acRef} `, ''),
-            };
-          }
-        }
-      }
-    }
-    return null;
-  }, [tree, acEvidenceMap]);
-
-  // Stats
   const portfolioTotal = portfolioEntries?.length || 0;
-  const portfolioCompleted =
-    portfolioEntries?.filter((e) => e.status === 'completed' || e.status === 'reviewed').length ||
-    0;
 
-  const yearlyHours = Math.round(totalTime.hours + totalTime.minutes / 60);
-  const yearlyTarget = otjGoal?.target_hours || 400;
-  const yearlyPercent = Math.round((yearlyHours / yearlyTarget) * 100);
+  /* ─── Smart focus ranking ─────────────────────────────────────────── */
+  const { focus, recentActivityCount } = usePortfolioFocus(
+    tree,
+    portfolioEntries,
+    acEvidenceMap
+  );
 
-  const weeklyHours = getWeeklyHours(timeEntries || []);
-  const weeklyTarget = 7.5;
-  const weeklyPercent = Math.round((weeklyHours / weeklyTarget) * 100);
-
-  const getGreeting = () => {
+  /* ─── Greeting / identity ─────────────────────────────────────────── */
+  const fullName = profile?.full_name || user?.email?.split('@')[0] || 'Apprentice';
+  const rawFirst = fullName.split(' ')[0];
+  const firstName = rawFirst.charAt(0).toUpperCase() + rawFirst.slice(1).toLowerCase();
+  const greeting = useMemo(() => {
     const hour = new Date().getHours();
     if (hour < 12) return 'Good morning';
     if (hour < 18) return 'Good afternoon';
     return 'Good evening';
-  };
+  }, []);
 
-  const fullName = profile?.full_name || user?.email?.split('@')[0] || 'Apprentice';
-  const rawFirst = fullName.split(' ')[0];
-  const firstName = rawFirst.charAt(0).toUpperCase() + rawFirst.slice(1).toLowerCase();
-
-  const toggleUnit = (unitCode: string) => {
-    haptic.light();
-    const next = new Set(expandedUnits);
-    if (next.has(unitCode)) {
-      next.delete(unitCode);
-    } else {
-      next.add(unitCode);
-    }
-    setExpandedUnits(next);
-  };
-
-  // No course selected
+  /* ─── No-course state ─────────────────────────────────────────────── */
   if (!userSelection && !qualLoading) {
     return (
-      <div className="px-5 py-6 space-y-6 lg:px-6 lg:max-w-4xl lg:mx-auto">
-        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">{getGreeting()}</span>
-          <h2 className="text-xl font-bold text-white tracking-tight mt-1">{firstName}</h2>
-          <p className="text-[14px] text-white/85 leading-relaxed mt-2">Select your qualification to get started</p>
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 py-6 space-y-5">
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-5 space-y-2">
+          <Eyebrow>{greeting}</Eyebrow>
+          <h2 className="text-[24px] font-semibold tracking-tight text-white">{firstName}</h2>
+          <p className="text-[13px] text-white/85 leading-relaxed">
+            Pick your qualification to start your portfolio.
+          </p>
         </div>
         <QualificationSelector />
       </div>
     );
   }
 
-  return (
-    <div className="px-5 py-6 space-y-6 lg:px-6 lg:max-w-4xl lg:mx-auto">
-      {/* Compact header — greeting + inline stats */}
-      <div className="flex items-start justify-between gap-4">
-        <div className="min-w-0">
-          <p className="text-[13px] text-white">{getGreeting()},</p>
-          <h2 className="text-xl font-bold text-white tracking-tight truncate">{firstName}</h2>
-          {userSelection && (
-            <button
-              onClick={() => setShowCourseSelector(true)}
-              className="mt-1 text-[12px] text-elec-yellow font-medium touch-manipulation active:opacity-70"
-            >
-              {userSelection.qualification?.title} →
-            </button>
-          )}
-        </div>
-        <div className="flex items-center gap-4 flex-shrink-0 pt-1">
-          <button onClick={() => onNavigate('work')} className="text-center touch-manipulation active:opacity-70">
-            <p className="text-lg font-bold text-white leading-none">
-              {tree.totalACs > 0 ? evidencedCount : portfolioCompleted}/{tree.totalACs > 0 ? tree.totalACs : portfolioTotal}
-            </p>
-            <p className="text-[10px] text-white mt-0.5 uppercase tracking-wider">{tree.totalACs > 0 ? 'ACs' : 'Portfolio'}</p>
-          </button>
-          <button onClick={() => onNavigate('hours')} className="text-center touch-manipulation active:opacity-70">
-            <p className={cn('text-lg font-bold leading-none', weeklyPercent >= 100 ? 'text-elec-yellow' : 'text-white')}>
-              {weeklyHours.toFixed(1)}h
-            </p>
-            <p className="text-[10px] text-white mt-0.5 uppercase tracking-wider">Week</p>
-          </button>
-          <button onClick={() => onNavigate('hours')} className="text-center touch-manipulation active:opacity-70">
-            <p className="text-lg font-bold text-white leading-none">{yearlyHours}h</p>
-            <p className="text-[10px] text-white mt-0.5 uppercase tracking-wider">Year</p>
-          </button>
-          <XPProgressRing
-            size={36}
-            compact
-            xpToday={xp.xpToday ?? 0}
-            dailyGoal={xp.dailyGoal ?? 50}
-            level={xp.level ?? 1}
-            levelTitle={xp.levelTitle ?? ''}
-            totalXP={xp.totalXP ?? 0}
-          />
-        </div>
-      </div>
-
-      {/* No-data guard */}
-      {userSelection && !acLoading && !qualLoading && tree.totalACs === 0 && (
-        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
-          <p className="text-[14px] text-white/85 leading-relaxed">
-            No curriculum data for this course yet.
-          </p>
-          <button
-            onClick={() => setShowCourseSelector(true)}
-            className="text-sm text-elec-yellow font-semibold mt-1.5 touch-manipulation"
-          >
-            Switch to a supported course
-          </button>
-        </div>
-      )}
-
-      {/* Quick Actions */}
-      <div className="grid grid-cols-3 gap-3">
-        <Button
-          onClick={onCapture}
-          className="h-12 rounded-2xl bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-sm touch-manipulation active:scale-[0.97] transition-transform shadow-lg shadow-elec-yellow/20"
-        >
-          Add Evidence
-        </Button>
-        <Button
-          variant="outline"
-          onClick={() => onNavigate('hours')}
-          className="h-12 rounded-2xl font-semibold text-sm touch-manipulation active:scale-[0.97] transition-transform border-white/15 bg-white/[0.04]"
-        >
-          Log Time
-        </Button>
-        <Button
-          variant="outline"
-          onClick={() => {
-            haptic.light();
-            setShowShareSheet(true);
-          }}
-          className="h-12 rounded-2xl font-semibold text-sm touch-manipulation active:scale-[0.97] transition-transform border-white/15 bg-white/[0.04]"
-        >
-          Share
-        </Button>
-      </div>
-
-      {/* Next AC to Target — smart nudge */}
-      {tree.totalACs > 0 && nextAC ? (
+  /* ─── Header / Hero (used in both layouts) ────────────────────────── */
+  const Hero = (
+    <div className="space-y-2">
+      <Eyebrow>Apprentice · Portfolio · {greeting}</Eyebrow>
+      <h2 className="text-[28px] sm:text-[32px] font-semibold tracking-tight text-white leading-none">
+        {firstName}
+      </h2>
+      {userSelection && (
         <button
-          onClick={() => {
-            haptic.light();
-            onCapture();
-          }}
-          className="w-full p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] text-left touch-manipulation active:scale-[0.99] transition-transform"
+          onClick={() => setShowCourseSelector(true)}
+          className="inline-flex items-center gap-1 text-[12px] text-elec-yellow font-medium touch-manipulation hover:text-elec-yellow/85 active:opacity-70"
         >
-          <div className="flex items-start gap-3">
-            <div className="flex-1 min-w-0">
-              <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 mb-1">Next AC to Target</p>
-              <p className="text-sm font-semibold text-white leading-snug">
-                {nextAC.unitCode} {nextAC.acRef}
-              </p>
-              <p className="text-xs text-white mt-0.5 line-clamp-3">{nextAC.acText}</p>
-            </div>
-            <span className="text-xs font-semibold text-elec-yellow flex-shrink-0 mt-1">Add →</span>
-          </div>
-          {/* Thin progress bar */}
-          <div className="mt-3 flex items-center gap-2">
-            <div className="flex-1 h-1.5 rounded-full bg-white/[0.08] overflow-hidden">
-              <motion.div
-                className="h-full rounded-full bg-elec-yellow"
-                initial={{ width: 0 }}
-                animate={{ width: `${overallPercent}%` }}
-                transition={{ type: 'spring', stiffness: 60, damping: 15, delay: 0.1 }}
-              />
-            </div>
-            <span className="text-[10px] text-white font-medium flex-shrink-0">
-              {evidencedCount}/{tree.totalACs}
-            </span>
-          </div>
+          {userSelection.qualification?.title}
+          <ChevronRight className="h-3 w-3" />
         </button>
-      ) : tree.totalACs > 0 ? (
-        <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 flex items-center gap-3">
-          <CheckCircle2 className="h-6 w-6 text-elec-yellow flex-shrink-0" />
-          <div>
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">All ACs covered</span>
-            <p className="text-[14px] text-white/85 leading-relaxed mt-0.5">
-              {tree.totalACs} assessment criteria evidenced
-            </p>
-          </div>
-        </div>
-      ) : null}
-
-      {/* Course Requirements — Units with LOs & ACs */}
-      {(acLoading || qualLoading) && userSelection && (
-        <div className="flex items-center justify-center py-8">
-          <div className="h-5 w-5 border-2 border-elec-yellow border-t-transparent rounded-full animate-spin" />
-          <span className="ml-2 text-sm text-white">Loading course data...</span>
-        </div>
       )}
-      {tree.totalACs > 0 && (
-        <div className="space-y-4">
-          {/* Section header */}
-          <div className="flex items-center justify-between">
-            <h3 className="text-base font-bold text-white">Course Requirements</h3>
-            <span className="flex items-center gap-1 text-xs text-white">
-              <Layers className="h-3.5 w-3.5 text-elec-yellow" />
-              {tree.units.length} units
-            </span>
-          </div>
+    </div>
+  );
 
-          {/* Units accordion */}
-          <div className="space-y-2">
-            {tree.units.map((unit) => {
-              const allUnitACs = unit.learningOutcomes.flatMap((lo) => lo.assessmentCriteria);
-              const totalUnitACs = allUnitACs.length;
-              const evidencedUnitACs = allUnitACs.filter(
-                (ac) => acEvidenceMap.has(ac.acRef) || acEvidenceMap.has(ac.acFullRef)
-              ).length;
+  /* ─── KPI strip — pure portfolio metrics ──────────────────────────── */
+  const KpiStrip = (
+    <div className="grid grid-cols-2 lg:grid-cols-2 gap-2">
+      <KpiCell
+        label="ACs evidenced"
+        value={tree.totalACs > 0 ? `${evidencedCount}/${tree.totalACs}` : '—'}
+        sub={tree.totalACs > 0 ? `${overallPercent}% of qualification` : 'No course data'}
+        highlight={overallPercent >= 70}
+        onClick={() => onNavigate('work')}
+      />
+      <KpiCell
+        label="Evidence items"
+        value={portfolioTotal}
+        sub={
+          actionRequiredCount > 0
+            ? `${actionRequiredCount} need attention`
+            : 'All up to date'
+        }
+        onClick={() => onNavigate('work')}
+      />
+      <KpiCell
+        label="Course units"
+        value={tree.units.length || '—'}
+        sub={tree.units.length > 0 ? `${tree.totalACs} ACs total` : ''}
+      />
+      <KpiCell
+        label="Tutor inbox"
+        value={actionRequiredCount}
+        sub={actionRequiredCount > 0 ? 'Awaiting your reply' : 'Nothing pending'}
+        highlight={actionRequiredCount > 0}
+      />
+    </div>
+  );
 
-              return (
-                <Collapsible
-                  key={unit.unitCode}
-                  open={expandedUnits.has(unit.unitCode)}
-                  onOpenChange={() => toggleUnit(unit.unitCode)}
-                >
-                  <CollapsibleTrigger asChild>
-                    <button
-                      className={cn('w-full text-left p-4 rounded-xl transition-all',
-                        'bg-white/[0.02] border border-white/[0.06]',
-                        'hover:border-white/[0.12] active:scale-[0.99] touch-manipulation',
-                        expandedUnits.has(unit.unitCode) && 'border-white/[0.12]'
-                      )}
-                    >
-                      <div className="flex items-start gap-3">
-                        <div className="mt-0.5 flex-shrink-0">
-                          {expandedUnits.has(unit.unitCode) ? (
-                            <ChevronDown className="h-4 w-4 text-elec-yellow" />
-                          ) : (
-                            <ChevronRight className="h-4 w-4 text-white/55" />
-                          )}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-semibold text-white leading-tight">
-                            {unit.unitTitle}
-                          </p>
-                          <p className="text-xs text-white mt-1">
-                            {unit.unitCode} · {unit.learningOutcomes.length} outcomes ·{' '}
-                            {totalUnitACs} ACs
-                          </p>
-                        </div>
-                        {/* Progress ring */}
-                        <div className="flex flex-col items-center gap-0.5 flex-shrink-0">
-                          <ProgressRing
-                            progress={totalUnitACs > 0 ? evidencedUnitACs / totalUnitACs : 0}
-                          />
-                          <span
-                            className={cn('text-[10px] font-medium',
-                              evidencedUnitACs === totalUnitACs && totalUnitACs > 0
-                                ? 'text-elec-yellow'
-                                : 'text-white/55'
-                            )}
-                          >
-                            {evidencedUnitACs}/{totalUnitACs}
-                          </span>
-                        </div>
-                      </div>
-                    </button>
-                  </CollapsibleTrigger>
-                  <CollapsibleContent>
-                    <div className="ml-4 mr-1 mt-2 mb-1 space-y-4 text-left">
-                      {unit.learningOutcomes.map((lo) => (
-                        <div key={`${unit.unitCode}-${lo.loNumber}`} className="space-y-2">
-                          <div className="flex items-start gap-2 text-left">
-                            <BookOpen className="h-3.5 w-3.5 text-white/55 mt-0.5 flex-shrink-0" />
-                            <p className="text-xs font-medium text-white leading-snug text-left">
-                              LO{lo.loNumber}: {lo.loText}
-                            </p>
-                          </div>
-                          <div className="space-y-1.5 ml-5">
-                            {lo.assessmentCriteria.map((ac) => {
-                              const evidenceList =
-                                acEvidenceMap.get(ac.acRef) ||
-                                acEvidenceMap.get(ac.acFullRef) ||
-                                [];
-                              const hasEvidence = evidenceList.length > 0;
+  /* ─── Primary actions ─────────────────────────────────────────────── */
+  const PrimaryActions = (
+    <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-2">
+      <PrimaryAction
+        onClick={() => {
+          haptic.light();
+          onCapture();
+        }}
+        label={
+          <>
+            <Plus className="h-4 w-4" />
+            Add evidence
+          </>
+        }
+      />
+      <SecondaryAction
+        onClick={() => {
+          haptic.light();
+          setShowShareSheet(true);
+        }}
+        label={
+          <>
+            <Share2 className="h-3.5 w-3.5" />
+            Share
+          </>
+        }
+        className="px-4"
+      />
+    </div>
+  );
 
-                              return (
-                                <button
-                                  key={ac.acFullRef}
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    haptic.light();
-                                    setSelectedAC({
-                                      code: ac.acRef,
-                                      text: ac.acText.replace(`${ac.acRef} `, ''),
-                                    });
-                                    setShowACEvidence(true);
-                                  }}
-                                  className={cn('w-full flex items-start gap-2 text-xs text-white text-left touch-manipulation active:bg-white/[0.06] rounded-lg py-2 px-2 -mx-2 transition-colors',
-                                    hasEvidence && 'bg-white/[0.02]'
-                                  )}
-                                >
-                                  {hasEvidence ? (
-                                    <CheckCircle2 className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-px" />
-                                  ) : (
-                                    <span className="text-white/55 flex-shrink-0 mt-px w-4 text-center">
-                                      •
-                                    </span>
-                                  )}
-                                  <span className="flex-1 text-left">
-                                    <span
-                                      className={cn('font-medium',
-                                        hasEvidence ? 'text-elec-yellow' : 'text-white'
-                                      )}
-                                    >
-                                      {ac.acRef}
-                                    </span>{' '}
-                                    {ac.acText.replace(`${ac.acRef} `, '')}
-                                  </span>
-                                  {hasEvidence && (
-                                    <span className="text-[10px] text-white/85 px-1.5 py-0.5 rounded-md border border-white/10 bg-white/[0.03] shrink-0">
-                                      {evidenceList.length}
-                                    </span>
-                                  )}
-                                </button>
-                              );
-                            })}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </CollapsibleContent>
-                </Collapsible>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* Your Evidence */}
-      {portfolioEntries && portfolioEntries.length > 0 && (
-        <div className="space-y-3">
-          <div className="flex items-center justify-between">
-            <h3 className="text-base font-bold text-white">Your Evidence</h3>
+  /* ─── Recent evidence ─────────────────────────────────────────────── */
+  const RecentEvidence =
+    portfolioEntries && portfolioEntries.length > 0 ? (
+      <div className="space-y-3">
+        <SectionHeader
+          eyebrow="Recent evidence"
+          title="Latest in your portfolio"
+          action={
             <button
               onClick={() => onNavigate('work')}
-              className="text-xs text-elec-yellow font-medium touch-manipulation flex items-center gap-0.5"
+              className="text-[12px] text-elec-yellow font-medium touch-manipulation flex items-center gap-0.5"
             >
-              View all {portfolioTotal} items <ChevronRight className="h-3 w-3" />
+              View all {portfolioTotal} →
             </button>
-          </div>
-          <div className="space-y-2">
-            {portfolioEntries.slice(0, 5).map((entry) => {
-              const entryACs = entry.assessmentCriteria || [];
-              return (
+          }
+        />
+        <ul className="space-y-2">
+          {portfolioEntries.slice(0, 5).map((entry) => {
+            const entryACs = entry.assessmentCriteria || [];
+            return (
+              <li key={entry.id}>
                 <button
-                  key={entry.id}
                   onClick={() => onNavigate('work')}
-                  className="w-full flex items-start gap-3 p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.06] text-left touch-manipulation active:scale-[0.99] transition-transform"
+                  className="w-full flex items-start gap-3 p-3.5 rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.06] text-left touch-manipulation hover:bg-white/[0.04] transition-colors"
                 >
                   <EvidenceThumbnail entry={entry} />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-white truncate">{entry.title}</p>
+                  <div className="flex-1 min-w-0 space-y-1.5">
+                    <p className="text-[13px] font-medium text-white truncate">{entry.title}</p>
                     {entryACs.length > 0 && (
-                      <div className="flex flex-wrap gap-1 mt-1">
-                        {entryACs.slice(0, 3).map((ac, i) => {
-                          const shortRef = ac.match(/\bAC\s+(\d+(?:\.\d+)*)/);
-                          const unitCode = ac.match(/^(\S+)/)?.[1];
-                          const label = shortRef
-                            ? `${unitCode} AC ${shortRef[1]}`
-                            : ac.length > 20
-                              ? ac.slice(0, 18) + '...'
-                              : ac;
-                          return (
-                            <span
-                              key={i}
-                              className="inline-flex items-center px-1.5 py-0.5 rounded-md border border-white/10 bg-white/[0.03] text-white/85 text-[10px] font-medium"
-                            >
-                              {label}
-                            </span>
-                          );
-                        })}
+                      <div className="flex flex-wrap gap-1">
+                        {entryACs.slice(0, 3).map((ac, i) => (
+                          <span
+                            key={i}
+                            className="inline-flex items-center px-1.5 py-0.5 rounded-md border border-white/10 bg-white/[0.03] text-white/85 text-[10px] font-mono"
+                          >
+                            {ac.length > 18 ? ac.slice(0, 16) + '…' : ac}
+                          </span>
+                        ))}
                         {entryACs.length > 3 && (
                           <span className="inline-flex items-center px-1.5 py-0.5 rounded-md border border-white/10 bg-white/[0.03] text-white/55 text-[10px]">
                             +{entryACs.length - 3}
@@ -564,23 +318,129 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
                         )}
                       </div>
                     )}
-                    <div className="flex items-center gap-2 mt-1.5">
-                      <span className="text-[10px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-[10px] uppercase tracking-[0.14em] text-white/55">
                         {String(entry.status || 'draft')}
                       </span>
-                      <span className="text-[10px] text-white/55">
+                      <span className="text-[10px] text-white/40 font-mono">
                         {formatRelativeDate(new Date(entry.dateCreated))}
                       </span>
                     </div>
                   </div>
                 </button>
-              );
-            })}
-          </div>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    ) : null;
+
+  const handleACClick = (acRef: string, acText: string, unitCode?: string) => {
+    haptic.light();
+    setSelectedAC({ code: acRef, text: acText, unitCode });
+    setShowACEvidence(true);
+  };
+
+  const handleFocusCapture = () => {
+    haptic.light();
+    onCapture();
+  };
+
+  /* ─── Render ─────────────────────────────────────────────────────── */
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-6 lg:py-8 space-y-7 lg:space-y-10">
+      {/* No-data guard */}
+      {userSelection && !acLoading && !qualLoading && tree.totalACs === 0 && (
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1.5">
+          <Eyebrow>Course data missing</Eyebrow>
+          <p className="text-[13px] text-white/85 leading-relaxed">
+            We don't have curriculum data for this course yet.
+          </p>
+          <button
+            onClick={() => setShowCourseSelector(true)}
+            className="text-[12px] text-elec-yellow font-medium mt-1 touch-manipulation"
+          >
+            Switch to a supported course →
+          </button>
         </div>
       )}
 
-      {/* AC Evidence Bottom Sheet */}
+      {(acLoading || qualLoading) && userSelection && (
+        <div className="flex items-center gap-3 py-6">
+          <div className="h-4 w-4 border-2 border-elec-yellow border-t-transparent rounded-full animate-spin" />
+          <Eyebrow>Loading qualification structure…</Eyebrow>
+        </div>
+      )}
+
+      {/* Top fold — 2-column on lg: hero/KPIs/EPA pulse on the left,
+          activity panels on the right. Stays narrow for readability. */}
+      <div className="lg:grid lg:grid-cols-[380px_minmax(0,1fr)] lg:gap-8 space-y-5 lg:space-y-0">
+        <div className="space-y-5 lg:sticky lg:top-4 lg:self-start">
+          {Hero}
+          {KpiStrip}
+          {courseCode && (
+            <EPAGatewayPulse
+              qualificationCode={courseCode}
+              qualificationId={courseId}
+            />
+          )}
+          {PrimaryActions}
+        </div>
+
+        <div className="space-y-6 lg:space-y-7 mt-5 lg:mt-0">
+          {tree.totalACs > 0 && (
+            <FromCollegeCallout
+              signoffRecords={signoffRecords}
+              comments={comments}
+              onACClick={handleACClick}
+            />
+          )}
+          {tree.totalACs > 0 && (
+            <TodaysFocusPanel
+              focus={focus}
+              recentActivityCount={recentActivityCount}
+              onCapture={handleFocusCapture}
+            />
+          )}
+        </div>
+      </div>
+
+      {/* Below fold — full-width sections so they get the whole canvas
+          on a wide desktop. Heatmap especially benefits from the room. */}
+      {tree.totalACs > 0 && (
+        <section id="ac-heatmap" className="scroll-mt-6">
+          <ACHeatmap
+            tree={tree}
+            acEvidenceMap={acEvidenceMap}
+            claimedOnlyRefs={claimedOnlyRefs}
+            getSignoff={getSignoff}
+            onACClick={handleACClick}
+          />
+        </section>
+      )}
+
+      {tree.totalACs > 0 && (
+        <SubmissionReadiness
+          qualificationCode={courseCode}
+          totalACs={tree.totalACs}
+          evidencedCount={evidencedCount}
+          portfolioEntries={portfolioEntries || []}
+          signoffRecords={signoffRecords}
+        />
+      )}
+
+      {tree.totalACs > 0 && (
+        <CourseRequirementsList
+          tree={tree}
+          acEvidenceMap={acEvidenceMap}
+          claimedOnlyRefs={claimedOnlyRefs}
+          onACClick={handleACClick}
+        />
+      )}
+
+      {RecentEvidence}
+
+      {/* AC Evidence bottom sheet */}
       <Sheet
         open={showACEvidence}
         onOpenChange={(v) => {
@@ -593,11 +453,16 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
           <div className="flex flex-col h-full">
             <SheetHeader className="px-4 pb-3">
               <SheetTitle className="text-left flex items-center gap-2">
-                <Badge className="bg-elec-yellow text-black font-bold text-sm px-2 py-0.5">
+                <span className="text-[11px] font-mono text-elec-yellow bg-elec-yellow/[0.06] border border-elec-yellow/30 px-2 py-0.5 rounded-md">
                   {selectedAC?.code}
-                </Badge>
+                </span>
+                {selectedAC?.unitCode && (
+                  <span className="text-[10px] uppercase tracking-[0.14em] text-white/55">
+                    Unit {selectedAC.unitCode}
+                  </span>
+                )}
               </SheetTitle>
-              <SheetDescription className="text-left text-white text-sm leading-snug">
+              <SheetDescription className="text-left text-white/85 text-[13px] leading-snug">
                 {selectedAC?.text}
               </SheetDescription>
             </SheetHeader>
@@ -613,90 +478,92 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
                   >
                     {(() => {
                       const entries = acEvidenceMap.get(selectedAC.code) || [];
-
-                      if (entries.length === 0) {
-                        return (
-                          <motion.div
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-                            className="flex flex-col items-center justify-center py-8 space-y-3"
-                          >
-                            <div className="p-3 rounded-full bg-white/[0.06]">
-                              <FileText className="h-6 w-6 text-white" />
-                            </div>
-                            <p className="text-sm text-white text-center">
-                              No evidence linked to this criterion yet
-                            </p>
-                            <Button
-                              onClick={() => {
-                                haptic.light();
-                                setShowACEvidence(false);
-                                setSelectedAC(null);
-                                onCapture();
-                              }}
-                              className="h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation active:scale-95"
-                            >
-                              <Plus className="h-4 w-4 mr-2" />
-                              Add Evidence
-                            </Button>
-                          </motion.div>
-                        );
-                      }
+                      const signoff = getSignoff(selectedAC.code, selectedAC.unitCode);
+                      const lastEvidenceAt =
+                        entries.length > 0
+                          ? entries
+                              .map((e) => e.dateCreated)
+                              .filter(Boolean)
+                              .sort()
+                              .reverse()[0] || null
+                          : signoff?.lastEvidenceAt || null;
 
                       return (
-                        <div className="space-y-2">
-                          {entries.map((entry, i) => (
-                            <motion.div
+                        <div className="space-y-5">
+                          {/* Audit timeline — always visible, builds the compliance picture */}
+                          <ACAuditTimeline
+                            signoff={signoff}
+                            evidenceCount={entries.length}
+                            lastEvidenceAt={lastEvidenceAt}
+                          />
+
+                          {/* Evidence list */}
+                          {entries.length === 0 ? (
+                            <div className="flex flex-col items-center justify-center py-6 space-y-3">
+                              <div className="p-3 rounded-full bg-white/[0.06]">
+                                <FileText className="h-5 w-5 text-white/55" />
+                              </div>
+                              <p className="text-[13px] text-white/85 text-center">
+                                Nothing linked yet — start with a quick capture on site.
+                              </p>
+                              <Button
+                                onClick={() => {
+                                  haptic.light();
+                                  setShowACEvidence(false);
+                                  setSelectedAC(null);
+                                  onCapture();
+                                }}
+                                className="h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
+                              >
+                                <Plus className="h-4 w-4 mr-2" />
+                                Capture for {selectedAC.code}
+                              </Button>
+                            </div>
+                          ) : (
+                            <div className="space-y-2">
+                              <Eyebrow>Evidence linked</Eyebrow>
+                              {entries.map((entry) => (
+                            <div
                               key={entry.id}
-                              initial={{ opacity: 0, y: 12 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              transition={{
-                                delay: i * 0.06,
-                                type: 'spring',
-                                stiffness: 400,
-                                damping: 25,
-                              }}
                               className="flex items-center gap-3 p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.06]"
                             >
                               <EvidenceThumbnail entry={entry} />
                               <div className="flex-1 min-w-0">
-                                <p className="text-sm text-white truncate">{entry.title}</p>
+                                <p className="text-[13px] font-medium text-white truncate">
+                                  {entry.title}
+                                </p>
                                 <div className="flex items-center gap-2 mt-0.5">
-                                  <p className="text-xs text-white">
+                                  <span className="text-[10px] text-white/40 font-mono">
                                     {formatRelativeDate(new Date(entry.dateCreated))}
-                                  </p>
+                                  </span>
                                   {entry.evidenceFiles && entry.evidenceFiles.length > 0 && (
-                                    <span className="text-[10px] text-white">
-                                      {entry.evidenceFiles.length} file{entry.evidenceFiles.length !== 1 ? 's' : ''}
+                                    <span className="text-[10px] text-white/55">
+                                      {entry.evidenceFiles.length} file
+                                      {entry.evidenceFiles.length !== 1 ? 's' : ''}
                                     </span>
                                   )}
                                 </div>
                               </div>
-                              <span className="text-[10px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                              <span className="text-[10px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] uppercase tracking-[0.14em]">
                                 {String(entry.status || 'draft')}
                               </span>
-                            </motion.div>
+                            </div>
                           ))}
-                          <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: entries.length * 0.06 + 0.1 }}
-                          >
-                            <Button
-                              variant="outline"
-                              onClick={() => {
-                                haptic.light();
-                                setShowACEvidence(false);
-                                setSelectedAC(null);
-                                onCapture();
-                              }}
-                              className="w-full h-11 mt-3 touch-manipulation active:scale-95 border-white/15 text-white hover:bg-white/[0.05]"
-                            >
-                              <Plus className="h-4 w-4 mr-2" />
-                              Add More Evidence
-                            </Button>
-                          </motion.div>
+                              <Button
+                                variant="outline"
+                                onClick={() => {
+                                  haptic.light();
+                                  setShowACEvidence(false);
+                                  setSelectedAC(null);
+                                  onCapture();
+                                }}
+                                className="w-full h-11 mt-3 touch-manipulation border-white/[0.08] bg-white/[0.02] text-white hover:bg-white/[0.04]"
+                              >
+                                <Plus className="h-4 w-4 mr-2" />
+                                Add more evidence
+                              </Button>
+                            </div>
+                          )}
                         </div>
                       );
                     })()}
@@ -708,12 +575,12 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
         </SheetContent>
       </Sheet>
 
-      {/* Course Selector Sheet */}
+      {/* Course selector */}
       <Sheet open={showCourseSelector} onOpenChange={setShowCourseSelector}>
         <SheetContent side="bottom" className="h-[85vh] rounded-t-3xl">
           <div className="w-12 h-1 bg-muted rounded-full mx-auto mb-4" />
           <SheetHeader className="pb-4">
-            <SheetTitle>Change Qualification</SheetTitle>
+            <SheetTitle>Change qualification</SheetTitle>
           </SheetHeader>
           <div className="overflow-y-auto pb-20 sm:pb-8">
             <QualificationSelector />
@@ -721,32 +588,10 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
         </SheetContent>
       </Sheet>
 
-      {/* Share Portfolio Sheet */}
+      {/* Share */}
       <SharePortfolioSheet open={showShareSheet} onOpenChange={setShowShareSheet} />
     </div>
   );
-}
-
-function getWeeklyHours(entries: any[]): number {
-  const now = new Date();
-  const startOfWeek = new Date(now);
-  startOfWeek.setDate(now.getDate() - now.getDay() + 1);
-  startOfWeek.setHours(0, 0, 0, 0);
-
-  return entries
-    .filter((e) => new Date(e.date) >= startOfWeek)
-    .reduce((sum, e) => sum + (e.duration || 0) / 60, 0);
-}
-
-function formatRelativeDate(date: Date): string {
-  const now = new Date();
-  const diff = now.getTime() - date.getTime();
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-
-  if (days === 0) return 'Today';
-  if (days === 1) return 'Yesterday';
-  if (days < 7) return `${days} days ago`;
-  return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 }
 
 export default UnifiedDashboard;

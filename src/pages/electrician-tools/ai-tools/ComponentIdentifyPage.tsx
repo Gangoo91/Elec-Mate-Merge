@@ -1,45 +1,38 @@
+/**
+ * ComponentIdentifyPage — editorial Quick Capture / Component ID screen.
+ *
+ * Drops the blue/cyan gradient chrome and per-category icons for the
+ * editorial cadence: numbered eyebrows, gradient-surface cards,
+ * type-led category and info chips, elec-yellow CTA. All logic
+ * (camera capture, upload, analyse pipeline) preserved.
+ */
+
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import { Button } from '@/components/ui/button';
-import {
-  ArrowLeft,
-  Camera,
-  Upload,
-  Search,
-  X,
-  Loader2,
-  Sparkles,
-  Cpu,
-  Zap,
-  Shield,
-  Box,
-  CircuitBoard,
-  PlugZap,
-  Gauge,
-} from 'lucide-react';
+import { ArrowLeft, X, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { Eyebrow } from '@/components/college/primitives';
 import ComponentIdentificationResults from '@/components/electrician-tools/ai-tools/ComponentIdentificationResults';
 
-// Component categories with icons
+// Component categories — type-led, no icons
 const componentCategories = [
-  { id: 'protection', label: 'Protection Devices', icon: Shield },
-  { id: 'distribution', label: 'Distribution', icon: Box },
-  { id: 'control', label: 'Control Gear', icon: CircuitBoard },
-  { id: 'accessories', label: 'Accessories', icon: PlugZap },
-  { id: 'metering', label: 'Metering', icon: Gauge },
-  { id: 'unknown', label: "Don't Know", icon: Search },
+  { id: 'protection', label: 'Protection devices' },
+  { id: 'distribution', label: 'Distribution' },
+  { id: 'control', label: 'Control gear' },
+  { id: 'accessories', label: 'Accessories' },
+  { id: 'metering', label: 'Metering' },
+  { id: 'unknown', label: "Don't know" },
 ];
 
-// What user wants to know
 const infoChips = [
-  { id: 'specs', label: 'Specifications', icon: Cpu },
-  { id: 'bs7671', label: 'BS 7671 Requirements', icon: Shield },
-  { id: 'replacement', label: 'Replacement Options', icon: Box },
-  { id: 'age', label: 'Age & Compliance', icon: Gauge },
-  { id: 'installation', label: 'Installation Notes', icon: Zap },
+  { id: 'specs', label: 'Specifications' },
+  { id: 'bs7671', label: 'BS 7671 requirements' },
+  { id: 'replacement', label: 'Replacement options' },
+  { id: 'age', label: 'Age + compliance' },
+  { id: 'installation', label: 'Installation notes' },
 ];
 
 const ComponentIdentifyPage = () => {
@@ -49,7 +42,6 @@ const ComponentIdentifyPage = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  // State
   const [images, setImages] = useState<File[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedInfo, setSelectedInfo] = useState<string[]>(['specs', 'bs7671']);
@@ -59,7 +51,6 @@ const ComponentIdentifyPage = () => {
   const [analysisResult, setAnalysisResult] = useState<any>(null);
   const [analysisProgress, setAnalysisProgress] = useState(0);
 
-  // Camera functions
   const startCamera = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -69,9 +60,9 @@ const ComponentIdentifyPage = () => {
         videoRef.current.srcObject = stream;
         setIsCameraActive(true);
       }
-    } catch (error) {
+    } catch {
       toast({
-        title: 'Camera Error',
+        title: 'Camera error',
         description: 'Unable to access camera',
         variant: 'destructive',
       });
@@ -126,8 +117,8 @@ const ComponentIdentifyPage = () => {
   const handleAnalysis = async () => {
     if (images.length === 0) {
       toast({
-        title: 'No Image',
-        description: 'Please upload or capture a photo',
+        title: 'No image',
+        description: 'Capture or upload a photo first',
         variant: 'destructive',
       });
       return;
@@ -141,13 +132,12 @@ const ComponentIdentifyPage = () => {
     }, 500);
 
     try {
-      // Upload image
       const image = images[0];
       const {
         data: { user },
       } = await supabase.auth.getUser();
       const fileName = `${user?.id}/visual-analysis/component-${Date.now()}.jpg`;
-      const { data: uploadData, error: uploadError } = await supabase.storage
+      const { error: uploadError } = await supabase.storage
         .from('visual-uploads')
         .upload(fileName, image);
 
@@ -157,7 +147,6 @@ const ComponentIdentifyPage = () => {
         data: { publicUrl },
       } = supabase.storage.from('visual-uploads').getPublicUrl(fileName);
 
-      // Call analysis function
       const { data, error } = await supabase.functions.invoke('visual-analysis', {
         body: {
           primary_image: publicUrl,
@@ -178,33 +167,18 @@ const ComponentIdentifyPage = () => {
 
       if (error) {
         console.error('Analysis error:', error);
-        console.error('Request settings:', {
-          mode: 'component_identify',
-          category: selectedCategory,
-          info: selectedInfo,
-          imageUrl: publicUrl,
-        });
-
         toast({
-          title: 'Analysis Failed',
-          description: 'Please try again with a clearer photo',
+          title: 'Analysis failed',
+          description: 'Try again with a clearer photo',
           variant: 'destructive',
         });
         return;
       }
 
-      console.log('Analysis response received:', {
-        hasAnalysis: !!data?.analysis,
-        hasComponent: !!data?.analysis?.component,
-        componentName: data?.analysis?.component?.name,
-        responseKeys: Object.keys(data || {}),
-      });
-
       if (!data?.analysis?.component) {
-        console.error('Response missing component:', data);
         toast({
-          title: 'Component Not Identified',
-          description: 'Please try again with a clearer photo',
+          title: 'Component not identified',
+          description: 'Try again with a clearer photo',
           variant: 'destructive',
         });
         return;
@@ -214,7 +188,7 @@ const ComponentIdentifyPage = () => {
       setAnalysisResult(data.analysis);
     } catch (error) {
       console.error('Analysis error:', error);
-      toast({ title: 'Analysis Failed', description: 'Please try again', variant: 'destructive' });
+      toast({ title: 'Analysis failed', description: 'Please try again', variant: 'destructive' });
     } finally {
       clearInterval(progressInterval);
       setIsAnalyzing(false);
@@ -229,216 +203,251 @@ const ComponentIdentifyPage = () => {
   };
 
   return (
-    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
-      {/* Sticky Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
+    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-elec-dark min-h-screen pb-24">
+      {/* Sticky header */}
+      <div className="sticky top-0 z-40 bg-elec-dark/95 backdrop-blur-xl border-b border-white/[0.06]">
         <div className="px-4 py-2">
           <div className="flex items-center gap-3 h-11">
-            <Button variant="ghost" size="icon" onClick={() => navigate('/electrician-tools/ai-tooling')} className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]">
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-            <div className="flex items-center gap-2.5">
-              <div className="p-1.5 rounded-lg bg-blue-500/10 border border-blue-500/20">
-                <Search className="h-4 w-4 text-blue-400" />
-              </div>
-              <h1 className="text-base font-semibold text-white">Component Identification</h1>
-            </div>
+            <button
+              type="button"
+              onClick={() => navigate('/electrician-tools/ai-tooling')}
+              aria-label="Back"
+              className="text-white/85 hover:text-white border border-white/15 hover:border-white/30 rounded-full h-9 w-9 inline-flex items-center justify-center touch-manipulation transition-colors"
+            >
+              <ArrowLeft className="h-4 w-4" />
+            </button>
+            <Eyebrow>COMPONENT ID</Eyebrow>
           </div>
         </div>
       </div>
 
-      <motion.main className="px-4 py-4 space-y-5">
-        {/* Results */}
+      <main className="px-4 sm:px-6 pt-6 pb-6 space-y-7 max-w-5xl mx-auto">
         {analysisResult ? (
           <div className="space-y-4">
             <ComponentIdentificationResults
               analysisResult={analysisResult}
               onRetry={resetAnalysis}
             />
-            <Button
+            <button
+              type="button"
               onClick={resetAnalysis}
-              className="w-full h-12 rounded-xl bg-white/[0.06] text-white ring-1 ring-white/[0.08] font-semibold touch-manipulation active:scale-[0.98] hover:bg-white/[0.1]"
+              className="w-full text-[12px] font-semibold uppercase tracking-[0.14em] text-white/85 border border-white/15 hover:border-white/30 rounded-full px-4 py-3 min-h-[44px] inline-flex items-center justify-center gap-2 touch-manipulation transition-colors"
             >
-              Identify Another Component
-            </Button>
+              Identify another component
+            </button>
           </div>
         ) : isAnalyzing ? (
-          /* Loading State */
-          <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] p-6 space-y-4">
+          <div className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-6 sm:p-8">
             <div className="flex items-center gap-3">
-              <Loader2 className="h-5 w-5 text-blue-400 animate-spin" />
-              <div>
-                <p className="text-sm font-medium text-white">Analysing...</p>
-                <p className="text-xs text-white">Cross-referencing component database</p>
-              </div>
+              <Loader2 className="h-4 w-4 text-elec-yellow animate-spin" aria-hidden />
+              <Eyebrow>ANALYSING</Eyebrow>
             </div>
-            <div className="h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
+            <p className="mt-3 text-[14px] text-white">
+              Cross-referencing the component database…
+            </p>
+            <p className="mt-1 text-[11.5px] text-white/65">
+              BS 7671 cited · Every claim referenced
+            </p>
+            <div className="mt-4 h-1 bg-white/[0.06] rounded-full overflow-hidden">
               <motion.div
-                className="h-full bg-blue-500 rounded-full"
+                className="h-full bg-elec-yellow rounded-full"
                 initial={{ width: 0 }}
                 animate={{ width: `${analysisProgress}%` }}
               />
             </div>
+            <p className="mt-2 text-[10.5px] uppercase tracking-[0.14em] font-semibold text-white/65 tabular-nums text-right">
+              {Math.round(analysisProgress)}%
+            </p>
           </div>
         ) : (
           <>
-            {/* Category Selection */}
-            <div className="space-y-3">
-              <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Component Type</h2>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                {componentCategories.map((cat) => (
-                  <button
-                    key={cat.id}
-                    onClick={() => setSelectedCategory(selectedCategory === cat.id ? null : cat.id)}
-                    className={cn(
-                      'flex items-center gap-2 px-3 transition-all touch-manipulation',
-                      selectedCategory === cat.id
-                        ? 'h-11 rounded-xl bg-blue-500/20 text-blue-400 ring-1 ring-blue-500/40 shadow-sm shadow-blue-500/10'
-                        : 'h-11 rounded-xl bg-white/[0.06] text-white ring-1 ring-white/[0.08] active:scale-[0.97]'
-                    )}
-                  >
-                    <cat.icon className="h-4 w-4 flex-shrink-0" />
-                    <span className="text-xs font-medium truncate">{cat.label}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
+            {/* Hero */}
+            <section className="space-y-2">
+              <Eyebrow>WHAT IT DOES</Eyebrow>
+              <h1 className="text-[28px] sm:text-[36px] font-semibold tracking-tight leading-[1.05]">
+                <span className="text-elec-yellow">Snap</span>{' '}
+                <span className="text-white">it. Know it.</span>
+              </h1>
+              <p className="text-[13px] sm:text-[14px] leading-relaxed text-white/85 max-w-2xl">
+                Photograph any component. Get specs, applicable BS 7671 regs, replacement options,
+                age estimate and install notes — every claim cited.
+              </p>
+            </section>
 
-            {/* Image Capture */}
-            <div className="space-y-3">
-              <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Capture Component</h2>
-              <div className="space-y-3">
-                {/* Camera View */}
-                <AnimatePresence>
-                  {isCameraActive && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      className="space-y-3 overflow-hidden"
-                    >
-                      <div className="relative aspect-video bg-black rounded-xl overflow-hidden">
-                        <video
-                          ref={videoRef}
-                          autoPlay
-                          playsInline
-                          muted
-                          className="w-full h-full object-cover"
-                        />
-                        <div className="absolute inset-0 border-2 border-blue-500/50 rounded-xl pointer-events-none" />
-                      </div>
-                      <div className="flex gap-2">
-                        <Button
-                          onClick={captureImage}
-                          className="flex-1 h-12 rounded-xl bg-blue-500 hover:bg-blue-600 text-white font-semibold touch-manipulation active:scale-[0.98]"
-                        >
-                          <Camera className="h-5 w-5 mr-2" />
-                          Capture
-                        </Button>
-                        <Button
-                          onClick={stopCamera}
-                          className="h-12 rounded-xl bg-white/[0.06] text-white ring-1 ring-white/[0.08] touch-manipulation active:scale-[0.98] hover:bg-white/[0.1]"
-                        >
-                          <X className="h-5 w-5" />
-                        </Button>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-                {/* Buttons */}
-                {!isCameraActive && (
-                  <div className="flex gap-3">
-                    <Button
-                      onClick={startCamera}
-                      className="flex-1 h-12 rounded-xl bg-blue-500 hover:bg-blue-600 text-white font-semibold touch-manipulation active:scale-[0.98]"
-                    >
-                      <Camera className="h-5 w-5 mr-2" />
-                      Camera
-                    </Button>
-                    <Button
-                      onClick={() => fileInputRef.current?.click()}
-                      className="flex-1 h-12 rounded-xl bg-white/[0.06] text-white ring-1 ring-white/[0.08] font-semibold touch-manipulation active:scale-[0.98] hover:bg-white/[0.1]"
-                    >
-                      <Upload className="h-5 w-5 mr-2" />
-                      Upload
-                    </Button>
-                  </div>
-                )}
-
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => handleFileSelect(e.target.files)}
-                  className="hidden"
-                />
-
-                {/* Image Preview */}
-                {images.length > 0 && (
-                  <div className="grid grid-cols-4 gap-2">
-                    {images.map((img, idx) => (
-                      <div
-                        key={idx}
-                        className="relative aspect-square rounded-xl overflow-hidden ring-1 ring-white/[0.08]"
+            {/* 01 — Category */}
+            <section className="space-y-3">
+              <Eyebrow>01 · COMPONENT TYPE</Eyebrow>
+              <ul className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                {componentCategories.map((cat) => {
+                  const active = selectedCategory === cat.id;
+                  return (
+                    <li key={cat.id}>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setSelectedCategory(active ? null : cat.id)
+                        }
+                        className={cn(
+                          'w-full inline-flex items-center justify-center text-[11px] font-semibold uppercase tracking-[0.12em] rounded-full px-3 py-2 min-h-[40px] border transition-colors touch-manipulation',
+                          active
+                            ? 'text-elec-yellow border-elec-yellow/40 bg-elec-yellow/[0.08]'
+                            : 'text-white/85 border-white/15 hover:border-white/30'
+                        )}
                       >
-                        <img
-                          src={URL.createObjectURL(img)}
-                          alt=""
-                          className="w-full h-full object-cover"
-                          loading="lazy"
-                        />
-                        <button
-                          onClick={() => removeImage(idx)}
-                          className="absolute top-1 right-1 w-6 h-6 rounded-full bg-black/60 flex items-center justify-center touch-manipulation"
-                        >
-                          <X className="h-3 w-3 text-white" />
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
+                        {cat.label}
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
 
-            {/* What do you want to know? */}
-            <div className="space-y-3">
-              <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">What Do You Want To Know?</h2>
-              <div className="flex flex-wrap gap-2">
-                {infoChips.map((chip) => (
-                  <button
-                    key={chip.id}
-                    onClick={() => toggleInfo(chip.id)}
-                    className={cn(
-                      'px-3 text-sm font-medium transition-all touch-manipulation flex items-center gap-2',
-                      selectedInfo.includes(chip.id)
-                        ? 'h-9 rounded-xl bg-blue-500/20 text-blue-400 ring-1 ring-blue-500/40 shadow-sm shadow-blue-500/10'
-                        : 'h-9 rounded-xl bg-white/[0.06] text-white ring-1 ring-white/[0.08] active:scale-[0.97]'
-                    )}
+            {/* 02 — Capture */}
+            <section className="space-y-3">
+              <Eyebrow>02 · CAPTURE</Eyebrow>
+
+              <AnimatePresence>
+                {isCameraActive && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    className="space-y-3 overflow-hidden"
                   >
-                    <chip.icon className="h-4 w-4" />
-                    {chip.label}
-                  </button>
-                ))}
-              </div>
-            </div>
+                    <div className="relative aspect-video bg-black rounded-2xl overflow-hidden border border-elec-yellow/30">
+                      <video
+                        ref={videoRef}
+                        autoPlay
+                        playsInline
+                        muted
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-3 border border-elec-yellow/40 rounded-xl pointer-events-none" />
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        type="button"
+                        onClick={captureImage}
+                        className="flex-1 text-[12px] font-semibold uppercase tracking-[0.14em] text-black bg-elec-yellow hover:bg-elec-yellow/90 active:bg-elec-yellow/85 rounded-full px-4 py-3 min-h-[44px] inline-flex items-center justify-center touch-manipulation transition-colors"
+                      >
+                        Capture
+                      </button>
+                      <button
+                        type="button"
+                        onClick={stopCamera}
+                        aria-label="Cancel"
+                        className="h-11 w-11 rounded-full inline-flex items-center justify-center border border-white/15 hover:border-white/30 text-white/85 touch-manipulation transition-colors shrink-0"
+                      >
+                        <X className="h-4 w-4" />
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
-            {/* Analyse Button */}
+              {!isCameraActive && (
+                <div className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5">
+                  <p className="text-[12.5px] leading-relaxed text-white/85 mb-4">
+                    Get the component square in frame, bright + flat lighting, no glare. Up to 4
+                    photos.
+                  </p>
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      onClick={startCamera}
+                      className="flex-1 text-[12px] font-semibold uppercase tracking-[0.14em] text-black bg-elec-yellow hover:bg-elec-yellow/90 active:bg-elec-yellow/85 rounded-full px-4 py-3 min-h-[44px] inline-flex items-center justify-center touch-manipulation transition-colors"
+                    >
+                      Open camera
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => fileInputRef.current?.click()}
+                      className="flex-1 text-[12px] font-semibold uppercase tracking-[0.14em] text-white/85 border border-white/15 hover:border-white/30 rounded-full px-4 py-3 min-h-[44px] inline-flex items-center justify-center touch-manipulation transition-colors"
+                    >
+                      Upload
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleFileSelect(e.target.files)}
+                className="hidden"
+              />
+
+              {/* Image preview */}
+              {images.length > 0 && (
+                <div className="grid grid-cols-4 gap-2">
+                  {images.map((img, idx) => (
+                    <div
+                      key={idx}
+                      className="relative aspect-square rounded-xl overflow-hidden border border-white/[0.10]"
+                    >
+                      <img
+                        src={URL.createObjectURL(img)}
+                        alt=""
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => removeImage(idx)}
+                        aria-label="Remove"
+                        className="absolute top-1 right-1 w-6 h-6 rounded-full bg-black/70 border border-white/20 flex items-center justify-center touch-manipulation"
+                      >
+                        <X className="h-3 w-3 text-white" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </section>
+
+            {/* 03 — What to know */}
+            <section className="space-y-3">
+              <Eyebrow>03 · WHAT TO KNOW</Eyebrow>
+              <ul className="flex flex-wrap gap-1.5">
+                {infoChips.map((chip) => {
+                  const active = selectedInfo.includes(chip.id);
+                  return (
+                    <li key={chip.id}>
+                      <button
+                        type="button"
+                        onClick={() => toggleInfo(chip.id)}
+                        className={cn(
+                          'inline-flex items-center text-[11px] font-semibold uppercase tracking-[0.12em] rounded-full px-3 py-2 min-h-[36px] border transition-colors touch-manipulation',
+                          active
+                            ? 'text-elec-yellow border-elec-yellow/40 bg-elec-yellow/[0.08]'
+                            : 'text-white/85 border-white/15 hover:border-white/30'
+                        )}
+                      >
+                        {chip.label}
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+
+            {/* Analyse */}
             {images.length > 0 && (
-              <Button
+              <button
+                type="button"
                 onClick={handleAnalysis}
                 disabled={isAnalyzing}
-                className="w-full h-14 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-bold text-base touch-manipulation active:scale-[0.98] shadow-lg shadow-blue-500/20 hover:from-blue-600 hover:to-cyan-600"
+                className="w-full text-[13px] font-semibold uppercase tracking-[0.14em] text-black bg-elec-yellow hover:bg-elec-yellow/90 active:bg-elec-yellow/85 rounded-full px-5 py-4 min-h-[52px] inline-flex items-center justify-center gap-2 touch-manipulation transition-colors disabled:opacity-50"
               >
-                <Search className="h-5 w-5 mr-2" />
-                Identify Component
-              </Button>
+                Identify component →
+              </button>
             )}
           </>
         )}
 
         <canvas ref={canvasRef} className="hidden" />
-      </motion.main>
+      </main>
     </div>
   );
 };

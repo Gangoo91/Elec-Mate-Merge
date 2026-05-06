@@ -1,13 +1,17 @@
 /**
  * UnifiedCaptureSheet
  *
- * Quick capture bottom sheet for adding evidence.
- * Wraps capture flow with option to link to Portfolio, OJT Hours, or Both.
- * AI analysis is manual — user taps "Analyse Evidence" after uploading.
+ * Voice-first, multi-file, streaming capture for the apprentice portfolio.
+ *
+ *   • Multi-file upload — capture several photos / docs in one go
+ *   • Voice description — speak the job; AI drafts a STAR reflection
+ *   • Live streaming AC matching — first match lands in ~1.5 s
+ *   • Quality grade A-D per file with concrete strengthen-it tips
+ *   • BS 7671 RAG-grounded — questions cite real reg numbers
+ *   • Editorial styling — match the rest of the portfolio dashboard
  */
 
-import { useState, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Sheet,
   SheetContent,
@@ -18,42 +22,42 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Badge } from '@/components/ui/badge';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import {
   Camera,
   Upload,
-  Link2,
-  Video,
   X,
   Sparkles,
   Loader2,
   Check,
+  Mic,
+  MicOff,
   Briefcase,
   Clock,
   CheckSquare,
   Square,
-  ListChecks,
-  Star,
+  FileCheck,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { usePortfolioData } from '@/hooks/portfolio/usePortfolioData';
 import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
-import { useAIEvidenceTagger, getStrengthColor } from '@/hooks/portfolio/useAIEvidenceTagger';
-import type { MatchedCriterion } from '@/hooks/portfolio/useAIEvidenceTagger';
+import {
+  usePortfolioCaptureStream,
+  type FileAnalysis,
+  type ReflectionDraft,
+  type CaptureMeta,
+} from '@/hooks/portfolio/usePortfolioCaptureStream';
 import type { PortfolioCategory } from '@/types/portfolio';
 import { useStudentQualification } from '@/hooks/useStudentQualification';
-import { useQualificationACs } from '@/hooks/qualification/useQualificationACs';
+import { useSpeechToText } from '@/hooks/useSpeechToText';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import { useHaptic } from '@/hooks/useHaptic';
+import {
+  Eyebrow,
+  PrimaryAction,
+  SecondaryAction,
+} from './portfolio/PortfolioPrimitives';
 
 interface UnifiedCaptureSheetProps {
   open: boolean;
@@ -64,13 +68,22 @@ interface UnifiedCaptureSheetProps {
 type LinkTo = 'portfolio' | 'ojt' | 'both';
 type CaptureStep = 'capture' | 'details';
 
-const FALLBACK_CATEGORIES = [
-  'Practical Skills',
-  'Health & Safety',
-  'Testing & Inspection',
-  'Technical Knowledge',
-  'Workplace Practice',
-];
+interface UploadedFile {
+  id: string;          // local synthetic id used for keying + SSE correlation
+  file: File;
+  previewUrl: string;
+  storageUrl?: string;
+  uploading: boolean;
+  analysis?: FileAnalysis;
+  error?: string;
+}
+
+const GRADE_TONE: Record<'A' | 'B' | 'C' | 'D', string> = {
+  A: 'border-elec-yellow/40 text-elec-yellow bg-elec-yellow/[0.06]',
+  B: 'border-elec-yellow/25 text-elec-yellow/85 bg-elec-yellow/[0.04]',
+  C: 'border-orange-400/30 text-orange-200 bg-orange-400/[0.06]',
+  D: 'border-red-500/30 text-red-300 bg-red-500/[0.05]',
+};
 
 export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedCaptureSheetProps) {
   const { toast } = useToast();
@@ -78,105 +91,130 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
   const haptic = useHaptic();
   const { addEntry } = usePortfolioData();
   const { addTimeEntry } = useTimeEntries();
-  const { analyze, isAnalyzing, result: aiResult } = useAIEvidenceTagger();
   const { qualificationCode } = useStudentQualification();
-  const { tree } = useQualificationACs(qualificationCode);
 
-  // Dynamic categories from qualification units
-  const categories =
-    tree.units.length > 0
-      ? tree.units.map((u) => `Unit ${u.unitCode}: ${u.unitTitle}`)
-      : FALLBACK_CATEGORIES;
-
-  // Form state
+  /* ─── Form state ─────────────────────────────────────────────────── */
   const [step, setStep] = useState<CaptureStep>('capture');
-  const [file, setFile] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string>('');
-  const [uploadedUrl, setUploadedUrl] = useState<string>('');
-  const [isUploading, setIsUploading] = useState(false);
+  const [files, setFiles] = useState<UploadedFile[]>([]);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [category, setCategory] = useState('');
   const [linkTo, setLinkTo] = useState<LinkTo>('portfolio');
   const [ojtDuration, setOjtDuration] = useState('');
 
-  // AI matched criteria selection
+  /* ─── Voice transcript ────────────────────────────────────────────── */
+  const {
+    isSupported: speechSupported,
+    isListening,
+    transcript: speechTranscript,
+    startListening,
+    stopListening,
+    resetTranscript,
+  } = useSpeechToText({ continuous: true });
+  const [voiceText, setVoiceText] = useState('');
+
+  // Append finalised speech transcript to the voice field
+  const prevTranscriptRef = useRef('');
+  useEffect(() => {
+    if (speechTranscript && speechTranscript !== prevTranscriptRef.current) {
+      const newText = speechTranscript.slice(prevTranscriptRef.current.length);
+      if (newText) {
+        setVoiceText((prev) => prev + (prev && !prev.endsWith(' ') ? ' ' : '') + newText.trim());
+      }
+      prevTranscriptRef.current = speechTranscript;
+    }
+  }, [speechTranscript]);
+
+  /* ─── Streaming state ────────────────────────────────────────────── */
+  const { start: startStream, running: streaming } = usePortfolioCaptureStream();
+  const [meta, setMeta] = useState<CaptureMeta | null>(null);
+  const [reflection, setReflection] = useState<ReflectionDraft | null>(null);
+
+  /* ─── AC selection ────────────────────────────────────────────────── */
   const [selectedACs, setSelectedACs] = useState<string[]>([]);
 
-  // Refs
+  /* ─── Refs ────────────────────────────────────────────────────────── */
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
 
-  // Reset form
+  /* ─── Aggregated AC matches across files ─────────────────────────── */
+  const allMatches = useMemo(() => {
+    const map = new Map<
+      string,
+      {
+        unitCode: string;
+        acCode: string;
+        acText: string;
+        confidence: number;
+        reasons: string[];
+        fromFiles: string[];
+      }
+    >();
+    for (const f of files) {
+      if (!f.analysis) continue;
+      for (const m of f.analysis.matchedCriteria) {
+        const key = `${m.unitCode} AC ${m.acCode}`;
+        const existing = map.get(key);
+        if (existing) {
+          existing.confidence = Math.max(existing.confidence, m.confidence);
+          existing.reasons.push(m.reason);
+          existing.fromFiles.push(f.id);
+        } else {
+          map.set(key, {
+            unitCode: m.unitCode,
+            acCode: m.acCode,
+            acText: m.acText,
+            confidence: m.confidence,
+            reasons: [m.reason],
+            fromFiles: [f.id],
+          });
+        }
+      }
+    }
+    return Array.from(map.values()).sort((a, b) => b.confidence - a.confidence);
+  }, [files]);
+
+  /* ─── Reset ───────────────────────────────────────────────────────── */
   const resetForm = () => {
     setStep('capture');
-    setFile(null);
-    setPreviewUrl('');
-    setUploadedUrl('');
-    setIsUploading(false);
+    setFiles([]);
     setTitle('');
     setDescription('');
-    setCategory('');
     setLinkTo('portfolio');
     setOjtDuration('');
+    setVoiceText('');
+    resetTranscript();
+    prevTranscriptRef.current = '';
+    setMeta(null);
+    setReflection(null);
     setSelectedACs([]);
   };
 
-  // Upload file to Supabase Storage
-  const uploadFile = async (fileToUpload: File): Promise<string | null> => {
-    if (!user?.id) {
-      toast({
-        title: 'Not authenticated',
-        description: 'Please sign in to upload files',
-        variant: 'destructive',
-      });
-      return null;
-    }
-
-    setIsUploading(true);
+  /* ─── Upload helper ──────────────────────────────────────────────── */
+  const uploadFile = async (file: File): Promise<string | null> => {
+    if (!user?.id) return null;
     try {
-      const fileExt = fileToUpload.name.split('.').pop();
-      const fileName = `${user.id}/${Date.now()}.${fileExt}`;
-
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${user.id}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${fileExt}`;
       const { data, error } = await supabase.storage
         .from('portfolio-evidence')
-        .upload(fileName, fileToUpload, {
-          cacheControl: '3600',
-          upsert: false,
-        });
-
-      if (error) {
-        // If bucket doesn't exist, fall back to preview URL
-        console.warn('Storage upload failed:', error.message);
-        return null;
-      }
-
-      // Get public URL
-      const { data: urlData } = supabase.storage.from('portfolio-evidence').getPublicUrl(data.path);
-
+        .upload(fileName, file, { cacheControl: '3600', upsert: false });
+      if (error) return null;
+      const { data: urlData } = supabase.storage
+        .from('portfolio-evidence')
+        .getPublicUrl(data.path);
       return urlData.publicUrl;
-    } catch (err) {
-      console.error('Upload error:', err);
+    } catch {
       return null;
-    } finally {
-      setIsUploading(false);
     }
   };
 
-  // Get evidence type from file
-  const getEvidenceType = (fileType: string): 'image' | 'document' | 'video' => {
-    if (fileType.startsWith('image/')) return 'image';
-    if (fileType.startsWith('video/')) return 'video';
-    return 'document';
-  };
-
-  // Handle file selection — upload only, no auto-analysis
+  /* ─── File selection ─────────────────────────────────────────────── */
   const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files?.[0];
-    if (!selectedFile) return;
+    const selected = Array.from(e.target.files || []);
+    if (!selected.length) return;
 
-    // Validate size (10MB max)
-    if (selectedFile.size > 10 * 1024 * 1024) {
+    const oversize = selected.find((f) => f.size > 10 * 1024 * 1024);
+    if (oversize) {
       toast({
         title: 'File too large',
         description: 'Maximum file size is 10MB',
@@ -185,113 +223,133 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
       return;
     }
 
-    setFile(selectedFile);
+    const newFiles: UploadedFile[] = selected.map((f) => ({
+      id: `f-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+      file: f,
+      previewUrl: f.type.startsWith('image/') ? URL.createObjectURL(f) : '',
+      uploading: true,
+    }));
 
-    // Create preview for images
-    if (selectedFile.type.startsWith('image/')) {
-      const url = URL.createObjectURL(selectedFile);
-      setPreviewUrl(url);
-    }
-
-    // Move to details step
+    setFiles((prev) => [...prev, ...newFiles]);
     setStep('details');
 
-    // Upload file to storage (but don't auto-analyse)
-    const storageUrl = await uploadFile(selectedFile);
-    if (storageUrl) {
-      setUploadedUrl(storageUrl);
-    }
-  };
+    // Reset the input so the same file can be selected again later
+    if (e.target) e.target.value = '';
 
-  // Manual AI analysis trigger
-  const handleAnalyse = async () => {
-    const evidenceUrl = uploadedUrl || previewUrl;
-    if (!evidenceUrl || !file) return;
-
-    const analysis = await analyze({
-      evidenceUrl,
-      evidenceType: getEvidenceType(file.type),
-      title: title || undefined,
-      description: description || undefined,
-      qualificationCode,
-    });
-
-    if (analysis) {
-      // Auto-select high-confidence ACs
-      const autoSelected =
-        analysis.matchedCriteria
-          ?.filter((ac) => ac.confidence >= 80 && ac.unitCode && ac.acCode)
-          .map((ac) => `${ac.unitCode} AC ${ac.acCode}`) ?? [];
-      setSelectedACs(autoSelected);
-
-      // Auto-fill title if empty
-      if (!title && analysis.suggestedTitle) {
-        setTitle(analysis.suggestedTitle.slice(0, 100));
-      }
-    }
-  };
-
-  // Toggle AC selection
-  const toggleAC = (acCode: string) => {
-    haptic.light();
-    setSelectedACs((prev) =>
-      prev.includes(acCode) ? prev.filter((c) => c !== acCode) : [...prev, acCode]
+    // Upload each file in parallel
+    await Promise.all(
+      newFiles.map(async (uf) => {
+        const url = await uploadFile(uf.file);
+        setFiles((prev) =>
+          prev.map((f) => (f.id === uf.id ? { ...f, storageUrl: url || undefined, uploading: false } : f))
+        );
+      })
     );
   };
 
-  // Bulk AC selection helpers
-  const selectAllACs = () => {
-    haptic.light();
-    const allCodes =
-      aiResult?.matchedCriteria
-        ?.filter((ac) => ac.unitCode && ac.acCode)
-        .map((ac) => `${ac.unitCode} AC ${ac.acCode}`) ?? [];
-    setSelectedACs(allCodes);
-  };
-
-  const selectRecommendedACs = () => {
-    haptic.light();
-    const recommended =
-      aiResult?.matchedCriteria
-        ?.filter((ac) => ac.confidence >= 80 && ac.unitCode && ac.acCode)
-        .map((ac) => `${ac.unitCode} AC ${ac.acCode}`) ?? [];
-    setSelectedACs(recommended);
-  };
-
-  const deselectAllACs = () => {
-    haptic.light();
-    setSelectedACs([]);
-  };
-
-  // Handle save — optimistic: close immediately, save in background
-  const handleSave = async () => {
-    if (!title.trim()) {
-      haptic.warning();
+  /* ─── Run streaming analysis ─────────────────────────────────────── */
+  const handleAnalyse = async () => {
+    if (!qualificationCode) {
       toast({
-        title: 'Title required',
-        description: 'Please enter a title for this evidence',
+        title: 'Set your qualification first',
+        description: 'AI grounds suggestions in your course ACs.',
+        variant: 'destructive',
+      });
+      return;
+    }
+    const filesForStream = files
+      .filter((f) => f.storageUrl)
+      .map((f) => ({ id: f.id, url: f.storageUrl!, type: f.file.type }));
+    if (!filesForStream.length && !voiceText.trim()) {
+      toast({
+        title: 'Nothing to analyse',
+        description: 'Upload a file or speak a description first.',
         variant: 'destructive',
       });
       return;
     }
 
-    // Haptic success immediately
+    haptic.light();
+    setMeta(null);
+    setReflection(null);
+
+    await startStream(
+      {
+        qualificationCode,
+        files: filesForStream,
+        transcript: voiceText.trim() || undefined,
+        context: description.trim() || undefined,
+      },
+      {
+        onMeta: (m) => setMeta(m),
+        onFileResult: (fileId, analysis) => {
+          setFiles((prev) =>
+            prev.map((f) => (f.id === fileId ? { ...f, analysis } : f))
+          );
+          // Auto-select high-confidence ACs
+          const auto = analysis.matchedCriteria
+            .filter((c) => c.confidence >= 80)
+            .map((c) => `${c.unitCode} AC ${c.acCode}`);
+          setSelectedACs((prev) => {
+            const next = new Set(prev);
+            for (const r of auto) next.add(r);
+            return Array.from(next);
+          });
+          // Auto-fill title from first analysis
+          setTitle((t) => t || analysis.suggestedTitle?.slice(0, 100) || '');
+        },
+        onReflection: (r) => {
+          setReflection(r);
+          setTitle((t) => t || r.suggestedTitle?.slice(0, 100) || '');
+          // Pull description from the action+result if empty
+          setDescription((d) => d || `${r.action}\n\n${r.result}`.slice(0, 500));
+          if (r.suggestedACs?.length) {
+            setSelectedACs((prev) => {
+              const next = new Set(prev);
+              for (const ac of r.suggestedACs!) next.add(ac);
+              return Array.from(next);
+            });
+          }
+        },
+        onError: (msg, fileId) => {
+          if (fileId) {
+            setFiles((prev) =>
+              prev.map((f) => (f.id === fileId ? { ...f, error: msg } : f))
+            );
+          }
+        },
+      }
+    );
+  };
+
+  /* ─── Save ──────────────────────────────────────────────────────── */
+  const handleSave = async () => {
+    if (!title.trim()) {
+      haptic.warning();
+      toast({
+        title: 'Title required',
+        description: 'Please enter a title for this evidence.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
     haptic.success();
 
-    // Snapshot form values before closing
     const snap = {
       title,
       description,
-      category,
       linkTo,
       ojtDuration,
       selectedACs: [...selectedACs],
-      file,
-      uploadedUrl,
-      previewUrl,
+      files: files.map((f) => ({
+        name: f.file.name,
+        type: f.file.type,
+        url: f.storageUrl || f.previewUrl,
+      })),
+      reflection,
     };
 
-    // Optimistic: close sheet + show success toast immediately
     const toastMsg =
       snap.linkTo === 'both'
         ? 'Added to portfolio and logged as training time'
@@ -303,29 +361,13 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
     resetForm();
     onComplete();
 
-    // Background save
     try {
-      let finalUrl = snap.uploadedUrl;
-      if (snap.file && !finalUrl) {
-        finalUrl = (await uploadFile(snap.file)) || snap.previewUrl;
-      }
-
-      const evidenceFile = snap.file
-        ? {
-            name: snap.file.name,
-            type: snap.file.type,
-            url: finalUrl || snap.previewUrl,
-          }
-        : null;
+      const evidenceFiles = snap.files.length ? snap.files : [];
 
       if (snap.linkTo === 'portfolio' || snap.linkTo === 'both') {
-        const categoryName = snap.category || 'Practical Skills';
         const categoryObj: PortfolioCategory = {
-          id: categoryName
-            .toLowerCase()
-            .replace(/[^a-z0-9]+/g, '-')
-            .replace(/(^-|-$)/g, ''),
-          name: categoryName,
+          id: 'practical-skills',
+          name: 'Practical Skills',
           description: '',
           icon: 'folder',
           color: 'gray',
@@ -333,12 +375,16 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
           completedEntries: 0,
         };
 
+        const reflectionBlock = snap.reflection
+          ? `\n\n---\nSituation: ${snap.reflection.situation}\nTask: ${snap.reflection.task}\nAction: ${snap.reflection.action}\nResult: ${snap.reflection.result}\nLearning: ${snap.reflection.learning}`
+          : '';
+
         await addEntry({
           title: snap.title,
-          description: snap.description,
+          description: (snap.description + reflectionBlock).trim(),
           category: categoryObj,
           skills: snap.selectedACs,
-          evidenceFiles: evidenceFile ? [evidenceFile] : [],
+          evidenceFiles,
           assessmentCriteria: snap.selectedACs,
           status: 'draft',
           dateCreated: new Date().toISOString(),
@@ -364,6 +410,29 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
     }
   };
 
+  /* ─── AC selection helpers ───────────────────────────────────────── */
+  const toggleAC = (ref: string) => {
+    haptic.light();
+    setSelectedACs((prev) =>
+      prev.includes(ref) ? prev.filter((r) => r !== ref) : [...prev, ref]
+    );
+  };
+
+  const removeFile = (id: string) => {
+    haptic.light();
+    setFiles((prev) => {
+      const target = prev.find((f) => f.id === id);
+      if (target?.previewUrl) URL.revokeObjectURL(target.previewUrl);
+      return prev.filter((f) => f.id !== id);
+    });
+  };
+
+  const filesUploadingCount = files.filter((f) => f.uploading).length;
+  const analysedCount = files.filter((f) => f.analysis).length;
+  const canAnalyse =
+    !streaming && (files.some((f) => f.storageUrl) || voiceText.trim().length > 0);
+
+  /* ─── Render ─────────────────────────────────────────────────────── */
   return (
     <Sheet
       open={open}
@@ -372,74 +441,65 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
         onOpenChange(v);
       }}
     >
-      <SheetContent side="bottom" className="h-[85vh] rounded-t-3xl p-0">
-        {/* Drag handle */}
-        <div className="w-12 h-1 bg-muted rounded-full mx-auto mt-3 mb-2" />
-
+      <SheetContent
+        side="bottom"
+        className="h-[92vh] sm:h-[88vh] rounded-t-3xl p-0 bg-[hsl(0_0%_8%)] border-white/[0.06]"
+      >
+        <div className="w-12 h-1 bg-white/15 rounded-full mx-auto mt-3 mb-2" />
         <div className="flex flex-col h-full">
-          <SheetHeader className="px-4 pb-4">
-            <SheetTitle>Add Evidence</SheetTitle>
-            <SheetDescription>
-              {step === 'capture' && 'Capture or upload evidence for your portfolio'}
-              {step === 'details' && 'Add details about this evidence'}
+          <SheetHeader className="px-4 sm:px-6 pb-4">
+            <SheetTitle className="text-left">
+              <Eyebrow>Capture · Evidence</Eyebrow>
+              <h2 className="text-[22px] sm:text-[26px] font-semibold tracking-tight text-white mt-1 leading-none">
+                {step === 'capture' ? 'Capture on site' : 'Review &amp; tag'}
+              </h2>
+            </SheetTitle>
+            <SheetDescription className="text-left text-[13px] text-white/70 leading-snug">
+              {step === 'capture'
+                ? 'Snap photos, speak a quick description, AI will suggest the ACs and draft a STAR reflection in seconds.'
+                : meta
+                  ? `Streaming analysis — ${analysedCount} of ${meta.totalFiles} files ready.`
+                  : 'Add a few details and tap Analyse — questions ground in BS 7671.'}
             </SheetDescription>
           </SheetHeader>
 
-          <div className="flex-1 overflow-y-auto px-4">
+          <div className="flex-1 overflow-y-auto px-4 sm:px-6 pb-32">
             {/* Step 1: Capture */}
             {step === 'capture' && (
-              <div className="space-y-6 py-4">
-                {/* Capture Options */}
-                <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-5 py-2">
+                <div className="grid grid-cols-2 gap-2.5">
                   <button
                     onClick={() => cameraInputRef.current?.click()}
-                    className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-elec-yellow/10 border-2 border-elec-yellow/20 hover:border-elec-yellow/40 active:scale-95 transition-all touch-manipulation"
+                    className="flex flex-col items-center gap-2 p-5 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] hover:bg-white/[0.04] transition-colors touch-manipulation"
                   >
-                    <div className="p-3 rounded-full bg-elec-yellow/20">
-                      <Camera className="h-6 w-6 text-elec-yellow" />
-                    </div>
-                    <span className="text-sm font-medium text-foreground">Camera</span>
+                    <Camera className="h-6 w-6 text-elec-yellow" />
+                    <span className="text-[13px] font-medium text-white">Camera</span>
                   </button>
-
                   <button
                     onClick={() => fileInputRef.current?.click()}
-                    className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-white/[0.02] border-2 border-white/[0.06] hover:border-white/[0.06] active:scale-95 transition-all touch-manipulation"
+                    className="flex flex-col items-center gap-2 p-5 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] hover:bg-white/[0.04] transition-colors touch-manipulation"
                   >
-                    <div className="p-3 rounded-full bg-white/[0.02]">
-                      <Upload className="h-6 w-6 text-white/85" />
-                    </div>
-                    <span className="text-sm font-medium text-foreground">Upload</span>
-                  </button>
-
-                  <button
-                    onClick={() => {
-                      setStep('details');
-                    }}
-                    className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-white/[0.02] border-2 border-white/[0.06] hover:border-white/[0.06] active:scale-95 transition-all touch-manipulation"
-                  >
-                    <div className="p-3 rounded-full bg-white/[0.02]">
-                      <Link2 className="h-6 w-6 text-white/85" />
-                    </div>
-                    <span className="text-sm font-medium text-foreground">Link</span>
-                  </button>
-
-                  <button
-                    onClick={() => fileInputRef.current?.click()}
-                    className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-white/[0.02] border-2 border-white/[0.06] hover:border-white/[0.06] active:scale-95 transition-all touch-manipulation"
-                  >
-                    <div className="p-3 rounded-full bg-white/[0.02]">
-                      <Video className="h-6 w-6 text-white/85" />
-                    </div>
-                    <span className="text-sm font-medium text-foreground">Video</span>
+                    <Upload className="h-6 w-6 text-white/85" />
+                    <span className="text-[13px] font-medium text-white">Upload files</span>
                   </button>
                 </div>
 
-                {/* Hidden inputs */}
+                <button
+                  onClick={() => setStep('details')}
+                  className="w-full flex items-center justify-center gap-2 p-4 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] hover:bg-white/[0.04] transition-colors touch-manipulation"
+                >
+                  <Mic className="h-4 w-4 text-elec-yellow" />
+                  <span className="text-[13px] font-medium text-white">
+                    Voice-only — describe a job without files
+                  </span>
+                </button>
+
                 <input
                   ref={cameraInputRef}
                   type="file"
                   accept="image/*"
                   capture="environment"
+                  multiple
                   onChange={handleFileSelect}
                   className="hidden"
                 />
@@ -447,380 +507,421 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
                   ref={fileInputRef}
                   type="file"
                   accept="image/*,video/*,.pdf,.doc,.docx"
+                  multiple
                   onChange={handleFileSelect}
                   className="hidden"
                 />
 
-                {/* Info */}
-                <p className="text-xs text-white text-center">
-                  Max file size: 10MB. Supported: Images, Videos, PDFs, Documents
+                <p className="text-[11px] text-white/55 text-center">
+                  Up to 10MB per file · images, video, PDFs, documents
                 </p>
               </div>
             )}
 
             {/* Step 2: Details */}
             {step === 'details' && (
-              <div className="space-y-5 py-4">
-                {/* Preview */}
-                {previewUrl && (
-                  <div className="relative aspect-video rounded-xl overflow-hidden bg-muted">
-                    <img src={previewUrl} alt="Preview" className="w-full h-full object-cover" />
+              <div className="space-y-6 py-2">
+                {/* File grid */}
+                {files.length > 0 && (
+                  <div className="space-y-2">
+                    <Eyebrow>Files · {files.length}</Eyebrow>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                      {files.map((f) => (
+                        <div
+                          key={f.id}
+                          className="relative rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden"
+                        >
+                          {f.previewUrl ? (
+                            <div className="aspect-square">
+                              <img
+                                src={f.previewUrl}
+                                alt=""
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                          ) : (
+                            <div className="aspect-square flex items-center justify-center bg-white/[0.04]">
+                              <FileCheck className="h-8 w-8 text-white/55" />
+                            </div>
+                          )}
+                          <button
+                            onClick={() => removeFile(f.id)}
+                            className="absolute top-1.5 right-1.5 p-1 rounded-full bg-black/60 text-white touch-manipulation"
+                          >
+                            <X className="h-3 w-3" />
+                          </button>
+                          <div className="px-2 py-1.5 space-y-0.5">
+                            <p className="text-[11px] text-white truncate" title={f.file.name}>
+                              {f.file.name}
+                            </p>
+                            <div className="flex items-center gap-1.5">
+                              {f.uploading && (
+                                <span className="text-[10px] text-white/55 flex items-center gap-1">
+                                  <Loader2 className="h-2.5 w-2.5 animate-spin" />
+                                  Uploading
+                                </span>
+                              )}
+                              {f.analysis && (
+                                <span
+                                  className={cn(
+                                    'text-[10px] font-mono px-1.5 py-0 rounded-md border',
+                                    GRADE_TONE[f.analysis.qualityGrade]
+                                  )}
+                                >
+                                  {f.analysis.qualityGrade} · {f.analysis.qualityScore}
+                                </span>
+                              )}
+                              {f.error && (
+                                <span className="text-[10px] text-red-300">Error</span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                     <button
-                      onClick={() => {
-                        setFile(null);
-                        setPreviewUrl('');
-                      }}
-                      className="absolute top-2 right-2 p-1.5 rounded-full bg-black/50 text-white"
+                      onClick={() => fileInputRef.current?.click()}
+                      className="w-full text-center py-2 rounded-lg border border-dashed border-white/[0.08] text-[12px] text-white/55 hover:bg-white/[0.04] transition-colors touch-manipulation"
                     >
-                      <X className="h-4 w-4" />
+                      + Add more files
                     </button>
                   </div>
                 )}
 
-                {/* Upload indicator */}
-                {isUploading && (
-                  <div className="flex items-center gap-2 p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
-                    <Loader2 className="h-4 w-4 text-elec-yellow animate-spin" />
-                    <span className="text-sm text-elec-yellow">Uploading file...</span>
+                {/* Voice transcript */}
+                <div className="space-y-2">
+                  <div className="flex items-baseline justify-between gap-3">
+                    <Eyebrow>Describe the job</Eyebrow>
+                    <span className="text-[11px] text-white/40 font-mono">
+                      {voiceText.length} chars
+                    </span>
                   </div>
-                )}
+                  <Textarea
+                    value={voiceText}
+                    onChange={(e) => setVoiceText(e.target.value)}
+                    placeholder="Speak or type — what was the job, what did you do, what did you measure, what did you learn?"
+                    rows={4}
+                    className="touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] text-[13px] text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20"
+                  />
+                  {speechSupported && (
+                    <button
+                      type="button"
+                      onClick={isListening ? stopListening : startListening}
+                      disabled={streaming}
+                      className={cn(
+                        'inline-flex items-center gap-2 h-9 px-3 rounded-lg border text-[12px] font-medium transition-colors touch-manipulation',
+                        isListening
+                          ? 'border-red-500/40 bg-red-500/[0.06] text-red-300'
+                          : 'border-white/[0.08] bg-[hsl(0_0%_10%)] text-white/85 hover:bg-white/[0.04]'
+                      )}
+                    >
+                      {isListening ? (
+                        <>
+                          <MicOff className="h-3.5 w-3.5" />
+                          Stop listening
+                        </>
+                      ) : (
+                        <>
+                          <Mic className="h-3.5 w-3.5" />
+                          Tap to speak
+                        </>
+                      )}
+                    </button>
+                  )}
+                </div>
 
-                {/* Analyse Evidence button — manual trigger */}
-                {file && !isUploading && !aiResult && (
+                {/* Analyse trigger / progress */}
+                {!streaming && analysedCount === 0 && !reflection && (
                   <Button
-                    variant="outline"
                     onClick={handleAnalyse}
-                    disabled={isAnalyzing || isUploading}
-                    className="w-full h-11 touch-manipulation border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/10 active:scale-95"
+                    disabled={!canAnalyse || filesUploadingCount > 0}
+                    className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:opacity-50 inline-flex items-center justify-center gap-2"
                   >
-                    {isAnalyzing ? (
+                    {filesUploadingCount > 0 ? (
                       <>
-                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                        Analysing evidence...
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                        Uploading {filesUploadingCount}{' '}
+                        {filesUploadingCount === 1 ? 'file' : 'files'}…
                       </>
                     ) : (
                       <>
-                        <Sparkles className="h-4 w-4 mr-2" />
-                        Analyse Evidence
+                        <Sparkles className="h-4 w-4" />
+                        Analyse with AI
                       </>
                     )}
                   </Button>
                 )}
 
-                {/* Analysing indicator (shown when running) */}
-                {isAnalyzing && (
-                  <div className="flex items-center gap-2 p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
-                    <Loader2 className="h-4 w-4 text-elec-yellow animate-spin" />
-                    <span className="text-sm text-elec-yellow">AI analysing evidence...</span>
+                {/* Streaming progress */}
+                {(streaming || meta) && (
+                  <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 space-y-3">
+                    <div className="flex items-baseline justify-between gap-3">
+                      <Eyebrow>
+                        {streaming ? 'Analysing · BS 7671 grounded' : 'Analysis complete'}
+                      </Eyebrow>
+                      <span className="text-[12px] font-mono text-white/85 tabular-nums">
+                        {analysedCount} / {meta?.totalFiles || files.length} files
+                        {meta?.hasTranscript ? ` · ${reflection ? '✓' : '·'} reflection` : ''}
+                      </span>
+                    </div>
+                    <div className="h-1 w-full bg-white/[0.04] rounded-full overflow-hidden">
+                      <div
+                        className="h-full rounded-full bg-elec-yellow transition-all duration-300"
+                        style={{
+                          width: `${
+                            meta && meta.totalTasks > 0
+                              ? ((analysedCount + (reflection ? 1 : 0)) / meta.totalTasks) * 100
+                              : 0
+                          }%`,
+                        }}
+                      />
+                    </div>
+                    {meta && meta.regNumbers.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5">
+                        <span className="text-[10px] uppercase tracking-[0.18em] text-white/40">
+                          Reg sources
+                        </span>
+                        {meta.regNumbers.slice(0, 6).map((r) => (
+                          <span
+                            key={r}
+                            className="text-[10px] font-mono text-elec-yellow/85 px-1.5 py-0 rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04]"
+                          >
+                            {r}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* STAR reflection */}
+                {reflection && (
+                  <div className="space-y-3">
+                    <Eyebrow>STAR reflection · drafted from your voice</Eyebrow>
+                    <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 space-y-3">
+                      <ReflectionRow label="Situation" text={reflection.situation} />
+                      <ReflectionRow label="Task" text={reflection.task} />
+                      <ReflectionRow label="Action" text={reflection.action} />
+                      <ReflectionRow label="Result" text={reflection.result} />
+                      <ReflectionRow label="Learning" text={reflection.learning} highlight />
+                    </div>
+                    <p className="text-[11px] text-white/55 italic">
+                      Reflection saves with the entry — edit any section by tweaking the description below.
+                    </p>
+                  </div>
+                )}
+
+                {/* Aggregated AC matches */}
+                {allMatches.length > 0 && (
+                  <div className="space-y-3">
+                    <div className="flex items-baseline justify-between gap-3">
+                      <Eyebrow>Suggested ACs · {allMatches.length}</Eyebrow>
+                      <span className="text-[11px] text-white/55">
+                        Tap to confirm — high-confidence matches auto-selected.
+                      </span>
+                    </div>
+                    <ul className="space-y-1.5">
+                      {allMatches.map((m) => {
+                        const ref = `${m.unitCode} AC ${m.acCode}`;
+                        const selected = selectedACs.includes(ref);
+                        const recommended = m.confidence >= 80;
+                        return (
+                          <li key={ref}>
+                            <button
+                              type="button"
+                              onClick={() => toggleAC(ref)}
+                              className={cn(
+                                'w-full flex items-start gap-3 px-4 py-3 rounded-xl border text-left transition-colors touch-manipulation',
+                                selected
+                                  ? 'border-elec-yellow/40 bg-elec-yellow/[0.05]'
+                                  : 'border-white/[0.06] bg-[hsl(0_0%_10%)] hover:bg-white/[0.04]'
+                              )}
+                            >
+                              {selected ? (
+                                <CheckSquare className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+                              ) : (
+                                <Square className="h-4 w-4 text-white/40 flex-shrink-0 mt-0.5" />
+                              )}
+                              <div className="flex-1 min-w-0 space-y-0.5">
+                                <div className="flex items-baseline gap-2 flex-wrap">
+                                  <span className="text-[11px] font-mono text-elec-yellow">
+                                    {m.unitCode} {m.acCode}
+                                  </span>
+                                  <span className="text-[10px] uppercase tracking-[0.14em] text-white/40">
+                                    {m.confidence}% match
+                                  </span>
+                                  {recommended && (
+                                    <span className="text-[10px] uppercase tracking-[0.14em] text-elec-yellow">
+                                      Recommended
+                                    </span>
+                                  )}
+                                </div>
+                                <p className="text-[13px] text-white leading-snug">{m.acText}</p>
+                                <p className="text-[11px] text-white/55 leading-snug italic">
+                                  {m.reasons[0]}
+                                </p>
+                              </div>
+                            </button>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Quality tips per file */}
+                {files.some((f) => f.analysis?.qualityTips?.length) && (
+                  <div className="space-y-2">
+                    <Eyebrow>Strengthen this evidence</Eyebrow>
+                    <ul className="space-y-1.5">
+                      {files
+                        .filter((f) => f.analysis?.qualityTips?.length)
+                        .flatMap((f) =>
+                          (f.analysis!.qualityTips || []).map((tip, i) => (
+                            <li
+                              key={`${f.id}-tip-${i}`}
+                              className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+                            >
+                              <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                              <span>{tip}</span>
+                            </li>
+                          ))
+                        )}
+                    </ul>
                   </div>
                 )}
 
                 {/* Title */}
                 <div className="space-y-2">
-                  <label className="text-sm font-medium">Title *</label>
+                  <Eyebrow>Title</Eyebrow>
                   <Input
                     placeholder="What is this evidence?"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    className="h-11 touch-manipulation"
+                    className="h-11 touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] text-[13px] text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20"
                   />
                 </div>
 
                 {/* Description */}
                 <div className="space-y-2">
-                  <label className="text-sm font-medium">Description</label>
+                  <Eyebrow>Description (optional)</Eyebrow>
                   <Textarea
-                    placeholder="Add details about this evidence..."
+                    placeholder="Anything extra you want to add about this entry…"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    rows={2}
-                    className="touch-manipulation"
+                    rows={3}
+                    className="touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] text-[13px] text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20"
                   />
                 </div>
 
-                {/* Category */}
+                {/* Link to */}
                 <div className="space-y-2">
-                  <label className="text-sm font-medium">Category</label>
-                  <Select value={category} onValueChange={setCategory}>
-                    <SelectTrigger className="h-11 touch-manipulation">
-                      <SelectValue placeholder="Select category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {categories.map((cat) => (
-                        <SelectItem key={cat} value={cat}>
-                          {cat}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {/* Link To Selection */}
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Link to</label>
-                  <div className="grid grid-cols-3 gap-2">
-                    <button
-                      onClick={() => setLinkTo('portfolio')}
-                      className={cn('flex flex-col items-center gap-1 p-3 rounded-lg border-2 transition-colors touch-manipulation min-h-[60px]',
-                        linkTo === 'portfolio'
-                          ? 'border-elec-yellow bg-elec-yellow/10'
-                          : 'border-border hover:border-muted-foreground/50'
-                      )}
-                    >
-                      <Briefcase
-                        className={cn('h-5 w-5',
-                          linkTo === 'portfolio' ? 'text-elec-yellow' : 'text-white'
-                        )}
-                      />
-                      <span className="text-xs font-medium">Portfolio</span>
-                    </button>
-                    <button
-                      onClick={() => setLinkTo('ojt')}
-                      className={cn('flex flex-col items-center gap-1 p-3 rounded-lg border-2 transition-colors touch-manipulation min-h-[60px]',
-                        linkTo === 'ojt'
-                          ? 'border-elec-yellow bg-elec-yellow/10'
-                          : 'border-border hover:border-muted-foreground/50'
-                      )}
-                    >
-                      <Clock
-                        className={cn('h-5 w-5',
-                          linkTo === 'ojt' ? 'text-elec-yellow' : 'text-white'
-                        )}
-                      />
-                      <span className="text-xs font-medium">OJT Hours</span>
-                    </button>
-                    <button
-                      onClick={() => setLinkTo('both')}
-                      className={cn('flex flex-col items-center gap-1 p-3 rounded-lg border-2 transition-colors touch-manipulation min-h-[60px]',
-                        linkTo === 'both'
-                          ? 'border-elec-yellow bg-elec-yellow/10'
-                          : 'border-border hover:border-muted-foreground/50'
-                      )}
-                    >
-                      <Check
-                        className={cn('h-5 w-5',
-                          linkTo === 'both' ? 'text-elec-yellow' : 'text-white'
-                        )}
-                      />
-                      <span className="text-xs font-medium">Both</span>
-                    </button>
+                  <Eyebrow>Link to</Eyebrow>
+                  <div className="grid grid-cols-3 gap-1.5">
+                    {([
+                      { v: 'portfolio', label: 'Portfolio', icon: Briefcase },
+                      { v: 'ojt', label: 'OJT hours', icon: Clock },
+                      { v: 'both', label: 'Both', icon: Check },
+                    ] as const).map((opt) => {
+                      const active = linkTo === opt.v;
+                      const Icon = opt.icon;
+                      return (
+                        <button
+                          key={opt.v}
+                          onClick={() => setLinkTo(opt.v)}
+                          className={cn(
+                            'flex flex-col items-center gap-1 p-3 rounded-lg border transition-colors touch-manipulation min-h-[60px]',
+                            active
+                              ? 'border-elec-yellow bg-elec-yellow/[0.06]'
+                              : 'border-white/[0.08] bg-[hsl(0_0%_10%)] hover:bg-white/[0.04]'
+                          )}
+                        >
+                          <Icon
+                            className={cn('h-4 w-4', active ? 'text-elec-yellow' : 'text-white/55')}
+                          />
+                          <span
+                            className={cn(
+                              'text-[11.5px] font-medium',
+                              active ? 'text-elec-yellow' : 'text-white/85'
+                            )}
+                          >
+                            {opt.label}
+                          </span>
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
 
-                {/* OJT Duration (if linking to OJT) */}
+                {/* OJT duration */}
                 {(linkTo === 'ojt' || linkTo === 'both') && (
                   <div className="space-y-2">
-                    <label className="text-sm font-medium">Time Spent (hours)</label>
+                    <Eyebrow>Time spent (hours)</Eyebrow>
                     <Input
                       type="number"
                       step="0.5"
                       min="0.5"
-                      placeholder="e.g., 2.5"
+                      placeholder="e.g. 2.5"
                       value={ojtDuration}
                       onChange={(e) => setOjtDuration(e.target.value)}
-                      className="h-11 touch-manipulation"
+                      className="h-11 touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] text-[13px] text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20"
                     />
-                  </div>
-                )}
-
-                {/* AI Matched Assessment Criteria */}
-                {aiResult && (
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-2">
-                      <Sparkles className="h-4 w-4 text-elec-yellow" />
-                      <label className="text-sm font-medium">Matched Assessment Criteria</label>
-                    </div>
-
-                    {/* Evidence Strength Badge */}
-                    <div className="flex items-center gap-2">
-                      <Badge
-                        variant="outline"
-                        className={cn('text-xs capitalize',
-                          getStrengthColor(aiResult.evidenceStrength)
-                        )}
-                      >
-                        {aiResult.evidenceStrength} evidence
-                      </Badge>
-                    </div>
-
-                    {/* Why good evidence */}
-                    {aiResult.whyGoodEvidence && (
-                      <p className="text-xs text-white leading-relaxed">
-                        {aiResult.whyGoodEvidence}
-                      </p>
-                    )}
-
-                    {/* Matched ACs grouped by unit */}
-                    {aiResult.matchedCriteria && aiResult.matchedCriteria.length > 0 ? (
-                      <div className="space-y-3">
-                        {/* Bulk selection buttons */}
-                        <div className="flex gap-2">
-                          {selectedACs.length === aiResult.matchedCriteria.length ? (
-                            <button
-                              onClick={deselectAllACs}
-                              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-white/[0.06] text-white touch-manipulation active:scale-95 transition-transform"
-                            >
-                              <Square className="h-3 w-3" />
-                              Deselect All
-                            </button>
-                          ) : (
-                            <button
-                              onClick={selectAllACs}
-                              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-white/[0.06] text-white touch-manipulation active:scale-95 transition-transform"
-                            >
-                              <ListChecks className="h-3 w-3" />
-                              Select All
-                            </button>
-                          )}
-                          {aiResult.matchedCriteria.some((ac) => ac.confidence >= 80) && (
-                            <button
-                              onClick={selectRecommendedACs}
-                              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-elec-yellow/10 text-elec-yellow border border-elec-yellow/20 touch-manipulation active:scale-95 transition-transform"
-                            >
-                              <Star className="h-3 w-3" />
-                              Recommended
-                            </button>
-                          )}
-                        </div>
-
-                        {(() => {
-                          // Group ACs by unit
-                          const grouped = new Map<
-                            string,
-                            { unitTitle: string; criteria: MatchedCriterion[] }
-                          >();
-                          for (const ac of aiResult.matchedCriteria) {
-                            const key = ac.unitCode || 'other';
-                            if (!grouped.has(key)) {
-                              grouped.set(key, {
-                                unitTitle: ac.unitTitle || 'Other',
-                                criteria: [],
-                              });
-                            }
-                            grouped.get(key)!.criteria.push(ac);
-                          }
-
-                          let acIndex = 0;
-                          return Array.from(grouped.entries()).map(([unitCode, group]) => (
-                            <div key={unitCode} className="space-y-2">
-                              <p className="text-xs font-semibold text-white uppercase tracking-wide">
-                                Unit {unitCode}
-                                {group.unitTitle !== 'Other' && ` — ${group.unitTitle}`}
-                              </p>
-                              {group.criteria.map((ac) => {
-                                const canonicalRef = `${unitCode} AC ${ac.acCode}`;
-                                const isSelected = selectedACs.includes(canonicalRef);
-                                const idx = acIndex++;
-                                return (
-                                  <motion.button
-                                    key={canonicalRef}
-                                    initial={{ opacity: 0, y: 8 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{
-                                      delay: idx * 0.05,
-                                      type: 'spring',
-                                      stiffness: 400,
-                                      damping: 25,
-                                    }}
-                                    onClick={() => toggleAC(canonicalRef)}
-                                    className={cn('w-full flex items-start gap-3 p-3 rounded-lg border text-left transition-colors touch-manipulation',
-                                      isSelected
-                                        ? 'border-elec-yellow/50 bg-elec-yellow/10'
-                                        : 'border-border hover:border-muted-foreground/50'
-                                    )}
-                                  >
-                                    <motion.div
-                                      animate={{
-                                        scale: isSelected ? [1, 1.2, 1] : 1,
-                                      }}
-                                      transition={{ duration: 0.2 }}
-                                    >
-                                      {isSelected ? (
-                                        <CheckSquare className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
-                                      ) : (
-                                        <Square className="h-5 w-5 text-white shrink-0 mt-0.5" />
-                                      )}
-                                    </motion.div>
-                                    <div className="flex-1 min-w-0">
-                                      <p className="text-sm font-medium text-foreground leading-snug">
-                                        {ac.acCode} {ac.acText}
-                                      </p>
-                                      <div className="flex items-center gap-2 mt-1">
-                                        <p className="text-xs text-white">
-                                          {ac.confidence}% match
-                                        </p>
-                                        {ac.confidence >= 80 && (
-                                          <Badge
-                                            variant="outline"
-                                            className="text-[9px] px-1 py-0 border-white/[0.06] text-white/85"
-                                          >
-                                            Recommended
-                                          </Badge>
-                                        )}
-                                      </div>
-                                    </div>
-                                  </motion.button>
-                                );
-                              })}
-                            </div>
-                          ));
-                        })()}
-                      </div>
-                    ) : (
-                      <p className="text-xs text-white">
-                        No matching criteria found. Try adding a more specific title and
-                        description.
-                      </p>
-                    )}
-
-                    {/* Quality Tips */}
-                    {aiResult.qualityTips && aiResult.qualityTips.length > 0 && (
-                      <div className="space-y-1 pt-1">
-                        <p className="text-xs font-medium text-white">
-                          Tips to strengthen evidence:
-                        </p>
-                        {aiResult.qualityTips.map((tip: string, i: number) => (
-                          <p key={i} className="text-xs text-white pl-3">
-                            &bull; {tip}
-                          </p>
-                        ))}
-                      </div>
-                    )}
                   </div>
                 )}
               </div>
             )}
           </div>
 
-          {/* Actions */}
+          {/* Footer actions */}
           {step === 'details' && (
-            <div className="p-4 border-t border-border shrink-0 bg-background pb-20 sm:pb-4">
-              <div className="flex gap-3">
-                <Button
-                  variant="outline"
+            <div className="px-4 sm:px-6 py-3 border-t border-white/[0.06] bg-[hsl(0_0%_8%)] pb-20 sm:pb-3">
+              <div className="grid grid-cols-2 gap-2">
+                <SecondaryAction
+                  label="Cancel"
                   onClick={() => {
                     resetForm();
                     onOpenChange(false);
                   }}
-                  className="flex-1 h-12 touch-manipulation active:scale-95"
-                >
-                  Cancel
-                </Button>
-                <Button
-                  onClick={handleSave}
-                  disabled={
-                    !title.trim() || ((linkTo === 'ojt' || linkTo === 'both') && !ojtDuration)
+                />
+                <PrimaryAction
+                  label={
+                    <>
+                      <Check className="h-4 w-4" />
+                      Save evidence
+                    </>
                   }
-                  className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation active:scale-95"
-                >
-                  Save Evidence
-                </Button>
+                  onClick={handleSave}
+                />
               </div>
             </div>
           )}
         </div>
       </SheetContent>
     </Sheet>
+  );
+}
+
+function ReflectionRow({
+  label,
+  text,
+  highlight,
+}: {
+  label: string;
+  text: string;
+  highlight?: boolean;
+}) {
+  return (
+    <div className="space-y-1">
+      <span
+        className={cn(
+          'text-[10px] font-medium uppercase tracking-[0.18em]',
+          highlight ? 'text-elec-yellow' : 'text-white/55'
+        )}
+      >
+        {label}
+      </span>
+      <p className="text-[13px] text-white/85 leading-relaxed">{text}</p>
+    </div>
   );
 }
 

@@ -1,5 +1,5 @@
 import { lazy } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { LazyRoute } from '@/components/LazyRoute';
 
 // Lazy-loaded pages
@@ -182,7 +182,10 @@ const SiteSafetyRules = lazy(() => import('@/pages/apprentice/safety-guide/SiteS
 const InspectionTesting = lazy(() => import('@/pages/apprentice/InspectionTesting'));
 const InspectionTestingHubPage = lazy(() => import('@/pages/apprentice/LearningHubPage'));
 const UnifiedApprenticeHub = lazy(() => import('@/pages/apprentice/UnifiedApprenticeHub'));
-const PortfolioHub = lazy(() => import('@/pages/apprentice/portfolio-hub/PortfolioHub'));
+// Retired: /apprentice/portfolio-hub now redirects to /apprentice/hub.
+// The unified workspace at /apprentice/hub (UnifiedApprenticeHub) is the
+// single source of truth for portfolio work — keeps deep links pointing
+// to the right place.
 const OJTHub = lazy(() => import('@/pages/apprentice/ojt-hub/OJTHub'));
 const LearningVideos = lazy(() => import('@/pages/apprentice/LearningVideos'));
 const SiteDiary = lazy(() => import('@/pages/apprentice/SiteDiary'));
@@ -1081,14 +1084,9 @@ const ApprenticeRoutes = () => (
         </LazyRoute>
       }
     />
-    <Route
-      path="portfolio-hub/*"
-      element={
-        <LazyRoute>
-          <PortfolioHub />
-        </LazyRoute>
-      }
-    />
+    {/* Retired — redirects all /apprentice/portfolio-hub/* deep-links into the
+        unified workspace at /apprentice/hub. */}
+    <Route path="portfolio-hub/*" element={<Navigate to="/apprentice/hub" replace />} />
     <Route
       path="ojt-hub/*"
       element={

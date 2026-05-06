@@ -1,3 +1,10 @@
+/**
+ * ScrollableChips — editorial horizontal spec chip strip.
+ *
+ * Drops the yellow gradient flood + icon glyph for tight editorial chip
+ * with eyebrow label + tabular value. Same horizontal-scroll semantics.
+ */
+
 import { LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -12,27 +19,12 @@ interface ScrollableChipsProps {
   className?: string;
 }
 
-/**
- * ScrollableChips - Horizontal scrollable specification chips
- *
- * Features:
- * - Horizontal scroll on mobile (no wrapping)
- * - Premium glassmorphism chip styling
- * - Optional icon per chip
- * - Hide scrollbar for clean look
- */
 export function ScrollableChips({ items, className }: ScrollableChipsProps) {
   if (!items || items.length === 0) return null;
 
   return (
     <div
-      className={cn(
-        'flex gap-3 overflow-x-auto pb-2',
-        // Hide scrollbar but keep functionality
-        'scrollbar-none',
-        '-mx-1 px-1', // Prevent chip shadows from being clipped
-        className
-      )}
+      className={cn('flex gap-2 overflow-x-auto pb-2 scrollbar-none -mx-1 px-1', className)}
       style={{
         WebkitOverflowScrolling: 'touch',
         scrollbarWidth: 'none',
@@ -42,22 +34,14 @@ export function ScrollableChips({ items, className }: ScrollableChipsProps) {
       {items.map((item, index) => (
         <div
           key={index}
-          className={cn(
-            'flex-shrink-0',
-            'px-4 py-3 rounded-xl',
-            'bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5',
-            'border border-elec-yellow/20',
-            'backdrop-blur-sm',
-            'min-w-[80px]'
-          )}
+          className="shrink-0 rounded-xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] px-3 py-2.5 min-w-[88px]"
         >
-          <div className="flex items-center gap-2 mb-1">
-            {item.icon && <item.icon className="h-3.5 w-3.5 text-elec-yellow/60" />}
-            <span className="text-xs text-white font-medium uppercase tracking-wide">
-              {item.label}
-            </span>
+          <span className="text-[9.5px] uppercase tracking-[0.14em] font-semibold text-white/65">
+            {item.label}
+          </span>
+          <div className="mt-0.5 text-[14px] sm:text-[15px] font-semibold tabular-nums text-elec-yellow leading-tight">
+            {item.value}
           </div>
-          <div className="text-lg font-bold text-elec-yellow">{item.value}</div>
         </div>
       ))}
     </div>

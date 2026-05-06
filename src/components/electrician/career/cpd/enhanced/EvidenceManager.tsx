@@ -56,49 +56,49 @@ const EvidenceManager = ({ entryId, evidenceFiles, onEvidenceUpdate }: EvidenceM
       type: 'certificate',
       label: 'Certificate',
       icon: <Award className="h-4 w-4" />,
-      color: 'bg-green-500/10 text-green-400',
+      color: 'bg-elec-yellow/[0.08] text-elec-yellow border-elec-yellow/30',
     },
     {
       type: 'attendance-record',
       label: 'Attendance Record',
       icon: <FileText className="h-4 w-4" />,
-      color: 'bg-blue-500/10 text-blue-400',
+      color: 'bg-white/[0.04] text-white border-white/[0.10]',
     },
     {
       type: 'site-photo',
       label: 'Site Photo',
       icon: <Camera className="h-4 w-4" />,
-      color: 'bg-purple-500/10 text-purple-400',
+      color: 'bg-white/[0.04] text-white border-white/[0.10]',
     },
     {
       type: 'reflection-notes',
       label: 'Reflection Notes',
       icon: <FileText className="h-4 w-4" />,
-      color: 'bg-yellow-500/10 text-yellow-400',
+      color: 'bg-white/[0.04] text-white border-white/[0.10]',
     },
     {
       type: 'assessment-results',
       label: 'Assessment Results',
       icon: <Award className="h-4 w-4" />,
-      color: 'bg-green-500/10 text-green-400',
+      color: 'bg-elec-yellow/[0.08] text-elec-yellow border-elec-yellow/30',
     },
     {
       type: 'toolbox-talk',
       label: 'Toolbox Talk',
       icon: <Mic className="h-4 w-4" />,
-      color: 'bg-orange-500/10 text-orange-400',
+      color: 'bg-white/[0.04] text-white border-white/[0.10]',
     },
     {
       type: 'technical-document',
       label: 'Technical Document',
       icon: <FileText className="h-4 w-4" />,
-      color: 'bg-indigo-500/10 text-indigo-400',
+      color: 'bg-white/[0.04] text-white border-white/[0.10]',
     },
     {
       type: 'video-recording',
       label: 'Video Recording',
       icon: <Video className="h-4 w-4" />,
-      color: 'bg-red-500/10 text-red-400',
+      color: 'bg-white/[0.04] text-white border-white/[0.10]',
     },
   ];
 
@@ -198,11 +198,11 @@ const EvidenceManager = ({ entryId, evidenceFiles, onEvidenceUpdate }: EvidenceM
       </Card>
 
       {/* Upload Options */}
-      <Card className="bg-card border-border">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-sm text-foreground">Add Evidence</CardTitle>
-        </CardHeader>
-        <CardContent>
+      <div className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5">
+        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow mb-3">
+          ADD EVIDENCE
+        </div>
+        <div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
             <Button
               variant="outline"
@@ -268,70 +268,71 @@ const EvidenceManager = ({ entryId, evidenceFiles, onEvidenceUpdate }: EvidenceM
           />
 
           {uploading && (
-            <Alert className="mt-3">
-              <Clock className="h-4 w-4" />
-              <AlertDescription>
-                Uploading and processing files... OCR analysis in progress.
-              </AlertDescription>
-            </Alert>
+            <div className="mt-3 rounded-xl border border-elec-yellow/30 bg-elec-yellow/[0.05] p-3">
+              <div className="flex items-baseline gap-2.5">
+                <Clock className="h-3.5 w-3.5 text-elec-yellow self-center" aria-hidden />
+                <p className="text-[12.5px] text-white/85">
+                  Uploading + processing — OCR analysis in progress.
+                </p>
+              </div>
+            </div>
           )}
-        </CardContent>
-      </Card>
+      </div>
 
-      {/* Evidence Files List */}
+      {/* Evidence files list */}
       {evidenceFiles.length > 0 && (
-        <Card className="bg-card border-border">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm text-foreground">Uploaded Evidence</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {evidenceFiles.map((file) => (
-                <div key={file.id} className="flex items-center gap-3 p-3 bg-muted/20 rounded-lg">
-                  <div className={`p-2 rounded ${getEvidenceColor(file.type)}`}>
-                    {getEvidenceIcon(file.type)}
-                  </div>
-
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-foreground truncate">{file.fileName}</p>
-                    <div className="flex items-center gap-2 text-xs text-white">
-                      <Badge variant="outline" className="text-xs">
-                        {file.type.replace('-', ' ')}
-                      </Badge>
-                      <span>•</span>
-                      <span>{new Date(file.uploadDate).toLocaleDateString()}</span>
-                      {file.verified ? (
-                        <CheckCircle className="h-3 w-3 text-green-400" />
-                      ) : (
-                        <AlertCircle className="h-3 w-3 text-yellow-400" />
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-1">
-                    <Button variant="ghost" size="sm" onClick={() => setSelectedEvidence(file)}>
-                      <Eye className="h-4 w-4" />
-                    </Button>
-
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => {
-                        // Download file
-                        const link = document.createElement('a');
-                        link.href = file.fileUrl;
-                        link.download = file.fileName;
-                        link.click();
-                      }}
-                    >
-                      <Download className="h-4 w-4" />
-                    </Button>
+        <div className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5">
+          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow mb-3">
+            UPLOADED
+          </div>
+          <ul className="divide-y divide-white/[0.06]">
+            {evidenceFiles.map((file) => (
+              <li key={file.id} className="flex items-center gap-3 py-3 first:pt-0 last:pb-0">
+                <div className={`p-2 rounded-md border ${getEvidenceColor(file.type)} shrink-0`}>
+                  {getEvidenceIcon(file.type)}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-[13px] font-semibold text-white truncate">{file.fileName}</p>
+                  <div className="mt-0.5 flex items-baseline gap-2 text-[10.5px] tabular-nums text-white/65">
+                    <span className="uppercase tracking-[0.12em] font-semibold">
+                      {file.type.replace('-', ' ')}
+                    </span>
+                    <span className="text-white/40">·</span>
+                    <span>{new Date(file.uploadDate).toLocaleDateString('en-GB')}</span>
+                    {file.verified ? (
+                      <CheckCircle className="h-3 w-3 text-emerald-300 self-center" aria-hidden />
+                    ) : (
+                      <AlertCircle className="h-3 w-3 text-amber-300 self-center" aria-hidden />
+                    )}
                   </div>
                 </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+                <div className="flex items-center gap-1 shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedEvidence(file)}
+                    aria-label="View"
+                    className="text-white/65 hover:text-white inline-flex items-center justify-center h-8 w-8 rounded-md border border-white/15 hover:border-white/30 transition-colors touch-manipulation"
+                  >
+                    <Eye className="h-3.5 w-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const link = document.createElement('a');
+                      link.href = file.fileUrl;
+                      link.download = file.fileName;
+                      link.click();
+                    }}
+                    aria-label="Download"
+                    className="text-white/65 hover:text-white inline-flex items-center justify-center h-8 w-8 rounded-md border border-white/15 hover:border-white/30 transition-colors touch-manipulation"
+                  >
+                    <Download className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
 
       {/* Evidence Detail Dialog */}

@@ -275,6 +275,15 @@ export const useInvoiceStorage = () => {
       const isNewInvoice = !existingQuote;
       let updatedQuote;
 
+      // quotes.expiry_date is NOT NULL — but standalone invoices don't always
+      // have a due date set by the user. Fall back to invoice_date + 30 days,
+      // or now + 30 days if no invoice_date either. Same fallback pattern
+      // saveQuote uses for the active-quote path.
+      const fallbackDueIso = new Date(
+        (invoice.invoice_date?.getTime() ?? Date.now()) + 30 * 24 * 60 * 60 * 1000
+      ).toISOString();
+      const dueDateIso = invoice.invoice_due_date?.toISOString() ?? fallbackDueIso;
+
       if (isNewInvoice) {
         // INSERT new standalone invoice
         const { data: newInvoice, error: insertError } = await supabase
@@ -298,13 +307,13 @@ export const useInvoiceStorage = () => {
               invoice_raised: true,
               invoice_number: finalInvoiceNumber,
               invoice_date: invoice.invoice_date?.toISOString(),
-              invoice_due_date: invoice.invoice_due_date?.toISOString(),
+              invoice_due_date: dueDateIso,
               invoice_status: invoice.invoice_status || 'draft',
               invoice_notes: invoice.invoice_notes || null,
               work_completion_date: invoice.work_completion_date?.toISOString(),
               additional_invoice_items: [] as any,
               tags: [] as any,
-              expiry_date: invoice.invoice_due_date?.toISOString(),
+              expiry_date: dueDateIso,
               acceptance_status: 'accepted',
               accepted_at: new Date().toISOString(),
               pdf_version: 1,

@@ -1,8 +1,12 @@
+/**
+ * RemindersPanel — editorial CPD reminders.
+ *
+ * Type-led: high-priority alerts, then divided list of other reminders,
+ * quick actions row, and a three-cell stat strip. Drops stock Card chrome
+ * and the per-priority colour boxes for editorial accents.
+ */
+
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 import {
   Bell,
   Calendar,
@@ -16,68 +20,43 @@ import {
 } from 'lucide-react';
 import { useEnhancedCPD } from '@/hooks/cpd/useEnhancedCPD';
 import { CPDReminder } from '@/types/cpd-enhanced';
+import { Eyebrow } from '@/components/college/primitives';
+import { cn } from '@/lib/utils';
+
+const surface =
+  'rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]';
 
 const RemindersPanel = () => {
   const { reminders, dismissReminder } = useEnhancedCPD();
 
-  const getRemindersIcon = (type: CPDReminder['type']) => {
+  const getReminderIcon = (type: CPDReminder['type']) => {
     switch (type) {
       case 'deadline':
-        return <Clock className="h-4 w-4" />;
+        return Clock;
       case 'goal-progress':
-        return <Target className="h-4 w-4" />;
+        return Target;
       case 'assessment':
-        return <Award className="h-4 w-4" />;
+        return Award;
       case 'renewal':
-        return <RefreshCw className="h-4 w-4" />;
+        return RefreshCw;
       default:
-        return <Bell className="h-4 w-4" />;
+        return Bell;
     }
   };
 
-  const getPriorityColor = (priority: CPDReminder['priority']) => {
-    switch (priority) {
-      case 'high':
-        return 'text-red-400 border-red-500/30 bg-red-500/10';
-      case 'medium':
-        return 'text-yellow-400 border-yellow-500/30 bg-yellow-500/10';
-      case 'low':
-        return 'text-blue-400 border-blue-500/30 bg-blue-500/10';
-      default:
-        return 'text-white border-gray-500/30 bg-gray-500/10';
-    }
-  };
-
-  const getTypeColor = (type: CPDReminder['type']) => {
-    switch (type) {
-      case 'deadline':
-        return 'bg-red-500/10 text-red-400';
-      case 'goal-progress':
-        return 'bg-blue-500/10 text-blue-400';
-      case 'assessment':
-        return 'bg-green-500/10 text-green-400';
-      case 'renewal':
-        return 'bg-purple-500/10 text-purple-400';
-      default:
-        return 'bg-gray-500/10 text-white';
-    }
-  };
+  const priorityTone = (priority: CPDReminder['priority']) =>
+    priority === 'high'
+      ? 'text-red-300'
+      : priority === 'medium'
+        ? 'text-amber-300'
+        : 'text-blue-300';
 
   const formatDaysUntil = (dueDate: string) => {
-    const now = new Date();
-    const due = new Date(dueDate);
-    const diffTime = due.getTime() - now.getTime();
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-    if (diffDays < 0) {
-      return `${Math.abs(diffDays)} days overdue`;
-    } else if (diffDays === 0) {
-      return 'Due today';
-    } else if (diffDays === 1) {
-      return 'Due tomorrow';
-    } else {
-      return `Due in ${diffDays} days`;
-    }
+    const diffDays = Math.ceil((new Date(dueDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+    if (diffDays < 0) return `${Math.abs(diffDays)}d overdue`;
+    if (diffDays === 0) return 'Due today';
+    if (diffDays === 1) return 'Due tomorrow';
+    return `Due in ${diffDays}d`;
   };
 
   const highPriorityReminders = reminders.filter((r) => r.priority === 'high');
@@ -85,180 +64,197 @@ const RemindersPanel = () => {
 
   if (reminders.length === 0) {
     return (
-      <Card className="bg-card border-border">
-        <CardContent className="p-6 text-center">
-          <CheckCircle className="h-12 w-12 text-green-400 mx-auto mb-3" />
-          <h3 className="font-medium text-foreground mb-2">All caught up!</h3>
-          <p className="text-sm text-white">
-            No pending reminders. Your CPD progress is on track.
-          </p>
-        </CardContent>
-      </Card>
+      <div className={cn(surface, 'p-8 text-center')}>
+        <CheckCircle className="h-8 w-8 text-emerald-300 mx-auto" aria-hidden />
+        <h3 className="mt-3 text-[20px] font-semibold tracking-tight text-white">All caught up.</h3>
+        <p className="mt-2 text-[13px] leading-relaxed text-white/85 max-w-md mx-auto">
+          No pending reminders — your CPD is on track.
+        </p>
+      </div>
     );
   }
 
   return (
-    <div className="space-y-4">
-      {/* High Priority Alerts */}
+    <div className="space-y-5">
+      {/* High priority */}
       {highPriorityReminders.length > 0 && (
-        <div className="space-y-3">
-          <h3 className="text-sm font-medium text-foreground flex items-center gap-2">
-            <AlertTriangle className="h-4 w-4 text-red-400" />
-            Urgent Attention Required
-          </h3>
-          {highPriorityReminders.map((reminder) => (
-            <Alert key={reminder.id} className="border-red-500/30 bg-red-500/5">
-              <AlertTriangle className="h-4 w-4" />
-              <AlertDescription className="text-foreground">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <p className="font-medium">{reminder.title}</p>
-                    <p className="text-sm mt-1">{reminder.message}</p>
-                    <div className="flex items-center gap-2 mt-2">
-                      <Badge variant="outline" className="text-xs border-red-500/30 text-red-400">
+        <section className="space-y-3">
+          <div className="flex items-baseline gap-2">
+            <AlertTriangle className="h-3.5 w-3.5 text-red-300 self-center" aria-hidden />
+            <Eyebrow>URGENT</Eyebrow>
+          </div>
+          <ul className="space-y-2">
+            {highPriorityReminders.map((reminder) => (
+              <li
+                key={reminder.id}
+                className="rounded-2xl bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] border border-red-500/30 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-4"
+              >
+                <div className="flex items-start gap-3">
+                  <AlertTriangle
+                    className="h-4 w-4 text-red-300 shrink-0 self-center"
+                    aria-hidden
+                  />
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[13.5px] font-semibold text-white">{reminder.title}</p>
+                    <p className="mt-1 text-[12.5px] leading-relaxed text-white/85">
+                      {reminder.message}
+                    </p>
+                    <div className="mt-2 flex flex-wrap gap-1.5">
+                      <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-red-300 border border-red-500/40 bg-red-500/[0.08] rounded-md px-1.5 py-0.5 tabular-nums">
                         {formatDaysUntil(reminder.dueDate)}
-                      </Badge>
+                      </span>
                       {reminder.actionRequired && (
-                        <Badge variant="secondary" className="text-xs">
-                          Action: {reminder.actionRequired}
-                        </Badge>
+                        <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white/85 border border-white/15 rounded-md px-1.5 py-0.5">
+                          {reminder.actionRequired}
+                        </span>
                       )}
                     </div>
                   </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
+                  <button
+                    type="button"
                     onClick={() => dismissReminder(reminder.id)}
-                    className="ml-2"
+                    aria-label="Dismiss"
+                    className="text-white/65 hover:text-white border border-white/15 hover:border-white/30 rounded-full h-7 w-7 inline-flex items-center justify-center shrink-0 touch-manipulation transition-colors"
                   >
-                    <X className="h-4 w-4" />
-                  </Button>
+                    <X className="h-3.5 w-3.5" />
+                  </button>
                 </div>
-              </AlertDescription>
-            </Alert>
-          ))}
-        </div>
+              </li>
+            ))}
+          </ul>
+        </section>
       )}
 
-      {/* Other Reminders */}
+      {/* Other */}
       {otherReminders.length > 0 && (
-        <Card className="bg-card border-border">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm text-foreground flex items-center gap-2">
-              <Bell className="h-4 w-4" />
-              Reminders & Notifications
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {otherReminders.map((reminder) => (
-              <div
-                key={reminder.id}
-                className={`p-3 border rounded-lg ${getPriorityColor(reminder.priority)}`}
-              >
-                <div className="flex items-start justify-between">
-                  <div className="flex items-start gap-3 flex-1">
-                    <div className={`p-2 rounded ${getTypeColor(reminder.type)}`}>
-                      {getRemindersIcon(reminder.type)}
-                    </div>
-
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h4 className="font-medium text-foreground text-sm">{reminder.title}</h4>
-                        <Badge variant="outline" className="text-xs">
+        <section className="space-y-3">
+          <div className="flex items-baseline gap-2">
+            <Bell className="h-3.5 w-3.5 text-elec-yellow self-center" aria-hidden />
+            <Eyebrow>NOTIFICATIONS</Eyebrow>
+          </div>
+          <ul className={cn(surface, 'divide-y divide-white/[0.06]')}>
+            {otherReminders.map((reminder) => {
+              const Icon = getReminderIcon(reminder.type);
+              return (
+                <li key={reminder.id} className="px-5 py-4 first:rounded-t-2xl last:rounded-b-2xl">
+                  <div className="flex items-start gap-3">
+                    <Icon
+                      className={cn(
+                        'h-4 w-4 shrink-0 self-center',
+                        priorityTone(reminder.priority)
+                      )}
+                      aria-hidden
+                    />
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-baseline justify-between gap-2 flex-wrap">
+                        <h4 className="text-[13.5px] font-semibold text-white">{reminder.title}</h4>
+                        <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white/65 border border-white/15 rounded-md px-1.5 py-0.5">
                           {reminder.type.replace('-', ' ')}
-                        </Badge>
+                        </span>
                       </div>
-
-                      <p className="text-sm text-white mb-2">{reminder.message}</p>
-
-                      <div className="flex items-center gap-2 text-xs">
-                        <div className="flex items-center gap-1">
-                          <Calendar className="h-3 w-3" />
-                          <span className="text-white">
-                            {formatDaysUntil(reminder.dueDate)}
-                          </span>
-                        </div>
-
+                      <p className="mt-1 text-[12.5px] leading-relaxed text-white/85">
+                        {reminder.message}
+                      </p>
+                      <div className="mt-2 flex items-baseline gap-2 text-[11px] tabular-nums">
+                        <span
+                          className={cn(
+                            'inline-flex items-center gap-1 uppercase tracking-[0.12em] font-semibold',
+                            priorityTone(reminder.priority)
+                          )}
+                        >
+                          <Calendar className="h-3 w-3 self-center" aria-hidden />
+                          {formatDaysUntil(reminder.dueDate)}
+                        </span>
                         {reminder.actionRequired && (
                           <>
-                            <span className="text-white">•</span>
-                            <span className="text-foreground">{reminder.actionRequired}</span>
+                            <span className="text-white/40">·</span>
+                            <span className="text-white/85">{reminder.actionRequired}</span>
                           </>
                         )}
                       </div>
                     </div>
+                    <button
+                      type="button"
+                      onClick={() => dismissReminder(reminder.id)}
+                      aria-label="Dismiss"
+                      className="text-white/65 hover:text-white border border-white/15 hover:border-white/30 rounded-full h-7 w-7 inline-flex items-center justify-center shrink-0 touch-manipulation transition-colors"
+                    >
+                      <X className="h-3.5 w-3.5" />
+                    </button>
                   </div>
-
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => dismissReminder(reminder.id)}
-                    className="ml-2"
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
       )}
 
-      {/* Quick Actions */}
-      <Card className="bg-card border-border">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-sm text-foreground">Quick Actions</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-2 gap-2">
-            <Button variant="outline" size="sm" className="justify-start">
-              <Calendar className="h-4 w-4 mr-2" />
-              Set Reminder
-            </Button>
+      {/* Quick actions */}
+      <section className={cn(surface, 'p-5 sm:p-6')}>
+        <Eyebrow>QUICK ACTIONS</Eyebrow>
+        <div className="mt-4 grid grid-cols-2 gap-2">
+          <QuickAction icon={Calendar} label="Set reminder" />
+          <QuickAction icon={Target} label="Create goal" />
+          <QuickAction icon={Award} label="Schedule assessment" />
+          <QuickAction icon={RefreshCw} label="Renewal tracker" />
+        </div>
+      </section>
 
-            <Button variant="outline" size="sm" className="justify-start">
-              <Target className="h-4 w-4 mr-2" />
-              Create Goal
-            </Button>
-
-            <Button variant="outline" size="sm" className="justify-start">
-              <Award className="h-4 w-4 mr-2" />
-              Schedule Assessment
-            </Button>
-
-            <Button variant="outline" size="sm" className="justify-start">
-              <RefreshCw className="h-4 w-4 mr-2" />
-              Renewal Tracker
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Summary Stats */}
-      <Card className="bg-card border-border">
-        <CardContent className="p-4">
-          <div className="grid grid-cols-3 gap-4 text-center">
-            <div>
-              <div className="text-lg font-bold text-red-400">{highPriorityReminders.length}</div>
-              <p className="text-xs text-white">High Priority</p>
-            </div>
-            <div>
-              <div className="text-lg font-bold text-yellow-400">
-                {reminders.filter((r) => r.priority === 'medium').length}
-              </div>
-              <p className="text-xs text-white">Medium Priority</p>
-            </div>
-            <div>
-              <div className="text-lg font-bold text-blue-400">
-                {reminders.filter((r) => r.priority === 'low').length}
-              </div>
-              <p className="text-xs text-white">Low Priority</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Stat strip */}
+      <section className={cn(surface, 'p-5')}>
+        <dl className="grid grid-cols-3 gap-4 text-center">
+          <PriorityStat
+            count={highPriorityReminders.length}
+            label="High"
+            tone="text-red-300"
+          />
+          <PriorityStat
+            count={reminders.filter((r) => r.priority === 'medium').length}
+            label="Medium"
+            tone="text-amber-300"
+          />
+          <PriorityStat
+            count={reminders.filter((r) => r.priority === 'low').length}
+            label="Low"
+            tone="text-blue-300"
+          />
+        </dl>
+      </section>
     </div>
   );
 };
+
+const QuickAction = ({
+  icon: Icon,
+  label,
+}: {
+  icon: React.ElementType;
+  label: string;
+}) => (
+  <button
+    type="button"
+    className="inline-flex items-center justify-start gap-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-white/85 border border-white/15 hover:border-white/30 rounded-full px-3 py-2.5 min-h-[40px] touch-manipulation transition-colors"
+  >
+    <Icon className="h-3.5 w-3.5" aria-hidden />
+    {label}
+  </button>
+);
+
+const PriorityStat = ({
+  count,
+  label,
+  tone,
+}: {
+  count: number;
+  label: string;
+  tone: string;
+}) => (
+  <div>
+    <dd className={cn('text-[20px] font-semibold tabular-nums', tone)}>{count}</dd>
+    <dt className="mt-0.5 text-[10px] uppercase tracking-[0.14em] font-semibold text-white/65">
+      {label}
+    </dt>
+  </div>
+);
 
 export default RemindersPanel;

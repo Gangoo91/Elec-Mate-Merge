@@ -26,6 +26,7 @@ import {
   LearningOutcomes,
   ContentEyebrow,
   SectionRule,
+  VideoCard,
   VideoList,
 } from '@/components/study-centre/learning';
 import { BarMagnet, SolenoidField, RightHandGripRule, FlemingsLeftHandRule, FlemingsRightHandRule, ACGenerator } from '@/components/study-centre/diagrams';
@@ -328,6 +329,14 @@ export default function Sub3() {
           </ConceptBlock>
 
           <ACGenerator />
+
+          <VideoCard
+            url={videos.acBasics.url}
+            title={videos.acBasics.title}
+            channel={videos.acBasics.channel}
+            duration={videos.acBasics.duration}
+            topic={videos.acBasics.topic}
+          />
 
           <VideoList
             title="Watch — generators and transformers from the same induction physics"

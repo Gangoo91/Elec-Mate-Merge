@@ -10,7 +10,7 @@ const PORTFOLIO_AI_PROMPT =
 /* ==========================================================================
    MyPortfolioSummaryCard — apprentice-side digest of portfolio state visible
    from inside the college hub. Counts only — the deep workspace is at
-   /apprentice/portfolio-hub. Each row is a jump into a specific section.
+   /apprentice/hub. Each row is a jump into a specific section.
 
    Counts come from portfolio_submissions (the canonical IQA/sign-off
    workflow) plus portfolio_comments for unread tutor feedback.
@@ -162,7 +162,7 @@ export function MyPortfolioSummaryCard() {
             </p>
             <button
               type="button"
-              onClick={() => navigate('/apprentice/portfolio-hub')}
+              onClick={() => navigate('/apprentice/hub')}
               className="mt-4 w-full h-11 rounded-lg bg-white/[0.02] text-white text-[13px] font-semibold hover:bg-white/[0.02] transition-colors touch-manipulation"
             >
               Open portfolio
@@ -194,7 +194,7 @@ export function MyPortfolioSummaryCard() {
               <div className="mt-4 space-y-2">
                 <button
                   type="button"
-                  onClick={() => navigate('/apprentice/portfolio-hub?section=tutor')}
+                  onClick={() => navigate('/apprentice/hub?section=tutor')}
                   className="w-full h-11 rounded-lg bg-white/[0.02] text-white text-[13px] font-semibold hover:bg-white/[0.02] transition-colors touch-manipulation"
                 >
                   Respond to tutor →
@@ -202,7 +202,7 @@ export function MyPortfolioSummaryCard() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   <button
                     type="button"
-                    onClick={() => navigate('/apprentice/portfolio-hub?section=evidence')}
+                    onClick={() => navigate('/apprentice/hub?section=evidence')}
                     className="h-11 rounded-lg border border-white/[0.10] bg-white/[0.02] text-[12.5px] font-medium text-white/85 hover:text-white hover:border-white/[0.22] transition-colors touch-manipulation"
                   >
                     Add evidence
@@ -225,7 +225,7 @@ export function MyPortfolioSummaryCard() {
               <div className="mt-4 grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-2">
                 <button
                   type="button"
-                  onClick={() => navigate('/apprentice/portfolio-hub?section=evidence')}
+                  onClick={() => navigate('/apprentice/hub?section=evidence')}
                   className="h-11 rounded-lg bg-white/[0.02] text-white text-[13px] font-semibold hover:bg-white/[0.02] transition-colors touch-manipulation"
                 >
                   Add evidence

@@ -1,31 +1,23 @@
 /**
  * EPAProfessionalDiscussion
  *
- * Full-page mock EPA professional discussion component.
- * Three states: Setup → In Progress → Results.
+ * Editorial-style EPA mock professional discussion. Questions are grounded
+ * in the apprentice's actual portfolio entries; each question surfaces the
+ * portfolio context it came from, plus the LO/AC it's testing. Responses
+ * are scored against EPA grade descriptors with strengths and areas to
+ * improve called out.
  */
 
 import { useState, useRef, useEffect } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import {
-  MessageSquare,
   Loader2,
-  ChevronLeft,
-  ChevronRight,
   ChevronDown,
   Send,
   CheckCircle2,
-  AlertTriangle,
-  Star,
-  Clock,
-  Target,
-  Award,
   RotateCcw,
   Mic,
   MicOff,
-  Brain,
 } from 'lucide-react';
 import {
   useEPAProfessionalDiscussion,
@@ -40,81 +32,46 @@ interface EPAProfessionalDiscussionProps {
   onSessionComplete?: () => void;
 }
 
-const GRADE_COLOURS: Record<string, { bg: string; text: string; border: string; ring: string }> = {
-  distinction: {
-    bg: 'bg-emerald-500/10',
-    text: 'text-emerald-400',
-    border: 'border-emerald-500/30',
-    ring: 'stroke-emerald-500',
-  },
-  pass: {
-    bg: 'bg-amber-500/10',
-    text: 'text-amber-400',
-    border: 'border-amber-500/30',
-    ring: 'stroke-amber-500',
-  },
-  fail: {
-    bg: 'bg-red-500/10',
-    text: 'text-red-400',
-    border: 'border-red-500/30',
-    ring: 'stroke-red-500',
-  },
-};
-
 const GRADE_LABELS: Record<string, string> = {
   distinction: 'Distinction',
   pass: 'Pass',
   fail: 'Fail',
 };
 
-/** Radial SVG progress ring */
-function RadialRing({
-  score,
-  size = 140,
-  strokeWidth = 10,
-  className,
-  ringClass,
+const Eyebrow = ({
   children,
+  className,
 }: {
-  score: number;
-  size?: number;
-  strokeWidth?: number;
+  children: React.ReactNode;
   className?: string;
-  ringClass?: string;
-  children?: React.ReactNode;
-}) {
-  const radius = (size - strokeWidth) / 2;
-  const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (score / 100) * circumference;
+}) => (
+  <span
+    className={cn(
+      'text-[10px] font-medium uppercase tracking-[0.18em] text-white/55',
+      className
+    )}
+  >
+    {children}
+  </span>
+);
 
+const ComponentBar = ({ label, score }: { label: string; score: number }) => {
+  const fillClass = score >= 70 ? 'bg-elec-yellow' : score >= 40 ? 'bg-white/55' : 'bg-white/30';
   return (
-    <div className={cn('relative inline-flex items-center justify-center', className)}>
-      <svg width={size} height={size} className="-rotate-90">
-        <circle
-          cx={size / 2}
-          cy={size / 2}
-          r={radius}
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={strokeWidth}
-          className="text-white/10"
+    <div className="space-y-1.5">
+      <div className="flex items-baseline justify-between">
+        <span className="text-[12px] text-white/85">{label}</span>
+        <span className="text-[12px] font-mono text-white/85 tabular-nums">{score}</span>
+      </div>
+      <div className="h-1 w-full bg-white/[0.04] rounded-full overflow-hidden">
+        <div
+          className={cn('h-full rounded-full transition-all duration-700', fillClass)}
+          style={{ width: `${score}%` }}
         />
-        <circle
-          cx={size / 2}
-          cy={size / 2}
-          r={radius}
-          fill="none"
-          strokeWidth={strokeWidth}
-          strokeLinecap="round"
-          className={cn('transition-all duration-1000 ease-out', ringClass)}
-          strokeDasharray={circumference}
-          strokeDashoffset={offset}
-        />
-      </svg>
-      <div className="absolute inset-0 flex flex-col items-center justify-center">{children}</div>
+      </div>
     </div>
   );
-}
+};
 
 export function EPAProfessionalDiscussion({
   portfolioEntries,
@@ -140,13 +97,14 @@ export function EPAProfessionalDiscussion({
     totalCount,
   } = useEPAProfessionalDiscussion();
 
+  void questions;
+
   const [responseText, setResponseText] = useState('');
   const [currentScore, setCurrentScore] = useState<ResponseScore | null>(null);
   const [isFinishing, setIsFinishing] = useState(false);
   const [descriptorsOpen, setDescriptorsOpen] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // Speech-to-text for voice input
   const {
     isSupported: speechSupported,
     isListening,
@@ -157,7 +115,6 @@ export function EPAProfessionalDiscussion({
     resetTranscript,
   } = useSpeechToText({ continuous: true });
 
-  // Append finalised speech transcript to response text
   const prevTranscriptRef = useRef('');
   useEffect(() => {
     if (speechTranscript && speechTranscript !== prevTranscriptRef.current) {
@@ -169,17 +126,13 @@ export function EPAProfessionalDiscussion({
     }
   }, [speechTranscript]);
 
-  const handleStart = () => {
-    generateQuestions(portfolioEntries, qualificationCode);
-  };
+  const handleStart = () => generateQuestions(portfolioEntries, qualificationCode);
 
   const handleSubmit = async () => {
     if (!currentQuestion || !responseText.trim()) return;
     setCurrentScore(null);
     const score = await submitResponse(currentQuestion.id, responseText.trim(), qualificationCode);
-    if (score) {
-      setCurrentScore(score);
-    }
+    if (score) setCurrentScore(score);
   };
 
   const handleNext = () => {
@@ -208,62 +161,40 @@ export function EPAProfessionalDiscussion({
     setDescriptorsOpen(false);
   };
 
-  // Get existing response for current question
   const existingResponse = currentQuestion
     ? responses.find((r) => r.questionId === currentQuestion.id)
     : null;
 
-  // --- SETUP STATE ---
+  /* ─── SETUP STATE ──────────────────────────────────────────── */
   if (!isSessionActive && !sessionResult) {
-    const STEPS = [
-      {
-        title: 'Portfolio Scan',
-        desc: 'AI reads your portfolio evidence to personalise the session',
-      },
-      {
-        title: 'Question Generation',
-        desc: 'Creates 5-8 EPA-style discussion questions tailored to your work',
-      },
-      { title: 'Your Response', desc: 'Type or speak your answer to each question' },
-      { title: 'AI Scoring', desc: 'Scores your response against real grade descriptors' },
-      { title: 'Results', desc: 'Get a predicted grade with targeted improvement tips' },
-    ];
-
     return (
-      <div className="py-5 px-4 space-y-5">
-        {/* Hero Header — gradient background */}
-        <div className="p-5 rounded-2xl bg-gradient-to-br from-purple-500/20 via-purple-600/10 to-transparent border border-purple-500/20">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="h-12 w-12 rounded-xl bg-purple-500/20 border border-purple-500/30 flex items-center justify-center shrink-0">
-              <MessageSquare className="h-6 w-6 text-purple-400" />
-            </div>
-            <div>
-              <h2 className="text-xl font-bold text-white">Mock Professional Discussion</h2>
-              <p className="text-xs text-white mt-0.5">AI-powered EPA preparation</p>
-            </div>
-          </div>
-          <p className="text-sm text-white leading-relaxed">
-            Practise answering EPA-style questions based on your actual portfolio evidence. Get
-            instant feedback and scoring against real grade descriptors.
+      <div className="px-4 sm:px-6 py-6 space-y-6">
+        <div className="space-y-2">
+          <Eyebrow>Mock professional discussion</Eyebrow>
+          <h2 className="text-[24px] sm:text-[28px] font-semibold text-white tracking-tight leading-tight">
+            Practise EPA-style questions on your real work
+          </h2>
+          <p className="text-[14px] text-white/70 leading-relaxed max-w-xl">
+            AI reads your portfolio evidence and generates 5–8 EPA-style discussion questions
+            grounded in your actual jobs. Type or speak each answer; you'll be scored against the
+            real grade descriptors.
           </p>
         </div>
 
-        {/* What you'll practise */}
+        {/* What's assessed */}
         <div className="space-y-2">
-          <p className="text-xs font-semibold text-white uppercase tracking-wider">
-            Skills Assessed
-          </p>
-          <div className="flex flex-wrap gap-2">
+          <Eyebrow>What's assessed</Eyebrow>
+          <div className="flex flex-wrap gap-1.5">
             {[
-              'Technical Knowledge',
-              'Practical Application',
+              'Technical knowledge',
+              'Practical application',
               'Communication',
               'Reflection',
-              'Problem Solving',
+              'Problem solving',
             ].map((skill) => (
               <span
                 key={skill}
-                className="px-3 py-1.5 rounded-lg bg-elec-gray border border-white/10 text-xs text-white font-medium"
+                className="text-[12px] text-white/85 px-2.5 py-0.5 rounded-md border border-white/[0.08] bg-white/[0.02]"
               >
                 {skill}
               </span>
@@ -271,76 +202,70 @@ export function EPAProfessionalDiscussion({
           </div>
         </div>
 
-        {/* How it works — Connected stepper */}
-        <div className="p-4 rounded-xl bg-elec-gray border border-white/10">
-          <p className="text-xs font-semibold text-white uppercase tracking-wider mb-4">
-            How it works
-          </p>
-          <div className="space-y-0">
-            {STEPS.map((step, i) => (
-              <div key={i} className="flex gap-3">
-                {/* Number + connecting line */}
-                <div className="flex flex-col items-center">
-                  <span className="h-7 w-7 rounded-full bg-purple-500/20 border border-purple-500/40 text-purple-400 flex items-center justify-center text-xs font-bold shrink-0">
-                    {i + 1}
+        {/* Flow */}
+        <div className="space-y-2">
+          <Eyebrow>How it works</Eyebrow>
+          <ol className="space-y-2">
+            {[
+              { title: 'Portfolio scan', desc: 'AI reads your portfolio evidence to personalise the session' },
+              { title: 'Question generation', desc: 'Creates 5–8 questions tailored to your actual jobs' },
+              { title: 'Your response', desc: 'Type or speak — voice transcription is supported' },
+              { title: 'AI scoring', desc: 'Marked against EPA grade descriptors with subscore breakdown' },
+              { title: 'Result', desc: 'Predicted grade, strengths, and targeted improvements' },
+            ].map((step, i) => (
+              <li
+                key={i}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-5 sm:py-4"
+              >
+                <div className="flex items-baseline gap-3">
+                  <span className="text-[11px] font-mono text-elec-yellow/85 flex-shrink-0">
+                    {String(i + 1).padStart(2, '0')}
                   </span>
-                  {i < STEPS.length - 1 && (
-                    <div className="w-px h-full min-h-[24px] bg-purple-500/20" />
-                  )}
+                  <div className="flex-1 min-w-0 space-y-1">
+                    <span className="text-[14px] font-medium text-white block">{step.title}</span>
+                    <span className="text-[13px] text-white/70 leading-relaxed">{step.desc}</span>
+                  </div>
                 </div>
-                {/* Content */}
-                <div className={cn('pb-4', i === STEPS.length - 1 && 'pb-0')}>
-                  <p className="text-sm font-medium text-white leading-7">{step.title}</p>
-                  <p className="text-xs text-white">{step.desc}</p>
-                </div>
-              </div>
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
 
         {/* Action */}
         {portfolioEntries.length === 0 ? (
-          <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-start gap-3">
-            <AlertTriangle className="h-5 w-5 text-amber-400 shrink-0 mt-0.5" />
-            <div className="space-y-1">
-              <p className="text-sm text-amber-400 font-medium">
-                Add portfolio evidence first to start a discussion
-              </p>
-              <a
-                href="/apprentice/hub"
-                className="inline-flex items-center gap-1 text-xs text-purple-400 font-medium touch-manipulation"
-              >
-                Go to Portfolio Hub
-                <ChevronRight className="h-3 w-3" />
-              </a>
-            </div>
+          <div className="rounded-xl border border-elec-yellow/30 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-1.5">
+            <Eyebrow className="text-elec-yellow">Add portfolio evidence first</Eyebrow>
+            <p className="text-[13px] text-white/85 leading-relaxed">
+              The discussion is grounded in your actual portfolio entries. Add at least one piece
+              of evidence first — questions get richer the more you've logged.
+            </p>
+            <a
+              href="/apprentice/hub"
+              className="inline-flex items-center h-9 px-3 mt-1 rounded-md bg-elec-yellow text-black text-[12px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
+            >
+              Go to portfolio →
+            </a>
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-2">
             <button
               onClick={handleStart}
               disabled={isGenerating}
-              className="w-full h-14 rounded-2xl bg-gradient-to-r from-purple-500 to-purple-600 text-white font-semibold text-base touch-manipulation active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2 shadow-lg shadow-purple-500/25"
+              className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:opacity-50 inline-flex items-center justify-center gap-2"
             >
               {isGenerating ? (
                 <>
-                  <Loader2 className="h-5 w-5 animate-spin" />
-                  Generating questions...
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Generating questions from your portfolio…
                 </>
               ) : (
-                <>
-                  <MessageSquare className="h-5 w-5" />
-                  Start Mock Discussion
-                </>
+                <>Start mock discussion →</>
               )}
             </button>
-            <div className="flex items-center gap-2">
-              <Badge variant="outline" className="text-xs text-white">
-                {portfolioEntries.length} portfolio entries
-              </Badge>
-              <Badge variant="outline" className="text-xs text-white">
-                ~15 min session
-              </Badge>
+            <div className="flex items-baseline gap-2 text-[10px] uppercase tracking-[0.18em] text-white/40">
+              <span>{portfolioEntries.length} portfolio entries</span>
+              <span>·</span>
+              <span>~15 min session</span>
             </div>
           </div>
         )}
@@ -348,303 +273,269 @@ export function EPAProfessionalDiscussion({
     );
   }
 
-  // --- RESULTS STATE ---
+  /* ─── RESULTS STATE ────────────────────────────────────────── */
   if (sessionResult) {
-    const gradeColour = GRADE_COLOURS[sessionResult.predictedGrade] || GRADE_COLOURS.fail;
+    const grade = sessionResult.predictedGrade;
+    const gradeText =
+      grade === 'distinction'
+        ? 'text-elec-yellow'
+        : grade === 'pass'
+          ? 'text-white/85'
+          : 'text-red-300';
+
+    const strengths = sessionResult.responses
+      .flatMap((r) => r.score?.strengthsShown || [])
+      .filter((v, i, a) => a.indexOf(v) === i)
+      .slice(0, 6);
 
     return (
-      <div className="space-y-5 px-4 py-5">
-        {/* Grade Hero — Radial Ring */}
-        <div className="p-5 rounded-xl bg-elec-gray border border-white/10">
-          <div className="flex items-center gap-5">
-            <RadialRing
-              score={sessionResult.overallScore}
-              size={120}
-              strokeWidth={10}
-              ringClass={gradeColour.ring}
+      <div className="px-4 sm:px-6 py-6 space-y-6">
+        {/* Score */}
+        <section className="space-y-2">
+          <Eyebrow>Result · {GRADE_LABELS[grade]}</Eyebrow>
+          <div className="flex items-baseline gap-2">
+            <span
+              className={cn(
+                'text-[64px] sm:text-[72px] font-mono font-semibold leading-none tabular-nums',
+                gradeText
+              )}
             >
-              <span className={cn('text-5xl font-bold', gradeColour.text)}>
-                {sessionResult.overallScore}
-              </span>
-              <span className="text-xs text-white">/100</span>
-            </RadialRing>
-
-            <div className="flex-1 space-y-2">
-              <Badge
-                className={cn('text-xs', gradeColour.bg, gradeColour.text, gradeColour.border)}
-              >
-                {GRADE_LABELS[sessionResult.predictedGrade]}
-              </Badge>
-              <p className="text-sm text-white">
-                {sessionResult.responses.filter((r) => r.score).length} of{' '}
-                {sessionResult.questions.length} questions answered
-              </p>
-              <div className="flex items-center gap-1 text-xs text-white">
-                <Clock className="h-3 w-3" />
-                {Math.floor(sessionResult.timeSpentSeconds / 60)}m{' '}
-                {sessionResult.timeSpentSeconds % 60}s
-              </div>
-            </div>
+              {sessionResult.overallScore}
+            </span>
+            <span className="text-[18px] text-white/40 font-mono">/ 100</span>
           </div>
-        </div>
+          <p className="text-[14px] text-white/70 leading-relaxed">
+            {sessionResult.responses.filter((r) => r.score).length} of{' '}
+            {sessionResult.questions.length} questions answered ·{' '}
+            {Math.floor(sessionResult.timeSpentSeconds / 60)} min{' '}
+            {sessionResult.timeSpentSeconds % 60}s.
+          </p>
+        </section>
 
-        {/* Component Scores — Full-width horizontal bars */}
-        <div className="space-y-2">
-          <h3 className="text-xs font-semibold text-white uppercase tracking-wider">
-            Component Scores
-          </h3>
-          {[
-            {
-              label: 'Technical Knowledge',
-              score: sessionResult.componentScores.technicalKnowledge,
-              icon: Target,
-            },
-            {
-              label: 'Practical Application',
-              score: sessionResult.componentScores.practicalApplication,
-              icon: Award,
-            },
-            {
-              label: 'Communication',
-              score: sessionResult.componentScores.communication,
-              icon: MessageSquare,
-            },
-            { label: 'Reflection', score: sessionResult.componentScores.reflection, icon: Star },
-            {
-              label: 'Problem Solving',
-              score: sessionResult.componentScores.problemSolving,
-              icon: Brain,
-            },
-          ].map((comp) => {
-            const barColour =
-              comp.score >= 70
-                ? 'bg-emerald-500'
-                : comp.score >= 40
-                  ? 'bg-amber-500'
-                  : 'bg-red-500';
-            return (
-              <div key={comp.label} className="p-3 rounded-xl bg-elec-gray border border-white/10">
-                <div className="flex items-center justify-between mb-1.5">
-                  <div className="flex items-center gap-2">
-                    <comp.icon className="h-4 w-4 text-white shrink-0" />
-                    <span className="text-sm text-white">{comp.label}</span>
-                  </div>
-                  <span className="text-sm font-bold text-white">{comp.score}/100</span>
-                </div>
-                <div className="h-2 rounded-full bg-white/10 overflow-hidden">
-                  <div
-                    className={cn('h-full rounded-full transition-all duration-500', barColour)}
-                    style={{ width: `${comp.score}%` }}
-                  />
-                </div>
-              </div>
-            );
-          })}
-        </div>
+        {/* Component scores */}
+        <section className="space-y-3">
+          <Eyebrow>Component scores</Eyebrow>
+          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+            <ComponentBar label="Technical knowledge" score={sessionResult.componentScores.technicalKnowledge} />
+            <ComponentBar label="Practical application" score={sessionResult.componentScores.practicalApplication} />
+            <ComponentBar label="Communication" score={sessionResult.componentScores.communication} />
+            <ComponentBar label="Reflection" score={sessionResult.componentScores.reflection} />
+            <ComponentBar label="Problem solving" score={sessionResult.componentScores.problemSolving} />
+          </div>
+        </section>
 
         {/* Strengths */}
-        {sessionResult.responses.some((r) => r.score?.strengthsShown?.length) && (
-          <div className="space-y-2">
-            <h3 className="text-xs font-semibold text-emerald-400 uppercase tracking-wider">
-              Key Strengths
-            </h3>
-            {sessionResult.responses
-              .flatMap((r) => r.score?.strengthsShown || [])
-              .filter((v, i, a) => a.indexOf(v) === i)
-              .slice(0, 6)
-              .map((s, i) => (
-                <div key={i} className="flex items-start gap-2 text-sm text-white">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
-                  {s}
-                </div>
+        {strengths.length > 0 && (
+          <section className="space-y-2">
+            <Eyebrow>Strengths</Eyebrow>
+            <ul className="space-y-1.5">
+              {strengths.map((s, i) => (
+                <li key={i} className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed">
+                  <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                  <span>{s}</span>
+                </li>
               ))}
-          </div>
+            </ul>
+          </section>
         )}
 
-        {/* Improvement Suggestions */}
+        {/* Improvements */}
         {sessionResult.improvementSuggestions.length > 0 && (
-          <div className="space-y-2">
-            <h3 className="text-xs font-semibold text-amber-400 uppercase tracking-wider">
-              Areas to Improve
-            </h3>
-            {sessionResult.improvementSuggestions.map((suggestion, i) => (
-              <div
-                key={i}
-                className="flex items-start gap-2 p-3 rounded-xl border border-white/10 border-l-4 border-l-amber-500 bg-amber-500/5"
-              >
-                <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
-                <p className="text-sm text-white">{suggestion}</p>
-              </div>
-            ))}
-          </div>
+          <section className="space-y-2">
+            <Eyebrow>Areas to improve</Eyebrow>
+            <ul className="space-y-2">
+              {sessionResult.improvementSuggestions.map((suggestion, i) => (
+                <li
+                  key={i}
+                  className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.03] px-4 py-3 sm:px-5 sm:py-4"
+                >
+                  <p className="text-[14px] text-white/85 leading-relaxed">{suggestion}</p>
+                </li>
+              ))}
+            </ul>
+          </section>
         )}
 
-        {/* Per-question Results */}
-        <div className="space-y-2">
-          <h3 className="text-xs font-semibold text-white uppercase tracking-wider">
-            Per-Question Results
-          </h3>
-          {sessionResult.questions.map((q, i) => {
-            const resp = sessionResult.responses.find((r) => r.questionId === q.id);
-            const score = resp?.score;
-            const qGrade = score
-              ? GRADE_COLOURS[score.grade] || GRADE_COLOURS.fail
-              : GRADE_COLOURS.fail;
-
-            return (
-              <Card key={q.id} className="border-white/10">
-                <CardContent className="p-3 space-y-2">
-                  <div className="flex items-start justify-between gap-2">
-                    <p className="text-sm text-white line-clamp-2 flex-1">
-                      {i + 1}. {q.question}
-                    </p>
+        {/* Per-question */}
+        <section className="space-y-3">
+          <Eyebrow>Per-question results</Eyebrow>
+          <ul className="space-y-2">
+            {sessionResult.questions.map((q, i) => {
+              const resp = sessionResult.responses.find((r) => r.questionId === q.id);
+              const score = resp?.score;
+              const qGradeClass =
+                score?.grade === 'distinction'
+                  ? 'text-elec-yellow border-elec-yellow/30 bg-elec-yellow/[0.06]'
+                  : score?.grade === 'pass'
+                    ? 'text-white/85 border-white/[0.08] bg-white/[0.03]'
+                    : 'text-red-300 border-red-500/30 bg-red-500/[0.05]';
+              return (
+                <li
+                  key={q.id}
+                  className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] px-4 py-3 sm:px-5 sm:py-4 space-y-2"
+                >
+                  <div className="flex items-baseline gap-3">
+                    <span className="text-[11px] font-mono text-white/40 flex-shrink-0">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <p className="text-[14px] text-white leading-snug flex-1">{q.question}</p>
                     {score && (
-                      <Badge
-                        className={cn('text-xs shrink-0', qGrade.bg, qGrade.text, qGrade.border)}
+                      <span
+                        className={cn(
+                          'text-[11px] font-mono px-1.5 py-0.5 rounded-md border flex-shrink-0',
+                          qGradeClass
+                        )}
                       >
-                        {score.score}/100
-                      </Badge>
+                        {score.score}
+                      </span>
                     )}
                   </div>
-                  {score && <p className="text-xs text-white">{score.feedback}</p>}
-                  {!score && <p className="text-xs text-white italic">Not answered</p>}
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
+                  {q.portfolioContext && (
+                    <p className="text-[12px] text-white/55 italic pl-7">
+                      Drawn from: {q.portfolioContext}
+                    </p>
+                  )}
+                  {score && (
+                    <p className="text-[12px] text-white/70 leading-relaxed pl-7">{score.feedback}</p>
+                  )}
+                  {!score && <p className="text-[12px] text-white/40 italic pl-7">Not answered</p>}
+                </li>
+              );
+            })}
+          </ul>
+        </section>
 
-        {/* Reset */}
         <button
           onClick={handleReset}
-          className="w-full h-11 rounded-xl bg-white/[0.06] border border-white/10 text-white font-medium text-sm touch-manipulation active:scale-95 flex items-center justify-center gap-2"
+          className="w-full h-12 rounded-xl border border-white/[0.08] bg-white/[0.02] text-white text-[14px] font-semibold hover:bg-white/[0.04] transition-colors touch-manipulation inline-flex items-center justify-center gap-2"
         >
           <RotateCcw className="h-4 w-4" />
-          Start New Discussion
+          Start new discussion
         </button>
       </div>
     );
   }
 
-  // --- IN PROGRESS STATE ---
+  /* ─── IN-PROGRESS STATE ─────────────────────────────────────── */
   return (
-    <div className="flex flex-col h-full">
-      {/* Progress Bar */}
-      <div className="px-4 pt-4 pb-2">
-        <div className="flex items-center justify-between text-xs text-white mb-1.5">
-          <span className="font-medium">
-            Question {currentQuestionIndex + 1} of {totalCount}
+    <div className="flex flex-col min-h-[60vh]">
+      {/* Progress strip */}
+      <div className="px-4 sm:px-6 pt-4 pb-3 space-y-2">
+        <div className="flex items-baseline justify-between gap-3">
+          <Eyebrow>
+            Question {currentQuestionIndex + 1} / {totalCount}
+          </Eyebrow>
+          <span className="text-[10px] font-mono text-white/40 uppercase tracking-[0.18em]">
+            {answeredCount} answered
           </span>
-          <span>{answeredCount} answered</span>
         </div>
-        <div className="h-1.5 rounded-full bg-white/10 overflow-hidden">
+        <div className="h-1 w-full bg-white/[0.04] rounded-full overflow-hidden">
           <div
-            className="h-full rounded-full bg-purple-500 transition-all duration-300"
-            style={{
-              width: `${((currentQuestionIndex + 1) / totalCount) * 100}%`,
-            }}
+            className="h-full rounded-full bg-elec-yellow transition-all duration-300"
+            style={{ width: `${((currentQuestionIndex + 1) / totalCount) * 100}%` }}
           />
         </div>
       </div>
 
-      {/* Question Card */}
-      <div className="flex-1 overflow-y-auto px-4 py-3 space-y-4">
+      {/* Question */}
+      <div className="flex-1 px-4 sm:px-6 py-4 space-y-4">
         {currentQuestion && (
           <>
-            <Card className="border-purple-500/20 bg-purple-500/5">
-              <CardContent className="p-4 space-y-3">
-                <div className="flex items-center gap-2">
-                  <MessageSquare className="h-4 w-4 text-purple-400" />
-                  <span className="text-xs text-purple-400 font-semibold">Assessor Question</span>
-                </div>
-                <p className="text-lg text-white leading-relaxed">{currentQuestion.question}</p>
-                <div className="flex flex-wrap gap-1.5">
-                  {currentQuestion.targetLO && (
-                    <Badge variant="outline" className="text-xs text-white">
-                      LO: {currentQuestion.targetLO}
-                    </Badge>
-                  )}
-                  {currentQuestion.portfolioContext && (
-                    <Badge variant="outline" className="text-xs text-white">
-                      {currentQuestion.portfolioContext}
-                    </Badge>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
+            {/* Portfolio source — surfaced prominently */}
+            {currentQuestion.portfolioContext && (
+              <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.03] px-4 py-3 sm:px-5 sm:py-4 space-y-1.5">
+                <Eyebrow className="text-elec-yellow">Drawn from your portfolio</Eyebrow>
+                <p className="text-[13px] text-white/85 leading-relaxed italic">
+                  {currentQuestion.portfolioContext}
+                </p>
+              </div>
+            )}
 
-            {/* Grade Descriptors — Collapsible */}
-            <div className="rounded-xl border border-white/10 overflow-hidden">
+            {/* The question */}
+            <div className="space-y-2">
+              <div className="flex items-baseline gap-2 flex-wrap">
+                <Eyebrow>Assessor question</Eyebrow>
+                {currentQuestion.targetLO && (
+                  <span className="text-[10px] font-mono text-white/55 uppercase tracking-[0.14em]">
+                    LO {currentQuestion.targetLO}
+                  </span>
+                )}
+                {currentQuestion.targetAC && (
+                  <span className="text-[10px] font-mono text-elec-yellow/85 uppercase tracking-[0.14em]">
+                    {currentQuestion.targetAC}
+                  </span>
+                )}
+                {currentQuestion.questionType && (
+                  <span className="text-[10px] uppercase tracking-[0.14em] text-white/40">
+                    {currentQuestion.questionType}
+                  </span>
+                )}
+              </div>
+              <p className="text-[16px] sm:text-[18px] text-white leading-relaxed">
+                {currentQuestion.question}
+              </p>
+            </div>
+
+            {/* Grade descriptors — collapsible */}
+            <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
               <button
                 onClick={() => setDescriptorsOpen(!descriptorsOpen)}
-                className="w-full flex items-center justify-between p-3 text-left touch-manipulation h-11"
+                className="w-full flex items-center justify-between px-4 py-3 text-left touch-manipulation h-11"
               >
-                <span className="text-xs font-semibold text-white uppercase tracking-wider">
-                  Grade Descriptors
-                </span>
+                <Eyebrow>Grade descriptors</Eyebrow>
                 <ChevronDown
                   className={cn(
-                    'h-4 w-4 text-white transition-transform',
+                    'h-4 w-4 text-white/55 transition-transform',
                     descriptorsOpen && 'rotate-180'
                   )}
                 />
               </button>
               {descriptorsOpen && (
-                <div className="px-3 pb-3 space-y-2">
-                  {(['pass', 'distinction'] as const).map((grade) => {
-                    const gc = GRADE_COLOURS[grade];
-                    return (
-                      <div
-                        key={grade}
-                        className={cn(
-                          'p-3 rounded-lg border border-white/10 border-l-4',
-                          grade === 'pass' ? 'border-l-amber-500' : 'border-l-emerald-500'
-                        )}
-                      >
-                        <p className={cn('text-xs font-semibold mb-1', gc.text)}>
-                          {GRADE_LABELS[grade]}
-                        </p>
-                        <p className="text-sm text-white">
-                          {currentQuestion.gradeDescriptors[grade]}
-                        </p>
-                      </div>
-                    );
-                  })}
+                <div className="px-4 pb-4 space-y-2">
+                  <div className="rounded-lg border border-white/[0.06] bg-[hsl(0_0%_10%)] p-3 space-y-1">
+                    <Eyebrow>Pass</Eyebrow>
+                    <p className="text-[13px] text-white/85 leading-relaxed">
+                      {currentQuestion.gradeDescriptors.pass}
+                    </p>
+                  </div>
+                  <div className="rounded-lg border border-elec-yellow/20 bg-elec-yellow/[0.03] p-3 space-y-1">
+                    <Eyebrow className="text-elec-yellow">Distinction</Eyebrow>
+                    <p className="text-[13px] text-white/85 leading-relaxed">
+                      {currentQuestion.gradeDescriptors.distinction}
+                    </p>
+                  </div>
                 </div>
               )}
             </div>
 
-            {/* Response Area */}
+            {/* Response area */}
             {existingResponse?.score ? (
-              // Show scored feedback
               <div className="space-y-3">
-                <div className="p-3 rounded-xl bg-elec-gray border border-white/10">
-                  <p className="text-xs text-white mb-1">Your response:</p>
-                  <p className="text-sm text-white">{existingResponse.responseText}</p>
+                <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 space-y-1.5">
+                  <Eyebrow>Your response</Eyebrow>
+                  <p className="text-[13px] text-white/85 leading-relaxed whitespace-pre-wrap">
+                    {existingResponse.responseText}
+                  </p>
                 </div>
-
                 <ScoreFeedback score={existingResponse.score} />
               </div>
             ) : (
               <div className="space-y-3">
-                {/* Textarea */}
                 <textarea
                   ref={textareaRef}
                   value={responseText}
                   onChange={(e) => setResponseText(e.target.value)}
-                  placeholder="Type or speak your response. Aim for 3-5 paragraphs covering your experience, reasoning, and reflection..."
-                  className="w-full min-h-[200px] p-4 rounded-xl bg-elec-gray border border-white/10 text-sm text-white placeholder:text-white focus:border-purple-500/40 focus:ring-1 focus:ring-purple-500/20 touch-manipulation resize-none"
+                  placeholder="Type or speak your response. Aim for 3–5 paragraphs covering your experience, reasoning, and reflection…"
+                  className="w-full min-h-[200px] p-4 rounded-xl bg-white/[0.02] border border-white/[0.08] text-[14px] text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20 touch-manipulation resize-none leading-relaxed"
                   disabled={isScoring}
                 />
 
-                {/* Interim speech preview */}
                 {interimTranscript && (
-                  <div className="p-2 rounded-lg bg-purple-500/5 border border-purple-500/10">
-                    <p className="text-xs text-purple-300 italic">{interimTranscript}...</p>
-                  </div>
+                  <p className="text-[12px] text-elec-yellow/85 italic px-2">
+                    {interimTranscript}…
+                  </p>
                 )}
 
-                {/* Mic Button — Dedicated row */}
                 {speechSupported && (
                   <div className="flex items-center gap-3">
                     <button
@@ -652,46 +543,45 @@ export function EPAProfessionalDiscussion({
                       onClick={isListening ? stopListening : startListening}
                       disabled={isScoring}
                       className={cn(
-                        'h-12 w-12 rounded-xl flex items-center justify-center touch-manipulation transition-all shrink-0',
+                        'h-11 w-11 rounded-lg flex items-center justify-center touch-manipulation transition-colors shrink-0 border',
                         isListening
-                          ? 'bg-red-500/20 border-2 border-red-500/60 text-red-400 animate-pulse'
-                          : 'bg-purple-500/10 border-2 border-purple-500/30 text-purple-400 hover:bg-purple-500/20'
+                          ? 'bg-red-500/[0.08] border-red-500/40 text-red-300 animate-pulse'
+                          : 'bg-white/[0.02] border-white/[0.08] text-white/85 hover:bg-white/[0.04]'
                       )}
                       aria-label={isListening ? 'Stop recording' : 'Start voice input'}
                     >
-                      {isListening ? <MicOff className="h-5 w-5" /> : <Mic className="h-5 w-5" />}
+                      {isListening ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
                     </button>
-                    <span className="text-sm text-white">
+                    <span className="text-[13px] text-white/70">
                       {isListening ? (
                         <span className="flex items-center gap-2">
-                          <span className="h-2 w-2 rounded-full bg-red-400 animate-pulse" />
-                          Listening...
+                          <span className="h-1.5 w-1.5 rounded-full bg-red-300 animate-pulse" />
+                          Listening…
                         </span>
                       ) : (
                         'Tap to speak'
                       )}
                     </span>
+                    <span className="ml-auto text-[10px] font-mono text-white/40 uppercase tracking-[0.14em]">
+                      {responseText.length} chars
+                    </span>
                   </div>
                 )}
 
-                {/* Character count */}
-                <p className="text-xs text-white">{responseText.length} characters</p>
-
-                {/* Submit button — full width */}
                 <button
                   onClick={handleSubmit}
                   disabled={!responseText.trim() || isScoring}
-                  className="w-full h-12 rounded-xl bg-purple-500 text-white font-medium text-sm touch-manipulation active:scale-95 disabled:opacity-50 flex items-center justify-center gap-2"
+                  className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:opacity-50 inline-flex items-center justify-center gap-2"
                 >
                   {isScoring ? (
                     <>
                       <Loader2 className="h-4 w-4 animate-spin" />
-                      Scoring...
+                      Scoring…
                     </>
                   ) : (
                     <>
                       <Send className="h-4 w-4" />
-                      Submit Response
+                      Submit response
                     </>
                   )}
                 </button>
@@ -703,8 +593,8 @@ export function EPAProfessionalDiscussion({
         )}
       </div>
 
-      {/* Navigation Footer */}
-      <div className="px-4 py-3 border-t border-white/5 flex items-center justify-between">
+      {/* Navigation */}
+      <div className="px-4 sm:px-6 py-3 border-t border-white/[0.06] flex items-center justify-between gap-3">
         <button
           onClick={() => {
             previousQuestion();
@@ -716,32 +606,30 @@ export function EPAProfessionalDiscussion({
             setDescriptorsOpen(false);
           }}
           disabled={currentQuestionIndex === 0}
-          className="h-11 px-4 rounded-xl border border-white/10 text-white text-sm touch-manipulation active:scale-95 disabled:opacity-30 flex items-center gap-1"
+          className="h-11 px-4 rounded-lg border border-white/[0.08] bg-white/[0.02] text-white text-[13px] font-medium hover:bg-white/[0.04] transition-colors touch-manipulation disabled:opacity-30"
         >
-          <ChevronLeft className="h-4 w-4" />
-          Previous
+          ← Previous
         </button>
 
         {currentQuestionIndex < totalCount - 1 ? (
           <button
             onClick={handleNext}
-            className="h-11 px-4 rounded-xl bg-white/[0.06] border border-white/10 text-white text-sm font-medium touch-manipulation active:scale-95 flex items-center gap-1"
+            className="h-11 px-4 rounded-lg border border-white/[0.08] bg-white/[0.02] text-white text-[13px] font-medium hover:bg-white/[0.04] transition-colors touch-manipulation"
           >
-            Next
-            <ChevronRight className="h-4 w-4" />
+            Next →
           </button>
         ) : (
           <button
             onClick={handleFinish}
             disabled={answeredCount === 0 || isFinishing}
-            className="h-11 px-6 rounded-xl bg-emerald-500 text-white text-sm font-medium touch-manipulation active:scale-95 disabled:opacity-50 flex items-center gap-2"
+            className="h-11 px-5 rounded-lg bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:opacity-50 inline-flex items-center gap-1.5"
           >
             {isFinishing ? (
               <Loader2 className="h-4 w-4 animate-spin" />
             ) : (
               <CheckCircle2 className="h-4 w-4" />
             )}
-            Finish Discussion
+            Finish discussion
           </button>
         )}
       </div>
@@ -749,83 +637,77 @@ export function EPAProfessionalDiscussion({
   );
 }
 
-// Score Feedback sub-component — redesigned with radial ring + horizontal bars
+/* ─── ScoreFeedback ────────────────────────────────────────── */
+
 function ScoreFeedback({ score }: { score: ResponseScore }) {
-  const gradeColour = GRADE_COLOURS[score.grade] || GRADE_COLOURS.fail;
+  const gradeText =
+    score.grade === 'distinction'
+      ? 'text-elec-yellow'
+      : score.grade === 'pass'
+        ? 'text-white/85'
+        : 'text-red-300';
 
   return (
-    <div className="space-y-4">
-      {/* Score + Grade — Radial ring */}
-      <div className="flex items-center gap-4">
-        <RadialRing score={score.score} size={90} strokeWidth={8} ringClass={gradeColour.ring}>
-          <span className={cn('text-2xl font-bold', gradeColour.text)}>{score.score}</span>
-        </RadialRing>
-        <div className="flex-1">
-          <Badge className={cn('text-xs', gradeColour.bg, gradeColour.text, gradeColour.border)}>
-            {GRADE_LABELS[score.grade]}
-          </Badge>
-          <p className="text-sm text-white mt-1">{score.feedback}</p>
+    <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
+      {/* Score + grade */}
+      <div className="space-y-1">
+        <Eyebrow>Score · {GRADE_LABELS[score.grade]}</Eyebrow>
+        <div className="flex items-baseline gap-2">
+          <span
+            className={cn(
+              'text-[40px] font-mono font-semibold leading-none tabular-nums',
+              gradeText
+            )}
+          >
+            {score.score}
+          </span>
+          <span className="text-[12px] text-white/40 font-mono">/ 100</span>
         </div>
+        <p className="text-[13px] text-white/85 leading-relaxed">{score.feedback}</p>
       </div>
 
-      {/* Subscores — Full-width horizontal bars */}
+      {/* Subscores */}
       <div className="space-y-2">
-        {[
-          { label: 'Technical Knowledge', value: score.subscores.technicalKnowledge },
-          { label: 'Practical Application', value: score.subscores.practicalApplication },
-          { label: 'Communication', value: score.subscores.communication },
-          { label: 'Reflection', value: score.subscores.reflection },
-          { label: 'Problem Solving', value: score.subscores.problemSolving },
-        ].map((sub) => {
-          const barColour =
-            sub.value >= 70 ? 'bg-emerald-500' : sub.value >= 40 ? 'bg-amber-500' : 'bg-red-500';
-          return (
-            <div key={sub.label}>
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-xs text-white">{sub.label}</span>
-                <span className="text-xs font-bold text-white">{sub.value}</span>
-              </div>
-              <div className="h-1.5 rounded-full bg-white/10 overflow-hidden">
-                <div
-                  className={cn('h-full rounded-full transition-all duration-500', barColour)}
-                  style={{ width: `${sub.value}%` }}
-                />
-              </div>
-            </div>
-          );
-        })}
+        <ComponentBar label="Technical knowledge" score={score.subscores.technicalKnowledge} />
+        <ComponentBar label="Practical application" score={score.subscores.practicalApplication} />
+        <ComponentBar label="Communication" score={score.subscores.communication} />
+        <ComponentBar label="Reflection" score={score.subscores.reflection} />
+        <ComponentBar label="Problem solving" score={score.subscores.problemSolving} />
       </div>
 
       {/* Strengths */}
       {score.strengthsShown.length > 0 && (
-        <div className="space-y-1.5">
-          <p className="text-xs font-semibold text-emerald-400 uppercase tracking-wider">
-            Strengths
-          </p>
-          {score.strengthsShown.map((s, i) => (
-            <div key={i} className="flex items-start gap-2 text-sm text-white">
-              <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
-              {s}
-            </div>
-          ))}
+        <div className="space-y-1.5 pt-3 border-t border-white/[0.04]">
+          <Eyebrow>Strengths</Eyebrow>
+          <ul className="space-y-1.5">
+            {score.strengthsShown.map((s, i) => (
+              <li
+                key={i}
+                className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+              >
+                <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                <span>{s}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
 
-      {/* Areas to Improve */}
+      {/* Areas to improve */}
       {score.areasToImprove.length > 0 && (
-        <div className="space-y-1.5">
-          <p className="text-xs font-semibold text-amber-400 uppercase tracking-wider">
-            Areas to Improve
-          </p>
-          {score.areasToImprove.map((a, i) => (
-            <div
-              key={i}
-              className="flex items-start gap-2 p-2.5 rounded-lg border border-white/10 border-l-4 border-l-amber-500 bg-amber-500/5 text-sm text-white"
-            >
-              <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
-              {a}
-            </div>
-          ))}
+        <div className="space-y-1.5 pt-3 border-t border-white/[0.04]">
+          <Eyebrow>Areas to improve</Eyebrow>
+          <ul className="space-y-1.5">
+            {score.areasToImprove.map((a, i) => (
+              <li
+                key={i}
+                className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+              >
+                <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                <span>{a}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </div>
