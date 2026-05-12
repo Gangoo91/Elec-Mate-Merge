@@ -328,7 +328,26 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
         });
 
         if (error) {
-          logger.api('generate-pdf-monkey', requestId).error(error, { quoteId: updatedQuote.id });
+          // Capture the underlying Response status + body for Sentry — Sentry REACT-3T
+          // supabase-js wraps the failing Response in FunctionsHttpError.context
+          let edgeFunctionStatus: number | undefined;
+          let edgeFunctionBody: string | undefined;
+          try {
+            const ctx = (error as { context?: Response }).context;
+            if (ctx && typeof ctx === 'object') {
+              edgeFunctionStatus = ctx.status;
+              if (typeof ctx.clone === 'function') {
+                edgeFunctionBody = (await ctx.clone().text()).slice(0, 500);
+              }
+            }
+          } catch {
+            // Best-effort diagnostics — ignore failures reading the response
+          }
+          logger.api('generate-pdf-monkey', requestId).error(error, {
+            quoteId: updatedQuote.id,
+            edgeFunctionStatus,
+            edgeFunctionBody,
+          });
           throw error;
         }
 

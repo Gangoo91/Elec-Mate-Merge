@@ -1445,20 +1445,22 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   };
 
   // Utility function to fix protective device terminology
-  const fixProtectiveDeviceType = (type: string): string => {
-    if (!type) return type;
+  // Coerces unknown AI input to a string up front — Sentry REACT-9W
+  const fixProtectiveDeviceType = (type: unknown): string => {
+    const s = typeof type === 'string' ? type : type == null ? '' : String(type);
+    if (!s) return s;
 
     // Map Type 1/2/3 to Type B/C/D (UK standard)
-    if (type.includes('Type 1') || type.includes('Type1')) {
-      return type.replace(/Type ?1/gi, 'Type B');
+    if (s.includes('Type 1') || s.includes('Type1')) {
+      return s.replace(/Type ?1/gi, 'Type B');
     }
-    if (type.includes('Type 2') || type.includes('Type2')) {
-      return type.replace(/Type ?2/gi, 'Type C');
+    if (s.includes('Type 2') || s.includes('Type2')) {
+      return s.replace(/Type ?2/gi, 'Type C');
     }
-    if (type.includes('Type 3') || type.includes('Type3')) {
-      return type.replace(/Type ?3/gi, 'Type D');
+    if (s.includes('Type 3') || s.includes('Type3')) {
+      return s.replace(/Type ?3/gi, 'Type D');
     }
-    return type;
+    return s;
   };
 
   // Helper to check if a row is blank
@@ -1483,14 +1485,15 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
     };
 
     // Extract base protective device type (MCB Type B → MCB)
-    const getDeviceBaseType = (type: string): string => {
-      if (!type) return '';
-      const upper = type.toUpperCase();
+    const getDeviceBaseType = (type: unknown): string => {
+      const s = typeof type === 'string' ? type : type == null ? '' : String(type);
+      if (!s) return '';
+      const upper = s.toUpperCase();
       if (upper.includes('RCBO')) return 'RCBO';
       if (upper.includes('RCD')) return 'RCD';
       if (upper.includes('MCB')) return 'MCB';
       if (upper.includes('FUSE')) return 'Fuse';
-      return type;
+      return s;
     };
 
     // Get BS Standard based on device type
