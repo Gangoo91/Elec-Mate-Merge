@@ -30,7 +30,9 @@ import {
   LearningOutcomes,
   ContentEyebrow,
   SectionRule,
+  VideoCard,
 } from '@/components/study-centre/learning';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE =
@@ -311,6 +313,14 @@ export default function Sub2() {
             options={checks[0].options}
             correctIndex={checks[0].correctIndex}
             explanation={checks[0].explanation}
+          />
+
+          <VideoCard
+            url={videos.ringFinalTest.url}
+            title={videos.ringFinalTest.title}
+            channel={videos.ringFinalTest.channel}
+            duration={videos.ringFinalTest.duration}
+            topic={videos.ringFinalTest.topic}
           />
 
           <SectionRule />

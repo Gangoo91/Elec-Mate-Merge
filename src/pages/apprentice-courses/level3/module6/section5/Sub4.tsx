@@ -31,6 +31,7 @@ import {
   ContentEyebrow,
   SectionRule,
 } from '@/components/study-centre/learning';
+import { EarthingSystemDiagram } from '@/components/study-centre/diagrams';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE =
@@ -339,6 +340,8 @@ The requirements of this regulation are met if the earth fault loop impedance of
             }
             cite="Source: BS 7671:2018+A4:2026 Part 4, Chapter 41, Regulation 411.5.3 and Table 41.5."
           />
+
+          <EarthingSystemDiagram />
 
           <SectionRule />
 

@@ -221,3 +221,100 @@ export async function sendEmail(
   const apiKey = Deno.env.get('BREVO_API_KEY') || Deno.env.get('RESEND_API_KEY') || '';
   return brevoSend(apiKey, params);
 }
+
+// ─── Client-facing sender helper ────────────────────────────────
+// Every email the PLATFORM sends to an ELECTRICIAN'S CLIENT (quotes,
+// invoices, reminders, certs, photos, scope, AI agent) MUST use this.
+//
+// Why a helper:
+//   - DMARC alignment requires the From-domain to match the DKIM domain
+//     Brevo signs with (elec-mate.com). Sending From the electrician's
+//     own company email would fail DMARC at strict receivers (Gmail
+//     Workspace, O365), landing in spam.
+//   - So From is LOCKED to `noreply@elec-mate.com` (Brevo-signed,
+//     intentionally unmonitored — no replies should ever land in an
+//     Elec-Mate inbox). The electrician's COMPANY NAME is the display
+//     name, so the client's inbox shows "ABC Electrical" as the sender.
+//   - Reply-To is the electrician's company_email (preferred) or auth
+//     email. Refuses any @elec-mate.com address — that's how founder@
+//     ended up receiving client replies historically (ELE-662).
+//   - If a recipient client ignores Reply-To (Outlook does this), the
+//     reply goes to noreply@ and is dropped. Never to a real person at
+//     Elec-Mate. This is the explicit design intent.
+//
+// Do not roll your own. Touching `from:` manually in a user→client
+// edge function is a Linear ticket waiting to happen.
+
+const CLIENT_FACING_SENDER_ADDRESS = 'noreply@elec-mate.com';
+
+export interface ClientFacingSenderInput {
+  /** Electrician's company name — shown to client as the From display name */
+  companyName: string | null | undefined;
+  /** Electrician's company email — preferred Reply-To target */
+  companyEmail?: string | null;
+  /** Electrician's auth/login email — Reply-To fallback */
+  userEmail?: string | null;
+}
+
+export interface ClientFacingSender {
+  from: string;
+  replyTo?: string;
+}
+
+export function clientFacingSender(
+  input: ClientFacingSenderInput
+): ClientFacingSender {
+  // Sanitise the display name. RFC 5322 forbids '<', '>', '"' in display
+  // text without quoting; just strip them to avoid header injection.
+  const rawName = (input.companyName || '').trim();
+  const safeName = (rawName || 'Your Electrician').replace(/[<>"\r\n]/g, '');
+  const from = `${safeName} <${CLIENT_FACING_SENDER_ADDRESS}>`;
+
+  // Reply-To cascade. Reject anything @elec-mate.com — historically the
+  // root cause of replies bouncing to founder@ when company_email was
+  // unset and the fallback resolved to an internal alias.
+  const candidates = [input.companyEmail, input.userEmail];
+  let replyTo: string | undefined;
+  for (const raw of candidates) {
+    const v = (raw || '').trim();
+    if (!v) continue;
+    if (v.toLowerCase().endsWith('@elec-mate.com')) continue;
+    replyTo = v;
+    break;
+  }
+
+  return { from, replyTo };
+}
+
+// ─── HTML → plain-text fallback ─────────────────────────────────
+// Brevo (and good practice) wants both an HTML body and a text body so
+// Outlook force-plaintext mode and accessibility tools render the
+// message correctly. Cheap stripper — not a full HTML parser, fine for
+// our transactional templates. Pass the result as `text:` on the
+// emailOptions and Brevo will use it as the text/plain alternative.
+
+export function htmlToPlainText(html: string): string {
+  if (!html) return '';
+  return html
+    // Drop <style> and <script> blocks entirely
+    .replace(/<style[\s\S]*?<\/style>/gi, '')
+    .replace(/<script[\s\S]*?<\/script>/gi, '')
+    // Turn block-level tags into line breaks before stripping
+    .replace(/<\/(p|div|h[1-6]|li|tr|br)>/gi, '\n')
+    .replace(/<br\s*\/?>/gi, '\n')
+    // Strip all remaining tags
+    .replace(/<[^>]+>/g, '')
+    // Decode the handful of entities that appear in our templates
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&pound;/g, '£')
+    // Collapse runs of whitespace and blank lines
+    .replace(/[ \t]+/g, ' ')
+    .replace(/\n[ \t]+/g, '\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+}

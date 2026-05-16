@@ -83,6 +83,11 @@ const faqs = [
   { question: 'How do I escalate without burning bridges with my supervisor?', answer: 'Frame it as "I want to make sure I\'m doing this safely — can you help me think through it?". Most supervisors respond well to honesty. The minority who don\'t are the ones you needed to escalate around anyway. ERA s.44 gives you cover.' },
   { question: 'Is there a tribunal time limit for an ERA s.44 claim?', answer: 'Yes — generally 3 months less one day from the act complained of. Get advice early; legal aid is rare for tribunal but unions and CAB offer help. Document everything contemporaneously.' },
   { question: 'Can I be prosecuted personally if I do follow an unsafe instruction?', answer: 'Yes — HASAWA s.7 is a personal duty. "I was told to" is no defence. The HSE has prosecuted operatives who carried out unsafe instructions. Refusal + escalation + documentation is the personal-protection sequence.' },
+  { question: 'I\'m an L3 supervising an L2 mate — what happens if THEY do something unsafe?', answer: 'You carry the EAWR Reg 16(2) supervision-leg duty. If your supervision was inadequate — no brief, no check-ins, no intervention — you could be on the s.7 hook alongside them, and the firm on s.2. The L3 supervisor protection is being able to evidence the supervision: brief notes, check-in timestamps, the intervention you made.' },
+  { question: 'What if the firm doesn\'t have a named Reg 7 competent person?', answer: 'That\'s a Reg 7 breach in itself. Raise it in writing — to the director if necessary. Ask who is acting as competent person in practice. If the answer is &quot;nobody&quot;, that&apos;s a serious gap and escalating externally to the HSE under PIDA may be justified if internal raising fails.' },
+  { question: 'Does signing a job sheet or schedule count as &quot;sign-off&quot; in scheme terms?', answer: 'No. Schedules and job sheets are operational documents; the regulated sign-off is the EIC / MWC / EICR signed by the firm&apos;s Qualified Supervisor or Approved Electrician under the scheme registration. Signing the job sheet says &quot;I did the work&quot;; signing the certificate says &quot;the installation complies with BS 7671 and is safe for use&quot; and is the legal claim under Building Regs Approved Document P.' },
+  { question: 'Can my refusal of an unsafe instruction be undermined by accepting the work afterwards if pressured?', answer: 'Yes — silence or compliance after an initial refusal weakens both the s.7 personal-duty defence and any ERA s.44 claim. Once you have refused, stand firm. If pressure escalates, escalate the escalation: raise to the next person in the chain, document the renewed refusal in writing, and request reassignment. A single firm refusal followed by escalation is stronger evidence than five wavering refusals followed by reluctant compliance.' },
+  { question: 'Does the Building Safety Act 2022 change the limits on what I can sign for residential work?', answer: 'For Higher-Risk Residential Buildings (HRRB — 18m+ or 7+ storeys with 2+ residential units) the BSA 2022 / HRRB Regs 2023 add a separate competence and dutyholder regime above the existing Approved Doc P scheme limits. The principal designer / principal contractor / accountable person roles all carry specific BSA competence requirements. L3 alone does not qualify you for any of these roles. The BSA gateway 2 / 3 process requires evidence of competence assessed against the Engineering Council UK-SPEC framework or equivalent, mediated through the BSR.' },
 ];
 
 export default function Sub3() {
@@ -103,6 +108,9 @@ export default function Sub3() {
             "L3 limits are wider than L2 but still exist. EIC sign-off, complex three-phase, hazardous areas, F-Gas, gas, asbestos licensed work — all sit outside the L3 scope.",
             "Escalation upwards is your right and your duty. Chain: supervisor → contracts manager → Qualified Supervisor → director. Document every attempt in writing.",
             "ERA 1996 s.44 protects you from detriment for refusing dangerous work or raising H&S concerns. PIDA 1998 (whistleblowing) extends protection for qualifying disclosures including external to regulators.",
+            "Competence has two limbs — knowledge / skill / experience to do the work AND authority from the firm or regulator to do it. Both required; either missing means the work stops or escalates.",
+            "Statutory competence boundaries are absolute. Gas Safe / F-Gas / Asbestos licensed / SAP HV / CompEx are not bendable for &apos;small jobs&apos; or favours. Refuse, signpost, document.",
+            "Lone-working scenarios change the risk profile. Some tasks (live work, MEWP, confined space, CompEx) need a second person regardless of personal competence.",
           ]} />
 
           <LearningOutcomes outcomes={[
@@ -130,7 +138,7 @@ export default function Sub3() {
             </ul>
           </ConceptBlock>
 
-          <RegsCallout source="Employment Rights Act 1996 — s.44(1)(c)" clause={<>"An employee has the right not to be subjected to any detriment by any act, or any deliberate failure to act, by his employer done on the ground that — (c) being an employee at a place where (i) there was no such representative or safety committee, or (ii) there was such a representative or safety committee but it was not reasonably practicable for the employee to raise the matter by those means, he brought to his employer&apos;s attention, by reasonable means, circumstances connected with his work which he reasonably believed were harmful or potentially harmful to health or safety."</>} meaning={<>The s.44 protection is broad — any reasonable means of raising a H&amp;S concern is protected. Detriment includes sacking (s.100 makes that automatically unfair), demotion, removal from a job, disciplinary, victimisation. Tribunal claim within 3 months. Compensation can include loss of earnings, injury to feelings, reinstatement. The protection makes the refusal sustainable.</>} cite="Source: Employment Rights Act 1996 (1996 c.18), s.44 — verbatim from legislation.gov.uk." />
+          <RegsCallout source="Employment Rights Act 1996 — s.44(1)(c)" clause={<>"An employee has the right not to be subjected to any detriment by any act, or any deliberate failure to act, by his employer done on the ground that — (c) being an employee at a place where (i) there was no such representative or safety committee, or (ii) there was such a representative or safety committee but it was not reasonably practicable for the employee to raise the matter by those means, he brought to his employer&apos;s attention, by reasonable means, circumstances connected with his work which he reasonably believed were harmful or potentially harmful to health or safety."</>} meaning={<>The s.44 protection is broad — any reasonable means of raising a H&amp;S concern is protected. Detriment includes sacking (s.100 makes that automatically unfair), demotion, removal from a job, disciplinary, victimisation. Tribunal claim within 3 months. Compensation can include loss of earnings, injury to feelings, reinstatement. The protection makes the refusal sustainable.</>} cite="Source: Employment Rights Act 1996 (1996 c.18), s.44." />
 
           <InlineCheck {...checks[0]} />
 
@@ -162,7 +170,7 @@ export default function Sub3() {
             </ul>
           </ConceptBlock>
 
-          <RegsCallout source="Public Interest Disclosure Act 1998 — inserted into Employment Rights Act 1996 as s.43A onwards" clause={<>"In this Act a 'qualifying disclosure' means any disclosure of information which, in the reasonable belief of the worker making the disclosure, is made in the public interest and tends to show one or more of the following — (a) that a criminal offence has been committed, is being committed or is likely to be committed, (b) that a person has failed, is failing or is likely to fail to comply with any legal obligation to which he is subject, ... (d) that the health or safety of any individual has been, is being or is likely to be endangered, (e) that the environment has been, is being or is likely to be damaged."</>} meaning={<>PIDA extends ERA protections to "qualifying disclosures" — including raising the concern externally to a regulator like the HSE. The reasonable-belief test is wide; you don&apos;t have to be right, you have to reasonably believe. Internal disclosure is preferred but external (HSE etc) is protected if internal channels have failed.</>} cite="Source: Public Interest Disclosure Act 1998 (1998 c.23), s.1 inserting Part IVA into ERA 1996 — verbatim from legislation.gov.uk." />
+          <RegsCallout source="Public Interest Disclosure Act 1998 — inserted into Employment Rights Act 1996 as s.43A onwards" clause={<>"In this Act a 'qualifying disclosure' means any disclosure of information which, in the reasonable belief of the worker making the disclosure, is made in the public interest and tends to show one or more of the following — (a) that a criminal offence has been committed, is being committed or is likely to be committed, (b) that a person has failed, is failing or is likely to fail to comply with any legal obligation to which he is subject, ... (d) that the health or safety of any individual has been, is being or is likely to be endangered, (e) that the environment has been, is being or is likely to be damaged."</>} meaning={<>PIDA extends ERA protections to "qualifying disclosures" — including raising the concern externally to a regulator like the HSE. The reasonable-belief test is wide; you don&apos;t have to be right, you have to reasonably believe. Internal disclosure is preferred but external (HSE etc) is protected if internal channels have failed.</>} cite="Source: Public Interest Disclosure Act 1998 (1998 c.23), s.1 inserting Part IVA into ERA 1996." />
 
           <InlineCheck {...checks[1]} />
           <InlineCheck {...checks[2]} />
@@ -275,7 +283,7 @@ export default function Sub3() {
                 limb (b) (legal obligation) and (d) (health or safety).
               </>
             }
-            cite="Source: Employment Rights Act 1996 (1996 c.18), s.43B as inserted by Public Interest Disclosure Act 1998 — verbatim from legislation.gov.uk."
+            cite="Source: Employment Rights Act 1996 (1996 c.18), s.43B as inserted by Public Interest Disclosure Act 1998."
           />
 
           <SectionRule />
@@ -358,6 +366,139 @@ export default function Sub3() {
           </ConceptBlock>
 
           <SectionRule />
+          <ContentEyebrow>The Reg 7 competent person — who exactly is it?</ContentEyebrow>
+
+          <ConceptBlock
+            title="The named H&S adviser the firm should have appointed"
+            plainEnglish="MHSWR Reg 7 requires every employer to appoint one or more competent persons to assist in undertaking the measures needed to comply with the firm&apos;s statutory H&S duties. In a small electrical firm this might be the director themselves with appropriate training, or an external consultant retained on a service contract. In a larger firm it&apos;s typically a dedicated H&S manager or QHSE manager. The competent person is the practical escalation address for cross-site safety issues — when your immediate supervisor and contracts manager have run out of road, the Reg 7 person is the next step."
+            onSite="Ask early — &apos;who&apos;s our Reg 7 competent person?&apos;. The induction pack should name them; if it doesn&apos;t, asking is itself a Reg 5 (arrangements) prompt to the firm. Knowing the name and contact details before you need them is the L3 discipline. A safety concern raised at 4pm on a Friday is much easier to escalate if you already know who the Reg 7 person is, where they are, and how to reach them."
+          >
+            <p>What &quot;competent&quot; means under Reg 7(5):</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Sufficient training and experience or knowledge</strong> — formal H&S
+                qualification (NEBOSH General, NEBOSH Construction, IOSH Managing Safely as a
+                minimum benchmark) plus practical experience in the firm&apos;s sector.
+              </li>
+              <li>
+                <strong>Other qualities</strong> — communication skill, integrity, willingness to
+                challenge senior decisions. The competent person who never says no isn&apos;t
+                actually competent.
+              </li>
+              <li>
+                <strong>Sufficient time and resources</strong> — to actually do the work; a name
+                on the organisation chart without dedicated time is not Reg 7 compliance.
+              </li>
+              <li>
+                <strong>Information about the firm&apos;s activities and risks</strong> — must
+                be briefed on the operational reality, not just left to read the policy folder.
+              </li>
+              <li>
+                <strong>Preference for internal appointment</strong> — Reg 7(8) expresses a
+                preference for internal people over external consultants where competence
+                exists internally.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="Management of Health and Safety at Work Regulations 1999 — Reg 7(1)"
+            clause={
+              <>
+                &quot;Every employer shall, subject to paragraphs (6) and (7), appoint one or more
+                competent persons to assist him in undertaking the measures he needs to take to
+                comply with the requirements and prohibitions imposed upon him by or under the
+                relevant statutory provisions and by Part II of the Fire Precautions (Workplace)
+                Regulations 1997.&quot;
+              </>
+            }
+            meaning={
+              <>
+                The Reg 7 appointment duty. The competent person is the firm&apos;s named H&S
+                adviser. In larger firms a QHSE manager; in smaller firms the director or a
+                retained external consultant. They are the practical escalation address when the
+                line-management chain has been exhausted. Knowing who they are before you need
+                them is the L3 discipline — most firms list them in the induction pack.
+              </>
+            }
+            cite="Source: Management of Health and Safety at Work Regulations 1999 (SI 1999/3242), Reg 7."
+          />
+
+          <SectionRule />
+          <ContentEyebrow>Approved Document P — the Building Regs competence overlay</ContentEyebrow>
+
+          <ConceptBlock
+            title="Why L3 alone doesn&apos;t equal &apos;competent person scheme&apos;"
+            plainEnglish="Approved Document P of the Building Regulations sets out the rules for notifiable electrical work in dwellings. To self-certify notifiable work, the operative (or the firm) must be a member of a Competent Person Scheme — NICEIC, NAPIT, ELECSA, STROMA, BSI, Certsure. Scheme membership requires assessed competence, regular site assessment and Qualified Supervisor authority. L3 by itself doesn&apos;t confer scheme membership; the firm holds the scheme registration and the Qualified Supervisor signs off on the firm&apos;s behalf."
+            onSite="What this means for the L3 daily reality: you can do the physical work in a domestic install but the certificate (EIC, Minor Works, EICR) must be signed by the firm&apos;s Qualified Supervisor or Approved Electrician. The signature isn&apos;t a courtesy formality — it&apos;s the regulatory hook that makes the work lawful self-certified rather than requiring Local Authority Building Control notification. Signing certificates as an L3 without scheme authority is an offence under the Building Regs."
+          >
+            <p>The Competent Person Scheme limitation in practice:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Notifiable work in dwellings</strong> — installation of new circuits,
+                CU replacement, work in special locations (bathrooms, kitchens are no longer
+                automatically notifiable in England but Wales remains broader).
+              </li>
+              <li>
+                <strong>Scheme membership held by the firm</strong>, not the individual
+                operative. Qualified Supervisor is the named scheme authority.
+              </li>
+              <li>
+                <strong>Annual scheme assessment</strong> visits verify competence; the firm&apos;s
+                ongoing registration depends on consistent compliance.
+              </li>
+              <li>
+                <strong>If the firm isn&apos;t scheme-registered</strong>, notifiable work must
+                be Building Control notified directly — a slow and expensive route most firms
+                avoid by scheme membership.
+              </li>
+              <li>
+                <strong>L3 contribution to scheme work</strong> — you can be the productive
+                operative but not the certifier. Honest framing of this with the customer
+                avoids confusion about who&apos;s signing the cert.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+          <ContentEyebrow>The L3 supervisor of an L2 mate — your reverse duty</ContentEyebrow>
+
+          <ConceptBlock
+            title="When you become the supervisor in EAWR Reg 16(2) terms"
+            plainEnglish="L3 introduces a duty most apprentices haven&apos;t carried before — supervising an L2 mate. EAWR Reg 16(2) treats supervision as the route by which less-experienced workers are made &apos;competent&apos;. If you&apos;re the L3 supervising an L2, you carry the supervision-leg duty. That means making sure the L2 is working within their competence, briefing them on the specific hazards, intervening when they&apos;re about to do something unsafe, and signing off on the completed work."
+            onSite="The mirror image: you&apos;ve just experienced two-plus years of being supervised. Now you start doing it back. The discipline is the same — clear instructions, defined scope, periodic check-ins, immediate intervention on unsafe acts, debrief at the end. Don&apos;t treat &apos;supervising the L2&apos; as a tax — it&apos;s how the trade transfers competence. Done well, the L2 learns faster and you build the supervisor skills you&apos;ll need as a Qualified Electrician later."
+          >
+            <p>L3-supervising-L2 daily practice:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Brief at the start of the task</strong> — what we&apos;re doing, what
+                you&apos;re doing, what I&apos;m doing, what to ask before progressing.
+              </li>
+                <li>
+                <strong>Define the limits</strong> — what the L2 is competent to do unsupervised,
+                what needs you watching, what you&apos;ll do yourself.
+              </li>
+              <li>
+                <strong>Check-in cadence</strong> — every 20-30 minutes for unfamiliar work,
+                less often for routine tasks.
+              </li>
+              <li>
+                <strong>Intervene early</strong> — don&apos;t let an unsafe practice get to
+                completion just to avoid embarrassment. Pause, explain, demonstrate, restart.
+              </li>
+              <li>
+                <strong>Sign off the work</strong> — visually inspect, witness key tests,
+                check the schedule against installation. Your signature on the dynamic
+                assessment / schedule is the supervision evidence.
+              </li>
+              <li>
+                <strong>Debrief at the end</strong> — what went well, what to do differently
+                next time. Short, constructive, not punitive.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
           <ContentEyebrow>Where it goes wrong</ContentEyebrow>
 
           <ConceptBlock
@@ -404,19 +545,164 @@ export default function Sub3() {
 
           <Scenario title="Customer pressure to do gas-related work" situation={<>You&apos;re replacing a kitchen socket and the customer says &quot;while you&apos;re here, can you just disconnect the gas hob so I can move it tomorrow?&quot;. They offer cash for the favour. Your supervisor isn&apos;t answering the phone. The hob has a flexible gas hose with a bayonet fitting; disconnecting at the bayonet is &quot;easy&quot; in physical terms.</>} whatToDo={<>Refuse. Gas work is restricted to Gas Safe registered engineers under the Gas Safety (Installation and Use) Regulations 1998 — you are not authorised regardless of physical ease. Politely explain to the customer: &quot;I&apos;m not Gas Safe registered so I can&apos;t lawfully disconnect the gas. I can recommend a Gas Safe engineer who can do it for you tomorrow morning&quot;. Don&apos;t accept the cash; don&apos;t do the work; document the conversation in your job-pack note that evening. If your firm has a Gas Safe sister-firm or a regular subcontractor, suggest them. If not, the customer can find a Gas Safe engineer via gassaferegister.co.uk.</>} whyItMatters={<>Customer cash-in-hand requests are the most common entry-route for un-authorised work. Doing it once is a HASAWA s.7 breach, a Gas Safety regulation breach, and a professional reputation risk. The customer&apos;s &quot;just this once&quot; doesn&apos;t protect you. Refusal + signposting + documentation is the L3 response, and the customer typically respects it once it&apos;s clearly explained.</>} />
 
+          <Scenario
+            title="The 'just sign here\' EIC pressure"
+            situation={
+              <>
+                You&apos;ve been the productive operative on a 12-circuit CU change on a
+                Friday afternoon. Testing is complete; the customer is waiting to be back in
+                power before the weekend. Your firm&apos;s Qualified Supervisor is 90 minutes
+                away at another job. The supervisor calls you and says &quot;just sign the EIC
+                as &apos;designer / constructor / inspector&apos; — put my name as &apos;tester&apos;,
+                the customer&apos;s not going to know the difference, I&apos;ll countersign on
+                Monday&quot;. The certificate pad has the firm&apos;s scheme membership
+                number on the header.
+              </>
+            }
+            whatToDo={
+              <>
+                Refuse. Signing the EIC as &quot;inspector&quot; or &quot;tester&quot; when
+                you are not the appointed scheme-authorised person is multiple breaches in
+                one: a Building Regs offence (false declaration of compliance under Approved
+                Doc P), a BS 7671 breach (the model form requires the named competent
+                person), a scheme rules breach (potentially invalidating the firm&apos;s
+                registration), and a HASAWA s.7 personal duty issue. Politely refuse and
+                offer alternatives: customer can wait until Monday for the certificate while
+                the installation is left energised under a job-pack note recording the
+                position; or the QS can pull off the other job to come and sign tonight.
+                Document the conversation in writing the same day — text the QS
+                summarising and CC the firm&apos;s director. ERA s.44 covers you.
+              </>
+            }
+            whyItMatters={
+              <>
+                Scheme certificates carry the firm&apos;s registration. A signature you
+                weren&apos;t entitled to give can void the customer&apos;s scheme cover
+                (handed to a buyer five years later, the certificate may be discovered to
+                be invalid), expose the firm to scheme disqualification, and expose you to
+                personal prosecution. The QS&apos;s &quot;I&apos;ll countersign Monday&quot; is
+                not a legal route. The five-minute conversation is far less painful than
+                the consequences if the certificate is later challenged.
+              </>
+            }
+          />
+
+          <SectionRule />
+          <ContentEyebrow>Inspector visit walkthrough — what HSE asks for at the door</ContentEyebrow>
+
+          <ConceptBlock
+            title="The unannounced HSE visit and what the inspector requests in the first 30 minutes"
+            plainEnglish="HSE inspectors have right of entry under HASAWA s.20 — they can enter any workplace at any reasonable time, with or without notice, and require production of documents. The first 30 minutes of an inspector visit are evidence-gathering. They will typically ask: (1) who is the responsible person on site? (2) can I see the current risk assessment and method statement for the work in progress? (3) can I see training and competence records for the operatives present? (4) what are the welfare arrangements? (5) for electrical work specifically — can I see the safe-isolation procedure and the most recent test instrument calibration certs? Knowing what is asked for, and being able to produce it without panic, is what separates a well-run firm from a poorly-run one in the inspector&apos;s eye."
+            onSite="The L3 reflex when HSE arrives unannounced: stay calm, be polite, notify the firm&apos;s responsible person and Qualified Supervisor immediately, produce documents the inspector requests, do not volunteer interpretation or admit fault. The inspector is gathering facts not conducting a trial; cooperation tends to result in advice or notice, obstruction tends to result in prosecution. HASAWA s.33(1)(h) makes obstruction itself an offence."
+          >
+            <p>Documents and information the inspector typically requests on arrival:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Identity of responsible person</strong> — name, role, contactable on
+                site.
+              </li>
+              <li>
+                <strong>Risk assessment and method statement for the current work</strong> —
+                site-specific, signed, current.
+              </li>
+              <li>
+                <strong>Operative competence evidence</strong> — qualifications, training
+                records, scheme registrations.
+              </li>
+              <li>
+                <strong>Equipment inspection / calibration records</strong> — test instruments
+                in date, ladders / steps / podiums tagged, electrical kit PAT-tested.
+              </li>
+              <li>
+                <strong>Safe-isolation procedure</strong> — written procedure, kit available
+                (lock-off, voltage indicator, proving unit, GS38 leads).
+              </li>
+              <li>
+                <strong>Welfare arrangements</strong> — toilets, washing, drinking water,
+                rest break, shelter from weather.
+              </li>
+              <li>
+                <strong>RIDDOR record</strong> — accident book, incident log for past 3
+                years.
+              </li>
+              <li>
+                <strong>Asbestos register</strong> — if pre-2000 building.
+              </li>
+              <li>
+                <strong>Permits and notifications</strong> — for live work, hot work,
+                excavation, confined space.
+              </li>
+              <li>
+                <strong>F10 notification</strong> — if CDM-notifiable project.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+          <ContentEyebrow>Case study — R v Tata Steel UK [2017] and the limits of &apos;I followed the manager&apos;s instruction&apos;</ContentEyebrow>
+
+          <ConceptBlock
+            title="When the supervisor&apos;s direction is no defence to a s.7 prosecution"
+            plainEnglish="Tata Steel UK was fined £1.4m at Cardiff Crown Court in 2017 after a maintenance worker suffered serious injuries when a steel slab fell during a lifting operation at the Port Talbot plant. The investigation found that the operative had been told by his supervisor to complete the lift using a sling that was not rated for the load. The operative complied. The HSE prosecuted Tata Steel under HASAWA s.2 and considered s.7 action against the operative; the supervisor was prosecuted personally under s.7 for actively directing the unsafe practice. The case illustrates the cascade: corporate liability for the firm under s.2; personal liability for the supervisor under s.7 for directing the breach; and the operative under s.7 personally — though the HSE did not in the end prosecute the operative on the operational facts, the option was clearly available."
+            onSite="The L3 takeaway: &apos;I was told to&apos; is not a defence to s.7 personal liability. The HSE may choose not to prosecute the operative on a given set of facts (typically where the operative is junior, the supervisor is clearly directing the breach, and the operative had limited practical ability to refuse), but the option is statutorily available. What protects you is documented refusal at the time — not just hoping the HSE will exercise prosecutorial discretion in your favour. The supervisor in Tata Steel went to court personally; the next time, the operative may too."
+          >
+            <p>What the L3 operative can learn from prosecuted cases like this:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>The supervisor&apos;s direction does not extinguish your s.7 duty</strong> —
+                it adds the supervisor to the duty list, it does not remove you from it.
+              </li>
+              <li>
+                <strong>The operative&apos;s ability to refuse is part of the analysis</strong> —
+                a 17-year-old first-year apprentice at the start of their career has less practical
+                ability to refuse than a 25-year-old L3 with three years of experience and an
+                understanding of the regs. The HSE&apos;s prosecutorial discretion takes that into
+                account; your s.7 exposure scales with your experience.
+              </li>
+              <li>
+                <strong>Documented refusal is the single most protective act</strong> — a text or
+                email to the supervisor at the moment of the unsafe direction shifts the evidential
+                picture decisively in your favour.
+              </li>
+              <li>
+                <strong>Group communications matter</strong> — if the unsafe direction was given in
+                a team setting, ensure other operatives heard your refusal. Their account is your
+                corroboration.
+              </li>
+              <li>
+                <strong>The firm&apos;s subsequent response matters</strong> — if the firm
+                disciplines you for the refusal, that is itself a s.44 / s.100 ERA 1996 issue
+                separate from the underlying H&amp;S breach.
+              </li>
+              <li>
+                <strong>Sentencing Council guideline (2016) applies</strong> — the operative
+                conviction under s.7 carries a structured sentence range that for high culpability
+                + serious harm includes immediate custody.
+              </li>
+              <li>
+                <strong>Insurance and employability</strong> — a personal s.7 conviction
+                materially affects future employability with reputable firms (PQQs ask), and may
+                affect any future application for scheme registration as a Qualified Supervisor.
+              </li>
+            </ul>
+          </ConceptBlock>
+
           <SectionRule />
           <FAQ items={faqs} />
           <SectionRule />
 
           <KeyTakeaways points={[
             "Remember from L2 — limits exist, escalate when in doubt. At L3 the limits are wider but still real.",
-            "Statutory limits L3 can\'t cross: gas (Gas Safe), F-Gas (Cat I-IV), asbestos licensed work, HV (SAP), EIC sign-off (Qualified Supervisor), CompEx, Approved Doc P competent person scheme.",
+            "Statutory limits L3 can't cross: gas (Gas Safe), F-Gas (Cat I-IV), asbestos licensed work, HV (SAP), EIC sign-off (Qualified Supervisor), CompEx, Approved Doc P competent person scheme.",
             "Personal duty sources: HASAWA s.7, EAWR Reg 16, MHSWR Reg 14, CDM Reg 15. Multiple parallel duties; same conclusion — refuse and escalate when warranted.",
             "Escalation chain: supervisor → contracts manager → Qualified Supervisor → director. Document each step in writing contemporaneously.",
             "ERA 1996 s.44 protects you from detriment for refusing dangerous work or raising H&S concerns. Tribunal route; 3-month time limit.",
             "PIDA 1998 protects qualifying disclosures including those made externally to regulators when internal escalation has failed.",
-            "\'I was told to' is no defence to a s.7 prosecution. Refusal + documentation is the personal-protection sequence.",
-            "L3 honesty about today\'s competence boundary is the judgement skill that distinguishes safe operators from incident-causers.",
+            "'I was told to' is no defence to a s.7 prosecution. Refusal + documentation is the personal-protection sequence.",
+            "L3 honesty about today's competence boundary is the judgement skill that distinguishes safe operators from incident-causers.",
+            "Tata Steel UK (2017) and similar cases show the cascade — corporate s.2 fine, supervisor s.7 prosecution, operative s.7 exposure. Documented refusal is the single most-protective act.",
+            "MHSWR Reg 7 competent person is the internal H&S escalation address. Know their name before you need it.",
+            "Approved Doc P scheme membership is held by the firm, not the individual. L3 contributes to scheme work; QS signs the cert.",
           ]} />
 
           <Quiz title="Limits of responsibility — knowledge check" questions={quizQuestions} />

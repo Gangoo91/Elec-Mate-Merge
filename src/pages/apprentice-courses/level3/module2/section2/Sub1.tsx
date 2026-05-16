@@ -27,7 +27,9 @@ import {
   LearningOutcomes,
   ContentEyebrow,
   SectionRule,
+  VideoCard,
 } from '@/components/study-centre/learning';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE =
@@ -316,6 +318,15 @@ export default function Sub1() {
               </>
             }
             cite="Source: BS 7671:2018+A4:2026 Section 712 (paraphrased from published commentary on the A4:2026 amendment — full text in IET Wiring Regulations 18th Edition, A4:2026, and the IET Code of Practice for Grid-Connected Solar Photovoltaic Systems)."
+          />
+
+          <VideoCard
+            url={videos.inverter.url}
+            title={videos.inverter.title}
+            channel={videos.inverter.channel}
+            duration={videos.inverter.duration}
+            topic="The PV inverter — Section 712 anchor component"
+            caption="Section 712 is built around the DC-AC inverter — string inverter, microinverter, or hybrid. Knowing what the inverter does at the switching-stage level makes the DC isolation, anti-islanding and protection requirements much easier to read."
           />
 
           <SectionRule />
@@ -670,7 +681,7 @@ export default function Sub1() {
                 competence.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Section 712 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Section 712."
           />
 
           <RegsCallout
@@ -691,7 +702,7 @@ export default function Sub1() {
                 stops at recommendation.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 421.1.7 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 421.1.7."
           />
 
           <SectionRule />

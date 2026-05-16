@@ -3,11 +3,12 @@
  * Maps to C&G 2365-03 / Unit 308 / LO1 / AC 1.6
  *   AC 1.6 — "Define the different roles in building services engineering"
  *
- * The Joint Industry Board (JIB) grading ladder — Apprentice, Stage 1-4,
- * Improver, Electrician, Approved Electrician, Technician — what each grade
- * means, what you need to evidence to climb it, the JIB pay framework that
- * sits behind it, and how the grading shows up on your ECS card and your
- * payslip.
+ * The Joint Industry Board (JIB) grading ladder — Apprentice (Stage 1-4),
+ * Adult Trainee, Electrician, Approved Electrician, Technician — what each
+ * formal grade means, what you need to evidence to climb it, the JIB pay
+ * framework that sits behind it, and how the grading shows up on your ECS
+ * card and your payslip. Note: 'Improver' is colloquial industry shorthand
+ * for the post-college / pre-AM2 stage and is NOT a formal JIB grade.
  */
 
 import { useNavigate } from 'react-router-dom';
@@ -32,7 +33,7 @@ import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'JIB grading deep dive | Level 3 Module 7.1.2 | Elec-Mate';
 const DESCRIPTION =
-  'The JIB grading ladder — Apprentice, Stage 1-4, Improver, Electrician, Approved Electrician, Technician — what each grade means, the evidence you need to progress, and how the JIB pay framework links your grade to your hourly rate.';
+  'The formal JIB grading ladder — Apprentice (Stage 1-4), Adult Trainee, Electrician, Approved Electrician, Technician — what each grade means, the evidence you need to progress, and how the JIB pay framework links your grade to your hourly rate. The colloquial term "Improver" is not a formal JIB grade.';
 
 const checks = [
   {
@@ -52,16 +53,16 @@ const checks = [
   {
     id: 'mod7-s1-sub2-am2-line',
     question:
-      "Why is the AM2 described as 'the line between Improver and Electrician'?",
+      "Why is the AM2 described as 'the line between final-year Apprentice and Electrician'?",
     options: [
       "It isn't — AM2 has nothing to do with grading.",
-      "Because the JIB rules require you to hold the practical assessment (AM2 or equivalent) before they'll grade you as Electrician. After college and 2365-03 you're an Improver — qualifications complete, AM2 not yet passed. After AM2 your employer applies to JIB to upgrade you to Electrician grade, which carries the full Electrician pay rate (around £19-20/hr in 2024 outside London). The jump from Improver to Electrician is the biggest single pay rise in the apprenticeship.",
+      "Because the JIB rules require you to hold the practical assessment (AM2 or equivalent) before they'll grade you as Electrician. After college and 2365-03 you remain on the final-year Apprentice (or Adult Trainee) rate — qualifications complete, AM2 not yet passed (colloquially called the 'Improver' stage, though that is NOT a formal JIB grade). After AM2 your employer applies to JIB to upgrade you to Electrician grade, which carries the full Electrician pay rate (around £19-20/hr in 2024 outside London). The jump to Electrician is the biggest single pay rise in the apprenticeship.",
       "AM2 is only for Scottish apprentices.",
       "AM2 is purely academic.",
     ],
     correctIndex: 1,
     explanation:
-      "The JIB Electrician grade requires both the Level 3 qualifications AND the AM2 (or equivalent JIB-recognised practical assessment). Without AM2 you stay at Improver rate even if you've finished college. The pay differential between Improver and Electrician is typically £4-5/hr — over a year that's £8,000+ in extra gross pay. This is why employers, college tutors and mentors take AM2 readiness seriously — it's not just a certificate, it's a step-change in your earnings.",
+      "The JIB Electrician grade requires both the Level 3 qualifications AND the AM2 (or equivalent JIB-recognised practical assessment). Without AM2 you stay on the final-year Apprentice or Adult Trainee rate even if you've finished college. The pay differential between that pre-AM2 stage (sometimes informally called the 'Improver' period) and Electrician is typically £4-5/hr — over a year that's £8,000+ in extra gross pay. This is why employers, college tutors and mentors take AM2 readiness seriously — it's not just a certificate, it's a step-change in your earnings.",
   },
   {
     id: 'mod7-s1-sub2-approved',
@@ -198,7 +199,7 @@ const faqs = [
       "If your firm is JIB-graded, contact your College Tutor or your union (Unite) rep first — JIB-graded firms are contractually bound to pay JIB minimums and a quiet word usually fixes it. If your firm is non-JIB they're not legally bound to JIB rates (only to the National Minimum/Living Wage), but they may match JIB by policy. The JIB doesn't enforce pay against non-JIB firms — that's a contract matter between you and the employer.",
   },
   {
-    question: "Can I jump from Apprentice straight to Approved without going through Improver and Electrician?",
+    question: "Can I jump from Apprentice straight to Approved without first becoming an Electrician?",
     answer:
       "No. The grading is sequential — you must hold the previous grade and meet the additional criteria before progressing. Apprentice → (qualifications + AM2) → Electrician → (2391-52 + 2 years' experience) → Approved → (HNC/experience) → Technician. Each step takes time; the ladder is designed to protect competence as much as career progression.",
   },
@@ -237,16 +238,16 @@ export default function Sub2() {
           <PageHero
             eyebrow="Module 7 · Section 1 · Subsection 2"
             title="JIB grading deep dive"
-            description="The JIB grading ladder — Apprentice Stages 1-4, Improver, Electrician, Approved Electrician, Technician — what each grade means, what evidence you need, and how the JIB pay framework links your grade to your hourly rate."
+            description="The formal JIB grading ladder — Apprentice Stages 1-4, Adult Trainee, Electrician, Approved Electrician, Technician — what each grade means, what evidence you need, and how the JIB pay framework links your grade to your hourly rate."
             tone="emerald"
           />
 
           <TLDR
             points={[
-              "JIB grades climb from Apprentice (Stages 1-4 during the apprenticeship) → Improver (post-college, pre-AM2) → Electrician (post-AM2) → Approved Electrician (post-2391-52 + experience) → Technician (post-HNC + experience). Each grade has a JIB-published minimum hourly rate.",
+              "Formal JIB grades climb from Apprentice (Stages 1-4 during the apprenticeship) → Adult Trainee (non-apprentice adult learner route) → Electrician (post-AM2) → Approved Electrician (post-2391-52 + experience) → Technician (post-HNC + experience). Each grade has a JIB-published minimum hourly rate. The colloquial term 'Improver' (post-college, pre-AM2) is NOT a formal JIB grade.",
               "Pay rates are renegotiated annually by ECA (employer side) and Unite (worker side) under the JIB Working Rule Agreement. London weighting adds £2-3/hr inside the M25; SJIB sets separate rates for Scotland.",
               "Your JIB grade is portable — recorded on your ECS card, it travels with you to any new employer. JIB-graded firms are bound to pay at least the JIB minimum for your grade.",
-              "AM2 is the practical line between Improver and Electrician — and the biggest single pay rise of the apprenticeship (typically £4-5/hr step up).",
+              "AM2 is the practical line between final-year Apprentice (or Adult Trainee) and Electrician — and the biggest single pay rise of the apprenticeship (typically £4-5/hr step up).",
             ]}
           />
 
@@ -265,9 +266,9 @@ export default function Sub2() {
           <ContentEyebrow>The JIB grading ladder</ContentEyebrow>
 
           <ConceptBlock
-            title="Five grades, evidence-based progression"
-            plainEnglish="JIB grading is the industry-collective recognition of your competence. Each grade is the next rung on a ladder that starts with Apprentice (sub-divided into Stages 1-4) and ends with Technician. You don't apply for grades — your employer notifies JIB when you've met the criteria, and the new grade is added to your ECS card. The grade determines your minimum hourly rate under JIB-graded employment."
-            onSite="Knowing where you sit on the ladder matters because every step up is a pay rise — typically £1-5/hr depending on the step. Knowing what evidence you need for the next grade lets you plan deliberately. Most apprentices focus on AM2 (Improver → Electrician) but forget that the next big jump (Electrician → Approved) requires the 2391-52 inspection and testing qualification — start planning that the day after AM2."
+            title="Five formal grades, evidence-based progression"
+            plainEnglish="JIB grading is the industry-collective recognition of your competence. Each grade is the next rung on a ladder that starts with Apprentice (sub-divided into Stages 1-4) and ends with Technician. You don't apply for grades — your employer notifies JIB when you've met the criteria, and the new grade is added to your ECS card. The grade determines your minimum hourly rate under JIB-graded employment. (Note: 'Improver' is a colloquial industry term for the post-college, pre-AM2 stage and is NOT a formal JIB grade.)"
+            onSite="Knowing where you sit on the ladder matters because every step up is a pay rise — typically £1-5/hr depending on the step. Knowing what evidence you need for the next grade lets you plan deliberately. Most apprentices focus on AM2 (final-year Apprentice → Electrician) but forget that the next big jump (Electrician → Approved) requires the 2391-52 inspection and testing qualification — start planning that the day after AM2."
           >
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
               <div className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] p-4">
@@ -283,12 +284,13 @@ export default function Sub2() {
               </div>
               <div className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] p-4">
                 <div className="text-[11px] uppercase tracking-[0.18em] text-elec-yellow mb-2">
-                  Improver
+                  Adult Trainee
                 </div>
                 <p className="text-[13.5px] text-white/85 leading-relaxed">
-                  Post-college, pre-AM2. You hold the Level 3 qualifications (2365-03 or NVQ
-                  Level 3) but haven&apos;t yet passed the AM2. Improver rate sits between Stage
-                  4 and Electrician rates &mdash; typically ~&pound;15-16/hr nationally in 2024.
+                  The formal JIB grade for a non-apprenticeship adult learner working towards
+                  the Level 3 qualifications and AM2. (The colloquial term &quot;Improver&quot;
+                  is sometimes used for the post-college, pre-AM2 stage but is NOT a formal JIB
+                  grade.)
                 </p>
               </div>
               <div className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] p-4">
@@ -365,8 +367,8 @@ export default function Sub2() {
           <ContentEyebrow>The post-apprenticeship grades</ContentEyebrow>
 
           <ConceptBlock
-            title="Improver → Electrician → Approved → Technician — the qualified ladder"
-            plainEnglish="Once the apprenticeship completes the four post-apprenticeship grades open up. Improver is the bridge — qualifications complete but AM2 not yet passed. Electrician is the standard qualified grade. Approved adds supervision and certification authority. Technician adds engineering-tier responsibility."
+            title="Final-year Apprentice → Electrician → Approved → Technician — the qualified ladder"
+            plainEnglish="Once the apprenticeship completes the post-apprenticeship grades open up. The final-year Apprentice (or Adult Trainee) is the bridge stage — qualifications complete but AM2 not yet passed (colloquially called the 'Improver' period). Electrician is the standard qualified grade. Approved adds supervision and certification authority. Technician adds engineering-tier responsibility."
             onSite="Each step requires specific evidence — not just time-served. Mapping out the qualifications and experience needed for each grade lets you plan your CPD spending. The 2391-52 (Inspection and Testing) is the most common bottleneck for the Electrician → Approved jump; HNC is the most common bottleneck for Approved → Technician."
           >
             <p>
@@ -374,11 +376,13 @@ export default function Sub2() {
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
-                <strong>Improver</strong> &mdash; C&amp;G 2365-03 Level 3 (or NVQ Level 3
-                Electrotechnical Services) complete; portfolio complete; AM2 not yet passed.
+                <strong>Final-year Apprentice / Adult Trainee (pre-AM2)</strong> &mdash; C&amp;G
+                2365-03 Level 3 (or NVQ Level 3 Electrotechnical Services) complete; portfolio
+                complete; AM2 not yet passed. Sometimes informally called the &quot;Improver&quot;
+                stage &mdash; but that is not a formal JIB grade.
               </li>
               <li>
-                <strong>Electrician</strong> &mdash; Improver criteria PLUS AM2 (or AM2E /
+                <strong>Electrician</strong> &mdash; Level 3 qualifications PLUS AM2 (or AM2E /
                 AM2S) passed. Employer applies to JIB to upgrade.
               </li>
               <li>
@@ -486,8 +490,8 @@ export default function Sub2() {
                 </p>
                 <ul className="space-y-1 list-disc pl-5 text-[14px]">
                   <li>
-                    Minimum hourly rates for each JIB grade (Apprentice Stages 1-4, Improver,
-                    Electrician, Approved Electrician, Technician).
+                    Minimum hourly rates for each formal JIB grade (Apprentice Stages 1-4,
+                    Adult Trainee, Electrician, Approved Electrician, Technician).
                   </li>
                   <li>
                     Separate national and London-weighted rate cards, renegotiated annually
@@ -616,9 +620,11 @@ export default function Sub2() {
               <>
                 You sat AM2 six weeks ago and got the pass. You&apos;ve told your line manager
                 and your College Tutor. Your next payslip arrives and you&apos;re still on the
-                Improver rate &mdash; about &pound;4/hr below the Electrician rate. You ask
-                payroll and they say &quot;the JIB upgrade hasn&apos;t come through&quot;.
-                You&apos;re losing several hundred pounds a month while this drags on.
+                final-year Apprentice rate (the pre-AM2 stage colloquially called the
+                &quot;Improver&quot; period) &mdash; about &pound;4/hr below the Electrician
+                rate. You ask payroll and they say &quot;the JIB upgrade hasn&apos;t come
+                through&quot;. You&apos;re losing several hundred pounds a month while this
+                drags on.
               </>
             }
             whatToDo={
@@ -653,7 +659,7 @@ export default function Sub2() {
             }
             whyItMatters={
               <>
-                The Improver-to-Electrician jump is the biggest single pay step of the
+                The pre-AM2 to Electrician jump is the biggest single pay step of the
                 apprenticeship &mdash; typically &pound;4-5/hr or &pound;8,000+/year of gross
                 pay. Every week the upgrade is delayed costs you real money. JIB-graded
                 employers are bound to process upgrades promptly; the practical reality is
@@ -788,9 +794,9 @@ export default function Sub2() {
 
           <KeyTakeaways
             points={[
-              "JIB grading ladder: Apprentice (Stages 1-4) → Improver → Electrician → Approved Electrician → Technician. Each grade has a JIB-published minimum hourly rate.",
+              "Formal JIB grading ladder: Apprentice (Stages 1-4) → Adult Trainee → Electrician → Approved Electrician → Technician. Each grade has a JIB-published minimum hourly rate. 'Improver' is colloquial industry shorthand for the post-college, pre-AM2 stage — NOT a formal JIB grade.",
               "Apprentice Stages 1-4 are evidence-based (syllabus completion + portfolio), not chronological. Falling behind on coursework can trap you at a lower Stage rate.",
-              "Improver → Electrician requires AM2; Electrician → Approved requires 2391-52 + 2 years' experience; Approved → Technician requires HNC/HND/degree + senior experience.",
+              "Final-year Apprentice → Electrician requires AM2; Electrician → Approved requires 2391-52 + 2 years' experience; Approved → Technician requires HNC/HND/degree + senior experience.",
               "JIB pay rates are renegotiated annually by ECA (employers) and Unite (workers) under the Working Rule Agreement. New rates typically take effect each January.",
               "London weighting adds £2-3/hr inside the M25; SJIB sets separate rates for Scotland; travel allowances stack on top for distant work.",
               "Your JIB grade is portable — recorded on your ECS card. JIB-graded employers are bound to pay at least the JIB minimum for your grade.",

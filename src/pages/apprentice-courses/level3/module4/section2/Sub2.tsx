@@ -494,8 +494,8 @@ export default function Sub2() {
               "Pre-shift routine: visual / calibration / function on each of the seven instruments. 5–8 minutes; catches every fault that has caused an incident.",
               "UKAS-traceable calibration in date is non-negotiable for BS 7671 certification and EAWR evidence. Out-of-calibration measurements are technically inadmissible.",
               "PUWER 1998 Reg 6 requires records of inspection at suitable intervals. For test instruments: calibration certificates + function-check log + defect register + instrument inventory.",
-              "Failed instrument workflow: tag, segregate, inform supervisor, don\'t reuse until verified. The failed unit goes to the calibration lab or repair house with the failure noted.",
-              "Calibration vs adjustment: calibration is measurement; adjustment is bringing the instrument into spec. \'As-found / as-left' on the certificate shows both.",
+              "Failed instrument workflow: tag, segregate, inform supervisor, don't reuse until verified. The failed unit goes to the calibration lab or repair house with the failure noted.",
+              "Calibration vs adjustment: calibration is measurement; adjustment is bringing the instrument into spec. 'As-found / as-left' on the certificate shows both.",
               "Calibration stickers go on the case where visible during normal use. Replace stickers after each cycle; remove old stickers to avoid confusion.",
               "Heavy usage and any 'event' (drop, water, lightning, blown fuse) trigger early re-calibration regardless of date.",
             ]}

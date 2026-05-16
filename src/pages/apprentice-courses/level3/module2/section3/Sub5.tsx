@@ -31,7 +31,10 @@ import {
   LearningOutcomes,
   ContentEyebrow,
   SectionRule,
+  VideoCard,
 } from '@/components/study-centre/learning';
+import { TransformerSchematic } from '@/components/study-centre/diagrams';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE =
@@ -344,6 +347,17 @@ export default function Sub5() {
               </>
             }
             cite="Source: Clean Air Act 1993 (1993 c.11) Part III and the Smoke Control Areas (Authorised Fuels) (England) Regulations 2023 — paraphrased; full text on legislation.gov.uk."
+          />
+
+          <TransformerSchematic />
+
+          <VideoCard
+            url={videos.transformers.url}
+            title={videos.transformers.title}
+            channel={videos.transformers.channel}
+            duration={videos.transformers.duration}
+            topic="Transformers — the grid-interface component for wind, hydro and CHP"
+            caption="Every grid-connected micro-generator ultimately delivers power through (or alongside) a distribution transformer. Understanding the transformer makes the G98/G99 connection rules, anti-islanding and reverse-power scenarios easier to read."
           />
 
           <SectionRule />
@@ -783,7 +797,7 @@ export default function Sub5() {
                 to standalone systems.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Section 712 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Section 712."
           />
 
           <SectionRule />

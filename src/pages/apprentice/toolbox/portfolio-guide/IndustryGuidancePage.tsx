@@ -1,497 +1,421 @@
-import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, CheckCircle } from 'lucide-react';
+/**
+ * Portfolio · IndustryGuidancePage — sector-specific portfolio guidance.
+ *
+ * Domestic, commercial, industrial evidence requirements, universal
+ * requirements, maximising industry exposure, assessment tips, client
+ * confidentiality.
+ */
+
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
+import {
+  ArrowLeft,
+  CheckCircle2,
+  AlertTriangle,
+  Home,
+  Building2,
+  Factory,
+  Shield,
+} from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import {
   PageFrame,
   PageHero,
   itemVariants,
 } from '@/components/college/primitives';
+import {
+  Eyebrow,
+  SectionHeader,
+} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+
+interface SectorGuide {
+  sector: string;
+  icon: LucideIcon;
+  description: string;
+  workAreas: string[];
+  evidenceTypes: string[];
+  regulations: string[];
+}
+
+const sectors: SectorGuide[] = [
+  {
+    sector: 'Domestic electrical work',
+    icon: Home,
+    description:
+      'Residential installations are the most common starting point for apprentices. Covers everything from rewires to new builds to additions and alterations.',
+    workAreas: [
+      'Consumer unit installations and upgrades (split-load, RCBO boards)',
+      'Domestic wiring systems — ring finals, radial circuits, lighting circuits',
+      'Kitchen and bathroom electrical work (special locations per BS 7671)',
+      'Garden and outdoor installations — external sockets, lighting, ponds',
+      'EV charging point installations',
+      'Smoke and heat alarm installations (BS 5839-6)',
+      'Rewires — full and partial, including first-fix and second-fix',
+      'Additions and alterations to existing installations',
+      'New build electrical installations from scratch',
+    ],
+    evidenceTypes: [
+      'EICRs (Electrical Installation Condition Reports)',
+      'Minor Works Certificates',
+      'Electrical Installation Certificates',
+      'Schedule of Test Results (R1+R2, Zs, IR, RCD times)',
+      'Customer testimonials about your professionalism',
+      'Before/during/after installation photos',
+      'Wiring diagrams and circuit charts you\'ve produced',
+    ],
+    regulations: [
+      'BS 7671 (18th Edition Wiring Regulations)',
+      'Part P of the Building Regulations (England and Wales)',
+      'BS 5839-6 (domestic fire detection and fire alarm systems)',
+      'NICEIC / NAPIT / ELECSA scheme requirements',
+      'IET Guidance Notes (particularly GN1, GN3, GN7)',
+      'Building Regulations Approved Document P',
+    ],
+  },
+  {
+    sector: 'Commercial electrical work',
+    icon: Building2,
+    description:
+      'Offices, shops, schools, hospitals, and other non-industrial buildings. Often involves larger systems, 3-phase supplies, and specialist systems like fire alarms and emergency lighting.',
+    workAreas: [
+      'Three-phase distribution systems and sub-distribution boards',
+      'Commercial lighting installations and controls (DALI, PIR, lux sensors)',
+      'Emergency lighting systems (maintained and non-maintained)',
+      'Fire alarm installations (conventional and addressable)',
+      'Structured cabling and data installations (Cat6 / Cat6a)',
+      'Access control and intruder alarm systems',
+      'Power distribution units (PDUs) in server rooms',
+      'Energy monitoring and building management systems (BMS)',
+      'External lighting — car parks, building facades, pathways',
+    ],
+    evidenceTypes: [
+      'Periodic inspection reports (5-yearly for commercial)',
+      'Commissioning test results and handover documents',
+      'Emergency lighting certificates (BS 5266)',
+      'Fire alarm commissioning records (BS 5839-1)',
+      'Cable schedule documentation',
+      'As-built drawings showing your installations',
+      'Snagging lists and completion records',
+    ],
+    regulations: [
+      'BS 7671 (18th Edition Wiring Regulations)',
+      'BS 5266 (Emergency lighting)',
+      'BS 5839-1 (Fire detection and fire alarm systems)',
+      'CDM Regulations 2015',
+      'Workplace (Health, Safety and Welfare) Regulations 1992',
+      'The Electricity at Work Regulations 1989',
+    ],
+  },
+  {
+    sector: 'Industrial electrical work',
+    icon: Factory,
+    description:
+      'Manufacturing plants, factories, process facilities, and heavy engineering. Larger power systems, motor control, automation, and potentially hazardous areas.',
+    workAreas: [
+      'Motor control centres (MCCs) and variable speed drives (VSDs)',
+      'PLC systems and automation',
+      'High voltage switching and protection systems',
+      'Industrial process control instrumentation',
+      'Hazardous area installations (ATEX zones)',
+      'Power factor correction equipment',
+      'Industrial lighting (high bays, floodlighting)',
+      'Cable tray and ladder rack containment systems',
+      'Busbar trunking systems',
+      'Standby generator installations and changeover systems',
+    ],
+    evidenceTypes: [
+      'Commissioning reports for plant and machinery',
+      'FAT and SAT (Factory / Site Acceptance Test) documents',
+      'Loop testing certificates for instrumentation',
+      'Motor testing results (insulation, winding resistance)',
+      'Safety system validation records',
+      'Permit-to-work documentation',
+      'Lock-out / tag-out (LOTO) procedure evidence',
+    ],
+    regulations: [
+      'BS 7671 (18th Edition Wiring Regulations)',
+      'BS EN 60079 (Explosive atmospheres — equipment classification)',
+      'DSEAR (Dangerous Substances and Explosive Atmospheres Regulations)',
+      'PUWER (Provision and Use of Work Equipment Regulations)',
+      'Machinery Directive (2006/42/EC)',
+      'The Electricity at Work Regulations 1989',
+      'LOLER (Lifting Operations and Lifting Equipment Regulations)',
+    ],
+  },
+];
+
+const universalRequirements = [
+  {
+    category: 'Health & safety',
+    items: [
+      'Risk assessment completion evidence',
+      'Method statement preparation or contribution',
+      'PPE usage documentation',
+      'Accident / incident / near-miss reporting',
+      'Safety training records (CSCS, first aid, manual handling)',
+      'Safe isolation procedure compliance',
+    ],
+  },
+  {
+    category: 'Testing & inspection',
+    items: [
+      'Initial verification testing (new installations)',
+      'Periodic inspection and testing (existing installations)',
+      'Portable appliance testing (PAT)',
+      'Emergency lighting testing and records',
+      'Fire alarm system testing and records',
+      'Earth fault loop impedance and RCD testing',
+    ],
+  },
+  {
+    category: 'Professional standards',
+    items: [
+      'BS 7671 (18th Edition) compliance in all work',
+      'IET Guidance Note understanding and application',
+      'On-Site Guide reference and use',
+      'Building Regulations awareness and compliance',
+      'CDM Regulations awareness (commercial and industrial)',
+      'Environmental regulations and waste management',
+    ],
+  },
+];
+
+const maximisingExposure = [
+  'Ask your employer about job variety — can you shadow other teams?',
+  'Use college workshops to practise work outside your usual sector',
+  'Volunteer for different types of projects when opportunities arise',
+  'Discuss exposure gaps with your training provider at reviews',
+  'If you only do domestic work, focus heavily on domestic evidence requirements',
+  'Some EPAOs accept college-based evidence if site exposure is limited',
+  'Your pathway choice (Installation vs Maintenance) affects what\'s expected',
+];
+
+const assessorsLookFor = [
+  'Evidence that is authentic, verifiable, and clearly your own work',
+  'Dates, witness signatures, and location details on all evidence',
+  'Progression and development over the 4-year programme',
+  'Coverage of ALL required KSBs, not just the easy ones',
+  'Quality over quantity in evidence selection',
+  'Clear organisation and easy navigation',
+];
+
+const portfolioWeakeners = [
+  'Evidence not mapped to specific KSBs',
+  'Missing or incomplete sections',
+  'All evidence from one time period (shows last-minute collection)',
+  'No reflective commentary — just raw evidence with no analysis',
+  'Generic content copied from textbooks or the internet',
+  'Messy presentation and poor organisation',
+  'Confidential client information included without consent',
+];
 
 const IndustryGuidancePage = () => {
   const navigate = useNavigate();
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
+        <button
           onClick={() => navigate('/apprentice/toolbox/portfolio-building')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+          className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation"
         >
-          <ArrowLeft className="mr-2 h-5 w-5" />
+          <ArrowLeft className="h-4 w-4" />
           Back
-        </Button>
+        </button>
       </motion.div>
 
       <motion.div variants={itemVariants}>
         <PageHero
           eyebrow="Apprentice · Portfolio"
-          title="Industry Guidance"
+          title="Industry guidance"
+          description="Different sectors have different work, evidence, and regulations. Domestic, commercial, industrial — whatever you work in, here\'s what to collect."
           tone="yellow"
         />
       </motion.div>
 
-      {/* Intro */}
-      <Card className="border-amber-500/30 bg-white/5">
-        <CardContent className="p-4 space-y-3">
-          <h2 className="text-lg font-semibold text-amber-400">
-            Sector-Specific Portfolio Guidance
-          </h2>
-          <p className="text-white text-sm leading-relaxed">
-            Different sectors of the electrical industry have different types
-            of work, evidence, and regulations. Whether you work primarily in
-            domestic, commercial, or industrial settings, this section helps
-            you collect the right evidence for your specific environment.
-            Most apprentices experience a mix of sectors — collect evidence
-            from all areas you work in.
+      {/* ── Intro ───────────────────────────────────────────────── */}
+      <motion.div variants={itemVariants}>
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2">
+          <Eyebrow>Why sector matters</Eyebrow>
+          <p className="text-[13.5px] text-white/85 leading-relaxed">
+            Different sectors have different evidence types and regulations.
+            Most apprentices experience a mix — collect evidence from all
+            areas you work in to build a well-rounded portfolio.
           </p>
-        </CardContent>
-      </Card>
+        </div>
+      </motion.div>
 
-      {/* Domestic */}
-      <Card className="border-blue-500/30 bg-white/5">
-        <CardContent className="p-4 space-y-3">
-          <h2 className="text-lg font-semibold text-blue-400">
-            Domestic Electrical Work
-          </h2>
-          <p className="text-white text-sm leading-relaxed">
-            Residential installations are the most common starting point for
-            apprentices. Domestic work covers everything from rewires to new
-            builds to additions and alterations.
-          </p>
-          <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
-            <h3 className="text-blue-400 font-semibold text-sm mb-2">
-              Key Work Areas to Evidence
-            </h3>
-            <ul className="space-y-1">
-              {[
-                'Consumer unit installations and upgrades (split-load, RCBO boards)',
-                'Domestic wiring systems — ring finals, radial circuits, lighting circuits',
-                'Kitchen and bathroom electrical work (special locations per BS 7671)',
-                'Garden and outdoor installations — external sockets, lighting, ponds',
-                'Electric vehicle charging point installations (OZEV/EVHS scheme)',
-                'Smoke and heat alarm installations (BS 5839-6)',
-                'Rewires — full and partial, including first-fix and second-fix',
-                'Additions and alterations to existing installations',
-                'New build electrical installations from scratch',
-              ].map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2 text-sm text-white"
-                >
-                  <span className="text-blue-400 flex-shrink-0">&bull;</span>
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
-            <h3 className="text-green-400 font-semibold text-sm mb-2">
-              Evidence Types for Domestic Work
-            </h3>
-            <ul className="space-y-1">
-              {[
-                'EICRs (Electrical Installation Condition Reports)',
-                'Minor Works Certificates',
-                'Electrical Installation Certificates',
-                'Schedule of Test Results (R1+R2, Zs, insulation resistance, RCD times)',
-                'Customer testimonials about your professionalism',
-                'Before/during/after installation photos',
-                'Wiring diagrams and circuit charts you have produced',
-              ].map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2 text-sm text-white"
-                >
-                  <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
-            <h3 className="text-amber-400 font-semibold text-sm mb-2">
-              Key Regulations for Domestic Work
-            </h3>
-            <ul className="space-y-1">
-              {[
-                'BS 7671 (18th Edition Wiring Regulations)',
-                'Part P of the Building Regulations (England and Wales)',
-                'BS 5839-6 (domestic fire detection and fire alarm systems)',
-                'NICEIC / NAPIT / ELECSA scheme requirements',
-                'IET Guidance Notes (particularly GN1, GN3, GN7)',
-                'Building Regulations Approved Document P',
-              ].map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2 text-sm text-white"
-                >
-                  <span className="text-amber-400 flex-shrink-0">&bull;</span>
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Commercial */}
-      <Card className="border-purple-500/30 bg-white/5">
-        <CardContent className="p-4 space-y-3">
-          <h2 className="text-lg font-semibold text-purple-400">
-            Commercial Electrical Work
-          </h2>
-          <p className="text-white text-sm leading-relaxed">
-            Commercial work includes offices, shops, schools, hospitals, and
-            other non-industrial buildings. This sector often involves larger
-            systems, 3-phase supplies, and specialist systems like fire
-            alarms and emergency lighting.
-          </p>
-          <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-3">
-            <h3 className="text-purple-400 font-semibold text-sm mb-2">
-              Key Work Areas to Evidence
-            </h3>
-            <ul className="space-y-1">
-              {[
-                'Three-phase distribution systems and sub-distribution boards',
-                'Commercial lighting installations and controls (DALI, PIR, lux sensors)',
-                'Emergency lighting systems (maintained and non-maintained)',
-                'Fire alarm installations (conventional and addressable)',
-                'Structured cabling and data installations (Cat6/Cat6a)',
-                'Access control and intruder alarm systems',
-                'Power distribution units (PDUs) in server rooms',
-                'Energy monitoring and building management systems (BMS)',
-                'External lighting — car parks, building facades, pathways',
-              ].map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2 text-sm text-white"
-                >
-                  <span className="text-purple-400 flex-shrink-0">&bull;</span>
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
-            <h3 className="text-green-400 font-semibold text-sm mb-2">
-              Evidence Types for Commercial Work
-            </h3>
-            <ul className="space-y-1">
-              {[
-                'Periodic inspection reports (5-yearly for commercial)',
-                'Commissioning test results and handover documents',
-                'Emergency lighting certificates (BS 5266)',
-                'Fire alarm commissioning records (BS 5839-1)',
-                'Cable schedule documentation',
-                'As-built drawings showing your installations',
-                'Snagging lists and completion records',
-              ].map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2 text-sm text-white"
-                >
-                  <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
-            <h3 className="text-amber-400 font-semibold text-sm mb-2">
-              Key Regulations for Commercial Work
-            </h3>
-            <ul className="space-y-1">
-              {[
-                'BS 7671 (18th Edition Wiring Regulations)',
-                'BS 5266 (Emergency lighting)',
-                'BS 5839-1 (Fire detection and fire alarm systems)',
-                'CDM Regulations 2015 (Construction Design and Management)',
-                'Workplace (Health, Safety and Welfare) Regulations 1992',
-                'The Electricity at Work Regulations 1989',
-              ].map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2 text-sm text-white"
-                >
-                  <span className="text-amber-400 flex-shrink-0">&bull;</span>
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Industrial */}
-      <Card className="border-orange-500/30 bg-white/5">
-        <CardContent className="p-4 space-y-3">
-          <h2 className="text-lg font-semibold text-orange-400">
-            Industrial Electrical Work
-          </h2>
-          <p className="text-white text-sm leading-relaxed">
-            Industrial work covers manufacturing plants, factories, process
-            facilities, and heavy engineering environments. This sector
-            involves larger power systems, motor control, automation, and
-            potentially hazardous areas.
-          </p>
-          <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-3">
-            <h3 className="text-orange-400 font-semibold text-sm mb-2">
-              Key Work Areas to Evidence
-            </h3>
-            <ul className="space-y-1">
-              {[
-                'Motor control centres (MCCs) and variable speed drives (VSDs)',
-                'PLC (Programmable Logic Controller) systems and automation',
-                'High voltage switching and protection systems',
-                'Industrial process control instrumentation',
-                'Hazardous area installations (ATEX zones)',
-                'Power factor correction equipment',
-                'Industrial lighting (high bays, floodlighting)',
-                'Cable tray and ladder rack containment systems',
-                'Busbar trunking systems',
-                'Standby generator installations and changeover systems',
-              ].map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2 text-sm text-white"
-                >
-                  <span className="text-orange-400 flex-shrink-0">&bull;</span>
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
-            <h3 className="text-green-400 font-semibold text-sm mb-2">
-              Evidence Types for Industrial Work
-            </h3>
-            <ul className="space-y-1">
-              {[
-                'Commissioning reports for plant and machinery',
-                'FAT (Factory Acceptance Test) and SAT (Site Acceptance Test) documents',
-                'Loop testing certificates for instrumentation',
-                'Motor testing results (insulation, winding resistance)',
-                'Safety system validation records',
-                'Permit-to-work documentation',
-                'Lock-out/tag-out (LOTO) procedure evidence',
-              ].map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2 text-sm text-white"
-                >
-                  <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
-            <h3 className="text-amber-400 font-semibold text-sm mb-2">
-              Key Regulations for Industrial Work
-            </h3>
-            <ul className="space-y-1">
-              {[
-                'BS 7671 (18th Edition Wiring Regulations)',
-                'BS EN 60079 (Explosive atmospheres — equipment classification)',
-                'DSEAR (Dangerous Substances and Explosive Atmospheres Regulations)',
-                'PUWER (Provision and Use of Work Equipment Regulations)',
-                'Machinery Directive (2006/42/EC)',
-                'The Electricity at Work Regulations 1989',
-                'LOLER (Lifting Operations and Lifting Equipment Regulations)',
-              ].map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2 text-sm text-white"
-                >
-                  <span className="text-amber-400 flex-shrink-0">&bull;</span>
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Universal Requirements */}
-      <Card className="border-green-500/30 bg-white/5">
-        <CardContent className="p-4 space-y-3">
-          <h2 className="text-lg font-semibold text-green-400">
-            Universal Requirements (All Sectors)
-          </h2>
-          <p className="text-white text-sm leading-relaxed">
-            Regardless of which sector you work in, these evidence
-            requirements apply everywhere:
-          </p>
-          <div className="space-y-3">
-            {[
-              {
-                category: 'Health & Safety',
-                items: [
-                  'Risk assessment completion evidence',
-                  'Method statement preparation or contribution',
-                  'PPE usage documentation',
-                  'Accident/incident/near-miss reporting',
-                  'Safety training records (CSCS, first aid, manual handling)',
-                  'Safe isolation procedure compliance',
-                ],
-              },
-              {
-                category: 'Testing & Inspection',
-                items: [
-                  'Initial verification testing (new installations)',
-                  'Periodic inspection and testing (existing installations)',
-                  'Portable appliance testing (PAT)',
-                  'Emergency lighting testing and records',
-                  'Fire alarm system testing and records',
-                  'Earth fault loop impedance and RCD testing',
-                ],
-              },
-              {
-                category: 'Professional Standards',
-                items: [
-                  'BS 7671 (18th Edition) compliance in all work',
-                  'IET Guidance Note understanding and application',
-                  'On-Site Guide reference and use',
-                  'Building Regulations awareness and compliance',
-                  'CDM Regulations awareness (commercial and industrial)',
-                  'Environmental regulations and waste management',
-                ],
-              },
-            ].map((section) => (
-              <div
-                key={section.category}
-                className="bg-white/5 border border-green-500/20 rounded-lg p-3"
-              >
-                <h3 className="text-green-400 font-semibold text-sm mb-2">
-                  {section.category}
-                </h3>
-                <ul className="space-y-1">
-                  {section.items.map((item) => (
+      {/* ── Sectors ─────────────────────────────────────────────── */}
+      {sectors.map((sector) => {
+        const Icon = sector.icon;
+        return (
+          <motion.section
+            key={sector.sector}
+            variants={itemVariants}
+            className="space-y-3"
+          >
+            <SectionHeader
+              eyebrow={sector.sector.split(' ').slice(0, 1).join(' ')}
+              title={sector.sector}
+              meta={sector.description}
+              action={
+                <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
+                  <Icon className="h-4 w-4 text-elec-yellow" />
+                </span>
+              }
+            />
+            <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
+              <div className="space-y-2">
+                <Eyebrow>Key work areas to evidence</Eyebrow>
+                <ul className="space-y-1.5">
+                  {sector.workAreas.map((item) => (
                     <li
                       key={item}
-                      className="flex items-start gap-2 text-sm text-white"
+                      className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
                     >
-                      <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                      {item}
+                      <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                      <span>{item}</span>
                     </li>
                   ))}
                 </ul>
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+              <div className="space-y-2 pt-2 border-t border-white/[0.04]">
+                <Eyebrow>Evidence types</Eyebrow>
+                <ul className="space-y-1.5">
+                  {sector.evidenceTypes.map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    >
+                      <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="space-y-2 pt-2 border-t border-white/[0.04]">
+                <Eyebrow>Key regulations</Eyebrow>
+                <ul className="space-y-1.5">
+                  {sector.regulations.map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    >
+                      <Shield className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </motion.section>
+        );
+      })}
 
-      {/* Maximising Your Exposure */}
-      <Card className="border-blue-500/30 bg-white/5">
-        <CardContent className="p-4 space-y-3">
-          <h2 className="text-lg font-semibold text-blue-400">
-            Maximising Your Industry Exposure
-          </h2>
-          <p className="text-white text-sm leading-relaxed">
-            If your employer works primarily in one sector, try to gain
-            experience in other areas too. A well-rounded portfolio showing
-            domestic, commercial, and industrial work is stronger than one
-            focused on a single sector.
-          </p>
-          <ul className="space-y-2">
-            {[
-              'Ask your employer about job variety — can you shadow other teams?',
-              'Use college workshops to practise work outside your usual sector',
-              'Volunteer for different types of projects when opportunities arise',
-              'Discuss exposure gaps with your training provider at reviews',
-              'If you only do domestic work, focus heavily on the domestic evidence requirements',
-              'Some EPAOs will accept college-based evidence if site exposure is limited',
-              'Your pathway choice (Installation vs Maintenance) affects what is expected',
-            ].map((item) => (
+      {/* ── Universal requirements ──────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Universal requirements"
+          title="Three categories that apply everywhere"
+          meta="Regardless of which sector you work in"
+        />
+        <ul className="space-y-2">
+          {universalRequirements.map((section) => (
+            <li
+              key={section.category}
+              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2"
+            >
+              <h3 className="text-[13.5px] font-semibold text-elec-yellow tracking-tight">
+                {section.category}
+              </h3>
+              <ul className="space-y-1.5">
+                {section.items.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  >
+                    <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      {/* ── Maximising exposure ─────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Maximising industry exposure"
+          title="A well-rounded portfolio is stronger"
+          meta="If your employer focuses on one sector, branch out"
+        />
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+          <ul className="space-y-1.5">
+            {maximisingExposure.map((item) => (
               <li
                 key={item}
-                className="flex items-start gap-2 text-sm text-white"
+                className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
               >
-                <CheckCircle className="h-4 w-4 text-blue-400 flex-shrink-0 mt-0.5" />
-                {item}
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                <span>{item}</span>
               </li>
             ))}
           </ul>
-        </CardContent>
-      </Card>
+        </div>
+      </motion.section>
 
-      {/* Assessment Tips */}
-      <Card className="border-red-500/30 bg-white/5">
-        <CardContent className="p-4 space-y-3">
-          <h2 className="text-lg font-semibold text-red-400">
-            Portfolio Assessment Tips
-          </h2>
-          <div className="space-y-3">
-            <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
-              <h3 className="text-green-400 font-semibold text-sm mb-2">
-                What Assessors Look For
-              </h3>
-              <ul className="space-y-1">
-                {[
-                  'Evidence that is authentic, verifiable, and clearly your own work',
-                  'Dates, witness signatures, and location details on all evidence',
-                  'Progression and development over the 4-year programme',
-                  'Coverage of ALL required KSBs, not just the easy ones',
-                  'Quality over quantity in evidence selection',
-                  'Clear organisation and easy navigation',
-                ].map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-2 text-sm text-white"
-                  >
-                    <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
-              <h3 className="text-red-400 font-semibold text-sm mb-2">
-                What Weakens a Portfolio
-              </h3>
-              <ul className="space-y-1">
-                {[
-                  'Evidence not mapped to specific KSBs',
-                  'Missing or incomplete sections',
-                  'All evidence from one time period (shows last-minute collection)',
-                  'No reflective commentary — just raw evidence with no analysis',
-                  'Generic content copied from textbooks or the internet',
-                  'Messy presentation and poor organisation',
-                  'Confidential client information included without consent',
-                ].map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-2 text-sm text-white"
-                  >
-                    <span className="text-red-400 flex-shrink-0">&bull;</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
+      {/* ── Assessment tips ─────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Portfolio assessment tips"
+          title="What they look for vs what weakens"
+          meta="The difference between Pass and Distinction at portfolio level"
+        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+          <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-3">
+            <Eyebrow className="text-elec-yellow/85">What assessors look for</Eyebrow>
+            <ul className="space-y-1.5">
+              {assessorsLookFor.map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                >
+                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
           </div>
-        </CardContent>
-      </Card>
+          <div className="rounded-xl border border-red-500/25 bg-red-500/[0.04] p-4 sm:p-5 space-y-3">
+            <Eyebrow className="text-red-300">What weakens a portfolio</Eyebrow>
+            <ul className="space-y-1.5">
+              {portfolioWeakeners.map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                >
+                  <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </motion.section>
 
-      {/* Confidentiality */}
-      <Card className="border-amber-500/30 bg-amber-500/10">
-        <CardContent className="p-4 space-y-3">
-          <h2 className="text-lg font-semibold text-amber-400">
-            Client Confidentiality
-          </h2>
-          <p className="text-white text-sm leading-relaxed">
-            Always respect client confidentiality when collecting portfolio
-            evidence. Remove or redact client names, addresses, and personal
-            details from certificates and photos. Never share portfolio
-            evidence publicly on social media. If in doubt about whether
-            you can include something, ask your employer and the client
-            for permission first.
+      {/* ── Confidentiality ─────────────────────────────────────── */}
+      <motion.section variants={itemVariants}>
+        <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-1.5">
+          <Eyebrow className="text-elec-yellow/85">Client confidentiality</Eyebrow>
+          <p className="text-[13.5px] text-white/85 leading-relaxed">
+            Always respect client confidentiality. Remove or redact client
+            names, addresses, and personal details from certificates and
+            photos. Never share portfolio evidence publicly on social media.
+            If in doubt, ask your employer and the client for permission first.
           </p>
-        </CardContent>
-      </Card>
+        </div>
+      </motion.section>
     </PageFrame>
   );
 };

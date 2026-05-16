@@ -13,6 +13,7 @@ import {
   KeyTakeaways, FAQ, LearningOutcomes, ContentEyebrow, SectionRule,
   VideoCard,
 } from '@/components/study-centre/learning';
+import { TransformerSchematic } from '@/components/study-centre/diagrams';
 import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
@@ -90,6 +91,7 @@ export default function Sub6() {
             'Specify a substation room with adequate ventilation, IP rating, fire separation and acoustic limits.',
             'Identify when an oil bund is required and to what capacity.',
           ]} initialVisibleCount={3} />
+          <TransformerSchematic />
           <ContentEyebrow>The UK grid hierarchy</ContentEyebrow>
           <ConceptBlock title="From generator to your socket" plainEnglish="Five voltage levels, five sets of transformers. Each step-down brings the supply closer to the consumer at progressively lower voltage and higher current.">
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">

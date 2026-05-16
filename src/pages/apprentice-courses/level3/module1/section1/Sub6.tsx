@@ -309,7 +309,7 @@ export default function Sub6() {
                 offence under s.33. Notice is published on the HSE Public Register.
               </>
             }
-            cite="Source: Health and Safety at Work etc Act 1974 (1974 c.37), s.21 — verbatim from legislation.gov.uk."
+            cite="Source: Health and Safety at Work etc Act 1974 (1974 c.37), s.21."
           />
 
           <RegsCallout
@@ -336,7 +336,7 @@ export default function Sub6() {
                 up to 2 years imprisonment on indictment.
               </>
             }
-            cite="Source: Health and Safety at Work etc Act 1974 (1974 c.37), s.22 — verbatim from legislation.gov.uk."
+            cite="Source: Health and Safety at Work etc Act 1974 (1974 c.37), s.22."
           />
 
           <InlineCheck
@@ -533,7 +533,7 @@ export default function Sub6() {
                 — it&apos;s a formal evidence-gathering procedure, not a chat.
               </>
             }
-            cite="Source: Health and Safety at Work etc Act 1974 (1974 c.37), Part I, s.20 — verbatim from legislation.gov.uk."
+            cite="Source: Health and Safety at Work etc Act 1974 (1974 c.37), Part I, s.20."
           />
 
           <SectionRule />

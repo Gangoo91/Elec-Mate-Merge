@@ -1998,7 +1998,7 @@ const Level3Module7Section3_5 = lazy(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section3_5',
-      () => import('@/pages/apprentice-courses/Level3Module7Section3_5')
+      () => import('@/pages/apprentice-courses/level3/module7/section3/Sub5')
     )
   )
 );
@@ -2046,7 +2046,7 @@ const Level3Module7Section4_5 = lazy(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section4_5',
-      () => import('@/pages/apprentice-courses/Level3Module7Section4_5')
+      () => import('@/pages/apprentice-courses/level3/module7/section4/Sub5')
     )
   )
 );
@@ -2054,7 +2054,7 @@ const Level3Module7Section5 = lazy(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section5',
-      () => import('@/pages/apprentice-courses/Level3Module7Section5')
+      () => import('@/pages/apprentice-courses/level3/module7/section5/Landing')
     )
   )
 );
@@ -2062,7 +2062,7 @@ const Level3Module7Section5_1 = lazy(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section5_1',
-      () => import('@/pages/apprentice-courses/Level3Module7Section5_1')
+      () => import('@/pages/apprentice-courses/level3/module7/section5/Sub1')
     )
   )
 );
@@ -2070,7 +2070,7 @@ const Level3Module7Section5_2 = lazy(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section5_2',
-      () => import('@/pages/apprentice-courses/Level3Module7Section5_2')
+      () => import('@/pages/apprentice-courses/level3/module7/section5/Sub2')
     )
   )
 );
@@ -2078,7 +2078,7 @@ const Level3Module7Section5_3 = lazy(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section5_3',
-      () => import('@/pages/apprentice-courses/Level3Module7Section5_3')
+      () => import('@/pages/apprentice-courses/level3/module7/section5/Sub3')
     )
   )
 );
@@ -2086,7 +2086,7 @@ const Level3Module7Section5_4 = lazy(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section5_4',
-      () => import('@/pages/apprentice-courses/Level3Module7Section5_4')
+      () => import('@/pages/apprentice-courses/level3/module7/section5/Sub4')
     )
   )
 );
@@ -2094,7 +2094,7 @@ const Level3Module7Section5_5 = lazy(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section5_5',
-      () => import('@/pages/apprentice-courses/Level3Module7Section5_5')
+      () => import('@/pages/apprentice-courses/level3/module7/section5/Sub5')
     )
   )
 );
@@ -2102,7 +2102,7 @@ const Level3Module7Section5_6 = lazy(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section5_6',
-      () => import('@/pages/apprentice-courses/Level3Module7Section5_6')
+      () => import('@/pages/apprentice-courses/level3/module7/section5/Sub6')
     )
   )
 );

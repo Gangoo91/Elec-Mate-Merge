@@ -223,13 +223,18 @@ serve(async (req) => {
           .maybeSingle();
 
         if (depositInvoice) {
+          // ELE-954 fix — the invoices table columns are `status`, `paid_at`,
+          // `payment_method`, `payment_reference` (not the legacy
+          // `invoice_*` prefixed names from when invoices lived on the
+          // quotes table). The previous code silently 400'd, which is why
+          // no deposit row ever flipped to paid in prod.
           await supabase
             .from('invoices')
             .update({
-              invoice_status: 'paid',
-              invoice_paid_at: new Date().toISOString(),
-              invoice_payment_method: 'card',
-              invoice_payment_reference: session.payment_intent as string,
+              status: 'paid',
+              paid_at: new Date().toISOString(),
+              payment_method: 'card',
+              payment_reference: session.payment_intent as string,
               stripe_payment_intent_id: session.payment_intent as string,
             })
             .eq('id', invoiceId);

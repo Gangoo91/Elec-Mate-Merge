@@ -31,7 +31,9 @@ import {
   LearningOutcomes,
   ContentEyebrow,
   SectionRule,
+  VideoCard,
 } from '@/components/study-centre/learning';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE =
@@ -105,7 +107,7 @@ const quizQuestions = [
       'Why does the inverter in a grid-tied PV install need to "follow" the grid, and what happens if the grid fails?',
     options: [
       'It doesn\'t need to follow the grid — it dictates the frequency.',
-      "A grid-tied (parallel-connected) inverter synchronises its output voltage and frequency to the grid using the grid as its reference. When the grid fails, the inverter must disconnect (anti-islanding protection) — it cannot legally continue exporting into a dead network because that would put live voltage onto cables that the DNO has isolated for fault repair, putting linespeople at risk. ENA G98/G99 specifies the loss-of-mains detection settings (vector shift, ROCOF, voltage and frequency limits). Without backup hardware, when the grid drops the PV stops — the customer\'s house goes dark even with sun on the roof.",
+      "A grid-tied (parallel-connected) inverter synchronises its output voltage and frequency to the grid using the grid as its reference. When the grid fails, the inverter must disconnect (anti-islanding protection) — it cannot legally continue exporting into a dead network because that would put live voltage onto cables that the DNO has isolated for fault repair, putting linespeople at risk. ENA G98/G99 specifies the loss-of-mains detection settings (vector shift, ROCOF, voltage and frequency limits). Without backup hardware, when the grid drops the PV stops — the customer's house goes dark even with sun on the roof.",
       'It runs on its own internal clock.',
       'It generates DC only.',
     ],
@@ -320,6 +322,15 @@ export default function Sub1() {
               </li>
             </ol>
           </ConceptBlock>
+
+          <VideoCard
+            url={videos.inverter.url}
+            title={videos.inverter.title}
+            channel={videos.inverter.channel}
+            duration={videos.inverter.duration}
+            topic="Solar PV inverter — DC to grid-quality AC"
+            caption="The inverter is the heart of the PV install — taking variable DC from the array and synthesising a 230 V 50 Hz sinusoid that the consumer unit can accept. Understanding the inverter is the foundation for everything else on the AC side."
+          />
 
           <SectionRule />
 
@@ -806,7 +817,7 @@ export default function Sub1() {
                 installer-competence standard is the practical companion document.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Section 712 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Section 712."
           />
 
           <SectionRule />

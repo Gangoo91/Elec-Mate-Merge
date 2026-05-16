@@ -11,6 +11,7 @@ import {
   TLDR, ConceptBlock, RegsCallout, CommonMistake, Scenario,
   KeyTakeaways, FAQ, LearningOutcomes, ContentEyebrow, SectionRule,
 } from '@/components/study-centre/learning';
+import { TransformerSchematic } from '@/components/study-centre/diagrams';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Transformer efficiency and regulation | Level 3 Module 3.4.5 | Elec-Mate';
@@ -83,6 +84,7 @@ export default function Sub5() {
             'Choose vector group, cooling code and inrush-rated upstream protection for a commercial transformer specification.',
             'Calculate all-day efficiency from a load profile and present it alongside nameplate efficiency in a customer-facing energy report.',
           ]} initialVisibleCount={3} />
+          <TransformerSchematic />
           <ContentEyebrow>Efficiency at any load</ContentEyebrow>
           <ConceptBlock title="η = output / (output + losses)" plainEnglish="Plug in your load fraction, multiply iron loss is fixed, scale copper loss by load squared.">
             <p><strong>η(x) = (x × S × pf) / (x × S × pf + P_fe + x² × P_cu_FL)</strong></p>

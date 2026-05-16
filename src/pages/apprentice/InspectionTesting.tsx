@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { SmartBackButton } from '@/components/ui/smart-back-button';
-import { Card, CardContent } from '@/components/ui/card';
 import {
   ArrowRight,
   Shield,
@@ -161,8 +160,8 @@ const InspectionTesting = () => {
             to="/apprentice/inspection-testing-hub"
             className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-2xl group"
           >
-            <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/15 via-elec-yellow/10 to-elec-yellow/5 hover:border-elec-yellow/50 hover:from-elec-yellow/20 hover:via-elec-yellow/15 hover:to-elec-yellow/10 transition-all duration-300 active:scale-[0.98] overflow-hidden">
-              <CardContent className="p-0">
+            <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+              <div className="p-0">
                 <div className="flex flex-col lg:flex-row">
                   {/* Left content area */}
                   <div className="flex-1 p-6 sm:p-8">
@@ -212,8 +211,7 @@ const InspectionTesting = () => {
                     </div>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
+              </div></div>
           </Link>
         </section>
 
@@ -231,10 +229,8 @@ const InspectionTesting = () => {
                 to={topic.link}
                 className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-xl group"
               >
-                <Card
-                  className={`bg-gradient-to-br ${topic.gradientFrom} ${topic.gradientTo} ${topic.borderColor} backdrop-blur-sm hover:shadow-lg transition-all duration-300 active:scale-[0.98] h-full`}
-                >
-                  <CardContent className="p-5 sm:p-6">
+                <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+                  <div className="p-4 sm:p-5 sm:p-6">
                     <div className="flex items-start gap-4">
                       <div
                         className={`min-w-[52px] min-h-[52px] p-3 rounded-xl bg-white/10 group-hover:bg-white/15 group-hover:scale-110 transition-all duration-300 flex-shrink-0 border border-white/10`}
@@ -258,8 +254,7 @@ const InspectionTesting = () => {
                         </div>
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
+                  </div></div>
               </Link>
             ))}
           </div>
@@ -277,82 +272,77 @@ const InspectionTesting = () => {
               to="/apprentice/inspection-testing-hub"
               className="focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-xl"
             >
-              <Card className="bg-gradient-to-br from-elec-yellow/15 to-elec-yellow/5 border-elec-yellow/30 hover:border-elec-yellow/50 hover:from-elec-yellow/20 hover:to-elec-yellow/10 transition-all duration-300 active:scale-[0.97] h-full">
-                <CardContent className="p-4 sm:p-5 flex flex-col items-center justify-center text-center min-h-[120px]">
+              <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+                <div className="p-4 sm:p-5 flex flex-col items-center justify-center text-center min-h-[120px]">
                   <div className="min-w-[44px] min-h-[44px] p-2.5 rounded-xl bg-elec-yellow/20 mb-3">
                     <GraduationCap className="h-5 w-5 text-elec-yellow" />
                   </div>
                   <p className="text-sm font-semibold text-white">I&T Hub</p>
                   <p className="text-xs text-white mt-1 hidden sm:block">Full training</p>
-                </CardContent>
-              </Card>
+                </div></div>
             </Link>
 
             <Link
               to="/apprentice/on-job-tools/bs7671-runthrough"
               className="focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-xl"
             >
-              <Card className="bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 backdrop-blur-sm transition-all duration-300 active:scale-[0.97] h-full">
-                <CardContent className="p-4 sm:p-5 flex flex-col items-center justify-center text-center min-h-[120px]">
+              <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+                <div className="p-4 sm:p-5 flex flex-col items-center justify-center text-center min-h-[120px]">
                   <div className="min-w-[44px] min-h-[44px] p-2.5 rounded-xl bg-elec-yellow/10 mb-3">
                     <CheckSquare className="h-5 w-5 text-elec-yellow" />
                   </div>
                   <p className="text-sm font-semibold text-white">Run-Through</p>
                   <p className="text-xs text-white mt-1 hidden sm:block">Step-by-step</p>
-                </CardContent>
-              </Card>
+                </div></div>
             </Link>
 
             <Link
               to="/apprentice/on-job-tools/testing-procedures"
               className="focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-xl"
             >
-              <Card className="bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 backdrop-blur-sm transition-all duration-300 active:scale-[0.97] h-full">
-                <CardContent className="p-4 sm:p-5 flex flex-col items-center justify-center text-center min-h-[120px]">
+              <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+                <div className="p-4 sm:p-5 flex flex-col items-center justify-center text-center min-h-[120px]">
                   <div className="min-w-[44px] min-h-[44px] p-2.5 rounded-xl bg-green-500/10 mb-3">
                     <Zap className="h-5 w-5 text-green-400" />
                   </div>
                   <p className="text-sm font-semibold text-white">Test Procedures</p>
                   <p className="text-xs text-white mt-1 hidden sm:block">Quick toolkit</p>
-                </CardContent>
-              </Card>
+                </div></div>
             </Link>
 
             <Link
               to="/apprentice/on-job-tools/flashcards"
               className="focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-xl"
             >
-              <Card className="bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 backdrop-blur-sm transition-all duration-300 active:scale-[0.97] h-full">
-                <CardContent className="p-4 sm:p-5 flex flex-col items-center justify-center text-center min-h-[120px]">
+              <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+                <div className="p-4 sm:p-5 flex flex-col items-center justify-center text-center min-h-[120px]">
                   <div className="min-w-[44px] min-h-[44px] p-2.5 rounded-xl bg-blue-500/10 mb-3">
                     <BookOpen className="h-5 w-5 text-blue-400" />
                   </div>
                   <p className="text-sm font-semibold text-white">Flashcards</p>
                   <p className="text-xs text-white mt-1 hidden sm:block">Quick revision</p>
-                </CardContent>
-              </Card>
+                </div></div>
             </Link>
 
             <Link
               to="/apprentice/calculators"
               className="focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-xl"
             >
-              <Card className="bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 backdrop-blur-sm transition-all duration-300 active:scale-[0.97] h-full">
-                <CardContent className="p-4 sm:p-5 flex flex-col items-center justify-center text-center min-h-[120px]">
+              <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+                <div className="p-4 sm:p-5 flex flex-col items-center justify-center text-center min-h-[120px]">
                   <div className="min-w-[44px] min-h-[44px] p-2.5 rounded-xl bg-purple-500/10 mb-3">
                     <FileText className="h-5 w-5 text-purple-400" />
                   </div>
                   <p className="text-sm font-semibold text-white">Calculators</p>
                   <p className="text-xs text-white mt-1 hidden sm:block">Zs, R1+R2</p>
-                </CardContent>
-              </Card>
+                </div></div>
             </Link>
           </div>
         </section>
 
         {/* Footer Disclaimer */}
-        <Card className="bg-white/5 border border-white/10 backdrop-blur-sm">
-          <CardContent className="p-5">
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+          <div className="p-4 sm:p-5">
             <div className="flex items-start gap-4">
               <div className="min-w-[44px] min-h-[44px] w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0">
                 <AlertTriangle className="h-5 w-5 text-white" />
@@ -367,8 +357,7 @@ const InspectionTesting = () => {
                 </p>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div></div>
       </div>
     </div>
   );

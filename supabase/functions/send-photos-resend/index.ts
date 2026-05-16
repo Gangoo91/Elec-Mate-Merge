@@ -1,6 +1,7 @@
 import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
-import { Resend } from '../_shared/mailer.ts';
+import { Resend, clientFacingSender, htmlToPlainText } from '../_shared/mailer.ts';
+import { buildPhotosSendEmail } from '../_shared/email-templates/photos-send.ts';
 import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
@@ -44,18 +45,6 @@ function extractStoragePath(publicUrl: string): string | null {
   } catch {
     return null;
   }
-}
-
-/**
- * Escape HTML to prevent XSS in email content
- */
-function escapeHtml(text: string): string {
-  return text
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
 }
 
 // ============================================================================
@@ -163,7 +152,6 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     const projectName = project.name || 'Untitled Project';
-    const projectDescription = project.description || '';
     console.log('Project fetched:', projectName);
 
     // ========================================================================
@@ -248,216 +236,56 @@ const handler = async (req: Request): Promise<Response> => {
 
     const companyName = companyProfile?.company_name || 'ElecMate';
     const companyEmail = companyProfile?.company_email || '';
-    const companyPhone = companyProfile?.company_phone || '';
     console.log('Company:', companyName);
 
     // ========================================================================
-    // STEP 8: Build photo grid HTML
+    // STEP 8: Build email via shared template
     // ========================================================================
-    const photoGridHtml = photoData
-      .map((photo, index) => {
-        const captionHtml = photo.caption
-          ? `<p style="margin: 8px 0 0; font-size: 13px; color: #6b7280; line-height: 1.4;">${escapeHtml(photo.caption)}</p>`
-          : '';
-
-        return `
-        <tr>
-          <td style="padding: 8px;">
-            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden;">
-              <tr>
-                <td style="padding: 0; text-align: center;">
-                  <a href="${photo.signedUrl}" target="_blank" style="display: block; text-decoration: none;">
-                    <img
-                      src="${photo.thumbnailUrl}"
-                      alt="${escapeHtml(photo.caption || `Photo ${index + 1}`)}"
-                      width="520"
-                      style="display: block; width: 100%; max-width: 520px; height: auto; border: 0; border-radius: 8px 8px 0 0;"
-                    />
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td style="padding: 12px 16px;">
-                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                    <tr>
-                      <td>
-                        <p style="margin: 0; font-size: 14px; font-weight: 600; color: #1f2937;">Photo ${index + 1}</p>
-                        ${captionHtml}
-                      </td>
-                      <td style="text-align: right; vertical-align: top; white-space: nowrap; padding-left: 12px;">
-                        <a href="${photo.signedUrl}" target="_blank" style="display: inline-block; background: #fbbf24; color: #1f2937; text-decoration: none; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600;">
-                          View Full Size
-                        </a>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-        `;
-      })
-      .join('');
-
-    // ========================================================================
-    // STEP 9: Build full email HTML
-    // ========================================================================
-    const safeRecipientName = recipientName ? escapeHtml(recipientName) : '';
-    const safeMessage = message ? escapeHtml(message) : '';
-    const safeProjectName = escapeHtml(projectName);
-    const safeProjectDescription = projectDescription ? escapeHtml(projectDescription) : '';
-
-    const emailHtml = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
-  <title>Project Photos from ${escapeHtml(companyName)}</title>
-  <!--[if mso]>
-  <style type="text/css">
-    body, table, td {font-family: Arial, sans-serif !important;}
-  </style>
-  <![endif]-->
-</head>
-<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f8fafc; -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;">
-
-  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f8fafc;">
-    <tr>
-      <td style="padding: 20px 10px;">
-        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); border-radius: 12px; overflow: hidden;">
-
-          <!-- Header -->
-          <tr>
-            <td style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 32px 24px; text-align: center;">
-              ${companyProfile?.logo_url ? `<img src="${companyProfile.logo_url}" alt="${escapeHtml(companyName)}" style="max-height: 60px; max-width: 200px; margin-bottom: 16px; display: block; margin-left: auto; margin-right: auto;" />` : ''}
-              <h1 style="margin: 0; color: #fbbf24; font-size: 24px; font-weight: 700;">${escapeHtml(companyName)}</h1>
-              <p style="margin: 8px 0 0; color: #9ca3af; font-size: 14px;">Project Photos</p>
-            </td>
-          </tr>
-
-          <!-- Greeting -->
-          <tr>
-            <td style="padding: 32px 24px 0;">
-              ${safeRecipientName ? `<p style="margin: 0 0 16px; font-size: 16px; line-height: 1.6; color: #374151;">Dear <strong style="color: #1f2937;">${safeRecipientName}</strong>,</p>` : ''}
-              <p style="margin: 0 0 24px; font-size: 16px; line-height: 1.6; color: #374151;">
-                Please find the project photos attached below from <strong style="color: #1f2937;">${escapeHtml(companyName)}</strong>.
-              </p>
-            </td>
-          </tr>
-
-          <!-- Custom Message -->
-          ${
-            safeMessage
-              ? `
-          <tr>
-            <td style="padding: 0 24px 24px;">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: #fffbeb; border-left: 4px solid #fbbf24; border-radius: 8px;">
-                <tr>
-                  <td style="padding: 16px;">
-                    <p style="margin: 0 0 8px; font-size: 13px; font-weight: 700; color: #92400e; text-transform: uppercase; letter-spacing: 0.05em;">Message</p>
-                    <p style="margin: 0; font-size: 15px; line-height: 1.6; color: #78350f;">${safeMessage}</p>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          `
-              : ''
-          }
-
-          <!-- Project Info Card -->
-          <tr>
-            <td style="padding: 0 24px 24px;">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); border-radius: 12px; border: 2px solid #e5e7eb;">
-                <tr>
-                  <td style="padding: 24px;">
-                    <h2 style="margin: 0 0 8px; font-size: 22px; font-weight: 700; color: #1f2937;">${safeProjectName}</h2>
-                    ${safeProjectDescription ? `<p style="margin: 0 0 12px; font-size: 14px; line-height: 1.6; color: #6b7280;">${safeProjectDescription}</p>` : ''}
-                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                      <tr>
-                        <td style="padding: 6px 0; font-size: 14px; color: #6b7280;">Photos included:</td>
-                        <td style="text-align: right; font-size: 14px; color: #1f2937; font-weight: 600;">${photoData.length}</td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-          <!-- Photo Grid -->
-          <tr>
-            <td style="padding: 0 16px 24px;">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                ${photoGridHtml}
-              </table>
-            </td>
-          </tr>
-
-          <!-- Download Notice -->
-          <tr>
-            <td style="padding: 0 24px 24px;">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px;">
-                <tr>
-                  <td style="padding: 16px; text-align: center;">
-                    <p style="margin: 0; font-size: 13px; color: #0369a1; line-height: 1.5;">
-                      Photo links are valid for <strong>1 hour</strong>. Click "View Full Size" to download each photo.
-                    </p>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-          <!-- Footer - Contact -->
-          <tr>
-            <td style="padding: 0 24px 32px;">
-              <p style="margin: 0 0 16px; font-size: 15px; line-height: 1.6; color: #374151;">
-                If you have any questions about these photos, please don't hesitate to contact us.
-              </p>
-              <p style="margin: 0; font-size: 16px; font-weight: 700; color: #1f2937;">${escapeHtml(companyName)}</p>
-              ${companyPhone ? `<p style="margin: 8px 0 0; font-size: 14px; color: #6b7280;"><a href="tel:${escapeHtml(companyPhone)}" style="color: #1f2937; text-decoration: none;">${escapeHtml(companyPhone)}</a></p>` : ''}
-              ${companyEmail ? `<p style="margin: 4px 0 0; font-size: 14px; color: #6b7280;"><a href="mailto:${escapeHtml(companyEmail)}" style="color: #1f2937; text-decoration: none;">${escapeHtml(companyEmail)}</a></p>` : ''}
-            </td>
-          </tr>
-
-          <!-- Branding Footer -->
-          <tr>
-            <td style="background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); padding: 28px 24px; text-align: center;">
-              <p style="margin: 0 0 8px; font-size: 16px; font-weight: 700; color: #fbbf24;">Powered by Elec-Mate</p>
-              <p style="margin: 0; font-size: 13px; color: #9ca3af;">Professional electrical contracting tools</p>
-            </td>
-          </tr>
-
-        </table>
-      </td>
-    </tr>
-  </table>
-
-</body>
-</html>
-    `;
+    const photosPayload = buildPhotosSendEmail({
+      company: {
+        name: companyName,
+        logoUrl: companyProfile?.logo_url || companyProfile?.logo_data_url || null,
+        primaryColor: companyProfile?.primary_color || null,
+        email: companyEmail || null,
+        phone: companyProfile?.company_phone || null,
+        website: companyProfile?.company_website || null,
+        address: companyProfile?.company_address || null,
+        vatNumber: companyProfile?.vat_number || null,
+        registrationNumber: companyProfile?.company_registration || null,
+      },
+      recipientName: recipientName || 'there',
+      projectName,
+      message: message || null,
+      photos: photoData.map((p) => ({
+        thumbnailUrl: p.thumbnailUrl,
+        fullSizeUrl: p.signedUrl,
+        caption: p.caption || null,
+      })),
+      trackingPixelUrl: `${Deno.env.get('SUPABASE_URL')}/functions/v1/email-open?type=photos_send&id=${projectId}`,
+    });
+    const emailHtml = photosPayload.html;
 
     // ========================================================================
     // STEP 10: Send email via Resend
     // ========================================================================
-    // ELE-662 — drop info@elec-mate.com fallback; only set Reply-To if real.
-    const replyToEmail = companyEmail || '';
-    const subject = `Project Photos: ${projectName} - ${companyName}`;
+    // ELE-662 — centralised sender. See _shared/mailer.ts:clientFacingSender.
+    const sender = clientFacingSender({
+      companyName,
+      companyEmail,
+      userEmail: user.email,
+    });
+    const subject = photosPayload.subject;
 
     console.log(`Sending to: ${recipientEmail}`);
-    console.log(`Reply-to: ${replyToEmail || '(none)'}`);
+    console.log(`From: ${sender.from}`);
+    console.log(`Reply-to: ${sender.replyTo || '(none)'}`);
 
     const { data: emailData, error: emailError } = await resend.emails.send({
-      from: `${companyName} <founder@elec-mate.com>`,
-      ...(replyToEmail ? { replyTo: replyToEmail } : {}),
+      ...sender,
       to: [recipientEmail.trim()],
       subject: subject,
       html: emailHtml,
+      text: htmlToPlainText(emailHtml),
     });
 
     if (emailError) {

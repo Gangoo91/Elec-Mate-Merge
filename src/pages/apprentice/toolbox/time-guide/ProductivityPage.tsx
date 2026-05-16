@@ -1,9 +1,7 @@
-import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, CheckCircle } from 'lucide-react';
+import { ArrowLeft, CheckCircle2 } from 'lucide-react';
 import ProductivityToolsTab from '@/components/apprentice/time-management/ProductivityToolsTab';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
 import {
   PageFrame,
   PageHero,
@@ -15,14 +13,10 @@ const ProductivityPage = () => {
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/apprentice/toolbox/time-management')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
+        <button onClick={() => navigate('/apprentice/toolbox/time-management')} className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation">
+          <ArrowLeft className="h-4 w-4" />
           Back
-        </Button>
+        </button>
       </motion.div>
 
       <motion.div variants={itemVariants}>
@@ -33,8 +27,7 @@ const ProductivityPage = () => {
         />
       </motion.div>
 
-      <Card className="border-amber-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-white">
             Tools to Boost Your Productivity
           </h2>
@@ -44,11 +37,11 @@ const ProductivityPage = () => {
             proven productivity methods, find what works for you.
           </p>
 
-          <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-4">
-            <h3 className="text-amber-400 font-semibold text-sm mb-3">
+          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 sm:p-4 space-y-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
               Productivity Methods
-            </h3>
-            <ul className="space-y-2">
+            </span>
+            <ul className="space-y-1.5">
               {[
                 'Pomodoro Technique — 25 min focus, 5 min break',
                 'To-do lists — write it down, tick it off',
@@ -58,16 +51,15 @@ const ProductivityPage = () => {
               ].map((item) => (
                 <li
                   key={item}
-                  className="flex items-center gap-2 text-sm text-white"
+                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
                 >
-                  <CheckCircle className="h-4 w-4 text-amber-400 flex-shrink-0" />
+                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                   {item}
                 </li>
               ))}
             </ul>
           </div>
-        </CardContent>
-      </Card>
+        </div>
 
       <ProductivityToolsTab />
     </PageFrame>

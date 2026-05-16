@@ -1,530 +1,493 @@
-import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, CheckCircle, AlertTriangle } from 'lucide-react';
+/**
+ * EPA · GradingPage — editorial guide to EPA grading and results.
+ *
+ * Pass / Merit / Distinction descriptions, re-sits, results timeline,
+ * how component grades combine, what the grade means for your career,
+ * appeals process.
+ */
+
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
+import {
+  ArrowLeft,
+  CheckCircle2,
+  AlertTriangle,
+  Award,
+  Trophy,
+  Sparkles,
+} from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import {
   PageFrame,
   PageHero,
   itemVariants,
 } from '@/components/college/primitives';
+import {
+  Eyebrow,
+  SectionHeader,
+} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { cn } from '@/lib/utils';
+
+interface GradeProfile {
+  grade: 'Pass' | 'Merit' | 'Distinction';
+  icon: LucideIcon;
+  description: string;
+  signals: string[];
+}
+
+const gradeProfiles: GradeProfile[] = [
+  {
+    grade: 'Pass',
+    icon: CheckCircle2,
+    description:
+      'Meets all requirements of the apprenticeship standard. You\'ve demonstrated competence across all KSBs and are ready to work as a qualified electrician.',
+    signals: [
+      'Knowledge test — solid understanding of electrical principles, regs, and safety across all areas',
+      'Practical — installation work completed safely and to an acceptable standard, safe isolation correct, accurate test results',
+      'Professional discussion — communicates effectively, relevant portfolio evidence, demonstrates understanding of professional behaviours',
+      'Overall — you can work competently and safely as an electrician',
+    ],
+  },
+  {
+    grade: 'Merit',
+    icon: Award,
+    description:
+      'Exceeds requirements in several areas. Deeper understanding, initiative, efficiency, and strong problem-solving.',
+    signals: [
+      'Knowledge test — deeper understanding, applies knowledge to complex scenarios, thorough answers with clear reasoning',
+      'Practical — efficient and methodical, high-quality workmanship, shows initiative in problem-solving',
+      'Professional discussion — detailed, well-structured portfolio evidence, clear decision-making, strong professional behaviours',
+      'Overall — works to a high standard, understands why (not just how), shows the qualities of an effective professional',
+    ],
+  },
+  {
+    grade: 'Distinction',
+    icon: Trophy,
+    description:
+      'Exceeds requirements in all areas. Exceptional understanding, outstanding practical skills, and the qualities of a leader in the trade.',
+    signals: [
+      'Knowledge test — exceptional understanding across all areas, comprehensive and accurate answers, applies knowledge to unfamiliar scenarios',
+      'Practical — outstanding quality of work, excellent efficiency, advanced skills and techniques, exemplary safe working practices',
+      'Professional discussion — comprehensive portfolio with exemplary evidence, articulates complex ideas clearly, demonstrates leadership',
+      'Overall — stands out as exceptional, consistently exceeds expectations, shows leadership potential and deep commitment',
+    ],
+  },
+];
+
+const resitOptions = [
+  {
+    title: 'Re-sit individual components',
+    description:
+      'If you fail one component but pass the others, you only re-sit the failed component. You don\'t redo the entire EPA.',
+  },
+  {
+    title: 'One free re-sit per component',
+    description:
+      'Entitled to one free re-sit funded within the original £23,000 funding band. No additional cost to you or your employer.',
+  },
+  {
+    title: 'Re-sit within 3 months',
+    description:
+      'Re-sit typically taken within 3 months of the original result. Training provider arranges additional support before the re-sit.',
+  },
+  {
+    title: 'Maximum grade on re-sit',
+    description:
+      'On a re-sit, maximum grade achievable is typically Pass for that component. Your overall grade may be capped. Check your EPAO\'s specific policy.',
+  },
+  {
+    title: 'Additional support before re-sit',
+    description:
+      'Training provider must provide additional training and support addressing the areas where you didn\'t meet the standard. Clear action plan expected.',
+  },
+  {
+    title: 'Second failure',
+    description:
+      'If you fail a re-sit, a second re-sit may be possible but may require separate funding between your employer and training provider. Uncommon — most pass on re-sit.',
+  },
+];
+
+const resultsCommunication = [
+  {
+    title: 'Timeline',
+    description:
+      'Results typically available within 10–15 working days of your final component. EPAO sends results to your training provider, who shares with you.',
+  },
+  {
+    title: 'Certificate',
+    description:
+      'Once you pass all three, your EPAO requests your apprenticeship certificate from ESFA. Your official qualification — Level 3 Installation or Maintenance Electrician.',
+  },
+  {
+    title: 'Certificate delivery',
+    description:
+      'Posted to your training provider, who passes it to you. 4–8 weeks after your final result. Contact your provider if you haven\'t received it after 8 weeks.',
+  },
+  {
+    title: 'What your certificate shows',
+    description:
+      'Your name, the apprenticeship standard, your overall grade (Pass / Merit / Distinction), and the date of completion.',
+  },
+  {
+    title: 'Digital records',
+    description:
+      'Completion also recorded on the Apprenticeship Service (DAS). Employer can verify through the system. Keep your own copies of EPA documentation.',
+  },
+];
+
+const afterPassing = [
+  'You are now a qualified Level 3 Installation Electrician or Maintenance Electrician',
+  'Apply for your JIB Approved Electrician (Gold Card) — your employer or JIB can guide you through the process',
+  'Eligible to register with a competent person scheme (NICEIC, NAPIT, ELECSA) once you have the required experience',
+  'Your employer should review your pay — you\'re now fully qualified and should be paid accordingly',
+  'Consider next steps — specialisation, further qualifications (Level 4 Design & Verification, 18th Edition updates), or self-employment',
+  'Keep CPD up to date — regulations change, staying current is essential for your career',
+];
+
+const gradeCombinations = [
+  { components: 'Pass + Pass + Pass', overall: 'Pass', tone: 'white' as const },
+  { components: 'Merit + Pass + Merit', overall: 'Pass or Merit', tone: 'white' as const },
+  { components: 'Merit + Merit + Merit', overall: 'Merit', tone: 'yellow' as const },
+  { components: 'Distinction + Merit + Distinction', overall: 'Merit or Distinction', tone: 'yellow' as const },
+  { components: 'Distinction + Distinction + Distinction', overall: 'Distinction', tone: 'yellow' as const },
+  { components: 'Any component: Fail', overall: 'Not achieved (re-sit required)', tone: 'red' as const },
+];
+
+const careerMeaning = [
+  {
+    title: 'All grades are a qualification',
+    description:
+      'Pass, Merit, and Distinction are all the same Level 3 qualification. You\'re a qualified electrician regardless of grade.',
+  },
+  {
+    title: 'Employers value the qualification most',
+    description:
+      'Most employers care that you\'ve passed, not whether you got Merit or Distinction. Practical skills, attitude, and work ethic matter more day-to-day.',
+  },
+  {
+    title: 'Higher grades help with progression',
+    description:
+      'Merit or Distinction can be an advantage for new jobs, promotions, or further training. Demonstrates you went above the minimum.',
+  },
+  {
+    title: 'JIB card is the same for all grades',
+    description:
+      'Your JIB Approved Electrician (Gold Card) is the same whether Pass, Merit, or Distinction. Grade doesn\'t affect your JIB status.',
+  },
+  {
+    title: 'Competent person scheme registration',
+    description:
+      'NICEIC, NAPIT registration is based on qualifications and experience, not EPA grade. A Pass is sufficient.',
+  },
+];
+
+const appealSteps = [
+  {
+    step: 1,
+    title: 'Informal review',
+    description:
+      'Discuss the result with your training provider. They can request a breakdown of marks and identify grounds for appeal.',
+  },
+  {
+    step: 2,
+    title: 'Formal appeal to EPAO',
+    description:
+      'With grounds, your training provider submits a formal appeal within the specified timeframe (usually 10–20 working days).',
+  },
+  {
+    step: 3,
+    title: 'EPAO review',
+    description:
+      'EPAO reviews assessment evidence, assessor notes, and your appeal. May re-mark your work or arrange re-assessment with a different assessor.',
+  },
+  {
+    step: 4,
+    title: 'Outcome',
+    description:
+      'Written response explaining the outcome. If upheld, grade may be changed or re-assessment arranged at no additional cost.',
+  },
+];
+
+function getCombinationStyles(tone: 'yellow' | 'red' | 'white') {
+  switch (tone) {
+    case 'yellow':
+      return 'text-elec-yellow';
+    case 'red':
+      return 'text-red-300';
+    default:
+      return 'text-white';
+  }
+}
 
 const GradingPage = () => {
   const navigate = useNavigate();
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
+        <button
           onClick={() => navigate('/apprentice/toolbox/end-point-assessment')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+          className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation"
         >
-          <ArrowLeft className="mr-2 h-5 w-5" />
+          <ArrowLeft className="h-4 w-4" />
           Back
-        </Button>
+        </button>
       </motion.div>
 
       <motion.div variants={itemVariants}>
         <PageHero
           eyebrow="Apprentice · EPA"
-          title="Grading & Results"
+          title="Grading & results"
+          description="How your grade is calculated, what each grade actually looks like, re-sit options if needed, and what your grade means for your career."
           tone="yellow"
         />
       </motion.div>
 
-      {/* How Grading Works */}
-      <Card className="border-amber-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-3">
-          <h2 className="text-lg font-semibold text-white">
-            How Your Grade is Determined
-          </h2>
-          <p className="text-white text-sm leading-relaxed">
-            Your overall EPA grade is determined by your performance across all
-            three assessment components. Each component is graded individually,
-            and your overall grade reflects your combined performance. You must
-            pass all three components — failing any single component means you
-            do not achieve the apprenticeship, regardless of your performance
-            in the other two.
+      {/* ── How grading works ───────────────────────────────────── */}
+      <motion.div variants={itemVariants}>
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+          <Eyebrow>How your grade is determined</Eyebrow>
+          <p className="text-[13.5px] text-white/85 leading-relaxed">
+            Overall EPA grade reflects performance across all three components.
+            Each is graded individually, and your overall grade reflects combined
+            performance. You must pass all three — failing any single component
+            means you don\'t achieve the apprenticeship, regardless of the other
+            two.
           </p>
-          <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
-            <p className="text-white text-sm">
-              <span className="text-amber-400 font-semibold">
-                Important:
-              </span>{' '}
-              The specific grade boundaries vary by EPAO. Your training provider
-              will confirm the exact percentages and criteria used by your
-              assessment organisation. The descriptions below are general
-              guidance based on the apprenticeship standard.
+          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
+            <p className="text-[12.5px] text-white/85 leading-relaxed">
+              <span className="font-semibold text-elec-yellow">Important:</span>{' '}
+              specific grade boundaries vary by EPAO. Your training provider
+              will confirm exact percentages and criteria. Descriptions below
+              are general guidance based on the apprenticeship standard.
             </p>
           </div>
-        </CardContent>
-      </Card>
-
-      {/* Pass Grade */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-green-400" />
-          <h2 className="text-base font-semibold text-white">Pass</h2>
         </div>
+      </motion.div>
 
-        <Card className="border-green-500/20 bg-white/5">
-          <CardContent className="p-4 space-y-3">
-            <div className="inline-block px-3 py-1 rounded-full bg-green-500/20 border border-green-500/30">
-              <span className="text-green-400 font-bold text-sm">Pass</span>
-            </div>
-            <p className="text-white text-sm leading-relaxed">
-              Meets all the requirements of the apprenticeship standard. You have
-              demonstrated competence across all Knowledge, Skills, and
-              Behaviours and are ready to work as a qualified electrician.
-            </p>
-            <div className="space-y-2">
-              <h4 className="text-white font-semibold text-sm">
-                What a Pass Looks Like
-              </h4>
-              {[
-                'Knowledge Test: Demonstrates solid understanding of electrical principles, regulations, and safety requirements across all question areas',
-                'Practical Observation: Completes installation work safely and to an acceptable standard, follows safe isolation correctly, produces accurate test results',
-                'Professional Discussion: Communicates effectively about your work, provides relevant portfolio evidence, demonstrates understanding of professional behaviours',
-                'Overall: You can work competently and safely as an electrician, following regulations and industry standards',
-              ].map((item) => (
-                <div key={item} className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                  <span className="text-white text-sm">{item}</span>
+      {/* ── Grade profiles ──────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Grade profiles"
+          title="Pass · Merit · Distinction"
+          meta="What each grade actually demonstrates"
+        />
+        <ul className="space-y-2.5">
+          {gradeProfiles.map((profile) => {
+            const Icon = profile.icon;
+            return (
+              <li
+                key={profile.grade}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
+              >
+                <div className="flex items-center gap-2">
+                  <Icon className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+                  <span className="inline-flex items-center h-6 px-2 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[10.5px] font-medium uppercase tracking-[0.14em] text-elec-yellow">
+                    {profile.grade}
+                  </span>
                 </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Merit Grade */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-blue-400" />
-          <h2 className="text-base font-semibold text-white">Merit</h2>
-        </div>
-
-        <Card className="border-blue-500/20 bg-white/5">
-          <CardContent className="p-4 space-y-3">
-            <div className="inline-block px-3 py-1 rounded-full bg-blue-500/20 border border-blue-500/30">
-              <span className="text-blue-400 font-bold text-sm">Merit</span>
-            </div>
-            <p className="text-white text-sm leading-relaxed">
-              Exceeds the requirements in several areas. You have demonstrated a
-              deeper understanding of electrical work and show initiative,
-              efficiency, and strong problem-solving skills.
-            </p>
-            <div className="space-y-2">
-              <h4 className="text-white font-semibold text-sm">
-                What a Merit Looks Like
-              </h4>
-              {[
-                'Knowledge Test: Shows deeper understanding, can apply knowledge to complex scenarios, answers questions thoroughly with clear reasoning',
-                'Practical Observation: Works efficiently and methodically, demonstrates high-quality workmanship, shows initiative in problem-solving',
-                'Professional Discussion: Provides detailed, well-structured portfolio evidence, explains decision-making clearly, demonstrates strong professional behaviours',
-                'Overall: You work to a high standard, understand why things are done (not just how), and show the qualities of an effective professional electrician',
-              ].map((item) => (
-                <div key={item} className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-blue-400 flex-shrink-0 mt-0.5" />
-                  <span className="text-white text-sm">{item}</span>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Distinction Grade */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-amber-400" />
-          <h2 className="text-base font-semibold text-white">Distinction</h2>
-        </div>
-
-        <Card className="border-amber-500/20 bg-white/5">
-          <CardContent className="p-4 space-y-3">
-            <div className="inline-block px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/30">
-              <span className="text-amber-400 font-bold text-sm">
-                Distinction
-              </span>
-            </div>
-            <p className="text-white text-sm leading-relaxed">
-              Exceeds the requirements in all areas. You have demonstrated
-              exceptional understanding, outstanding practical skills, and the
-              qualities of someone who will be a leader in the trade.
-            </p>
-            <div className="space-y-2">
-              <h4 className="text-white font-semibold text-sm">
-                What a Distinction Looks Like
-              </h4>
-              {[
-                'Knowledge Test: Exceptional understanding across all areas, provides comprehensive and accurate answers, applies knowledge to complex unfamiliar scenarios',
-                'Practical Observation: Outstanding quality of work, excellent efficiency, demonstrates advanced skills and techniques, exemplary safe working practices',
-                'Professional Discussion: Comprehensive portfolio with exemplary evidence, articulates complex ideas clearly, demonstrates leadership qualities and deep professional insight',
-                'Overall: You stand out as an exceptional electrician who consistently exceeds expectations, shows leadership potential, and demonstrates a deep commitment to the profession',
-              ].map((item) => (
-                <div key={item} className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-amber-400 flex-shrink-0 mt-0.5" />
-                  <span className="text-white text-sm">{item}</span>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Fail & Re-sits */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-red-400" />
-          <h2 className="text-base font-semibold text-white">
-            If You Do Not Pass
-          </h2>
-        </div>
-
-        <Card className="border-red-500/20 bg-white/5">
-          <CardContent className="p-4 space-y-4">
-            <p className="text-white text-sm leading-relaxed">
-              Do not panic if you do not pass an EPA component. It happens, and
-              there is a clear process for re-sits. Here is what you need to
-              know:
-            </p>
-
-            {[
-              {
-                title: 'You can re-sit individual components',
-                description:
-                  'If you fail one component but pass the others, you only need to re-sit the failed component. You do not have to redo the entire EPA.',
-              },
-              {
-                title: 'One free re-sit per component',
-                description:
-                  'You are entitled to one free re-sit funded within the original £23,000 funding band. This means no additional cost to you or your employer.',
-              },
-              {
-                title: 'Re-sit within 3 months',
-                description:
-                  'Your re-sit must typically be taken within 3 months of the original result. Your training provider will arrange additional support before the re-sit.',
-              },
-              {
-                title: 'Maximum grade on re-sit',
-                description:
-                  'On a re-sit, the maximum grade achievable is typically Pass for that component. This means your overall grade may be capped. Check with your EPAO for their specific re-sit grading policy.',
-              },
-              {
-                title: 'Additional support before re-sit',
-                description:
-                  'Your training provider must provide additional training and support to address the areas where you did not meet the standard. You should receive a clear action plan.',
-              },
-              {
-                title: 'Second failure',
-                description:
-                  'If you fail a re-sit, a second re-sit may be possible but may require separate funding arrangements between your employer and training provider. This is uncommon — most apprentices pass on the re-sit.',
-              },
-            ].map((item) => (
-              <div key={item.title} className="flex items-start gap-2">
-                <AlertTriangle className="h-4 w-4 text-red-400 flex-shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-red-400 font-semibold text-sm">
-                    {item.title}
-                  </p>
-                  <p className="text-white text-sm mt-0.5">
-                    {item.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* How Results are Communicated */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-purple-400" />
-          <h2 className="text-base font-semibold text-white">
-            Receiving Your Results
-          </h2>
-        </div>
-
-        <Card className="border-purple-500/20 bg-white/5">
-          <CardContent className="p-4 space-y-3">
-            {[
-              {
-                title: 'Timeline',
-                description:
-                  'Results are typically available within 10-15 working days of your final component. Your EPAO sends results to your training provider, who will share them with you.',
-              },
-              {
-                title: 'Certificate',
-                description:
-                  'Once you pass all three components, your EPAO requests your apprenticeship certificate from the ESFA. This is your official qualification — Level 3 Installation Electrician or Maintenance Electrician.',
-              },
-              {
-                title: 'Certificate delivery',
-                description:
-                  'The certificate is posted to your training provider, who passes it to you. This can take 4-8 weeks after your final result. If you have not received it after 8 weeks, contact your training provider.',
-              },
-              {
-                title: 'What your certificate shows',
-                description:
-                  'Your certificate shows your name, the apprenticeship standard (Level 3 Installation Electrician / Maintenance Electrician), your overall grade (Pass, Merit, or Distinction), and the date of completion.',
-              },
-              {
-                title: 'Digital records',
-                description:
-                  'Your apprenticeship completion is also recorded on the Apprenticeship Service (DAS). Your employer can verify your qualification through this system. You should also keep copies of all EPA documentation for your own records.',
-              },
-            ].map((item) => (
-              <div key={item.title}>
-                <p className="text-purple-400 font-semibold text-sm">
-                  {item.title}
+                <p className="text-[13.5px] text-white/85 leading-relaxed">
+                  {profile.description}
                 </p>
-                <p className="text-white text-sm mt-0.5">{item.description}</p>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* After EPA */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-elec-yellow" />
-          <h2 className="text-base font-semibold text-white">
-            After You Pass
-          </h2>
-        </div>
-
-        <Card className="border-elec-yellow/20 bg-white/5">
-          <CardContent className="p-4 space-y-3">
-            <p className="text-white text-sm leading-relaxed">
-              Passing your EPA is a significant achievement. Here is what comes
-              next:
-            </p>
-            {[
-              'You are now a qualified Level 3 Installation Electrician or Maintenance Electrician',
-              'You can apply for your JIB Approved Electrician (Gold Card) — your employer or JIB can guide you through the process',
-              'You are eligible to register with a competent person scheme (e.g. NICEIC, NAPIT, ELECSA) once you have the required experience',
-              'Your employer should review your pay — you are now fully qualified and should be paid accordingly',
-              'Consider your next steps: specialisation, further qualifications (Level 4 Design & Verification, 18th Edition update courses), or moving towards self-employment',
-              'Keep your CPD up to date — regulations change, and staying current is essential for your career',
-            ].map((item) => (
-              <div key={item} className="flex items-start gap-2">
-                <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                <span className="text-white text-sm">{item}</span>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* How Each Component Contributes to Overall Grade */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-blue-400" />
-          <h2 className="text-base font-semibold text-white">
-            How Component Grades Combine
-          </h2>
-        </div>
-
-        <Card className="border-blue-500/20 bg-white/5">
-          <CardContent className="p-4 space-y-4">
-            <p className="text-white text-sm leading-relaxed">
-              Your overall EPA grade is not a simple average. The EPAO uses a
-              grading matrix that considers performance across all three
-              components, with the practical observation weighted most heavily
-              at 50%.
-            </p>
-
-            <div className="space-y-3">
-              <h4 className="text-white font-semibold text-sm">
-                Typical Grade Combinations
-              </h4>
-              {[
-                {
-                  components: 'Pass + Pass + Pass',
-                  overall: 'Pass',
-                  colour: 'text-green-400',
-                },
-                {
-                  components: 'Merit + Pass + Merit',
-                  overall: 'Pass or Merit',
-                  colour: 'text-green-400',
-                },
-                {
-                  components: 'Merit + Merit + Merit',
-                  overall: 'Merit',
-                  colour: 'text-blue-400',
-                },
-                {
-                  components: 'Distinction + Merit + Distinction',
-                  overall: 'Merit or Distinction',
-                  colour: 'text-blue-400',
-                },
-                {
-                  components: 'Distinction + Distinction + Distinction',
-                  overall: 'Distinction',
-                  colour: 'text-amber-400',
-                },
-                {
-                  components: 'Any component: Fail',
-                  overall: 'Not achieved (re-sit required)',
-                  colour: 'text-red-400',
-                },
-              ].map((combo) => (
-                <div
-                  key={combo.components}
-                  className="flex items-center justify-between bg-white/5 rounded-lg p-3"
-                >
-                  <span className="text-white text-sm">
-                    {combo.components}
-                  </span>
-                  <span className={`text-sm font-bold ${combo.colour}`}>
-                    {combo.overall}
-                  </span>
+                <div className="space-y-2 pt-2 border-t border-white/[0.04]">
+                  <Eyebrow>What it looks like</Eyebrow>
+                  <ul className="space-y-1.5">
+                    {profile.signals.map((s) => (
+                      <li
+                        key={s}
+                        className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                      >
+                        <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                        <span>{s}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              ))}
-            </div>
+              </li>
+            );
+          })}
+        </ul>
+      </motion.section>
 
-            <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
-              <p className="text-white text-sm">
-                <span className="text-blue-400 font-semibold">Note:</span>{' '}
-                Exact grading matrices vary by EPAO. Some weight the practical
-                more heavily in borderline cases. Your training provider can
-                give you the specific grading criteria for your EPAO.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Employer Perspective on Grades */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-green-400" />
-          <h2 className="text-base font-semibold text-white">
-            What Your Grade Means for Your Career
-          </h2>
+      {/* ── Combinations ────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="How component grades combine"
+          title="Not a simple average"
+          meta="Practical is weighted most heavily — exact matrix varies by EPAO"
+        />
+        <ul className="space-y-2">
+          {gradeCombinations.map((combo) => (
+            <li
+              key={combo.components}
+              className="flex items-center justify-between gap-3 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-3 sm:p-4"
+            >
+              <span className="text-[12.5px] sm:text-[13px] text-white/85 leading-snug">
+                {combo.components}
+              </span>
+              <span
+                className={cn(
+                  'text-[12.5px] sm:text-[13px] font-semibold leading-snug text-right flex-shrink-0',
+                  getCombinationStyles(combo.tone)
+                )}
+              >
+                {combo.overall}
+              </span>
+            </li>
+          ))}
+        </ul>
+        <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
+          <p className="text-[12.5px] text-white/85 leading-relaxed">
+            <span className="font-semibold text-elec-yellow">Note:</span> exact
+            grading matrices vary by EPAO. Some weight the practical more
+            heavily in borderline cases. Your training provider can give you the
+            specific grading criteria.
+          </p>
         </div>
+      </motion.section>
 
-        <Card className="border-green-500/20 bg-white/5">
-          <CardContent className="p-4 space-y-4">
-            {[
-              {
-                title: 'All grades are a qualification',
-                description:
-                  'A Pass, Merit, and Distinction are all the same Level 3 qualification. You are a qualified electrician regardless of grade. The grade reflects how well you demonstrated your competence during assessment.',
-              },
-              {
-                title: 'Employers value the qualification most',
-                description:
-                  'Most employers care that you have passed, not whether you got a Merit or Distinction. Your practical skills, attitude, and work ethic matter more than the grade on your certificate in day-to-day work.',
-              },
-              {
-                title: 'Higher grades can help with progression',
-                description:
-                  'A Merit or Distinction can be an advantage when applying for new jobs, promotions, or further training. It demonstrates you went above and beyond the minimum standard.',
-              },
-              {
-                title: 'JIB card is the same for all grades',
-                description:
-                  'Your JIB Approved Electrician (Gold Card) is the same whether you achieved a Pass, Merit, or Distinction. The grade does not affect your JIB status or card colour.',
-              },
-              {
-                title: 'Competent person scheme registration',
-                description:
-                  'Registration with NICEIC, NAPIT, or other competent person schemes is based on qualifications and experience, not EPA grade. A Pass is sufficient.',
-              },
-            ].map((item) => (
-              <div key={item.title} className="flex items-start gap-2">
-                <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-green-400 font-semibold text-sm">
+      {/* ── Re-sits ─────────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="If you don't pass"
+          title="Six things to know about re-sits"
+          meta="It happens — there's a clear process"
+        />
+        <ul className="space-y-2">
+          {resitOptions.map((item) => (
+            <li
+              key={item.title}
+              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+            >
+              <div className="flex items-start gap-2.5">
+                <AlertTriangle className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                <div className="space-y-1">
+                  <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
                     {item.title}
-                  </p>
-                  <p className="text-white text-sm mt-0.5">
+                  </h3>
+                  <p className="text-[13px] text-white/85 leading-relaxed">
                     {item.description}
                   </p>
                 </div>
               </div>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      {/* ── Results ─────────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Receiving your results"
+          title="From assessment to certificate"
+          meta="Five things to know about the post-EPA process"
+        />
+        <ul className="space-y-2">
+          {resultsCommunication.map((item) => (
+            <li
+              key={item.title}
+              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+            >
+              <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                {item.title}
+              </h3>
+              <p className="text-[13px] text-white/85 leading-relaxed mt-1">
+                {item.description}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      {/* ── After passing ───────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="After you pass"
+          title="Six next steps"
+          meta="Your career begins the moment your grade lands"
+        />
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+          <ul className="space-y-2">
+            {afterPassing.map((item) => (
+              <li
+                key={item}
+                className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+              >
+                <Sparkles className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                <span>{item}</span>
+              </li>
             ))}
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Appeal Process */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-amber-400" />
-          <h2 className="text-base font-semibold text-white">
-            Appeals Process
-          </h2>
+          </ul>
         </div>
+      </motion.section>
 
-        <Card className="border-amber-500/20 bg-white/5">
-          <CardContent className="p-4 space-y-3">
-            <p className="text-white text-sm leading-relaxed">
-              If you believe your EPA result is unfair, you have the right to
-              appeal. Here is how it works:
-            </p>
-            {[
-              {
-                step: '1',
-                title: 'Informal review',
-                description:
-                  'First, discuss the result with your training provider. They can request a breakdown of your marks and identify if there are grounds for appeal.',
-              },
-              {
-                step: '2',
-                title: 'Formal appeal to EPAO',
-                description:
-                  'If you have grounds, your training provider submits a formal appeal to the EPAO within the specified timeframe (usually 10-20 working days of the result).',
-              },
-              {
-                step: '3',
-                title: 'EPAO review',
-                description:
-                  'The EPAO reviews the assessment evidence, assessor notes, and your appeal. They may re-mark your work or arrange a re-assessment with a different assessor.',
-              },
-              {
-                step: '4',
-                title: 'Outcome',
-                description:
-                  'You will receive a written response explaining the outcome. If upheld, your grade may be changed or a re-assessment arranged at no additional cost.',
-              },
-            ].map((item) => (
-              <div key={item.step} className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-amber-500/20 border border-amber-500/30 flex items-center justify-center flex-shrink-0">
-                  <span className="text-amber-400 text-xs font-bold">
-                    {item.step}
-                  </span>
-                </div>
-                <div>
-                  <p className="text-white font-semibold text-sm">
+      {/* ── Career meaning ──────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="What your grade means for your career"
+          title="Five honest truths"
+          meta="The grade matters less than you think — mostly"
+        />
+        <ul className="space-y-2">
+          {careerMeaning.map((item) => (
+            <li
+              key={item.title}
+              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+            >
+              <div className="flex items-start gap-2.5">
+                <CheckCircle2 className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                <div className="space-y-1">
+                  <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
                     {item.title}
-                  </p>
-                  <p className="text-white text-sm mt-0.5">
+                  </h3>
+                  <p className="text-[13px] text-white/85 leading-relaxed">
                     {item.description}
                   </p>
                 </div>
               </div>
-            ))}
-            <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
-              <p className="text-white text-sm">
-                <span className="text-amber-400 font-semibold">
-                  Grounds for appeal:
-                </span>{' '}
-                Appeals are typically accepted for procedural errors (assessment
-                not conducted properly), mitigating circumstances (illness,
-                disruption during assessment), or evidence of assessor bias. You
-                cannot appeal simply because you disagree with the grade — there
-                must be specific grounds.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      {/* ── Appeals ─────────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Appeals process"
+          title="Four steps if you believe the result is unfair"
+          meta="Procedural grounds, mitigating circumstances, or assessor bias"
+        />
+        <ol className="space-y-2">
+          {appealSteps.map((item) => (
+            <li
+              key={item.step}
+              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+            >
+              <div className="flex items-start gap-3">
+                <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[12px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
+                  {item.step}
+                </span>
+                <div className="space-y-1">
+                  <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                    {item.title}
+                  </h3>
+                  <p className="text-[13px] text-white/85 leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
+          <p className="text-[12.5px] text-white/85 leading-relaxed">
+            <span className="font-semibold text-elec-yellow">Grounds for appeal:</span>{' '}
+            procedural errors (assessment not conducted properly), mitigating
+            circumstances (illness, disruption during assessment), or evidence
+            of assessor bias. You can\'t appeal simply because you disagree with
+            the grade — there must be specific grounds.
+          </p>
+        </div>
+      </motion.section>
     </PageFrame>
   );
 };

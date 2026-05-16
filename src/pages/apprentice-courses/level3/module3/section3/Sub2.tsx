@@ -28,6 +28,7 @@ import {
   SectionRule,
   VideoCard,
 } from '@/components/study-centre/learning';
+import { ThreePhaseWave } from '@/components/study-centre/diagrams';
 import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
@@ -207,6 +208,8 @@ export default function Sub2() {
             ]}
             initialVisibleCount={3}
           />
+
+          <ThreePhaseWave />
 
           <ContentEyebrow>Star — voltage transforms, current does not</ContentEyebrow>
 

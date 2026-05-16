@@ -303,7 +303,7 @@ export default function Sub7() {
                 construction-industry training landscape over the next decade.
               </>
             }
-            cite="Source: Building Safety Act 2022 (2022 c.30), s.2 — verbatim from legislation.gov.uk."
+            cite="Source: Building Safety Act 2022 (2022 c.30), s.2."
           />
 
           <SectionRule />
@@ -420,7 +420,7 @@ export default function Sub7() {
                 worked on an HRRB.
               </>
             }
-            cite="Source: Defective Premises Act 1972 (1972 c.35), s.1 as amended by Building Safety Act 2022 (2022 c.30), s.135 — verbatim from legislation.gov.uk."
+            cite="Source: Defective Premises Act 1972 (1972 c.35), s.1 as amended by Building Safety Act 2022 (2022 c.30), s.135."
           />
 
           <InlineCheck
@@ -472,7 +472,7 @@ export default function Sub7() {
                 straightforward but easy to overlook on mixed-use buildings.
               </>
             }
-            cite="Source: Higher-Risk Buildings (Descriptions and Supplementary Provisions) Regulations 2023 (SI 2023/275), Reg 8 — verbatim from legislation.gov.uk."
+            cite="Source: Higher-Risk Buildings (Descriptions and Supplementary Provisions) Regulations 2023 (SI 2023/275), Reg 8."
           />
 
           <SectionRule />
@@ -689,7 +689,7 @@ export default function Sub7() {
           <KeyTakeaways
             points={[
               "BSA 2022 is the post-Grenfell, post-Hackitt regulatory framework. Higher-Risk Building = 18m / 7+ storeys + 2+ residential units.",
-              "L2 didn\'t cover BSA 2022. L3 needs the framework knowledge — even if not directly working on HRRBs yet, the indirect effects (30-year liability, competence framework, Building Regs amendments) reach every residential job.",
+              "L2 didn't cover BSA 2022. L3 needs the framework knowledge — even if not directly working on HRRBs yet, the indirect effects (30-year liability, competence framework, Building Regs amendments) reach every residential job.",
               "Building Safety Regulator sits within HSE; runs the gateway regime (1 planning / 2 pre-construction / 3 pre-occupation) and has prosecution powers.",
               "In-occupation duty holders: Principal Accountable Person, Accountable Persons, Responsible Person (fire). PAP holds the safety case and the golden thread.",
               "Golden thread = digital, accurate, accessible, secure information set covering design, construction and ongoing management. EIC and EICR records become part of it.",

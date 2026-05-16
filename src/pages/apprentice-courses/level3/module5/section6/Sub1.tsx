@@ -29,7 +29,9 @@ import {
   LearningOutcomes,
   ContentEyebrow,
   SectionRule,
+  VideoCard,
 } from '@/components/study-centre/learning';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'EIC issue and certificate types — EIC vs MWC vs EICR | Level 3 Module 5.6.1 | Elec-Mate';
@@ -348,6 +350,15 @@ export default function Sub1() {
             options={checks[1].options}
             correctIndex={checks[1].correctIndex}
             explanation={checks[1].explanation}
+          />
+
+          <VideoCard
+            url={videos.faultFinding.url}
+            title={videos.faultFinding.title}
+            channel={videos.faultFinding.channel}
+            duration={videos.faultFinding.duration}
+            topic="Describing a fault on an EICR — language and coding"
+            caption="The EICR is only as useful as the language used to describe the observations. Plain, precise fault description is what lets the duty holder act on the report and what defends the inspector if a coding is later challenged."
           />
 
           <SectionRule />

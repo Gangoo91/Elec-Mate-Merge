@@ -22,7 +22,9 @@ import {
   LearningOutcomes,
   ContentEyebrow,
   SectionRule,
+  VideoCard,
 } from '@/components/study-centre/learning';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Earth electrode resistance — TT systems and generators | Level 3 Module 5.3.6 | Elec-Mate';
@@ -316,6 +318,15 @@ export default function Sub6() {
               </>
             }
             cite="Source: BS 7671:2018+A4:2026 Part 4, Chapter 41, Regulation 411.5.3."
+          />
+
+          <VideoCard
+            url={videos.zeTest.url}
+            title={videos.zeTest.title}
+            channel={videos.zeTest.channel}
+            duration={videos.zeTest.duration}
+            topic="Ze on a TT supply — earth electrode loop"
+            caption="On a TT system Ze IS the earth electrode resistance plus the conductor back to the MET. The Ze test walks through the loop that the RA × IΔn ≤ 50 V check relies on."
           />
 
           <SectionRule />

@@ -419,7 +419,7 @@ export default function Sub1() {
                 career.
               </>
             }
-            cite="Source: Electricity at Work Regulations 1989 (SI 1989/635), reg. 16 — verbatim from legislation.gov.uk."
+            cite="Source: Electricity at Work Regulations 1989 (SI 1989/635), reg. 16."
           />
 
           <RegsCallout

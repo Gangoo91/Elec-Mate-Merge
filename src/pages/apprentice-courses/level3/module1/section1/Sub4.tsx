@@ -326,7 +326,7 @@ export default function Sub4() {
                 HSE today and submit the F2508 within 10 days&quot;.
               </>
             }
-            cite="Source: Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 (SI 2013/1471), Reg 4 — verbatim from legislation.gov.uk."
+            cite="Source: Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 (SI 2013/1471), Reg 4."
           />
 
           <InlineCheck
@@ -450,7 +450,7 @@ export default function Sub4() {
                 routine silica or solder work.
               </>
             }
-            cite="Source: Control of Substances Hazardous to Health Regulations 2002 (SI 2002/2677), Reg 7 — verbatim from legislation.gov.uk."
+            cite="Source: Control of Substances Hazardous to Health Regulations 2002 (SI 2002/2677), Reg 7."
           />
 
           <InlineCheck
@@ -585,7 +585,7 @@ export default function Sub4() {
                 lift — that means you&apos;re the one Reg 8 expects to have planned it.
               </>
             }
-            cite="Source: Lifting Operations and Lifting Equipment Regulations 1998 (SI 1998/2307), Reg 8 — verbatim from legislation.gov.uk."
+            cite="Source: Lifting Operations and Lifting Equipment Regulations 1998 (SI 1998/2307), Reg 8."
           />
 
           <SectionRule />

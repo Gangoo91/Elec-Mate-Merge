@@ -1,10 +1,13 @@
+/**
+ * JargonStudyPage — editorial site-jargon flashcard study.
+ *
+ * Filters by category and difficulty, runs a shuffled flashcard session
+ * with definitions, usage examples, context, and related terms.
+ */
+
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
 import {
   Select,
   SelectContent,
@@ -12,16 +15,37 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { ArrowLeft, Shuffle, GraduationCap, BookOpen, RotateCcw } from 'lucide-react';
+import {
+  ArrowLeft,
+  Shuffle,
+  GraduationCap,
+  BookOpen,
+  RotateCcw,
+  X,
+} from 'lucide-react';
 import { siteJargonTerms, siteJargonCategories, JargonTerm } from '@/data/apprentice/siteJargonData';
-import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import {
+  PageFrame,
+  PageHero,
+  itemVariants,
+} from '@/components/college/primitives';
+import {
+  Eyebrow,
+  SectionHeader,
+} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { cn } from '@/lib/utils';
+
+const difficultyTone: Record<string, string> = {
+  basic: 'border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow',
+  intermediate: 'border-white/[0.10] bg-white/[0.03] text-white/85',
+  advanced: 'border-red-500/30 bg-red-500/[0.04] text-red-300',
+};
 
 const JargonStudyPage = () => {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedDifficulty, setSelectedDifficulty] = useState('all');
 
-  // Flashcard state
   const [isStudying, setIsStudying] = useState(false);
   const [currentTermIndex, setCurrentTermIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
@@ -68,147 +92,148 @@ const JargonStudyPage = () => {
       ? ((currentTermIndex + (showAnswer ? 1 : 0)) / shuffledTerms.length) * 100
       : 0;
 
-  // Active flashcard session
+  /* ─── Active session ─── */
   if (isStudying && currentTerm) {
     return (
-      <div className="max-w-2xl mx-auto space-y-4 animate-fade-in px-4 pb-20">
-        {/* Session Header */}
-        <div className="flex items-center justify-between">
+      <div className="max-w-2xl mx-auto space-y-4 animate-fade-in px-4 pb-20 pt-4">
+        {/* Session header */}
+        <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <Badge variant="outline" className="text-white border-elec-yellow/30 bg-elec-yellow/10">
-              {currentTermIndex + 1} of {shuffledTerms.length}
-            </Badge>
+            <span className="inline-flex items-center h-7 px-2 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[11px] font-mono tabular-nums text-elec-yellow">
+              {currentTermIndex + 1} / {shuffledTerms.length}
+            </span>
             {studiedCount > 0 && (
-              <Badge variant="outline" className="text-green-400 border-green-500/30 bg-green-500/10">
+              <span className="inline-flex items-center h-7 px-2 rounded-md border border-white/[0.08] bg-white/[0.02] text-[11px] font-mono tabular-nums text-white/85">
                 {studiedCount} studied
-              </Badge>
+              </span>
             )}
           </div>
-          <Button
-            variant="outline"
-            size="sm"
+          <button
             onClick={() => setIsStudying(false)}
-            className="text-white border-red-500/30 hover:bg-red-500/10 touch-manipulation active:scale-[0.98]"
+            className="inline-flex items-center gap-1.5 h-9 px-3 rounded-md border border-white/[0.08] bg-white/[0.02] text-[12px] font-medium text-white/85 hover:bg-white/[0.04] touch-manipulation"
+            aria-label="Exit session"
           >
+            <X className="h-3.5 w-3.5" />
             Exit
-          </Button>
+          </button>
         </div>
 
-        <Progress value={progress} className="w-full" />
+        {/* Progress */}
+        <div className="h-1.5 rounded-full bg-white/[0.04] overflow-hidden">
+          <div
+            className="h-full bg-elec-yellow rounded-full transition-all duration-500"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
 
         {/* Flashcard */}
-        <Card className="border-elec-yellow/20 bg-white/5">
-          <CardContent className="p-6 space-y-5">
-            {/* Term */}
-            <div className="text-center space-y-2">
-              <h2 className="text-2xl font-bold text-elec-yellow">{currentTerm.term}</h2>
-              {currentTerm.difficulty && (
-                <Badge
-                  className={
-                    currentTerm.difficulty === 'basic'
-                      ? 'bg-green-500/20 text-green-400 border-green-500/30'
-                      : currentTerm.difficulty === 'intermediate'
-                        ? 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30'
-                        : 'bg-red-500/20 text-red-400 border-red-500/30'
-                  }
-                >
-                  {currentTerm.difficulty}
-                </Badge>
-              )}
-            </div>
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-5 sm:p-6 space-y-5">
+          <div className="text-center space-y-2">
+            <h2 className="text-[22px] sm:text-[26px] font-semibold tracking-tight text-elec-yellow">
+              {currentTerm.term}
+            </h2>
+            {currentTerm.difficulty && (
+              <span
+                className={cn(
+                  'inline-flex items-center h-6 px-2 rounded-md border text-[10.5px] font-medium uppercase tracking-[0.14em]',
+                  difficultyTone[currentTerm.difficulty] ?? difficultyTone.basic
+                )}
+              >
+                {currentTerm.difficulty}
+              </span>
+            )}
+          </div>
 
-            {/* Answer */}
-            {showAnswer ? (
-              <div className="space-y-3 animate-fade-in">
-                <div className="p-4 bg-white/5 rounded-lg border border-white/10">
-                  <p className="text-white text-base text-center leading-relaxed">
-                    {currentTerm.definition}
+          {showAnswer ? (
+            <div className="space-y-3 animate-fade-in">
+              <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-4">
+                <p className="text-[14px] text-white text-center leading-relaxed">
+                  {currentTerm.definition}
+                </p>
+              </div>
+
+              {currentTerm.commonUsage && (
+                <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-1">
+                  <Eyebrow className="text-elec-yellow/85">How it sounds on site</Eyebrow>
+                  <p className="text-[13px] text-white italic">
+                    "{currentTerm.commonUsage}"
                   </p>
                 </div>
+              )}
 
-                {currentTerm.commonUsage && (
-                  <div className="p-3 bg-green-500/10 rounded-lg border border-green-500/20">
-                    <p className="text-xs font-medium text-green-400 mb-1">How it sounds on site</p>
-                    <p className="text-sm text-white italic">"{currentTerm.commonUsage}"</p>
+              {currentTerm.context && (
+                <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
+                  <Eyebrow>Context</Eyebrow>
+                  <p className="text-[13px] text-white/85">{currentTerm.context}</p>
+                </div>
+              )}
+
+              {currentTerm.relatedTerms && currentTerm.relatedTerms.length > 0 && (
+                <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
+                  <Eyebrow>Related terms</Eyebrow>
+                  <div className="flex flex-wrap gap-1.5 justify-center">
+                    {currentTerm.relatedTerms.map((related, i) => (
+                      <span
+                        key={i}
+                        className="inline-flex items-center h-7 px-2 rounded-md border border-white/[0.08] bg-white/[0.02] text-[11px] text-white/85"
+                      >
+                        {related}
+                      </span>
+                    ))}
                   </div>
-                )}
-
-                {currentTerm.context && (
-                  <div className="p-3 bg-blue-500/10 rounded-lg border border-blue-500/20">
-                    <p className="text-xs font-medium text-blue-400 mb-1">Context</p>
-                    <p className="text-sm text-white">{currentTerm.context}</p>
-                  </div>
-                )}
-
-                {currentTerm.relatedTerms && currentTerm.relatedTerms.length > 0 && (
-                  <div className="p-3 bg-purple-500/10 rounded-lg border border-purple-500/20">
-                    <p className="text-xs font-medium text-purple-400 mb-1.5">Related Terms</p>
-                    <div className="flex flex-wrap gap-1.5 justify-center">
-                      {currentTerm.relatedTerms.map((related, i) => (
-                        <Badge
-                          key={i}
-                          variant="outline"
-                          className="text-xs text-white border-purple-500/30 bg-purple-500/10"
-                        >
-                          {related}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div className="py-8 text-center">
-                <p className="text-sm text-white">Tap below to reveal the answer</p>
-              </div>
-            )}
-
-            {/* Action Buttons */}
-            <div className="flex gap-3 justify-center pt-2">
-              {!showAnswer ? (
-                <Button
-                  onClick={() => setShowAnswer(true)}
-                  className="h-11 px-8 touch-manipulation active:scale-[0.98]"
-                >
-                  Show Answer
-                </Button>
-              ) : (
-                <>
-                  <Button
-                    onClick={nextCard}
-                    className="h-11 px-8 touch-manipulation active:scale-[0.98]"
-                  >
-                    {currentTermIndex < shuffledTerms.length - 1 ? 'Next Card' : 'Finish'}
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={reshuffleCards}
-                    className="h-11 touch-manipulation active:scale-[0.98]"
-                  >
-                    <Shuffle className="h-4 w-4 mr-2" />
-                    Shuffle
-                  </Button>
-                </>
+                </div>
               )}
             </div>
-          </CardContent>
-        </Card>
+          ) : (
+            <div className="py-8 text-center">
+              <p className="text-[13px] text-white/55 uppercase tracking-[0.14em]">
+                Tap below to reveal the answer
+              </p>
+            </div>
+          )}
+
+          <div className="flex gap-2 justify-center pt-2">
+            {!showAnswer ? (
+              <button
+                onClick={() => setShowAnswer(true)}
+                className="inline-flex items-center justify-center h-11 px-6 rounded-md bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation"
+              >
+                Show answer
+              </button>
+            ) : (
+              <>
+                <button
+                  onClick={nextCard}
+                  className="inline-flex items-center justify-center h-11 px-6 rounded-md bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation"
+                >
+                  {currentTermIndex < shuffledTerms.length - 1 ? 'Next card' : 'Finish'}
+                </button>
+                <button
+                  onClick={reshuffleCards}
+                  className="inline-flex items-center justify-center gap-1.5 h-11 px-4 rounded-md border border-white/[0.08] bg-white/[0.02] text-[13px] font-medium text-white/85 hover:bg-white/[0.04] active:scale-[0.98] transition-all touch-manipulation"
+                >
+                  <Shuffle className="h-3.5 w-3.5" />
+                  Shuffle
+                </button>
+              </>
+            )}
+          </div>
+        </div>
       </div>
     );
   }
 
-  // Session complete / not started
+  /* ─── Setup screen ─── */
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
+        <button
           onClick={() => navigate('/apprentice/toolbox/site-jargon')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+          className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation"
         >
-          <ArrowLeft className="mr-2 h-5 w-5" />
+          <ArrowLeft className="h-4 w-4" />
           Back
-        </Button>
+        </button>
       </motion.div>
 
       <motion.div variants={itemVariants}>
@@ -220,53 +245,49 @@ const JargonStudyPage = () => {
         />
       </motion.div>
 
-      {/* How It Works */}
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardContent className="p-4 space-y-3">
-          <div className="flex items-center gap-2 mb-1">
-            <GraduationCap className="h-5 w-5 text-elec-yellow" />
-            <h3 className="font-semibold text-elec-yellow">How It Works</h3>
-          </div>
-          <div className="space-y-2">
-            <div className="flex items-start gap-3">
-              <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <span className="text-xs font-bold text-elec-yellow">1</span>
-              </div>
-              <p className="text-sm text-white">You see a term — think about what it means</p>
-            </div>
-            <div className="flex items-start gap-3">
-              <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <span className="text-xs font-bold text-elec-yellow">2</span>
-              </div>
-              <p className="text-sm text-white">
-                Tap "Show Answer" to reveal the definition, usage example, and context
-              </p>
-            </div>
-            <div className="flex items-start gap-3">
-              <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <span className="text-xs font-bold text-elec-yellow">3</span>
-              </div>
-              <p className="text-sm text-white">
-                Work through all cards — shuffle any time to mix things up
-              </p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      {/* ── How it works ────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="How it works"
+          title="Three-step flashcard loop"
+          meta="Think · reveal · repeat"
+        />
+        <ol className="space-y-2">
+          {[
+            'You see a term — think about what it means',
+            'Tap "Show answer" to reveal the definition, usage example, and context',
+            'Work through all cards — shuffle any time to mix things up',
+          ].map((step, i) => (
+            <li
+              key={step}
+              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 flex items-start gap-3"
+            >
+              <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[12px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
+                {i + 1}
+              </span>
+              <p className="text-[13px] text-white/85 leading-relaxed">{step}</p>
+            </li>
+          ))}
+        </ol>
+      </motion.section>
 
-      {/* Filter Options */}
-      <Card className="border-blue-500/20 bg-blue-500/5">
-        <CardContent className="p-4 space-y-3">
-          <h3 className="font-semibold text-blue-400">Choose Your Terms</h3>
-          <div className="grid grid-cols-2 gap-3">
-            <div className="space-y-1">
-              <label className="text-xs font-medium text-white">Category</label>
+      {/* ── Filters ─────────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Choose your terms"
+          title="Filter by category and difficulty"
+          meta={`${filteredTerms.length} terms match`}
+        />
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="space-y-1.5">
+              <Eyebrow>Category</Eyebrow>
               <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                <SelectTrigger className="h-11 touch-manipulation">
+                <SelectTrigger className="h-11 touch-manipulation bg-[hsl(0_0%_8%)] border-white/[0.08]">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Categories</SelectItem>
+                  <SelectItem value="all">All categories</SelectItem>
                   {siteJargonCategories.map((cat) => (
                     <SelectItem key={cat.id} value={cat.id}>
                       {cat.name}
@@ -275,14 +296,14 @@ const JargonStudyPage = () => {
                 </SelectContent>
               </Select>
             </div>
-            <div className="space-y-1">
-              <label className="text-xs font-medium text-white">Difficulty</label>
+            <div className="space-y-1.5">
+              <Eyebrow>Difficulty</Eyebrow>
               <Select value={selectedDifficulty} onValueChange={setSelectedDifficulty}>
-                <SelectTrigger className="h-11 touch-manipulation">
+                <SelectTrigger className="h-11 touch-manipulation bg-[hsl(0_0%_8%)] border-white/[0.08]">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Levels</SelectItem>
+                  <SelectItem value="all">All levels</SelectItem>
                   <SelectItem value="basic">Basic</SelectItem>
                   <SelectItem value="intermediate">Intermediate</SelectItem>
                   <SelectItem value="advanced">Advanced</SelectItem>
@@ -291,68 +312,70 @@ const JargonStudyPage = () => {
             </div>
           </div>
           {(selectedCategory !== 'all' || selectedDifficulty !== 'all') && (
-            <div className="flex items-center justify-between">
-              <p className="text-xs text-white">{filteredTerms.length} terms match your filters</p>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => {
-                  setSelectedCategory('all');
-                  setSelectedDifficulty('all');
-                }}
-                className="text-xs text-white touch-manipulation"
-              >
-                Clear
-              </Button>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-
-      {/* Start Button */}
-      <Button
-        onClick={startFlashcards}
-        className="w-full h-12 touch-manipulation active:scale-[0.98] text-base"
-        disabled={filteredTerms.length === 0}
-      >
-        <BookOpen className="h-5 w-5 mr-2" />
-        Start Flashcards ({filteredTerms.length} terms)
-      </Button>
-
-      {/* Session Results */}
-      {studiedCount > 0 && (
-        <Card className="border-green-500/20 bg-green-500/5">
-          <CardContent className="p-4 space-y-3">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center">
-                <span className="text-sm font-bold text-green-400">{studiedCount}</span>
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-green-400">
-                  {studiedCount} term{studiedCount !== 1 ? 's' : ''} studied
-                </p>
-                <p className="text-xs text-white">Great work! Start again to keep revising.</p>
-              </div>
-            </div>
-            <Button
-              onClick={startFlashcards}
-              variant="outline"
-              className="w-full h-11 touch-manipulation active:scale-[0.98] border-green-500/30 hover:bg-green-500/10 text-white"
+            <button
+              onClick={() => {
+                setSelectedCategory('all');
+                setSelectedDifficulty('all');
+              }}
+              className="inline-flex items-center h-8 px-2.5 rounded-md text-[11px] font-medium text-white/55 hover:text-white/85 transition-colors touch-manipulation"
             >
-              <RotateCcw className="h-4 w-4 mr-2" />
-              Study Again
-            </Button>
-          </CardContent>
-        </Card>
+              Clear filters
+            </button>
+          )}
+        </div>
+      </motion.section>
+
+      {/* ── Start button ────────────────────────────────────────── */}
+      <motion.div variants={itemVariants}>
+        <button
+          onClick={startFlashcards}
+          disabled={filteredTerms.length === 0}
+          className="w-full inline-flex items-center justify-center gap-2 h-12 rounded-xl bg-elec-yellow text-black text-[14px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation disabled:opacity-50"
+        >
+          <BookOpen className="h-4 w-4" />
+          Start flashcards ({filteredTerms.length} terms)
+        </button>
+      </motion.div>
+
+      {/* ── Session results ─────────────────────────────────────── */}
+      {studiedCount > 0 && (
+        <motion.div variants={itemVariants}>
+          <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-3">
+            <div className="flex items-center gap-3">
+              <span className="inline-flex items-center justify-center w-9 h-9 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[13px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
+                {studiedCount}
+              </span>
+              <div className="space-y-0.5">
+                <Eyebrow className="text-elec-yellow/85">Session complete</Eyebrow>
+                <p className="text-[13px] text-white/85 leading-relaxed">
+                  {studiedCount} term{studiedCount !== 1 ? 's' : ''} studied. Great work — start again to keep revising.
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={startFlashcards}
+              className="w-full inline-flex items-center justify-center gap-2 h-11 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[13px] font-medium text-elec-yellow hover:bg-elec-yellow/[0.10] active:scale-[0.98] transition-all touch-manipulation"
+            >
+              <RotateCcw className="h-3.5 w-3.5" />
+              Study again
+            </button>
+          </div>
+        </motion.div>
       )}
 
-      {/* Tip */}
-      <div className="p-3 bg-elec-yellow/10 border border-elec-yellow/20 rounded-lg">
-        <p className="text-xs text-white">
-          <strong className="text-elec-yellow">Tip:</strong> Start with Basic difficulty if you
-          are new. Once you can get them all right, move to Intermediate and then Advanced.
-        </p>
-      </div>
+      {/* ── Tip ─────────────────────────────────────────────────── */}
+      <motion.div variants={itemVariants}>
+        <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
+          <div className="flex items-start gap-2">
+            <GraduationCap className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+            <p className="text-[12.5px] text-white/85 leading-relaxed">
+              <span className="font-semibold text-elec-yellow">Tip:</span> Start
+              with Basic if you're new. Once you can get them all right, step up
+              to Intermediate and then Advanced.
+            </p>
+          </div>
+        </div>
+      </motion.div>
     </PageFrame>
   );
 };

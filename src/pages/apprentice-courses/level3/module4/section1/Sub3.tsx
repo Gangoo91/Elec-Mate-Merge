@@ -641,7 +641,7 @@ export default function Sub3() {
               "BS 7671 Reg 462 (isolation) requires lockable, designed-to-prevent re-energisation. Some older switches don't satisfy Reg 462 and need upstream isolation instead.",
               "Full installation isolation is needed when the fault is on the supply / cut-out / busbar, when circuit ID is unreliable, when the CU is compromised, or when removing the CU cover.",
               "Loss of supply has impact across four categories — other personnel, customer/client, public, building systems. Document the briefing before isolation, not after.",
-              "Multi-operative isolation uses a multi-lock hasp (Brady 65681, Master Lock 421). Each operative attaches their own padlock; no operative removes anyone else\'s lock.",
+              "Multi-operative isolation uses a multi-lock hasp (Brady 65681, Master Lock 421). Each operative attaches their own padlock; no operative removes anyone else's lock.",
               "Auto-restart of motors on supply restoration is a major cause of post-fault injuries. PUWER Reg 19 requires local isolators OFF before upstream restoration.",
               "Personal padlock + tag is a personal-safety device, not just a circuit-control device. Only the operative who applied the lock removes it. LOTO discipline is universal.",
             ]}

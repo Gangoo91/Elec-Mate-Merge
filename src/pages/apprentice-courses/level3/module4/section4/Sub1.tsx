@@ -30,7 +30,9 @@ import {
   LearningOutcomes,
   ContentEyebrow,
   SectionRule,
+  VideoCard,
 } from '@/components/study-centre/learning';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE =
@@ -368,6 +370,14 @@ export default function Sub1() {
             cite="Source: BS 7671:2018+A4:2026 — Reg 642.2."
           />
 
+          <VideoCard
+            url={videos.faultFinding.url}
+            title={videos.faultFinding.title}
+            channel={videos.faultFinding.channel}
+            duration={videos.faultFinding.duration}
+            topic={videos.faultFinding.topic}
+          />
+
           <SectionRule />
 
           <ContentEyebrow>Where it goes wrong</ContentEyebrow>
@@ -528,7 +538,7 @@ export default function Sub1() {
               "Test ordering: safety (dead before live), discrimination (most-narrowing first), cost (quick / free before slow / expensive).",
               "Visual inspection at stage 1 catches the easy 30% of faults — scorched terminals, water marks, signs of past faults — before any instrument used.",
               "Document each stage on the job sheet — symptoms, hypothesis, test plan, results, analysis, fix plan, fix execution. Defensible diagnostic narrative.",
-              "Even \'obvious' fixes benefit from a mental run-through of the stages. Apprentices who skip find the cases where obvious was wrong.",
+              "Even 'obvious' fixes benefit from a mental run-through of the stages. Apprentices who skip find the cases where obvious was wrong.",
             ]}
           />
 

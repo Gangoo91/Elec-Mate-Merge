@@ -897,7 +897,7 @@ export default function Sub3() {
               "Tester hand-over to certifier = completed Schedule of Test Results, witness sheets where spec requires, anomaly log, defect register, instrument calibration evidence.",
               "Certifier hand-over to customer = O&M pack consolidating everything — signed EIC, schedules, design pack, as-builts, BCCC, manuals, maintenance schedule, contact directory.",
               "Reg 132.13 spans the chain — design-side documentation flows from start to end, evolving at each link rather than being recreated at the end.",
-              "Documentation chain integrity matters most years later — fault, sale, EICR, insurance claim, alteration. A weak link compromises the installation\'s defendability when it is needed most.",
+              "Documentation chain integrity matters most years later — fault, sale, EICR, insurance claim, alteration. A weak link compromises the installation's defendability when it is needed most.",
             ]}
           />
 

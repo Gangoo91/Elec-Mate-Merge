@@ -323,7 +323,7 @@ export default function Sub1() {
                 Three conjoint tests, all of which must be satisfied before live working is permitted. Fault diagnosis usually clears (a) by necessity (you need voltage to measure). Test (b) requires a documented risk assessment justifying live over dead. Test (c) is the practical layer &mdash; GS38 instruments, insulated tools, defined work area, accompanied where required. Falling short on any one breaches the regulation.
               </>
             }
-            cite="Source: Electricity at Work Regulations 1989 (S.I. 1989/635), Reg 14 — verbatim from legislation.gov.uk."
+            cite="Source: Electricity at Work Regulations 1989 (S.I. 1989/635), Reg 14."
           />
 
           <InlineCheck
@@ -585,12 +585,12 @@ export default function Sub1() {
           <KeyTakeaways
             points={[
               "Fault diagnosis is structurally more dangerous than installation because the fault itself may have created hidden hazards — borrowed neutrals, induced voltage, compromised CPCs, open PEN.",
-              "EAWR Reg 13 says dead working is the default. Reg 14 sets three conjoint tests for live working. Reg 16 says you only do work you\'re competent to do — under supervision if not.",
+              "EAWR Reg 13 says dead working is the default. Reg 14 sets three conjoint tests for live working. Reg 16 says you only do work you're competent to do — under supervision if not.",
               "Always prove dead at the WORK POINT with a GS38 two-pole tester (Martindale VI-13800, Fluke T130, Kewtech KT1780) proved on a known live source BEFORE and AFTER. Every time.",
-              "A multimeter is a measurement instrument, not a proving instrument. Its 10 MΩ input reads induced and phantom voltages as if they were real. The two-pole\'s low impedance loads them out.",
+              "A multimeter is a measurement instrument, not a proving instrument. Its 10 MΩ input reads induced and phantom voltages as if they were real. The two-pole's low impedance loads them out.",
               "Stored energy in capacitors, drives, UPS batteries and thermal stores survives electrical isolation. Discharge through a resistor, never with a screwdriver, and verify with the meter.",
-              "TN-C-S open PEN is the supply-side hazard a normal RCD doesn\'t detect. Read N–E at the cut-out before any work — anything more than a few volts means STOP.",
-              "Borrowed neutrals are illegal under BS 7671 314.4 but exist in older installations. They\'re the classic \'I thought it was dead' cause of electrician shock.",
+              "TN-C-S open PEN is the supply-side hazard a normal RCD doesn't detect. Read N–E at the cut-out before any work — anything more than a few volts means STOP.",
+              "Borrowed neutrals are illegal under BS 7671 314.4 but exist in older installations. They're the classic 'I thought it was dead' cause of electrician shock.",
               "Knowing where your apprentice authority stops — and calling the supervisor — is part of the EAWR Reg 16 competence duty, not a sign of weakness.",
             ]}
           />

@@ -535,7 +535,13 @@ serve(async (req) => {
       }>;
 
       // ELE-888 — pre-compute item-adjusted versions of every line for both views
-      const adjustedRawItems = (freshQuote?.items || []).map((item: any) => {
+      // ELE-970 — invoices store user-added lines in additional_invoice_items; merge so PDF
+      // renders every line, regardless of whether the caller pre-merged on the client.
+      const invoiceItems = [
+        ...(freshQuote?.items || []),
+        ...(freshQuote?.additional_invoice_items || []),
+      ];
+      const adjustedRawItems = invoiceItems.map((item: any) => {
         const a = applyItemAdjustment(item);
         const qty = item.actualQuantity !== undefined ? item.actualQuantity : (parseFloat(item.quantity) || 0);
         return {
@@ -865,6 +871,9 @@ serve(async (req) => {
           status: freshQuote?.status || 'draft',
           notes: freshQuote?.notes || '',
           // Signature/acceptance data
+          // ELE-975 — explicit opt-in flag so templates can render a blank
+          // signature box even when the quote has not been accepted yet.
+          showSignatureBox: !!freshQuote?.settings?.showSignatureBox,
           signature_url: freshQuote?.signature_url || null,
           acceptance_status: freshQuote?.acceptance_status || null,
           acceptance_method: freshQuote?.acceptance_method || null,

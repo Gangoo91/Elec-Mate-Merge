@@ -1,5 +1,4 @@
-import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, CheckCircle, AlertCircle, Lightbulb } from 'lucide-react';
+import { ArrowLeft, CheckCircle2222, AlertTriangle, Lightbulb } from 'lucide-react';
 
 const traditionalMethods = [
   {
@@ -162,7 +161,6 @@ const providerCriteria = [
 ];
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
 import {
   PageFrame,
   PageHero,
@@ -174,14 +172,10 @@ const DeliveryPage = () => {
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/apprentice/toolbox/off-job-training-guide')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
+        <button onClick={() => navigate('/apprentice/toolbox/off-job-training-guide')} className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation">
+          <ArrowLeft className="h-4 w-4" />
           Back
-        </Button>
+        </button>
       </motion.div>
 
       <motion.div variants={itemVariants}>
@@ -194,14 +188,11 @@ const DeliveryPage = () => {
 
       {/* Traditional Methods */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-cyan-400" />
-          <h2 className="text-base font-semibold text-white">Traditional Methods</h2>
-        </div>
+        <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">Traditional Methods</span></div></div>
 
         {traditionalMethods.map((method) => (
-          <Card key={method.title} className={`${method.border} bg-white/5`}>
-            <CardContent className="p-4 space-y-3">
+          <div key={method.title} className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+            <div className="p-4 sm:p-5 space-y-3">
               <h3 className={`font-medium text-sm ${method.colour}`}>{method.title}</h3>
               <p className="text-white text-sm">{method.desc}</p>
 
@@ -211,7 +202,7 @@ const DeliveryPage = () => {
                   <ul className="space-y-1">
                     {method.pros.map((pro) => (
                       <li key={pro} className="flex items-start gap-1.5 text-xs text-white">
-                        <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
+                        <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 mt-0.5 flex-shrink-0" />
                         {pro}
                       </li>
                     ))}
@@ -222,28 +213,24 @@ const DeliveryPage = () => {
                   <ul className="space-y-1">
                     {method.cons.map((con) => (
                       <li key={con} className="flex items-start gap-1.5 text-xs text-white">
-                        <AlertCircle className="h-3 w-3 text-red-400 mt-0.5 flex-shrink-0" />
+                        <AlertTriangle className="h-3.5 w-3.5 text-red-300 mt-0.5 flex-shrink-0" />
                         {con}
                       </li>
                     ))}
                   </ul>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </div></div>
         ))}
       </div>
 
       {/* Modern Approaches */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-cyan-400" />
-          <h2 className="text-base font-semibold text-white">Modern Approaches</h2>
-        </div>
+        <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">Modern Approaches</span></div></div>
 
         {modernApproaches.map((method) => (
-          <Card key={method.title} className={`${method.border} bg-white/5`}>
-            <CardContent className="p-4 space-y-3">
+          <div key={method.title} className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+            <div className="p-4 sm:p-5 space-y-3">
               <h3 className={`font-medium text-sm ${method.colour}`}>{method.title}</h3>
               <p className="text-white text-sm">{method.desc}</p>
 
@@ -253,7 +240,7 @@ const DeliveryPage = () => {
                   <ul className="space-y-1">
                     {method.pros.map((pro) => (
                       <li key={pro} className="flex items-start gap-1.5 text-xs text-white">
-                        <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
+                        <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 mt-0.5 flex-shrink-0" />
                         {pro}
                       </li>
                     ))}
@@ -264,27 +251,23 @@ const DeliveryPage = () => {
                   <ul className="space-y-1">
                     {method.cons.map((con) => (
                       <li key={con} className="flex items-start gap-1.5 text-xs text-white">
-                        <AlertCircle className="h-3 w-3 text-red-400 mt-0.5 flex-shrink-0" />
+                        <AlertTriangle className="h-3.5 w-3.5 text-red-300 mt-0.5 flex-shrink-0" />
                         {con}
                       </li>
                     ))}
                   </ul>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </div></div>
         ))}
       </div>
 
       {/* Remote Learning Tips */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-amber-400" />
-          <h2 className="text-base font-semibold text-white">Remote Learning Tips</h2>
-        </div>
+        <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">Remote Learning Tips</span></div></div>
 
-        <Card className="border-amber-500/20 bg-amber-500/10">
-          <CardContent className="p-4 space-y-3">
+        <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04]">
+          <div className="p-4 sm:p-5 space-y-3">
             <div className="flex items-center gap-2 mb-1">
               <Lightbulb className="h-4 w-4 text-amber-400" />
               <p className="text-white text-sm font-medium">
@@ -294,36 +277,31 @@ const DeliveryPage = () => {
             <ul className="space-y-2">
               {remoteLearningTips.map((tip) => (
                 <li key={tip} className="flex items-start gap-2 text-sm text-white">
-                  <span className="text-amber-400 mt-0.5">•</span>
+                  <span className="text-elec-yellow/70 mt-0.5">·</span>
                   {tip}
                 </li>
               ))}
             </ul>
-          </CardContent>
-        </Card>
+          </div></div>
       </div>
 
       {/* Provider Selection */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-cyan-400" />
-          <h2 className="text-base font-semibold text-white">Provider Selection Criteria</h2>
-        </div>
+        <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">Provider Selection Criteria</span></div></div>
 
         {providerCriteria.map((section) => (
-          <Card key={section.title} className="border-cyan-500/20 bg-white/5">
-            <CardContent className="p-4">
+          <div key={section.title} className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+            <div className="p-4 sm:p-5">
               <h3 className="text-elec-yellow font-semibold text-sm mb-2">{section.title}</h3>
               <ul className="space-y-1">
                 {section.items.map((item) => (
                   <li key={item} className="flex items-start gap-2 text-sm text-white">
-                    <span className="text-cyan-400 mt-0.5">•</span>
+                    <span className="text-elec-yellow/70 mt-0.5">·</span>
                     {item}
                   </li>
                 ))}
               </ul>
-            </CardContent>
-          </Card>
+            </div></div>
         ))}
       </div>
     </PageFrame>

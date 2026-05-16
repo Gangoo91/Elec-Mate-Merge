@@ -26,7 +26,9 @@ import {
   LearningOutcomes,
   ContentEyebrow,
   SectionRule,
+  VideoCard,
 } from '@/components/study-centre/learning';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE =
@@ -47,7 +49,7 @@ const checks = [
     ],
     correctIndex: 1,
     explanation:
-      "Section 712.433.101 and 712.433.102 set the rules for PV string protection. The rationale is reverse-current fault protection — under a string short-circuit fault the surrounding strings can backfeed current into the faulty string, and that current must either be safely carried by the cable or interrupted by a per-string OCPD. The 1.1 coefficient in route (b) reflects the worst-case Isc multiplier; A4:2026 notes the coefficient is to be adapted upward for special module technologies or reflective conditions. The acceptance criterion appears verbatim in bs7671_facets — practitioners should never accept an array of N greater than two parallel sub-arrays without checking one of the two routes.",
+      "Section 712.433.101 and 712.433.102 set the rules for PV string protection. The rationale is reverse-current fault protection — under a string short-circuit fault the surrounding strings can backfeed current into the faulty string, and that current must either be safely carried by the cable or interrupted by a per-string OCPD. The 1.1 coefficient in route (b) reflects the worst-case Isc multiplier; A4:2026 notes the coefficient is to be adapted upward for special module technologies or reflective conditions. Practitioners should never accept an array of N greater than two parallel sub-arrays without checking one of the two routes.",
   },
   {
     id: 'l3-m2-s4-sub3-g98-g99',
@@ -92,7 +94,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      "The scope wording from Section 712 is unambiguous in the published amendment commentary. A4:2026 represents the most significant rewrite of Section 712 since the 18th Edition was published, reflecting the maturity of UK PV deployment and the increasing prevalence of hybrid and battery-coupled systems. The Action: consult Section 712 facet captured in bs7671_facets makes this explicit — anyone designing, installing, inspecting or certifying PV must work to the revised section.",
+      "The scope wording from Section 712 is unambiguous in the published amendment commentary. A4:2026 represents the most significant rewrite of Section 712 since the 18th Edition was published, reflecting the maturity of UK PV deployment and the increasing prevalence of hybrid and battery-coupled systems. The clear takeaway: anyone designing, installing, inspecting or certifying PV must work to the revised section.",
   },
   {
     id: 2,
@@ -106,7 +108,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      "IP44 is splash protection plus protection against tools and small objects 1 mm and over. IK07 is a 2 J impact rating. The combination is appropriate for typical UK outdoor weather and incidental contact, including hail and minor mechanical knocks. The acceptance facet from bs7671_facets is direct — labelling or documentation is required, and a verifier confronted with neither must record non-compliance.",
+      "IP44 is splash protection plus protection against tools and small objects 1 mm and over. IK07 is a 2 J impact rating. The combination is appropriate for typical UK outdoor weather and incidental contact, including hail and minor mechanical knocks. The acceptance rule is direct — labelling or documentation is required, and a verifier confronted with neither must record non-compliance.",
   },
   {
     id: 3,
@@ -120,7 +122,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      "BS EN 61557-8 is the product standard for Insulation Monitoring Devices used in IT systems and selected DC applications. The acceptance facet captured in bs7671_facets is precise — absence of conformity evidence is non-compliance, and the verifier should not accept verbal assurance. IMDs detect insulation degradation on the DC side before the fault becomes a hazard. Section 712 requires their use in defined configurations.",
+      "BS EN 61557-8 is the product standard for Insulation Monitoring Devices used in IT systems and selected DC applications. The acceptance rule is precise — absence of conformity evidence is non-compliance, and the verifier should not accept verbal assurance. IMDs detect insulation degradation on the DC side before the fault becomes a hazard. Section 712 requires their use in defined configurations.",
   },
   {
     id: 4,
@@ -134,7 +136,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      "The Reg 712.2 table is short but very specific — a stepped scale of permitted device ratings in the functional bonding conductor based on PV array peak power. The complete five-row table appears verbatim in bs7671_facets. This functional bonding handles transient and induced currents, not fault clearance, so the device ratings are deliberately small and ascend slowly with array size.",
+      "The Reg 712.2 table is short but very specific — a stepped scale of permitted device ratings in the functional bonding conductor based on PV array peak power. The complete five-row table is published in BS 7671. This functional bonding handles transient and induced currents, not fault clearance, so the device ratings are deliberately small and ascend slowly with array size.",
   },
   {
     id: 5,
@@ -190,7 +192,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      "Regulation 712.542.101 covers the electrical bonding of the structural metalwork that holds the PV modules in place. The intent is to ensure that any fault current finding its way onto the array frames, rails or fixings has a low-impedance return to earth. The acceptance facet captured in bs7671_facets is direct — continuity must be measurable and the connection must be permanent and secure.",
+      "Regulation 712.542.101 covers the electrical bonding of the structural metalwork that holds the PV modules in place. The intent is to ensure that any fault current finding its way onto the array frames, rails or fixings has a low-impedance return to earth. The acceptance rule is direct — continuity must be measurable and the connection must be permanent and secure.",
   },
 ];
 
@@ -213,7 +215,7 @@ const faqs = [
   {
     question: "How does the A4:2026 revision of Section 712 affect a PV install I'm working on now?",
     answer:
-      "If the install commenced after the A4:2026 effective date, the revised Section 712 applies in full — including the new and amended clauses on DC voltage calculation, IMD selection (BS EN 61557-8), enclosure ratings (IP44 plus IK07), string OCPD selection routes, equipotential bonding continuity acceptance criteria and the functional-bonding-conductor device ratings table at 712.2. Designs commenced before the effective date but completed after it sit in the transitional window — the IET commentary and the customer's MCS designer should advise. The Action: consult Section 712 facet from bs7671_facets is the safe default for any post-effective-date work.",
+      "If the install commenced after the A4:2026 effective date, the revised Section 712 applies in full — including the new and amended clauses on DC voltage calculation, IMD selection (BS EN 61557-8), enclosure ratings (IP44 plus IK07), string OCPD selection routes, equipotential bonding continuity acceptance criteria and the functional-bonding-conductor device ratings table at 712.2. Designs commenced before the effective date but completed after it sit in the transitional window — the IET commentary and the customer's MCS designer should advise. Consulting the revised Section 712 is the safe default for any post-effective-date work.",
   },
   {
     question: "Anti-islanding sometimes trips for no obvious reason and the customer loses generation. What's going on?",
@@ -341,7 +343,7 @@ export default function Sub3() {
             clause={
               <>
                 <p className="mb-2">
-                  Acceptance criterion (verbatim from bs7671_facets):
+                  Acceptance criterion:
                 </p>
                 <p>
                   &quot;For acceptance on site, the enclosure shall be labelled or accompanied
@@ -362,7 +364,16 @@ export default function Sub3() {
                 non-compliance under Section 712.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Reg 712.512.102 (verbatim acceptance criterion via bs7671_facets — IET Wiring Regulations 18th Edition A4:2026)."
+            cite="Source: BS 7671:2018+A4:2026 Reg 712.512.102 — IET Wiring Regulations 18th Edition A4:2026."
+          />
+
+          <VideoCard
+            url={videos.inverter.url}
+            title={videos.inverter.title}
+            channel={videos.inverter.channel}
+            duration={videos.inverter.duration}
+            topic="PV inverter operation — context for Section 712 deep dive"
+            caption="Section 712's anti-islanding, IMD and protection rules all hinge on what the inverter is doing in normal and abnormal operation. A clear mental model of the inverter switching stage makes the regulatory rules much easier to apply."
           />
 
           <SectionRule />
@@ -372,7 +383,7 @@ export default function Sub3() {
           <ConceptBlock
             title="More than two parallel sub-arrays — pick route (a) or route (b)"
             plainEnglish="If a PV array has more than two parallel strings (sub-arrays) feeding a common DC bus, a fault on one string can be back-fed by the other strings. Section 712 gives two routes to cope. Route (a) — fit no string OCPDs but ensure each string cable can carry the worst-case reverse current (N − 1 strings backfeeding into one). Route (b) — fit per-string OCPDs sized between 1.1 times Isc max and the cable Iz. Either route is compliant; the design choice is usually about cable economics versus device cost."
-            onSite="On a typical large commercial array with many strings, route (a) (oversized cable, no string fuses) becomes uneconomic quickly — every cable would have to carry many times Isc. Route (b) (per-string OCPDs in a combiner box) is the normal commercial answer. On small domestic two-string installs, Section 712 acceptance allows no OCPD because N is at most 2, removing the back-feed risk by definition. The acceptance facet captured in bs7671_facets makes this explicit — N at most 2 needs no string OCPDs."
+            onSite="On a typical large commercial array with many strings, route (a) (oversized cable, no string fuses) becomes uneconomic quickly — every cable would have to carry many times Isc. Route (b) (per-string OCPDs in a combiner box) is the normal commercial answer. On small domestic two-string installs, Section 712 acceptance allows no OCPD because N is at most 2, removing the back-feed risk by definition. The acceptance rule is explicit — N at most 2 needs no string OCPDs."
           >
             <p>
               The numbers, made concrete with a worked example. Suppose N = 6 parallel
@@ -406,7 +417,7 @@ export default function Sub3() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Reg 712.433.102 (Protection of PV strings, acceptance criterion verbatim)"
+            source="BS 7671:2018+A4:2026 — Reg 712.433.102 (Protection of PV sub-array cable, paraphrased summary)"
             clause={
               <>
                 &quot;For PV arrays with N greater than 2 parallel sub-arrays, compliance is
@@ -427,7 +438,7 @@ export default function Sub3() {
                 712 non-compliance you will encounter on inspection.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Reg 712.433.102 (verbatim acceptance criterion via bs7671_facets — IET Wiring Regulations 18th Edition A4:2026)."
+            cite="Source: BS 7671:2018+A4:2026 Reg 712.433.102 — IET Wiring Regulations 18th Edition A4:2026."
           />
 
           <InlineCheck
@@ -445,7 +456,7 @@ export default function Sub3() {
           <ConceptBlock
             title="Uoc max and Upc max set the floor for every DC-side rating"
             plainEnglish="DC voltage on a PV string rises in cold weather. The open-circuit voltage of a silicon module increases as cell temperature falls — typical figures around 0.3 to 0.4 percent per degree Celsius below 25 degrees. On a frosty UK morning a string rated 600 V Uoc at STC can hit 680 to 720 V before the inverter starts pulling current. Every piece of DC-side equipment — cable, isolator, fuse, combiner, inverter input — must be rated for Uoc max at the lowest expected ambient. Equipment underrated for that worst case is non-compliant under Reg 712.512.1.1 and is a real-world cause of arc faults and fires."
-            onSite="On Section 712 acceptance you check the labels on every DC-side device against the Uoc max calculation in the design pack. If the design pack says Uoc max = 720 V and the DC isolator label says 600 V DC, the isolator is non-compliant regardless of what the installer says about it usually being fine. The acceptance facet captured in bs7671_facets is direct — equipment voltage ratings shall be at least Uoc max (considered nominal) and Upc max determined per Reg 712.433.101.1."
+            onSite="On Section 712 acceptance you check the labels on every DC-side device against the Uoc max calculation in the design pack. If the design pack says Uoc max = 720 V and the DC isolator label says 600 V DC, the isolator is non-compliant regardless of what the installer says about it usually being fine. The acceptance rule is direct — equipment voltage ratings shall be at least Uoc max (considered nominal) and Upc max determined per Reg 712.433.101.1."
           >
             <p>
               Three other equipment-selection rules from Section 712 worth committing to
@@ -515,7 +526,7 @@ export default function Sub3() {
             source="BS 7671:2018+A4:2026 — Reg 712.538.101 (IMD selection per BS EN 61557-8)"
             clause={
               <>
-                Acceptance criterion (verbatim): &quot;Where an IMD is provided but cannot be
+                Acceptance criterion: &quot;Where an IMD is provided but cannot be
                 shown to be selected in accordance with BS EN 61557-8 (no documentation,
                 marking or declaration of conformity), the installation does not meet the
                 requirement of Regulation 712.538.101 and should be treated as non-compliant
@@ -532,7 +543,7 @@ export default function Sub3() {
                 Verbal assurance is not enough.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Reg 712.538.101 (verbatim acceptance criterion via bs7671_facets — IET Wiring Regulations 18th Edition A4:2026)."
+            cite="Source: BS 7671:2018+A4:2026 Reg 712.538.101 — IET Wiring Regulations 18th Edition A4:2026."
           />
 
           <InlineCheck

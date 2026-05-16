@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { ArrowLeft, CheckCircle2, ChevronDown, ChevronUp } from 'lucide-react';
 import {
   PageFrame,
   PageHero,
@@ -196,14 +194,10 @@ const ProfessionalSkills = () => {
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/apprentice/professional-development')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
+        <button onClick={() => navigate('/apprentice/professional-development')} className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation">
+          <ArrowLeft className="h-4 w-4" />
           Back
-        </Button>
+        </button>
       </motion.div>
 
       <motion.div variants={itemVariants}>
@@ -216,14 +210,11 @@ const ProfessionalSkills = () => {
       </motion.div>
 
       {/* Skill Categories */}
-      <div className="flex items-center gap-2">
-        <div className="w-2 h-2 rounded-full bg-green-400" />
-        <h2 className="text-base font-semibold text-white">Skill Categories</h2>
-      </div>
+      <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">Skill Categories</span></div></div>
 
       <div className="space-y-2">
         {skillCategories.map((category, index) => (
-          <Card key={category.title} className="border-green-500/20 bg-white/5">
+          <div key={category.title} className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
             <button
               onClick={() => toggleExpanded(index)}
               className="w-full p-4 flex items-center justify-between touch-manipulation active:scale-[0.98] transition-transform min-h-[44px] text-left"
@@ -244,44 +235,37 @@ const ProfessionalSkills = () => {
             </button>
 
             {expandedIndex === index && (
-              <CardContent className="px-4 pb-4 pt-0 space-y-2 animate-fade-in">
+              <div className="px-4 pb-4 pt-0 space-y-2 animate-fade-in">
                 {category.skills.map((skill) => (
                   <div
                     key={skill}
                     className="flex items-start gap-2 text-sm text-white p-2 bg-white/5 border border-white/10 rounded-lg"
                   >
-                    <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
+                    <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                     {skill}
                   </div>
                 ))}
-              </CardContent>
+              </div>
             )}
-          </Card>
+          </div>
         ))}
       </div>
 
       {/* Development Activities */}
-      <div className="flex items-center gap-2">
-        <div className="w-2 h-2 rounded-full bg-blue-400" />
-        <h2 className="text-base font-semibold text-white">Development Activities</h2>
-      </div>
+      <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">Development Activities</span></div></div>
 
       <div className="space-y-3">
         {developmentActivities.map((activity) => (
-          <Card key={activity.title} className="border-blue-500/20 bg-white/5">
-            <CardContent className="p-4 space-y-1">
+          <div key={activity.title} className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+            <div className="p-4 space-y-1">
               <h3 className="font-semibold text-blue-400 text-sm">{activity.title}</h3>
               <p className="text-white text-sm leading-relaxed">{activity.description}</p>
-            </CardContent>
-          </Card>
+            </div></div>
         ))}
       </div>
 
       {/* Why Professional Skills Matter */}
-      <div className="flex items-center gap-2">
-        <div className="w-2 h-2 rounded-full bg-purple-400" />
-        <h2 className="text-base font-semibold text-white">Why Professional Skills Matter</h2>
-      </div>
+      <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">Why Professional Skills Matter</span></div></div>
 
       <div className="space-y-3">
         {[
@@ -301,25 +285,21 @@ const ProfessionalSkills = () => {
               'If you want to be self-employed or run your own business, professional skills are not optional. Pricing, marketing, customer service, and financial management are essential.',
           },
         ].map((benefit) => (
-          <Card key={benefit.title} className="border-purple-500/20 bg-white/5">
-            <CardContent className="p-4 space-y-1">
+          <div key={benefit.title} className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+            <div className="p-4 space-y-1">
               <h3 className="font-semibold text-purple-400 text-sm">{benefit.title}</h3>
               <p className="text-white text-sm leading-relaxed">{benefit.detail}</p>
-            </CardContent>
-          </Card>
+            </div></div>
         ))}
       </div>
 
       {/* Recommended Resources */}
-      <div className="flex items-center gap-2">
-        <div className="w-2 h-2 rounded-full bg-orange-400" />
-        <h2 className="text-base font-semibold text-white">Recommended Resources</h2>
-      </div>
+      <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">Recommended Resources</span></div></div>
 
       <div className="space-y-3">
         {recommendedResources.map((resource) => (
-          <Card key={resource.title} className="border-orange-500/20 bg-white/5">
-            <CardContent className="p-4 space-y-1">
+          <div key={resource.title} className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+            <div className="p-4 space-y-1">
               <div className="flex items-center justify-between">
                 <h3 className="font-semibold text-orange-400 text-sm">{resource.title}</h3>
                 <span className="text-xs font-medium text-white bg-orange-500/20 border border-orange-500/30 rounded-full px-2 py-0.5 flex-shrink-0">
@@ -327,8 +307,7 @@ const ProfessionalSkills = () => {
                 </span>
               </div>
               <p className="text-white text-sm leading-relaxed">{resource.description}</p>
-            </CardContent>
-          </Card>
+            </div></div>
         ))}
       </div>
 
@@ -338,8 +317,8 @@ const ProfessionalSkills = () => {
         <h2 className="text-base font-semibold text-white">Getting Started This Week</h2>
       </div>
 
-      <Card className="border-yellow-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-3">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 space-y-3">
           <p className="text-white text-sm leading-relaxed">
             Professional skills improve with practice, not just reading. Pick one action from this
             list and do it this week:
@@ -358,12 +337,11 @@ const ProfessionalSkills = () => {
               </li>
             ))}
           </ul>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Development Strategy */}
-      <Card className="border-green-500/20 bg-green-500/5">
-        <CardContent className="p-4 space-y-2">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 space-y-2">
           <h3 className="font-semibold text-green-400 text-sm">Development Strategy</h3>
           <p className="text-white text-sm leading-relaxed">
             Pick one or two professional skills to focus on each quarter. Set specific, measurable
@@ -371,18 +349,16 @@ const ProfessionalSkills = () => {
             toolbox talk per month." Track your progress and ask for feedback from colleagues and
             clients. Small, consistent improvements add up to significant career growth.
           </p>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Footer */}
-      <Card className="border-white/10 bg-white/5">
-        <CardContent className="p-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4">
           <p className="text-white text-xs leading-relaxed">
             Professional skills guidance based on IET professional standards, ECA industry
             requirements, and current UK employer expectations for electrical professionals.
           </p>
-        </CardContent>
-      </Card>
+        </div></div>
     </PageFrame>
   );
 };

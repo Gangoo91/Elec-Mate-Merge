@@ -15,7 +15,11 @@
 
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
-import { Resend } from '../_shared/mailer.ts';
+import { Resend, clientFacingSender, htmlToPlainText } from '../_shared/mailer.ts';
+import {
+  buildCertExpiryReminderEmail,
+  type ExpiryTier,
+} from '../_shared/email-templates/cert-expiry-reminder.ts';
 import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
@@ -24,16 +28,16 @@ const corsHeaders = {
     'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
-/** Human-readable certificate type labels */
-const CERT_TYPE_LABELS: Record<string, string> = {
-  eicr: 'Electrical Installation Condition Report (EICR)',
-  eic: 'Electrical Installation Certificate (EIC)',
-  'minor-works': 'Minor Electrical Installation Works Certificate',
-  'fire-alarm': 'Fire Alarm Certificate',
-  'emergency-lighting': 'Emergency Lighting Certificate',
-  'pat-testing': 'PAT Testing Certificate',
-  'ev-charging': 'EV Charging Installation Certificate',
-  'solar-pv': 'Solar PV Installation Certificate',
+/** Short cert-type display names used in subject/hero. */
+const CERT_TYPE_SHORT: Record<string, string> = {
+  eicr: 'EICR',
+  eic: 'EIC',
+  'minor-works': 'Minor Works',
+  'fire-alarm': 'Fire Alarm',
+  'emergency-lighting': 'Emergency Lighting',
+  'pat-testing': 'PAT Testing',
+  'ev-charging': 'EV Charging',
+  'solar-pv': 'Solar PV',
 };
 
 serve(async (req: Request) => {
@@ -206,50 +210,59 @@ serve(async (req: Request) => {
         }
       }
 
-      // Get electrician's company details for the "contact us" section
-      let companyName = 'Your Electrician';
-      let companyPhone = '';
-      let companyEmail = '';
-
+      // Get full electrician profile so the email is fully branded
+      // (logo, primary colour, address, VAT, registration) — matches
+      // every other client-facing email in the system.
       const { data: company } = await supabase
         .from('company_profiles')
-        .select('company_name, company_email, email, company_phone, phone, full_name')
+        .select('*')
         .eq('user_id', cert.user_id)
         .single();
 
-      if (company) {
-        companyName = company.company_name || company.full_name || 'Your Electrician';
-        companyEmail = company.company_email || company.email || '';
-        companyPhone = company.company_phone || company.phone || '';
-      }
+      const companyName =
+        company?.company_name || company?.full_name || 'Your Electrician';
+      const companyEmail =
+        company?.company_email || company?.email || '';
 
       const clientName = customer.name || cert.client_name || 'Valued Customer';
-      const address = cert.installation_address || 'your property';
-      const certLabel = CERT_TYPE_LABELS[reportType] || reportType.toUpperCase();
+      const address = cert.installation_address || null;
+      const certLabel = CERT_TYPE_SHORT[reportType] || reportType.toUpperCase();
 
-      const emailContent = generateClientExpiryEmail(
-        reminderTier,
+      const emailContent = buildCertExpiryReminderEmail({
+        company: {
+          name: companyName,
+          logoUrl: company?.logo_url || company?.logo_data_url || null,
+          primaryColor: company?.primary_color || null,
+          email: companyEmail || null,
+          phone: company?.company_phone || company?.phone || null,
+          website: company?.company_website || null,
+          address: company?.company_address || null,
+          vatNumber: company?.vat_number || null,
+          registrationNumber: company?.company_registration || null,
+        },
         clientName,
-        address,
-        cert.certificate_number,
-        certLabel,
+        certificateType: certLabel,
+        certificateNumber: cert.certificate_number,
+        installationAddress: address,
+        expiryDate: cert.expiry_date,
         daysUntilExpiry,
-        cert.expiry_date,
-        companyName,
-        companyEmail,
-        companyPhone
-      );
+        tier: reminderTier as ExpiryTier,
+        bookingUrl: null,
+      });
 
       try {
-        // ELE-662 — migrated from direct Resend fetch to Brevo via mailer
-        // shim. Drop support@elec-mate.com fallback (unmonitored).
+        // ELE-662 — DMARC-aligned sender via the shared helper.
         const resend = new Resend(resendApiKey);
+        const sender = clientFacingSender({
+          companyName,
+          companyEmail: companyEmail || undefined,
+        });
         const { error: emailError } = await resend.emails.send({
-          from: `ElecMate <founder@elec-mate.com>`,
-          ...(companyEmail ? { replyTo: companyEmail } : {}),
+          ...sender,
           to: customer.email,
           subject: emailContent.subject,
           html: emailContent.html,
+          text: htmlToPlainText(emailContent.html),
         });
 
         if (emailError) {
@@ -312,6 +325,7 @@ serve(async (req: Request) => {
       functionName: 'send-client-expiry-reminders',
       requestUrl: req.url,
       requestMethod: req.method,
+      trackingPixelUrl: `${Deno.env.get('SUPABASE_URL')}/functions/v1/email-open?type=cert_expiry&id=${cert.id}`,
     });
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,
@@ -319,195 +333,3 @@ serve(async (req: Request) => {
     });
   }
 });
-
-function generateClientExpiryEmail(
-  tier: '30-day' | '14-day' | '7-day',
-  clientName: string,
-  address: string,
-  certificateNumber: string,
-  certTypeLabel: string,
-  daysUntilExpiry: number,
-  expiryDate: string,
-  companyName: string,
-  companyEmail: string,
-  companyPhone: string
-): { subject: string; html: string } {
-  const formattedExpiry = new Date(expiryDate).toLocaleDateString('en-GB', {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  });
-
-  const configs = {
-    '30-day': {
-      subject: `Your ${certTypeLabel} is due for renewal`,
-      title: 'Certificate Renewal Notice',
-      titleColor: '#3b82f6',
-      borderColor: 'rgba(59, 130, 246, 0.2)',
-      bgGradient: 'rgba(59, 130, 246, 0.1)',
-      badgeColor: '#3b82f6',
-      badgeBg: 'rgba(59, 130, 246, 0.15)',
-      badgeBorder: 'rgba(59, 130, 246, 0.3)',
-      message: `Your electrical certificate for <strong>${address}</strong> is approaching its expiry date. To maintain compliance and ensure the continued safety of your installation, a re-inspection will be needed before it expires.`,
-      cta: 'There is no need for immediate action, but we recommend getting in touch with your electrician in the coming weeks to arrange a convenient date.',
-    },
-    '14-day': {
-      subject: `Reminder: Your ${certTypeLabel} expires in ${daysUntilExpiry} days`,
-      title: 'Certificate Expiry Reminder',
-      titleColor: '#f59e0b',
-      borderColor: 'rgba(245, 158, 11, 0.3)',
-      bgGradient: 'rgba(245, 158, 11, 0.1)',
-      badgeColor: '#f59e0b',
-      badgeBg: 'rgba(245, 158, 11, 0.15)',
-      badgeBorder: 'rgba(245, 158, 11, 0.3)',
-      message: `Your electrical certificate for <strong>${address}</strong> expires in just two weeks. A re-inspection is needed to keep your installation compliant and safe.`,
-      cta: 'We recommend contacting your electrician soon to book your re-inspection before the certificate expires.',
-    },
-    '7-day': {
-      subject: `Urgent: Your ${certTypeLabel} expires in ${daysUntilExpiry} days`,
-      title: 'Urgent: Certificate Expiring Soon',
-      titleColor: '#ef4444',
-      borderColor: 'rgba(239, 68, 68, 0.3)',
-      bgGradient: 'rgba(239, 68, 68, 0.15)',
-      badgeColor: '#ef4444',
-      badgeBg: 'rgba(239, 68, 68, 0.15)',
-      badgeBorder: 'rgba(239, 68, 68, 0.3)',
-      message: `Your electrical certificate for <strong>${address}</strong> expires in less than a week. Once expired, your installation will no longer have a valid certificate.`,
-      cta: 'Please contact your electrician as soon as possible to arrange an immediate re-inspection.',
-    },
-  };
-
-  const config = configs[tier];
-
-  // Build contact section
-  let contactSection = '';
-  if (companyEmail || companyPhone) {
-    const contactLines = [];
-    if (companyPhone)
-      contactLines.push(
-        `<p style="margin: 4px 0; font-size: 15px; color: #cbd5e1;">Phone: <a href="tel:${companyPhone}" style="color: #facc15; text-decoration: none;">${companyPhone}</a></p>`
-      );
-    if (companyEmail)
-      contactLines.push(
-        `<p style="margin: 4px 0; font-size: 15px; color: #cbd5e1;">Email: <a href="mailto:${companyEmail}" style="color: #facc15; text-decoration: none;">${companyEmail}</a></p>`
-      );
-    contactSection = `
-      <tr>
-        <td style="padding: 0 24px 32px 24px;">
-          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background: rgba(250, 204, 21, 0.08); border-radius: 16px; border: 1px solid rgba(250, 204, 21, 0.15);">
-            <tr>
-              <td style="padding: 20px 24px;">
-                <p style="margin: 0 0 8px 0; font-size: 13px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px;">Contact Your Electrician</p>
-                <p style="margin: 0 0 4px 0; font-size: 16px; color: #e2e8f0; font-weight: 600;">${companyName}</p>
-                ${contactLines.join('')}
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    `;
-  }
-
-  const html = `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #0f172a; margin: 0; padding: 0; -webkit-font-smoothing: antialiased;">
-      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #0f172a;">
-        <tr>
-          <td align="center" style="padding: 48px 16px;">
-            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width: 420px; background: #111111; border-radius: 24px; overflow: hidden; border: 1px solid ${config.borderColor};">
-
-              <!-- Title -->
-              <tr>
-                <td align="center" style="padding: 48px 32px 12px 32px;">
-                  <h1 style="margin: 0; font-size: 24px; font-weight: 700; color: ${config.titleColor}; line-height: 1.3;">${config.title}</h1>
-                </td>
-              </tr>
-
-              <!-- Certificate Type Badge -->
-              <tr>
-                <td align="center" style="padding: 0 32px 12px 32px;">
-                  <table role="presentation" cellspacing="0" cellpadding="0">
-                    <tr>
-                      <td style="background: ${config.badgeBg}; border: 1px solid ${config.badgeBorder}; border-radius: 12px; padding: 10px 20px;">
-                        <span style="font-size: 14px; font-weight: 600; color: ${config.badgeColor};">${certTypeLabel}</span>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-
-              <!-- Certificate Number -->
-              <tr>
-                <td align="center" style="padding: 0 32px 32px 32px;">
-                  <table role="presentation" cellspacing="0" cellpadding="0">
-                    <tr>
-                      <td style="background: rgba(250, 204, 21, 0.15); border: 1px solid rgba(250, 204, 21, 0.3); border-radius: 12px; padding: 12px 24px;">
-                        <span style="font-size: 15px; font-weight: 600; color: #facc15;">${certificateNumber}</span>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-
-              <!-- Expiry Countdown -->
-              <tr>
-                <td style="padding: 0 24px 24px 24px;">
-                  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background: ${config.bgGradient}; border-radius: 20px; border: 1px solid ${config.borderColor};">
-                    <tr>
-                      <td align="center" style="padding: 24px;">
-                        <p style="margin: 0 0 8px 0; font-size: 13px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1.5px;">Expires In</p>
-                        <p style="margin: 0; font-size: 42px; font-weight: 700; color: ${config.titleColor};">${daysUntilExpiry}</p>
-                        <p style="margin: 4px 0 0 0; font-size: 16px; color: #94a3b8; font-weight: 500;">day${daysUntilExpiry === 1 ? '' : 's'}</p>
-                        <p style="margin: 16px 0 0 0; font-size: 14px; color: #64748b;">${formattedExpiry}</p>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-
-              <!-- Message -->
-              <tr>
-                <td style="padding: 0 32px 24px 32px;">
-                  <p style="margin: 0; font-size: 17px; color: #e2e8f0; line-height: 1.6;">Dear ${clientName},</p>
-                  <p style="margin: 20px 0 0 0; font-size: 16px; color: #94a3b8; line-height: 1.7;">${config.message}</p>
-                  <p style="margin: 16px 0 0 0; font-size: 16px; color: #94a3b8; line-height: 1.7;">${config.cta}</p>
-                </td>
-              </tr>
-
-              <!-- Contact Section -->
-              ${contactSection}
-
-              <!-- Reassurance -->
-              <tr>
-                <td style="padding: 0 32px 32px 32px;">
-                  <p style="margin: 0; font-size: 14px; color: #64748b; line-height: 1.6;">
-                    Regular electrical inspections help keep your property safe and ensure your installation meets current regulations. Your electrician will be happy to discuss the process and answer any questions.
-                  </p>
-                </td>
-              </tr>
-
-              <!-- Footer -->
-              <tr>
-                <td style="padding: 28px 32px; border-top: 1px solid rgba(148, 163, 184, 0.1);">
-                  <p style="margin: 0; font-size: 13px; color: #64748b; text-align: center;">Sent on behalf of ${companyName}</p>
-                  <p style="margin: 8px 0 0 0; font-size: 12px; color: #475569; text-align: center;">Sent via Elec-Mate</p>
-                  <p style="margin: 12px 0 0 0; font-size: 11px; color: #334155; text-align: center;">You received this because your electrician has enabled certificate expiry reminders for you. If you believe this was sent in error, please contact your electrician directly.</p>
-                </td>
-              </tr>
-
-            </table>
-          </td>
-        </tr>
-      </table>
-    </body>
-    </html>
-  `;
-
-  return { subject: config.subject, html };
-}

@@ -543,7 +543,7 @@ export default function Sub1() {
               "Replacement-only: consumer units (sealed), drivers, AFDDs, modern moulded accessories, electronic protective devices.",
               "Compliance can force replacement: A4:2026 requirements, Building Regs changes, original device below current spec.",
               "Check warranty / insurance before quoting paid work — in-warranty fix is free for the customer.",
-              "Customer makes commercial decision (which compliant option); firm makes safety decision (which options are compliant). Don\'t confuse.",
+              "Customer makes commercial decision (which compliant option); firm makes safety decision (which options are compliant). Don't confuse.",
               "Quote 2–3 options with trade-offs. Customer feels respected; firm preserves trust; commercial relationship continues.",
             ]}
           />

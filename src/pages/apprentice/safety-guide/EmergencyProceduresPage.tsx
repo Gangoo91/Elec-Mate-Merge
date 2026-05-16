@@ -1,8 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, CheckCircle, AlertTriangle, Phone } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { ArrowLeft, CheckCircle2222, AlertTriangle, Phone } from 'lucide-react';
 import {
   PageFrame,
   PageHero,
@@ -14,14 +12,10 @@ const EmergencyProceduresPage = () => {
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/apprentice/safety-fundamentals')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
+        <button onClick={() => navigate('/apprentice/safety-fundamentals')} className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation">
+          <ArrowLeft className="h-4 w-4" />
           Back
-        </Button>
+        </button>
       </motion.div>
 
       <motion.div variants={itemVariants}>
@@ -34,8 +28,8 @@ const EmergencyProceduresPage = () => {
       </motion.div>
 
       {/* Intro */}
-      <Card className="border-red-500/30 bg-red-500/10">
-        <CardContent className="p-4 space-y-3">
+      <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04]">
+        <div className="p-4 sm:p-5 space-y-3">
           <div className="flex items-center gap-2">
             <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0" />
             <h2 className="text-lg font-semibold text-red-400">
@@ -51,12 +45,11 @@ const EmergencyProceduresPage = () => {
             first aid kit, fire extinguishers, assembly point, and nearest phone
             are located.
           </p>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Electric Shock */}
-      <Card className="border-red-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-red-500/25 bg-red-500/[0.04]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-red-400">
             Electric Shock Response
           </h2>
@@ -67,7 +60,7 @@ const EmergencyProceduresPage = () => {
             30mA across the heart can be fatal.
           </p>
 
-          <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4">
+          <div className="rounded-md border border-red-500/25 bg-red-500/[0.04] p-3 sm:p-4">
             <h3 className="text-red-400 font-bold text-sm mb-3">
               DO NOT TOUCH THE CASUALTY UNTIL THE SUPPLY IS ISOLATED
             </h3>
@@ -140,7 +133,7 @@ const EmergencyProceduresPage = () => {
             ))}
           </div>
 
-          <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
+          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
             <p className="text-white text-xs">
               <span className="font-semibold text-blue-400">Important: </span>
               Even if the casualty seems fine after an electric shock, they{' '}
@@ -149,12 +142,11 @@ const EmergencyProceduresPage = () => {
               shock casualties should be monitored with an ECG.
             </p>
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Electrical Fire */}
-      <Card className="border-orange-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-orange-400">
             Electrical Fire Response
           </h2>
@@ -165,7 +157,7 @@ const EmergencyProceduresPage = () => {
             the situation much worse.
           </p>
 
-          <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4">
+          <div className="rounded-md border border-red-500/25 bg-red-500/[0.04] p-3 sm:p-4">
             <h3 className="text-red-400 font-bold text-sm mb-2">
               NEVER USE WATER ON AN ELECTRICAL FIRE
             </h3>
@@ -243,12 +235,11 @@ const EmergencyProceduresPage = () => {
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Arc Flash */}
-      <Card className="border-purple-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-purple-400">
             Arc Flash Incident
           </h2>
@@ -284,12 +275,11 @@ const EmergencyProceduresPage = () => {
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Burns Treatment */}
-      <Card className="border-amber-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-amber-400">
             Burns Treatment
           </h2>
@@ -323,12 +313,11 @@ const EmergencyProceduresPage = () => {
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Falls */}
-      <Card className="border-blue-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-blue-400">
             Falls from Height
           </h2>
@@ -354,12 +343,11 @@ const EmergencyProceduresPage = () => {
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* RIDDOR */}
-      <Card className="border-green-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-green-400">
             RIDDOR Reporting
           </h2>
@@ -387,7 +375,7 @@ const EmergencyProceduresPage = () => {
                 key={item}
                 className="flex items-start gap-2 text-sm text-white"
               >
-                <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                 {item}
               </div>
             ))}
@@ -413,12 +401,11 @@ const EmergencyProceduresPage = () => {
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* First Aid on Site */}
-      <Card className="border-blue-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-blue-400">
             First Aid Awareness on Site
           </h2>
@@ -442,13 +429,13 @@ const EmergencyProceduresPage = () => {
                 key={item}
                 className="flex items-start gap-2 text-sm text-white"
               >
-                <CheckCircle className="h-4 w-4 text-blue-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                 {item}
               </div>
             ))}
           </div>
 
-          <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
+          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
             <p className="text-white text-xs">
               <span className="font-semibold text-blue-400">Tip: </span>
               Consider getting a first aid at work certificate (3-day course or
@@ -457,12 +444,11 @@ const EmergencyProceduresPage = () => {
               will pay for this training.
             </p>
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Emergency Contacts */}
-      <Card className="border-red-500/20 bg-red-500/10">
-        <CardContent className="p-4 space-y-3">
+      <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04]">
+        <div className="p-4 sm:p-5 space-y-3">
           <div className="flex items-center gap-2">
             <Phone className="h-5 w-5 text-red-400" />
             <h3 className="text-sm font-semibold text-red-400">
@@ -487,12 +473,11 @@ const EmergencyProceduresPage = () => {
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Footer */}
-      <Card className="border-white/10 bg-white/5">
-        <CardContent className="p-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5">
           <p className="text-white text-xs leading-relaxed">
             Emergency procedures based on Resuscitation Council UK guidelines
             (2021), HSE first aid at work guidance (INDG214), RIDDOR 2013, and
@@ -500,8 +485,7 @@ const EmergencyProceduresPage = () => {
             breaths for adults. Always follow your employer's emergency procedures
             and attend refresher training regularly.
           </p>
-        </CardContent>
-      </Card>
+        </div></div>
     </PageFrame>
   );
 };

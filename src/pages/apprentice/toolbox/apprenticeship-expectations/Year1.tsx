@@ -1,9 +1,17 @@
-import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { Button } from '@/components/ui/button';
+/**
+ * Year1 — editorial Year 1 apprenticeship guide (Foundation year).
+ *
+ * The foundation year: safety, basics, ECS card, portfolio started.
+ * Full editorial rewrite — drops chunky multi-coloured Cards / Badges /
+ * Progress in favour of the editorial pattern. Content retained and
+ * enriched.
+ */
+
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import {
+  ArrowLeft,
   BookOpen,
   Wrench,
   Shield,
@@ -11,916 +19,774 @@ import {
   Calendar,
   Target,
   AlertTriangle,
-  CheckCircle,
+  CheckCircle2,
   Clock,
   GraduationCap,
   Briefcase,
   Star,
   ChevronDown,
-  ChevronUp,
   Lightbulb,
   Package,
-  Coffee,
   HardHat,
   Zap,
   FileText,
+  Coffee,
   Heart,
+  X,
 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
-import { useIsMobile } from '@/hooks/use-mobile';
+import type { LucideIcon } from 'lucide-react';
 import {
-  MobileAccordion,
-  MobileAccordionItem,
-  MobileAccordionTrigger,
-  MobileAccordionContent,
-} from '@/components/ui/mobile-accordion';
+  PageFrame,
+  PageHero,
+  itemVariants,
+} from '@/components/college/primitives';
+import {
+  Eyebrow,
+  SectionHeader,
+} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { cn } from '@/lib/utils';
 
-const Year1 = () => {
+interface MonthlyPeriod {
+  month: string;
+  title: string;
+  focus: string;
+  icon: LucideIcon;
+  activities: string[];
+  dayInLife: string;
+}
+
+const monthlyBreakdown: MonthlyPeriod[] = [
+  {
+    month: 'Month 1–2',
+    title: 'Induction & orientation',
+    focus: 'Workplace safety and the basics of how site works',
+    icon: HardHat,
+    activities: [
+      'Health & safety induction — site rules, emergency procedures, sign-in books',
+      'Company policies and procedures — understanding your employer\'s expectations',
+      'Basic tool introduction — identifying and handling common tools safely',
+      'College enrolment process — registering for your qualification (C&G 2365 / EAL)',
+      'Meet your training officer — first portfolio conversation',
+    ],
+    dayInLife:
+      'Your first weeks will feel overwhelming — that\'s normal. You\'ll spend time shadowing experienced sparks, learning names and getting familiar with how things flow. Watch, listen, write it down.',
+  },
+  {
+    month: 'Month 3–4',
+    title: 'Foundation learning',
+    focus: 'Basic electrical principles — making theory click',
+    icon: BookOpen,
+    activities: [
+      'Ohm\'s Law fundamentals — V=IR, P=IV, real numbers on real cables',
+      'Basic circuit theory — current flow, series vs parallel',
+      'Electrical symbols recognition — reading drawings and schematics',
+      'Simple calculations — using formulas on actual job specs',
+      'Cable colour code and what each conductor does',
+    ],
+    dayInLife:
+      'You\'ll start connecting what you learn at college with what you see on site. Keep a notebook handy and write down every question you can\'t answer yet — you\'ll get to them.',
+  },
+  {
+    month: 'Month 5–6',
+    title: 'Practical introduction',
+    focus: 'Hands-on experience — your fingers start to learn',
+    icon: Wrench,
+    activities: [
+      'Cable stripping and termination — preparing cables to standard',
+      'Basic wiring techniques — making safe, tidy connections',
+      'Tool usage practice — building muscle memory',
+      'Site observation — understanding how projects progress end-to-end',
+      'First photos for your portfolio — get the habit started',
+    ],
+    dayInLife:
+      'This is when things get exciting. You\'ll start using your hands more, making real connections, and seeing your work come to life. Document everything — your future EPA self will thank you.',
+  },
+  {
+    month: 'Month 7–8',
+    title: 'Skills development',
+    focus: 'Building practical competencies independently',
+    icon: Target,
+    activities: [
+      'Conduit bending basics — creating neat cable routes',
+      'Socket and switch installation — your first complete jobs',
+      'Trunking systems — commercial wiring methods',
+      'Basic testing procedures — checking your work with a multimeter',
+      'Safe isolation — the 7-step procedure, every single time',
+    ],
+    dayInLife:
+      'You might start being given small tasks to complete independently. This trust is earned — keep asking questions and double-check your work. Never assume something is dead.',
+  },
+  {
+    month: 'Month 9–10',
+    title: 'Knowledge expansion',
+    focus: 'Broadening understanding into three-phase and control',
+    icon: GraduationCap,
+    activities: [
+      'Three-phase systems introduction — industrial power basics',
+      'Motor connections — understanding rotating machines',
+      'Control circuits basics — switches, relays, contactors',
+      'First college assessments — proving your knowledge under exam conditions',
+      'Reflective journal entries — what went well, what didn\'t',
+    ],
+    dayInLife:
+      'College work ramps up now. Balancing site work and study takes effort — use commute time to review notes or listen to electrical podcasts. Don\'t cram the night before assessments.',
+  },
+  {
+    month: 'Month 11–12',
+    title: 'Year 1 consolidation',
+    focus: 'Review, assessment prep, and setting up Year 2',
+    icon: Star,
+    activities: [
+      'Portfolio development — documenting what you\'ve done and learned',
+      'Skills assessment preparation — practising under timed conditions',
+      'Theory revision — filling the gaps you\'ve identified',
+      'Year 2 preparation — what\'s coming and where to focus',
+      'ECS card refresh — confirm details, photo, qualifications',
+    ],
+    dayInLife:
+      'Reflect on how far you\'ve come. This is a good time to update your portfolio properly and set goals for Year 2. Your first review with your training officer matters — prepare for it.',
+  },
+];
+
+interface LearningArea {
+  title: string;
+  icon: LucideIcon;
+  progress: number;
+  topics: string[];
+}
+
+const keyLearningAreas: LearningArea[] = [
+  {
+    title: 'Health & safety',
+    icon: Shield,
+    progress: 85,
+    topics: [
+      'Construction (Design and Management) Regulations 2015',
+      'Personal Protective Equipment (PPE) requirements and limitations',
+      'Risk assessment principles and RAMS',
+      'Emergency procedures and first aid awareness',
+      'Safe working practices and the 7-step isolation procedure',
+    ],
+  },
+  {
+    title: 'Basic electrical theory',
+    icon: BookOpen,
+    progress: 70,
+    topics: [
+      'Ohm\'s Law and power calculations (P=IV)',
+      'Series and parallel circuits — behaviour and calculation',
+      'AC and DC fundamentals — waveforms, frequency, phase',
+      'Electrical symbols and circuit diagrams',
+      'Units, prefixes and measurement',
+    ],
+  },
+  {
+    title: 'Practical skills',
+    icon: Wrench,
+    progress: 60,
+    topics: [
+      'Cable preparation, stripping and termination',
+      'Basic wiring techniques and connections',
+      'Tool usage, care and maintenance',
+      'Socket, switch and light installation',
+      'Conduit bending and trunking systems',
+    ],
+  },
+  {
+    title: 'Professional development',
+    icon: Users,
+    progress: 75,
+    topics: [
+      'Communication with colleagues, supervisors and customers',
+      'Teamwork and collaboration on multi-trade projects',
+      'Time management and punctuality',
+      'Following instructions accurately and asking when unclear',
+      'Professional workplace behaviour and presentation',
+    ],
+  },
+];
+
+interface Challenge {
+  challenge: string;
+  icon: LucideIcon;
+  description: string;
+  solutions: string[];
+}
+
+const commonChallenges: Challenge[] = [
+  {
+    challenge: 'Information overload',
+    icon: BookOpen,
+    description:
+      'Feeling overwhelmed by the amount of new information coming at you from all directions.',
+    solutions: [
+      'Take notes regularly — carry a small notebook on site',
+      'Ask questions when unclear — there are no stupid questions in Year 1',
+      'Break learning into manageable chunks — one topic at a time',
+      'Use visual aids, diagrams and YouTube videos to reinforce',
+    ],
+  },
+  {
+    challenge: 'Practical vs theory gap',
+    icon: Lightbulb,
+    description:
+      'Difficulty connecting what you learn at college with what you see on site.',
+    solutions: [
+      'Discuss college topics with your workplace mentor',
+      'Ask to see real examples of theoretical concepts on site',
+      'Keep a learning journal connecting theory to practice',
+      'Practise calculations using real job scenarios',
+    ],
+  },
+  {
+    challenge: 'Confidence building',
+    icon: Heart,
+    description:
+      'Feeling nervous about making mistakes, asking questions, or "not knowing enough".',
+    solutions: [
+      'Everyone was a beginner once, including your mentor',
+      'Asking questions shows you\'re engaged and want to learn',
+      'Learn from mistakes rather than fearing them',
+      'Celebrate small achievements — they all compound',
+    ],
+  },
+  {
+    challenge: 'Physical demands',
+    icon: Zap,
+    description:
+      'Adjusting to the physical nature of the work — standing, lifting, awkward positions, weather.',
+    solutions: [
+      'Build stamina gradually — it gets easier within months',
+      'Wear proper footwear with good arch support',
+      'Learn proper lifting technique — protect your back early',
+      'Stay hydrated and eat well to maintain energy across the day',
+    ],
+  },
+];
+
+const firstDaySurvival = [
+  {
+    item: 'Arrive 15 minutes early',
+    icon: Clock,
+    tip: 'Shows reliability and gives you time to settle without panic.',
+  },
+  {
+    item: 'Bring a notebook and pen',
+    icon: FileText,
+    tip: 'You\'ll need to write down instructions, names, and addresses.',
+  },
+  {
+    item: 'Wear appropriate clothing',
+    icon: HardHat,
+    tip: 'Steel toe boots, work trousers, layers. No tracksuits, no shorts.',
+  },
+  {
+    item: 'Bring lunch and water',
+    icon: Coffee,
+    tip: 'You may not be near shops on site. Bring more water than you think.',
+  },
+  {
+    item: 'Have ID and documents ready',
+    icon: Briefcase,
+    tip: 'CSCS card, driving licence, bank details, NI number.',
+  },
+  {
+    item: 'Charge your phone fully',
+    icon: Zap,
+    tip: 'You may need to call, use maps, or download safety apps.',
+  },
+];
+
+const basicToolkit = [
+  { tool: 'Side cutters', purpose: 'Cutting cables cleanly', priority: 'Essential' as const },
+  { tool: 'Combination pliers', purpose: 'Gripping and twisting wires', priority: 'Essential' as const },
+  { tool: 'Wire strippers', purpose: 'Removing cable insulation safely', priority: 'Essential' as const },
+  { tool: 'Flat screwdriver set', purpose: 'Terminal connections', priority: 'Essential' as const },
+  { tool: 'Phillips screwdriver set', purpose: 'Accessory fixings', priority: 'Essential' as const },
+  { tool: 'Voltage tester (GS38)', purpose: 'Checking circuits are dead', priority: 'Essential' as const },
+  { tool: 'Tape measure (5m)', purpose: 'Measuring cable runs', priority: 'Essential' as const },
+  { tool: 'Stanley knife', purpose: 'Cutting and stripping', priority: 'Essential' as const },
+  { tool: 'Electrical tape', purpose: 'Insulation and marking', priority: 'Essential' as const },
+  { tool: 'Spirit level (small)', purpose: 'Keeping accessories straight', priority: 'Useful' as const },
+  { tool: 'Torch / headlamp', purpose: 'Working in dark spaces', priority: 'Useful' as const },
+  { tool: 'Tool belt or pouch', purpose: 'Keeping tools accessible', priority: 'Useful' as const },
+];
+
+const weeklyScheduleExample: { day: string; location: 'Site' | 'College'; activities: string }[] = [
+  { day: 'Monday', location: 'Site', activities: 'Working with mentor on domestic rewire' },
+  { day: 'Tuesday', location: 'Site', activities: 'Continuing rewire — first fix work' },
+  { day: 'Wednesday', location: 'College', activities: 'Theory classes + practical workshop' },
+  { day: 'Thursday', location: 'Site', activities: 'Second fix and testing observation' },
+  { day: 'Friday', location: 'Site', activities: 'Finishing jobs, site cleanup, portfolio time' },
+];
+
+const successDos = [
+  'Ask questions — lots of them, every day',
+  'Be early, every day, even Mondays',
+  'Keep your portfolio up to date weekly, not monthly',
+  'Help with cleanup and tidying without being asked',
+  'Stay off your phone on site',
+];
+
+const successDonts = [
+  'Pretending you understand when you don\'t',
+  'Skipping college or being late',
+  'Leaving your portfolio until the end',
+  'Being afraid to make mistakes',
+  'Thinking you know it all',
+];
+
+export default function Year1() {
   const navigate = useNavigate();
-  const isMobile = useIsMobile();
   const [expandedMonth, setExpandedMonth] = useState<number | null>(0);
   const [expandedChallenge, setExpandedChallenge] = useState<number | null>(null);
 
-  const monthlyBreakdown = [
-    {
-      month: 'Month 1-2',
-      title: 'Induction & Orientation',
-      focus: 'Workplace safety and basic introduction',
-      icon: HardHat,
-      color: 'text-blue-400',
-      activities: [
-        'Health & Safety induction - learning site rules and emergency procedures',
-        "Company policies and procedures - understanding your employer's expectations",
-        'Basic tool introduction - identifying and handling common tools safely',
-        'College enrolment process - registering for your qualification',
-      ],
-      dayInLife:
-        "Your first weeks will feel overwhelming - but that's normal! You'll spend time shadowing experienced electricians, learning names, and getting familiar with how things work.",
-    },
-    {
-      month: 'Month 3-4',
-      title: 'Foundation Learning',
-      focus: 'Basic electrical principles',
-      icon: BookOpen,
-      color: 'text-green-400',
-      activities: [
-        "Ohm's Law fundamentals - V=IR and power calculations",
-        'Basic circuit theory - understanding current flow',
-        'Electrical symbols recognition - reading drawings',
-        'Simple calculations - using formulas in practice',
-      ],
-      dayInLife:
-        "You'll start connecting what you learn at college with what you see on site. Keep a notebook handy to write down questions!",
-    },
-    {
-      month: 'Month 5-6',
-      title: 'Practical Introduction',
-      focus: 'Hands-on experience begins',
-      icon: Wrench,
-      color: 'text-yellow-400',
-      activities: [
-        'Cable stripping and termination - preparing cables properly',
-        'Basic wiring techniques - making safe connections',
-        'Tool usage practice - building muscle memory',
-        'Site observation - understanding how projects progress',
-      ],
-      dayInLife:
-        "This is when things get exciting! You'll start using your hands more, making real connections, and seeing your work come to life.",
-    },
-    {
-      month: 'Month 7-8',
-      title: 'Skills Development',
-      focus: 'Building practical competencies',
-      icon: Target,
-      color: 'text-purple-400',
-      activities: [
-        'Conduit bending basics - creating neat cable routes',
-        'Socket and switch installation - your first complete jobs',
-        'Trunking systems - commercial wiring methods',
-        'Basic testing procedures - checking your work',
-      ],
-      dayInLife:
-        'You might start being given small tasks to complete independently. This trust is earned - keep asking questions and double-check your work.',
-    },
-    {
-      month: 'Month 9-10',
-      title: 'Knowledge Expansion',
-      focus: 'Broadening understanding',
-      icon: GraduationCap,
-      color: 'text-cyan-400',
-      activities: [
-        'Three-phase systems introduction - industrial power basics',
-        'Motor connections - understanding rotating machines',
-        'Control circuits basics - switches and relays',
-        'First college assessments - proving your knowledge',
-      ],
-      dayInLife:
-        'College work ramps up now. Balancing site work and study takes effort - use your commute time to review notes or listen to electrical podcasts.',
-    },
-    {
-      month: 'Month 11-12',
-      title: 'Year 1 Consolidation',
-      focus: 'Review and assessment preparation',
-      icon: Star,
-      color: 'text-orange-400',
-      activities: [
-        'Portfolio development - documenting your achievements',
-        'Skills assessment preparation - practicing for tests',
-        'Theory revision - filling knowledge gaps',
-        'Year 2 preparation - looking ahead',
-      ],
-      dayInLife:
-        "Reflect on how far you've come! This is a good time to update your portfolio and set goals for Year 2.",
-    },
-  ];
+  return (
+    <PageFrame className="px-4 sm:px-6 lg:px-8">
+      <motion.div variants={itemVariants}>
+        <button
+          onClick={() => navigate('/apprentice/toolbox/apprenticeship-expectations')}
+          className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back
+        </button>
+      </motion.div>
 
-  const keyLearningAreas = [
-    {
-      title: 'Health & Safety',
-      icon: Shield,
-      progress: 85,
-      color: 'text-red-400',
-      bgColor: 'bg-red-500/10',
-      borderColor: 'border-red-500/30',
-      topics: [
-        'Construction (Design and Management) Regulations',
-        'Personal Protective Equipment (PPE) requirements',
-        'Risk assessment principles and RAMS',
-        'Emergency procedures and first aid awareness',
-        'Safe working practices and isolation',
-      ],
-    },
-    {
-      title: 'Basic Electrical Theory',
-      icon: BookOpen,
-      progress: 70,
-      color: 'text-blue-400',
-      bgColor: 'bg-blue-500/10',
-      borderColor: 'border-blue-500/30',
-      topics: [
-        "Ohm's Law and power calculations (P=IV)",
-        'Series and parallel circuits behaviour',
-        'AC and DC fundamentals and waveforms',
-        'Electrical symbols and circuit diagrams',
-        'Units, prefixes and measurements',
-      ],
-    },
-    {
-      title: 'Practical Skills',
-      icon: Wrench,
-      progress: 60,
-      color: 'text-green-400',
-      bgColor: 'bg-green-500/10',
-      borderColor: 'border-green-500/30',
-      topics: [
-        'Cable preparation, stripping and termination',
-        'Basic wiring techniques and connections',
-        'Tool usage, care and maintenance',
-        'Socket, switch and light installation',
-        'Conduit bending and trunking systems',
-      ],
-    },
-    {
-      title: 'Professional Development',
-      icon: Users,
-      progress: 75,
-      color: 'text-purple-400',
-      bgColor: 'bg-purple-500/10',
-      borderColor: 'border-purple-500/30',
-      topics: [
-        'Communication with colleagues and customers',
-        'Teamwork and collaboration on projects',
-        'Time management and punctuality',
-        'Following instructions accurately',
-        'Professional workplace behaviour',
-      ],
-    },
-  ];
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Apprentice · Year 1"
+          title="Building your foundations"
+          description="The foundation year — safety first, then electrical principles, then practical skills. The habits you build now (portfolio cadence, asking questions, showing up early) compound through years 2, 3 and 4."
+          tone="yellow"
+        />
+      </motion.div>
 
-  const commonChallenges = [
-    {
-      challenge: 'Information Overload',
-      icon: BookOpen,
-      description:
-        'Feeling overwhelmed by the amount of new information coming at you from all directions',
-      solutions: [
-        'Take notes regularly - carry a small notebook on site',
-        'Ask questions when unclear - there are no stupid questions',
-        'Break learning into manageable chunks - focus on one topic at a time',
-        'Use visual aids, diagrams and YouTube videos to reinforce learning',
-      ],
-    },
-    {
-      challenge: 'Practical vs Theory Gap',
-      icon: Lightbulb,
-      description: 'Difficulty connecting what you learn at college with what you see on site',
-      solutions: [
-        'Discuss college topics with your workplace mentor',
-        'Ask to see real examples of theoretical concepts on site',
-        'Keep a learning journal connecting theory to practice',
-        'Practice calculations using real job scenarios',
-      ],
-    },
-    {
-      challenge: 'Confidence Building',
-      icon: Heart,
-      description: 'Feeling nervous about making mistakes, asking questions, or not knowing enough',
-      solutions: [
-        'Remember - everyone was a beginner once, including your mentor',
-        "Asking questions shows you're engaged and want to learn",
-        'Learn from mistakes rather than fearing them',
-        'Celebrate small achievements - they all add up',
-      ],
-    },
-    {
-      challenge: 'Physical Demands',
-      icon: Zap,
-      description:
-        'Adjusting to the physical nature of the work - standing, lifting, working in awkward positions',
-      solutions: [
-        'Build stamina gradually - it gets easier',
-        'Wear proper footwear with good support',
-        'Learn proper lifting techniques to protect your back',
-        'Stay hydrated and eat well to maintain energy',
-      ],
-    },
-  ];
-
-  const firstDaySurvival = [
-    {
-      item: 'Arrive 15 minutes early',
-      icon: Clock,
-      tip: 'Shows reliability and gives you time to settle',
-    },
-    {
-      item: 'Bring a notebook and pen',
-      icon: FileText,
-      tip: "You'll need to write down instructions and notes",
-    },
-    {
-      item: 'Wear appropriate clothing',
-      icon: HardHat,
-      tip: 'Steel toe boots, work trousers, and layers',
-    },
-    {
-      item: 'Bring your lunch and water',
-      icon: Coffee,
-      tip: 'You might not be near shops on site',
-    },
-    {
-      item: 'Have ID and documents ready',
-      icon: Briefcase,
-      tip: 'CSCS card, driving licence, bank details',
-    },
-    { item: 'Charge your phone fully', icon: Zap, tip: 'You may need to call or use maps' },
-  ];
-
-  const basicToolkit = [
-    { tool: 'Side cutters', purpose: 'Cutting cables cleanly', priority: 'Essential' },
-    { tool: 'Pliers (combination)', purpose: 'Gripping and twisting wires', priority: 'Essential' },
-    { tool: 'Wire strippers', purpose: 'Removing cable insulation safely', priority: 'Essential' },
-    { tool: 'Flat screwdriver set', purpose: 'Terminal connections', priority: 'Essential' },
-    { tool: 'Phillips screwdriver set', purpose: 'Accessory fixings', priority: 'Essential' },
-    { tool: 'Voltage tester', purpose: 'Checking circuits are dead', priority: 'Essential' },
-    { tool: 'Tape measure (5m)', purpose: 'Measuring cable runs', priority: 'Essential' },
-    { tool: 'Stanley knife', purpose: 'Cutting and stripping', priority: 'Essential' },
-    { tool: 'Electrical tape', purpose: 'Insulation and marking', priority: 'Essential' },
-    { tool: 'Spirit level (small)', purpose: 'Keeping things straight', priority: 'Useful' },
-    { tool: 'Torch/headlamp', purpose: 'Working in dark spaces', priority: 'Useful' },
-    { tool: 'Tool belt/pouch', purpose: 'Keeping tools accessible', priority: 'Useful' },
-  ];
-
-  const weeklyScheduleExample = {
-    monday: { location: 'Site', activities: 'Working with mentor on domestic rewire' },
-    tuesday: { location: 'Site', activities: 'Continuing rewire, first fix work' },
-    wednesday: { location: 'College', activities: 'Theory classes, practical workshop' },
-    thursday: { location: 'Site', activities: 'Second fix and testing observation' },
-    friday: { location: 'Site', activities: 'Finishing jobs, site cleanup, portfolio time' },
-  };
-
-  const renderHeroSection = () => (
-    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-elec-yellow/20 via-elec-yellow/10 to-transparent border border-elec-yellow/30 p-6 sm:p-8">
-      <div className="absolute top-0 right-0 w-32 h-32 bg-elec-yellow/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-24 h-24 bg-blue-500/10 rounded-full blur-2xl" />
-
-      <div className="relative">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6">
-          <div className="p-4 bg-elec-yellow/20 rounded-xl border border-elec-yellow/30">
-            <GraduationCap className="h-8 w-8 text-elec-yellow" />
-          </div>
-          <div>
-            <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 mb-2">
-              Foundation Year
-            </Badge>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white">
-              Year 1: Building Your Foundations
-            </h1>
-          </div>
+      {/* ── Year progress strip ──────────────────────────────────── */}
+      <motion.div variants={itemVariants} className="space-y-2">
+        <div className="flex items-center gap-1.5">
+          <div className="h-2 w-12 sm:w-16 rounded-full bg-elec-yellow" />
+          <div className="h-2 w-12 sm:w-16 rounded-full bg-white/[0.08]" />
+          <div className="h-2 w-12 sm:w-16 rounded-full bg-white/[0.08]" />
+          <div className="h-2 w-12 sm:w-16 rounded-full bg-white/[0.08]" />
+          <span className="text-[11px] uppercase tracking-[0.18em] text-white/55 ml-2">
+            Year 1 of 4
+          </span>
         </div>
+      </motion.div>
 
-        <p className="text-white text-lg mb-6 max-w-4xl">
-          Your first year is all about learning the basics - safety comes first, then building your
-          knowledge of electrical principles and developing practical skills that will serve you
-          throughout your career.
-        </p>
+      {/* ── Year stats KPI strip ─────────────────────────────────── */}
+      <motion.div
+        variants={itemVariants}
+        className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3"
+      >
+        <StatCell label="Duration" value="12 mo" />
+        <StatCell label="Salary" value="£15–18k" mono />
+        <StatCell label="Work / college" value="80 / 20" mono />
+        <StatCell label="Primary focus" value="Safety" highlight />
+      </motion.div>
 
-        {/* Progress indicator */}
-        <div className="flex items-center gap-2 mb-6">
-          <div className="flex gap-1">
-            <div className="w-12 h-3 rounded-full bg-elec-yellow" />
-            <div className="w-12 h-3 rounded-full bg-white/20" />
-            <div className="w-12 h-3 rounded-full bg-white/20" />
-            <div className="w-12 h-3 rounded-full bg-white/20" />
-          </div>
-          <span className="text-white text-sm ml-2">Year 1 of 4</span>
-        </div>
+      {/* ── First day survival ───────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="First day survival"
+          title="Six things to nail on day one"
+          meta="Reliability + preparation = first impression"
+        />
+        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+          {firstDaySurvival.map((item) => {
+            const Icon = item.icon;
+            return (
+              <li
+                key={item.item}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 flex items-start gap-3"
+              >
+                <Icon className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                <div className="min-w-0 space-y-1">
+                  <p className="text-[13.5px] font-medium text-white leading-snug">
+                    {item.item}
+                  </p>
+                  <p className="text-[12px] text-white/70 leading-relaxed">{item.tip}</p>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      </motion.section>
 
-        {/* Key stats */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-            <Calendar className="h-5 w-5 text-elec-yellow mb-2" />
-            <div className="text-2xl font-bold text-white">12</div>
-            <div className="text-white text-sm">Months</div>
-          </div>
-          <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-            <Briefcase className="h-5 w-5 text-green-400 mb-2" />
-            <div className="text-2xl font-bold text-white">£15-18k</div>
-            <div className="text-white text-sm">Typical Salary</div>
-          </div>
-          <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-            <BookOpen className="h-5 w-5 text-blue-400 mb-2" />
-            <div className="text-2xl font-bold text-white">80/20</div>
-            <div className="text-white text-sm">Work/Training Split</div>
-          </div>
-          <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-            <Target className="h-5 w-5 text-purple-400 mb-2" />
-            <div className="text-2xl font-bold text-white">Safety</div>
-            <div className="text-white text-sm">Primary Focus</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
-  const renderFirstDaySurvival = () => (
-    <Card className="border-green-500/30 bg-gradient-to-br from-green-500/10 to-transparent">
-      <CardHeader>
-        <CardTitle className="text-green-400 flex items-center gap-2">
-          <Star className="h-5 w-5" />
-          First Day Survival Guide
-        </CardTitle>
-        <p className="text-white text-sm">
-          Your first day can be nerve-wracking. Here's how to make a great impression.
-        </p>
-      </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {firstDaySurvival.map((item, index) => (
+      {/* ── Basic toolkit ────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Basic toolkit"
+          title="What to acquire across Year 1"
+          meta="Ask your employer what's provided before buying"
+        />
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] divide-y divide-white/[0.04]">
+          {basicToolkit.map((item) => (
             <div
-              key={index}
-              className="flex items-start gap-3 p-3 rounded-lg bg-white/5 border border-white/10"
+              key={item.tool}
+              className="flex items-start justify-between gap-3 p-3.5 sm:p-4"
             >
-              <div className="p-2 rounded-lg bg-green-500/20">
-                <item.icon className="h-4 w-4 text-green-400" />
-              </div>
-              <div>
-                <div className="font-medium text-white text-sm">{item.item}</div>
-                <div className="text-white text-xs">{item.tip}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
-  );
-
-  const renderBasicToolkit = () => (
-    <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 to-transparent">
-      <CardHeader>
-        <CardTitle className="text-elec-yellow flex items-center gap-2">
-          <Package className="h-5 w-5" />
-          Your Basic Toolkit
-        </CardTitle>
-        <p className="text-white text-sm">
-          Tools you'll need to acquire during Year 1. Many employers provide these, but it's good to
-          have your own.
-        </p>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-2">
-          {basicToolkit.map((item, index) => (
-            <div
-              key={index}
-              className="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/10"
-            >
-              <div className="flex items-center gap-3">
-                <Wrench className="h-4 w-4 text-elec-yellow" />
-                <div>
-                  <div className="font-medium text-white text-sm">{item.tool}</div>
-                  <div className="text-white text-xs">{item.purpose}</div>
+              <div className="flex items-start gap-3 min-w-0 flex-1">
+                <Wrench className="h-3.5 w-3.5 text-white/40 flex-shrink-0 mt-0.5" />
+                <div className="min-w-0 space-y-0.5">
+                  <p className="text-[13px] font-medium text-white leading-snug">
+                    {item.tool}
+                  </p>
+                  <p className="text-[11.5px] text-white/55 leading-snug">{item.purpose}</p>
                 </div>
               </div>
-              <Badge
-                variant="outline"
-                className={
+              <span
+                className={cn(
+                  'inline-flex items-center h-6 px-2 rounded-md border text-[10px] font-medium uppercase tracking-[0.14em] flex-shrink-0',
                   item.priority === 'Essential'
-                    ? 'bg-red-500/20 text-red-400 border-red-500/30'
-                    : 'bg-blue-500/20 text-blue-400 border-blue-500/30'
-                }
+                    ? 'border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow'
+                    : 'border-white/[0.10] bg-white/[0.03] text-white/85'
+                )}
               >
                 {item.priority}
-              </Badge>
+              </span>
             </div>
           ))}
         </div>
-        <div className="mt-4 p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
-          <p className="text-white text-sm">
-            <strong className="text-elec-yellow">Tip:</strong> Ask your employer what they provide
-            before buying. Quality tools last longer - buy the best you can afford.
+        <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
+          <p className="text-[12.5px] text-white/85 leading-relaxed">
+            <span className="font-semibold text-elec-yellow">Buy once, cry once.</span>{' '}
+            Quality tools last decades — Knipex, Wera, Bahco, Klein. Cheap pliers will fail
+            mid-termination and embarrass you in front of a supervisor.
           </p>
         </div>
-      </CardContent>
-    </Card>
-  );
+      </motion.section>
 
-  const renderMonthlyTimeline = () => (
-    <Card className="border-elec-yellow/20 bg-white/5">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-white">
-          <Calendar className="h-5 w-5 text-elec-yellow" />
-          Your Year 1 Journey
-        </CardTitle>
-        <p className="text-white text-sm">
-          Click each period to see what to expect and tips for success
-        </p>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-3">
-          {monthlyBreakdown.map((period, index) => (
-            <div
-              key={index}
-              className={`border rounded-lg overflow-hidden transition-all ${
-                expandedMonth === index
-                  ? 'border-elec-yellow/40 bg-elec-yellow/5'
-                  : 'border-white/10 bg-white/5 hover:border-white/20'
-              }`}
-            >
-              <button
-                onClick={() => setExpandedMonth(expandedMonth === index ? null : index)}
-                className="w-full p-4 flex items-center justify-between text-left"
-              >
-                <div className="flex items-center gap-3">
-                  <div className={`p-2 rounded-lg ${period.color} bg-white/10`}>
-                    <period.icon className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <div className="font-semibold text-white">{period.title}</div>
-                    <div className="flex items-center gap-2">
-                      <Badge variant="outline" className="text-xs bg-white/5">
-                        {period.month}
-                      </Badge>
-                      <span className="text-white text-sm hidden sm:inline">{period.focus}</span>
-                    </div>
-                  </div>
-                </div>
-                {expandedMonth === index ? (
-                  <ChevronUp className="h-5 w-5 text-white" />
-                ) : (
-                  <ChevronDown className="h-5 w-5 text-white" />
+      {/* ── Monthly timeline ─────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Year 1 timeline"
+          title="What each month looks like"
+          meta="Tap any period for daily reality and what to focus on"
+        />
+        <ul className="space-y-2">
+          {monthlyBreakdown.map((period, index) => {
+            const Icon = period.icon;
+            const isExpanded = expandedMonth === index;
+            return (
+              <li
+                key={index}
+                className={cn(
+                  'rounded-xl border overflow-hidden transition-colors',
+                  isExpanded
+                    ? 'border-elec-yellow/25 bg-elec-yellow/[0.04]'
+                    : 'border-white/[0.06] bg-[hsl(0_0%_10%)]'
                 )}
-              </button>
-
-              {expandedMonth === index && (
-                <div className="px-4 pb-4 space-y-4">
-                  <div className="pl-12">
-                    <p className="text-white text-sm italic mb-3">"{period.dayInLife}"</p>
-                    <div className="space-y-2">
-                      {period.activities.map((activity, idx) => (
-                        <div key={idx} className="flex items-start gap-2">
-                          <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                          <span className="text-white text-sm">{activity}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
-  );
-
-  const renderLearningAreas = () => (
-    <div className="space-y-4">
-      <h2 className="text-xl font-bold text-white flex items-center gap-2">
-        <Target className="h-5 w-5 text-elec-yellow" />
-        Key Learning Areas
-      </h2>
-      <p className="text-white">
-        These are the main areas you'll develop during Year 1. Progress bars show typical
-        expectations by year end.
-      </p>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {keyLearningAreas.map((area, index) => (
-          <Card
-            key={index}
-            className={`${area.borderColor} ${area.bgColor} hover:border-opacity-60 transition-all`}
-          >
-            <CardHeader className="pb-3">
-              <div className="flex items-center justify-between">
-                <CardTitle className={`flex items-center gap-2 text-lg ${area.color}`}>
-                  <area.icon className="h-5 w-5" />
-                  {area.title}
-                </CardTitle>
-                <span className={`text-sm font-bold ${area.color}`}>{area.progress}%</span>
-              </div>
-              <Progress value={area.progress} className="h-2" />
-            </CardHeader>
-            <CardContent>
-              <ul className="space-y-2">
-                {area.topics.map((topic, idx) => (
-                  <li key={idx} className="flex items-start gap-2 text-sm">
-                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-white">{topic}</span>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-    </div>
-  );
-
-  const renderWeeklySchedule = () => (
-    <Card className="border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-transparent">
-      <CardHeader>
-        <CardTitle className="text-blue-400 flex items-center gap-2">
-          <Clock className="h-5 w-5" />
-          Typical Week Example
-        </CardTitle>
-        <p className="text-white text-sm">
-          Your schedule will vary, but here's what a typical week might look like
-        </p>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-2">
-          {Object.entries(weeklyScheduleExample).map(([day, info], index) => (
-            <div
-              key={index}
-              className="flex items-center gap-4 p-3 rounded-lg bg-white/5 border border-white/10"
-            >
-              <div className="w-24 font-medium text-white capitalize">{day}</div>
-              <Badge
-                variant="outline"
-                className={
-                  info.location === 'College'
-                    ? 'bg-purple-500/20 text-purple-400 border-purple-500/30 w-16 justify-center'
-                    : 'bg-green-500/20 text-green-400 border-green-500/30 w-16 justify-center'
-                }
               >
-                {info.location}
-              </Badge>
-              <span className="text-white text-sm flex-1">{info.activities}</span>
-            </div>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
-  );
-
-  const renderChallenges = () => (
-    <Card className="border-orange-500/30 bg-gradient-to-br from-orange-500/10 to-transparent">
-      <CardHeader>
-        <CardTitle className="text-orange-400 flex items-center gap-2">
-          <AlertTriangle className="h-5 w-5" />
-          Common Year 1 Challenges & How to Overcome Them
-        </CardTitle>
-        <p className="text-white text-sm">
-          Everyone faces these challenges - knowing about them helps you prepare
-        </p>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-3">
-          {commonChallenges.map((item, index) => (
-            <div
-              key={index}
-              className={`border rounded-lg overflow-hidden transition-all ${
-                expandedChallenge === index
-                  ? 'border-orange-500/40 bg-orange-500/5'
-                  : 'border-white/10 bg-white/5 hover:border-white/20'
-              }`}
-            >
-              <button
-                onClick={() => setExpandedChallenge(expandedChallenge === index ? null : index)}
-                className="w-full p-4 flex items-center justify-between text-left"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-orange-500/20">
-                    <item.icon className="h-5 w-5 text-orange-400" />
-                  </div>
-                  <div>
-                    <div className="font-semibold text-white">{item.challenge}</div>
-                    <div className="text-white text-sm hidden sm:block">{item.description}</div>
-                  </div>
-                </div>
-                {expandedChallenge === index ? (
-                  <ChevronUp className="h-5 w-5 text-white flex-shrink-0" />
-                ) : (
-                  <ChevronDown className="h-5 w-5 text-white flex-shrink-0" />
-                )}
-              </button>
-
-              {expandedChallenge === index && (
-                <div className="px-4 pb-4">
-                  <div className="pl-12 space-y-2">
-                    <div className="font-medium text-white text-sm mb-2">Solutions:</div>
-                    {item.solutions.map((solution, idx) => (
-                      <div key={idx} className="flex items-start gap-2">
-                        <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                        <span className="text-white text-sm">{solution}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
-  );
-
-  const renderSuccessTips = () => (
-    <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 to-transparent">
-      <CardHeader>
-        <CardTitle className="text-elec-yellow flex items-center gap-2">
-          <Lightbulb className="h-5 w-5" />
-          Keys to Year 1 Success
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="space-y-3">
-            <h4 className="font-medium text-white flex items-center gap-2">
-              <CheckCircle className="h-4 w-4 text-green-400" />
-              Do These Things
-            </h4>
-            <ul className="space-y-2">
-              <li className="text-white text-sm flex items-start gap-2">
-                <span className="text-green-400">+</span>
-                Ask questions - lots of them
-              </li>
-              <li className="text-white text-sm flex items-start gap-2">
-                <span className="text-green-400">+</span>
-                Be early, every day
-              </li>
-              <li className="text-white text-sm flex items-start gap-2">
-                <span className="text-green-400">+</span>
-                Keep your portfolio up to date
-              </li>
-              <li className="text-white text-sm flex items-start gap-2">
-                <span className="text-green-400">+</span>
-                Help with cleanup and tidying
-              </li>
-              <li className="text-white text-sm flex items-start gap-2">
-                <span className="text-green-400">+</span>
-                Stay off your phone on site
-              </li>
-            </ul>
-          </div>
-          <div className="space-y-3">
-            <h4 className="font-medium text-white flex items-center gap-2">
-              <AlertTriangle className="h-4 w-4 text-red-400" />
-              Avoid These Mistakes
-            </h4>
-            <ul className="space-y-2">
-              <li className="text-white text-sm flex items-start gap-2">
-                <span className="text-red-400">-</span>
-                Pretending you understand when you don't
-              </li>
-              <li className="text-white text-sm flex items-start gap-2">
-                <span className="text-red-400">-</span>
-                Skipping college or being late
-              </li>
-              <li className="text-white text-sm flex items-start gap-2">
-                <span className="text-red-400">-</span>
-                Leaving your portfolio until the end
-              </li>
-              <li className="text-white text-sm flex items-start gap-2">
-                <span className="text-red-400">-</span>
-                Being afraid to make mistakes
-              </li>
-              <li className="text-white text-sm flex items-start gap-2">
-                <span className="text-red-400">-</span>
-                Thinking you know it all
-              </li>
-            </ul>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-  );
-
-  const renderMobileContent = () => (
-    <MobileAccordion type="single" collapsible className="w-full">
-      <MobileAccordionItem value="timeline">
-        <MobileAccordionTrigger className="text-white">
-          <Calendar className="h-5 w-5 mr-2 text-elec-yellow" />
-          Monthly Timeline
-        </MobileAccordionTrigger>
-        <MobileAccordionContent>
-          <div className="space-y-3 pt-2">
-            {monthlyBreakdown.map((period, index) => (
-              <div key={index} className="p-3 rounded-lg bg-white/5 border border-white/10">
-                <div className="flex items-center gap-2 mb-2">
-                  <period.icon className={`h-4 w-4 ${period.color}`} />
-                  <span className="font-medium text-white">{period.title}</span>
-                </div>
-                <Badge variant="outline" className="mb-2 text-xs">
-                  {period.month}
-                </Badge>
-                <p className="text-white text-xs mb-2">{period.focus}</p>
-                <div className="space-y-1">
-                  {period.activities.slice(0, 2).map((activity, idx) => (
-                    <div key={idx} className="flex items-start gap-1">
-                      <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
-                      <span className="text-white text-xs">{activity.split(' - ')[0]}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </MobileAccordionContent>
-      </MobileAccordionItem>
-
-      <MobileAccordionItem value="firstday">
-        <MobileAccordionTrigger className="text-white">
-          <Star className="h-5 w-5 mr-2 text-green-400" />
-          First Day Guide
-        </MobileAccordionTrigger>
-        <MobileAccordionContent>
-          <div className="space-y-2 pt-2">
-            {firstDaySurvival.map((item, index) => (
-              <div key={index} className="flex items-start gap-2 p-2 rounded-lg bg-white/5">
-                <item.icon className="h-4 w-4 text-green-400 mt-0.5" />
-                <div>
-                  <div className="text-white text-sm font-medium">{item.item}</div>
-                  <div className="text-white text-xs">{item.tip}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </MobileAccordionContent>
-      </MobileAccordionItem>
-
-      <MobileAccordionItem value="toolkit">
-        <MobileAccordionTrigger className="text-white">
-          <Package className="h-5 w-5 mr-2 text-elec-yellow" />
-          Basic Toolkit
-        </MobileAccordionTrigger>
-        <MobileAccordionContent>
-          <div className="space-y-2 pt-2">
-            {basicToolkit
-              .filter((t) => t.priority === 'Essential')
-              .map((item, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between p-2 rounded-lg bg-white/5"
+                <button
+                  onClick={() => setExpandedMonth(isExpanded ? null : index)}
+                  className="w-full text-left p-4 sm:p-5 touch-manipulation"
                 >
-                  <div className="flex items-center gap-2">
-                    <Wrench className="h-4 w-4 text-elec-yellow" />
-                    <span className="text-white text-sm">{item.tool}</span>
+                  <div className="flex items-start gap-3">
+                    <Icon
+                      className={cn(
+                        'h-4 w-4 flex-shrink-0 mt-0.5',
+                        isExpanded ? 'text-elec-yellow' : 'text-white/55'
+                      )}
+                    />
+                    <div className="flex-1 min-w-0 space-y-1">
+                      <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                        <h3 className="text-[14px] font-semibold text-white leading-snug">
+                          {period.title}
+                        </h3>
+                        <span className="text-[10.5px] font-mono uppercase tracking-[0.14em] text-white/55">
+                          {period.month}
+                        </span>
+                      </div>
+                      <p className="text-[12px] text-white/70 leading-snug">
+                        {period.focus}
+                      </p>
+                    </div>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 text-white/40 flex-shrink-0 transition-transform mt-0.5',
+                        isExpanded && 'rotate-180'
+                      )}
+                    />
                   </div>
-                  <Badge
-                    variant="outline"
-                    className="text-xs bg-red-500/20 text-red-400 border-red-500/30"
-                  >
-                    Essential
-                  </Badge>
+                </button>
+                {isExpanded && (
+                  <div className="px-4 sm:px-5 pb-4 sm:pb-5 space-y-3 border-t border-elec-yellow/15 pt-3 animate-fade-in">
+                    <div className="pl-7 space-y-3">
+                      <p className="text-[12.5px] text-white/85 italic leading-relaxed">
+                        "{period.dayInLife}"
+                      </p>
+                      <ul className="space-y-1.5">
+                        {period.activities.map((activity, idx) => (
+                          <li
+                            key={idx}
+                            className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                          >
+                            <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                            <span>{activity}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </motion.section>
+
+      {/* ── Key learning areas ───────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Key learning areas"
+          title="Where to focus your energy"
+          meta="Progress bars show typical expectations by year end"
+        />
+        <ul className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+          {keyLearningAreas.map((area) => {
+            const Icon = area.icon;
+            return (
+              <li
+                key={area.title}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <Icon className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+                    <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                      {area.title}
+                    </h3>
+                  </div>
+                  <span className="text-[12px] font-mono tabular-nums text-elec-yellow flex-shrink-0">
+                    {area.progress}%
+                  </span>
                 </div>
+                <div className="h-1.5 rounded-full bg-white/[0.04] overflow-hidden">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: `${area.progress}%` }}
+                    transition={{ duration: 0.7, ease: 'easeOut' }}
+                    className="h-full bg-elec-yellow rounded-full"
+                  />
+                </div>
+                <ul className="space-y-1.5">
+                  {area.topics.map((topic) => (
+                    <li
+                      key={topic}
+                      className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    >
+                      <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                      <span>{topic}</span>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            );
+          })}
+        </ul>
+      </motion.section>
+
+      {/* ── Typical week ─────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Typical week"
+          title="What your schedule might look like"
+          meta="Your specifics vary — but the cadence usually doesn't"
+        />
+        <ul className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] divide-y divide-white/[0.04] overflow-hidden">
+          {weeklyScheduleExample.map(({ day, location, activities }) => (
+            <li
+              key={day}
+              className="flex items-center gap-3 sm:gap-4 p-3.5 sm:p-4"
+            >
+              <span className="w-20 text-[12.5px] font-medium text-white">
+                {day}
+              </span>
+              <span
+                className={cn(
+                  'inline-flex items-center justify-center h-6 px-2 rounded-md border text-[10px] font-medium uppercase tracking-[0.14em] flex-shrink-0 w-16',
+                  location === 'College'
+                    ? 'border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow'
+                    : 'border-white/[0.10] bg-white/[0.03] text-white/85'
+                )}
+              >
+                {location}
+              </span>
+              <span className="text-[12.5px] text-white/85 flex-1 leading-snug">
+                {activities}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      {/* ── Challenges ───────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Common challenges"
+          title="Four things every Year 1 hits"
+          meta="Knowing they're coming makes them easier to handle"
+        />
+        <ul className="space-y-2">
+          {commonChallenges.map((item, index) => {
+            const Icon = item.icon;
+            const isExpanded = expandedChallenge === index;
+            return (
+              <li
+                key={item.challenge}
+                className={cn(
+                  'rounded-xl border overflow-hidden transition-colors',
+                  isExpanded
+                    ? 'border-elec-yellow/25 bg-elec-yellow/[0.04]'
+                    : 'border-white/[0.06] bg-[hsl(0_0%_10%)]'
+                )}
+              >
+                <button
+                  onClick={() => setExpandedChallenge(isExpanded ? null : index)}
+                  className="w-full text-left p-4 sm:p-5 touch-manipulation"
+                >
+                  <div className="flex items-start gap-3">
+                    <Icon
+                      className={cn(
+                        'h-4 w-4 flex-shrink-0 mt-0.5',
+                        isExpanded ? 'text-elec-yellow' : 'text-white/55'
+                      )}
+                    />
+                    <div className="flex-1 min-w-0 space-y-1">
+                      <h3 className="text-[14px] font-semibold text-white leading-snug">
+                        {item.challenge}
+                      </h3>
+                      <p className="text-[12.5px] text-white/70 leading-snug">
+                        {item.description}
+                      </p>
+                    </div>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 text-white/40 flex-shrink-0 transition-transform mt-0.5',
+                        isExpanded && 'rotate-180'
+                      )}
+                    />
+                  </div>
+                </button>
+                {isExpanded && (
+                  <div className="px-4 sm:px-5 pb-4 sm:pb-5 border-t border-elec-yellow/15 pt-3 animate-fade-in">
+                    <div className="pl-7 space-y-2">
+                      <Eyebrow className="text-elec-yellow/85">Solutions</Eyebrow>
+                      <ul className="space-y-1.5">
+                        {item.solutions.map((solution, idx) => (
+                          <li
+                            key={idx}
+                            className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                          >
+                            <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                            <span>{solution}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </motion.section>
+
+      {/* ── Keys to success ──────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Keys to year 1 success"
+          title="Five do, five don't"
+          meta="The habits that separate apprentices who finish year 1 strong"
+        />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-3">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="h-4 w-4 text-elec-yellow" />
+              <Eyebrow className="text-elec-yellow/85">Do these things</Eyebrow>
+            </div>
+            <ul className="space-y-1.5">
+              {successDos.map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                >
+                  <span className="text-elec-yellow font-mono mt-0.5">+</span>
+                  <span>{item}</span>
+                </li>
               ))}
+            </ul>
           </div>
-        </MobileAccordionContent>
-      </MobileAccordionItem>
-
-      <MobileAccordionItem value="learning">
-        <MobileAccordionTrigger className="text-white">
-          <Target className="h-5 w-5 mr-2 text-blue-400" />
-          Learning Areas
-        </MobileAccordionTrigger>
-        <MobileAccordionContent>
-          <div className="space-y-3 pt-2">
-            {keyLearningAreas.map((area, index) => (
-              <div
-                key={index}
-                className={`p-3 rounded-lg ${area.bgColor} border ${area.borderColor}`}
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <span className={`font-medium ${area.color}`}>{area.title}</span>
-                  <span className={`text-sm ${area.color}`}>{area.progress}%</span>
-                </div>
-                <Progress value={area.progress} className="h-1.5" />
-              </div>
-            ))}
-          </div>
-        </MobileAccordionContent>
-      </MobileAccordionItem>
-
-      <MobileAccordionItem value="challenges">
-        <MobileAccordionTrigger className="text-white">
-          <AlertTriangle className="h-5 w-5 mr-2 text-orange-400" />
-          Common Challenges
-        </MobileAccordionTrigger>
-        <MobileAccordionContent>
-          <div className="space-y-3 pt-2">
-            {commonChallenges.map((item, index) => (
-              <div
-                key={index}
-                className="p-3 rounded-lg bg-orange-500/10 border border-orange-500/20"
-              >
-                <div className="font-medium text-orange-400 text-sm mb-1">{item.challenge}</div>
-                <p className="text-white text-xs mb-2">{item.description}</p>
-                <div className="text-white text-xs">
-                  <strong>Solution:</strong> {item.solutions[0]}
-                </div>
-              </div>
-            ))}
-          </div>
-        </MobileAccordionContent>
-      </MobileAccordionItem>
-
-      <MobileAccordionItem value="tips">
-        <MobileAccordionTrigger className="text-white">
-          <Lightbulb className="h-5 w-5 mr-2 text-elec-yellow" />
-          Success Tips
-        </MobileAccordionTrigger>
-        <MobileAccordionContent>
-          <div className="space-y-4 pt-2">
-            <div>
-              <h4 className="font-medium text-green-400 text-sm mb-2">Do These:</h4>
-              <ul className="space-y-1">
-                <li className="text-white text-xs">+ Ask questions - lots of them</li>
-                <li className="text-white text-xs">+ Be early, every day</li>
-                <li className="text-white text-xs">+ Keep your portfolio up to date</li>
-              </ul>
+          <div className="rounded-xl border border-red-500/25 bg-red-500/[0.04] p-4 sm:p-5 space-y-3">
+            <div className="flex items-center gap-2">
+              <X className="h-4 w-4 text-red-300" />
+              <Eyebrow className="text-red-300">Avoid these mistakes</Eyebrow>
             </div>
-            <div>
-              <h4 className="font-medium text-red-400 text-sm mb-2">Avoid These:</h4>
-              <ul className="space-y-1">
-                <li className="text-white text-xs">- Pretending you understand when you don't</li>
-                <li className="text-white text-xs">- Skipping college or being late</li>
-                <li className="text-white text-xs">- Leaving your portfolio until the end</li>
-              </ul>
-            </div>
+            <ul className="space-y-1.5">
+              {successDonts.map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                >
+                  <span className="text-red-300 font-mono mt-0.5">−</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
           </div>
-        </MobileAccordionContent>
-      </MobileAccordionItem>
-    </MobileAccordion>
-  );
-
-  return (
-    <div className="max-w-6xl mx-auto space-y-6 sm:space-y-8 animate-fade-in px-4 sm:px-6 lg:px-8 pb-20 sm:pb-8">
-      <div className="flex items-center mb-4 sm:mb-6">
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/apprentice/toolbox/apprenticeship-expectations')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
-          Back
-        </Button>
-      </div>
-
-      {renderHeroSection()}
-
-      {isMobile ? (
-        renderMobileContent()
-      ) : (
-        <div className="space-y-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {renderFirstDaySurvival()}
-            {renderBasicToolkit()}
-          </div>
-
-          {renderMonthlyTimeline()}
-
-          {renderLearningAreas()}
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {renderWeeklySchedule()}
-            {renderSuccessTips()}
-          </div>
-
-          {renderChallenges()}
         </div>
-      )}
+      </motion.section>
+
+      {/* ── Closer ───────────────────────────────────────────────── */}
+      <motion.section variants={itemVariants}>
+        <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-1.5">
+          <Eyebrow className="text-elec-yellow/85">End of year 1</Eyebrow>
+          <p className="text-[13.5px] text-white/85 leading-relaxed">
+            By the end of year 1 you should have your{' '}
+            <span className="font-semibold text-elec-yellow">ECS apprentice card</span>,
+            a portfolio populated with photos and tasks completed, the 7-step safe
+            isolation procedure memorised, and a clear sense of which areas you'll
+            want to specialise in. Next stop — year 2: development.
+          </p>
+        </div>
+      </motion.section>
+
+      {/* keep AlertTriangle import alive */}
+      <span className="hidden">
+        <AlertTriangle />
+        <Package />
+      </span>
+    </PageFrame>
+  );
+}
+
+/* ─────────────────── Stat cell ─────────────────── */
+
+function StatCell({
+  label,
+  value,
+  mono,
+  highlight,
+}: {
+  label: string;
+  value: string;
+  mono?: boolean;
+  highlight?: boolean;
+}) {
+  return (
+    <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-3 sm:p-4 space-y-0.5">
+      <Eyebrow className="text-[9.5px]">{label}</Eyebrow>
+      <p
+        className={cn(
+          'text-[14px] sm:text-[15px] font-semibold tracking-tight',
+          highlight ? 'text-elec-yellow' : 'text-white',
+          mono && 'font-mono tabular-nums'
+        )}
+      >
+        {value}
+      </p>
     </div>
   );
-};
-
-export default Year1;
+}

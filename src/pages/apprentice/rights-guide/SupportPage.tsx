@@ -1,8 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Card, CardContent } from '@/components/ui/card';
 import { ArrowLeft, Phone, ExternalLink } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import {
   PageFrame,
   PageHero,
@@ -101,14 +99,10 @@ const SupportPage = () => {
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/apprentice/rights-and-pay')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
+        <button onClick={() => navigate('/apprentice/rights-and-pay')} className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation">
+          <ArrowLeft className="h-4 w-4" />
           Back
-        </Button>
+        </button>
       </motion.div>
 
       <motion.div variants={itemVariants}>
@@ -122,16 +116,13 @@ const SupportPage = () => {
 
       {/* Workplace & Rights Helplines */}
       <div className="space-y-2">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-blue-400" />
-          <h2 className="text-base font-semibold text-white">
+        <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
             Workplace & Rights
-          </h2>
-        </div>
+          </span></div></div>
 
         {helplines.map((line) => (
-          <Card key={line.name} className={`${line.border} bg-white/5`}>
-            <CardContent className="p-4 space-y-2">
+          <div key={line.name} className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+            <div className="p-4 sm:p-5 space-y-2">
               <h3 className={`font-semibold text-sm ${line.colour}`}>
                 {line.name}
               </h3>
@@ -145,23 +136,19 @@ const SupportPage = () => {
               </a>
               <p className="text-white text-xs leading-relaxed">{line.description}</p>
               <p className="text-white text-xs">{line.hours}</p>
-            </CardContent>
-          </Card>
+            </div></div>
         ))}
       </div>
 
       {/* Mental Health */}
       <div className="space-y-2">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-green-400" />
-          <h2 className="text-base font-semibold text-white">
+        <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
             Mental Health & Wellbeing
-          </h2>
-        </div>
+          </span></div></div>
 
         {mentalHealthLines.map((line) => (
-          <Card key={line.name} className={`${line.border} bg-white/5`}>
-            <CardContent className="p-4 space-y-2">
+          <div key={line.name} className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+            <div className="p-4 sm:p-5 space-y-2">
               <h3 className={`font-semibold text-sm ${line.colour}`}>
                 {line.name}
               </h3>
@@ -175,14 +162,13 @@ const SupportPage = () => {
               </a>
               <p className="text-white text-xs leading-relaxed">{line.description}</p>
               <p className="text-white text-xs">{line.hours}</p>
-            </CardContent>
-          </Card>
+            </div></div>
         ))}
       </div>
 
       {/* Emergency */}
-      <Card className="border-red-500/20 bg-red-500/5">
-        <CardContent className="p-4 space-y-3">
+      <div className="rounded-xl border border-red-500/25 bg-red-500/[0.04]">
+        <div className="p-4 sm:p-5 space-y-3">
           <h3 className="text-red-400 font-bold text-sm">In Immediate Danger?</h3>
           <a
             href="tel:999"
@@ -195,8 +181,7 @@ const SupportPage = () => {
             For electrical accidents, serious injuries, or any situation where someone
             is in immediate danger. Always call 999 first, then notify your supervisor.
           </p>
-        </CardContent>
-      </Card>
+        </div></div>
     </PageFrame>
   );
 };

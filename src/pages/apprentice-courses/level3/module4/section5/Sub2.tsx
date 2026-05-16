@@ -531,12 +531,12 @@ export default function Sub2() {
             points={[
               "Post-rectification retest is non-negotiable. BS 7671 643 tests on the affected circuit — continuity, IR, polarity, EFLI, RCD trip-time. Proves the fix worked.",
               "Document pre-rectification (failed) reading AND post-rectification (corrected) reading. The before/after pair is the proof.",
-              "Functional testing complements electrical testing — does the system actually do what it\'s supposed to do? EL discharge, fire alarm walk test, RCD trip-time, smoke alarm activation.",
+              "Functional testing complements electrical testing — does the system actually do what it's supposed to do? EL discharge, fire alarm walk test, RCD trip-time, smoke alarm activation.",
               "Customer hand-back is five steps: demonstrate, walk through, provide docs, educate, agree next steps. 5 minutes; converts work-done to customer-satisfied.",
               "Demonstration step (30 seconds): show the original symptom is gone. Customer goes from uncertain bystander to verified beneficiary.",
               "Customer-friendly summary in plain English (1 page) accompanies the technical job sheet. Customer reads once; references later.",
               "Certification trail: updated EICR / supplementary if pre-existing codes affected; MEIWC for the rectification work.",
-              "New faults at retest are not unusual — investigate as new diagnostic problem; never dismiss as \'must have been there before\'.",
+              "New faults at retest are not unusual — investigate as new diagnostic problem; never dismiss as 'must have been there before'.",
             ]}
           />
 

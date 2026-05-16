@@ -306,7 +306,7 @@ export default function Sub2() {
                 the senior person on a small site.
               </>
             }
-            cite="Source: Regulatory Reform (Fire Safety) Order 2005 (SI 2005/1541), Article 8 — verbatim from legislation.gov.uk."
+            cite="Source: Regulatory Reform (Fire Safety) Order 2005 (SI 2005/1541), Article 8."
           />
 
           <InlineCheck
@@ -341,7 +341,7 @@ export default function Sub2() {
                 criminal liability with no employer indemnity.
               </>
             }
-            cite="Source: Health and Safety at Work etc. Act 1974 (1974 c.37), s.7 — verbatim from legislation.gov.uk."
+            cite="Source: Health and Safety at Work etc. Act 1974 (1974 c.37), s.7."
           />
 
           <SectionRule />
@@ -570,7 +570,7 @@ export default function Sub2() {
                 feeds the next year&apos;s evacuation drill.
               </>
             }
-            cite="Source: Regulatory Reform (Fire Safety) Order 2005 (SI 2005/1541), Article 9 — verbatim from legislation.gov.uk."
+            cite="Source: Regulatory Reform (Fire Safety) Order 2005 (SI 2005/1541), Article 9."
           />
 
           <CommonMistake

@@ -32,7 +32,7 @@ import useSEO from '@/hooks/useSEO';
 const TITLE =
   'Industry structure and roles in building services engineering | Level 3 Module 7.1.1 | Elec-Mate';
 const DESCRIPTION =
-  'How the UK electrical contracting industry is structured — main contractor, sub-contractor, domestic installer — and the roles within a firm: Apprentice, Improver, Electrician, Approved Electrician, Technician, Project Engineer, Designer, Commissioning Engineer.';
+  'How the UK electrical contracting industry is structured — main contractor, sub-contractor, domestic installer — and the roles within a firm: Apprentice, Electrician, Approved Electrician, Technician, Project Engineer, Designer, Commissioning Engineer.';
 
 const checks = [
   {
@@ -134,16 +134,16 @@ const quizQuestions = [
   },
   {
     id: 5,
-    question: "What's the JIB Apprentice grade and how does it differ from Improver?",
+    question: "What's the JIB Apprentice grade and how does it differ from the colloquial term 'Improver'?",
     options: [
       "There's no difference.",
-      "Apprentice is the JIB grade for someone in a registered apprenticeship — typically a learner working towards the C&G 2365 (or NVQ Level 3) and the AM2. Improver is the post-college, pre-AM2 grade — the apprentice has completed the technical qualifications but not yet sat the AM2. Once AM2 is passed and JIB processes the upgrade, the worker becomes an Electrician on the JIB scale.",
-      "Improver is a higher grade than Approved Electrician.",
+      "Apprentice is a formal JIB grade for someone in a registered apprenticeship — typically a learner working towards the C&G 2365 (or NVQ Level 3) and the AM2. 'Improver' is not a formal JIB grade — it's a colloquial industry term sometimes used for the post-college, pre-AM2 stage where the learner has completed the technical qualifications but not yet sat the AM2. Once AM2 is passed and JIB processes the upgrade, the worker becomes an Electrician on the JIB scale.",
+      "'Improver' is a higher grade than Approved Electrician.",
       "Apprentice is for over-30s only.",
     ],
     correctAnswer: 1,
     explanation:
-      "JIB grades progress: Apprentice → Improver → Electrician → Approved Electrician → Technician. The Improver grade is the 'in-between' year where you've finished college but haven't yet passed AM2. The pay rate steps up at each transition — current 2024 JIB national rates put the Electrician hourly at around £19 to £20 per hour and Approved Electrician above that, with London Weighting on top. Always check the current JIB rate card on jib.org.uk.",
+      "The formal JIB Working Rule Agreement grades are Apprentice → Adult Trainee → Electrician → Approved Electrician → Technician. 'Improver' is colloquial industry shorthand for the in-between period where you've finished college but haven't yet passed AM2 — it doesn't appear on the formal JIB grade card. The pay rate steps up at each formal transition — current 2024 JIB national rates put the Electrician hourly at around £19 to £20 per hour and Approved Electrician above that, with London Weighting on top. Always check the current JIB rate card on jib.org.uk.",
   },
   {
     id: 6,
@@ -162,7 +162,7 @@ const quizQuestions = [
     id: 7,
     question: "Which of these roles typically requires an HNC, HND or degree in electrical engineering?",
     options: [
-      "Apprentice and Improver.",
+      "Apprentice and entry-level Electrician.",
       "Site Labourer.",
       "Design Engineer (M&E Consultant or sub-contractor design team), Senior Project Engineer, and Chartered Engineer roles. The degree-level qualification gives the design knowledge (load calcs, voltage drop, discrimination, protection coordination) and the management knowledge needed for the more senior roles. Many apprentices add an HNC or HND part-time once they've passed AM2 to open these routes.",
       "Tea boy.",
@@ -237,14 +237,14 @@ export default function Sub1() {
           <PageHero
             eyebrow="Module 7 · Section 1 · Subsection 1"
             title="Industry structure and roles in building services engineering"
-            description="How the UK electrical contracting industry is structured and the roles you'll meet — Apprentice, Improver, Electrician, Approved Electrician, Technician, Site Foreman, Project Engineer, Design Engineer, Commissioning Engineer."
+            description="How the UK electrical contracting industry is structured and the roles you'll meet — Apprentice, Electrician, Approved Electrician, Technician, Site Foreman, Project Engineer, Design Engineer, Commissioning Engineer."
             tone="emerald"
           />
 
           <TLDR
             points={[
               "UK electrical work is delivered by main contractors (head contract with the client) and electrical sub-contractors (specialist package). Most apprentices work for sub-contractors. There's also a domestic-installer tier — small firms working on houses and flats under a competent person scheme.",
-              "Within a sub-contractor the JIB grade ladder is Apprentice → Improver → Electrician → Approved Electrician → Technician. Above that sit Site Foreman, Project Engineer, Design Engineer, Commissioning Engineer, Contracts Manager and Operations Director.",
+              "Within a sub-contractor the formal JIB grade ladder is Apprentice → Adult Trainee → Electrician → Approved Electrician → Technician. The colloquial industry term 'Improver' (sometimes used for the post-college, pre-AM2 stage) is NOT a formal JIB grade. Above that sit Site Foreman, Project Engineer, Design Engineer, Commissioning Engineer, Contracts Manager and Operations Director.",
               "Building services engineering (BSE) is broader than electrical — it covers mechanical, public health, fire, security, BMS, lifts and renewables. The 2365-03 syllabus uses 'building services engineering' deliberately because cross-discipline knowledge increasingly matters for career mobility.",
             ]}
           />
@@ -253,7 +253,7 @@ export default function Sub1() {
             outcomes={[
               "Maps to AC 1.6 (Define the different roles in building services engineering).",
               "Identify the structural layers of UK electrical contracting — main contractor, electrical sub-contractor, domestic installer.",
-              "Define the JIB grade ladder — Apprentice, Improver, Electrician, Approved Electrician, Technician — and the qualification gates between each.",
+              "Define the formal JIB grade ladder — Apprentice, Adult Trainee, Electrician, Approved Electrician, Technician — and the qualification gates between each.",
               "Identify the wider building services engineering disciplines you'll work alongside (mechanical, public health, fire, security, BMS, lifts, renewables).",
               "Distinguish the install role from the design role and the commissioning role, and the procurement routes (traditional vs design and build) that allocate design responsibility.",
               "Identify routes outside contracting — facilities management, manufacturer technical roles, client-side engineering, commissioning, renewables.",
@@ -305,11 +305,11 @@ export default function Sub1() {
 
           <ConceptBlock
             title="The JIB grade ladder — your competence record on a card"
-            plainEnglish="The Joint Industry Board (JIB) operates a grading scheme for electrical operatives in England, Wales and Northern Ireland. The grades climb from Apprentice through Improver, Electrician, Approved Electrician to Technician. Each grade has a defined competence standard, a defined pay rate (annually negotiated between ECA and Unite), and shows on your ECS card. SELECT and the SJIB run an equivalent scheme in Scotland."
-            onSite="As an apprentice your card shows Apprentice grade. Once you've completed your college qualifications but before AM2 you become an Improver. Once you pass AM2 and JIB processes the upgrade, you're an Electrician — the standard JIB grade for a qualified, time-served operative. Approved Electrician is the next step (additional experience, evidence of supervision and sign-off authority, JIB application). Technician is the senior grade — typically Approved Electrician plus an HNC, HND or degree."
+            plainEnglish="The Joint Industry Board (JIB) operates a grading scheme for electrical operatives in England, Wales and Northern Ireland. The formal grades climb from Apprentice through Adult Trainee, Electrician, Approved Electrician to Technician. Each grade has a defined competence standard, a defined pay rate (annually negotiated between ECA and Unite), and shows on your ECS card. SELECT and the SJIB run an equivalent scheme in Scotland. Note that 'Improver' is a colloquial industry term sometimes used informally for the post-college, pre-AM2 stage — it is NOT a formal JIB grade."
+            onSite="As an apprentice your card shows Apprentice grade. Once you've completed your college qualifications but before AM2 you're still formally graded as a final-year Apprentice (or, for an older non-apprentice learner, Adult Trainee) — though colleagues may informally call you an 'Improver'. Once you pass AM2 and JIB processes the upgrade, you're an Electrician — the standard JIB grade for a qualified, time-served operative. Approved Electrician is the next step (additional experience, evidence of supervision and sign-off authority, JIB application). Technician is the senior grade — typically Approved Electrician plus an HNC, HND or degree."
           >
             <p>
-              The JIB grade ladder in practice (rates are indicative — always check current
+              The formal JIB grade ladder in practice (rates are indicative — always check current
               jib.org.uk):
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -318,8 +318,8 @@ export default function Sub1() {
                 year of apprenticeship.
               </li>
               <li>
-                <strong>Improver</strong> &mdash; college qualifications complete, AM2 not yet
-                passed. Bridging grade.
+                <strong>Adult Trainee</strong> &mdash; non-apprenticeship adult learner route to
+                qualification.
               </li>
               <li>
                 <strong>Electrician</strong> &mdash; AM2 passed and JIB-processed. Standard
@@ -334,6 +334,11 @@ export default function Sub1() {
                 covering design, commissioning and supervision authority.
               </li>
             </ul>
+            <p className="mt-3 text-[13px] text-white/70">
+              Note: &quot;Improver&quot; is colloquial industry shorthand sometimes used for the
+              post-college, pre-AM2 stage. It is NOT a formal JIB grade and does not appear on
+              the JIB Working Rule Agreement grade card.
+            </p>
           </ConceptBlock>
 
           <InlineCheck
@@ -358,7 +363,7 @@ export default function Sub1() {
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
-                <strong>Apprentice / Improver</strong> &mdash; the learner. Paired with an Approved
+                <strong>Apprentice</strong> &mdash; the learner. Paired with an Approved
                 or Electrician for direct supervision.
               </li>
               <li>
@@ -562,7 +567,7 @@ export default function Sub1() {
                 signal worth noticing.
               </>
             }
-            cite="Source: Health and Safety at Work etc Act 1974 (1974 c.37), Part I, s.2 &mdash; verbatim from legislation.gov.uk."
+            cite="Source: Health and Safety at Work etc Act 1974 (1974 c.37), Part I, s.2."
           />
 
           <RegsCallout
@@ -811,13 +816,13 @@ export default function Sub1() {
           <KeyTakeaways
             points={[
               "UK electrical work is layered — main contractor (head contract), electrical sub-contractor (specialist package), domestic installer (sole traders and small firms working on dwellings under a Part P scheme).",
-              "The JIB grade ladder is Apprentice → Improver → Electrician → Approved Electrician → Technician. Each grade has a defined competence standard, a national pay rate negotiated between ECA and Unite, and shows on your ECS card.",
-              "Within a sub-contractor the site roles are Apprentice / Improver / Electrician / Approved / Charge Hand / Foreman / Project Engineer / Contracts Manager. Office and specialist roles include Design Engineer, Estimator, Commissioning Engineer, Procurement.",
+              "The formal JIB grade ladder is Apprentice → Adult Trainee → Electrician → Approved Electrician → Technician. Each grade has a defined competence standard, a national pay rate negotiated between ECA and Unite, and shows on your ECS card. 'Improver' is colloquial industry shorthand for the post-college, pre-AM2 stage — NOT a formal JIB grade.",
+              "Within a sub-contractor the site roles are Apprentice / Electrician / Approved / Charge Hand / Foreman / Project Engineer / Contracts Manager. Office and specialist roles include Design Engineer, Estimator, Commissioning Engineer, Procurement.",
               "Building services engineering (BSE) is broader than electrical — it includes mechanical (HVAC), public health, fire detection, security, BMS, lifts, and renewables (solar, EV, heat pumps). Cross-discipline knowledge increasingly matters.",
-              "Procurement route shapes who designs — traditional contracts keep design with an external M&E Consultant; design and build (D&B) shifts design to the contractor\'s in-house or external design team. Most modern UK projects are D&B.",
+              "Procurement route shapes who designs — traditional contracts keep design with an external M&E Consultant; design and build (D&B) shifts design to the contractor's in-house or external design team. Most modern UK projects are D&B.",
               "BMS, commissioning and renewables are three of the fastest-growing specialisms within electrical. All open at premium rates with the right vendor certifications and qualifications added to the AM2 stack.",
               "The first move post-AM2 is the biggest career inflection point. Pick a direction (install, design, Project Engineer, commissioning, BMS, renewables), pick the next qualification deliberately, build the right relationships, and move at the right moment.",
-              "JIB grade, ECS card and your qualifications are portable across employers. Once you\'re past AM2 you\'re a free-agent qualified electrician — the UK industry has high mobility and your competence record travels with you.",
+              "JIB grade, ECS card and your qualifications are portable across employers. Once you're past AM2 you're a free-agent qualified electrician — the UK industry has high mobility and your competence record travels with you.",
             ]}
           />
 

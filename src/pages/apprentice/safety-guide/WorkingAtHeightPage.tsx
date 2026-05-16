@@ -1,8 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, CheckCircle, AlertTriangle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { ArrowLeft, CheckCircle2222, AlertTriangle } from 'lucide-react';
 import {
   PageFrame,
   PageHero,
@@ -14,14 +12,10 @@ const WorkingAtHeightPage = () => {
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/apprentice/safety-fundamentals')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
+        <button onClick={() => navigate('/apprentice/safety-fundamentals')} className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation">
+          <ArrowLeft className="h-4 w-4" />
           Back
-        </Button>
+        </button>
       </motion.div>
 
       <motion.div variants={itemVariants}>
@@ -34,8 +28,8 @@ const WorkingAtHeightPage = () => {
       </motion.div>
 
       {/* Intro */}
-      <Card className="border-orange-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-white">
             Falls Are the Biggest Killer in Construction
           </h2>
@@ -51,7 +45,7 @@ const WorkingAtHeightPage = () => {
             personal injury — there is no minimum height threshold.
           </p>
 
-          <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
+          <div className="rounded-md border border-red-500/25 bg-red-500/[0.04] p-3">
             <p className="text-white text-sm">
               <span className="font-bold text-red-400">Key fact: </span>
               "Working at height" means any work where you could fall a distance
@@ -60,12 +54,11 @@ const WorkingAtHeightPage = () => {
               chair. It does not require a specific height.
             </p>
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Hierarchy of Controls */}
-      <Card className="border-orange-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-orange-400">
             The Hierarchy — Avoid, Prevent, Mitigate
           </h2>
@@ -109,12 +102,11 @@ const WorkingAtHeightPage = () => {
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Ladders */}
-      <Card className="border-blue-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-blue-400">
             Ladders — BS EN 131
           </h2>
@@ -147,17 +139,16 @@ const WorkingAtHeightPage = () => {
                 key={item}
                 className="flex items-start gap-2 text-sm text-white"
               >
-                <CheckCircle className="h-4 w-4 text-blue-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                 {item}
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Step Ladders */}
-      <Card className="border-blue-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-blue-400">
             Step Ladders
           </h2>
@@ -181,17 +172,16 @@ const WorkingAtHeightPage = () => {
                 key={item}
                 className="flex items-start gap-2 text-sm text-white"
               >
-                <CheckCircle className="h-4 w-4 text-blue-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                 {item}
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Scaffolding */}
-      <Card className="border-purple-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-purple-400">
             Scaffolding
           </h2>
@@ -220,17 +210,16 @@ const WorkingAtHeightPage = () => {
                 key={item}
                 className="flex items-start gap-2 text-sm text-white"
               >
-                <CheckCircle className="h-4 w-4 text-purple-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                 {item}
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Mobile Towers */}
-      <Card className="border-green-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-green-400">
             Mobile Access Towers — PASMA
           </h2>
@@ -261,17 +250,16 @@ const WorkingAtHeightPage = () => {
                 key={item}
                 className="flex items-start gap-2 text-sm text-white"
               >
-                <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                 {item}
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Harnesses */}
-      <Card className="border-red-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-red-500/25 bg-red-500/[0.04]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-red-400">
             Fall Arrest Harnesses
           </h2>
@@ -315,7 +303,7 @@ const WorkingAtHeightPage = () => {
             ].map((item) => (
               <div
                 key={item.point}
-                className="bg-red-500/10 border border-red-500/20 rounded-lg p-3"
+                className="rounded-md border border-red-500/25 bg-red-500/[0.04] p-3"
               >
                 <h4 className="text-red-400 font-semibold text-sm mb-1">
                   {item.point}
@@ -324,12 +312,11 @@ const WorkingAtHeightPage = () => {
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Fragile Surfaces */}
-      <Card className="border-amber-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <div className="flex items-center gap-2">
             <AlertTriangle className="h-5 w-5 text-amber-400" />
             <h2 className="text-lg font-semibold text-amber-400">
@@ -362,12 +349,11 @@ const WorkingAtHeightPage = () => {
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Common Electrical Tasks at Height */}
-      <Card className="border-blue-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-blue-400">
             Common Electrical Tasks at Height
           </h2>
@@ -405,7 +391,7 @@ const WorkingAtHeightPage = () => {
             ].map((item) => (
               <div
                 key={item.task}
-                className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3"
+                className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3"
               >
                 <h4 className="text-blue-400 font-semibold text-sm mb-1">
                   {item.task}
@@ -414,12 +400,11 @@ const WorkingAtHeightPage = () => {
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Footer */}
-      <Card className="border-white/10 bg-white/5">
-        <CardContent className="p-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5">
           <p className="text-white text-xs leading-relaxed">
             Based on the Work at Height Regulations 2005, BS EN 131 (ladders),
             NASC SG4 (scaffolding), PASMA guidance (mobile towers), BS EN 361/355
@@ -427,8 +412,7 @@ const WorkingAtHeightPage = () => {
             guide). Always follow your employer's site-specific risk assessment
             and method statement for working at height.
           </p>
-        </CardContent>
-      </Card>
+        </div></div>
     </PageFrame>
   );
 };

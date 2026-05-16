@@ -39,6 +39,10 @@ const faqs = [
   { question: 'What if the client (commercial) doesn\'t know their CDM duties?', answer: 'Reg 9(1) — contractor must satisfy themselves the client knows. If they don\'t, contractor either educates them or doesn\'t start work. Most commercial clients have basic awareness; some don\'t and the conversation is the contractor\'s responsibility.' },
   { question: 'How does the L3 transition affect my JIB grading?', answer: 'JIB grading reflects competence and qualification level. L3 typically progresses to Approved Electrician status post-qualification with appropriate experience and competence demonstration; CDM contractor-level capability is part of the broader competence picture.' },
   { question: 'Can I refuse to act as the firm\'s contractor representative if I don\'t feel ready?', answer: 'Yes — EAWR Reg 16 competence applies. ERA s.44 protects refusal. The firm should match the role to actual L3 readiness; "you\'re L3 so you can run this" isn\'t automatic.' },
+  { question: 'What is the difference between a Method Statement and a RAMS?', answer: 'A method statement describes how a particular task will be carried out — step-by-step procedure, sequence, resources, controls. A RAMS (Risk Assessment and Method Statement) combines the risk assessment outputs with the method statement. The risk assessment identifies hazards and controls; the method statement describes how the work will be done within those controls. The L3 representative ensures both are in place and current; reviews them at start of shift; updates if conditions change.' },
+  { question: 'When is a Principal Designer required?', answer: 'A Principal Designer must be appointed by the client where more than one contractor is or is reasonably expected to be involved (CDM 2015 Reg 5). The PD coordinates the pre-construction phase including identification, elimination and control of foreseeable risks; preparation and provision of pre-construction information; liaison with the principal contractor. On single-contractor projects the contractor effectively absorbs the design coordination function without a separate PD appointment.' },
+  { question: 'What records must the contractor retain under CDM 2015?', answer: 'The CPP itself; risk assessments and method statements (RAMS); records of training and competence of operatives; site induction records; toolbox talks; near-miss reports; correspondence with PD / PC / client; the Health and Safety File contributions at end of project. Retention periods vary — most records 3+ years; H&S File is for the life of the building.' },
+  { question: 'Does the Pre-Construction Information always exist?', answer: 'On notifiable projects, almost always — the client (or PD) prepares it. On smaller projects it may be a brief informal document, an email, or a verbal briefing depending on client sophistication. The contractor under Reg 9(1) should ask for it; on commercial / industrial work some PCI should be expected even on small jobs. Absence of PCI is itself a flag that the client may not have engaged with their Reg 4 duties.' },
 ];
 
 export default function Sub2() {
@@ -54,6 +58,9 @@ export default function Sub2() {
             "L2 = Reg 15 worker (cooperate, comply, report). L3 = still Reg 15 PLUS contributing to Reg 9 contractor duties (plan, manage, monitor) as firm's representative.",
             "CDM applies to all construction work — no monetary threshold. F10 notification only for projects &gt;30 days/20 workers OR &gt;500 person-days.",
             "L3 supervisor checklist on a small project: verify CPP, verify client awareness, brief operatives, dynamic risk assessment, manage and monitor, document, escalate, close out.",
+            "CPP under Reg 12 / 15 is mandatory for every project; CIS80 template adequate for small; bespoke for complex.",
+            "Reg 11 Principal Designer / Reg 14 PC roles on multi-contractor projects; both have specific duties beyond the contractor&apos;s Reg 9.",
+            "PCI (Pre-Construction Information), CPP, and HS File together form the CDM information triad — the &apos;before&apos;, &apos;during&apos; and &apos;after&apos; of project safety documentation.",
           ]} />
           <LearningOutcomes outcomes={[
             "Identify CDM 2015 dutyholder roles and the L2 → L3 transition from worker to contractor representative.",
@@ -62,10 +69,15 @@ export default function Sub2() {
             "Recognise the application of CDM to all construction work regardless of size.",
             "Distinguish single-contractor and multi-contractor projects and the role of the principal contractor.",
             "Apply the L3 contractor-representative checklist on a small project.",
+            "Describe the six CDM dutyholder roles — client, PD, PC, designer, contractor, worker — and the duties on each.",
+            "Describe the CDM information chain — PCI, CPP, HSF — and the regulations behind each.",
+            "Apply MHSWR Reg 14 worker duties — use per training, report serious / immediate danger, report shortcomings.",
+            "Apply EAWR Reg 16 personal competence duty and the refusal protections under ERA s.44.",
+            "Describe Reg 13 site induction on multi-contractor projects and the worker&apos;s attendance duty.",
           ]} initialVisibleCount={3} />
 
           <ContentEyebrow>The transition</ContentEyebrow>
-          <ConceptBlock title="From worker to contractor's eyes-and-ears" plainEnglish="At L2 you sat firmly inside Reg 15. At L3 you still hold Reg 15 personally but increasingly act as the firm's Reg 9 representative on site. The firm's contractor duties (plan, manage, monitor) are operationalised through your day-to-day actions when you're leading a small job or supervising junior trades." onSite="The transition is gradual. At first the L3 brief is mostly Reg 15 with some Reg 9 input. By end of L3 / start of post-qualification many operatives are routinely acting as contractor representative on small jobs.">
+          <ConceptBlock title="From worker to contractor's eyes-and-ears" plainEnglish="At L2 you sat firmly inside Reg 15. At L3 you still hold Reg 15 personally but increasingly act as the firm's Reg 9 representative on site. The firm's contractor duties (plan, manage, monitor) are operationalised through your day-to-day actions when you're leading a small job or supervising junior trades. The L2 framing was &apos;cooperate, comply, report&apos;. The L3 framing adds: the people you supervise are now in your duty of care; the plan you brief is the firm&apos;s discharge of Reg 9; the monitoring you do on the day is part of the contractor&apos;s safe-system-of-work. The transition is one of the most significant L2→L3 mindset shifts." onSite="The transition is gradual. At first the L3 brief is mostly Reg 15 with some Reg 9 input. By end of L3 / start of post-qualification many operatives are routinely acting as contractor representative on small jobs. The firm should match the role to actual readiness; demanding too much too early creates exposure for both the L3 and the firm. The L3 supervisor needs the support of the contracts manager: clear handover, documented authority, escalation path, and the time to do the planning / briefing / monitoring properly.">
             <p>Practical examples of the transition:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>Briefing an L2 mate on the day&apos;s plan = Reg 9 manage.</li>
@@ -75,12 +87,15 @@ export default function Sub2() {
               <li>Updating the CPP if conditions change = Reg 9 plan.</li>
               <li>End-of-day debrief and lessons-learned = Reg 9 monitor + review.</li>
               <li>Reporting near-misses up = both Reg 15 (worker) and Reg 9 (contractor).</li>
+              <li>Cooperating with PD / PC and other contractors = Reg 9 cooperation; cascades from Reg 11 / Reg 14 duties.</li>
+              <li>Verifying training currency of L2 operatives before tasks = Reg 9 manage + Reg 8 contractor competence.</li>
+              <li>Operating a permit-to-work system for hot works or live work = Reg 9 plan + manage; safe system of work under HASAWA s.2(2)(a).</li>
             </ul>
           </ConceptBlock>
 
-          <RegsCallout source="CDM 2015 — Reg 9(1)" clause={<>"A contractor must not carry out construction work in relation to a project unless satisfied that the client is aware of the duties owed by the client under these Regulations."</>} meaning={<>The contractor&apos;s client-awareness duty. Brief conversation but mandatory before starting. The L3 representative often has this conversation on small jobs where the contracts manager isn&apos;t present.</>} cite="Source: Construction (Design and Management) Regulations 2015 (SI 2015/51), Reg 9 — verbatim from legislation.gov.uk." />
+          <RegsCallout source="CDM 2015 — Reg 9(1)" clause={<>"A contractor must not carry out construction work in relation to a project unless satisfied that the client is aware of the duties owed by the client under these Regulations."</>} meaning={<>The contractor&apos;s client-awareness duty. Brief conversation but mandatory before starting. The L3 representative often has this conversation on small jobs where the contracts manager isn&apos;t present.</>} cite="Source: Construction (Design and Management) Regulations 2015 (SI 2015/51), Reg 9." />
 
-          <RegsCallout source="CDM 2015 — Reg 15(b)" clause={<>"A worker must — (b) report to the principal contractor or, where there is no principal contractor, the contractor any defect or unsafe practice which they believe is likely to endanger their own health or safety or that of any other person."</>} meaning={<>The worker reporting duty. At L3 you both DO the reporting and (when acting as contractor representative) RECEIVE reports from junior workers.</>} cite="Source: Construction (Design and Management) Regulations 2015 (SI 2015/51), Reg 15 — verbatim from legislation.gov.uk." />
+          <RegsCallout source="CDM 2015 — Reg 15(b)" clause={<>"A worker must — (b) report to the principal contractor or, where there is no principal contractor, the contractor any defect or unsafe practice which they believe is likely to endanger their own health or safety or that of any other person."</>} meaning={<>The worker reporting duty. At L3 you both DO the reporting and (when acting as contractor representative) RECEIVE reports from junior workers.</>} cite="Source: Construction (Design and Management) Regulations 2015 (SI 2015/51), Reg 15." />
 
           <InlineCheck {...checks[0]} />
           <InlineCheck {...checks[1]} />
@@ -88,7 +103,7 @@ export default function Sub2() {
 
           <SectionRule />
           <ContentEyebrow>The contractor representative checklist</ContentEyebrow>
-          <ConceptBlock title="Operationalising Reg 9 on a small project" plainEnglish="Eight-point checklist for L3 acting as the firm's contractor representative on a small project." onSite="Each item is small (a few minutes) but together they discharge the Reg 9 duty operationally. Document as you go.">
+          <ConceptBlock title="Operationalising Reg 9 on a small project" plainEnglish="Eight-point checklist for L3 acting as the firm's contractor representative on a small project. The list is a practical translation of Reg 9&apos;s &apos;plan, manage, monitor&apos; into the day-to-day actions of the L3 representative. Each item discharges a specific aspect of the contractor&apos;s duty; together they form the safe-system-of-work that the firm relies on for HASAWA s.2 / s.3 compliance." onSite="Each item is small (a few minutes) but together they discharge the Reg 9 duty operationally. Document as you go. The job pack becomes the evidence file — the SFAIRP defence under HASAWA s.40 and the demonstration of CDM 2015 contractor compliance. The L3 supervisor who treats the checklist as paperwork is missing the point; the L3 supervisor who treats it as the operational rhythm of the day is doing the job correctly.">
             <p>The checklist:</p>
             <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
               <li>Verify Construction Phase Plan exists and reflects the actual work.</li>
@@ -99,6 +114,8 @@ export default function Sub2() {
               <li>Document the day&apos;s safety actions in the job pack.</li>
               <li>Escalate issues that exceed your competence or authority.</li>
               <li>Close out at end of project — lessons, records, cleanup, RAMS update if needed.</li>
+              <li>Submit handover information to the customer / PC / PD — as-built drawings, certificates, manuals as appropriate.</li>
+              <li>Update the firm&apos;s near-miss / lessons-learned system based on observations during the project.</li>
             </ol>
           </ConceptBlock>
 
@@ -129,9 +146,9 @@ export default function Sub2() {
             </ul>
           </ConceptBlock>
 
-          <RegsCallout source="CDM 2015 — Reg 6(1)" clause={<>&quot;A project is notifiable if the construction work on a construction site is scheduled to — (a) last longer than 30 working days and have more than 20 workers working simultaneously at any point in the project; or (b) exceed 500 person days.&quot;</>} meaning={<>The notifiability test. Note the AND in trigger (a) — both conditions must apply. Trigger (b) is a single test on aggregate person-days. Most domestic and small-commercial work falls below; medium / large refurbishment and new-build typically above.</>} cite="Source: Construction (Design and Management) Regulations 2015 (SI 2015/51), Reg 6 — verbatim from legislation.gov.uk." />
+          <RegsCallout source="CDM 2015 — Reg 6(1)" clause={<>&quot;A project is notifiable if the construction work on a construction site is scheduled to — (a) last longer than 30 working days and have more than 20 workers working simultaneously at any point in the project; or (b) exceed 500 person days.&quot;</>} meaning={<>The notifiability test. Note the AND in trigger (a) — both conditions must apply. Trigger (b) is a single test on aggregate person-days. Most domestic and small-commercial work falls below; medium / large refurbishment and new-build typically above.</>} cite="Source: Construction (Design and Management) Regulations 2015 (SI 2015/51), Reg 6." />
 
-          <ConceptBlock title="Pre-construction information and the design link" plainEnglish="CDM Reg 4(4) requires the client to provide pre-construction information (PCI) to designers and contractors. PCI covers known hazards (asbestos, services, structural), site context, project arrangements, and any existing risk-relevant information. The contractor uses PCI to plan safe construction." onSite="The L3 contractor representative asks for PCI on every commercial job. Absence of PCI is itself a risk indicator — domestic clients rarely have any, commercial clients often have a basic pack, HRRB clients have extensive PCI. Brief the team on what PCI tells you about the site before walking on.">
+          <ConceptBlock title="Pre-construction information and the design link" plainEnglish="CDM Reg 4(4) requires the client to provide pre-construction information (PCI) to designers and contractors. PCI covers known hazards (asbestos, services, structural), site context, project arrangements, and any existing risk-relevant information. The contractor uses PCI to plan safe construction. The PCI flows from the client (or PD on multi-contractor projects) to every designer and contractor &apos;as soon as practicable&apos;. The PCI is project-specific — it is not a generic template; it reflects what is known about this particular site, this particular building, this particular work scope." onSite="The L3 contractor representative asks for PCI on every commercial job. Absence of PCI is itself a risk indicator — domestic clients rarely have any, commercial clients often have a basic pack, HRRB clients have extensive PCI. Brief the team on what PCI tells you about the site before walking on. Where the PCI is plainly inadequate (e.g. claims &apos;no asbestos present&apos; without any survey reference, claims &apos;no buried services&apos; without drawings, fails to mention adjacent occupancies), the L3 representative flags it back through the contracts manager. The contractor cannot use inadequate PCI as a defence — Reg 9(1) and Reg 9(2) require the contractor to satisfy themselves the client&apos;s arrangements are sufficient before starting work.">
             <p>PCI typically contains:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>Known asbestos register / refurbishment survey.</li>
@@ -190,20 +207,486 @@ export default function Sub2() {
 
           <CommonMistake title="Assuming the customer (commercial) knows their CDM duties" whatHappens={<>L3 starts work on commercial project without having the Reg 9(1) client-awareness conversation. Customer thinks they&apos;ve hired a contractor and have no further obligation. Customer fails CDM client duties (e.g. provide pre-construction information). HSE finds gap; contractor faulted for not checking under Reg 9(1).</>} doInstead={<>Brief client-awareness conversation at start of every commercial job. Two minutes; documented. Customer briefed on their CDM duties (cooperation, providing information, ensuring sufficient time and resources). Many customers don&apos;t know — the contractor representative explains.</>} />
 
+          <SectionRule />
+          <ContentEyebrow>Worker duties under Reg 15 in depth</ContentEyebrow>
+
+          <ConceptBlock
+            title="Cooperate, comply, report — the three Reg 15 limbs"
+            plainEnglish="CDM 2015 Reg 15 places three core duties on workers. (a) Cooperate with the client, principal designer, principal contractor and any other person engaged in connection with the project to enable that person to comply with their CDM duties. (b) Report to the principal contractor (or, where there is no PC, the contractor) any defect or unsafe practice which the worker believes is likely to endanger their own health or safety or that of any other person. (c) Comply with the worker&apos;s general safety duties under MHSWR Reg 14 (use plant and substances in accordance with training, report serious dangers, report shortcomings)."
+            onSite="The L3 representative still personally holds Reg 15 even while acting as contractor representative — the worker duty doesn&apos;t evaporate at L3. What changes is the L3 is now both the recipient of Reg 15 reports from L2 operatives (and is responsible for acting on them) and a Reg 15 reporter themselves to the PC / contractor. The combination puts the L3 squarely at the centre of the safety information flow on site. Acting on Reg 15 reports promptly and documentably is part of the firm&apos;s Reg 9 monitor duty."
+          >
+            <p>Reg 15 worker duties in practice:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Cooperate</strong> — attend induction, follow site
+                rules, participate in toolbox talks, comply with PC&apos;s
+                directions, contribute to RAMS where asked.
+              </li>
+              <li>
+                <strong>Report</strong> — defects, unsafe practices, near-misses,
+                changes to site conditions, missing equipment, deteriorating
+                weather affecting the work.
+              </li>
+              <li>
+                <strong>Comply with MHSWR Reg 14</strong> — use equipment per
+                training, follow safe systems of work, raise concerns.
+              </li>
+              <li>
+                <strong>Personal H&amp;S protection</strong> — wear issued
+                PPE, follow isolation procedures, refuse work beyond competence
+                (Reg 16 EAWR overlap).
+              </li>
+              <li>
+                <strong>Cooperation with other trades</strong> — keep your work
+                area orderly, communicate hazards, share information about
+                upcoming risk activities.
+              </li>
+              <li>
+                <strong>Records</strong> — sign in to induction, sign toolbox
+                talks, return signed RAMS acknowledgements.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="MHSWR Reg 14 — the parallel personal duty"
+            plainEnglish="MHSWR 1999 Reg 14 sits alongside HASAWA s.7 and CDM Reg 15 as the third major personal duty regime for the worker. Reg 14 requires every employee, in accordance with the training provided by the employer, to use any machinery, equipment, dangerous substance, transport equipment, means of production or safety device only in accordance with the training and instructions provided. Reg 14(2) requires the worker to inform the employer of any situation which they reasonably consider to represent a serious and immediate danger to health and safety, and any matter which they reasonably consider to represent a shortcoming in the employer&apos;s protection arrangements. The three personal duties (HASAWA s.7, MHSWR Reg 14, CDM Reg 15) overlap significantly but each adds a slightly different angle."
+            onSite="The L3 representative discharging the personal duties: use equipment per training, raise serious-and-immediate-danger concerns, raise shortcomings in the firm&apos;s arrangements. The Reg 14 &apos;shortcomings&apos; limb is particularly useful at L3 — it covers concerns about the firm&apos;s safety system itself, not just individual unsafe practices. A poorly-written RAMS, an inadequate training matrix, a missing competence verification regime are all Reg 14 shortcomings to be raised."
+          >
+            <p>MHSWR Reg 14 worker duties:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Use equipment per training</strong> — machinery,
+                equipment, dangerous substances, transport, safety devices.
+              </li>
+              <li>
+                <strong>Inform of serious / immediate danger</strong> — promptly
+                to the employer or safety rep.
+              </li>
+              <li>
+                <strong>Inform of shortcomings</strong> — in the firm&apos;s
+                arrangements; gaps in training; inadequate equipment; missing
+                procedures.
+              </li>
+              <li>
+                <strong>Reasonable belief</strong> — standard is what the worker
+                reasonably believes, not what is objectively proven.
+              </li>
+              <li>
+                <strong>Channels</strong> — direct to employer; via safety rep
+                where one exists; via TUC / scheme bodies for collective
+                concerns.
+              </li>
+              <li>
+                <strong>ERA s.44 protection</strong> — for raising the concern
+                by reasonable means.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="EAWR Reg 16 competence and the L3 personal hook"
+            plainEnglish="Electricity at Work Regulations 1989 Reg 16 imposes a personal competence duty: no person shall be engaged in any work activity where technical knowledge or experience is necessary to prevent danger or injury, unless they possess such knowledge or experience or are under such degree of supervision as may be appropriate having regard to the nature of the work. The duty bites on the operative (don&apos;t work beyond competence) AND the employer (don&apos;t direct work beyond operative competence). The L3 transition involves an expanding personal competence base — what was beyond competence at L2 may now be within competence at L3, but the boundary moves; refusal of work beyond the new boundary is still required."
+            onSite="The L3 representative reflex on any new task type: do I have the technical knowledge and experience for this; what training / experience does the firm have on record for me; is appropriate supervision available; what would a competent person in my position do. Where the answer is &apos;not yet&apos;, the L3 refuses the task and asks for supervised training. EAWR Reg 16 is the regulatory hook for the refusal; ERA s.44 protects from detriment for refusing; documentation in writing (text, email) of the refusal is the L3&apos;s defence if subsequently challenged."
+          >
+            <p>Reg 16 competence considerations:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Technical knowledge — training, qualification, experience matched to the work.</li>
+              <li>Experience — recent and relevant; old training without recent practice may be insufficient.</li>
+              <li>Supervision — real, not nominal; competent supervisor available and present where needed.</li>
+              <li>Specific authorisation — HV switching, live working, confined-space entry typically require specific authorisation beyond general competence.</li>
+              <li>Manufacturer-specific training — for proprietary equipment (specialised inverters, control systems, HVAC interfaces).</li>
+              <li>JIB grading reflects broad competence but doesn&apos;t guarantee specific task competence.</li>
+              <li>The L3 representative is responsible for verifying team competence before assigning tasks under Reg 9 manage.</li>
+            </ul>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="Management of Health and Safety at Work Regulations 1999 — Reg 14"
+            clause={
+              <>
+                &quot;(1) Every employee shall use any machinery, equipment,
+                dangerous substance, transport equipment, means of production or
+                safety device provided to him by his employer in accordance both
+                with any training in the use of the equipment concerned which has
+                been received by him and the instructions respecting that use
+                which have been provided to him by the said employer in
+                compliance with the requirements and prohibitions imposed upon
+                that employer by or under the relevant statutory provisions.
+                (2) Every employee shall inform his employer or any other
+                employee of that employer with specific responsibility for the
+                health and safety of his fellow employees — (a) of any work
+                situation which a person with the first-mentioned
+                employee&apos;s training and instruction would reasonably
+                consider represented a serious and immediate danger to health
+                and safety; and (b) of any matter which a person with the
+                first-mentioned employee&apos;s training and instruction would
+                reasonably consider represented a shortcoming in the
+                employer&apos;s protection arrangements for health and safety,
+                in so far as that situation or matter either affects the health
+                and safety of that first-mentioned employee or arises out of or
+                in connection with his own activities at work, and has not
+                previously been reported to his employer or to any other
+                employee of that employer in accordance with this paragraph.&quot;
+              </>
+            }
+            meaning={
+              <>
+                MHSWR Reg 14 — the worker&apos;s general H&amp;S duty parallel to
+                HASAWA s.7 and CDM Reg 15. The two limbs — use equipment per
+                training, report dangers and shortcomings — together form the
+                practical translation of the worker&apos;s s.7 duty into the
+                day-to-day. The &apos;shortcomings&apos; limb is the bit most
+                often forgotten — it covers concerns about the firm&apos;s
+                arrangements themselves, not just individual unsafe practices.
+              </>
+            }
+            cite="Source: Management of Health and Safety at Work Regulations 1999 (SI 1999/3242), Reg 14."
+          />
+
           <Scenario title="L3 leading first small commercial single-contractor job" situation={<>Your contracts manager hands you a small commercial socket-installation job — 2 days, single contractor (your firm), commercial client (small office). One L2 mate with you. The contracts manager says "you can run this — here's the RAMS, get on with it" and disappears. You realise no CPP exists; client awareness hasn't been confirmed; the L2 hasn\'t been briefed.</>} whatToDo={<>Apply the contractor-representative checklist. (1) CPP — write a brief one using the CIS80 template (15 minutes); covers the work, the hazards, the controls, the welfare arrangements, the emergency procedure. (2) Client awareness — phone the client&apos;s designated contact; brief 5-minute conversation about CDM client duties (cooperate, provide info, ensure time/resources); document. (3) Operative briefing — sit with the L2 mate; walk through the CPP, the RAMS, the day&apos;s plan, hazards expected, who to contact in emergency; signed attendance log. (4) Walk-round on arrival; dynamic risk assessment; document. (5) Throughout — observe, intervene, document. (6) End of day - debrief with L2; note any near-misses; update CPP if conditions changed. (7) End of project — lessons-learned summary back to firm; close out CPP; cleanup. Phone contracts manager if anything escalates beyond competence; ERA s.44 protects refusal if you don&apos;t feel ready.</>} whyItMatters={<>This is the L2 → L3 transition in action. The contracts manager&apos;s hand-off was inadequate (common); the L3&apos;s response operationalises the CDM Reg 9 contractor duties through the checklist. The 30-60 minutes invested up-front in CPP + client awareness + operative briefing creates the safety system that runs through the project. The HSE inspector visiting on day 1 sees a competent contractor representative running a structured project; the alternative (no CPP, no briefing, ad-hoc execution) is a Reg 9 prosecution waiting to happen.</>} />
+
+          <SectionRule />
+          <ContentEyebrow>CDM 2015 — the Principal Designer duty and where electrical fits</ContentEyebrow>
+
+          <ConceptBlock
+            title="Why the design stage matters to the L3 contractor"
+            plainEnglish="CDM 2015 Reg 11 imposes duties on designers (anyone preparing or modifying design — including specification of products). The Principal Designer (Reg 5) coordinates design-stage health and safety on projects with more than one contractor. The L3 contractor representative often works with a Principal Designer&apos;s output: pre-construction information, design risk register, residual risks the designer couldn&apos;t eliminate. Understanding what the designer has and hasn&apos;t done shapes the contractor&apos;s site-stage approach."
+            onSite="The L3 contractor reflex on receipt of design information: read the design risk register; what risks did the designer eliminate; what residual risks did they pass to construction; what design-stage controls have they specified; what survey information did they commission. Where the design risk register is missing or thin, the L3 raises it with the firm&apos;s contracts manager — the designer has duties that may not have been discharged."
+          >
+            <p>Designer duties under CDM 2015 Reg 11:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Take account of general principles of prevention</strong> — MHSWR
+                Schedule 1; designed-in safety.
+              </li>
+              <li>
+                <strong>Eliminate foreseeable risks</strong> through design so far as
+                reasonably practicable.
+              </li>
+              <li>
+                <strong>Reduce or control residual risks</strong> that cannot be eliminated.
+              </li>
+              <li>
+                <strong>Pass information about residual risks</strong> to the principal
+                designer for inclusion in pre-construction information.
+              </li>
+              <li>
+                <strong>Cooperate with other dutyholders</strong> — designer, principal
+                designer, principal contractor, contractors.
+              </li>
+              <li>
+                <strong>Provide information about the design</strong> needed for safe use
+                and maintenance.
+              </li>
+              <li>
+                <strong>Pre-construction information</strong> — site survey, existing services
+                location, hazards identified at design stage, structural issues, asbestos,
+                contaminated land.
+              </li>
+              <li>
+                <strong>Design-stage workshops</strong> — Principal Designer typically runs
+                hazard / buildability workshops including key contractors.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+          <ContentEyebrow>Contractor competence under CDM 2015 Reg 8</ContentEyebrow>
+
+          <ConceptBlock
+            title="Worker consultation under HSCER 1996 and SRSC Regs 1977"
+            plainEnglish="Two related sets of regulations govern worker consultation on H&S — Safety Representatives and Safety Committees Regulations 1977 (workplaces with recognised trade unions) and Health and Safety (Consultation with Employees) Regulations 1996 (other workplaces). Both require the employer to consult workers on H&S matters; both give recognised representatives specific rights including paid time off, access to information, inspection rights. The L3 supervisor on a project with active safety representatives works alongside them — they are a resource, not an obstacle. Concerns raised by representatives are evidence of safety culture; firms that suppress representatives create regulatory risk."
+            onSite="The L3 representative attending a safety committee meeting (where one exists) brings the contractor&apos;s perspective; reports on the project; engages with concerns; takes back action items. The committee minutes record the engagement — useful documentation under the SFAIRP defence."
+          >
+            <p>Worker consultation provisions:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>SRSC 1977 — TU-recognised reps; paid time off; inspection rights; access to information.</li>
+              <li>HSCER 1996 — workplaces without TU recognition; representatives of employee safety.</li>
+              <li>Topics consulted on — introduction of new measures, training, info about risks and arrangements, health surveillance, work equipment, organisational changes.</li>
+              <li>Safety committees — formal meetings; published minutes; action tracking.</li>
+              <li>Joint protection under ERA s.44 — representatives have additional protection from detriment.</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Reg 8 — the duty not to engage incompetent appointees"
+            plainEnglish="CDM 2015 Reg 8 places a competence duty across the dutyholder chain. Any person appointing or engaging another to a CDM role must take reasonable steps to satisfy themselves the appointee has the skills, knowledge, experience and (if an organisation) organisational capability to fulfil the role. Reg 8(2) puts the parallel duty on the person being appointed — they must not accept the role unless they have the necessary competence. The duty runs at every level: client appointing PD, PC, contractor; PC engaging sub-contractor; contractor allocating L2 apprentice to a task."
+            onSite="The L3 representative discharges Reg 8 when allocating tasks to L2 operatives — verify training currency, experience, supervision needs; refuse to allocate beyond the operative&apos;s reasonable capability. Reg 8 also bites on the contracts manager allocating the L3 representative — the L3 should be appointed to the contractor-representative role only where their competence supports it. PASMA, IPAF, EAL, JIB, SSSTS / SMSTS supervisor certificates, NEBOSH / IOSH safety training all evidence competence in their respective domains."
+          >
+            <p>Reg 8 competence considerations:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Skills</strong> — manual, technical, problem-solving for
+                the specific work type.
+              </li>
+              <li>
+                <strong>Knowledge</strong> — regulatory framework, technical
+                standards, materials, processes.
+              </li>
+              <li>
+                <strong>Experience</strong> — recent practical experience in
+                comparable work; old experience alone may not suffice.
+              </li>
+              <li>
+                <strong>Organisational capability</strong> — for firms;
+                covers systems, supervision, support, training programmes.
+              </li>
+              <li>
+                <strong>Reasonable steps to verify</strong> — recorded
+                qualifications, references, scheme registrations, prequalification
+                questionnaires.
+              </li>
+              <li>
+                <strong>Refusal duty</strong> — Reg 8(2) requires refusal of a
+                role beyond competence; backed up by EAWR Reg 16 personal duty.
+              </li>
+              <li>
+                <strong>Records</strong> — training matrix, scheme registrations,
+                third-party PQQ outputs.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="Construction (Design and Management) Regulations 2015 — Reg 8(1)"
+            clause={
+              <>
+                &quot;A designer (including a principal designer) or contractor
+                (including a principal contractor) appointed to work on a
+                project must have the skills, knowledge and experience, and, if
+                they are an organisation, the organisational capability,
+                necessary to fulfil the role that they are appointed to
+                undertake, in a manner that secures the health and safety of
+                any person affected by the project.&quot;
+              </>
+            }
+            meaning={
+              <>
+                Reg 8 — competence duty across the dutyholder chain. The
+                appointing party must take reasonable steps to verify; the
+                appointee must refuse where competence is lacking. The duty is
+                two-sided. Documentation of competence — qualifications,
+                training records, scheme registrations, recent project
+                experience — is the evidence base.
+              </>
+            }
+            cite="Source: Construction (Design and Management) Regulations 2015 (SI 2015/51), Reg 8."
+          />
+
+          <SectionRule />
+          <ContentEyebrow>The full CDM 2015 dutyholder cast — recap and depth</ContentEyebrow>
+
+          <ConceptBlock
+            title="Client, Principal Designer, Principal Contractor, Contractor, Designer, Worker — the six roles"
+            plainEnglish="CDM 2015 names six dutyholder roles. The client (Reg 4) is the person on whose behalf the construction work is being carried out. The principal designer (Reg 5, on projects with more than one contractor) coordinates the pre-construction phase. The principal contractor (Reg 6, on projects with more than one contractor) coordinates the construction phase. The contractor (Reg 9) does the construction work. The designer (Reg 11) prepares or modifies designs and considers foreseeable risks during construction, use, maintenance, demolition. The worker (Reg 15) carries out the work and reports concerns. Each role has specific duties; the same person / firm can hold multiple roles (the contractor on a single-contractor project absorbs the principal contractor duties)."
+            onSite="The L3 representative on any new project identifies the cast: who is the client; is it a notifiable project; is there a principal designer; is there a principal contractor; what other contractors are working; how does information flow. Knowing the cast tells you who you escalate to, who provides what information, who signs what off. Confused or missing role-holding on a project is itself a red flag — somebody should be doing each of these jobs."
+          >
+            <p>Dutyholder roles and headline duties:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Client (Reg 4)</strong> — makes suitable arrangements
+                for managing the project; provides pre-construction
+                information; appoints PD and PC where more than one contractor;
+                ensures the CPP is prepared; ensures the HSF is prepared;
+                provides for welfare. Domestic clients can be carved out.
+              </li>
+              <li>
+                <strong>Principal Designer (Reg 5, 11)</strong> — coordinates
+                pre-construction phase H&amp;S; plans / manages / monitors design
+                work and coordination; advises client on PCI; identifies,
+                eliminates, controls foreseeable risks; coordinates with PC;
+                prepares HSF.
+              </li>
+              <li>
+                <strong>Principal Contractor (Reg 6, 12-14)</strong> —
+                coordinates the construction phase; prepares the CPP under
+                Reg 15; provides site rules; site induction (Reg 13);
+                consultation; cooperation with PD; prevention of unauthorised
+                access.
+              </li>
+              <li>
+                <strong>Designer (Reg 11)</strong> — eliminates, reduces,
+                controls foreseeable risks at design stage; provides
+                information about residual risks; cooperates with other
+                dutyholders.
+              </li>
+              <li>
+                <strong>Contractor (Reg 9)</strong> — plans, manages, monitors
+                construction work; complies with PD / PC directions; verifies
+                client awareness; provides RAMS; supervises workers.
+              </li>
+              <li>
+                <strong>Worker (Reg 15)</strong> — cooperates with other
+                dutyholders; reports defects or unsafe practices; complies
+                with controls.
+              </li>
+              <li>
+                <strong>Multiple roles</strong> — same person can hold
+                multiple roles (sole-contractor project: contractor + PC
+                duties).
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="The CDM information chain — PCI, CPP, HSF"
+            plainEnglish="The Pre-Construction Information (PCI), Construction Phase Plan (CPP), and Health and Safety File (HSF) form the CDM information chain. PCI flows from client / PD to PC / contractor at the start; CPP is prepared by the PC (multi-contractor) or contractor (single-contractor) and used throughout construction; HSF is prepared by the PD (or PC at handover if no PD) and handed to the client at completion. Each document feeds the next: PCI informs the CPP; CPP records what was actually done; HSF records what the client / future operators need to know to use and maintain the building safely."
+            onSite="The L3 representative interacts with all three: reads the PCI before quoting / starting; contributes to or writes the CPP for the firm&apos;s work; submits as-built drawings, certificates, manuals into the HSF at the end. Each is a CDM-required document under specific regulations; gaps in any of them are regulatory failures. On Higher-Risk Buildings under BSA 2022 the HSF is supplemented by the &apos;golden thread&apos; — a digital information record retained for the life of the building."
+          >
+            <p>The information chain in detail:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>PCI — Pre-Construction Information</strong> (Reg 4(4)):
+                site survey, existing services, hazards identified pre-construction,
+                project arrangements. Provided by client / PD to contractors
+                bidding for and undertaking work.
+              </li>
+              <li>
+                <strong>CPP — Construction Phase Plan</strong> (Reg 12 / 15):
+                H&amp;S arrangements for the construction phase. Prepared by
+                PC (multi-contractor) or contractor (single-contractor) before
+                work starts. Updated as work progresses. Retained as project
+                record.
+              </li>
+              <li>
+                <strong>HSF — Health and Safety File</strong> (Reg 12(5)):
+                handed to client at end of project. Records residual risks,
+                materials, locations, maintenance considerations, manuals,
+                certificates. Retained for the life of the building.
+              </li>
+              <li>
+                <strong>Building Safety Act 2022</strong> — for HRBs, the HSF
+                is part of the golden thread: digital record of the
+                building&apos;s safety information from design through to
+                occupation and modification.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="Construction (Design and Management) Regulations 2015 — Reg 4(4)"
+            clause={
+              <>
+                &quot;A client must provide pre-construction information as soon
+                as is practicable to every designer and contractor appointed, or
+                being considered for appointment, to the project.&quot;
+              </>
+            }
+            meaning={
+              <>
+                Reg 4(4) — the client&apos;s duty to provide PCI. Domestic
+                client carve-out under Reg 7 cascades this duty to the
+                contractor (single-contractor) or PD (multi-contractor). On
+                commercial / industrial projects the client retains the duty.
+                The PCI should be specific to the project — not a generic
+                template — and should cover known site hazards, services,
+                structure, neighbours, occupants, asbestos, contaminated
+                ground, time / resource expectations, and any other
+                risk-relevant information.
+              </>
+            }
+            cite="Source: Construction (Design and Management) Regulations 2015 (SI 2015/51), Reg 4."
+          />
+
+          <RegsCallout
+            source="Construction (Design and Management) Regulations 2015 — Reg 13(1)"
+            clause={
+              <>
+                &quot;The principal contractor must ensure that suitable site
+                induction is provided to every worker carrying out construction
+                work.&quot;
+              </>
+            }
+            meaning={
+              <>
+                Reg 13 — the site-induction duty for the principal contractor on
+                multi-contractor projects. Induction covers the CPP summary,
+                site-specific hazards, site rules, welfare locations, emergency
+                arrangements, accident reporting, permit-to-work systems,
+                communication. The L3 representative arrives early on day 1 to
+                attend induction; the firm&apos;s team signs in; any worker
+                arriving later attends induction before working.
+              </>
+            }
+            cite="Source: Construction (Design and Management) Regulations 2015 (SI 2015/51), Reg 13."
+          />
+
+          <Scenario
+            title="Discovery of additional design risk mid-construction"
+            situation={
+              <>
+                Your firm is the electrical contractor on a 4-contractor commercial
+                refurbishment project. Partway through second-fix you discover
+                that the structural drawings indicate steel beams that you
+                weren&apos;t expecting in the wall void on the first-floor cable
+                runs. The original design hadn&apos;t flagged this; your method
+                statement is for direct cable routing that won&apos;t work with
+                the steel in place. The contracts manager is off-site for two
+                days. The principal contractor is on site; the principal
+                designer&apos;s office is in another city.
+              </>
+            }
+            whatToDo={
+              <>
+                Stop the affected work. The design risk register issued at
+                pre-construction stage didn&apos;t flag this — it&apos;s a
+                designer omission or change since the survey. The L3
+                contractor representative&apos;s response: (1) Verify what
+                you&apos;ve found with a second person; photograph the
+                steel-beam evidence. (2) Update the dynamic risk assessment to
+                reflect the discovery. (3) Flag to the principal contractor on
+                site within the hour — &quot;design risk register doesn&apos;t
+                reflect what we&apos;ve found; need PD&apos;s input on safe
+                routing and load implications&quot;. (4) Phone the firm&apos;s
+                contracts manager (even though off-site) to alert them. (5)
+                Email the PD office requesting clarification — copy the PC and
+                contracts manager. (6) Pause work in the affected area; brief
+                team on the pause; redeploy to unaffected areas while waiting
+                for design input. (7) Document everything — what was found,
+                when, who was told, what the response was. Once PD response
+                arrives (typically within 24-48 hours on competently-run
+                projects), update the CPP / method statement, brief the team,
+                resume work. The PD response may require design change with
+                further input from a structural engineer; that&apos;s their
+                duty under Reg 11.
+              </>
+            }
+            whyItMatters={
+              <>
+                Designer omissions are a real failure mode on construction
+                projects; the contractor on site cannot just &apos;work around
+                it&apos; without engaging the design team. The L3 representative
+                escalating the design discrepancy back to the PD is the proper
+                discharge of Reg 11 (designer duty) and Reg 9 (contractor
+                duty) — both are engaged. Proceeding without escalation could
+                result in the contractor unwittingly absorbing a designer
+                liability (under negligence or under the contract). The
+                documentation trail — emails, photos, dated notes — is what
+                protects the firm if the issue subsequently becomes a dispute
+                or a regulatory action.
+              </>
+            }
+          />
 
           <SectionRule />
           <FAQ items={faqs} />
           <SectionRule />
           <KeyTakeaways points={[
             "Remember from Section 1.3 — CDM applies to all construction work. At L3 you transition from Reg 15 worker to Reg 9 contractor representative.",
-            "L2 = Reg 15 (cooperate, comply, report). L3 = Reg 15 PLUS contributing to firm\'s Reg 9 (plan, manage, monitor).",
+            "L2 = Reg 15 (cooperate, comply, report). L3 = Reg 15 PLUS contributing to firm's Reg 9 (plan, manage, monitor).",
             "Reg 9(1) — contractor verifies client awareness before starting. Brief but mandatory conversation.",
             "Reg 12 / 16 — Construction Phase Plan mandatory for every project. CIS80 template adequate for small.",
             "Single-contractor: contractor writes CPP, runs the show. Multi-contractor: PC writes CPP, coordinates site.",
             "L3 contractor-representative checklist: verify CPP, verify client awareness, brief team, dynamic RA, manage and monitor, document, escalate, close out.",
             "Demand formal handover from supervisor before acting as contractor representative.",
-            "ERA s.44 protects refusal if you don\'t feel ready for the contractor-representative role.",
+            "ERA s.44 protects refusal if you don't feel ready for the contractor-representative role.",
+            "Six CDM dutyholder roles — client, PD, PC, designer, contractor, worker. Same firm / person can hold multiple roles.",
+            "CDM information chain — PCI (before), CPP (during), HSF (after). All three are regulatory documents under specific regulations.",
+            "Worker Reg 15 = cooperate + report + comply. MHSWR Reg 14 = use per training + report serious / immediate danger + report shortcomings.",
+            "EAWR Reg 16 competence — personal duty; refuse work beyond competence; ERA s.44 protects refusal.",
+            "Reg 13 site induction on multi-contractor projects; attend before working; arrive early on day 1.",
+            "BSA 2022 elevates the HSF into the &apos;golden thread&apos; for HRBs — digital record retained for the life of the building.",
           ]} />
           <Quiz title="CDM transition — knowledge check" questions={quizQuestions} />
           <div className="grid grid-cols-2 gap-3 pt-2">

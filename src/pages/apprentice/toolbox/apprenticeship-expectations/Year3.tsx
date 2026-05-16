@@ -1,960 +1,863 @@
-import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
+/**
+ * Year3 — editorial Year 3 apprenticeship guide (Progression year).
+ *
+ * Commercial work, fault-finding, supervision, EPA preparation begins.
+ * Full editorial rewrite with EPA component breakdown, leadership
+ * opportunities, and salary progression.
+ */
+
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import {
+  ArrowLeft,
   Zap,
-  Users,
   Wrench,
-  BookOpen,
-  Calendar,
   Target,
-  AlertTriangle,
-  CheckCircle,
+  CheckCircle2,
   TrendingUp,
-  Award,
-  GraduationCap,
   Briefcase,
   ChevronDown,
-  ChevronUp,
-  Lightbulb,
-  Clock,
-  Search,
   Shield,
+  Search,
+  Users,
   Brain,
-  Star,
+  Award,
   ClipboardCheck,
-  FileText,
   MessageSquare,
+  Star,
+  Lightbulb,
 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
-import { useIsMobile } from '@/hooks/use-mobile';
+import type { LucideIcon } from 'lucide-react';
 import {
-  MobileAccordion,
-  MobileAccordionItem,
-  MobileAccordionTrigger,
-  MobileAccordionContent,
-} from '@/components/ui/mobile-accordion';
+  PageFrame,
+  PageHero,
+  itemVariants,
+} from '@/components/college/primitives';
+import {
+  Eyebrow,
+  SectionHeader,
+} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { cn } from '@/lib/utils';
 
-const Year3 = () => {
+interface MonthlyPeriod {
+  month: string;
+  title: string;
+  focus: string;
+  icon: LucideIcon;
+  activities: string[];
+  dayInLife: string;
+}
+
+const monthlyBreakdown: MonthlyPeriod[] = [
+  {
+    month: 'Month 25–26',
+    title: 'Advanced installation work',
+    focus: 'Complex electrical systems and installations',
+    icon: Wrench,
+    activities: [
+      'Industrial installation principles — three-phase commercial work',
+      'High-current systems — larger cables and busbars',
+      'Advanced control systems — PLCs and automation basics',
+      'Specialist equipment installation — machinery and plant',
+      'Heavier containment — tray, ladder, cable management at scale',
+    ],
+    dayInLife:
+      'You\'re trusted with more complex work now. Jobs that seemed impossible in Year 1 are now your bread and butter. Take pride in the upgrade.',
+  },
+  {
+    month: 'Month 27–28',
+    title: 'Fault finding & diagnostics',
+    focus: 'Advanced troubleshooting techniques',
+    icon: Search,
+    activities: [
+      'Systematic fault finding — a logical approach to any problem',
+      'Advanced test equipment — oscilloscopes, thermal imaging, clamp meters',
+      'Circuit analysis techniques — reading and interpreting schematics',
+      'Repair and maintenance procedures — fixing what others can\'t',
+      'Intermittent faults — the patience and method to chase them down',
+    ],
+    dayInLife:
+      'When something\'s broken, you\'re increasingly the one they call. The satisfaction of finding a tricky fault is unmatched — chase the cause, not the symptom.',
+  },
+  {
+    month: 'Month 29–30',
+    title: 'Commercial systems',
+    focus: 'Commercial and industrial electrical systems',
+    icon: Zap,
+    activities: [
+      'Three-phase distribution systems — substations and HV/LV',
+      'Motor control and starters — star-delta, soft starters, VSDs',
+      'Building management systems — BMS and integration',
+      'Emergency and fire alarm systems — critical life safety',
+      'Power factor correction and harmonic distortion basics',
+    ],
+    dayInLife:
+      'Commercial work opens new opportunities. Understanding how whole buildings work electrically gives you perspective that\'ll pay back for decades.',
+  },
+  {
+    month: 'Month 31–32',
+    title: 'Supervisory experience',
+    focus: 'Leadership and mentoring skills',
+    icon: Users,
+    activities: [
+      'Mentoring junior apprentices — passing on what you\'ve learned',
+      'Work planning and coordination — organising jobs efficiently',
+      'Quality control and inspection — checking others\' work',
+      'Health and safety leadership — setting the example',
+      'Toolbox talks — explaining a risk in plain language',
+    ],
+    dayInLife:
+      'Remember your first day? Now you\'re helping others through theirs. Teaching reinforces your own knowledge and is great EPA prep.',
+  },
+  {
+    month: 'Month 33–34',
+    title: 'EPA preparation',
+    focus: 'End Point Assessment preparation begins',
+    icon: Award,
+    activities: [
+      'Portfolio completion and review — gathering final evidence',
+      'Mock practical assessments — practising under exam conditions',
+      'Professional discussion preparation — talking about your work',
+      'Knowledge test revision — filling any gaps',
+      'AM2S booth practice if your provider offers it',
+    ],
+    dayInLife:
+      'EPA prep time. Everything you\'ve done for 3+ years comes together now. Trust your training — you\'re closer than you think.',
+  },
+  {
+    month: 'Month 35–36',
+    title: 'Year 3 consolidation',
+    focus: 'Skills consolidation and final stretch planning',
+    icon: Star,
+    activities: [
+      'Advanced skills demonstration — showing what you can do',
+      'Professional competency review — supervisor sign-offs',
+      'Career planning discussions — what comes next?',
+      'Year 4 transition preparation — final stretch planning',
+      'Specialisation conversations — EV, solar, I&T, design',
+    ],
+    dayInLife:
+      'You can see the finish line. This year is about proving you\'re ready to be called a qualified electrician — and choosing your direction beyond.',
+  },
+];
+
+interface LearningArea {
+  title: string;
+  icon: LucideIcon;
+  progress: number;
+  topics: string[];
+}
+
+const keyLearningAreas: LearningArea[] = [
+  {
+    title: 'Advanced installation methods',
+    icon: Wrench,
+    progress: 85,
+    topics: [
+      'Industrial installation techniques',
+      'High-voltage systems (up to 1 kV)',
+      'Specialist containment systems',
+      'Advanced jointing techniques',
+      'Complex distribution arrangements',
+    ],
+  },
+  {
+    title: 'Fault finding & diagnostics',
+    icon: Search,
+    progress: 80,
+    topics: [
+      'Systematic troubleshooting approaches',
+      'Advanced test equipment operation',
+      'Circuit analysis and diagnosis',
+      'Repair techniques and procedures',
+      'Preventive maintenance principles',
+    ],
+  },
+  {
+    title: 'Commercial & industrial systems',
+    icon: Zap,
+    progress: 75,
+    topics: [
+      'Three-phase power distribution',
+      'Motor control systems (DOL, star-delta, VSD)',
+      'Building services integration',
+      'Emergency lighting systems',
+      'Fire alarm and security systems',
+    ],
+  },
+  {
+    title: 'Leadership & mentoring',
+    icon: Users,
+    progress: 70,
+    topics: [
+      'Supervising junior apprentices',
+      'Work planning and organisation',
+      'Communication and delegation',
+      'Quality assurance procedures',
+      'Health and safety leadership',
+    ],
+  },
+];
+
+interface EPAComponent {
+  component: string;
+  icon: LucideIcon;
+  duration: string;
+  weighting: string;
+  description: string;
+  preparationTips: string[];
+  whatToExpect: string;
+}
+
+const epaComponents: EPAComponent[] = [
+  {
+    component: 'Practical assessment',
+    icon: Wrench,
+    duration: '17 hours over ~2.5 days',
+    weighting: '50%',
+    description:
+      'Demonstrate installation, testing, and fault-finding skills under exam conditions in equipped NET assessment booths.',
+    preparationTips: [
+      'Practice installations under time pressure',
+      'Master all testing procedures thoroughly — every test, every time',
+      'Develop a systematic fault-finding approach',
+      'Ensure all portfolio evidence is complete and signed off',
+    ],
+    whatToExpect:
+      'You complete a real installation task, test your work, and diagnose a fault — all while observed and assessed against the AM2S specification.',
+  },
+  {
+    component: 'Professional discussion',
+    icon: MessageSquare,
+    duration: '90 minutes',
+    weighting: '25%',
+    description:
+      'Discuss your portfolio evidence and demonstrate knowledge through structured conversation with an EPAO assessor.',
+    preparationTips: [
+      'Know your portfolio evidence thoroughly — every photo, every sign-off',
+      'Practice explaining complex technical concepts in plain language',
+      'Prepare for regulation-based questions — BS 7671, HSWA, EAW',
+      'Develop confidence in professional communication',
+    ],
+    whatToExpect:
+      'An assessor will ask about your work experience, how you\'ve applied knowledge, and test your understanding through discussion — not interrogation.',
+  },
+  {
+    component: 'Knowledge test',
+    icon: Brain,
+    duration: '90 minutes',
+    weighting: '25%',
+    description:
+      'Multiple-choice test covering all apprenticeship content areas. Use of BS 7671 permitted.',
+    preparationTips: [
+      'Revise theoretical knowledge systematically across all units',
+      'Practice past papers and mock tests under time pressure',
+      'Focus on weak areas identified during practice',
+      'Understand regulations and their practical applications',
+    ],
+    whatToExpect:
+      'Online or paper-based test with questions covering the entire apprenticeship standard. Use of the Regs book allowed — navigation skill matters.',
+  },
+];
+
+interface LeadershipOpp {
+  opportunity: string;
+  icon: LucideIcon;
+  description: string;
+  benefits: string[];
+  responsibilities: string[];
+}
+
+const leadershipOpportunities: LeadershipOpp[] = [
+  {
+    opportunity: 'Mentor new apprentices',
+    icon: Users,
+    description: 'Guide and support first-year apprentices through their learning journey.',
+    benefits: [
+      'Develops leadership skills',
+      'Reinforces your own knowledge',
+      'Builds confidence',
+    ],
+    responsibilities: [
+      'Provide technical guidance',
+      'Share experiences and tips',
+      'Support with challenges',
+    ],
+  },
+  {
+    opportunity: 'Lead small projects',
+    icon: ClipboardCheck,
+    description: 'Take responsibility for planning and executing smaller electrical projects.',
+    benefits: [
+      'Project management experience',
+      'Increased responsibility',
+      'Problem-solving skills',
+    ],
+    responsibilities: [
+      'Plan work activities',
+      'Coordinate with team members',
+      'Ensure quality standards',
+    ],
+  },
+  {
+    opportunity: 'Quality assurance role',
+    icon: Shield,
+    description: 'Check and verify work completed by junior team members.',
+    benefits: [
+      'Attention to detail',
+      'Technical knowledge application',
+      'Quality awareness',
+    ],
+    responsibilities: [
+      'Inspect completed work',
+      'Identify issues early',
+      'Provide constructive feedback',
+    ],
+  },
+];
+
+interface Challenge {
+  challenge: string;
+  icon: LucideIcon;
+  description: string;
+  solutions: string[];
+}
+
+const commonChallenges: Challenge[] = [
+  {
+    challenge: 'EPA anxiety',
+    icon: Award,
+    description: 'The End Point Assessment can feel overwhelming after years of preparation.',
+    solutions: [
+      'Start preparation early — don\'t cram at the end',
+      'Attend mock assessments if offered by college',
+      'Talk to apprentices who\'ve passed recently',
+      'Remember — you\'ve been preparing for 3+ years',
+      'Trust your training and experience',
+    ],
+  },
+  {
+    challenge: 'Increased responsibility',
+    icon: TrendingUp,
+    description: 'More complex work and expectations to guide others can feel pressuring.',
+    solutions: [
+      'Delegate appropriately — you can\'t do everything',
+      'Ask for help when needed — it\'s not weakness',
+      'Set realistic expectations for yourself',
+      'Learn from mistakes without dwelling on them',
+      'Even qualified sparkies ask questions',
+    ],
+  },
+  {
+    challenge: 'Complex technical problems',
+    icon: Search,
+    description: 'Advanced fault finding can be frustrating when solutions aren\'t obvious.',
+    solutions: [
+      'Develop a systematic approach to every fault',
+      'Document what you\'ve tried and the results',
+      'Don\'t be afraid to ask for a second opinion',
+      'Use manufacturer resources and tech support',
+      'Every tricky fault teaches you something new',
+    ],
+  },
+  {
+    challenge: 'Mentoring others',
+    icon: Users,
+    description: 'Guiding junior apprentices while still learning yourself can be challenging.',
+    solutions: [
+      'Be patient — remember your first days',
+      'You don\'t need to know everything to help',
+      'It\'s okay to say "let\'s find out together"',
+      'Teaching reinforces your own learning',
+      'Set boundaries — your work matters too',
+    ],
+  },
+];
+
+const weeklyScheduleExample: { day: string; location: 'Site' | 'College'; activities: string }[] = [
+  { day: 'Monday', location: 'Site', activities: 'Industrial installation — motor control panel' },
+  { day: 'Tuesday', location: 'Site', activities: 'Commissioning and testing' },
+  { day: 'Wednesday', location: 'College', activities: 'EPA preparation, revision sessions' },
+  { day: 'Thursday', location: 'Site', activities: 'Fault finding on production line' },
+  { day: 'Friday', location: 'Site', activities: 'Mentoring Y1 apprentice, documentation' },
+];
+
+export default function Year3() {
   const navigate = useNavigate();
-  const isMobile = useIsMobile();
   const [expandedMonth, setExpandedMonth] = useState<number | null>(0);
   const [expandedChallenge, setExpandedChallenge] = useState<number | null>(null);
 
-  const monthlyBreakdown = [
-    {
-      month: 'Month 25-26',
-      title: 'Advanced Installation Work',
-      focus: 'Complex electrical systems and installations',
-      icon: Wrench,
-      color: 'text-green-400',
-      activities: [
-        'Industrial installation principles - three-phase commercial work',
-        'High-current systems - larger cables and busbars',
-        'Advanced control systems - PLCs and automation basics',
-        'Specialist equipment installation - machinery and plant',
-      ],
-      dayInLife:
-        "You're trusted with more complex work now. Jobs that seemed impossible in Year 1 are now your bread and butter.",
-    },
-    {
-      month: 'Month 27-28',
-      title: 'Fault Finding & Diagnostics',
-      focus: 'Advanced troubleshooting techniques',
-      icon: Search,
-      color: 'text-yellow-400',
-      activities: [
-        'Systematic fault finding - logical approach to any problem',
-        'Advanced test equipment usage - oscilloscopes and thermal imaging',
-        'Circuit analysis techniques - reading and interpreting schematics',
-        "Repair and maintenance procedures - fixing what others can't",
-      ],
-      dayInLife:
-        "When something's broken, you're increasingly the one they call. The satisfaction of finding a tricky fault is unmatched.",
-    },
-    {
-      month: 'Month 29-30',
-      title: 'Commercial Systems',
-      focus: 'Commercial and industrial electrical systems',
-      icon: Zap,
-      color: 'text-blue-400',
-      activities: [
-        'Three-phase distribution systems - substations and HV/LV',
-        'Motor control and starters - star-delta, soft starters, VSDs',
-        'Building management systems - BMS and integration',
-        'Emergency and fire alarm systems - critical life safety',
-      ],
-      dayInLife:
-        'Commercial work opens new opportunities. Understanding how whole buildings work electrically gives you valuable perspective.',
-    },
-    {
-      month: 'Month 31-32',
-      title: 'Supervisory Experience',
-      focus: 'Leadership and mentoring skills',
-      icon: Users,
-      color: 'text-purple-400',
-      activities: [
-        "Mentoring junior apprentices - passing on what you've learned",
-        'Work planning and coordination - organising jobs efficiently',
-        "Quality control and inspection - checking others' work",
-        'Health and safety leadership - setting the example',
-      ],
-      dayInLife:
-        "Remember your first day? Now you're helping others through theirs. Teaching reinforces your own knowledge too.",
-    },
-    {
-      month: 'Month 33-34',
-      title: 'EPA Preparation',
-      focus: 'End Point Assessment preparation',
-      icon: Award,
-      color: 'text-cyan-400',
-      activities: [
-        'Portfolio completion and review - gathering final evidence',
-        'Mock practical assessments - practicing under exam conditions',
-        'Professional discussion preparation - talking about your work',
-        'Knowledge test revision - filling any gaps',
-      ],
-      dayInLife:
-        "EPA prep time. Everything you've done for 3+ years comes together now. Trust your training - you're ready for this.",
-    },
-    {
-      month: 'Month 35-36',
-      title: 'Year 3 Consolidation',
-      focus: 'Skills consolidation and assessment',
-      icon: Star,
-      color: 'text-orange-400',
-      activities: [
-        'Advanced skills demonstration - showing what you can do',
-        'Professional competency review - supervisor sign-offs',
-        'Career planning discussions - what comes next?',
-        'Year 4 transition preparation - final stretch planning',
-      ],
-      dayInLife:
-        "You can see the finish line. This year is about proving you're ready to be called a qualified electrician.",
-    },
-  ];
+  return (
+    <PageFrame className="px-4 sm:px-6 lg:px-8">
+      <motion.div variants={itemVariants}>
+        <button
+          onClick={() => navigate('/apprentice/toolbox/apprenticeship-expectations')}
+          className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back
+        </button>
+      </motion.div>
 
-  const keyLearningAreas = [
-    {
-      title: 'Advanced Installation Methods',
-      icon: Wrench,
-      progress: 85,
-      color: 'text-green-400',
-      bgColor: 'bg-green-500/10',
-      borderColor: 'border-green-500/30',
-      topics: [
-        'Industrial installation techniques',
-        'High-voltage systems (up to 1kV)',
-        'Specialist containment systems',
-        'Advanced jointing techniques',
-        'Complex distribution arrangements',
-      ],
-    },
-    {
-      title: 'Fault Finding & Diagnostics',
-      icon: Search,
-      progress: 80,
-      color: 'text-yellow-400',
-      bgColor: 'bg-yellow-500/10',
-      borderColor: 'border-yellow-500/30',
-      topics: [
-        'Systematic troubleshooting approaches',
-        'Advanced test equipment operation',
-        'Circuit analysis and diagnosis',
-        'Repair techniques and procedures',
-        'Preventive maintenance principles',
-      ],
-    },
-    {
-      title: 'Commercial & Industrial Systems',
-      icon: Zap,
-      progress: 75,
-      color: 'text-blue-400',
-      bgColor: 'bg-blue-500/10',
-      borderColor: 'border-blue-500/30',
-      topics: [
-        'Three-phase power distribution',
-        'Motor control systems (DOL, star-delta, VSD)',
-        'Building services integration',
-        'Emergency lighting systems',
-        'Fire alarm and security systems',
-      ],
-    },
-    {
-      title: 'Leadership & Mentoring',
-      icon: Users,
-      progress: 70,
-      color: 'text-purple-400',
-      bgColor: 'bg-purple-500/10',
-      borderColor: 'border-purple-500/30',
-      topics: [
-        'Supervising junior apprentices',
-        'Work planning and organisation',
-        'Communication and delegation',
-        'Quality assurance procedures',
-        'Health and safety leadership',
-      ],
-    },
-  ];
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Apprentice · Year 3"
+          title="Advanced skills & EPA prep"
+          description="Year 3 is where you step up — more complex installations, fault finding, and the beginning of your End Point Assessment preparation. You'll also start mentoring junior apprentices."
+          tone="yellow"
+        />
+      </motion.div>
 
-  const epaPreparation = [
-    {
-      component: 'Practical Assessment',
-      icon: Wrench,
-      color: 'text-green-400',
-      bgColor: 'bg-green-500/20',
-      duration: '6 hours',
-      weighting: '50%',
-      description:
-        'Demonstrate installation, testing, and fault-finding skills under exam conditions',
-      preparationTips: [
-        'Practice installations under time pressure',
-        'Master all testing procedures thoroughly',
-        'Develop systematic fault-finding approach',
-        'Ensure all portfolio evidence is complete',
-      ],
-      whatToExpect:
-        "You'll complete a real installation task, test your work, and diagnose a fault - all while being observed and assessed.",
-    },
-    {
-      component: 'Professional Discussion',
-      icon: MessageSquare,
-      color: 'text-blue-400',
-      bgColor: 'bg-blue-500/20',
-      duration: '60 minutes',
-      weighting: '25%',
-      description: 'Discuss your portfolio evidence and demonstrate knowledge through conversation',
-      preparationTips: [
-        'Know your portfolio evidence thoroughly',
-        'Practice explaining complex technical concepts simply',
-        'Prepare for regulation-based questions',
-        'Develop confidence in professional communication',
-      ],
-      whatToExpect:
-        "An assessor will ask about your work experience, how you've applied knowledge, and test your understanding through discussion.",
-    },
-    {
-      component: 'Knowledge Test',
-      icon: Brain,
-      color: 'text-purple-400',
-      bgColor: 'bg-purple-500/20',
-      duration: '90 minutes',
-      weighting: '25%',
-      description: 'Multiple choice test covering all apprenticeship content areas',
-      preparationTips: [
-        'Revise all theoretical knowledge systematically',
-        'Practice past papers and mock tests',
-        'Focus on weak areas identified in practice',
-        'Understand regulations and their applications',
-      ],
-      whatToExpect:
-        'An online or paper-based test with questions covering the entire apprenticeship standard. Use of Regs book allowed.',
-    },
-  ];
-
-  const leadershipOpportunities = [
-    {
-      opportunity: 'Mentor New Apprentices',
-      icon: Users,
-      color: 'text-green-400',
-      description: 'Guide and support first-year apprentices in their learning journey',
-      benefits: [
-        'Develops leadership skills',
-        'Reinforces your own knowledge',
-        'Builds confidence',
-      ],
-      responsibilities: [
-        'Provide technical guidance',
-        'Share experiences and tips',
-        'Support with challenges',
-      ],
-    },
-    {
-      opportunity: 'Lead Small Projects',
-      icon: ClipboardCheck,
-      color: 'text-blue-400',
-      description: 'Take responsibility for planning and executing smaller electrical projects',
-      benefits: [
-        'Project management experience',
-        'Increased responsibility',
-        'Problem-solving skills',
-      ],
-      responsibilities: [
-        'Plan work activities',
-        'Coordinate with team members',
-        'Ensure quality standards',
-      ],
-    },
-    {
-      opportunity: 'Quality Assurance Role',
-      icon: Shield,
-      color: 'text-purple-400',
-      description: 'Check and verify work completed by junior team members',
-      benefits: ['Attention to detail', 'Technical knowledge application', 'Quality awareness'],
-      responsibilities: [
-        'Inspect completed work',
-        'Identify issues early',
-        'Provide constructive feedback',
-      ],
-    },
-  ];
-
-  const commonChallenges = [
-    {
-      challenge: 'EPA Anxiety',
-      icon: Award,
-      description: 'The End Point Assessment can feel overwhelming after years of preparation',
-      solutions: [
-        "Start preparation early - don't cram at the end",
-        'Attend mock assessments if offered by college',
-        "Talk to apprentices who've passed recently",
-        "Remember - you've been preparing for 3+ years",
-        'Trust your training and experience',
-      ],
-    },
-    {
-      challenge: 'Increased Responsibility',
-      icon: TrendingUp,
-      description: 'More complex work and expectations to guide others can feel pressuring',
-      solutions: [
-        "Delegate appropriately - you can't do everything",
-        "Ask for help when needed - it's not weakness",
-        'Set realistic expectations for yourself',
-        'Learn from mistakes without dwelling on them',
-        'Remember - even qualified sparkies ask questions',
-      ],
-    },
-    {
-      challenge: 'Complex Technical Problems',
-      icon: Search,
-      description:
-        "Advanced fault finding and diagnostics can be frustrating when solutions aren't obvious",
-      solutions: [
-        'Develop a systematic approach to every fault',
-        "Document what you've tried and the results",
-        "Don't be afraid to ask for a second opinion",
-        'Use manufacturer resources and tech support',
-        'Every tricky fault teaches you something new',
-      ],
-    },
-    {
-      challenge: 'Mentoring Others',
-      icon: Users,
-      description: 'Guiding junior apprentices while still learning yourself can be challenging',
-      solutions: [
-        'Be patient - remember your first days',
-        "You don't need to know everything to help",
-        "It's okay to say 'let's find out together'",
-        'Teaching reinforces your own learning',
-        'Set boundaries - your work matters too',
-      ],
-    },
-  ];
-
-  const weeklyScheduleExample = {
-    monday: { location: 'Site', activities: 'Industrial installation - motor control panel' },
-    tuesday: { location: 'Site', activities: 'Commissioning and testing' },
-    wednesday: { location: 'College', activities: 'EPA preparation, revision sessions' },
-    thursday: { location: 'Site', activities: 'Fault finding on production line' },
-    friday: { location: 'Site', activities: 'Mentoring Y1 apprentice, documentation' },
-  };
-
-  const renderHeroSection = () => (
-    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-purple-500/20 via-purple-500/10 to-transparent border border-purple-500/30 p-6 sm:p-8">
-      <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-24 h-24 bg-elec-yellow/10 rounded-full blur-2xl" />
-
-      <div className="relative">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6">
-          <div className="p-4 bg-purple-500/20 rounded-xl border border-purple-500/30">
-            <Award className="h-8 w-8 text-purple-400" />
-          </div>
-          <div>
-            <Badge className="bg-purple-500/20 text-purple-400 border-purple-500/30 mb-2">
-              Progression Year
-            </Badge>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white">
-              Year 3: Advanced Skills & EPA Prep
-            </h1>
-          </div>
+      {/* Year progress strip */}
+      <motion.div variants={itemVariants} className="space-y-2">
+        <div className="flex items-center gap-1.5">
+          <div className="h-2 w-12 sm:w-16 rounded-full bg-elec-yellow" />
+          <div className="h-2 w-12 sm:w-16 rounded-full bg-elec-yellow" />
+          <div className="h-2 w-12 sm:w-16 rounded-full bg-elec-yellow" />
+          <div className="h-2 w-12 sm:w-16 rounded-full bg-white/[0.08]" />
+          <span className="text-[11px] uppercase tracking-[0.18em] text-white/55 ml-2">
+            Year 3 of 4
+          </span>
         </div>
+      </motion.div>
 
-        <p className="text-white text-lg mb-6 max-w-4xl">
-          Year 3 is where you step up - more complex installations, fault finding, and the beginning
-          of your End Point Assessment preparation. You'll also start mentoring junior apprentices.
-        </p>
+      {/* KPI strip */}
+      <motion.div
+        variants={itemVariants}
+        className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3"
+      >
+        <StatCell label="Duration" value="12 mo" />
+        <StatCell label="Salary" value="£24–28k" mono />
+        <StatCell label="Key focus" value="EPA prep" highlight />
+        <StatCell label="New role" value="Mentor" highlight />
+      </motion.div>
 
-        {/* Progress indicator */}
-        <div className="flex items-center gap-2 mb-6">
-          <div className="flex gap-1">
-            <div className="w-12 h-3 rounded-full bg-green-500" />
-            <div className="w-12 h-3 rounded-full bg-blue-500" />
-            <div className="w-12 h-3 rounded-full bg-purple-500" />
-            <div className="w-12 h-3 rounded-full bg-white/20" />
-          </div>
-          <span className="text-white text-sm ml-2">Year 3 of 4</span>
-        </div>
-
-        {/* Key stats */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-            <Calendar className="h-5 w-5 text-purple-400 mb-2" />
-            <div className="text-2xl font-bold text-white">12</div>
-            <div className="text-white text-sm">Months</div>
-          </div>
-          <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-            <Briefcase className="h-5 w-5 text-green-400 mb-2" />
-            <div className="text-2xl font-bold text-white">£24-28k</div>
-            <div className="text-white text-sm">Typical Salary</div>
-          </div>
-          <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-            <Award className="h-5 w-5 text-yellow-400 mb-2" />
-            <div className="text-2xl font-bold text-white">EPA</div>
-            <div className="text-white text-sm">Preparation</div>
-          </div>
-          <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-            <Users className="h-5 w-5 text-blue-400 mb-2" />
-            <div className="text-2xl font-bold text-white">Mentor</div>
-            <div className="text-white text-sm">New Role</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
-  const renderSalaryProgress = () => (
-    <Card className="border-green-500/30 bg-gradient-to-br from-green-500/10 to-transparent">
-      <CardHeader>
-        <CardTitle className="text-green-400 flex items-center gap-2">
-          <TrendingUp className="h-5 w-5" />
-          Salary Progression
-        </CardTitle>
-        <p className="text-white text-sm">Your skills and experience are worth more each year</p>
-      </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-4 gap-3 text-center">
-          <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-            <p className="text-white text-xs mb-1">Year 1</p>
-            <p className="text-lg font-bold text-white">£16.5k</p>
-          </div>
-          <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-            <p className="text-white text-xs mb-1">Year 2</p>
-            <p className="text-lg font-bold text-white">£20k</p>
-          </div>
-          <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/30">
-            <p className="text-green-400 text-xs mb-1">Year 3</p>
-            <p className="text-lg font-bold text-green-400">£26k</p>
-          </div>
-          <div className="p-3 rounded-lg bg-green-500/20 border border-green-500/30">
-            <p className="text-white text-xs mb-1">Total Rise</p>
-            <p className="text-lg font-bold text-green-400">+58%</p>
-          </div>
-        </div>
-        <div className="mt-4 p-3 rounded-lg bg-green-500/10 border border-green-500/20">
-          <p className="text-white text-sm">
-            <strong className="text-green-400">Looking ahead:</strong> Qualified electricians
-            typically earn £32k-£45k, with specialists earning significantly more. Your investment
-            is nearly paying off.
-          </p>
-        </div>
-      </CardContent>
-    </Card>
-  );
-
-  const renderEPAPrep = () => (
-    <Card className="border-purple-500/30 bg-gradient-to-br from-purple-500/10 to-transparent">
-      <CardHeader>
-        <CardTitle className="text-purple-400 flex items-center gap-2">
-          <Award className="h-5 w-5" />
-          End Point Assessment (EPA) Guide
-        </CardTitle>
-        <p className="text-white text-sm">
-          The final assessment to complete your apprenticeship - here's what to expect
-        </p>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          {epaPreparation.map((item, index) => (
-            <div key={index} className={`p-4 rounded-lg ${item.bgColor} border border-white/10`}>
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-2">
-                  <item.icon className={`h-5 w-5 ${item.color}`} />
-                  <span className={`font-medium ${item.color}`}>{item.component}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Badge variant="outline" className="bg-white/10 text-white border-white/20">
-                    {item.duration}
-                  </Badge>
-                  <Badge variant="outline" className={`${item.bgColor} ${item.color}`}>
-                    {item.weighting}
-                  </Badge>
-                </div>
-              </div>
-              <p className="text-white text-sm mb-3">{item.description}</p>
-              <div className="p-3 rounded-lg bg-white/5 border border-white/10 mb-3">
-                <p className="text-white text-xs mb-1">What to expect:</p>
-                <p className="text-white text-sm">{item.whatToExpect}</p>
-              </div>
-              <div className="space-y-1">
-                <p className="text-white text-xs font-medium mb-2">Preparation Tips:</p>
-                {item.preparationTips.map((tip, idx) => (
-                  <div key={idx} className="flex items-start gap-2">
-                    <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-white text-xs">{tip}</span>
-                  </div>
-                ))}
-              </div>
+      {/* ── Salary progression ──────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Salary progression"
+          title="Your value compounds yearly"
+          meta="The biggest jump is often Year 3 → Year 4"
+        />
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+          <div className="grid grid-cols-4 gap-2 sm:gap-3">
+            <StatCell label="Year 1" value="£16.5k" mono />
+            <StatCell label="Year 2" value="£20k" mono />
+            <div className="rounded-xl border border-elec-yellow/30 bg-elec-yellow/[0.06] p-3 sm:p-4 space-y-0.5">
+              <Eyebrow className="text-[9.5px] text-elec-yellow/85">Year 3</Eyebrow>
+              <p className="text-[14px] sm:text-[15px] font-mono font-semibold tabular-nums text-elec-yellow">
+                £26k
+              </p>
             </div>
-          ))}
-        </div>
-        <div className="mt-4 p-3 rounded-lg bg-purple-500/10 border border-purple-500/20">
-          <p className="text-white text-sm">
-            <strong className="text-purple-400">EPA Success Rate:</strong> Over 90% of apprentices
-            who attend regularly and maintain their portfolio pass first time. If you've put in the
-            work, you're ready.
-          </p>
-        </div>
-      </CardContent>
-    </Card>
-  );
-
-  const renderLeadership = () => (
-    <Card className="border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-transparent">
-      <CardHeader>
-        <CardTitle className="text-blue-400 flex items-center gap-2">
-          <Users className="h-5 w-5" />
-          Leadership Opportunities
-        </CardTitle>
-        <p className="text-white text-sm">
-          Year 3 apprentices often take on mentoring and leadership roles
-        </p>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          {leadershipOpportunities.map((item, index) => (
-            <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <div className="flex items-center gap-2 mb-2">
-                <item.icon className={`h-5 w-5 ${item.color}`} />
-                <span className={`font-medium ${item.color}`}>{item.opportunity}</span>
-              </div>
-              <p className="text-white text-sm mb-3">{item.description}</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-white text-xs font-medium mb-2">Benefits:</p>
-                  {item.benefits.map((benefit, idx) => (
-                    <div key={idx} className="flex items-start gap-2">
-                      <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
-                      <span className="text-white text-xs">{benefit}</span>
-                    </div>
-                  ))}
-                </div>
-                <div>
-                  <p className="text-white text-xs font-medium mb-2">Responsibilities:</p>
-                  {item.responsibilities.map((resp, idx) => (
-                    <div key={idx} className="flex items-start gap-2">
-                      <Target className="h-3 w-3 text-purple-400 mt-0.5 flex-shrink-0" />
-                      <span className="text-white text-xs">{resp}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+            <div className="rounded-xl border border-elec-yellow/30 bg-elec-yellow/[0.06] p-3 sm:p-4 space-y-0.5">
+              <Eyebrow className="text-[9.5px] text-elec-yellow/85">Uplift</Eyebrow>
+              <p className="text-[14px] sm:text-[15px] font-mono font-semibold tabular-nums text-elec-yellow">
+                +30%
+              </p>
             </div>
-          ))}
+          </div>
         </div>
-      </CardContent>
-    </Card>
-  );
+      </motion.section>
 
-  const renderMonthlyTimeline = () => (
-    <Card className="border-elec-yellow/20 bg-white/5">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-white">
-          <Calendar className="h-5 w-5 text-elec-yellow" />
-          Your Year 3 Journey
-        </CardTitle>
-        <p className="text-white text-sm">Click each period to see what to expect</p>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-3">
-          {monthlyBreakdown.map((period, index) => (
-            <div
-              key={index}
-              className={`border rounded-lg overflow-hidden transition-all ${
-                expandedMonth === index
-                  ? 'border-elec-yellow/40 bg-elec-yellow/5'
-                  : 'border-white/10 bg-white/5 hover:border-white/20'
-              }`}
-            >
-              <button
-                onClick={() => setExpandedMonth(expandedMonth === index ? null : index)}
-                className="w-full p-4 flex items-center justify-between text-left"
+      {/* ── EPA Preparation ──────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="End Point Assessment"
+          title="Three components, one final challenge"
+          meta="AM2S via NET — start preparation now, not in Year 4"
+        />
+        <ul className="space-y-2.5">
+          {epaComponents.map((c) => {
+            const Icon = c.icon;
+            return (
+              <li
+                key={c.component}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
               >
-                <div className="flex items-center gap-3">
-                  <div className={`p-2 rounded-lg ${period.color} bg-white/10`}>
-                    <period.icon className="h-5 w-5" />
+                <div className="flex items-start justify-between gap-3 flex-wrap">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <Icon className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+                    <h3 className="text-[15px] font-semibold text-white tracking-tight">
+                      {c.component}
+                    </h3>
                   </div>
-                  <div>
-                    <div className="font-semibold text-white">{period.title}</div>
-                    <div className="flex items-center gap-2">
-                      <Badge variant="outline" className="text-xs bg-white/5">
-                        {period.month}
-                      </Badge>
-                      <span className="text-white text-sm hidden sm:inline">{period.focus}</span>
-                    </div>
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <span className="text-[11px] font-mono tabular-nums text-white/55">
+                      {c.duration}
+                    </span>
+                    <span className="inline-flex items-center h-6 px-2 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[10.5px] font-mono tabular-nums text-elec-yellow">
+                      {c.weighting}
+                    </span>
                   </div>
                 </div>
-                {expandedMonth === index ? (
-                  <ChevronUp className="h-5 w-5 text-white" />
-                ) : (
-                  <ChevronDown className="h-5 w-5 text-white" />
+                <p className="text-[13px] text-white/85 leading-relaxed">
+                  {c.description}
+                </p>
+                <div className="space-y-2 pt-2 border-t border-white/[0.04]">
+                  <Eyebrow className="text-elec-yellow/85">Preparation tips</Eyebrow>
+                  <ul className="space-y-1.5">
+                    {c.preparationTips.map((tip) => (
+                      <li
+                        key={tip}
+                        className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                      >
+                        <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                        <span>{tip}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3">
+                  <div className="flex items-start gap-2">
+                    <Lightbulb className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                    <p className="text-[12.5px] text-white/85 leading-relaxed italic">
+                      {c.whatToExpect}
+                    </p>
+                  </div>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      </motion.section>
+
+      {/* ── Monthly timeline ─────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Year 3 timeline"
+          title="What each month looks like"
+          meta="Tap any period for daily reality"
+        />
+        <ul className="space-y-2">
+          {monthlyBreakdown.map((period, index) => {
+            const Icon = period.icon;
+            const isExpanded = expandedMonth === index;
+            return (
+              <li
+                key={index}
+                className={cn(
+                  'rounded-xl border overflow-hidden transition-colors',
+                  isExpanded
+                    ? 'border-elec-yellow/25 bg-elec-yellow/[0.04]'
+                    : 'border-white/[0.06] bg-[hsl(0_0%_10%)]'
                 )}
-              </button>
-
-              {expandedMonth === index && (
-                <div className="px-4 pb-4 space-y-4">
-                  <div className="pl-12">
-                    <p className="text-white text-sm italic mb-3">"{period.dayInLife}"</p>
-                    <div className="space-y-2">
-                      {period.activities.map((activity, idx) => (
-                        <div key={idx} className="flex items-start gap-2">
-                          <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                          <span className="text-white text-sm">{activity}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
-  );
-
-  const renderLearningAreas = () => (
-    <div className="space-y-4">
-      <h2 className="text-xl font-bold text-white flex items-center gap-2">
-        <Target className="h-5 w-5 text-elec-yellow" />
-        Key Learning Areas
-      </h2>
-      <p className="text-white">
-        By Year 3 end, you should be at or above these competency levels.
-      </p>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {keyLearningAreas.map((area, index) => (
-          <Card
-            key={index}
-            className={`${area.borderColor} ${area.bgColor} hover:border-opacity-60 transition-all`}
-          >
-            <CardHeader className="pb-3">
-              <div className="flex items-center justify-between">
-                <CardTitle className={`flex items-center gap-2 text-lg ${area.color}`}>
-                  <area.icon className="h-5 w-5" />
-                  {area.title}
-                </CardTitle>
-                <span className={`text-sm font-bold ${area.color}`}>{area.progress}%</span>
-              </div>
-              <Progress value={area.progress} className="h-2" />
-            </CardHeader>
-            <CardContent>
-              <ul className="space-y-2">
-                {area.topics.map((topic, idx) => (
-                  <li key={idx} className="flex items-start gap-2 text-sm">
-                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-white">{topic}</span>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-    </div>
-  );
-
-  const renderWeeklySchedule = () => (
-    <Card className="border-cyan-500/30 bg-gradient-to-br from-cyan-500/10 to-transparent">
-      <CardHeader>
-        <CardTitle className="text-cyan-400 flex items-center gap-2">
-          <Clock className="h-5 w-5" />
-          Typical Week Example
-        </CardTitle>
-        <p className="text-white text-sm">
-          Complex projects, EPA prep, and mentoring responsibilities
-        </p>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-2">
-          {Object.entries(weeklyScheduleExample).map(([day, info], index) => (
-            <div
-              key={index}
-              className="flex items-center gap-4 p-3 rounded-lg bg-white/5 border border-white/10"
-            >
-              <div className="w-24 font-medium text-white capitalize">{day}</div>
-              <Badge
-                variant="outline"
-                className={
-                  info.location === 'College'
-                    ? 'bg-purple-500/20 text-purple-400 border-purple-500/30 w-16 justify-center'
-                    : 'bg-green-500/20 text-green-400 border-green-500/30 w-16 justify-center'
-                }
               >
-                {info.location}
-              </Badge>
-              <span className="text-white text-sm flex-1">{info.activities}</span>
-            </div>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
-  );
-
-  const renderChallenges = () => (
-    <Card className="border-orange-500/30 bg-gradient-to-br from-orange-500/10 to-transparent">
-      <CardHeader>
-        <CardTitle className="text-orange-400 flex items-center gap-2">
-          <AlertTriangle className="h-5 w-5" />
-          Year 3 Challenges & Solutions
-        </CardTitle>
-        <p className="text-white text-sm">Common hurdles and how to overcome them</p>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-3">
-          {commonChallenges.map((item, index) => (
-            <div
-              key={index}
-              className={`border rounded-lg overflow-hidden transition-all ${
-                expandedChallenge === index
-                  ? 'border-orange-500/40 bg-orange-500/5'
-                  : 'border-white/10 bg-white/5 hover:border-white/20'
-              }`}
-            >
-              <button
-                onClick={() => setExpandedChallenge(expandedChallenge === index ? null : index)}
-                className="w-full p-4 flex items-center justify-between text-left"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-orange-500/20">
-                    <item.icon className="h-5 w-5 text-orange-400" />
-                  </div>
-                  <div>
-                    <div className="font-semibold text-white">{item.challenge}</div>
-                    <div className="text-white text-sm hidden sm:block">{item.description}</div>
-                  </div>
-                </div>
-                {expandedChallenge === index ? (
-                  <ChevronUp className="h-5 w-5 text-white flex-shrink-0" />
-                ) : (
-                  <ChevronDown className="h-5 w-5 text-white flex-shrink-0" />
-                )}
-              </button>
-
-              {expandedChallenge === index && (
-                <div className="px-4 pb-4">
-                  <div className="pl-12 space-y-2">
-                    <div className="font-medium text-white text-sm mb-2">Solutions:</div>
-                    {item.solutions.map((solution, idx) => (
-                      <div key={idx} className="flex items-start gap-2">
-                        <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                        <span className="text-white text-sm">{solution}</span>
+                <button
+                  onClick={() => setExpandedMonth(isExpanded ? null : index)}
+                  className="w-full text-left p-4 sm:p-5 touch-manipulation"
+                >
+                  <div className="flex items-start gap-3">
+                    <Icon
+                      className={cn(
+                        'h-4 w-4 flex-shrink-0 mt-0.5',
+                        isExpanded ? 'text-elec-yellow' : 'text-white/55'
+                      )}
+                    />
+                    <div className="flex-1 min-w-0 space-y-1">
+                      <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                        <h3 className="text-[14px] font-semibold text-white leading-snug">
+                          {period.title}
+                        </h3>
+                        <span className="text-[10.5px] font-mono uppercase tracking-[0.14em] text-white/55">
+                          {period.month}
+                        </span>
                       </div>
+                      <p className="text-[12px] text-white/70 leading-snug">
+                        {period.focus}
+                      </p>
+                    </div>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 text-white/40 flex-shrink-0 transition-transform mt-0.5',
+                        isExpanded && 'rotate-180'
+                      )}
+                    />
+                  </div>
+                </button>
+                {isExpanded && (
+                  <div className="px-4 sm:px-5 pb-4 sm:pb-5 border-t border-elec-yellow/15 pt-3 animate-fade-in">
+                    <div className="pl-7 space-y-3">
+                      <p className="text-[12.5px] text-white/85 italic leading-relaxed">
+                        "{period.dayInLife}"
+                      </p>
+                      <ul className="space-y-1.5">
+                        {period.activities.map((activity, idx) => (
+                          <li
+                            key={idx}
+                            className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                          >
+                            <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                            <span>{activity}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </motion.section>
+
+      {/* ── Key learning areas ──────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Key learning areas"
+          title="Where to focus your energy"
+          meta="Progress bars show typical expectations by year end"
+        />
+        <ul className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+          {keyLearningAreas.map((area) => {
+            const Icon = area.icon;
+            return (
+              <li
+                key={area.title}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <Icon className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+                    <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                      {area.title}
+                    </h3>
+                  </div>
+                  <span className="text-[12px] font-mono tabular-nums text-elec-yellow flex-shrink-0">
+                    {area.progress}%
+                  </span>
+                </div>
+                <div className="h-1.5 rounded-full bg-white/[0.04] overflow-hidden">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: `${area.progress}%` }}
+                    transition={{ duration: 0.7, ease: 'easeOut' }}
+                    className="h-full bg-elec-yellow rounded-full"
+                  />
+                </div>
+                <ul className="space-y-1.5">
+                  {area.topics.map((topic) => (
+                    <li
+                      key={topic}
+                      className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    >
+                      <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                      <span>{topic}</span>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            );
+          })}
+        </ul>
+      </motion.section>
+
+      {/* ── Leadership opportunities ─────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Leadership opportunities"
+          title="Three ways to step up"
+          meta="Each one builds skills your EPA professional discussion will probe"
+        />
+        <ul className="space-y-2">
+          {leadershipOpportunities.map((opp) => {
+            const Icon = opp.icon;
+            return (
+              <li
+                key={opp.opportunity}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
+              >
+                <div className="flex items-center gap-2">
+                  <Icon className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+                  <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                    {opp.opportunity}
+                  </h3>
+                </div>
+                <p className="text-[13px] text-white/85 leading-relaxed">
+                  {opp.description}
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 pt-2 border-t border-white/[0.04]">
+                  <div className="space-y-1.5">
+                    <Eyebrow>What you get</Eyebrow>
+                    {opp.benefits.map((b) => (
+                      <p
+                        key={b}
+                        className="flex items-start gap-2 text-[12px] text-white/85 leading-relaxed"
+                      >
+                        <CheckCircle2 className="h-3 w-3 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                        <span>{b}</span>
+                      </p>
+                    ))}
+                  </div>
+                  <div className="space-y-1.5">
+                    <Eyebrow>What it asks</Eyebrow>
+                    {opp.responsibilities.map((r) => (
+                      <p
+                        key={r}
+                        className="flex items-start gap-2 text-[12px] text-white/85 leading-relaxed"
+                      >
+                        <Target className="h-3 w-3 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                        <span>{r}</span>
+                      </p>
                     ))}
                   </div>
                 </div>
-              )}
-            </div>
+              </li>
+            );
+          })}
+        </ul>
+      </motion.section>
+
+      {/* ── Typical week ─────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Typical week"
+          title="What your schedule might look like"
+          meta="More leadership, more diagnostics, more independence"
+        />
+        <ul className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] divide-y divide-white/[0.04] overflow-hidden">
+          {weeklyScheduleExample.map(({ day, location, activities }) => (
+            <li
+              key={day}
+              className="flex items-center gap-3 sm:gap-4 p-3.5 sm:p-4"
+            >
+              <span className="w-20 text-[12.5px] font-medium text-white">{day}</span>
+              <span
+                className={cn(
+                  'inline-flex items-center justify-center h-6 px-2 rounded-md border text-[10px] font-medium uppercase tracking-[0.14em] flex-shrink-0 w-16',
+                  location === 'College'
+                    ? 'border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow'
+                    : 'border-white/[0.10] bg-white/[0.03] text-white/85'
+                )}
+              >
+                {location}
+              </span>
+              <span className="text-[12.5px] text-white/85 flex-1 leading-snug">
+                {activities}
+              </span>
+            </li>
           ))}
+        </ul>
+      </motion.section>
+
+      {/* ── Challenges ───────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Common challenges"
+          title="Four Year 3-specific hurdles"
+          meta="The transition from learner to junior pro"
+        />
+        <ul className="space-y-2">
+          {commonChallenges.map((item, index) => {
+            const Icon = item.icon;
+            const isExpanded = expandedChallenge === index;
+            return (
+              <li
+                key={item.challenge}
+                className={cn(
+                  'rounded-xl border overflow-hidden transition-colors',
+                  isExpanded
+                    ? 'border-elec-yellow/25 bg-elec-yellow/[0.04]'
+                    : 'border-white/[0.06] bg-[hsl(0_0%_10%)]'
+                )}
+              >
+                <button
+                  onClick={() => setExpandedChallenge(isExpanded ? null : index)}
+                  className="w-full text-left p-4 sm:p-5 touch-manipulation"
+                >
+                  <div className="flex items-start gap-3">
+                    <Icon
+                      className={cn(
+                        'h-4 w-4 flex-shrink-0 mt-0.5',
+                        isExpanded ? 'text-elec-yellow' : 'text-white/55'
+                      )}
+                    />
+                    <div className="flex-1 min-w-0 space-y-1">
+                      <h3 className="text-[14px] font-semibold text-white leading-snug">
+                        {item.challenge}
+                      </h3>
+                      <p className="text-[12.5px] text-white/70 leading-snug">
+                        {item.description}
+                      </p>
+                    </div>
+                    <ChevronDown
+                      className={cn(
+                        'h-4 w-4 text-white/40 flex-shrink-0 transition-transform mt-0.5',
+                        isExpanded && 'rotate-180'
+                      )}
+                    />
+                  </div>
+                </button>
+                {isExpanded && (
+                  <div className="px-4 sm:px-5 pb-4 sm:pb-5 border-t border-elec-yellow/15 pt-3 animate-fade-in">
+                    <div className="pl-7 space-y-2">
+                      <Eyebrow className="text-elec-yellow/85">Solutions</Eyebrow>
+                      <ul className="space-y-1.5">
+                        {item.solutions.map((solution, idx) => (
+                          <li
+                            key={idx}
+                            className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                          >
+                            <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                            <span>{solution}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </motion.section>
+
+      {/* ── Closer ───────────────────────────────────────────────── */}
+      <motion.section variants={itemVariants}>
+        <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-1.5">
+          <Eyebrow className="text-elec-yellow/85">End of Year 3</Eyebrow>
+          <p className="text-[13.5px] text-white/85 leading-relaxed">
+            By the end of Year 3 you should be{' '}
+            <span className="font-semibold text-elec-yellow">commercially competent</span>
+            , mentoring junior apprentices with confidence, your portfolio
+            substantially complete, and your EPA preparation well underway. Year
+            4 is the final stretch — AM2S, 18th Edition, and JIB grading.
+          </p>
         </div>
-      </CardContent>
-    </Card>
+      </motion.section>
+
+      <span className="hidden">
+        <Briefcase />
+      </span>
+    </PageFrame>
   );
+}
 
-  const renderMobileContent = () => (
-    <MobileAccordion type="single" collapsible className="w-full">
-      <MobileAccordionItem value="salary">
-        <MobileAccordionTrigger className="text-white">
-          <TrendingUp className="h-5 w-5 mr-2 text-green-400" />
-          Salary Progress
-        </MobileAccordionTrigger>
-        <MobileAccordionContent>
-          <div className="grid grid-cols-4 gap-2 pt-2">
-            <div className="p-2 rounded-lg bg-white/5 text-center">
-              <p className="text-white text-xs">Y1</p>
-              <p className="font-bold text-white text-sm">£16.5k</p>
-            </div>
-            <div className="p-2 rounded-lg bg-white/5 text-center">
-              <p className="text-white text-xs">Y2</p>
-              <p className="font-bold text-white text-sm">£20k</p>
-            </div>
-            <div className="p-2 rounded-lg bg-green-500/20 text-center">
-              <p className="text-green-400 text-xs">Y3</p>
-              <p className="font-bold text-green-400 text-sm">£26k</p>
-            </div>
-            <div className="p-2 rounded-lg bg-green-500/10 text-center">
-              <p className="text-white text-xs">Rise</p>
-              <p className="font-bold text-green-400 text-sm">+58%</p>
-            </div>
-          </div>
-        </MobileAccordionContent>
-      </MobileAccordionItem>
+/* ─────────────────── Stat cell ─────────────────── */
 
-      <MobileAccordionItem value="epa">
-        <MobileAccordionTrigger className="text-white">
-          <Award className="h-5 w-5 mr-2 text-purple-400" />
-          EPA Guide
-        </MobileAccordionTrigger>
-        <MobileAccordionContent>
-          <div className="space-y-3 pt-2">
-            {epaPreparation.map((item, index) => (
-              <div key={index} className={`p-3 rounded-lg ${item.bgColor}`}>
-                <div className="flex items-center justify-between mb-2">
-                  <span className={`font-medium text-sm ${item.color}`}>{item.component}</span>
-                  <Badge variant="outline" className="text-xs bg-white/10">
-                    {item.weighting}
-                  </Badge>
-                </div>
-                <p className="text-white text-xs mb-2">{item.description}</p>
-                <div className="flex gap-2">
-                  <Badge variant="outline" className="text-xs">
-                    {item.duration}
-                  </Badge>
-                </div>
-              </div>
-            ))}
-          </div>
-        </MobileAccordionContent>
-      </MobileAccordionItem>
-
-      <MobileAccordionItem value="timeline">
-        <MobileAccordionTrigger className="text-white">
-          <Calendar className="h-5 w-5 mr-2 text-elec-yellow" />
-          Monthly Timeline
-        </MobileAccordionTrigger>
-        <MobileAccordionContent>
-          <div className="space-y-3 pt-2">
-            {monthlyBreakdown.map((period, index) => (
-              <div key={index} className="p-3 rounded-lg bg-white/5 border border-white/10">
-                <div className="flex items-center gap-2 mb-2">
-                  <period.icon className={`h-4 w-4 ${period.color}`} />
-                  <span className="font-medium text-white">{period.title}</span>
-                </div>
-                <Badge variant="outline" className="mb-2 text-xs">
-                  {period.month}
-                </Badge>
-                <p className="text-white text-xs">{period.focus}</p>
-              </div>
-            ))}
-          </div>
-        </MobileAccordionContent>
-      </MobileAccordionItem>
-
-      <MobileAccordionItem value="learning">
-        <MobileAccordionTrigger className="text-white">
-          <Target className="h-5 w-5 mr-2 text-elec-yellow" />
-          Learning Areas
-        </MobileAccordionTrigger>
-        <MobileAccordionContent>
-          <div className="space-y-3 pt-2">
-            {keyLearningAreas.map((area, index) => (
-              <div
-                key={index}
-                className={`p-3 rounded-lg ${area.bgColor} border ${area.borderColor}`}
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <span className={`font-medium ${area.color}`}>{area.title}</span>
-                  <span className={`text-sm ${area.color}`}>{area.progress}%</span>
-                </div>
-                <Progress value={area.progress} className="h-1.5" />
-              </div>
-            ))}
-          </div>
-        </MobileAccordionContent>
-      </MobileAccordionItem>
-
-      <MobileAccordionItem value="leadership">
-        <MobileAccordionTrigger className="text-white">
-          <Users className="h-5 w-5 mr-2 text-blue-400" />
-          Leadership Roles
-        </MobileAccordionTrigger>
-        <MobileAccordionContent>
-          <div className="space-y-2 pt-2">
-            {leadershipOpportunities.map((item, index) => (
-              <div key={index} className="p-3 rounded-lg bg-white/5">
-                <div className="flex items-center gap-2 mb-1">
-                  <item.icon className={`h-4 w-4 ${item.color}`} />
-                  <span className={`font-medium text-sm ${item.color}`}>{item.opportunity}</span>
-                </div>
-                <p className="text-white text-xs">{item.description}</p>
-              </div>
-            ))}
-          </div>
-        </MobileAccordionContent>
-      </MobileAccordionItem>
-
-      <MobileAccordionItem value="challenges">
-        <MobileAccordionTrigger className="text-white">
-          <AlertTriangle className="h-5 w-5 mr-2 text-orange-400" />
-          Common Challenges
-        </MobileAccordionTrigger>
-        <MobileAccordionContent>
-          <div className="space-y-3 pt-2">
-            {commonChallenges.map((item, index) => (
-              <div
-                key={index}
-                className="p-3 rounded-lg bg-orange-500/10 border border-orange-500/20"
-              >
-                <div className="font-medium text-orange-400 text-sm mb-1">{item.challenge}</div>
-                <p className="text-white text-xs mb-2">{item.description}</p>
-                <div className="text-white text-xs">
-                  <strong>Top tip:</strong> {item.solutions[0]}
-                </div>
-              </div>
-            ))}
-          </div>
-        </MobileAccordionContent>
-      </MobileAccordionItem>
-    </MobileAccordion>
-  );
-
+function StatCell({
+  label,
+  value,
+  mono,
+  highlight,
+}: {
+  label: string;
+  value: string;
+  mono?: boolean;
+  highlight?: boolean;
+}) {
   return (
-    <div className="max-w-6xl mx-auto space-y-6 sm:space-y-8 animate-fade-in px-4 sm:px-6 lg:px-8 pb-20 sm:pb-8">
-      <div className="flex items-center mb-4 sm:mb-6">
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/apprentice/toolbox/apprenticeship-expectations')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
-          Back
-        </Button>
-      </div>
-
-      {renderHeroSection()}
-
-      {isMobile ? (
-        renderMobileContent()
-      ) : (
-        <div className="space-y-6">
-          {renderSalaryProgress()}
-
-          {renderEPAPrep()}
-
-          {renderMonthlyTimeline()}
-
-          {renderLearningAreas()}
-
-          {renderLeadership()}
-
-          {renderWeeklySchedule()}
-
-          {renderChallenges()}
-        </div>
-      )}
+    <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-3 sm:p-4 space-y-0.5">
+      <Eyebrow className="text-[9.5px]">{label}</Eyebrow>
+      <p
+        className={cn(
+          'text-[14px] sm:text-[15px] font-semibold tracking-tight',
+          highlight ? 'text-elec-yellow' : 'text-white',
+          mono && 'font-mono tabular-nums'
+        )}
+      >
+        {value}
+      </p>
     </div>
   );
-};
-
-export default Year3;
+}

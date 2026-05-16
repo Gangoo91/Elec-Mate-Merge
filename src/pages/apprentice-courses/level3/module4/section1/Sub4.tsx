@@ -616,12 +616,12 @@ export default function Sub4() {
           <KeyTakeaways
             points={[
               "The pre-work precaution checklist has six items: RAMS, permit, isolation plan, instruments, PPE, comms. Run through it every job, every time, no exceptions.",
-              "Work-area control = physical barrier + signage + briefing of named responsible person. Verbal warnings alone don\'t satisfy EAWR Reg 14(c).",
+              "Work-area control = physical barrier + signage + briefing of named responsible person. Verbal warnings alone don't satisfy EAWR Reg 14(c).",
               "Second person required for live working, confined space, work at height, remote locations, HV, large industrial 3-phase. Their role is observation and rescue, not work.",
               "Three-step instrument check: visual / calibration / function. Every instrument, every shift. Out-of-calibration instrument = unusable instrument.",
               "Code 1 defect found outside the call-out scope triggers a duty to make safe, inform customer in writing (Dangerous Condition Notification), escalate to supervisor.",
               "Work at Height Regulations 2005 apply alongside electrical-safety procedure for loft and ceiling-void fault work — risk assessment, secured access, no plasterboard standing.",
-              "Apprentice-as-cover-holder for a senior\'s live work is unsafe — politely decline, suggest a prop, escalate to supervisor if pressed.",
+              "Apprentice-as-cover-holder for a senior's live work is unsafe — politely decline, suggest a prop, escalate to supervisor if pressed.",
               "Make-safe-and-tidy at job end protects the next operative and the customer. Temporary terminations capped, removed accessories returned, area documented.",
             ]}
           />

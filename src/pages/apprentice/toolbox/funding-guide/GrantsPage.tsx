@@ -1,531 +1,458 @@
-import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, CheckCircle, AlertTriangle } from 'lucide-react';
+/**
+ * Funding · GrantsPage — editorial grants & incentives guide.
+ *
+ * CITB grants (attendance + completion), travel & accommodation, age
+ * incentive, care leaver bursary, learning support, NI relief, other
+ * industry grants, and the full 4-year financial summary.
+ */
+
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
+import {
+  ArrowLeft,
+  CheckCircle2,
+  AlertTriangle,
+  Banknote,
+  Award,
+  PiggyBank,
+} from 'lucide-react';
 import {
   PageFrame,
   PageHero,
   itemVariants,
 } from '@/components/college/primitives';
+import {
+  Eyebrow,
+  SectionHeader,
+} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+
+const citbBreakdown = [
+  'Year 1 attendance grant: £2,500 (paid quarterly every 13 weeks)',
+  'Year 2 attendance grant: £2,500 (paid quarterly every 13 weeks)',
+  'Year 3 attendance grant: £2,500 (paid quarterly every 13 weeks)',
+  'Year 4 attendance grant: £2,500 (paid quarterly every 13 weeks)',
+  'Completion bonus: £3,500 (paid on successful completion)',
+  'Total: £13,500 over full programme',
+];
+
+const citbEligibility = [
+  'Employer must be registered with CITB',
+  'Employer must be paying the CITB levy (separate from Apprenticeship Levy)',
+  'Apprentice must be on an approved construction apprenticeship programme',
+  'Claims must be submitted within 52 weeks of the qualifying date',
+  'Apprentice must meet minimum attendance requirements',
+  'Employer must be up to date with CITB levy payments',
+];
+
+const citbClaimSteps = [
+  'Log in to the CITB grants portal at citb.co.uk',
+  'Register the apprentice within 12 weeks of their start date',
+  'Upload the apprenticeship agreement and commitment statement',
+  'Submit attendance evidence every 13 weeks (training provider confirms)',
+  'Claim is verified and paid within 20 working days',
+  'Submit completion claim once the apprentice passes their EPA',
+];
+
+const citbMistakes = [
+  'Late registration — register within 12 weeks of start date',
+  'Missing quarterly claim deadlines (52-week window)',
+  'Not having up-to-date CITB levy payments',
+  'Forgetting to submit the completion claim after EPA',
+  'Not keeping evidence of attendance on file',
+];
+
+const travelFacts = [
+  'CITB covers 80% of eligible travel and accommodation costs',
+  'Applies when the training centre is over 50 miles from home or workplace',
+  'Also applies to block release training requiring overnight stays',
+  'Employer claims through the same CITB grants portal',
+  'Receipts and evidence of travel required for claims',
+  'Doesn\'t cover daily commuting to a local college',
+];
+
+const ageIncentive = [
+  '£1,000 for apprentices aged 16–18 at the start',
+  '£1,000 for apprentices aged 19–25 with an EHC plan or care leaver status',
+  'Payment split: £500 after 90 days + £500 after 1 year',
+  'Paid to: £500 to employer + £500 to training provider',
+  'Can be spent on anything to support the apprentice',
+  'Automatic — no separate claim needed once registered on DAS',
+];
+
+const careLeaverFacts = [
+  '£1,000 paid directly to the apprentice',
+  'Must be aged 16–24 and a care leaver',
+  'Paid by the training provider from ESFA funding',
+  'Separate from the £1,000 age incentive paid to employers',
+  'Can be used for travel, equipment, clothing, or other costs',
+];
+
+const learningSupportFacts = [
+  'Up to £150 per month additional learning support funding',
+  'Covers specialist equipment, software, or adapted materials',
+  'One-to-one support workers or learning assistants',
+  'Available for dyslexia, ADHD, autism, physical disabilities, and other needs',
+  'Claimed by the training provider on top of the funding band',
+  'Doesn\'t reduce the £23,000 available for training',
+  'Requires an initial assessment and evidence of need',
+];
+
+const taxBenefits = [
+  'Employer NI relief: zero employer NI contributions for apprentices under 25',
+  'Saves approximately £2,000–£3,000 per year depending on wages',
+  'Apprenticeship training costs are an allowable business expense',
+  'CITB levy payments are also tax-deductible',
+  'Apprentice wages are deductible as normal employment costs',
+];
+
+const otherGrants = [
+  {
+    title: 'JIB training grant',
+    description:
+      'Up to £500 for JIB-registered electrical contractors employing apprentices. Covers first-year support costs. Check jib.org.uk for current terms.',
+  },
+  {
+    title: 'ECA training support',
+    description:
+      'Varies — available to Electrical Contractors Association members. Training subsidies, mentoring support, and access to ECA training events.',
+  },
+  {
+    title: 'Local authority grants',
+    description:
+      'Varies by area — some local authorities offer additional grants of £500–£2,000 for employers taking on apprentices in skills-shortage areas.',
+  },
+  {
+    title: 'Regional skills fund',
+    description:
+      'Up to £1,000 in certain regions — availability depends on your area. Combined authorities (Greater Manchester, West Midlands) often run their own schemes.',
+  },
+  {
+    title: 'Kickstart / Youth Hub programmes',
+    description:
+      'Some areas run youth employment hubs providing additional support — travel, work clothing, and tools. Ask your training provider or local Jobcentre Plus.',
+  },
+];
+
+const employerReceives = [
+  { label: 'Government-funded training', value: '£23,000' },
+  { label: 'CITB attendance grants (4 years)', value: '£10,000' },
+  { label: 'CITB completion bonus', value: '£3,500' },
+  { label: 'Age incentive (if 16–18)', value: '£1,000' },
+  { label: 'NI relief (approx. over 4 years)', value: '£8,000+' },
+];
+
+const employerPays = [
+  { label: 'Co-investment (5% of £23k)', value: '£1,150' },
+  { label: 'Apprentice wages (4 years approx.)', value: '£64,000' },
+];
 
 const GrantsPage = () => {
   const navigate = useNavigate();
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
+        <button
           onClick={() => navigate('/apprentice/toolbox/apprenticeship-funding')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+          className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation"
         >
-          <ArrowLeft className="mr-2 h-5 w-5" />
+          <ArrowLeft className="h-4 w-4" />
           Back
-        </Button>
+        </button>
       </motion.div>
 
       <motion.div variants={itemVariants}>
         <PageHero
           eyebrow="Apprentice · Funding"
-          title="Grants & Incentives"
+          title="Grants & incentives"
+          description="Beyond the £23,000 training fund — CITB grants, travel support, age incentives, care leaver bursary, learning support, NI relief, and other industry grants."
           tone="yellow"
         />
       </motion.div>
 
-      {/* Total Potential Funding */}
-      <Card className="border-green-500/20 bg-green-500/5">
-        <CardContent className="p-4 space-y-2">
-          <p className="text-green-400 font-bold text-2xl">£14,500+</p>
-          <p className="text-white text-sm">
-            Total potential funding available to eligible employers on top of the
-            £23,000 apprenticeship training fund. This includes CITB grants, age
-            incentives, and tax savings.
+      {/* ── Headline number ─────────────────────────────────────── */}
+      <motion.div variants={itemVariants}>
+        <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-2">
+          <Eyebrow className="text-elec-yellow/85">Total potential funding</Eyebrow>
+          <p className="text-[36px] sm:text-[42px] font-mono font-semibold tabular-nums text-elec-yellow leading-none">
+            £14,500+
           </p>
-        </CardContent>
-      </Card>
-
-      {/* CITB Grants */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-orange-400" />
-          <h2 className="text-base font-semibold text-white">CITB Grants</h2>
+          <p className="text-[13px] text-white/85 leading-relaxed">
+            Available to eligible employers on top of the £23,000 apprenticeship
+            training fund — CITB grants, age incentives, and tax savings combined.
+          </p>
         </div>
+      </motion.div>
 
-        <Card className="border-orange-500/20 bg-white/5">
-          <CardContent className="p-4 space-y-4">
-            <p className="text-white text-sm leading-relaxed">
-              The Construction Industry Training Board (CITB) provides grants to
-              registered employers to support apprenticeship training. The total
-              available is{' '}
-              <span className="font-bold text-orange-400">£13,500</span> over the
-              course of a 4-year apprenticeship.
+      {/* ── CITB grants ─────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="CITB grants"
+          title="£13,500 over 4 years"
+          meta="Construction Industry Training Board attendance + completion"
+          action={
+            <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
+              <Banknote className="h-4 w-4 text-elec-yellow" />
+            </span>
+          }
+        />
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
+          <ul className="space-y-1.5">
+            {citbBreakdown.map((item) => (
+              <li
+                key={item}
+                className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+              >
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-1">
+            <Eyebrow className="text-elec-yellow/85">Quarterly payment schedule (per year)</Eyebrow>
+            <ul className="text-[12.5px] font-mono tabular-nums text-white/85 space-y-0.5">
+              <li>Q1 (weeks 1–13): £625</li>
+              <li>Q2 (weeks 14–26): £625</li>
+              <li>Q3 (weeks 27–39): £625</li>
+              <li>Q4 (weeks 40–52): £625</li>
+              <li className="font-semibold text-elec-yellow pt-1 border-t border-elec-yellow/15">
+                Annual total: £2,500
+              </li>
+            </ul>
+            <p className="text-[11.5px] text-white/70 leading-relaxed pt-1">
+              Payments made after each 13-week period, subject to attendance
+              requirements and a valid claim.
             </p>
+          </div>
+          <div className="space-y-2 pt-2 border-t border-white/[0.04]">
+            <Eyebrow>Eligibility</Eyebrow>
+            <ul className="space-y-1.5">
+              {citbEligibility.map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                >
+                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="space-y-2 pt-2 border-t border-white/[0.04]">
+            <Eyebrow>How to claim — step by step</Eyebrow>
+            <ol className="space-y-1.5">
+              {citbClaimSteps.map((step, i) => (
+                <li
+                  key={step}
+                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                >
+                  <span className="text-elec-yellow font-mono tabular-nums mt-0.5">
+                    {i + 1}.
+                  </span>
+                  <span>{step}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+          <div className="rounded-md border border-red-500/25 bg-red-500/[0.04] p-3 space-y-2">
+            <Eyebrow className="text-red-300">Common claim mistakes to avoid</Eyebrow>
+            <ul className="space-y-1.5">
+              {citbMistakes.map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                >
+                  <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </motion.section>
 
-            <div>
-              <h4 className="text-white font-semibold text-sm mb-2">
-                Grant Breakdown
-              </h4>
-              <ul className="space-y-1.5">
-                {[
-                  'Year 1 attendance grant: £2,500 (paid quarterly every 13 weeks)',
-                  'Year 2 attendance grant: £2,500 (paid quarterly every 13 weeks)',
-                  'Year 3 attendance grant: £2,500 (paid quarterly every 13 weeks)',
-                  'Year 4 attendance grant: £2,500 (paid quarterly every 13 weeks)',
-                  'Completion bonus: £3,500 (paid on successful completion)',
-                  'Total: £13,500 over full programme',
-                ].map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-2 text-sm text-white"
-                  >
-                    <CheckCircle className="h-4 w-4 text-orange-400 flex-shrink-0 mt-0.5" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
+      {/* ── CITB Travel ─────────────────────────────────────────── */}
+      <FundingCard
+        eyebrow="CITB travel & accommodation"
+        title="Up to 80% covered for distant training"
+        meta="50+ miles or block release with overnight stays"
+        items={travelFacts}
+      />
 
-            {/* Quarterly Payment Schedule */}
-            <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-3 space-y-2">
-              <h4 className="text-orange-400 font-semibold text-sm">
-                Quarterly Payment Schedule (Per Year)
-              </h4>
-              <div className="space-y-1">
-                <p className="text-white text-sm">
-                  Q1 (weeks 1–13): £625
-                </p>
-                <p className="text-white text-sm">
-                  Q2 (weeks 14–26): £625
-                </p>
-                <p className="text-white text-sm">
-                  Q3 (weeks 27–39): £625
-                </p>
-                <p className="text-white text-sm">
-                  Q4 (weeks 40–52): £625
-                </p>
-                <p className="text-white text-sm font-semibold">
-                  Annual total: £2,500
-                </p>
+      {/* ── Age incentive ──────────────────────────────────────── */}
+      <FundingCard
+        eyebrow="Age incentive"
+        title="£1,000 for under-19s + EHC / care leavers"
+        meta="Split £500 employer + £500 training provider"
+        items={ageIncentive}
+      />
+
+      {/* ── Care leaver bursary ─────────────────────────────────── */}
+      <FundingCard
+        eyebrow="Care leaver bursary"
+        title="£1,000 paid directly to the apprentice"
+        meta="Separate from the employer age incentive"
+        items={careLeaverFacts}
+      />
+
+      {/* ── Learning support ────────────────────────────────────── */}
+      <FundingCard
+        eyebrow="Additional learning support"
+        title="Up to £150/month for additional needs"
+        meta="Dyslexia, ADHD, autism, physical disabilities, more"
+        items={learningSupportFacts}
+      />
+
+      {/* ── Tax benefits ────────────────────────────────────────── */}
+      <FundingCard
+        eyebrow="Tax benefits for employers"
+        title="NI relief + allowable expenses"
+        meta="Saves £2,000–£3,000/year for under-25 apprentices"
+        items={taxBenefits}
+        icon={PiggyBank}
+      />
+
+      {/* ── Other industry grants ───────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Other industry grants"
+          title="Five lesser-known funding routes"
+          meta="JIB · ECA · local authorities · regional · youth hubs"
+        />
+        <ul className="space-y-2">
+          {otherGrants.map((grant) => (
+            <li
+              key={grant.title}
+              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+            >
+              <div className="flex items-start gap-2.5">
+                <Award className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                <div className="space-y-1">
+                  <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
+                    {grant.title}
+                  </h3>
+                  <p className="text-[13px] text-white/85 leading-relaxed">
+                    {grant.description}
+                  </p>
+                </div>
               </div>
-              <p className="text-white text-xs">
-                Payments are made after each 13-week period, subject to the
-                apprentice meeting attendance requirements and the employer
-                submitting a valid claim.
-              </p>
-            </div>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
 
-            <div>
-              <h4 className="text-white font-semibold text-sm mb-2">
-                Eligibility
-              </h4>
-              <ul className="space-y-1.5">
-                {[
-                  'Employer must be registered with CITB',
-                  'Employer must be paying the CITB levy (separate from Apprenticeship Levy)',
-                  'Apprentice must be on an approved construction apprenticeship programme',
-                  'Claims must be submitted within 52 weeks of the qualifying date',
-                  'Apprentice must meet minimum attendance requirements',
-                  'Employer must be up to date with CITB levy payments',
-                ].map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-2 text-sm text-white"
-                  >
-                    <CheckCircle className="h-4 w-4 text-white flex-shrink-0 mt-0.5" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="text-white font-semibold text-sm mb-2">
-                How to Claim — Step by Step
-              </h4>
-              <ol className="space-y-1.5 list-decimal list-inside">
-                <li className="text-sm text-white">
-                  Log in to the CITB grants portal at citb.co.uk
-                </li>
-                <li className="text-sm text-white">
-                  Register the apprentice within 12 weeks of their start date
-                </li>
-                <li className="text-sm text-white">
-                  Upload the apprenticeship agreement and commitment statement
-                </li>
-                <li className="text-sm text-white">
-                  Submit attendance evidence every 13 weeks (training provider
-                  confirms)
-                </li>
-                <li className="text-sm text-white">
-                  Claim is verified and paid within 20 working days
-                </li>
-                <li className="text-sm text-white">
-                  Submit completion claim once the apprentice passes their EPA
-                </li>
-              </ol>
-            </div>
-
-            <div>
-              <h4 className="text-white font-semibold text-sm mb-2">
-                Common Claim Mistakes to Avoid
-              </h4>
-              <ul className="space-y-1.5">
-                {[
-                  'Late registration — register within 12 weeks of start date',
-                  'Missing quarterly claim deadlines (52-week window)',
-                  'Not having up-to-date CITB levy payments',
-                  'Forgetting to submit the completion claim after EPA',
-                  'Not keeping evidence of attendance on file',
-                ].map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-2 text-sm text-white"
-                  >
-                    <AlertTriangle className="h-4 w-4 text-amber-400 flex-shrink-0 mt-0.5" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Travel & Accommodation */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-orange-400" />
-          <h2 className="text-base font-semibold text-white">
-            CITB Travel & Accommodation
-          </h2>
-        </div>
-
-        <Card className="border-orange-500/20 bg-white/5">
-          <CardContent className="p-4 space-y-3">
-            <p className="text-white text-sm leading-relaxed">
-              CITB provides additional support for apprentices who need to travel to
-              distant training centres for block release or specialist training.
-            </p>
+      {/* ── Full financial summary ──────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Full financial summary"
+          title="4-year Level 3 electrical — the maths"
+          meta="What the employer receives vs what the employer pays"
+        />
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
+          <div className="space-y-2">
+            <Eyebrow className="text-elec-yellow/85">Employer receives</Eyebrow>
             <ul className="space-y-1.5">
-              {[
-                'CITB covers 80% of eligible travel and accommodation costs',
-                'Applies when the training centre is over 50 miles from home or workplace',
-                'Also applies to block release training requiring overnight stays',
-                'Employer claims through the same CITB grants portal',
-                'Receipts and evidence of travel required for claims',
-                'Does not cover daily commuting to a local college',
-              ].map((item) => (
+              {employerReceives.map((row) => (
                 <li
-                  key={item}
-                  className="flex items-start gap-2 text-sm text-white"
+                  key={row.label}
+                  className="flex items-start justify-between gap-3 text-[12.5px] text-white/85"
                 >
-                  <CheckCircle className="h-4 w-4 text-orange-400 flex-shrink-0 mt-0.5" />
-                  {item}
+                  <span>{row.label}</span>
+                  <span className="font-mono tabular-nums text-elec-yellow font-semibold flex-shrink-0">
+                    {row.value}
+                  </span>
                 </li>
               ))}
+              <li className="flex items-start justify-between gap-3 text-[13.5px] text-white pt-1.5 border-t border-elec-yellow/15">
+                <span className="font-semibold">Total value</span>
+                <span className="font-mono tabular-nums text-elec-yellow font-bold">
+                  £45,500+
+                </span>
+              </li>
             </ul>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Age Incentive Payments */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-blue-400" />
-          <h2 className="text-base font-semibold text-white">
-            Age Incentive Payments
-          </h2>
-        </div>
-
-        <Card className="border-blue-500/20 bg-white/5">
-          <CardContent className="p-4 space-y-3">
-            <p className="text-white text-sm leading-relaxed">
-              The government pays a{' '}
-              <span className="font-bold text-blue-400">£1,000</span> incentive
-              for employers who take on younger apprentices or those with additional
-              needs.
-            </p>
+          </div>
+          <div className="space-y-2 pt-2 border-t border-white/[0.04]">
+            <Eyebrow>Employer pays</Eyebrow>
             <ul className="space-y-1.5">
-              {[
-                '£1,000 for apprentices aged 16–18 at the start of their apprenticeship',
-                '£1,000 for apprentices aged 19–25 with an Education, Health and Care (EHC) plan or care leaver status',
-                'Payment split: £500 after 90 days + £500 after 1 year',
-                'Paid to: £500 to employer + £500 to training provider',
-                'Employer and provider can spend the incentive on anything to support the apprentice',
-                'Payments are automatic — no separate claim needed once the apprentice is registered on DAS',
-              ].map((item) => (
+              {employerPays.map((row) => (
                 <li
-                  key={item}
-                  className="flex items-start gap-2 text-sm text-white"
+                  key={row.label}
+                  className="flex items-start justify-between gap-3 text-[12.5px] text-white/85"
                 >
-                  <CheckCircle className="h-4 w-4 text-blue-400 flex-shrink-0 mt-0.5" />
-                  {item}
+                  <span>{row.label}</span>
+                  <span className="font-mono tabular-nums text-white font-semibold flex-shrink-0">
+                    {row.value}
+                  </span>
                 </li>
               ))}
+              <li className="flex items-start justify-between gap-3 text-[13.5px] text-white pt-1.5 border-t border-white/[0.06]">
+                <span className="font-semibold">Total cost</span>
+                <span className="font-mono tabular-nums text-white font-bold">
+                  £65,150
+                </span>
+              </li>
             </ul>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Care Leaver Bursary */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-blue-400" />
-          <h2 className="text-base font-semibold text-white">
-            Care Leaver Bursary
-          </h2>
-        </div>
-
-        <Card className="border-blue-500/20 bg-white/5">
-          <CardContent className="p-4 space-y-3">
-            <p className="text-white text-sm leading-relaxed">
-              Apprentices who are care leavers may be eligible for a{' '}
-              <span className="font-bold text-blue-400">£1,000 bursary</span>{' '}
-              paid directly to them (not the employer) to help with the costs of
-              starting an apprenticeship.
+          </div>
+          <div className="rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.04] p-3">
+            <p className="text-[12.5px] text-white/85 leading-relaxed">
+              <span className="font-semibold text-elec-yellow">Net result:</span>{' '}
+              After grants and tax relief, the true cost of a 4-year apprentice
+              is approximately{' '}
+              <span className="font-mono text-elec-yellow">£20,000</span> — and
+              you gain a fully qualified electrician trained to your standards.
+              Compared to hiring at £35k+ salary plus £5k+ recruitment fees,
+              apprenticeships are significantly better value.
             </p>
-            <ul className="space-y-1.5">
-              {[
-                '£1,000 paid directly to the apprentice',
-                'Must be aged 16–24 and a care leaver',
-                'Paid by the training provider from ESFA funding',
-                'Separate from the £1,000 age incentive paid to employers',
-                'Can be used for travel, equipment, clothing, or other costs',
-              ].map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2 text-sm text-white"
-                >
-                  <CheckCircle className="h-4 w-4 text-blue-400 flex-shrink-0 mt-0.5" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Learning Support */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-green-400" />
-          <h2 className="text-base font-semibold text-white">
-            Additional Learning Support
-          </h2>
+          </div>
         </div>
-
-        <Card className="border-green-500/20 bg-white/5">
-          <CardContent className="p-4 space-y-3">
-            <p className="text-white text-sm leading-relaxed">
-              Extra funding is available for apprentices with learning difficulties,
-              disabilities, or additional support needs.
-            </p>
-            <ul className="space-y-1.5">
-              {[
-                'Up to £150 per month additional learning support funding',
-                'Covers specialist equipment, software, or adapted materials',
-                'One-to-one support workers or learning assistants',
-                'Available for dyslexia, ADHD, autism, physical disabilities, and other needs',
-                'Claimed by the training provider on top of the funding band',
-                'Does not reduce the £23,000 available for training',
-                'Requires an initial assessment and evidence of need',
-              ].map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2 text-sm text-white"
-                >
-                  <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* NI Relief & Tax Benefits */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-cyan-400" />
-          <h2 className="text-base font-semibold text-white">
-            Tax Benefits for Employers
-          </h2>
-        </div>
-
-        <Card className="border-cyan-500/20 bg-white/5">
-          <CardContent className="p-4 space-y-3">
-            <p className="text-white text-sm leading-relaxed">
-              Beyond direct grants, employers benefit from significant tax savings
-              when taking on apprentices.
-            </p>
-            <ul className="space-y-1.5">
-              {[
-                'Employer NI relief: zero employer NI contributions for apprentices under 25',
-                'This saves approximately £2,000–£3,000 per year depending on wages',
-                'Apprenticeship training costs are an allowable business expense for corporation tax',
-                'CITB levy payments are also tax-deductible',
-                'Apprentice wages are deductible as normal employment costs',
-              ].map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2 text-sm text-white"
-                >
-                  <CheckCircle className="h-4 w-4 text-cyan-400 flex-shrink-0 mt-0.5" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Other Industry Grants */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-purple-400" />
-          <h2 className="text-base font-semibold text-white">
-            Other Industry Grants
-          </h2>
-        </div>
-
-        <Card className="border-purple-500/20 bg-white/5">
-          <CardContent className="p-4 space-y-3">
-            <ul className="space-y-3">
-              <li className="space-y-1">
-                <p className="text-purple-400 font-semibold text-sm">
-                  JIB Training Grant
-                </p>
-                <p className="text-white text-sm">
-                  Up to £500 for JIB-registered electrical contractors employing
-                  apprentices. Covers first-year support costs. Contact JIB directly
-                  or check jib.org.uk for current terms and application process.
-                </p>
-              </li>
-              <li className="space-y-1">
-                <p className="text-purple-400 font-semibold text-sm">
-                  ECA Training Support
-                </p>
-                <p className="text-white text-sm">
-                  Varies — available to Electrical Contractors Association members.
-                  Includes training subsidies, mentoring support, and access to ECA
-                  training events. Check with your ECA regional office.
-                </p>
-              </li>
-              <li className="space-y-1">
-                <p className="text-purple-400 font-semibold text-sm">
-                  Local Authority Grants
-                </p>
-                <p className="text-white text-sm">
-                  Varies by area — some local authorities offer additional grants of
-                  £500–£2,000 for employers taking on apprentices, especially in
-                  areas with skills shortages. Check your local council website or
-                  contact your local growth hub.
-                </p>
-              </li>
-              <li className="space-y-1">
-                <p className="text-purple-400 font-semibold text-sm">
-                  Regional Skills Fund
-                </p>
-                <p className="text-white text-sm">
-                  Up to £1,000 in certain regions — availability depends on your
-                  area and current funding rounds. Combined authorities (e.g. Greater
-                  Manchester, West Midlands) often run their own schemes.
-                </p>
-              </li>
-              <li className="space-y-1">
-                <p className="text-purple-400 font-semibold text-sm">
-                  Kickstart / Youth Hub Programmes
-                </p>
-                <p className="text-white text-sm">
-                  Some areas run youth employment hubs that provide additional
-                  support for young people starting apprenticeships, including help
-                  with travel, work clothing, and tools. Ask your training provider
-                  or local Jobcentre Plus.
-                </p>
-              </li>
-            </ul>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Full Financial Summary */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-elec-yellow" />
-          <h2 className="text-base font-semibold text-white">
-            Full Financial Summary (4-Year L3 Electrical)
-          </h2>
-        </div>
-
-        <Card className="border-elec-yellow/20 bg-white/5">
-          <CardContent className="p-4 space-y-3">
-            <div>
-              <h4 className="text-green-400 font-semibold text-sm mb-2">
-                Employer Receives
-              </h4>
-              <ul className="space-y-1.5">
-                <li className="flex items-start justify-between text-sm text-white">
-                  <span>Government-funded training</span>
-                  <span className="text-green-400 font-semibold">£23,000</span>
-                </li>
-                <li className="flex items-start justify-between text-sm text-white">
-                  <span>CITB attendance grants (4 years)</span>
-                  <span className="text-green-400 font-semibold">£10,000</span>
-                </li>
-                <li className="flex items-start justify-between text-sm text-white">
-                  <span>CITB completion bonus</span>
-                  <span className="text-green-400 font-semibold">£3,500</span>
-                </li>
-                <li className="flex items-start justify-between text-sm text-white">
-                  <span>Age incentive (if 16–18)</span>
-                  <span className="text-green-400 font-semibold">£1,000</span>
-                </li>
-                <li className="flex items-start justify-between text-sm text-white">
-                  <span>NI relief (approx. over 4 years)</span>
-                  <span className="text-green-400 font-semibold">£8,000+</span>
-                </li>
-                <li className="flex items-start justify-between text-sm text-white border-t border-white/10 pt-1.5">
-                  <span className="font-semibold">Total value</span>
-                  <span className="text-green-400 font-bold">£45,500+</span>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="text-amber-400 font-semibold text-sm mb-2">
-                Employer Pays
-              </h4>
-              <ul className="space-y-1.5">
-                <li className="flex items-start justify-between text-sm text-white">
-                  <span>Co-investment (5% of £23k)</span>
-                  <span className="text-amber-400 font-semibold">£1,150</span>
-                </li>
-                <li className="flex items-start justify-between text-sm text-white">
-                  <span>Apprentice wages (4 years approx.)</span>
-                  <span className="text-amber-400 font-semibold">£64,000</span>
-                </li>
-                <li className="flex items-start justify-between text-sm text-white border-t border-white/10 pt-1.5">
-                  <span className="font-semibold">Total cost</span>
-                  <span className="text-amber-400 font-bold">£65,150</span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
-              <p className="text-white text-sm">
-                <span className="text-green-400 font-semibold">Net result:</span>{' '}
-                After grants and tax relief, the true cost of a 4-year apprentice
-                is approximately £20,000 — and you gain a fully qualified
-                electrician trained to your standards. Compared to hiring at £35k+
-                salary plus £5k+ recruitment fees, apprenticeships are significantly
-                better value.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      </motion.section>
     </PageFrame>
   );
 };
+
+/* ─────────────────── Funding card helper ─────────────────── */
+
+import type { LucideIcon } from 'lucide-react';
+
+function FundingCard({
+  eyebrow,
+  title,
+  meta,
+  items,
+  icon: Icon = Banknote,
+}: {
+  eyebrow: string;
+  title: string;
+  meta: string;
+  items: string[];
+  icon?: LucideIcon;
+}) {
+  return (
+    <motion.section variants={itemVariants} className="space-y-3">
+      <SectionHeader
+        eyebrow={eyebrow}
+        title={title}
+        meta={meta}
+        action={
+          <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
+            <Icon className="h-4 w-4 text-elec-yellow" />
+          </span>
+        }
+      />
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+        <ul className="space-y-1.5">
+          {items.map((item) => (
+            <li
+              key={item}
+              className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+            >
+              <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </motion.section>
+  );
+}
 
 export default GrantsPage;

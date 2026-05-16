@@ -16,7 +16,7 @@
  * hairline cells, single yellow accent per row, mobile-flat per the project
  * working agreement.
  */
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
@@ -28,9 +28,12 @@ import { toast } from '@/hooks/use-toast';
 import { QuoteInvoiceAnalytics } from '@/components/electrician/analytics/QuoteInvoiceAnalytics';
 import { useBusinessHubData } from '@/hooks/useBusinessHubData';
 import { useSparkProjects } from '@/hooks/useSparkProjects';
+import { useSparkTasks } from '@/hooks/useSparkTasks';
+import { useCustomers } from '@/hooks/useCustomers';
 import { useSnags } from '@/hooks/useSnags';
 import { useTimeTracker, formatDuration } from '@/hooks/useTimeTracker';
 import { shareContent } from '@/utils/share';
+import { Assistant } from '@/components/business-hub/Assistant';
 
 // ─────────────────────────────────────────────────────────────────────────
 // Editorial helpers
@@ -414,9 +417,48 @@ const BusinessHub = () => {
     refresh,
     formatCurrency,
   } = useBusinessHubData();
-  const { counts: projectCounts } = useSparkProjects('active');
+  const {
+    counts: projectCounts,
+    projects,
+    createProject,
+    updateProject,
+    completeProject,
+    deleteProject,
+  } = useSparkProjects('active');
   const { counts: snagCounts } = useSnags();
+  const {
+    tasks,
+    saveTask,
+    updateTask,
+    deleteTask,
+    markDone,
+  } = useSparkTasks('all');
+  const { customers, saveCustomer, updateCustomer, deleteCustomer } = useCustomers();
   const { activeSession, elapsedSeconds } = useTimeTracker();
+
+  const [mateOpen, setMateOpen] = useState(false);
+  const [matePrompt, setMatePrompt] = useState<string | undefined>(undefined);
+
+  const openMate = (prompt?: string) => {
+    setMatePrompt(prompt);
+    setMateOpen(true);
+  };
+  const closeMate = () => {
+    setMateOpen(false);
+    setMatePrompt(undefined);
+  };
+
+  // ⌘+K / Ctrl+K — open Assistant globally on the Business Hub
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        openMate();
+      }
+    }
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
   const timeTrackerSubtitle = activeSession
     ? `Running · ${formatDuration(elapsedSeconds)}`
@@ -704,6 +746,122 @@ const BusinessHub = () => {
       <div className="px-4 py-4 space-y-12 sm:space-y-16 max-w-7xl mx-auto">
         <Hero headline={headline} verdict={verdict} cta={cta} />
 
+        {/* ── MATE — live AI partner. Single panel, mobile-flat, above the fold. ── */}
+        <motion.section
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="relative"
+          aria-labelledby="mate-heading"
+        >
+          {/* Eyebrow with breathing pulse — signals Mate is live */}
+          <motion.div
+            variants={itemVariants}
+            className="flex items-center gap-2 mb-3 sm:mb-4"
+          >
+            <span className="relative flex h-2 w-2" aria-hidden="true">
+              <span className="absolute inline-flex h-full w-full rounded-full bg-elec-yellow opacity-75 animate-ping" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-elec-yellow" />
+            </span>
+            <p className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.22em] text-elec-yellow">
+              Mate · Your AI partner
+            </p>
+          </motion.div>
+
+          <motion.h2
+            id="mate-heading"
+            variants={itemVariants}
+            className="font-semibold tracking-tight leading-[1.05] text-[26px] sm:text-[34px] lg:text-[40px]"
+          >
+            <span className="text-white">I'm Mate.</span>{' '}
+            <span className="text-elec-yellow">What needs sorting?</span>
+          </motion.h2>
+
+          <motion.p
+            variants={itemVariants}
+            className="mt-2.5 sm:mt-3 text-[13.5px] sm:text-[15px] leading-relaxed text-white/55 max-w-[620px]"
+          >
+            Plain English — tasks, snags, projects, customers, regs. I propose, you approve, it saves.
+          </motion.p>
+
+          {/* Chat input bar — looks live, opens the sheet on tap */}
+          <motion.div variants={itemVariants} className="mt-5 sm:mt-6">
+            <button
+              type="button"
+              onClick={() => openMate()}
+              aria-label="Open Mate"
+              className="group w-full flex items-center gap-2.5 sm:gap-3 rounded-2xl bg-white/[0.05] border border-white/[0.10] hover:bg-white/[0.07] hover:border-white/[0.18] focus-visible:outline-none focus-visible:border-elec-yellow/60 focus-visible:bg-white/[0.07] transition-colors pl-4 pr-2 sm:pl-5 sm:pr-2.5 py-2 touch-manipulation active:scale-[0.995] text-left"
+            >
+              <span className="flex-1 truncate text-[14px] sm:text-[15px] text-white/55 py-1.5">
+                Message Mate — tasks, snags, regs, anything…
+              </span>
+              <kbd className="hidden md:inline-flex items-center gap-1 text-[10px] font-semibold text-white/40 px-1.5 py-0.5 rounded-md border border-white/[0.12] bg-white/[0.04]">
+                ⌘K
+              </kbd>
+              <span className="flex items-center justify-center h-9 w-9 sm:h-10 sm:w-10 rounded-xl bg-elec-yellow text-black transition-transform group-hover:scale-[1.04] group-active:scale-[0.96] shrink-0">
+                <ArrowRight className="h-[18px] w-[18px]" />
+              </span>
+            </button>
+          </motion.div>
+
+          {/* Starter cards — 2×2 mobile, 4-up desktop. Each = prompt + outcome hint. */}
+          <motion.div variants={itemVariants} className="mt-6 sm:mt-8">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/40 mb-3">
+              I can help with
+            </p>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
+              {[
+                {
+                  label: 'Plan my day',
+                  prompt: 'Plan my day',
+                  outcome: 'Routed, ordered, ready',
+                },
+                {
+                  label: 'Add snags to a job',
+                  prompt: 'Add 3 snags for Oak Lane',
+                  outcome: 'Tagged, linked, saved',
+                },
+                {
+                  label: 'New customer',
+                  prompt: 'New customer Mrs Patel · 07700 900900',
+                  outcome: 'CRM card created',
+                },
+                {
+                  label: 'Ask the regs',
+                  prompt: 'RCDs for kitchen sockets — what do the regs say?',
+                  outcome: 'BS 7671 answer, cited',
+                },
+              ].map((s) => (
+                <button
+                  key={s.label}
+                  type="button"
+                  onClick={() => openMate(s.prompt)}
+                  className="group text-left rounded-xl bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] hover:border-white/[0.18] transition-colors px-3 sm:px-4 py-3 sm:py-3.5 touch-manipulation active:scale-[0.98] min-h-[68px]"
+                >
+                  <p className="text-[13px] sm:text-[14px] font-semibold text-white leading-snug">
+                    {s.label}
+                  </p>
+                  <p className="mt-1 text-[11px] sm:text-[12px] text-white/45 leading-snug">
+                    {s.outcome}
+                  </p>
+                </button>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Trust tag — replaces the buried "Grounded in BS 7671" in the old paragraph */}
+          <motion.div
+            variants={itemVariants}
+            className="mt-6 sm:mt-8 flex items-center gap-3"
+          >
+            <span className="h-px flex-1 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/40">
+              Grounded in BS 7671
+            </p>
+            <span className="h-px flex-1 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+          </motion.div>
+        </motion.section>
+
         <BusinessHeadlineStats stats={stats} />
 
         <EditorialToolGrid number="02" label="YOUR DAY" cards={yourDay} columns="three" />
@@ -741,6 +899,27 @@ const BusinessHub = () => {
           </motion.div>
         </motion.section>
       </div>
+
+      {/* Business Hub AI assistant */}
+      <Assistant
+        isOpen={mateOpen}
+        onClose={closeMate}
+        initialPrompt={matePrompt}
+        currentTasks={tasks}
+        currentProjects={projects}
+        currentCustomers={customers}
+        onSave={saveTask}
+        onUpdate={updateTask}
+        onMarkDone={markDone}
+        onDelete={deleteTask}
+        onCreateProject={createProject}
+        onUpdateProject={updateProject}
+        onCompleteProject={completeProject}
+        onDeleteProject={deleteProject}
+        onCreateCustomer={saveCustomer}
+        onUpdateCustomer={updateCustomer}
+        onDeleteCustomer={deleteCustomer}
+      />
     </div>
   );
 };

@@ -47,6 +47,11 @@ const faqs = [
   { question: 'What if the casualty refuses to consent to RIDDOR reporting?', answer: 'Casualty consent isn\'t required — it\'s the responsible person\'s legal duty. Casualty\'s personal data is protected by data protection law but the report itself goes regardless of consent.' },
   { question: 'Are near-misses RIDDOR reportable?', answer: '"Near-miss" isn\'t a RIDDOR category. Some near-misses ARE reportable as "dangerous occurrences" (Schedule 2) — e.g. uncontrolled electrical short circuit causing 24+ hour plant stoppage. Most near-misses are internal-only; check Schedule 2 each time.' },
   { question: 'How does RIDDOR interact with the firm\'s insurance?', answer: 'PI / EL insurers usually require notification of any incident likely to give rise to a claim — separate from RIDDOR. Late insurer notification can void cover. Many firms have an internal incident-management process that handles RIDDOR + insurance + customer comms in parallel.' },
+  { question: 'Who has the right of access to RIDDOR records?', answer: 'HSE inspectors have right of access under HASAWA s.20 to any RIDDOR records. Insurance companies typically request RIDDOR records as part of claim investigations or annual renewal. PQQ clients can request RIDDOR data. Employees and their representatives can request their own data under Data Protection Act 2018; redactions may apply to third-party information.' },
+  { question: 'What if a self-employed contractor on our site has an incident — who reports?', answer: 'The contractor as self-employed person is responsible for reporting their own RIDDOR-reportable injury to themselves. But the host firm has parallel responsibilities — they may also need to report under different categories (e.g. as &quot;person in control of premises&quot;), and their EAWR / CDM duties around contractor competence and supervision are likely to be relevant to the HSE investigation. Both firms should liaise on the reporting and the response.' },
+  { question: 'Does a verbal apology to the casualty after an incident count as admission of liability?', answer: 'A genuine expression of sympathy is not the same as admitting legal liability — the Compensation Act 2006 s.2 specifically clarifies this for civil claims. For RIDDOR purposes a verbal apology has no statutory effect either way. But the L3 supervisor reflex is to be cautious — say what is genuinely felt (&quot;I&apos;m so sorry this has happened to you&quot;), do not speculate about cause (&quot;it was our fault, that ladder was no good&quot;) which is interpreted by insurers and the HSE as evidence of breach.' },
+  { question: 'What if the incident happened to a member of the public, not an employee?', answer: 'Public-injury incidents on your firm&apos;s work activity are reportable under RIDDOR Reg 5 if the person was injured and taken from the scene of the accident to hospital for treatment in respect of that injury. The reporting category is different from employee injuries but the timescales are the same. The PL insurer notification runs in parallel. CDM 2015 may add design / Principal Contractor duty considerations.' },
+  { question: 'Are reports submitted to RIDDOR ever published publicly?', answer: 'Individual RIDDOR reports are not published, but aggregate sectoral data is published in HSE statistics and may inform sector-targeted campaigns. Where prosecution follows, court records become public; firms can also be named in HSE press releases. PQQ clients can request RIDDOR statistics under their contractual rights.' },
 ];
 
 export default function Sub5() {
@@ -62,6 +67,9 @@ export default function Sub5() {
             "Trigger identification: fatality / specified injury → immediate phone (0345 300 9923) + F2508 within 10 days. Over-7-day injury → F2508A within 15 days. Dangerous occurrence (Schedule 2) → F2508 within 10 days. Disease (Schedule 3) → F2508A.",
             "Responsible person under Reg 3 makes the report. Operative escalates with facts. Online portal at riddor.hse.gov.uk.",
             "3-year statutory retention (Reg 12). Many firms retain longer for PI / Defective Premises Act considerations.",
+            "Late reporting is a separate Reg 6 offence — stacks on top of the underlying breach. When in doubt, report; amend later if facts change.",
+            "Specified injuries (Schedule 1) — fracture (excl fingers/thumbs/toes), amputation, sight loss, crush, serious burn, scalping, head-injury unconsciousness, enclosed-space injury.",
+            "Enforcement Management Model (EMM) determines outcome — actual + potential consequence, probability, risk gap, firm history, response quality.",
           ]} />
           <LearningOutcomes outcomes={[
             "Identify the RIDDOR trigger categories — death, specified injury, over-7-day, dangerous occurrence, disease.",
@@ -70,6 +78,9 @@ export default function Sub5() {
             "Apply the operative-to-responsible-person escalation chain.",
             "State the 3-year retention requirement under Reg 12.",
             "Describe the typical post-report HSE follow-up and the FFI implications.",
+            "Recall Schedule 1 specified injuries and Schedule 2 dangerous occurrences most relevant to electrical work.",
+            "Apply the parallel RIDDOR + insurance + customer-comms triangle of post-incident notification.",
+            "Distinguish HASAWA s.20 fact-gathering interviews from PACE-cautioned investigative interviews.",
           ]} initialVisibleCount={3} />
 
           <ContentEyebrow>Trigger identification — what's reportable?</ContentEyebrow>
@@ -82,16 +93,20 @@ export default function Sub5() {
               <li><strong>Dangerous occurrence (Schedule 2)</strong> — F2508 within 10 days.</li>
               <li><strong>Reportable disease (Schedule 3)</strong> — F2508A.</li>
               <li><strong>Gas incident</strong> — separate Reg 11–12 scheme.</li>
+              <li><strong>Member of public taken to hospital (Reg 5)</strong> — F2508 within 10 days.</li>
+              <li><strong>Self-employed similar list (Reg 4(2))</strong> — F2508 within 10 days.</li>
+              <li><strong>When category uncertain</strong> — default to higher category; the HSE does not penalise over-reporting but does penalise under-reporting under Reg 6.</li>
+              <li><strong>Amendment after submission</strong> — supported by the portal; honest update preferred over stale partial record.</li>
             </ul>
           </ConceptBlock>
 
-          <RegsCallout source="Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 — Reg 6" clause={<>"The responsible person must follow the reporting procedure when the responsible person becomes aware of the death of any person, the suffering of a specified injury at work, the suffering of an injury that results in a person being incapacitated for more than 7 consecutive days, the suffering of an occupational disease, or the occurrence of a dangerous occurrence."</>} meaning={<>Reg 6 puts the duty on the responsible person to follow the prescribed reporting procedure (phone for the highest categories, F2508/F2508A within timescales). The L3 operative&apos;s role is to alert the responsible person promptly and accurately; the responsible person discharges Reg 6.</>} cite="Source: Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 (SI 2013/1471), Reg 6 — verbatim from legislation.gov.uk." />
+          <RegsCallout source="Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 — Reg 6" clause={<>"The responsible person must follow the reporting procedure when the responsible person becomes aware of the death of any person, the suffering of a specified injury at work, the suffering of an injury that results in a person being incapacitated for more than 7 consecutive days, the suffering of an occupational disease, or the occurrence of a dangerous occurrence. The reporting procedure is — (a) the responsible person must without delay notify the relevant enforcing authority of the death, accident, occurrence or case by the quickest practicable means; and (b) within 10 days of the death, accident, occurrence or case, the responsible person must send a report of it to the relevant enforcing authority in an approved manner."</>} meaning={<>Reg 6 puts the duty on the responsible person to follow the prescribed reporting procedure (phone for the highest categories, F2508/F2508A within timescales). The L3 operative&apos;s role is to alert the responsible person promptly and accurately; the responsible person discharges Reg 6. The &quot;quickest practicable means&quot; wording sets the bar — text, phone or email; the 10-day clock for the formal F2508 runs from the date of the incident, not from when the firm decided to act.</>} cite="Source: Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 (SI 2013/1471), Reg 6." />
 
           <InlineCheck {...checks[0]} />
 
           <SectionRule />
           <ContentEyebrow>Responsible person and the report mechanics</ContentEyebrow>
-          <ConceptBlock title="Reg 3 responsible person" plainEnglish="RIDDOR Reg 3 defines the \'responsible person' for each category. Usually the employer for employee incidents; the self-employed person for themselves; the person in control of premises in some cases. For an electrical contractor working on a customer\'s site, the contractor employer is usually the responsible person for incidents to their employees." onSite="Knowing your firm\'s RIDDOR responsible person is essential — usually the H&S manager, contracts manager or director. Escalate to them immediately when a reportable trigger occurs.">
+          <ConceptBlock title="Reg 3 responsible person" plainEnglish="RIDDOR Reg 3 defines the \'responsible person' for each category. Usually the employer for employee incidents; the self-employed person for themselves; the person in control of premises in some cases. For an electrical contractor working on a customer\'s site, the contractor employer is usually the responsible person for incidents to their employees. Where the incident affects a member of the public on the customer&apos;s premises, the contractor employer and the premises occupier may BOTH have separate responsible-person duties; the F2508 should be coordinated to avoid duplicate or inconsistent reports." onSite="Knowing your firm\'s RIDDOR responsible person is essential — usually the H&S manager, contracts manager or director. Escalate to them immediately when a reportable trigger occurs. In multi-contractor scenarios (e.g. CDM project) the Principal Contractor often coordinates the RIDDOR response across the trades on site.">
             <p>The escalation flow:</p>
             <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
               <li>Operative identifies trigger event (incident, dangerous occurrence).</li>
@@ -104,7 +119,7 @@ export default function Sub5() {
             </ol>
           </ConceptBlock>
 
-          <ConceptBlock title="The online portal" plainEnglish="riddor.hse.gov.uk is the modern reporting route. F2508 and F2508A are completed online; PDF copy emailed to the firm; HSE record created. Phone 0345 300 9923 used only for fatality / specified-injury immediate notification." onSite="Most firms have a single account on the portal — usually the H&S manager. Operatives feed facts to that account-holder; the account-holder submits.">
+          <ConceptBlock title="The online portal" plainEnglish="riddor.hse.gov.uk is the modern reporting route. F2508 and F2508A are completed online; PDF copy emailed to the firm; HSE record created. Phone 0345 300 9923 used only for fatality / specified-injury immediate notification. The portal also supports F2508G (gas incidents under Reg 11) for Gas Safe registered businesses." onSite="Most firms have a single account on the portal — usually the H&S manager or a director-level safety lead. Operatives feed facts to that account-holder; the account-holder submits. Multi-site firms with several reporting points should still maintain a single consolidated account for audit consistency.">
             <p>What the form captures:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>Reporter / responsible person details.</li>
@@ -124,7 +139,7 @@ export default function Sub5() {
 
           <SectionRule />
           <ContentEyebrow>Retention and follow-up</ContentEyebrow>
-          <ConceptBlock title="3-year statutory retention; longer practice" plainEnglish="RIDDOR Reg 12 requires records to be retained for 3 years. In practice many firms retain indefinitely, particularly residential incidents — the BSA 2022 / Defective Premises Act extension to 30-year retrospective limitation makes long retention prudent." onSite="Records are typically the F2508 PDF, the firm\'s internal incident form, photos, witness statements, RIDDOR acknowledgement email, any HSE correspondence. Stored on the firm\'s H&S system or document management; backed up.">
+          <ConceptBlock title="3-year statutory retention; longer practice" plainEnglish="RIDDOR Reg 12 requires records to be retained for 3 years from the date the record was made. In practice many firms retain indefinitely, particularly residential incidents — the BSA 2022 / Defective Premises Act extension to 30-year retrospective limitation makes long retention prudent. Professional indemnity insurers often expect 6+ year retention to align with their own claims-handling cycle. Major framework clients commonly ask for 5+ years on PQQs." onSite="Records are typically the F2508 PDF, the firm\'s internal incident form, photos, witness statements, RIDDOR acknowledgement email, any HSE correspondence, root-cause analysis, corrective action register. Stored on the firm\'s H&S system or document management; backed up daily; access-controlled.">
             <p>What HSE follow-up typically looks like:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>Acknowledgement email — automatic.</li>
@@ -134,6 +149,8 @@ export default function Sub5() {
               <li>Improvement / prohibition notice — if breach justifies.</li>
               <li>Prosecution — for serious or systemic breaches.</li>
               <li>Sector intelligence — RIDDOR reports feed HSE statistics and inform sector campaigns.</li>
+              <li>Cross-reference with other regulators — Environment Agency, Fire and Rescue Service, scheme body, local authority where relevant.</li>
+              <li>Industry alerts — the HSE may issue a sector safety alert if the incident reveals a pattern affecting other firms.</li>
             </ul>
           </ConceptBlock>
 
@@ -322,7 +339,7 @@ export default function Sub5() {
                 separate offence under Reg 6 itself.
               </>
             }
-            cite="Source: Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 (SI 2013/1471), Regs 4 and 6 — verbatim from legislation.gov.uk."
+            cite="Source: Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 (SI 2013/1471), Regs 4 and 6."
           />
 
           <RegsCallout
@@ -347,7 +364,7 @@ export default function Sub5() {
                 accident books on their own are no longer adequate for any sizeable firm.
               </>
             }
-            cite="Source: Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 (SI 2013/1471), Reg 12 — verbatim from legislation.gov.uk."
+            cite="Source: Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 (SI 2013/1471), Reg 12."
           />
 
           <SectionRule />
@@ -356,6 +373,297 @@ export default function Sub5() {
           <CommonMistake title="Late reporting because \'we wanted to wait and see how serious it was\'" whatHappens={<>Casualty injured Monday; firm decides to &quot;see how it develops&quot; before reporting. Injury confirmed serious by Wednesday. F2508 filed on day 12. Late report = separate Reg 6 offence. Stacks on top of underlying breach. Two charges instead of one.</>} doInstead={<>When in doubt, report. Update the report later if facts change. Late reporting is itself an offence regardless of the underlying breach severity.</>} />
 
           <Scenario title="L3 walking through an end-to-end RIDDOR" situation={<>You&apos;re running a small commercial install with one L2 mate. Mid-morning the L2 falls from a 3-step podium-style platform — the rubber feet had perished. They land awkwardly and immediately complain of severe ankle pain; can&apos;t put weight on it. You arrange transport to A&amp;E (van + you driving, customer on standby). At A&amp;E the X-ray confirms a fracture. The L2 will be off normal duties for at least 3 weeks.</>} whatToDo={<>Immediate sequence: (1) on site — render first aid, organise transport (don&apos;t let them drive themselves), photograph the platform with perished feet visible, photograph the work area, get the platform tagged out of service. (2) Notify firm responsible person by phone immediately — &quot;L2 has fallen from podium, possible fracture, transporting to A&amp;E now&quot;. (3) At A&amp;E — accompany if possible; obtain initial diagnosis from casualty/medical team. (4) Notify firm again with confirmed diagnosis — &quot;fracture confirmed, looks like 3+ weeks off&quot;. (5) Report writing — same day write contemporaneous account: time, sequence, condition of platform, weather, lighting, witnesses (yourself, customer, A&amp;E paperwork). Trigger identification: fracture (excl fingers/thumbs/toes) is a SPECIFIED INJURY under Schedule 1. Responsible person must phone HSE 0345 300 9923 today and submit F2508 within 10 days. (6) Witnesses — written statement from yourself; customer statement if they witnessed; sign-off by responsible person. (7) Equipment — pull all similar platforms from fleet for inspection; document the fleet check. (8) Insurance notification — separate to RIDDOR; firm&apos;s EL insurer notified within their required timescale. (9) Preserve the failed platform itself for possible HSE follow-up. (10) Retain all records 3+ years; in practice indefinitely.</>} whyItMatters={<>This is a textbook L3 supervisor walkthrough. The fracture triggers the highest-priority category (immediate phone notification + F2508 within 10 days). Your contemporaneous account, the photographs of the perished feet, and the equipment preservation create the evidence trail the firm&apos;s defence and the HSE&apos;s investigation both rely on. Pulling the rest of the fleet for inspection is the supervisor act that prevents the next incident — and demonstrates to the HSE that the firm is taking the lessons seriously, which often shapes the enforcement decision (notice vs prosecution).</>} />
+
+          <SectionRule />
+          <ContentEyebrow>The HSE&apos;s decision framework — Enforcement Management Model</ContentEyebrow>
+
+          <ConceptBlock
+            title="Why some RIDDOR reports become prosecutions and most don&apos;t"
+            plainEnglish="HSE inspectors use the Enforcement Management Model (EMM) to make consistent enforcement decisions. The EMM considers actual or potential consequence, likelihood of harm, public expectation, and the firm&apos;s response. Outputs range from informal advice through letters and improvement notices to prohibition notices and prosecution. Two firms reporting similar incidents can end up with very different outcomes depending on their cooperation, remediation and past record."
+            onSite="The L3 supervisor cooperation reflex after a RIDDOR report shapes the EMM scoring: prompt provision of documents, candid interview answers (under legal advice), visible remediation, no obstruction. The opposite — delay, defensiveness, late responses, contradictory accounts — moves the EMM towards harder enforcement. The cooperation isn&apos;t an admission of fault; it&apos;s evidence of competence and seriousness that the inspector reads positively."
+          >
+            <p>EMM factors that move the enforcement decision:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Actual consequence</strong> — what happened (death, specified injury,
+                lost-time, near-miss).
+              </li>
+              <li>
+                <strong>Potential consequence</strong> — what could have happened given the
+                breach.
+              </li>
+              <li>
+                <strong>Probability</strong> — how likely was harm given the situation.
+              </li>
+              <li>
+                <strong>Risk gap</strong> — distance between actual control and benchmark
+                standard.
+              </li>
+              <li>
+                <strong>Public expectation</strong> — would the public expect enforcement on
+                this matter (children, vulnerable persons, public-facing premises).
+              </li>
+              <li>
+                <strong>Firm&apos;s history</strong> — repeated similar breaches, prior
+                notices, prosecution history.
+              </li>
+              <li>
+                <strong>Firm&apos;s response</strong> — cooperation, candour, remediation,
+                visible commitment to change.
+              </li>
+              <li>
+                <strong>Senior management failure</strong> — Corporate Manslaughter referral
+                where applicable.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+          <ContentEyebrow>Cross-reference table — RIDDOR vs EL / PL insurance notification</ContentEyebrow>
+
+          <ConceptBlock
+            title="The two parallel notification regimes that the L3 supervisor must keep in step"
+            plainEnglish="Two notification regimes run side-by-side after most incidents: RIDDOR (statutory, prescribed timescales) and insurance (contractual, policy-driven, often shorter timescales). They have different audiences, different content requirements and different consequences for late notification. The L3 supervisor reflex is to ensure both notifications are made on time and consistently. Inconsistent or contradictory accounts to the two channels are one of the easiest ways to create problems further down the line."
+            onSite="Practical: when the responsible person submits RIDDOR they should simultaneously ensure the EL / PL insurer is notified. The insurer&apos;s notification usually requires less detail than RIDDOR but in some respects more — name and address of any potential claimant, expected severity, witness contact details for the insurer&apos;s own investigation. The firm&apos;s broker is usually the operational route. Late insurer notification can void cover for the incident."
+          >
+            <p>The two regimes compared:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Audience</strong> — RIDDOR goes to HSE; insurance notification goes
+                to the EL / PL insurer (Employers&apos; Liability for staff incidents;
+                Public Liability for third-party incidents).
+              </li>
+              <li>
+                <strong>Trigger</strong> — RIDDOR triggers on the categories in Regs 4-8;
+                insurance triggers on &quot;any circumstance likely to give rise to a
+                claim&quot; — often a wider net than RIDDOR.
+              </li>
+              <li>
+                <strong>Timescale</strong> — RIDDOR has prescribed statutory deadlines
+                (immediate / 10 days / 15 days); insurance is typically 7-14 days per
+                policy terms, sometimes shorter.
+              </li>
+              <li>
+                <strong>Format</strong> — RIDDOR uses F2508 / F2508A via portal;
+                insurance uses the insurer&apos;s own notification form (online or via
+                broker).
+              </li>
+              <li>
+                <strong>Content</strong> — RIDDOR captures incident facts; insurance also
+                captures contact details, expected severity, witness information.
+              </li>
+              <li>
+                <strong>Privilege</strong> — insurance correspondence after notification
+                may be subject to litigation privilege; RIDDOR records are not.
+              </li>
+              <li>
+                <strong>Consequence of failure</strong> — RIDDOR lateness is a Reg 6
+                offence; insurance lateness can void cover for the specific incident.
+              </li>
+              <li>
+                <strong>Audit trail</strong> — both regimes generate records that may be
+                disclosed years later in subsequent civil claims or HSE prosecutions.
+              </li>
+              <li>
+                <strong>Consistency</strong> — accounts to RIDDOR and to insurer must
+                match; contradictions are detected and damage both processes.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+          <ContentEyebrow>Case study — R v Conoco Phillips (UK) Ltd [2016] and the cost of inaccurate reporting</ContentEyebrow>
+
+          <ConceptBlock
+            title="When the underlying RIDDOR record becomes evidence in a manslaughter prosecution"
+            plainEnglish="ConocoPhillips was fined £3m at Cardiff Crown Court in 2016 after three uncontrolled gas releases at the Bacton terminal in Norfolk. The HSE prosecution under HASAWA s.2 and s.3 was substantially supported by the RIDDOR records the firm itself had submitted over the preceding years — records that, examined in aggregate, showed a pattern of release events that had not been responded to with adequate corrective action. The case demonstrates that the RIDDOR data the firm submits is not just a one-time statistical return; it becomes part of the firm&apos;s permanent record and can be assembled by prosecutors to demonstrate systemic failure. Accurate, timely, comprehensive reporting protects the firm in many ways; inaccurate, partial or delayed reporting can come back to haunt the firm years later."
+            onSite="The L3 reading: every RIDDOR submission is a building block of the firm&apos;s long-term defensibility. Submit accurately, submit on time, submit comprehensively. A firm with a clean and consistent record can defend a one-off incident as an outlier; a firm with a pattern of selectively reported events finds the prosecution assembling that pattern as evidence of systemic neglect."
+          >
+            <p>What the ConocoPhillips case teaches about reporting discipline:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Aggregate records become evidence</strong> — one report is a data
+                point; five similar reports are a pattern; ten are a system failure.
+              </li>
+              <li>
+                <strong>Selective reporting is detectable</strong> — operatives talk;
+                inspectors check site logs against submitted reports; gaps get found.
+              </li>
+              <li>
+                <strong>Corrective action tracking matters</strong> — what did the firm do
+                after each previous report? If the answer is &quot;nothing visible&quot; the
+                report counts against the firm not in its favour.
+              </li>
+              <li>
+                <strong>The HSE&apos;s sectoral intelligence picture</strong> draws on
+                aggregated RIDDOR data; firms that under-report can find themselves on
+                sector-targeted inspection campaigns.
+              </li>
+              <li>
+                <strong>PI / EL insurers also draw on RIDDOR data</strong> — significant
+                under-reporting may emerge in a claim history audit and lead to coverage
+                issues.
+              </li>
+              <li>
+                <strong>Director knowledge</strong> — if the same director signed off each
+                report and the pattern was visible, s.37 personal liability becomes hard
+                to escape.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+          <ContentEyebrow>Specified injuries — Schedule 1 unpacked</ContentEyebrow>
+
+          <ConceptBlock
+            title="What actually counts as a &apos;specified injury&apos; under Reg 4(1)"
+            plainEnglish="Schedule 1 of RIDDOR 2013 lists the specific injuries that trigger the immediate phone notification + F2508 within 10 days route. Many L3 supervisors know &apos;something serious&apos; triggers immediate reporting but cannot recite the actual list. Knowing the categories helps you make a defensible category decision at the scene of an incident without waiting for the responsible person to research the regulation."
+            onSite="When an injury is observed, run the casualty&apos;s presentation against the Schedule 1 list mentally. If the injury is on the list, the trigger category is specified injury — immediate phone to HSE. If the injury is serious but not on the list and the casualty is likely to be off work 7+ days, the trigger is over-7-day. If neither, it is internal-only unless the wider event itself meets the dangerous-occurrence (Schedule 2) criteria. The list is short enough to memorise."
+          >
+            <p>RIDDOR 2013 Schedule 1 — specified injuries to a worker:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>(a) Fracture</strong>, other than to fingers, thumbs or toes.
+              </li>
+              <li>
+                <strong>(b) Amputation</strong> of an arm, hand, finger, thumb, leg, foot or
+                toe.
+              </li>
+              <li>
+                <strong>(c) Permanent loss of sight</strong> or reduction of sight in one or
+                both eyes.
+              </li>
+              <li>
+                <strong>(d) Crush injury</strong> to the head or torso causing damage to the
+                brain or internal organs.
+              </li>
+              <li>
+                <strong>(e) Serious burns</strong> (including scalding) which cover more
+                than 10% of the body or cause significant damage to eyes, respiratory system
+                or other vital organs.
+              </li>
+              <li>
+                <strong>(f) Scalping</strong> (separation of skin from the head) requiring
+                hospital treatment.
+              </li>
+              <li>
+                <strong>(g) Loss of consciousness</strong> caused by head injury or
+                asphyxia.
+              </li>
+              <li>
+                <strong>(h) Injury arising from work in an enclosed space</strong> leading to
+                hypothermia, heat-induced illness or requiring resuscitation, or requiring
+                admittance to hospital for more than 24 hours.
+              </li>
+              <li>
+                <strong>Self-employed similar list</strong> — Reg 4(2) applies the same
+                categories to self-employed persons doing work under another&apos;s
+                control.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+          <ContentEyebrow>Dangerous occurrences — Schedule 2 (relevant to electrical work)</ContentEyebrow>
+
+          <ConceptBlock
+            title="The near-miss events that ARE RIDDOR-reportable"
+            plainEnglish="Most near-misses are internal-only. But Schedule 2 of RIDDOR 2013 lists specific &apos;dangerous occurrences&apos; that ARE reportable even where no-one was injured. Several of the listed categories are directly relevant to electrical work — particularly the electrical short-circuit / overload causing fire, the failure of pressure systems, the collapse of scaffolding, and the unintended movement of work-at-height equipment. Knowing the list helps you spot the reportable near-miss that would otherwise be logged only internally."
+            onSite="The L3 supervisor reflex when a near-miss occurs: check whether the event meets a Schedule 2 trigger. If yes, it is reportable on F2508 within 10 days even though no injury resulted. The internal logging continues as normal but the external report is also required. Inspectors take a dim view of firms that consistently classify Schedule 2 events as internal-only."
+          >
+            <p>RIDDOR 2013 Schedule 2 events most relevant to electrical work:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Electrical short circuit or overload</strong> causing fire or
+                explosion resulting in plant stoppage for more than 24 hours, or which had
+                the potential to cause death.
+              </li>
+              <li>
+                <strong>Collapse, overturning or failure of load-bearing parts</strong> of
+                lifts and lifting equipment.
+              </li>
+              <li>
+                <strong>Failure of any closed vessel</strong> in which the internal pressure
+                was above or below atmospheric, where the failure had the potential to cause
+                death.
+              </li>
+              <li>
+                <strong>Plant or equipment coming into contact with overhead power
+                lines</strong> exceeding 200 volts.
+              </li>
+              <li>
+                <strong>Electrical incident causing explosion or fire</strong> where the
+                incident resulted in stoppage of the plant involved for more than 24 hours.
+              </li>
+              <li>
+                <strong>Unintended collapse of any building or structure</strong> under
+                construction, alteration or demolition.
+              </li>
+              <li>
+                <strong>Unintended release of more than 100 kg of flammable liquid</strong>,
+                or 10 kg of flammable liquid at temperature above its boiling point.
+              </li>
+              <li>
+                <strong>Failure of breathing apparatus</strong> while in use or during
+                testing immediately before use.
+              </li>
+              <li>
+                <strong>Unintended ignition or explosion of explosives</strong>.
+              </li>
+              <li>
+                <strong>Dangerous occurrence at a mine, quarry, well, transport
+                system, dock, pipeline or offshore installation</strong> — sector-specific
+                categories.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+          <ContentEyebrow>Occupational diseases — Schedule 3 categories most likely to affect L3 electricians</ContentEyebrow>
+
+          <ConceptBlock
+            title="The diseases that warrant a F2508A — and the long-latency ones to watch for"
+            plainEnglish="RIDDOR Reg 8 + Schedule 3 cover reportable occupational diseases. The reporting trigger is medical diagnosis received in writing from a registered medical practitioner that attributes the disease to a work activity listed in the schedule. For electrical trade workers the most common reportable diseases are hand-arm vibration syndrome, occupational dermatitis from contact with substances, occupational cancer from carcinogenic exposure (including welding fume reclassified 2019), and occupational asthma. Long-latency diseases mean a 2025 exposure may produce a 2045 diagnosis — and the report at that point still needs the original employer&apos;s records."
+            onSite="The L3 supervisor reflex: when an operative shows symptoms that could be work-related, the firm&apos;s occupational health route should be triggered, not just the GP route. The OH practitioner can advise on whether the diagnosis falls within Schedule 3 and whether a RIDDOR report is required. The firm&apos;s records of the operative&apos;s historical exposure (which substances, for how long, with what controls) become the documentation supporting the eventual report — sometimes decades later."
+          >
+            <p>Schedule 3 diseases most relevant to electrical-trade workers:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Carpal tunnel syndrome</strong> — work involves regular use of
+                percussive or vibrating tools.
+              </li>
+              <li>
+                <strong>Cramp of the hand or forearm</strong> — prolonged periods of
+                repetitive movement of fingers, hands or arms.
+              </li>
+              <li>
+                <strong>Occupational dermatitis</strong> — exposure to a known skin
+                sensitiser or irritant.
+              </li>
+              <li>
+                <strong>Hand-arm vibration syndrome</strong> — regular use of percussive
+                or vibrating tools (drilling, breaking, chasing).
+              </li>
+              <li>
+                <strong>Occupational asthma</strong> — exposure to a known respiratory
+                sensitiser (rosin in soldering fume, certain isocyanates in adhesives).
+              </li>
+              <li>
+                <strong>Tendonitis or tenosynovitis</strong> of the hand or forearm —
+                physically demanding work involving frequent, repetitive movements.
+              </li>
+              <li>
+                <strong>Any occupational cancer</strong> attributable to a Schedule 3
+                exposure — asbestos (mesothelioma, lung cancer, asbestosis), welding fume
+                (since HSE 2019 reclassification), some solvent exposures, ionising
+                radiation.
+              </li>
+              <li>
+                <strong>Any disease attributable to exposure to a biological agent</strong>
+                — relevant where work involves wastewater, healthcare or animal contact.
+              </li>
+            </ul>
+          </ConceptBlock>
 
           <SectionRule />
           <FAQ items={faqs} />
@@ -369,6 +677,10 @@ export default function Sub5() {
             "3-year statutory retention (Reg 12). Practice often longer for PI / Defective Premises Act considerations.",
             "Late reporting is a separate Reg 6 offence. When in doubt, report; update later if facts change.",
             "HSE follow-up may include desktop review, site visit, FFI invoicing, notice or prosecution. Cooperation + accurate evidence = best outcome.",
+            "Schedule 1 specified injuries — memorise the categories (fracture, amputation, sight, crush, burn, scalping, head-injury LOC, enclosed-space).",
+            "Schedule 2 dangerous occurrences — electrical short / overload with 24h+ stoppage IS reportable even without injury.",
+            "Schedule 3 occupational diseases — long-latency reports (HAVS, dermatitis, occupational cancer, asthma) come from medical diagnosis.",
+            "Apologies after incidents — Compensation Act 2006 s.2 separates sympathy from admission; speak with care.",
           ]} />
           <Quiz title="RIDDOR F2508 process — knowledge check" questions={quizQuestions} />
           <div className="grid grid-cols-2 gap-3 pt-2">

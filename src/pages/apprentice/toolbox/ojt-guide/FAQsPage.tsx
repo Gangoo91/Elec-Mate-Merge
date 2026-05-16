@@ -1,4 +1,3 @@
-import { Card, CardContent } from '@/components/ui/card';
 import { ArrowLeft } from 'lucide-react';
 
 const faqs = [
@@ -95,7 +94,6 @@ const glossary = [
 ];
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
 import {
   PageFrame,
   PageHero,
@@ -107,14 +105,10 @@ const FAQsPage = () => {
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/apprentice/toolbox/off-job-training-guide')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
+        <button onClick={() => navigate('/apprentice/toolbox/off-job-training-guide')} className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation">
+          <ArrowLeft className="h-4 w-4" />
           Back
-        </Button>
+        </button>
       </motion.div>
 
       <motion.div variants={itemVariants}>
@@ -133,24 +127,20 @@ const FAQsPage = () => {
         </div>
 
         {faqs.map((faq) => (
-          <Card key={faq.question} className="border-elec-yellow/20 bg-white/5">
-            <CardContent className="p-4 space-y-2">
+          <div key={faq.question} className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04]">
+            <div className="p-4 sm:p-5 space-y-2">
               <h3 className="font-medium text-elec-yellow text-sm">{faq.question}</h3>
               <p className="text-white text-sm">{faq.answer}</p>
-            </CardContent>
-          </Card>
+            </div></div>
         ))}
       </div>
 
       {/* Glossary */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-purple-400" />
-          <h2 className="text-base font-semibold text-white">Glossary of Terms</h2>
-        </div>
+        <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">Glossary of Terms</span></div></div>
 
-        <Card className="border-purple-500/20 bg-white/5">
-          <CardContent className="p-4 space-y-3">
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+          <div className="p-4 sm:p-5 space-y-3">
             {glossary.map((item) => (
               <div key={item.term} className="flex items-start gap-2">
                 <span className="text-purple-400 font-semibold text-sm min-w-[80px] flex-shrink-0">
@@ -159,8 +149,7 @@ const FAQsPage = () => {
                 <span className="text-white text-sm">{item.definition}</span>
               </div>
             ))}
-          </CardContent>
-        </Card>
+          </div></div>
       </div>
     </PageFrame>
   );

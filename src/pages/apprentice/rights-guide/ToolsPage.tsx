@@ -1,8 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, CheckCircle, FileText, Calculator, ClipboardList } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { ArrowLeft, CheckCircle2222, FileText, Calculator, ClipboardList } from 'lucide-react';
 import {
   PageFrame,
   PageHero,
@@ -71,14 +69,10 @@ const ToolsPage = () => {
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/apprentice/rights-and-pay')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
+        <button onClick={() => navigate('/apprentice/rights-and-pay')} className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation">
+          <ArrowLeft className="h-4 w-4" />
           Back
-        </Button>
+        </button>
       </motion.div>
 
       <motion.div variants={itemVariants}>
@@ -92,8 +86,8 @@ const ToolsPage = () => {
 
       {/* Checklists */}
       {checklists.map((checklist) => (
-        <Card key={checklist.title} className={`${checklist.border} bg-white/5`}>
-          <CardContent className="p-4 space-y-4">
+        <div key={checklist.title} className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+          <div className="p-4 sm:p-5 space-y-4">
             <div className="flex items-center gap-2">
               {checklist.icon}
               <h2 className={`text-lg font-semibold ${checklist.colour}`}>
@@ -111,13 +105,12 @@ const ToolsPage = () => {
                 </li>
               ))}
             </ul>
-          </CardContent>
-        </Card>
+          </div></div>
       ))}
 
       {/* Useful Templates */}
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-elec-yellow">
             Useful Letter Templates
           </h2>
@@ -173,20 +166,18 @@ const ToolsPage = () => {
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Tip */}
-      <Card className="border-green-500/20 bg-green-500/5">
-        <CardContent className="p-4">
+      <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04]">
+        <div className="p-4 sm:p-5">
           <p className="text-white text-sm leading-relaxed">
             <strong className="text-green-400">Top tip:</strong> Always keep copies
             of your apprenticeship agreement, payslips, training records, and any
             correspondence with your employer. Digital photos of documents are fine.
             This evidence is essential if you ever need to raise a formal complaint.
           </p>
-        </CardContent>
-      </Card>
+        </div></div>
     </PageFrame>
   );
 };

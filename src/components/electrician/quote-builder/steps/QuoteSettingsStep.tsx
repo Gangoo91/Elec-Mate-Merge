@@ -24,6 +24,8 @@ const settingsSchema = z.object({
       equipment: z.number().optional(),
     })
     .optional(),
+  // ELE-975 — customer signature box on PDF (opt-in)
+  showSignatureBox: z.boolean().optional(),
 });
 
 interface QuoteSettingsStepProps {
@@ -137,6 +139,33 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
                   <FormControl>
                     <Switch
                       checked={field.value !== false}
+                      onCheckedChange={field.onChange}
+                      className="data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </div>
+        </div>
+
+        {/* ELE-975 — Customer signature box on PDF */}
+        <div>
+          <div className="flex items-center justify-between py-3 border-b border-white/[0.12]">
+            <div>
+              <p className="text-[14px] font-medium text-white">Customer Signature Box</p>
+              <p className="text-[12px] text-white mt-0.5">
+                Add a signed-by / date area at the bottom of the PDF
+              </p>
+            </div>
+            <FormField
+              control={form.control}
+              name="showSignatureBox"
+              render={({ field }) => (
+                <FormItem className="p-0 m-0 space-y-0">
+                  <FormControl>
+                    <Switch
+                      checked={field.value === true}
                       onCheckedChange={field.onChange}
                       className="data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
                     />

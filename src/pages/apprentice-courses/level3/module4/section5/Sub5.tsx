@@ -31,7 +31,9 @@ import {
   LearningOutcomes,
   ContentEyebrow,
   SectionRule,
+  VideoCard,
 } from '@/components/study-centre/learning';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE =
@@ -338,6 +340,14 @@ export default function Sub5() {
             options={checks[1].options}
             correctIndex={checks[1].correctIndex}
             explanation={checks[1].explanation}
+          />
+
+          <VideoCard
+            url={videos.faultFinding.url}
+            title={videos.faultFinding.title}
+            channel={videos.faultFinding.channel}
+            duration={videos.faultFinding.duration}
+            topic={videos.faultFinding.topic}
           />
 
           <SectionRule />

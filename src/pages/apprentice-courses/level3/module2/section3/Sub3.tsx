@@ -740,7 +740,7 @@ export default function Sub3() {
                 as fully revised in A4:2026.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Section 712 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Section 712."
           />
 
           <RegsCallout
@@ -760,7 +760,7 @@ export default function Sub3() {
                 framework.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 421.1.7 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 421.1.7."
           />
 
           <SectionRule />

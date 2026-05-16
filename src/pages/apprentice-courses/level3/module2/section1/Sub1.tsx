@@ -28,7 +28,9 @@ import {
   LearningOutcomes,
   ContentEyebrow,
   SectionRule,
+  VideoCard,
 } from '@/components/study-centre/learning';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE =
@@ -49,7 +51,7 @@ const checks = [
     ],
     correctIndex: 1,
     explanation:
-      "Heat pumps are the textbook 'energy upgrade' principle. They consume electrical work to move heat from a cold reservoir (outside air, ground, or water) to a hotter reservoir (the wet heating system). The first law of thermodynamics is satisfied — total energy in equals total energy out. The COP simply measures how much useful heat each kilowatt-hour of electricity moves. Customers often hear 'free heat' marketing claims — the honest framing is 'cheap heat, paid for by clever physics\'.",
+      "Heat pumps are the textbook 'energy upgrade' principle. They consume electrical work to move heat from a cold reservoir (outside air, ground, or water) to a hotter reservoir (the wet heating system). The first law of thermodynamics is satisfied — total energy in equals total energy out. The COP simply measures how much useful heat each kilowatt-hour of electricity moves. Customers often hear 'free heat' marketing claims — the honest framing is 'cheap heat, paid for by clever physics'.",
   },
   {
     id: 'l3-m2-s1-sub1-pv-principle',
@@ -390,6 +392,15 @@ export default function Sub1() {
             explanation={checks[1].explanation}
           />
 
+          <VideoCard
+            url={videos.inverter.url}
+            title={videos.inverter.title}
+            channel={videos.inverter.channel}
+            duration={videos.inverter.duration}
+            topic="The inverter — the bridge between DC harvest and AC supply"
+            caption="The inverter sits in the middle of nearly every environmental-tech system — PV, battery, EV charging, micro-wind. Knowing what it actually does at the principle level makes the rest of the family easier to read."
+          />
+
           <SectionRule />
 
           <ContentEyebrow>Upgrade — heat pumps as the worked example</ContentEyebrow>
@@ -552,7 +563,7 @@ export default function Sub1() {
                 regulatory map keeps tightening.
               </>
             }
-            cite="Source: Climate Change Act 2008 (2008 c.27) s.1(1) — verbatim as amended; legislation.gov.uk."
+            cite="Source: Climate Change Act 2008 (2008 c.27) s.1(1) — paraphrased framework summary as amended; legislation.gov.uk."
           />
 
           <RegsCallout
@@ -575,7 +586,7 @@ export default function Sub1() {
                 judgement calls on string fusing, DC isolation and earthing strategy.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026, Section 712 — verbatim from published amendment commentary."
+            cite="Source: BS 7671:2018+A4:2026, Section 712."
           />
 
           <SectionRule />
@@ -764,11 +775,11 @@ export default function Sub1() {
           <KeyTakeaways
             points={[
               "Four operating principles cover almost every environmental technology — harvest, upgrade, recovery, demand reduction. Most real systems combine more than one.",
-              "Heat pumps don\'t create heat — they upgrade low-grade heat using electrical work. The first law of thermodynamics is conserved; COP and SCOP measure efficiency.",
+              "Heat pumps don't create heat — they upgrade low-grade heat using electrical work. The first law of thermodynamics is conserved; COP and SCOP measure efficiency.",
               "PV is the harvest principle — photons in, electrons out, no moving parts. UK roofs typically yield 800-1100 kWh per kWp per year.",
               "MVHR is energy recovery — but only delivers net benefit in airtight buildings where ventilation heat loss is the dominant flow.",
               "Demand reduction (LED, controls, fabric) is usually the cheapest carbon saving per pound spent. Generation is glamorous; reduction is effective.",
-              "UK grid carbon intensity has fallen from ~500 gCO₂/kWh in 2012 to ~200 gCO₂/kWh recently. Electrified loads get cleaner every year; gas boilers don\'t.",
+              "UK grid carbon intensity has fallen from ~500 gCO₂/kWh in 2012 to ~200 gCO₂/kWh recently. Electrified loads get cleaner every year; gas boilers don't.",
               "The Climate Change Act 2008 (as amended 2019) commits the UK to net-zero by 2050. Part L Building Regs, MCS, BS 7671 712/722/753 and ENA G98/G99 are downstream of that target.",
               "Unit 301 is an overview unit. Detailed PV / heat-pump / EV competence lives in the standalone MCS qualifications — 2399, 2919, 2921 — not in 2365-03.",
             ]}

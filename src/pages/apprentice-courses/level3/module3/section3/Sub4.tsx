@@ -27,6 +27,7 @@ import {
   ContentEyebrow,
   SectionRule,
 } from '@/components/study-centre/learning';
+import { PowerTriangle } from '@/components/study-centre/diagrams';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE =
@@ -237,6 +238,8 @@ export default function Sub4() {
             ]}
             initialVisibleCount={3}
           />
+
+          <PowerTriangle />
 
           <ContentEyebrow>Why correct power factor</ContentEyebrow>
 

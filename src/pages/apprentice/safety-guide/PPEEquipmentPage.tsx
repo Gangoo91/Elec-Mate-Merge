@@ -1,8 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, CheckCircle, AlertTriangle, Shield } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { ArrowLeft, CheckCircle2222, AlertTriangle, Shield } from 'lucide-react';
 import {
   PageFrame,
   PageHero,
@@ -14,14 +12,10 @@ const PPEEquipmentPage = () => {
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/apprentice/safety-fundamentals')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
+        <button onClick={() => navigate('/apprentice/safety-fundamentals')} className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation">
+          <ArrowLeft className="h-4 w-4" />
           Back
-        </Button>
+        </button>
       </motion.div>
 
       <motion.div variants={itemVariants}>
@@ -34,8 +28,8 @@ const PPEEquipmentPage = () => {
       </motion.div>
 
       {/* Intro */}
-      <Card className="border-blue-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <div className="flex items-center gap-2">
             <Shield className="h-5 w-5 text-blue-400" />
             <h2 className="text-lg font-semibold text-white">
@@ -51,12 +45,11 @@ const PPEEquipmentPage = () => {
             Protective Equipment at Work Regulations 2022. You are legally required
             to wear it and look after it.
           </p>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* PPE Items */}
-      <Card className="border-blue-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-blue-400">
             Essential PPE for Electricians
           </h2>
@@ -177,7 +170,7 @@ const PPEEquipmentPage = () => {
             ].map((ppe) => (
               <div
                 key={ppe.item}
-                className="border border-blue-500/20 rounded-lg p-4 space-y-3"
+                className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 sm:p-4 space-y-3"
               >
                 <div className="flex items-center justify-between">
                   <h3 className="font-semibold text-white">{ppe.item}</h3>
@@ -187,7 +180,7 @@ const PPEEquipmentPage = () => {
                 </div>
                 <p className="text-white text-sm">{ppe.purpose}</p>
 
-                <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
+                <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
                   <p className="text-white text-xs">
                     <span className="font-semibold text-blue-400">
                       Electrical note:{' '}
@@ -206,14 +199,14 @@ const PPEEquipmentPage = () => {
                         key={check}
                         className="flex items-start gap-2 text-xs text-white"
                       >
-                        <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0 mt-0.5" />
+                        <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                         {check}
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-2">
+                <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-2">
                   <p className="text-white text-xs">
                     <span className="font-semibold text-amber-400">
                       Replace:{' '}
@@ -224,12 +217,11 @@ const PPEEquipmentPage = () => {
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Arc Flash */}
-      <Card className="border-red-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-red-500/25 bg-red-500/[0.04]">
+        <div className="p-4 sm:p-5 space-y-4">
           <div className="flex items-center gap-2">
             <AlertTriangle className="h-5 w-5 text-red-400" />
             <h2 className="text-lg font-semibold text-red-400">
@@ -263,7 +255,7 @@ const PPEEquipmentPage = () => {
             ))}
           </div>
 
-          <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
+          <div className="rounded-md border border-red-500/25 bg-red-500/[0.04] p-3">
             <p className="text-white text-xs">
               <span className="font-semibold text-red-400">As an apprentice: </span>
               You should not be working in arc flash risk zones without
@@ -272,12 +264,11 @@ const PPEEquipmentPage = () => {
               flash risk assessment.
             </p>
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Tool Safety */}
-      <Card className="border-green-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-green-400">
             Tool Safety and Inspection
           </h2>
@@ -304,7 +295,7 @@ const PPEEquipmentPage = () => {
                 key={item}
                 className="flex items-start gap-2 text-sm text-white"
               >
-                <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                 {item}
               </div>
             ))}
@@ -321,7 +312,7 @@ const PPEEquipmentPage = () => {
               tools (screwdrivers, pliers, side cutters, strippers) should all be
               VDE-rated.
             </p>
-            <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
+            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
               <p className="text-white text-xs">
                 <span className="font-semibold text-green-400">Note: </span>
                 VDE insulation is a backup safety measure — it does not replace
@@ -331,12 +322,11 @@ const PPEEquipmentPage = () => {
               </p>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Your Responsibilities */}
-      <Card className="border-amber-500/20 bg-amber-500/10">
-        <CardContent className="p-4 space-y-3">
+      <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04]">
+        <div className="p-4 sm:p-5 space-y-3">
           <h2 className="text-sm font-semibold text-amber-400">
             Your PPE Responsibilities
           </h2>
@@ -354,17 +344,16 @@ const PPEEquipmentPage = () => {
                 key={item}
                 className="flex items-start gap-2 text-sm text-white"
               >
-                <CheckCircle className="h-4 w-4 text-amber-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                 {item}
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Footer */}
-      <Card className="border-white/10 bg-white/5">
-        <CardContent className="p-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5">
           <p className="text-white text-xs leading-relaxed">
             PPE standards and requirements based on the Personal Protective
             Equipment at Work Regulations 2022, BS EN standards as cited, and HSE
@@ -372,8 +361,7 @@ const PPEEquipmentPage = () => {
             suitable equipment free of charge. Check with your employer for
             site-specific PPE requirements.
           </p>
-        </CardContent>
-      </Card>
+        </div></div>
     </PageFrame>
   );
 };

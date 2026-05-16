@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { DecimalInput } from '@/components/ui/decimal-input';
 import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
@@ -572,18 +573,10 @@ export const EnhancedQuoteItemsStep = ({
             <div className="space-y-3">
               <label className="text-xs font-medium text-white block">Hours (decimals allowed, e.g. 3.5)</label>
               <div className="flex items-center gap-2">
-                <input
-                  type="text"
-                  inputMode="decimal"
+                <DecimalInput
                   placeholder="3.5"
-                  value={newItem.hours > 0 ? newItem.hours : ''}
-                  onChange={(e) => {
-                    const val = e.target.value;
-                    if (val === '' || /^\d*\.?\d*$/.test(val)) {
-                      const num = val === '' ? 0 : parseFloat(val);
-                      if (!isNaN(num)) handleHoursChange(num);
-                    }
-                  }}
+                  value={newItem.hours}
+                  onChange={handleHoursChange}
                   className="flex-1 h-12 px-4 rounded-xl bg-white/[0.08] border border-elec-yellow/40 text-[17px] font-medium text-white placeholder:text-white touch-manipulation focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/30 caret-elec-yellow"
                 />
                 <span className="text-[13px] font-medium text-white">hours</span>
@@ -789,7 +782,8 @@ export const EnhancedQuoteItemsStep = ({
                 inputMode="decimal"
                 value={quantityInput}
                 onChange={(e) => {
-                  const val = e.target.value;
+                  // ELE-974 — iOS UK keyboards surface comma on the decimal key
+                  const val = e.target.value.replace(',', '.');
                   if (val === '' || /^\d*\.?\d*$/.test(val)) {
                     setQuantityInput(val);
                     // ELE-890 — also flush parseable values into newItem so the
@@ -871,7 +865,8 @@ export const EnhancedQuoteItemsStep = ({
                 inputMode="decimal"
                 value={unitPriceInput}
                 onChange={(e) => {
-                  const val = e.target.value;
+                  // ELE-974 — iOS UK keyboards surface comma on the decimal key
+                  const val = e.target.value.replace(',', '.');
                   if (val === '' || /^\d*\.?\d*$/.test(val)) {
                     setUnitPriceInput(val);
                     // ELE-890 — flush parseable price to newItem live so the
@@ -982,37 +977,19 @@ export const EnhancedQuoteItemsStep = ({
                   <div className="flex items-center justify-between">
                     {/* Quantity and Price inputs */}
                     <div className="flex items-center gap-1.5">
-                      <input
-                        type="text"
-                        inputMode="decimal"
+                      <DecimalInput
                         style={{ colorScheme: 'dark' }}
-                        value={item.quantity === 0 ? '' : item.quantity}
-                        onChange={(e) => {
-                          const val = e.target.value;
-                          if (val === '' || /^\d*\.?\d*$/.test(val)) {
-                            onUpdate(item.id, {
-                              quantity: val === '' ? 0 : parseFloat(val),
-                            });
-                          }
-                        }}
+                        value={item.quantity}
+                        onChange={(quantity) => onUpdate(item.id, { quantity })}
                         className="w-12 h-8 text-center text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation"
                       />
                       <span className="text-[11px] text-white w-8 truncate">{item.unit}</span>
                       <span className="text-[12px] text-white">×</span>
                       <span className="text-[11px] text-white">£</span>
-                      <input
-                        type="text"
-                        inputMode="decimal"
+                      <DecimalInput
                         style={{ colorScheme: 'dark' }}
-                        value={item.unitPrice === 0 ? '' : item.unitPrice}
-                        onChange={(e) => {
-                          const val = e.target.value;
-                          if (val === '' || /^\d*\.?\d*$/.test(val)) {
-                            onUpdate(item.id, {
-                              unitPrice: val === '' ? 0 : parseFloat(val),
-                            });
-                          }
-                        }}
+                        value={item.unitPrice}
+                        onChange={(unitPrice) => onUpdate(item.id, { unitPrice })}
                         className="w-14 h-8 text-center text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation"
                       />
                     </div>

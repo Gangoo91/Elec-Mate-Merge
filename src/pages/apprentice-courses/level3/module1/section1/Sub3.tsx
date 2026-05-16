@@ -319,7 +319,7 @@ export default function Sub3() {
                 catches almost every electrical contracting firm.
               </>
             }
-            cite="Source: Management of Health and Safety at Work Regulations 1999 (SI 1999/3242), Reg 3 — verbatim from legislation.gov.uk."
+            cite="Source: Management of Health and Safety at Work Regulations 1999 (SI 1999/3242), Reg 3."
           />
 
           <SectionRule />
@@ -426,7 +426,7 @@ export default function Sub3() {
                 question.
               </>
             }
-            cite="Source: Construction (Design and Management) Regulations 2015 (SI 2015/51), Reg 9 — verbatim from legislation.gov.uk."
+            cite="Source: Construction (Design and Management) Regulations 2015 (SI 2015/51), Reg 9."
           />
 
           <RegsCallout
@@ -451,7 +451,7 @@ export default function Sub3() {
                 an L2 mate — both directions of the duty are live.
               </>
             }
-            cite="Source: Construction (Design and Management) Regulations 2015 (SI 2015/51), Reg 15 — verbatim from legislation.gov.uk."
+            cite="Source: Construction (Design and Management) Regulations 2015 (SI 2015/51), Reg 15."
           />
 
           <InlineCheck
@@ -610,7 +610,7 @@ export default function Sub3() {
                 is a Reg 13 + EAWR Reg 16 + HASAWA s.7 issue all at once.
               </>
             }
-            cite="Source: Management of Health and Safety at Work Regulations 1999 (SI 1999/3242), Reg 13 — verbatim from legislation.gov.uk."
+            cite="Source: Management of Health and Safety at Work Regulations 1999 (SI 1999/3242), Reg 13."
           />
 
           <SectionRule />

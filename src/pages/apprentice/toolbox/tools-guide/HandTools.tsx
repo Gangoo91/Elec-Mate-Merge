@@ -1,14 +1,36 @@
+/**
+ * Tools · HandTools — editorial hand tools browser.
+ *
+ * Searchable, filterable list of hand tools with featured carousel,
+ * essential quick reference, simple job kits, advanced tools section
+ * (collapsible), and full grid.
+ */
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, Search, SlidersHorizontal, Wrench, Star, Shield, Zap } from 'lucide-react';
+import {
+  ArrowLeft,
+  Search,
+  SlidersHorizontal,
+  Wrench,
+  Star,
+  Shield,
+  Zap,
+  X,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToolsData } from '@/hooks/useToolsData';
-import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import {
+  PageFrame,
+  PageHero,
+  itemVariants,
+} from '@/components/college/primitives';
+import {
+  Eyebrow,
+  SectionHeader,
+} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 import ToolsFeaturedCarousel from '@/components/electrician-tools/ToolsFeaturedCarousel';
 import ToolsGrid from '@/components/electrician-tools/ToolsGrid';
 import EssentialToolsQuickRef from '@/components/electrician-tools/EssentialToolsQuickRef';
@@ -16,7 +38,24 @@ import SimpleJobKits from '@/components/electrician-tools/SimpleJobKits';
 import ToolComparison from '@/components/electrician-tools/ToolComparison';
 import ProfessionalTips from '@/components/electrician-tools/ProfessionalTips';
 import QuickToolFinder from '@/components/electrician-tools/QuickToolFinder';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
+
+const quickStats = [
+  { label: 'Tool categories', value: '6+', icon: Wrench },
+  { label: 'Price filters', value: '7', icon: Star },
+  { label: 'UK suppliers', value: '5+', icon: Shield },
+  { label: 'Quality focus', value: '100%', icon: Zap },
+];
+
+const quickFilters = [
+  { id: 'all', label: 'All tools' },
+  { id: 'essential', label: 'Essential only' },
+  { id: 'under20', label: 'Under £20' },
+  { id: 'under50', label: 'Under £50' },
+  { id: 'testing', label: 'Testing' },
+  { id: 'cutting', label: 'Cutting' },
+  { id: 'instock', label: 'In stock' },
+];
 
 const HandTools = () => {
   const navigate = useNavigate();
@@ -25,53 +64,6 @@ const HandTools = () => {
   const [showAdvanced, setShowAdvanced] = useState(false);
   const { data: tools = [], isLoading } = useToolsData();
 
-  const quickStats = [
-    {
-      label: 'Tool Categories',
-      value: '6+',
-      icon: Wrench,
-      color: 'text-elec-yellow',
-      bg: 'from-elec-yellow/10 to-elec-yellow/5',
-      border: 'border-elec-yellow/30',
-    },
-    {
-      label: 'Price Filters',
-      value: '7',
-      icon: Star,
-      color: 'text-blue-400',
-      bg: 'from-blue-500/10 to-blue-500/5',
-      border: 'border-blue-500/30',
-    },
-    {
-      label: 'UK Suppliers',
-      value: '5+',
-      icon: Shield,
-      color: 'text-green-400',
-      bg: 'from-green-500/10 to-green-500/5',
-      border: 'border-green-500/30',
-    },
-    {
-      label: 'Quality Focus',
-      value: '100%',
-      icon: Zap,
-      color: 'text-purple-400',
-      bg: 'from-purple-500/10 to-purple-500/5',
-      border: 'border-purple-500/30',
-    },
-  ];
-
-  // Quick filter options
-  const quickFilters = [
-    { id: 'all', label: 'All Tools' },
-    { id: 'essential', label: 'Essential Only' },
-    { id: 'under20', label: 'Under £20' },
-    { id: 'under50', label: 'Under £50' },
-    { id: 'testing', label: 'Testing Tools' },
-    { id: 'cutting', label: 'Cutting Tools' },
-    { id: 'instock', label: 'In Stock' },
-  ];
-
-  // Filter tools for hand tools and apply search + quick filters
   const handTools = tools.filter((tool) => {
     const isHandTool =
       tool.category?.toLowerCase().includes('hand') ||
@@ -88,7 +80,6 @@ const HandTools = () => {
       tool.category?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       tool.supplier?.toLowerCase().includes(searchTerm.toLowerCase());
 
-    // Apply quick filters
     let matchesFilter = true;
     if (selectedFilter === 'essential') {
       matchesFilter =
@@ -115,24 +106,20 @@ const HandTools = () => {
     return isHandTool && matchesSearch && matchesFilter;
   });
 
-  // Get featured tools (first 6 for carousel)
   const featuredTools = handTools.slice(0, 6);
   const featuredToolIds = featuredTools.map((tool) => tool.id || 0);
-
-  // Get remaining tools for grid
   const gridTools = handTools.slice(6);
 
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
+        <button
           onClick={() => navigate('/apprentice/toolbox/tools-guide')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+          className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation"
         >
-          <ArrowLeft className="mr-2 h-5 w-5" />
+          <ArrowLeft className="h-4 w-4" />
           Back
-        </Button>
+        </button>
       </motion.div>
 
       <motion.div variants={itemVariants}>
@@ -144,141 +131,143 @@ const HandTools = () => {
         />
       </motion.div>
 
-      {/* Quick Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-        {quickStats.map((stat, index) => (
-          <Card key={index} className={`${stat.border} bg-gradient-to-br ${stat.bg}`}>
-            <CardContent className="p-4 text-center">
-              <stat.icon className={`h-8 w-8 ${stat.color} mx-auto mb-2`} />
-              <p className={`text-2xl font-bold ${stat.color}`}>{stat.value}</p>
-              <p className="text-xs text-white">{stat.label}</p>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      {/* ── Quick stats ─────────────────────────────────────────── */}
+      <motion.div
+        variants={itemVariants}
+        className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3"
+      >
+        {quickStats.map((stat) => {
+          const Icon = stat.icon;
+          return (
+            <div
+              key={stat.label}
+              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-3 sm:p-4 text-center space-y-1.5"
+            >
+              <Icon className="h-4 w-4 text-elec-yellow/85 mx-auto" />
+              <p className="text-[18px] sm:text-[20px] font-mono font-semibold tabular-nums text-elec-yellow leading-none">
+                {stat.value}
+              </p>
+              <Eyebrow className="text-[9.5px]">{stat.label}</Eyebrow>
+            </div>
+          );
+        })}
+      </motion.div>
 
-      {/* Search and Filters */}
-      <Card className="border-white/10 bg-white/5 backdrop-blur-sm">
-        <CardContent className="p-4 space-y-4">
+      {/* ── Search & filters ────────────────────────────────────── */}
+      <motion.div variants={itemVariants}>
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
           <div className="relative w-full">
-            {!searchTerm && (
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-            )}
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40 pointer-events-none" />
             <Input
-              placeholder="Search hand tools..."
+              placeholder="Search hand tools…"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className={cn(
-                'bg-white/5 border-white/20 text-white placeholder:text-white focus:border-elec-yellow/50',
-                !searchTerm && 'pl-10'
-              )}
+              className="h-11 pl-10 pr-10 touch-manipulation bg-[hsl(0_0%_8%)] border border-white/[0.08] text-[13px] focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20 placeholder:text-white/40"
             />
-          </div>
-
-          {/* Quick Filters */}
-          <div className="flex flex-wrap gap-2">
-            {quickFilters.map((filter) => (
-              <Badge
-                key={filter.id}
-                variant={selectedFilter === filter.id ? 'default' : 'outline'}
-                className={`cursor-pointer transition-all ${
-                  selectedFilter === filter.id
-                    ? 'bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90'
-                    : 'border-white/30 text-white hover:bg-white/10'
-                }`}
-                onClick={() => setSelectedFilter(filter.id)}
+            {searchTerm && (
+              <button
+                onClick={() => setSearchTerm('')}
+                className="absolute right-2 top-1/2 -translate-y-1/2 h-9 w-9 flex items-center justify-center rounded-full active:bg-white/[0.06] touch-manipulation"
+                aria-label="Clear search"
               >
-                {filter.label}
-              </Badge>
-            ))}
+                <X className="h-4 w-4 text-white/55" />
+              </button>
+            )}
           </div>
 
-          {/* Results count */}
+          {/* Quick filter chips */}
+          <div className="flex flex-wrap gap-1.5">
+            {quickFilters.map((filter) => {
+              const isActive = selectedFilter === filter.id;
+              return (
+                <button
+                  key={filter.id}
+                  onClick={() => setSelectedFilter(filter.id)}
+                  className={cn(
+                    'inline-flex items-center h-8 px-3 rounded-md border text-[11.5px] font-medium touch-manipulation active:scale-[0.98] transition-all',
+                    isActive
+                      ? 'border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow'
+                      : 'border-white/[0.08] bg-white/[0.02] text-white/85 hover:bg-white/[0.04]'
+                  )}
+                >
+                  {filter.label}
+                </button>
+              );
+            })}
+          </div>
+
           {!isLoading && handTools.length > 0 && (
-            <div className="flex items-center justify-between text-sm text-white">
-              <span>{handTools.length} tools found</span>
-              <Button
-                variant="ghost"
-                size="sm"
+            <div className="flex items-center justify-between gap-2 pt-2 border-t border-white/[0.04]">
+              <span className="text-[12px] font-mono tabular-nums text-white/55">
+                {handTools.length} tools found
+              </span>
+              <button
                 onClick={() => setShowAdvanced(!showAdvanced)}
-                className="text-white hover:text-white hover:bg-white/10"
+                className="inline-flex items-center gap-1.5 h-8 px-3 rounded-md text-[11.5px] font-medium text-white/85 hover:text-white touch-manipulation"
               >
-                <SlidersHorizontal className="h-4 w-4 mr-2" />
-                {showAdvanced ? 'Hide' : 'Show'} Advanced
-              </Button>
+                <SlidersHorizontal className="h-3.5 w-3.5" />
+                {showAdvanced ? 'Hide' : 'Show'} advanced
+              </button>
             </div>
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </motion.div>
 
+      {/* ── Results ─────────────────────────────────────────────── */}
       {isLoading ? (
         <div className="flex justify-center py-16">
-          <div className="animate-pulse text-white">Loading tools...</div>
+          <Eyebrow>Loading tools…</Eyebrow>
         </div>
       ) : handTools.length === 0 ? (
-        <Card className="border-white/10 bg-white/5">
-          <CardContent className="text-center py-16">
-            <div className="w-16 h-16 rounded-full bg-elec-yellow/10 flex items-center justify-center mx-auto mb-4">
-              <Search className="h-8 w-8 text-elec-yellow" />
-            </div>
-            <h3 className="text-lg font-semibold text-white mb-2">No Hand Tools Found</h3>
-            <p className="text-white">Try adjusting your filters or search terms.</p>
-            <Button
-              variant="outline"
-              onClick={() => {
-                setSearchTerm('');
-                setSelectedFilter('all');
-              }}
-              className="mt-4 border-elec-yellow/30 text-white hover:bg-elec-yellow/10"
-            >
-              Clear Filters
-            </Button>
-          </CardContent>
-        </Card>
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-6 sm:p-8 text-center space-y-3">
+          <Search className="h-5 w-5 text-white/40 mx-auto" />
+          <Eyebrow>No hand tools found</Eyebrow>
+          <p className="text-[13px] text-white/70">
+            Try adjusting your filters or search terms.
+          </p>
+          <button
+            onClick={() => {
+              setSearchTerm('');
+              setSelectedFilter('all');
+            }}
+            className="inline-flex items-center justify-center gap-2 h-10 px-4 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06] text-[12.5px] font-medium text-elec-yellow hover:bg-elec-yellow/[0.10] active:scale-[0.98] transition-all touch-manipulation"
+          >
+            Clear filters
+          </button>
+        </div>
       ) : (
         <div className="space-y-6">
-          {/* Essential Tools Quick Reference */}
           <EssentialToolsQuickRef />
-
-          {/* Simple Job Kits */}
           <SimpleJobKits />
 
-          {/* Advanced Tools Section (Collapsible) */}
           <Collapsible open={showAdvanced} onOpenChange={setShowAdvanced}>
             <CollapsibleContent className="space-y-6">
-              {/* Quick Tool Finder */}
               <QuickToolFinder />
-
-              {/* Tool Comparison */}
               <ToolComparison tools={handTools} />
-
-              {/* Professional Tips */}
               <ProfessionalTips />
             </CollapsibleContent>
           </Collapsible>
 
-          {/* Featured Carousel */}
           {featuredTools.length > 0 && (
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="h-px bg-gradient-to-r from-transparent via-elec-yellow/30 to-transparent flex-1" />
-                <h3 className="text-xl font-semibold text-white px-4">Featured Hand Tools</h3>
-                <div className="h-px bg-gradient-to-r from-transparent via-elec-yellow/30 to-transparent flex-1" />
-              </div>
+            <section className="space-y-3">
+              <SectionHeader
+                eyebrow="Featured"
+                title="Featured hand tools"
+                meta="Editor's pick — quality first"
+              />
               <ToolsFeaturedCarousel />
-            </div>
+            </section>
           )}
 
-          {/* All Tools Grid */}
           {gridTools.length > 0 && (
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="h-px bg-gradient-to-r from-transparent via-elec-yellow/30 to-transparent flex-1" />
-                <h3 className="text-xl font-semibold text-white px-4">Browse All Hand Tools</h3>
-                <div className="h-px bg-gradient-to-r from-transparent via-elec-yellow/30 to-transparent flex-1" />
-              </div>
+            <section className="space-y-3">
+              <SectionHeader
+                eyebrow="Browse all"
+                title="All hand tools"
+                meta={`${gridTools.length} more tools to explore`}
+              />
               <ToolsGrid tools={gridTools} excludeIds={featuredToolIds} />
-            </div>
+            </section>
           )}
         </div>
       )}

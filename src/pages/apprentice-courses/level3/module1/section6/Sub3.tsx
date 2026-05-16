@@ -37,12 +37,16 @@ const quizQuestions = [
 ];
 
 const faqs = [
-  { question: 'Is BS 7671 part of the Approved Documents?', answer: 'No - BS 7671 is the IET wiring regulations (BSI standard). Approved Doc P references BS 7671 as the technical basis for safe electrical installation. Compliance with BS 7671 + Approved Doc P together discharges Building Regs electrical safety requirements.' },
-  { question: 'What\'s the Future Homes Standard?', answer: 'Government direction setting more demanding energy efficiency targets for new homes (heat pumps, no gas, low-carbon). Approved Doc L being progressively updated to align. Driving major electrification of heating sector.' },
-  { question: 'Does Approved Doc P apply to all electrical work?', answer: 'No - Approved Doc P specifically covers dwellings (and some shared parts). Commercial work governed by Building Regs more broadly + other guidance.' },
-  { question: 'What\'s a "thermal element" under Approved Doc L?', answer: 'A wall, floor or roof - element separating conditioned from unconditioned space. Energy efficiency requirements apply when these are altered. Affects insulation requirements and may indirectly drive electrical work (recessed luminaires require fire / thermal considerations).' },
-  { question: 'Are EV chargers covered by specific Approved Documents?', answer: 'Approved Doc S (Infrastructure for charging electric vehicles) introduced 2021 - requirements for new dwellings and non-residential buildings to provide EV charge points. Plus Approved Doc B fire considerations + BS 7671 Section 722 for the install itself.' },
+  { question: 'Is BS 7671 part of the Approved Documents?', answer: 'No — BS 7671 is the IET wiring regulations (BSI standard). Approved Doc P references BS 7671 as the technical basis for safe electrical installation. Compliance with BS 7671 + Approved Doc P together discharges Building Regs electrical safety requirements.' },
+  { question: 'What is the Future Homes Standard?', answer: 'Government direction setting more demanding energy efficiency targets for new homes (heat pumps, no gas, low-carbon). Approved Doc L being progressively updated to align. Driving major electrification of heating sector.' },
+  { question: 'Does Approved Doc P apply to all electrical work?', answer: 'No — Approved Doc P specifically covers dwellings (and some shared parts). Commercial work governed by Building Regs more broadly + other guidance.' },
+  { question: 'What is a thermal element under Approved Doc L?', answer: 'A wall, floor or roof — element separating conditioned from unconditioned space. Energy efficiency requirements apply when these are altered. Affects insulation requirements and may indirectly drive electrical work (recessed luminaires require fire / thermal considerations).' },
+  { question: 'Are EV chargers covered by specific Approved Documents?', answer: 'Approved Doc S (Infrastructure for charging electric vehicles) introduced 2021 — requirements for new dwellings and non-residential buildings to provide EV charge points. Plus Approved Doc B fire considerations + BS 7671 Section 722 for the install itself.' },
   { question: 'How do Approved Documents update?', answer: 'Periodically by government. Typically 5-10 year cycles for major revisions; interim updates and amendments more frequent. Approved Doc B has been updated multiple times post-Grenfell. Always check the current version.' },
+  { question: 'Which Approved Document covers commercial / non-domestic electrical safety?', answer: 'Approved Document P specifically covers dwellings. Non-domestic electrical safety is governed by Building Regulations requirement L1 / B1-B5 / and BS 7671 directly. EAWR 1989 applies as the workplace safety statute. There is no &quot;Approved Doc P for commercial&quot; — the framework operates differently.' },
+  { question: 'How does Approved Doc M (Access to and use of buildings) affect electrical work?', answer: 'Approved Doc M sets accessibility standards. Affects switch / socket heights, accessible-toilet electrical requirements, evacuation lift specifications, induction loop systems, accessible parking EV charger placement. Often considered alongside Doc P and Doc B.' },
+  { question: 'Are Approved Documents tested in C&G assessments?', answer: 'Conceptually yes — the relationship between Building Regulations and Approved Documents, the notifiable work framework under Doc P, the safe-harbour relationship to statute. The detailed content is reference material rather than memorisation.' },
+  { question: 'What if the Approved Document is silent on something I need to do?', answer: 'Apply BS 7671 plus relevant BS / EN standards plus manufacturer instructions plus industry good practice. The Approved Document is one route to Building Regs compliance — silence does not block the work, but it does require the contractor to demonstrate equivalent performance through other recognised standards.' },
 ];
 
 export default function Sub3() {
@@ -56,8 +60,11 @@ export default function Sub3() {
           <PageHero eyebrow="Module 1 · Section 6 · Subsection 3" title="Approved Documents B / L / P interactions" description="Remember from Section 1.7 - Approved Documents support Building Regs. At L3 you understand how B (fire) / L (energy) / P (electrical safety) interact with the work you do." tone="emerald" />
           <TLDR points={[
             "Approved Documents are non-statutory guidance giving practical detail on Building Regs 2010 compliance. Safe-harbour relationship.",
-            "Doc P - electrical safety in dwellings (England). Notifiable work via Competent Person Scheme or building control.",
+            "Doc P — electrical safety in dwellings (England). Notifiable work via Competent Person Scheme or building control.",
             "Doc B (fire) drives emergency lighting, fire detection, cable CPR class, fire stopping. Doc L (energy) drives heat pumps, LED, EV charging, renewables.",
+            "Doc S — EV charging infrastructure (2021); new dwellings, residential, non-residential buildings with parking.",
+            "Devolved nations have separate frameworks — Wales (Welsh Approved Documents), Scotland (Building Standards Technical Handbooks), NI (Technical Booklets).",
+            "Approved Documents are the technical baseline; BSA 2022 framework wraps regulatory process around them for HRRBs.",
           ]} />
           <LearningOutcomes outcomes={[
             "Identify Approved Documents B (fire), L (energy), P (electrical safety) and their scopes.",
@@ -179,7 +186,7 @@ export default function Sub3() {
             </ul>
           </ConceptBlock>
 
-          <RegsCallout source="Building Regulations 2010 — Schedule 1, Requirement L1 (Conservation of fuel and power)" clause={<>&quot;Reasonable provision shall be made for the conservation of fuel and power in buildings by — (a) limiting heat gains and losses... (b) providing fixed building services which — (i) are energy efficient...&quot;</>} meaning={<>The energy efficiency requirement in the Building Regs schedule. Approved Document L gives the practical compliance route. Drives heat pump rollout, LED retrofit, BMS controls, EV charging infrastructure, on-site renewables — major source of electrical trade work over coming decade.</>} cite="Source: Building Regulations 2010 (SI 2010/2214), Schedule 1, Requirement L1 — verbatim from legislation.gov.uk." />
+          <RegsCallout source="Building Regulations 2010 — Schedule 1, Requirement L1 (Conservation of fuel and power)" clause={<>&quot;Reasonable provision shall be made for the conservation of fuel and power in buildings by — (a) limiting heat gains and losses... (b) providing fixed building services which — (i) are energy efficient...&quot;</>} meaning={<>The energy efficiency requirement in the Building Regs schedule. Approved Document L gives the practical compliance route. Drives heat pump rollout, LED retrofit, BMS controls, EV charging infrastructure, on-site renewables — major source of electrical trade work over coming decade.</>} cite="Source: Building Regulations 2010 (SI 2010/2214), Schedule 1, Requirement L1." />
 
           <ConceptBlock title="Devolved nation frameworks — quick reference" plainEnglish="Approved Documents are England-specific. Wales has its own equivalent set (similar but not identical, published by Welsh Government); Scotland has Building Standards Technical Handbooks under Building (Scotland) Regulations 2004 (different framework with mandatory compliance route); Northern Ireland has Building Regulations (Northern Ireland) 2012 with Technical Booklets." onSite="L3 supervisor on cross-border work: check the local framework before quoting Approved Doc clauses. Most technical content aligns broadly but specifics differ — notification regimes, prescribed self-certification schemes, fire-safety classifications, energy-efficiency targets all have devolved variations.">
             <p>Devolved nation frameworks:</p>
@@ -202,17 +209,250 @@ export default function Sub3() {
           <Scenario title="Heat pump install on a domestic property" situation={<>Customer wants a heat pump fitted to replace gas boiler. Your firm has been engaged for the electrical infrastructure. The pump itself will be installed by an F-Gas certified contractor. The customer assumes \"you can just do it&quot;.</>} whatToDo={<>Apply Approved Doc framework. Doc L drives the energy efficiency case (heat pump = compliant); Doc P covers electrical safety in dwellings (likely involves new circuit = notifiable work, CPS registration covers); Doc B may apply if heat pump location affects fire compartmentation (boilers were sometimes in fire-rated cupboards). Doc S may apply if EV charge point being added at same time. Brief the customer: scope of electrical work, notification under Approved Doc P, F-Gas certified contractor for refrigerant work, expected commissioning sequence. Confirm CPS registration covers; produce notifiable cert via CPS. Coordinate with F-Gas contractor; integrate sequencing.</>} whyItMatters={<>Heat pump installs are a fast-growing trade area driven by Approved Doc L. Multiple Approved Documents may be relevant on a single job. The L3 supervisor identifies the framework and ensures compliance routes are followed. Customer&apos;s &quot;just do it&quot; framing skips the notification + competent contractor coordination that&apos;s mandatory.</>} />
 
           <SectionRule />
+          <ContentEyebrow>Approved Document S — EV charging infrastructure</ContentEyebrow>
+
+          <ConceptBlock
+            title="The newest Approved Document and what it means for daily electrical work"
+            plainEnglish="Approved Document S (Infrastructure for the Charging of Electric Vehicles) came into force in June 2022. It sets out requirements for EV charging provision in new and renovated buildings: dwellings with parking get a chargepoint or cable route; non-residential new buildings get chargepoints proportionate to parking; renovated non-residential buildings with parking get cable routes. Compliance routes include physical chargepoint install, cable route provision, or commuted contribution where local circumstances make on-site provision unreasonable. The Document interacts with BS 7671 Section 722 (EV charging installations) for the technical electrical detail."
+            onSite="The L3 supervisor on any new-build or major renovation now routinely encounters Approved Doc S requirements. Even when the chargepoint itself isn&apos;t being installed, the cable route provision (ducting, mains capacity, accessibility) is mandatory. Identifying scope under Doc S at design stage avoids retrofit cost. The interaction with Building Control means the work needs notification under Approved Doc P alongside the Doc S compliance."
+          >
+            <p>Approved Doc S compliance routes:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>New dwellings with associated parking</strong> — minimum 1
+                chargepoint per dwelling, or cable route where chargepoint not currently
+                installed.
+              </li>
+              <li>
+                <strong>Renovated dwellings (major renovation) with parking</strong> —
+                same as new where parking provision is being addressed.
+              </li>
+              <li>
+                <strong>New non-residential buildings with parking</strong> — minimum
+                1 chargepoint per 10 spaces; cable route to all spaces.
+              </li>
+              <li>
+                <strong>Renovated non-residential with parking &gt;10 spaces</strong> —
+                cable route to 1 in 5 spaces minimum.
+              </li>
+              <li>
+                <strong>Mixed-use</strong> — provision proportionate to dwellings and
+                non-residential elements.
+              </li>
+              <li>
+                <strong>BS 7671 Section 722</strong> — technical requirements for the
+                EV charging installation itself; integrates with Approved Doc S
+                provision requirement.
+              </li>
+              <li>
+                <strong>OCPP compatibility, OZEV-eligible products</strong> — for
+                grant-funded installations; market-shaped by funding criteria.
+              </li>
+              <li>
+                <strong>Load management considerations</strong> — site capacity may
+                require active load management at higher chargepoint counts.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+          <ContentEyebrow>Approved Doc M and accessibility</ContentEyebrow>
+
+          <ConceptBlock
+            title="How accessibility affects everyday electrical work"
+            plainEnglish="Approved Document M (Access to and use of buildings) sets accessibility standards under Building Regs requirement M. Volume 1 covers dwellings (with M4(1), M4(2), M4(3) categories for different levels of access); Volume 2 covers non-domestic buildings. Electrical-trade implications: switch and socket heights (typically 450-1200mm above floor), socket positions for accessibility, light switches at accessible heights, accessible-toilet electrical requirements, evacuation lift specifications, induction loop systems, accessible EV charging parking bay electrical infrastructure. The standard ensures that the built environment is usable by people with a range of mobility, sensory and cognitive needs."
+            onSite="L3 supervisor practical implication: standard new-build electrical fit-outs follow Approved Doc M requirements, with switches and sockets at accessible heights. Retrofit and refurbishment work may need to bring existing installations up to accessibility standard depending on scope. Customer-facing alterations particularly in homes occupied by older or disabled residents often benefit from M4(2) or M4(3) provision even where not strictly required by Building Regs scope. The supervisor identifies the M-relevant elements at job start."
+          >
+            <p>Approved Doc M electrical touchpoints:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Switch and socket heights — 450-1200mm above floor for accessibility.</li>
+              <li>Socket count and positioning for accessible reach.</li>
+              <li>Accessible-toilet electrical requirements — emergency pull cord, alarm reset, light controls.</li>
+              <li>Evacuation lift specifications — BS EN 81-76; safe evacuation of mobility-impaired residents.</li>
+              <li>Induction loop systems — for residents with hearing aids; counter / reception areas.</li>
+              <li>Accessible EV charging parking bay infrastructure.</li>
+              <li>Tactile and visual signage power supplies.</li>
+              <li>Lighting levels and uniformity — particularly stairs and circulation routes.</li>
+              <li>Volume 1 — dwellings; Volume 2 — non-domestic buildings.</li>
+              <li>M4(1) visitable, M4(2) accessible and adaptable, M4(3) wheelchair user dwellings.</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Approved Doc B and the fire-stopping discipline"
+            plainEnglish="Approved Doc B (Volume 1 dwellings, Volume 2 buildings other than dwellings) addresses fire safety. The fire-stopping requirement is one of the most operationally significant for electrical contractors — every penetration through a fire-rated wall, floor or ceiling must be fire-stopped to maintain the compartment&apos;s fire integrity. Cable trays, conduit, individual cables passing through fire walls all require appropriate fire-stopping per the relevant standard. Approved fire-stopping products include intumescent collars, fire batt, fire-rated sealant, fire pillows. Installation must follow manufacturer instructions; substitutions need design approval. The fire-stopping is one of the routine inspection points that surfaces failures repeatedly on EICR coding."
+            onSite="L3 supervisor practical reflex: every cable penetration through a fire-rated element gets fire-stopped. Photograph before fire-stopping (showing the penetration), photograph after (showing the stopping in place). Record the product used. The discipline takes minutes per penetration and produces an inspection-defensible record. The supervisor coaching L2 mates makes fire-stopping part of cable-installation routine, not an after-thought. On HRRBs the discipline is even sharper — fire-stopping is safety-case-critical and any breach is an MOR trigger."
+          >
+            <p>Fire-stopping operational discipline:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Identify fire-rated elements (compartmentation walls, fire-rated ceilings, fire-rated floors) before penetrating.</li>
+              <li>Plan cable routes to minimise penetrations where possible.</li>
+              <li>Use approved fire-stopping products — intumescent collar, fire batt, fire sealant, fire pillows.</li>
+              <li>Follow manufacturer installation instructions exactly.</li>
+              <li>Photograph the penetration before stopping.</li>
+              <li>Photograph the stopping in place after installation.</li>
+              <li>Record product used (manufacturer, model, batch number).</li>
+              <li>Verify fire-stopping integrity at periodic inspection.</li>
+              <li>On HRRBs the discipline is safety-case-critical; breaches are MOR triggers.</li>
+              <li>Common EICR coding finding when missed — code C2 typically.</li>
+            </ul>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="Building Regulations 2010 — Approved Document B Volume 2 (Buildings other than dwellings)"
+            clause={
+              <>
+                &quot;Where a wall or floor is required to provide compartmentation,
+                any opening for the passage of a pipe, duct, conduit, cable or
+                chimney, or for any other reason, should be — (a) provided with a
+                fire-stopping system that has been tested to the relevant
+                standard...; and (b) installed in accordance with the
+                manufacturer&apos;s installation instructions to maintain the
+                integrity of the compartmentation.&quot;
+              </>
+            }
+            meaning={
+              <>
+                The fire-stopping requirement at the cable-installation level.
+                Tested system; manufacturer installation instructions; maintain
+                compartment integrity. The wording is similar across Volume 1 and
+                Volume 2 with adjustments for residential context. Routine cable
+                runs through fire-rated elements need stopping; the standard
+                expectation is that competent contractors do this as part of
+                normal practice without needing prompting.
+              </>
+            }
+            cite="Source: Building Regulations 2010 (SI 2010/2214), Approved Document B Volume 2."
+          />
+
+          <SectionRule />
+          <ContentEyebrow>BS 7671 and the BS 7671:2018+A4:2026 update</ContentEyebrow>
+
+          <ConceptBlock
+            title="The wiring regs as the technical baseline behind Doc P"
+            plainEnglish="BS 7671 is the IET Wiring Regulations — the technical standard for electrical installations. Approved Doc P references BS 7671 as the technical basis for safe installation in dwellings. Compliance with BS 7671 + Approved Doc P together discharges Building Regs P1 requirement. BS 7671:2018 is the current edition; Amendment 4 was published in 2026 with significant changes including AFDD requirements, TN-C-S (PNB) provisions, schedule of test column changes, and model form updates. The 2026 amendment reflects the post-Grenfell direction towards stronger fire-safety integration of electrical installation choices."
+            onSite="L3 supervisor implication: the supervisor needs the current edition of BS 7671 plus any amendments. Working from an older edition can produce technically-non-compliant work that nevertheless &apos;follows the regs the supervisor learned from&apos; — a recipe for inspection-time problems. The amendment cycle for BS 7671 is more frequent than the Building Regs themselves; staying current on amendments is part of L3 competence maintenance. CPD record retention covers this through scheme requirements."
+          >
+            <p>BS 7671 and the amendment cycle:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>BS 7671 is the IET Wiring Regulations.</li>
+              <li>Approved Doc P references BS 7671 as the technical basis for dwellings.</li>
+              <li>Compliance with BS 7671 + Approved Doc P discharges Building Regs P1 requirement.</li>
+              <li>BS 7671:2018 with Amendment 1 (2020), Amendment 2 (2022), Amendment 3 (2024), Amendment 4 (2026).</li>
+              <li>Amendment 4 includes AFDD requirements, TN-C-S (PNB) provisions, schedule of test changes, model forms.</li>
+              <li>Post-Grenfell direction reflected in 2026 amendment — stronger fire-safety integration.</li>
+              <li>L3 supervisor needs current edition plus amendments — not the edition learned in training years ago.</li>
+              <li>CPD record retention covers competence maintenance through scheme requirements.</li>
+              <li>Section 700-series in BS 7671 covers special installations and locations — including dwellings, bathrooms, swimming pools, agricultural, hazardous, marinas, exhibitions, EV charging (S722), photovoltaic (S712), etc.</li>
+              <li>BS 7671 is itself a BSI standard — used as evidence of EAWR Reg 4 compliance for installation safety.</li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+          <ContentEyebrow>The Building Regulations 2010 — statutory foundations</ContentEyebrow>
+
+          <ConceptBlock
+            title="What the regulations actually say"
+            plainEnglish="Building Regulations 2010 (SI 2010/2214) is the statutory instrument under the Building Act 1984. Schedule 1 contains the requirements (A to S in current numbering): A structural safety; B fire safety; C resistance to contaminants and moisture; D toxic substances; E sound; F ventilation; G sanitation, hot water safety and water efficiency; H drainage and waste disposal; J combustion appliances; K protection from falling; L conservation of fuel and power; M access to and use of buildings; N (withdrawn); P electrical safety in dwellings; Q security in dwellings; R high-speed electronic communications; S infrastructure for electric vehicle charging. Each requirement is a one-paragraph statement of intent; Approved Documents give the practical compliance routes."
+            onSite="L3 supervisor reflex: when in doubt about the regulatory framework for a piece of work, identify the relevant Schedule 1 requirement (A-S), then consult the Approved Document for the practical compliance route. The Approved Document is the easier read but the requirement is the legal hook. Where work is technically complex or unusual, designers may need to reference the requirement and demonstrate alternative compliance — the safe-harbour relationship gives them that flexibility."
+          >
+            <p>Schedule 1 requirements relevant to electrical work:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li><strong>B1 — Means of warning and escape</strong> — fire detection / alarm + emergency lighting.</li>
+              <li><strong>B2 — Internal fire spread (linings)</strong> — wall and ceiling materials including conduit / containment.</li>
+              <li><strong>B3 — Internal fire spread (structure)</strong> — compartmentation; fire-stopping requirements.</li>
+              <li><strong>B4 — External fire spread</strong> — external wall systems; post-Grenfell tightening.</li>
+              <li><strong>B5 — Access and facilities for the fire service</strong> — firefighters&apos; lifts, fire mains, hydrants.</li>
+              <li><strong>L1 — Conservation of fuel and power (new dwellings)</strong> — heat pumps, LED, controls.</li>
+              <li><strong>L2 — Conservation of fuel and power (existing dwellings)</strong> — retrofit energy efficiency.</li>
+              <li><strong>M1 — Access to and use of buildings (dwellings / non-domestic)</strong> — accessibility, switch heights.</li>
+              <li><strong>P1 — Electrical safety (dwellings)</strong> — design, installation, certification.</li>
+              <li><strong>S1 — EV charging infrastructure</strong> — new builds, renovations.</li>
+            </ul>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="Building Regulations 2010 — Schedule 1, Requirement P1"
+            clause={
+              <>
+                &quot;Reasonable provision shall be made in the design and
+                installation of electrical installations in order to protect
+                persons operating, maintaining or altering the installations from
+                fire or injury.&quot;
+              </>
+            }
+            meaning={
+              <>
+                P1 is the Schedule 1 requirement for electrical safety in
+                dwellings. &quot;Reasonable provision&quot; is the qualifier;
+                compliance with BS 7671 plus the Approved Doc P notifiable-work
+                regime is the standard route. Same safe-harbour mechanic as B1-B5
+                for fire safety — compliance with the Approved Document is strong
+                evidence but not exclusive. Alternative approaches permitted if
+                they achieve P1&apos;s objective.
+              </>
+            }
+            cite="Source: Building Regulations 2010 (SI 2010/2214), Schedule 1, Requirement P1."
+          />
+
+          <SectionRule />
+          <ContentEyebrow>Competent Person Schemes — the operational backbone</ContentEyebrow>
+
+          <ConceptBlock
+            title="How CPS registration actually works"
+            plainEnglish="Competent Person Schemes (NICEIC, NAPIT, ELECSA, Stroma etc.) authorise registered installers to self-certify notifiable work under Approved Doc P. The firm registers with the scheme; the scheme assesses competence at registration and periodically thereafter; the registered installer issues the Electrical Installation Certificate and a Building Regulations Compliance Certificate to the customer; the scheme notifies local authority building control on the firm&apos;s behalf. The customer receives the certificate as evidence of compliant work for any future sale, alteration, or building control enquiry. Without CPS registration the same notifiable work needs separate building control notification with fees and inspection."
+            onSite="L3 supervisor reflex on customer-facing work: the cert + Building Regs compliance certificate is the customer&apos;s evidence. Many customers do not know they will need this when they sell the house; getting it right at install time prevents friction at sale time. The scheme registration is the firm&apos;s operational licence in the domestic market — losing it (through scheme deregistration following safety failings) is effectively an end to domestic trading. The supervisor&apos;s discipline contributes to the firm&apos;s scheme standing through the quality of work produced and certified."
+          >
+            <p>CPS operational mechanics:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Firm registers with scheme (NICEIC, NAPIT, ELECSA, Stroma).</li>
+              <li>Scheme assesses firm competence at registration — premises, equipment, knowledge, supervisor qualifications.</li>
+              <li>Periodic re-assessment — typically annual.</li>
+              <li>Firm carries out notifiable work; produces Electrical Installation Certificate (EIC).</li>
+              <li>Firm issues Building Regulations Compliance Certificate to customer.</li>
+              <li>Scheme notifies local authority building control on firm&apos;s behalf.</li>
+              <li>Customer retains certificates as Building Regs compliance evidence.</li>
+              <li>Periodic scheme inspections of registered firms&apos; ongoing work — sample basis.</li>
+              <li>Customer complaint can trigger scheme technical investigation.</li>
+              <li>Scheme sanctions range from advisory through conditional registration through to deregistration.</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="What happens when CPS registration is not held"
+            plainEnglish="A firm without CPS registration can still do notifiable work — but each notifiable job requires separate building control notification before work starts. The customer (or the contractor on the customer&apos;s behalf) pays a notification fee — typically £150-£500 per notification depending on local authority and complexity. Building control inspects at completion; on satisfactory completion they issue a Building Regs Compliance Certificate. Without that certificate the work is technically unauthorised and may affect house insurance, future sale, or future alterations. For a domestic-focused firm the time / cost overhead of separate notification per job typically makes CPS registration the only viable commercial model."
+            onSite="L3 supervisor practical implication: confirm at start of every customer-facing job whether the firm&apos;s CPS registration covers the proposed work. Where the work falls outside the firm&apos;s scheme scope, or where the firm is not CPS-registered for the trade type involved, the building control route applies and must be initiated before work starts. Customers occasionally push to skip the notification (&quot;we will not tell anyone&quot;) — that response cuts the supervisor out of the Building Regs compliance route entirely and creates problems at future sale or insurance claim time."
+          >
+            <p>Non-CPS routes to compliance:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Building Notice — work proceeds, building control inspects at key stages.</li>
+              <li>Full Plans — design submitted in advance, formal approval, inspection schedule.</li>
+              <li>Notification fee — typically £150-£500 per notification depending on LA and complexity.</li>
+              <li>Building control inspection at completion.</li>
+              <li>Building Regs Compliance Certificate issued on satisfactory completion.</li>
+              <li>Customer retains certificate — needed for sale, insurance, future alterations.</li>
+              <li>Without certificate the work is technically unauthorised.</li>
+              <li>Time / cost overhead per job typically makes CPS registration the viable commercial model.</li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
           <FAQ items={faqs} />
           <SectionRule />
           <KeyTakeaways points={[
-            "Remember from Section 1.7 - Approved Documents are non-statutory guidance for Building Regs 2010 compliance.",
-            "Approved Doc P - electrical safety in dwellings (England). Notifiable work + CPS scheme.",
-            "Approved Doc B - fire safety. Drives emergency lighting, fire detection, cable CPR, fire stopping.",
-            "Approved Doc L - energy efficiency. Drives heat pumps, LED, EV charging, renewables, BMS.",
-            "Approved Doc S - EV charging infrastructure (introduced 2021).",
+            "Remember from Section 1.7 — Approved Documents are non-statutory guidance for Building Regs 2010 compliance.",
+            "Approved Doc P — electrical safety in dwellings (England). Notifiable work + CPS scheme.",
+            "Approved Doc B — fire safety. Drives emergency lighting, fire detection, cable CPR, fire stopping.",
+            "Approved Doc L — energy efficiency. Drives heat pumps, LED, EV charging, renewables, BMS.",
+            "Approved Doc S — EV charging infrastructure (introduced 2021).",
             "Notifiable work under Doc P: new circuits, CU replacement, special locations. CPS or building control notification.",
             "Devolved nations have separate frameworks (Wales / Scotland Technical Handbooks / NI).",
-            "Future Homes Standard driving electrification of heating - major future trade impact.",
+            "Future Homes Standard driving electrification of heating — major future trade impact.",
+            "Safe-harbour relationship: compliance with Approved Document = strong evidence of Building Regs compliance; alternative approaches permitted if equivalent performance evidenced.",
+            "Schedule 1 requirements A-S in Building Regs 2010 are the legal hook; Approved Documents are the practical compliance routes.",
+            "CPS registration is the operational backbone of domestic electrical compliance — scheme deregistration effectively ends domestic trading.",
+            "Approved Doc 7 (materials and workmanship) underlies all other Approved Documents — fitness for purpose evidenced through BS / EN, manufacturer instructions, industry good practice.",
+            "Post-Grenfell tightening of Approved Doc B affects external walls, cable CPR class, sprinkler, alarm, emergency lighting requirements.",
           ]} />
           <Quiz title="Approved Documents - knowledge check" questions={quizQuestions} />
           <div className="grid grid-cols-2 gap-3 pt-2">

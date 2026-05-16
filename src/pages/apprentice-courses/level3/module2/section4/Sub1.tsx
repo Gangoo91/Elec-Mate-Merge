@@ -749,7 +749,7 @@ export default function Sub1() {
                 Section 712 for safe installation. A4:2026 reset the Section 712 wording.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Section 712 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Section 712."
           />
 
           <RegsCallout
@@ -771,7 +771,7 @@ export default function Sub1() {
                 even if the MCS-certified installer makes the final design call.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Section 722 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Section 722."
           />
 
           <SectionRule />

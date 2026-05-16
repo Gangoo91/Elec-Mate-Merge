@@ -29,6 +29,7 @@ import {
   ContentEyebrow,
   SectionRule,
 } from '@/components/study-centre/learning';
+import { EarthingSystemDiagram } from '@/components/study-centre/diagrams';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE =
@@ -380,7 +381,7 @@ export default function Sub4() {
                 document.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Section 722 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Section 722."
           />
 
           <RegsCallout
@@ -400,8 +401,10 @@ export default function Sub4() {
                 Section 722. For everyday Mode 3 wired AC charging, Section 722 is the home.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Section 722 exclusions — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Section 722 exclusions."
           />
+
+          <EarthingSystemDiagram />
 
           <SectionRule />
 

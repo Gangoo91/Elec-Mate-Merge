@@ -1,23 +1,33 @@
-import { Card, CardContent } from '@/components/ui/card';
+/**
+ * IndustryNetworking — editorial guide to the UK electrical industry network.
+ *
+ * Professional bodies, events, online communities, LinkedIn strategy,
+ * actionable tips, mentorship programmes, networking action plan, and ROI.
+ * Replaces orange/blue/green/purple/yellow chunky cards with editorial.
+ */
+
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, CheckCircle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { ArrowLeft, CheckCircle2 } from 'lucide-react';
 import {
   PageFrame,
   PageHero,
   itemVariants,
 } from '@/components/college/primitives';
+import {
+  Eyebrow,
+  SectionHeader,
+} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 
 const professionalBodies = [
   {
     name: 'IET (Institution of Engineering and Technology)',
-    cost: '£200–£400/year',
+    cost: '£200–£400/yr',
     members: '150,000+ members',
     description:
-      'The leading professional body for electrical and electronic engineers in the UK. Offers EngTech, IEng, and CEng professional registration, CPD tracking, and access to technical resources.',
+      'The leading professional body for electrical and electronic engineers in the UK. Offers EngTech, IEng, and CEng professional registration, CPD tracking, and technical resources.',
     benefits: [
-      'Professional registration (EngTech/IEng/CEng)',
+      'Professional registration (EngTech / IEng / CEng)',
       'CPD tracking and recording',
       'Technical resources and publications',
       'Local network events across the UK',
@@ -29,7 +39,7 @@ const professionalBodies = [
     cost: 'Via employer (no individual fee)',
     members: 'Industry-wide grading body',
     description:
-      'The JIB sets grading, pay rates, and working conditions for the UK electrical contracting industry. Your JIB grade (Apprentice, Electrician, Approved Electrician, Technician) directly determines your minimum pay rate and is recognised by every major contractor.',
+      'Sets grading, pay rates, and working conditions for the UK electrical contracting industry. Your JIB grade directly determines your minimum pay rate and is recognised by every major contractor.',
     benefits: [
       'Industry-standard grading and pay rates',
       'ECS (Electrotechnical Certification Scheme) card',
@@ -40,10 +50,10 @@ const professionalBodies = [
   },
   {
     name: "ECA (Electrical Contractors' Association)",
-    cost: '£300–£800/year',
+    cost: '£300–£800/yr',
     members: 'Industry representation',
     description:
-      "The UK's leading trade association for electrical contractors. Provides business support, industry representation, and training opportunities for member companies.",
+      "The UK's leading trade association for electrical contractors. Business support, industry representation, and training opportunities for member companies.",
     benefits: [
       'Industry lobbying and representation',
       'Business support and advice',
@@ -54,10 +64,10 @@ const professionalBodies = [
   },
   {
     name: 'NICEIC',
-    cost: '£500–£1,500/year',
+    cost: '£500–£1,500/yr',
     members: 'Consumer trust brand',
     description:
-      'While primarily a competent person scheme, NICEIC membership also provides networking opportunities, technical support, and industry credibility that opens doors.',
+      'Primarily a competent person scheme, but membership also provides networking opportunities, technical support, and industry credibility that opens doors.',
     benefits: [
       'Strong consumer brand recognition',
       'Technical helpline support',
@@ -68,7 +78,7 @@ const professionalBodies = [
   },
   {
     name: 'NAPIT',
-    cost: '£400–£1,200/year',
+    cost: '£400–£1,200/yr',
     members: 'Multi-trade network',
     description:
       'Multi-trade competent person scheme and professional body. Good for networking across electrical, plumbing, and heating disciplines.',
@@ -82,7 +92,7 @@ const professionalBodies = [
   },
   {
     name: 'REA (Renewable Energy Association)',
-    cost: '£500–£2,000/year',
+    cost: '£500–£2,000/yr',
     members: 'Green energy sector',
     description:
       'The voice of the UK renewable energy industry. Essential for electricians specialising in solar, wind, battery storage, and EV charging.',
@@ -119,7 +129,7 @@ const industryEvents = [
     location: 'Various',
     cost: '£200–£800',
     description:
-      'Major electrical trade exhibition showcasing new products, technologies, and training opportunities. Hands-on demos and CPD sessions.',
+      'Major electrical trade exhibition showcasing new products, technologies, and training. Hands-on demos and CPD sessions.',
   },
   {
     name: 'Renewable Energy Events',
@@ -135,7 +145,7 @@ const industryEvents = [
     location: 'Various',
     cost: 'Free for ECA members',
     description:
-      'Annual conference covering industry trends, regulation changes, and business development. Strong networking with electrical contractors and industry figures.',
+      'Annual conference covering industry trends, regulation changes, and business development. Strong networking with electrical contractors.',
   },
 ];
 
@@ -166,7 +176,7 @@ const onlineCommunities = [
     members: 'Variable',
     cost: 'Free',
     description:
-      'Informal but active groups like "Electricians UK" and "Spark\'s Corner." Good for quick advice, job leads, and product recommendations.',
+      'Informal but active groups like "Electricians UK" and "Spark\'s Corner". Good for quick advice, job leads, and product recommendations.',
   },
 ];
 
@@ -179,7 +189,7 @@ const linkedInTips = [
   {
     tip: 'Fill the basics',
     detail:
-      'Photo, current employer, qualifications, ECS card status. Recruiters skim — if the basics are blank they move on. Doesn\'t need to be polished, needs to be there.',
+      'Photo, current employer, qualifications, ECS card status. Recruiters skim — if the basics are blank they move on. Doesn\'t need polish, needs to be there.',
   },
   {
     tip: 'Show real work',
@@ -195,27 +205,27 @@ const linkedInTips = [
 
 const networkingTips = [
   {
-    tip: 'Carry Business Cards',
+    tip: 'Carry business cards',
     detail:
-      'Even as an apprentice, a simple business card with your name, qualifications, and contact details makes you memorable. Hand them out at every event you attend.',
+      'Even as an apprentice, a simple card with your name, qualifications, and contact details makes you memorable. Hand them out at every event you attend.',
   },
   {
-    tip: 'Ask Questions',
+    tip: 'Ask questions',
     detail:
-      'At events and talks, always ask a question. It shows you are engaged, helps you learn, and gives speakers a reason to remember you. Follow up afterwards.',
+      'At events and talks, always ask a question. It shows you\'re engaged, helps you learn, and gives speakers a reason to remember you. Follow up afterwards.',
   },
   {
-    tip: 'Volunteer at Events',
+    tip: 'Volunteer at events',
     detail:
       'Offer to help set up at IET local network events or trade shows. You meet organisers and speakers directly — and they remember the people who helped.',
   },
   {
-    tip: 'Connect Suppliers',
+    tip: 'Connect with suppliers',
     detail:
       'Build relationships with electrical wholesaler reps. They know which companies are hiring, which projects are starting, and can introduce you to decision-makers.',
   },
   {
-    tip: 'Follow Up Fast',
+    tip: 'Follow up fast',
     detail:
       'Send a LinkedIn connection request or email within 24 hours of meeting someone. Reference something specific from your conversation. Speed shows professionalism.',
   },
@@ -252,251 +262,306 @@ const mentorshipProgrammes = [
   },
 ];
 
+const actionPlan = [
+  {
+    step: 1,
+    title: 'Start online',
+    detail:
+      'Create or update your LinkedIn profile this week. Join 2–3 electrical industry groups and start engaging with posts. Follow the IET, ECA, and key industry figures.',
+  },
+  {
+    step: 2,
+    title: 'Attend an event',
+    detail:
+      'Find a local IET talk, trade show, or ECA branch meeting within the next month. Go with the goal of meeting 3 new people and exchanging contact details.',
+  },
+  {
+    step: 3,
+    title: 'Build relationships',
+    detail:
+      'Follow up with everyone you meet within 48 hours. Connect on LinkedIn, send a brief message, and look for ways to help them. Networking is about giving, not just taking.',
+  },
+  {
+    step: 4,
+    title: 'Get your ECS card',
+    detail:
+      'If you don\'t already have one, apply for your ECS card through the JIB. It\'s the industry-standard proof of your qualifications and is required on most commercial sites.',
+  },
+];
+
 const IndustryNetworking = () => {
   const navigate = useNavigate();
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
+        <button
           onClick={() => navigate('/apprentice/professional-development')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+          className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation"
         >
-          <ArrowLeft className="mr-2 h-5 w-5" />
+          <ArrowLeft className="h-4 w-4" />
           Back
-        </Button>
+        </button>
       </motion.div>
 
       <motion.div variants={itemVariants}>
         <PageHero
           eyebrow="Apprentice · Network"
           title="Industry networking"
-          description="Trade bodies, conferences and mentor programmes — the rooms where progression actually happens. Most apprentices skip this until late; the ones who don't get the better jobs."
+          description="Trade bodies, conferences, and mentor programmes — the rooms where progression actually happens. Most apprentices skip this until late; the ones who don't get the better jobs."
           tone="yellow"
         />
       </motion.div>
 
-      {/* Intro */}
-      <Card className="border-orange-500/20 bg-white/5">
-        <CardContent className="p-4">
-          <p className="text-white text-sm leading-relaxed">
-            Your network is your net worth in this industry. The connections you make as an
-            apprentice can become lifelong professional relationships — opening doors to jobs,
-            partnerships, and opportunities you would never find on your own.
+      {/* ── Intro ─────────────────────────────────────────────────── */}
+      <motion.div variants={itemVariants}>
+        <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5">
+          <p className="text-[13.5px] text-white/85 leading-relaxed">
+            Your network is your net worth in this industry. The connections you
+            make as an apprentice can become lifelong professional relationships
+            — opening doors to jobs, partnerships, and opportunities you'd never
+            find on your own.
           </p>
-        </CardContent>
-      </Card>
+        </div>
+      </motion.div>
 
-      {/* Professional Bodies */}
-      <div className="flex items-center gap-2">
-        <div className="w-2 h-2 rounded-full bg-orange-400" />
-        <h2 className="text-base font-semibold text-white">Professional Bodies</h2>
-      </div>
-
-      <div className="space-y-3">
-        {professionalBodies.map((body) => (
-          <Card key={body.name} className="border-orange-500/20 bg-white/5">
-            <CardContent className="p-4 space-y-3">
-              <div className="flex items-start justify-between gap-2">
-                <h3 className="font-semibold text-orange-400 text-sm">{body.name}</h3>
+      {/* ── Professional bodies ──────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Professional bodies"
+          title="Six worth knowing"
+          meta="Recommended ones flagged"
+        />
+        <ul className="space-y-2.5">
+          {professionalBodies.map((body) => (
+            <li
+              key={body.name}
+              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
+            >
+              <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                <h3 className="text-[15px] font-semibold text-white tracking-tight">
+                  {body.name}
+                </h3>
                 {body.recommended && (
-                  <span className="text-xs font-medium text-white bg-orange-500/20 border border-orange-500/30 rounded-full px-2 py-0.5 flex-shrink-0">
+                  <span className="inline-flex items-center h-6 px-2 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[10px] font-medium uppercase tracking-[0.14em] text-elec-yellow">
                     Recommended
                   </span>
                 )}
               </div>
-              <p className="text-white text-sm leading-relaxed">{body.description}</p>
-              <div className="flex items-center gap-3 text-xs text-white">
+              <p className="text-[13px] text-white/85 leading-relaxed">
+                {body.description}
+              </p>
+              <div className="flex items-center gap-2 text-[11.5px] font-mono tabular-nums text-white/55">
                 <span>{body.cost}</span>
                 <span>·</span>
                 <span>{body.members}</span>
               </div>
-              <ul className="space-y-1">
+              <ul className="space-y-1.5">
                 {body.benefits.map((benefit) => (
-                  <li key={benefit} className="flex items-start gap-2 text-sm text-white">
-                    <CheckCircle className="h-4 w-4 text-orange-400 flex-shrink-0 mt-0.5" />
-                    {benefit}
+                  <li
+                    key={benefit}
+                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  >
+                    <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                    <span>{benefit}</span>
                   </li>
                 ))}
               </ul>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
 
-      {/* Industry Events */}
-      <div className="flex items-center gap-2">
-        <div className="w-2 h-2 rounded-full bg-blue-400" />
-        <h2 className="text-base font-semibold text-white">Industry Events</h2>
-      </div>
-
-      <div className="space-y-3">
-        {industryEvents.map((event) => (
-          <Card key={event.name} className="border-blue-500/20 bg-white/5">
-            <CardContent className="p-4 space-y-2">
-              <h3 className="font-semibold text-blue-400 text-sm">{event.name}</h3>
-              <p className="text-white text-sm leading-relaxed">{event.description}</p>
-              <div className="flex items-center gap-3 text-xs text-white">
+      {/* ── Industry events ──────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Industry events"
+          title="Five conferences that matter"
+          meta="Where the deals actually get done"
+        />
+        <ul className="space-y-2">
+          {industryEvents.map((event) => (
+            <li
+              key={event.name}
+              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2"
+            >
+              <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                {event.name}
+              </h3>
+              <p className="text-[13px] text-white/85 leading-relaxed">
+                {event.description}
+              </p>
+              <div className="flex items-center gap-2 text-[11.5px] font-mono tabular-nums text-white/55 flex-wrap">
                 <span>{event.frequency}</span>
                 <span>·</span>
                 <span>{event.location}</span>
                 <span>·</span>
                 <span>{event.cost}</span>
               </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
 
-      {/* Online Communities */}
-      <div className="flex items-center gap-2">
-        <div className="w-2 h-2 rounded-full bg-green-400" />
-        <h2 className="text-base font-semibold text-white">Online Communities</h2>
-      </div>
-
-      <div className="space-y-3">
-        {onlineCommunities.map((community) => (
-          <Card key={community.name} className="border-green-500/20 bg-white/5">
-            <CardContent className="p-4 space-y-2">
-              <div className="flex items-center justify-between">
-                <h3 className="font-semibold text-green-400 text-sm">{community.name}</h3>
-                <span className="text-xs font-medium text-white bg-green-500/20 border border-green-500/30 rounded-full px-2 py-0.5 flex-shrink-0">
+      {/* ── Online communities ───────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Online communities"
+          title="Four places to lurk"
+          meta="Read first, post later"
+        />
+        <ul className="space-y-2">
+          {onlineCommunities.map((community) => (
+            <li
+              key={community.name}
+              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2"
+            >
+              <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                  {community.name}
+                </h3>
+                <span className="inline-flex items-center h-6 px-2 rounded-md border border-white/[0.08] bg-white/[0.02] text-[10.5px] font-medium uppercase tracking-[0.14em] text-white/85">
                   {community.cost}
                 </span>
               </div>
-              <p className="text-white text-sm leading-relaxed">{community.description}</p>
-              <p className="text-white text-xs">{community.members}</p>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+              <p className="text-[13px] text-white/85 leading-relaxed">
+                {community.description}
+              </p>
+              <p className="text-[11.5px] text-white/55 font-mono">
+                {community.members}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
 
-      {/* LinkedIn Strategy */}
-      <div className="flex items-center gap-2">
-        <div className="w-2 h-2 rounded-full bg-purple-400" />
-        <h2 className="text-base font-semibold text-white">LinkedIn Strategy</h2>
-      </div>
+      {/* ── LinkedIn ─────────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="LinkedIn strategy"
+          title="Four moves that compound"
+          meta="The platform recruiters actually search"
+        />
+        <ul className="space-y-2">
+          {linkedInTips.map((item) => (
+            <li
+              key={item.tip}
+              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1"
+            >
+              <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                {item.tip}
+              </h3>
+              <p className="text-[13px] text-white/85 leading-relaxed">{item.detail}</p>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
 
-      <div className="space-y-3">
-        {linkedInTips.map((item) => (
-          <Card key={item.tip} className="border-purple-500/20 bg-white/5">
-            <CardContent className="p-4 space-y-1">
-              <h3 className="font-semibold text-purple-400 text-sm">{item.tip}</h3>
-              <p className="text-white text-sm leading-relaxed">{item.detail}</p>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      {/* ── Networking tips ──────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Networking tips that work"
+          title="Five habits to build"
+          meta="None of these cost money — all of them pay off"
+        />
+        <ul className="space-y-2">
+          {networkingTips.map((item) => (
+            <li
+              key={item.tip}
+              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1"
+            >
+              <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                {item.tip}
+              </h3>
+              <p className="text-[13px] text-white/85 leading-relaxed">{item.detail}</p>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
 
-      {/* Actionable Networking Tips */}
-      <div className="flex items-center gap-2">
-        <div className="w-2 h-2 rounded-full bg-blue-400" />
-        <h2 className="text-base font-semibold text-white">Networking Tips That Work</h2>
-      </div>
-
-      <div className="space-y-3">
-        {networkingTips.map((item) => (
-          <Card key={item.tip} className="border-blue-500/20 bg-white/5">
-            <CardContent className="p-4 space-y-1">
-              <h3 className="font-semibold text-blue-400 text-sm">{item.tip}</h3>
-              <p className="text-white text-sm leading-relaxed">{item.detail}</p>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      {/* Mentorship Programmes */}
-      <div className="flex items-center gap-2">
-        <div className="w-2 h-2 rounded-full bg-yellow-400" />
-        <h2 className="text-base font-semibold text-white">Mentorship Programmes</h2>
-      </div>
-
-      <div className="space-y-3">
-        {mentorshipProgrammes.map((programme) => (
-          <Card key={programme.name} className="border-yellow-500/20 bg-white/5">
-            <CardContent className="p-4 space-y-2">
-              <h3 className="font-semibold text-yellow-400 text-sm">{programme.name}</h3>
-              <p className="text-white text-sm leading-relaxed">{programme.description}</p>
-              <div className="flex items-center gap-3 text-xs text-white">
+      {/* ── Mentorship ───────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Mentorship programmes"
+          title="Four formal routes"
+          meta="A mentor accelerates everything"
+        />
+        <ul className="space-y-2">
+          {mentorshipProgrammes.map((programme) => (
+            <li
+              key={programme.name}
+              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2"
+            >
+              <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                {programme.name}
+              </h3>
+              <p className="text-[13px] text-white/85 leading-relaxed">
+                {programme.description}
+              </p>
+              <div className="flex items-center gap-2 text-[11.5px] font-mono tabular-nums text-white/55">
                 <span>{programme.duration}</span>
                 <span>·</span>
                 <span>{programme.cost}</span>
               </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
 
-      {/* Networking Action Plan */}
-      <div className="flex items-center gap-2">
-        <div className="w-2 h-2 rounded-full bg-orange-400" />
-        <h2 className="text-base font-semibold text-white">Networking Action Plan</h2>
-      </div>
-
-      <div className="space-y-3">
-        {[
-          {
-            step: 1,
-            title: 'Start Online',
-            detail:
-              'Create or update your LinkedIn profile this week. Join 2–3 electrical industry groups and start engaging with posts. Follow the IET, ECA, and key industry figures.',
-          },
-          {
-            step: 2,
-            title: 'Attend an Event',
-            detail:
-              'Find a local IET talk, trade show, or ECA branch meeting within the next month. Go with the goal of meeting 3 new people and exchanging contact details.',
-          },
-          {
-            step: 3,
-            title: 'Build Relationships',
-            detail:
-              'Follow up with everyone you meet within 48 hours. Connect on LinkedIn, send a brief message, and look for ways to help them. Networking is about giving, not just taking.',
-          },
-          {
-            step: 4,
-            title: 'Get Your ECS Card',
-            detail:
-              'If you do not already have one, apply for your ECS card through the JIB. It is the industry-standard proof of your qualifications and is required on most commercial sites.',
-          },
-        ].map((item) => (
-          <Card key={item.step} className="border-orange-500/20 bg-white/5">
-            <CardContent className="p-4 space-y-2">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-orange-500/20 border border-orange-500/30 flex items-center justify-center flex-shrink-0">
-                  <span className="text-orange-400 font-bold text-sm">{item.step}</span>
+      {/* ── Action plan ──────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Action plan"
+          title="Four steps for this month"
+          meta="Start small, compound from there"
+        />
+        <ol className="space-y-2">
+          {actionPlan.map((item) => (
+            <li
+              key={item.step}
+              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+            >
+              <div className="flex items-start gap-3">
+                <div className="h-8 w-8 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] flex items-center justify-center flex-shrink-0">
+                  <span className="text-[13px] font-mono font-semibold text-elec-yellow tabular-nums">
+                    {item.step}
+                  </span>
                 </div>
-                <h3 className="font-semibold text-orange-400 text-sm">{item.title}</h3>
+                <div className="flex-1 min-w-0 space-y-1.5">
+                  <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                    {item.title}
+                  </h3>
+                  <p className="text-[13px] text-white/85 leading-relaxed">
+                    {item.detail}
+                  </p>
+                </div>
               </div>
-              <p className="text-white text-sm leading-relaxed">{item.detail}</p>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+            </li>
+          ))}
+        </ol>
+      </motion.section>
 
-      {/* ROI Tip */}
-      <Card className="border-orange-500/20 bg-orange-500/5">
-        <CardContent className="p-4 space-y-2">
-          <h3 className="font-semibold text-orange-400 text-sm">The ROI of Networking</h3>
-          <p className="text-white text-sm leading-relaxed">
-            Industry surveys consistently show that 60–70% of job opportunities are never advertised
-            publicly. They are filled through referrals and personal connections. Investing time in
-            networking is not optional — it is one of the most effective career development
-            activities you can do. Even 30 minutes a week on LinkedIn can transform your career
-            opportunities within a year.
+      {/* ── ROI tip ──────────────────────────────────────────────── */}
+      <motion.section variants={itemVariants}>
+        <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-1.5">
+          <Eyebrow className="text-elec-yellow/85">The ROI of networking</Eyebrow>
+          <p className="text-[13.5px] text-white/85 leading-relaxed">
+            Industry surveys consistently show that{' '}
+            <span className="font-mono text-elec-yellow">60–70%</span> of job
+            opportunities are never advertised publicly. They're filled through
+            referrals and personal connections. Even 30 minutes a week on
+            LinkedIn can transform your career opportunities within a year.
           </p>
-        </CardContent>
-      </Card>
+        </div>
+      </motion.section>
 
-      {/* Footer */}
-      <Card className="border-white/10 bg-white/5">
-        <CardContent className="p-4">
-          <p className="text-white text-xs leading-relaxed">
-            Professional body information based on current UK membership rates and benefits. Costs
-            and offerings may change — check directly with each organisation for the latest details.
-          </p>
-        </CardContent>
-      </Card>
+      {/* ── Footnote ─────────────────────────────────────────────── */}
+      <motion.section variants={itemVariants}>
+        <p className="text-[11px] text-white/40 leading-relaxed">
+          Professional body information based on current UK membership rates and
+          benefits. Costs and offerings may change — check directly with each
+          organisation for the latest details.
+        </p>
+      </motion.section>
     </PageFrame>
   );
 };

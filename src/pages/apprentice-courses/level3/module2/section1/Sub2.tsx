@@ -458,7 +458,7 @@ export default function Sub2() {
                 under Section 712 plus the relevant MCS MIS standard for installer competence.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026, Section 712 — scope statement, verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026, Section 712."
           />
 
           <RegsCallout
@@ -481,7 +481,7 @@ export default function Sub2() {
                 you&apos;ll meet day-to-day.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026, Section 722 — scope, verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026, Section 722."
           />
 
           <SectionRule />
@@ -726,7 +726,7 @@ export default function Sub2() {
               "Five families dominate UK domestic environmental tech today — heat pumps (ASHP/GSHP), solar PV, EV charging, battery storage, MVHR.",
               "Solar thermal, micro-CHP, biomass, wind and micro-hydro are recognition-level — they exist but new installs are uncommon.",
               "kWp ≠ kWh. Always quote PV in both — the nameplate kWp and the expected annual kWh — and explain the relationship.",
-              "ASHP dominates UK retrofit because it\'s cheap and quick. GSHP wins on SCOP and lifetime where land and budget allow.",
+              "ASHP dominates UK retrofit because it's cheap and quick. GSHP wins on SCOP and lifetime where land and budget allow.",
               "Battery storage is a time-shifter, not a generator. It moves PV surplus from midday to evening peak, raising self-consumption from 25-40% to 70-90%.",
               "Mode 3 EV charging is the domestic standard. Mode 1 is banned, Mode 2 is the granny lead, Mode 4 is DC rapid (public).",
               "Each system has a regulatory home — BS 7671 Section 712/722/753 (electrical), MCS MIS 300x (installer competence), Building Regs Part L/F (energy/ventilation).",

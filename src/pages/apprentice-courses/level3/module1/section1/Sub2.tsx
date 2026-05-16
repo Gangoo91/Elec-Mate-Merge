@@ -374,7 +374,7 @@ export default function Sub2() {
                 instrument.
               </>
             }
-            cite="Source: Electricity at Work Regulations 1989 (SI 1989/635), Reg 4 — verbatim from legislation.gov.uk."
+            cite="Source: Electricity at Work Regulations 1989 (SI 1989/635), Reg 4."
           />
 
           <InlineCheck
@@ -437,7 +437,7 @@ export default function Sub2() {
                 from memory; it&apos;s the single most-prosecuted EAWR clause.
               </>
             }
-            cite="Source: Electricity at Work Regulations 1989 (SI 1989/635), Reg 14 — verbatim from legislation.gov.uk."
+            cite="Source: Electricity at Work Regulations 1989 (SI 1989/635), Reg 14."
           />
 
           <InlineCheck
@@ -506,7 +506,7 @@ export default function Sub2() {
                 competent for this without supervision&quot; conversation.
               </>
             }
-            cite="Source: Electricity at Work Regulations 1989 (SI 1989/635), Reg 16 — verbatim from legislation.gov.uk."
+            cite="Source: Electricity at Work Regulations 1989 (SI 1989/635), Reg 16."
           />
 
           <InlineCheck
@@ -619,7 +619,7 @@ export default function Sub2() {
                 the practitioner reference for what counts as adequate in each case.
               </>
             }
-            cite="Source: Electricity at Work Regulations 1989 (SI 1989/635), Reg 13 — verbatim from legislation.gov.uk."
+            cite="Source: Electricity at Work Regulations 1989 (SI 1989/635), Reg 13."
           />
 
           <SectionRule />

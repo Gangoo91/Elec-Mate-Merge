@@ -27,7 +27,10 @@ import {
   LearningOutcomes,
   ContentEyebrow,
   SectionRule,
+  VideoCard,
 } from '@/components/study-centre/learning';
+import { VoltageDropDiagram } from '@/components/study-centre/diagrams';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE =
@@ -275,6 +278,17 @@ export default function Sub4() {
               </>
             }
             cite="Source: BS 7671:2018+A4:2026 Part 5, Chapter 52, Regulation 525.202; Vd limits in Appendix 4 §6.4."
+          />
+
+          <VoltageDropDiagram />
+
+          <VideoCard
+            url={videos.ohmsLaw.url}
+            title={videos.ohmsLaw.title}
+            channel={videos.ohmsLaw.channel}
+            duration={videos.ohmsLaw.duration}
+            topic="V = IR — the maths behind voltage drop"
+            caption="Ohm's law is the underlying physics of every voltage-drop calc — current through a cable's resistance equals lost volts. The mV/A/m method in Appendix 4 is just Ohm's law repackaged per metre of cable."
           />
 
           <SectionRule />

@@ -1,8 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, CheckCircle, AlertTriangle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { ArrowLeft, CheckCircle2222, AlertTriangle } from 'lucide-react';
 import {
   PageFrame,
   PageHero,
@@ -14,14 +12,10 @@ const RightsPage = () => {
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/apprentice/rights-and-pay')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
+        <button onClick={() => navigate('/apprentice/rights-and-pay')} className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation">
+          <ArrowLeft className="h-4 w-4" />
           Back
-        </Button>
+        </button>
       </motion.div>
 
       <motion.div variants={itemVariants}>
@@ -34,8 +28,8 @@ const RightsPage = () => {
       </motion.div>
 
       {/* Employment Rights */}
-      <Card className="border-green-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-green-400">
             Core Employment Rights
           </h2>
@@ -52,17 +46,16 @@ const RightsPage = () => {
               'Maximum 48-hour working week (you can opt out in writing, but cannot be forced to)',
             ].map((item) => (
               <li key={item} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                 {item}
               </li>
             ))}
           </ul>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Training Rights */}
-      <Card className="border-blue-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-blue-400">
             Training Rights
           </h2>
@@ -77,17 +70,16 @@ const RightsPage = () => {
               'Time for study and coursework during working hours',
             ].map((item) => (
               <li key={item} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-blue-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                 {item}
               </li>
             ))}
           </ul>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Under 18 */}
-      <Card className="border-purple-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-purple-400">
             Additional Rights if Under 18
           </h2>
@@ -101,17 +93,16 @@ const RightsPage = () => {
               'A specific risk assessment for young workers',
             ].map((item) => (
               <li key={item} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-purple-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                 {item}
               </li>
             ))}
           </ul>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* What To Do */}
-      <Card className="border-red-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-red-500/25 bg-red-500/[0.04]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-red-400">
             If Your Rights Are Not Being Met
           </h2>
@@ -147,12 +138,11 @@ const RightsPage = () => {
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Warning */}
-      <Card className="border-red-500/20 bg-red-500/5">
-        <CardContent className="p-4">
+      <div className="rounded-xl border border-red-500/25 bg-red-500/[0.04]">
+        <div className="p-4 sm:p-5">
           <div className="flex items-start gap-2">
             <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
             <p className="text-white text-sm leading-relaxed">
@@ -161,8 +151,7 @@ const RightsPage = () => {
               about your rights. This is called whistleblower protection.
             </p>
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
     </PageFrame>
   );
 };

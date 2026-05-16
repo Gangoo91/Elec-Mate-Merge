@@ -1,4 +1,3 @@
-import { Card, CardContent } from '@/components/ui/card';
 import { ArrowLeft, AlertTriangle } from 'lucide-react';
 
 const yearPhases = [
@@ -102,7 +101,6 @@ const seasonalTips = [
 ];
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
 import {
   PageFrame,
   PageHero,
@@ -114,14 +112,10 @@ const PlanningPage = () => {
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/apprentice/toolbox/off-job-training-guide')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
+        <button onClick={() => navigate('/apprentice/toolbox/off-job-training-guide')} className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation">
+          <ArrowLeft className="h-4 w-4" />
           Back
-        </Button>
+        </button>
       </motion.div>
 
       <motion.div variants={itemVariants}>
@@ -134,14 +128,11 @@ const PlanningPage = () => {
 
       {/* Annual Approach */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-purple-400" />
-          <h2 className="text-base font-semibold text-white">Annual Planning Approach</h2>
-        </div>
+        <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">Annual Planning Approach</span></div></div>
 
         {yearPhases.map((phase) => (
-          <Card key={phase.label} className={`${phase.border} bg-white/5`}>
-            <CardContent className="p-4 space-y-2">
+          <div key={phase.label} className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+            <div className="p-4 sm:p-5 space-y-2">
               <h3 className={`font-medium text-sm ${phase.colour}`}>{phase.label}</h3>
               <p className="text-white text-sm">{phase.desc}</p>
               <ul className="space-y-1 mt-2">
@@ -152,20 +143,16 @@ const PlanningPage = () => {
                   </li>
                 ))}
               </ul>
-            </CardContent>
-          </Card>
+            </div></div>
         ))}
       </div>
 
       {/* Sample Weekly Schedule */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-purple-400" />
-          <h2 className="text-base font-semibold text-white">Sample Weekly Schedule</h2>
-        </div>
+        <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">Sample Weekly Schedule</span></div></div>
 
-        <Card className="border-purple-500/20 bg-white/5">
-          <CardContent className="p-4 space-y-2">
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+          <div className="p-4 sm:p-5 space-y-2">
             <p className="text-white text-sm mb-3">
               A typical week for a day-release apprentice:
             </p>
@@ -188,19 +175,15 @@ const PlanningPage = () => {
               Purple rows = off-the-job training. Your schedule may differ — block release
               apprentices attend college full-time for 1-2 week blocks instead.
             </p>
-          </CardContent>
-        </Card>
+          </div></div>
       </div>
 
       {/* Monthly Allocation */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-purple-400" />
-          <h2 className="text-base font-semibold text-white">Monthly Allocation Breakdown</h2>
-        </div>
+        <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">Monthly Allocation Breakdown</span></div></div>
 
-        <Card className="border-purple-500/20 bg-white/5">
-          <CardContent className="p-4 space-y-3">
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+          <div className="p-4 sm:p-5 space-y-3">
             <p className="text-white text-sm mb-2">
               How your OJT hours are typically split across activities:
             </p>
@@ -210,55 +193,46 @@ const PlanningPage = () => {
                 <span className="text-elec-yellow font-medium text-sm">{row.value}</span>
               </div>
             ))}
-          </CardContent>
-        </Card>
+          </div></div>
       </div>
 
       {/* Catching Up on Missed Hours */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-red-400" />
-          <h2 className="text-base font-semibold text-white">Catching Up on Missed Hours</h2>
-        </div>
+        <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">Catching Up on Missed Hours</span></div></div>
 
         {catchUpStrategies.map((item) => (
-          <Card key={item.title} className="border-red-500/20 bg-white/5">
-            <CardContent className="p-4">
+          <div key={item.title} className="rounded-xl border border-red-500/25 bg-red-500/[0.04]">
+            <div className="p-4 sm:p-5">
               <div className="flex items-start gap-2 mb-1">
                 <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                 <h3 className="font-medium text-white text-sm">{item.title}</h3>
               </div>
               <p className="text-white text-sm ml-6">{item.desc}</p>
-            </CardContent>
-          </Card>
+            </div></div>
         ))}
       </div>
 
       {/* Seasonal Considerations */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-cyan-400" />
-          <h2 className="text-base font-semibold text-white">Seasonal Considerations</h2>
-        </div>
+        <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">Seasonal Considerations</span></div></div>
 
         <p className="text-white text-sm">
           Construction work follows seasonal patterns — plan your OJT around them:
         </p>
 
         {seasonalTips.map((item) => (
-          <Card key={item.season} className="border-white/10 bg-white/5">
-            <CardContent className="p-4">
+          <div key={item.season} className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+            <div className="p-4 sm:p-5">
               <h3 className={`font-medium text-sm ${item.colour}`}>{item.season}</h3>
               <p className="text-white text-sm mt-1">{item.tip}</p>
-            </CardContent>
-          </Card>
+            </div></div>
         ))}
       </div>
 
       {/* Planning Tip */}
-      <Card className="border-amber-500/20 bg-amber-500/10">
-        <CardContent className="p-4">
-          <h3 className="text-amber-400 font-semibold text-sm mb-2">Planning Tip</h3>
+      <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04]">
+        <div className="p-4 sm:p-5">
+          <h3 className="text-[13.5px] font-semibold text-elec-yellow tracking-tight mb-2">Planning Tip</h3>
           <p className="text-white text-sm leading-relaxed">
             Coordinate with your employer to ensure your fixed training hours are
             protected and scheduled in advance. Last-minute changes can disrupt learning
@@ -266,8 +240,7 @@ const PlanningPage = () => {
             percentage. Review your training plan at every progress review (minimum
             every 12 weeks) to check you are on track.
           </p>
-        </CardContent>
-      </Card>
+        </div></div>
     </PageFrame>
   );
 };

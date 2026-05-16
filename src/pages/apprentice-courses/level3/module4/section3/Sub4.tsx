@@ -506,12 +506,12 @@ export default function Sub4() {
             points={[
               "Modern RCD nuisance trips are usually CUMULATIVE leakage from many small electronic loads. Clamp meter (L+N together) measures total leakage; differential isolation finds the source.",
               "RCD types: AC (legacy), A (default), F (VFD), B (EV / smooth DC). EV chargers MUST have Type B or Type A + 6 mA DC RCM.",
-              "30 mA RCD threshold is the IEC 60479-1 safety case for shock protection. Don\'t \'solve' nuisance trips by upgrading to higher mA — that removes the protection.",
-              "RCBO-per-circuit (instead of dual-RCD CU) isolates each circuit\'s leakage and prevents cumulative trips. Trade standard for new installs / rewires.",
+              "30 mA RCD threshold is the IEC 60479-1 safety case for shock protection. Don't 'solve' nuisance trips by upgrading to higher mA — that removes the protection.",
+              "RCBO-per-circuit (instead of dual-RCD CU) isolates each circuit's leakage and prevents cumulative trips. Trade standard for new installs / rewires.",
               "S-type (selective) RCDs upstream of standard 30 mA give selectivity. Used at TT origin and upstream of EV chargers.",
               "AFDD detection is signature-based — real arc trips (motor brushes, HRJ early arc) and false trips (cheap PSUs, RF interference) both possible.",
               "BS 7671 A4:2026 mandates AFDD on certain dwelling final circuits (HMO bedrooms, care homes, short-term accommodation, some combustible-construction).",
-              "AFDD won\'t-latch is a strong indicator of real arc fault — investigate before assuming AFDD failure.",
+              "AFDD won't-latch is a strong indicator of real arc fault — investigate before assuming AFDD failure.",
             ]}
           />
 

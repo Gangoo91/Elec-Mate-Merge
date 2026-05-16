@@ -26,6 +26,7 @@ import {
   ContentEyebrow,
   SectionRule,
 } from '@/components/study-centre/learning';
+import { ThreePhaseWave } from '@/components/study-centre/diagrams';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE =
@@ -232,6 +233,8 @@ export default function Sub5() {
             ]}
             initialVisibleCount={3}
           />
+
+          <ThreePhaseWave />
 
           <ContentEyebrow>Why balancing matters</ContentEyebrow>
 

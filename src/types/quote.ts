@@ -85,6 +85,10 @@ export interface QuoteSettings {
     materials?: number;
     equipment?: number;
   };
+  // ELE-975 — render a customer signature box on the quote PDF. Defaults
+  // off (opt-in). When the quote has been accepted, the captured signature
+  // image is rendered; otherwise blank signature/date lines.
+  showSignatureBox?: boolean;
 }
 
 export interface Quote {

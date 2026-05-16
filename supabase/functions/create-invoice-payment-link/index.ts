@@ -73,22 +73,22 @@ serve(async (req) => {
     // ELE-954 — Try the new `invoices` table first (where deposit invoices
     // live). Fall back to legacy `quotes` table for older invoices that
     // haven't been migrated.
+    // The invoices table uses snake_case columns (client_data, job_details).
+    // The previous select referenced legacy camelCase (client, jobDetails)
+    // which doesn't exist on this table — every fetch was 400'ing and
+    // the function silently fell through to the legacy quotes-table path.
     let invoice: any = null;
     {
       let query = supabaseAdmin
         .from('invoices')
         .select(
-          'id, user_id, invoice_number, total, client, jobDetails, parent_quote_id, deposit_for_quote'
+          'id, user_id, invoice_number, total, client_data, job_details, parent_quote_id, deposit_for_quote'
         )
         .eq('id', invoiceId);
       if (!isServiceRoleCaller) query = query.eq('user_id', userId);
       const { data } = await query.maybeSingle();
       if (data) {
-        invoice = {
-          ...data,
-          client_data: data.client,
-          job_details: data.jobDetails,
-        };
+        invoice = data;
       }
     }
     if (!invoice) {

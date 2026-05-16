@@ -24,6 +24,7 @@ import {
   ContentEyebrow,
   SectionRule,
 } from '@/components/study-centre/learning';
+import { EarthingSystemDiagram } from '@/components/study-centre/diagrams';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Zs measurement — 3-lead and 2-lead methods | Level 3 Module 5.4.1 | Elec-Mate';
@@ -312,6 +313,8 @@ IET GN3 guidance (separate from BS 7671): A practical "rule of thumb" of Zs(meas
             }
             cite="Source: BS 7671:2018+A4:2026 Part 6, Chapter 64, Regulation 643.7.1 and Table 41.3. The 0.8 multiplier is IET Guidance Note 3 guidance, not a BS 7671 regulation."
           />
+
+          <EarthingSystemDiagram />
 
           <SectionRule />
 

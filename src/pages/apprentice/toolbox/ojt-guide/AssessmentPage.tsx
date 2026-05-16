@@ -1,5 +1,4 @@
-import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, AlertTriangle, CheckCircle, Clock } from 'lucide-react';
+import { ArrowLeft, AlertTriangle, CheckCircle2222, Clock } from 'lucide-react';
 
 const knowledgeCards = [
   {
@@ -178,7 +177,6 @@ const portfolioCards = [
 ];
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
 import {
   PageFrame,
   PageHero,
@@ -190,14 +188,10 @@ const AssessmentPage = () => {
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/apprentice/toolbox/off-job-training-guide')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
+        <button onClick={() => navigate('/apprentice/toolbox/off-job-training-guide')} className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation">
+          <ArrowLeft className="h-4 w-4" />
           Back
-        </Button>
+        </button>
       </motion.div>
 
       <motion.div variants={itemVariants}>
@@ -209,8 +203,8 @@ const AssessmentPage = () => {
       </motion.div>
 
       {/* OJT & EPA Connection */}
-      <Card className="border-blue-500/20 bg-blue-500/10">
-        <CardContent className="p-4">
+      <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04]">
+        <div className="p-4 sm:p-5">
           <h2 className="text-blue-400 font-semibold text-sm mb-2">OJT & EPA Connection</h2>
           <p className="text-white text-sm leading-relaxed">
             Your off-the-job training directly prepares you for the End Point Assessment
@@ -218,23 +212,19 @@ const AssessmentPage = () => {
             knowledge, skills, and behaviours required by ST0152 v1.2. The EPA is the
             final assessment that determines your grade — Pass, Merit, or Distinction.
           </p>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* EPA Component Breakdown */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-red-400" />
-          <h2 className="text-base font-semibold text-white">EPA Components</h2>
-        </div>
+        <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">EPA Components</span></div></div>
 
         <p className="text-white text-sm">
           The EPA for ST0152 v1.2 has three components. Each is graded separately:
         </p>
 
         {epaComponents.map((comp) => (
-          <Card key={comp.title} className={`${comp.border} bg-white/5`}>
-            <CardContent className="p-4 space-y-2">
+          <div key={comp.title} className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+            <div className="p-4 sm:p-5 space-y-2">
               <h3 className={`font-medium text-sm ${comp.colour}`}>{comp.title}</h3>
               <div className="flex gap-4 text-xs text-white">
                 <span>Format: {comp.format}</span>
@@ -247,20 +237,16 @@ const AssessmentPage = () => {
                   {comp.ojtLink}
                 </p>
               </div>
-            </CardContent>
-          </Card>
+            </div></div>
         ))}
       </div>
 
       {/* Gateway Requirements */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-green-400" />
-          <h2 className="text-base font-semibold text-white">Gateway Requirements</h2>
-        </div>
+        <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">Gateway Requirements</span></div></div>
 
-        <Card className="border-green-500/20 bg-white/5">
-          <CardContent className="p-4 space-y-3">
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+          <div className="p-4 sm:p-5 space-y-3">
             <p className="text-white text-sm">
               Before you can sit your EPA, you must pass through "gateway" — a formal check
               that you are ready:
@@ -268,61 +254,53 @@ const AssessmentPage = () => {
             <ul className="space-y-2">
               {gatewayRequirements.map((req) => (
                 <li key={req} className="flex items-start gap-2 text-sm text-white">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 mt-0.5 flex-shrink-0" />
                   {req}
                 </li>
               ))}
             </ul>
-          </CardContent>
-        </Card>
+          </div></div>
       </div>
 
       {/* Common Referral Reasons */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-red-400" />
-          <h2 className="text-base font-semibold text-white">Common Reasons for EPA Referral</h2>
-        </div>
+        <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">Common Reasons for EPA Referral</span></div></div>
 
         <p className="text-white text-sm">
           These are the pitfalls that most commonly cause apprentices to fail. Avoid them:
         </p>
 
         {referralReasons.map((item) => (
-          <Card key={item.reason} className="border-red-500/20 bg-white/5">
-            <CardContent className="p-4 space-y-2">
+          <div key={item.reason} className="rounded-xl border border-red-500/25 bg-red-500/[0.04]">
+            <div className="p-4 sm:p-5 space-y-2">
               <div className="flex items-start gap-2">
                 <AlertTriangle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
                 <h3 className="font-medium text-red-400 text-sm">{item.reason}</h3>
               </div>
               <p className="text-white text-sm ml-7">{item.detail}</p>
               <div className="flex items-start gap-2 ml-7">
-                <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 mt-0.5 flex-shrink-0" />
                 <p className="text-white text-sm">
                   <span className="text-green-400 font-medium">Prevention: </span>
                   {item.prevention}
                 </p>
               </div>
-            </CardContent>
-          </Card>
+            </div></div>
         ))}
       </div>
 
       {/* Timeline to EPA */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-amber-400" />
-          <h2 className="text-base font-semibold text-white">Timeline to EPA</h2>
-        </div>
+        <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">Timeline to EPA</span></div></div>
 
         <div className="flex items-center gap-2 mb-1">
-          <Clock className="h-4 w-4 text-amber-400" />
+          <Clock className="h-3.5 w-3.5 text-elec-yellow/85" />
           <p className="text-white text-sm font-medium">Key milestones and preparation</p>
         </div>
 
         {timeline.map((phase) => (
-          <Card key={phase.phase} className="border-white/10 bg-white/5">
-            <CardContent className="p-4 space-y-2">
+          <div key={phase.phase} className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+            <div className="p-4 sm:p-5 space-y-2">
               <h3 className={`font-medium text-sm ${phase.colour}`}>{phase.phase}</h3>
               <ul className="space-y-1">
                 {phase.actions.map((action) => (
@@ -332,59 +310,46 @@ const AssessmentPage = () => {
                   </li>
                 ))}
               </ul>
-            </CardContent>
-          </Card>
+            </div></div>
         ))}
       </div>
 
       {/* Knowledge Alignment */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-red-400" />
-          <h2 className="text-base font-semibold text-white">Knowledge Alignment</h2>
-        </div>
+        <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">Knowledge Alignment</span></div></div>
 
         {knowledgeCards.map((card) => (
-          <Card key={card.title} className={`${card.border} bg-white/5`}>
-            <CardContent className="p-4">
+          <div key={card.title} className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+            <div className="p-4 sm:p-5">
               <h3 className={`font-medium text-sm ${card.colour}`}>{card.title}</h3>
               <p className="text-white text-sm mt-1">{card.desc}</p>
-            </CardContent>
-          </Card>
+            </div></div>
         ))}
       </div>
 
       {/* Skills Development */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-red-400" />
-          <h2 className="text-base font-semibold text-white">Skills Development</h2>
-        </div>
+        <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">Skills Development</span></div></div>
 
         {skillsCards.map((card) => (
-          <Card key={card.title} className={`${card.border} bg-white/5`}>
-            <CardContent className="p-4">
+          <div key={card.title} className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+            <div className="p-4 sm:p-5">
               <h3 className={`font-medium text-sm ${card.colour}`}>{card.title}</h3>
               <p className="text-white text-sm mt-1">{card.desc}</p>
-            </CardContent>
-          </Card>
+            </div></div>
         ))}
       </div>
 
       {/* Portfolio Strategy */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-red-400" />
-          <h2 className="text-base font-semibold text-white">Portfolio Strategy</h2>
-        </div>
+        <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">Portfolio Strategy</span></div></div>
 
         {portfolioCards.map((card) => (
-          <Card key={card.title} className="border-red-500/20 bg-white/5">
-            <CardContent className="p-4">
+          <div key={card.title} className="rounded-xl border border-red-500/25 bg-red-500/[0.04]">
+            <div className="p-4 sm:p-5">
               <h3 className="font-medium text-amber-400 text-sm">{card.title}</h3>
               <p className="text-white text-sm mt-1">{card.desc}</p>
-            </CardContent>
-          </Card>
+            </div></div>
         ))}
       </div>
     </PageFrame>

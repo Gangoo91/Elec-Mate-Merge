@@ -220,75 +220,92 @@ export default function SiteDiary() {
   return (
     <div className="flex flex-col bg-background min-h-0">
       {/* ═══ FIXED TOP BAR ═══ */}
-      <div className="flex-shrink-0 bg-[hsl(240,5.9%,10%)]/95 backdrop-blur-xl border-b border-white/[0.06] z-20">
+      <div className="flex-shrink-0 bg-[hsl(0_0%_8%)]/92 backdrop-blur-md border-b border-white/[0.06] z-20">
         {/* Title row */}
-        <div className="flex items-center gap-3 px-4 h-14">
+        <div className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 h-14">
           <button
             onClick={() => navigate('/apprentice')}
-            className="h-11 w-11 flex items-center justify-center rounded-xl active:bg-white/10 touch-manipulation -ml-1"
+            className="inline-flex items-center justify-center gap-2 h-11 px-2 -ml-1 rounded-md text-[11px] sm:text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation flex-shrink-0"
+            aria-label="Back to apprentice hub"
           >
-            <ArrowLeft className="h-5 w-5 text-white" />
+            <ArrowLeft className="h-4 w-4" />
+            <span className="hidden md:inline">Apprentice hub</span>
           </button>
+          <div className="hidden md:block h-5 w-px bg-white/10 flex-shrink-0" />
 
           <div className="flex-1 min-w-0">
-            <h1 className="text-lg font-bold text-white truncate">Site Diary</h1>
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 block truncate">
+              <span className="hidden sm:inline">Site diary · Daily logbook</span>
+              <span className="sm:hidden">Site diary</span>
+            </span>
           </div>
 
           {/* Action buttons */}
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 flex-shrink-0">
             <button
               onClick={() => setSearchOpen(!searchOpen)}
-              className={`h-11 w-11 flex items-center justify-center rounded-xl touch-manipulation transition-colors ${
-                searchOpen ? 'bg-elec-yellow/15 text-elec-yellow' : 'active:bg-white/10 text-white'
+              className={`h-10 w-10 flex items-center justify-center rounded-md touch-manipulation transition-colors ${
+                searchOpen
+                  ? 'bg-elec-yellow/[0.10] text-elec-yellow'
+                  : 'active:bg-white/[0.06] text-white/70'
               }`}
+              aria-label="Search entries"
             >
-              <Search className="h-5 w-5" />
+              <Search className="h-4 w-4" />
             </button>
             <button
               onClick={() => {
                 setEditEntry(null);
                 setSheetOpen(true);
               }}
-              className="h-11 flex items-center gap-1.5 px-3.5 rounded-xl bg-elec-yellow text-black font-semibold text-sm touch-manipulation active:scale-[0.98] transition-transform"
+              className="h-10 inline-flex items-center justify-center gap-1.5 px-3 sm:px-4 rounded-md bg-elec-yellow text-black text-[12.5px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.97] transition-all touch-manipulation"
             >
-              <Plus className="h-4 w-4" />
-              <span className="hidden sm:inline">Log Entry</span>
+              <Plus className="h-4 w-4" strokeWidth={2.5} />
+              <span className="hidden sm:inline">Log entry</span>
             </button>
           </div>
         </div>
 
         {/* Stats ribbon */}
-        <div className="flex items-center gap-3 px-4 pb-2.5 overflow-x-auto scrollbar-hide sm:flex-wrap">
+        <div className="flex items-center gap-2.5 px-3 sm:px-4 pb-2.5 overflow-x-auto scrollbar-hide sm:flex-wrap">
           {currentStreak > 0 ? (
-            <div className="flex items-center gap-1.5 flex-shrink-0 px-2.5 py-1 rounded-full bg-orange-500/15 border border-orange-500/25">
-              <Flame className="h-3.5 w-3.5 text-orange-400 animate-pulse" />
-              <span className="text-xs font-bold text-orange-400">{currentStreak}-day streak</span>
+            <div className="flex items-center gap-1.5 flex-shrink-0 px-2 h-7 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
+              <Flame className="h-3 w-3 text-elec-yellow" />
+              <span className="text-[11px] font-mono tabular-nums text-elec-yellow">
+                {currentStreak}d streak
+              </span>
               {nextMilestone && daysToNextMilestone > 0 && (
-                <span className="text-[10px] text-orange-400/70">
-                  {daysToNextMilestone}d to {nextMilestone}!
+                <span className="text-[10px] font-mono tabular-nums text-elec-yellow/70">
+                  · {daysToNextMilestone}d to {nextMilestone}
                 </span>
               )}
             </div>
           ) : (
-            <div className="flex items-center gap-1 flex-shrink-0">
-              <Flame className="h-3.5 w-3.5 text-white" />
-              <span className="text-xs text-white">{streakMessage}</span>
+            <div className="flex items-center gap-1.5 flex-shrink-0 px-2 h-7 rounded-md border border-white/[0.08] bg-white/[0.02]">
+              <Flame className="h-3 w-3 text-white/55" />
+              <span className="text-[11px] text-white/70">{streakMessage}</span>
             </div>
           )}
-          <div className="flex items-center gap-1 flex-shrink-0">
-            <BookOpen className="h-3.5 w-3.5 text-white" />
-            <span className="text-xs text-white">{totalEntries} entries</span>
+          <div className="flex items-center gap-1.5 flex-shrink-0">
+            <BookOpen className="h-3 w-3 text-white/40" />
+            <span className="text-[11px] font-mono tabular-nums text-white/85">
+              {totalEntries} entries
+            </span>
           </div>
           {longestStreak > 1 && (
-            <div className="flex items-center gap-1 flex-shrink-0">
-              <TrendingUp className="h-3.5 w-3.5 text-white" />
-              <span className="text-xs text-white">Best: {longestStreak}d</span>
+            <div className="flex items-center gap-1.5 flex-shrink-0">
+              <TrendingUp className="h-3 w-3 text-white/40" />
+              <span className="text-[11px] font-mono tabular-nums text-white/85">
+                Best {longestStreak}d
+              </span>
             </div>
           )}
           {avgMood && (
             <div className="flex items-center gap-1 flex-shrink-0">
-              <span className="text-sm">{moodEmojis[avgMood]}</span>
-              <span className="text-xs text-white">avg mood</span>
+              <span className="text-[13px] leading-none">{moodEmojis[avgMood]}</span>
+              <span className="text-[11px] text-white/55 uppercase tracking-[0.14em]">
+                avg mood
+              </span>
             </div>
           )}
         </div>
@@ -400,37 +417,41 @@ export default function SiteDiary() {
                     setDetailOpen(true);
                   }
                 }}
-                className="w-full rounded-xl border border-amber-500/20 bg-gradient-to-br from-amber-500/[0.06] to-yellow-500/[0.04] overflow-hidden text-left touch-manipulation active:bg-amber-500/[0.08] transition-colors"
+                className="w-full rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] overflow-hidden text-left touch-manipulation active:bg-elec-yellow/[0.08] transition-colors"
               >
-                <div className="h-0.5 bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-500" />
                 <div className="px-4 py-3 flex items-center gap-3">
-                  <div className="h-9 w-9 rounded-lg bg-amber-500/15 flex items-center justify-center flex-shrink-0">
-                    <Briefcase className="h-4 w-4 text-amber-400" />
+                  <div className="h-9 w-9 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] flex items-center justify-center flex-shrink-0">
+                    <Briefcase className="h-4 w-4 text-elec-yellow" />
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <h4 className="text-sm font-semibold text-white">Portfolio Opportunities</h4>
-                    <p className="text-[11px] text-amber-300/80 mt-0.5">
-                      {portfolioOpportunities.length} entr
-                      {portfolioOpportunities.length !== 1 ? 'ies' : 'y'} could strengthen your
-                      portfolio
+                  <div className="flex-1 min-w-0 space-y-0.5">
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+                      Portfolio opportunity
+                    </span>
+                    <p className="text-[13px] text-white leading-snug">
+                      <span className="font-mono tabular-nums">
+                        {portfolioOpportunities.length}
+                      </span>{' '}
+                      entr{portfolioOpportunities.length !== 1 ? 'ies' : 'y'} could
+                      strengthen your portfolio
                     </p>
                   </div>
-                  <ChevronRight className="h-4 w-4 text-amber-400/60 flex-shrink-0" />
+                  <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0" />
                 </div>
               </button>
             )}
 
             {/* AI Coach card — only when 3+ entries */}
             {entries.length >= 3 && (
-              <div className="rounded-xl overflow-hidden border border-purple-500/20 bg-gradient-to-br from-purple-500/[0.06] to-blue-500/[0.06]">
-                <div className="h-0.5 bg-gradient-to-r from-purple-500 via-blue-500 to-purple-500" />
+              <div className="rounded-xl overflow-hidden border border-white/[0.06] bg-[hsl(0_0%_10%)]">
                 <button
                   onClick={() => setCoachExpanded(!coachExpanded)}
                   className="w-full flex items-center justify-between px-4 py-3 touch-manipulation"
                 >
                   <div className="flex items-center gap-2">
-                    <Sparkles className="h-4 w-4 text-purple-400" />
-                    <h3 className="text-sm font-semibold text-white">AI Coach</h3>
+                    <Sparkles className="h-4 w-4 text-elec-yellow" />
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                      AI coach
+                    </span>
                   </div>
                   <div className="flex items-center gap-1">
                     {!coachLoading && coachInsight && (
@@ -442,16 +463,16 @@ export default function SiteDiary() {
                           refreshCoach();
                         }}
                         onKeyDown={(e) => { if (e.key === 'Enter') { e.stopPropagation(); refreshCoach(); } }}
-                        className="h-9 px-2.5 flex items-center gap-1.5 rounded-lg bg-purple-500/15 border border-purple-500/25 touch-manipulation cursor-pointer active:bg-purple-500/25 transition-colors"
+                        className="h-8 px-2.5 flex items-center gap-1.5 rounded-md border border-white/[0.08] bg-white/[0.02] touch-manipulation cursor-pointer active:bg-white/[0.04] transition-colors"
                       >
-                        <RefreshCw className="h-3 w-3 text-purple-400" />
-                        <span className="text-[11px] font-medium text-purple-400">Refresh</span>
+                        <RefreshCw className="h-3 w-3 text-white/70" />
+                        <span className="text-[10.5px] font-medium text-white/85">Refresh</span>
                       </div>
                     )}
                     {coachExpanded ? (
-                      <ChevronUp className="h-4 w-4 text-white ml-1" />
+                      <ChevronUp className="h-4 w-4 text-white/40 ml-1" />
                     ) : (
-                      <ChevronDown className="h-4 w-4 text-white ml-1" />
+                      <ChevronDown className="h-4 w-4 text-white/40 ml-1" />
                     )}
                   </div>
                 </button>
@@ -460,96 +481,117 @@ export default function SiteDiary() {
                   <div className="px-4 pb-4">
                     <button
                       onClick={refreshCoach}
-                      className="w-full flex items-center justify-center gap-2 h-12 rounded-xl bg-purple-500/15 border border-purple-500/30 text-purple-400 text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all"
+                      className="w-full inline-flex items-center justify-center gap-2 h-11 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation"
                     >
                       <Sparkles className="h-4 w-4" />
-                      Get AI Insights
+                      Get AI insights
                     </button>
-                    <p className="text-[11px] text-white text-center mt-2">
-                      Analyses your recent diary entries for patterns and guidance
+                    <p className="text-[11px] text-white/55 text-center mt-2">
+                      Analyses your recent entries for patterns and guidance
                     </p>
                   </div>
                 )}
 
                 {coachExpanded && coachLoading && !coachInsight && (
                   <div className="flex items-center justify-center py-6 px-4">
-                    <div className="animate-spin h-5 w-5 border-2 border-purple-400 border-t-transparent rounded-full" />
-                    <span className="text-xs text-white ml-2">Analysing your diary...</span>
+                    <div className="animate-spin h-4 w-4 border-2 border-elec-yellow border-t-transparent rounded-full" />
+                    <span className="text-[11px] text-white/55 uppercase tracking-[0.14em] ml-2">
+                      Analysing…
+                    </span>
                   </div>
                 )}
 
                 {coachExpanded && coachError && !coachLoading && !coachInsight && (
                   <div className="px-4 pb-4 space-y-2">
-                    <div className="flex items-start gap-2 px-3 py-2.5 rounded-lg bg-red-500/[0.06] border border-red-500/20">
-                      <AlertTriangle className="h-3.5 w-3.5 text-red-400 mt-0.5 flex-shrink-0" />
-                      <p className="text-xs text-red-300 leading-relaxed">{coachError}</p>
+                    <div className="flex items-start gap-2 px-3 py-2.5 rounded-md border border-red-500/30 bg-red-500/[0.04]">
+                      <AlertTriangle className="h-3.5 w-3.5 text-red-300 mt-0.5 flex-shrink-0" />
+                      <p className="text-[12px] text-red-300 leading-relaxed">{coachError}</p>
                     </div>
                     <button
                       onClick={refreshCoach}
-                      className="w-full flex items-center justify-center gap-2 h-11 rounded-xl bg-purple-500/15 border border-purple-500/30 text-purple-400 text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all"
+                      className="w-full inline-flex items-center justify-center gap-2 h-10 rounded-md border border-white/[0.08] bg-white/[0.02] text-[12px] font-medium text-white/85 hover:bg-white/[0.04] active:scale-[0.98] transition-all touch-manipulation"
                     >
-                      Try Again
+                      Try again
                     </button>
                   </div>
                 )}
 
                 {coachExpanded && coachInsight && (
-                  <div className="px-4 pb-4 space-y-4">
-                    {/* Entry count badge */}
-                    <p className="text-[10px] text-white uppercase tracking-wider text-center">
+                  <div className="px-4 pb-4 space-y-4 border-t border-white/[0.04]">
+                    <p className="text-[10px] uppercase tracking-[0.18em] text-white/40 text-center pt-3">
                       Based on {entries.length} entr{entries.length !== 1 ? 'ies' : 'y'}
                     </p>
 
-                    {/* Encouragement — hero section */}
-                    <div className="px-4 py-3 rounded-xl bg-purple-500/[0.08] border border-purple-500/20">
-                      <p className="text-sm text-white leading-relaxed">{coachInsight.encouragement}</p>
+                    {/* Encouragement */}
+                    <div className="px-4 py-3 rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04]">
+                      <p className="text-[13px] text-white/85 leading-relaxed">
+                        {coachInsight.encouragement}
+                      </p>
                     </div>
 
                     {/* 2-col grid on desktop for key insights */}
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-2.5">
                       {/* Recommendation */}
-                      <div className="px-4 py-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Lightbulb className="h-4 w-4 text-elec-yellow" />
-                          <span className="text-[10px] text-white uppercase tracking-wider font-semibold">Next Steps</span>
+                      <div className="px-4 py-3 rounded-md border border-white/[0.06] bg-white/[0.02] space-y-1.5">
+                        <div className="flex items-center gap-1.5">
+                          <Lightbulb className="h-3.5 w-3.5 text-elec-yellow/85" />
+                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                            Next steps
+                          </span>
                         </div>
-                        <p className="text-xs text-white leading-relaxed">{coachInsight.recommendation}</p>
+                        <p className="text-[12.5px] text-white/85 leading-relaxed">
+                          {coachInsight.recommendation}
+                        </p>
                       </div>
 
                       {/* Mood */}
                       {coachInsight.moodInsight && (
-                        <div className="px-4 py-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-                          <div className="flex items-center gap-2 mb-2">
-                            <Brain className="h-4 w-4 text-cyan-400" />
-                            <span className="text-[10px] text-white uppercase tracking-wider font-semibold">Wellbeing</span>
+                        <div className="px-4 py-3 rounded-md border border-white/[0.06] bg-white/[0.02] space-y-1.5">
+                          <div className="flex items-center gap-1.5">
+                            <Brain className="h-3.5 w-3.5 text-white/55" />
+                            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                              Wellbeing
+                            </span>
                           </div>
-                          <p className="text-xs text-white leading-relaxed">{coachInsight.moodInsight}</p>
+                          <p className="text-[12.5px] text-white/85 leading-relaxed">
+                            {coachInsight.moodInsight}
+                          </p>
                         </div>
                       )}
 
                       {/* Regulation tip */}
                       {coachInsight.regulationTip && (
-                        <div className="px-4 py-3 rounded-xl bg-amber-500/[0.06] border border-amber-500/15">
-                          <div className="flex items-center gap-2 mb-2">
-                            <AlertTriangle className="h-4 w-4 text-amber-400" />
-                            <span className="text-[10px] text-amber-300 uppercase tracking-wider font-semibold">BS 7671 Tip</span>
+                        <div className="px-4 py-3 rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] space-y-1.5">
+                          <div className="flex items-center gap-1.5">
+                            <AlertTriangle className="h-3.5 w-3.5 text-elec-yellow/85" />
+                            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+                              BS 7671 tip
+                            </span>
                           </div>
-                          <p className="text-xs text-amber-300/90 leading-relaxed">{coachInsight.regulationTip}</p>
+                          <p className="text-[12.5px] text-white/85 leading-relaxed">
+                            {coachInsight.regulationTip}
+                          </p>
                         </div>
                       )}
 
                       {/* KSB + Qualification */}
                       {(coachInsight.ksbSuggestion || coachInsight.qualificationProgress) && (
-                        <div className="px-4 py-3 rounded-xl bg-green-500/[0.06] border border-green-500/15">
-                          <div className="flex items-center gap-2 mb-2">
-                            <BookOpen className="h-4 w-4 text-green-400" />
-                            <span className="text-[10px] text-green-300 uppercase tracking-wider font-semibold">Evidence &amp; Progress</span>
+                        <div className="px-4 py-3 rounded-md border border-white/[0.06] bg-white/[0.02] space-y-1.5">
+                          <div className="flex items-center gap-1.5">
+                            <BookOpen className="h-3.5 w-3.5 text-white/55" />
+                            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                              Evidence & progress
+                            </span>
                           </div>
                           {coachInsight.ksbSuggestion && (
-                            <p className="text-xs text-white leading-relaxed">{coachInsight.ksbSuggestion}</p>
+                            <p className="text-[12.5px] text-white/85 leading-relaxed">
+                              {coachInsight.ksbSuggestion}
+                            </p>
                           )}
                           {coachInsight.qualificationProgress && (
-                            <p className="text-xs text-green-300/90 leading-relaxed mt-1.5">{coachInsight.qualificationProgress}</p>
+                            <p className="text-[12px] text-white/70 leading-relaxed mt-1">
+                              {coachInsight.qualificationProgress}
+                            </p>
                           )}
                         </div>
                       )}
@@ -557,11 +599,18 @@ export default function SiteDiary() {
 
                     {/* Skill gaps */}
                     {coachInsight.skillGaps && coachInsight.skillGaps.length > 0 && (
-                      <div>
-                        <span className="text-[10px] text-white uppercase tracking-wider font-semibold">Skills to Practise</span>
-                        <div className="flex flex-wrap gap-1.5 mt-2">
+                      <div className="space-y-2">
+                        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                          Skills to practise
+                        </span>
+                        <div className="flex flex-wrap gap-1.5">
                           {coachInsight.skillGaps.map((skill) => (
-                            <span key={skill} className="px-2.5 py-1 rounded-lg text-[11px] font-medium bg-purple-500/10 border border-purple-500/20 text-purple-400">{skill}</span>
+                            <span
+                              key={skill}
+                              className="inline-flex items-center h-7 px-2 rounded-md border border-white/[0.08] bg-white/[0.02] text-[11px] text-white/85"
+                            >
+                              {skill}
+                            </span>
                           ))}
                         </div>
                       </div>
@@ -577,18 +626,24 @@ export default function SiteDiary() {
                             if (target) { setDetailEntry(target); setDetailOpen(true); }
                           }
                         }}
-                        className="w-full flex items-start gap-3 px-4 py-3 min-h-[44px] rounded-xl bg-elec-yellow/[0.06] border border-elec-yellow/15 text-left touch-manipulation active:bg-elec-yellow/10 transition-colors"
+                        className="w-full flex items-start gap-3 px-4 py-3 min-h-[44px] rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] text-left touch-manipulation active:bg-elec-yellow/[0.08] transition-colors"
                       >
                         <Briefcase className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                        <div className="flex-1 min-w-0">
-                          <span className="text-[10px] text-elec-yellow uppercase tracking-wider font-semibold">Portfolio Suggestion</span>
-                          <p className="text-xs text-white leading-relaxed mt-1">{coachInsight.suggestedEvidence}</p>
+                        <div className="flex-1 min-w-0 space-y-1">
+                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+                            Portfolio suggestion
+                          </span>
+                          <p className="text-[12.5px] text-white/85 leading-relaxed">
+                            {coachInsight.suggestedEvidence}
+                          </p>
                           {coachInsight.portfolioNudges?.[0] && (
-                            <p className="text-[11px] text-elec-yellow/60 mt-1">Tap to view &amp; add to portfolio</p>
+                            <p className="text-[10.5px] text-elec-yellow/70">
+                              Tap to view & add to portfolio
+                            </p>
                           )}
                         </div>
                         {coachInsight.portfolioNudges?.[0] && (
-                          <ChevronRight className="h-4 w-4 text-elec-yellow/50 mt-0.5 flex-shrink-0" />
+                          <ChevronRight className="h-4 w-4 text-elec-yellow/60 mt-0.5 flex-shrink-0" />
                         )}
                       </button>
                     )}

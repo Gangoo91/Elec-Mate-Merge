@@ -525,6 +525,67 @@ export const generateAIEnhancedQuotePDF = async ({
     }
   };
 
+  // ELE-975 — customer signature box (opt-in via settings.showSignatureBox).
+  const renderSignatureBox = () => {
+    if (quote.settings?.showSignatureBox !== true) return;
+
+    if (yPosition + 50 > pageHeight - 30) {
+      pdf.addPage();
+      yPosition = margin;
+    }
+
+    yPosition += 8;
+    yPosition = addText('CUSTOMER ACCEPTANCE', margin, yPosition, {
+      fontSize: 10,
+      fontStyle: 'bold',
+      color: primaryColor,
+    });
+    yPosition += 4;
+
+    const sigBoxWidth = 70;
+    const sigBoxHeight = 25;
+    const colGap = 10;
+    const dateColX = margin + sigBoxWidth + colGap;
+
+    addText('Signature', margin, yPosition, { fontSize: 9, color: [100, 100, 100] });
+    addText('Date', dateColX, yPosition, { fontSize: 9, color: [100, 100, 100] });
+    yPosition += 4;
+
+    if (quote.signature_url) {
+      try {
+        pdf.addImage(quote.signature_url, 'PNG', margin, yPosition, sigBoxWidth, sigBoxHeight);
+      } catch {
+        pdf.setDrawColor(150, 150, 150);
+        pdf.setLineWidth(0.3);
+        pdf.line(margin, yPosition + sigBoxHeight, margin + sigBoxWidth, yPosition + sigBoxHeight);
+      }
+    } else {
+      pdf.setDrawColor(150, 150, 150);
+      pdf.setLineWidth(0.3);
+      pdf.line(margin, yPosition + sigBoxHeight, margin + sigBoxWidth, yPosition + sigBoxHeight);
+    }
+
+    pdf.setDrawColor(150, 150, 150);
+    pdf.setLineWidth(0.3);
+    pdf.line(dateColX, yPosition + sigBoxHeight, dateColX + 50, yPosition + sigBoxHeight);
+
+    if (quote.accepted_at) {
+      addText(safeDate(quote.accepted_at), dateColX, yPosition + sigBoxHeight - 2, {
+        fontSize: 10,
+      });
+    }
+
+    yPosition += sigBoxHeight + 4;
+
+    if (quote.accepted_by_name) {
+      addText(`Signed by: ${safeText(quote.accepted_by_name)}`, margin, yPosition, {
+        fontSize: 9,
+        color: [80, 80, 80],
+      });
+      yPosition += 5;
+    }
+  };
+
   // Add footer to all pages
   const addFooterToAllPages = () => {
     const totalPages = pdf.getNumberOfPages();
@@ -564,6 +625,7 @@ export const generateAIEnhancedQuotePDF = async ({
     yPosition = renderItemsTable();
     yPosition = renderTotals();
     yPosition = renderRecommendations();
+    renderSignatureBox();
     renderFooter();
 
     // Add footer to all pages

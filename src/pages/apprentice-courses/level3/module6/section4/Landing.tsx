@@ -22,7 +22,7 @@ const subsections = [
   },
   {
     number: 'Subsection 2',
-    title: 'Reference Methods (A\–G and 100\–103)',
+    title: 'Reference Methods (A–G and 100–103)',
     description: 'The BS 7671 install-method catalogue.',
     icon: ClipboardCheck,
     href: '/study-centre/apprentice/level3-module6-section4-2',

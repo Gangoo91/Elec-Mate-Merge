@@ -30,7 +30,9 @@ import {
   LearningOutcomes,
   ContentEyebrow,
   SectionRule,
+  VideoCard,
 } from '@/components/study-centre/learning';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'IET Guidance Note 3 — what it adds | Level 3 Module 5.1.3 | Elec-Mate';
@@ -294,6 +296,15 @@ export default function Sub3() {
               </>
             }
             cite="Source: IET Guidance Note 3, 9th Edition 2022 (A4 update), Chapter 1 — paraphrased."
+          />
+
+          <VideoCard
+            url={videos.safeIsolation.url}
+            title={videos.safeIsolation.title}
+            channel={videos.safeIsolation.channel}
+            duration={videos.safeIsolation.duration}
+            topic="Safe isolation — the first step of any GN3 test sequence"
+            caption="Before any GN3 dead-test sequence the circuit must be safely isolated and proven dead. The JIB safe isolation procedure is what every Part 6 verification depends on."
           />
 
           <SectionRule />

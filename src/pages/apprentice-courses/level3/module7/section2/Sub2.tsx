@@ -92,7 +92,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      "BUS (Boiler Upgrade Scheme) is administered by Ofgem and pays homeowners £7,500 toward an air-source heat pump (£7,500 also for ground-source as of 2026). MCS-registered installation is mandatory for the grant. The grant pays the homeowner direct (typically against an installer invoice). For an installer this means MCS registration is the practical entry condition for taking on BUS work, which is the bulk of the heat pump market.",
+      "BUS (Boiler Upgrade Scheme) is administered by Ofgem and pays homeowners £7,500 toward an air-source heat pump (and £7,500 toward a ground-source heat pump — both rates have applied since the October 2023 uplift). MCS-registered installation is mandatory for the grant. The grant pays the homeowner direct (typically against an installer invoice). For an installer this means MCS registration is the practical entry condition for taking on BUS work, which is the bulk of the heat pump market.",
   },
   {
     id: 2,

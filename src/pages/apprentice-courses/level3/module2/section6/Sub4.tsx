@@ -871,7 +871,7 @@ export default function Sub4() {
                 record.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 132.1 framework — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 132.1 framework."
           />
 
           <SectionRule />

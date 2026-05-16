@@ -31,6 +31,7 @@ import {
   ContentEyebrow,
   SectionRule,
 } from '@/components/study-centre/learning';
+import { ConsumerUnit } from '@/components/study-centre/diagrams';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE =
@@ -188,7 +189,7 @@ const quizQuestions = [
       'Why does prefabrication off-site reduce material wastage and is it relevant to environmental tech installs?',
     options: [
       'It doesn\'t reduce wastage.',
-      "Prefabrication off-site (e.g. pre-terminating SWA tails to length, pre-building consumer units, pre-assembling cable trays in a workshop) reduces on-site cuts and offcuts. Off-site cutting can be measured precisely; on-site cuts under time pressure tend to leave more wastage. Less waste = lower material cost = smaller skip = less environmental impact. Relevant to environmental tech because: (a) the customer is by definition committed to sustainability so resource-efficient installation matches their values; (b) the trade is increasingly held to evidence-based environmental claims; (c) it\'s a 2357 Unit 312 AC 2.1 explicit requirement. Plus prefabrication gives faster on-site install times.",
+      "Prefabrication off-site (e.g. pre-terminating SWA tails to length, pre-building consumer units, pre-assembling cable trays in a workshop) reduces on-site cuts and offcuts. Off-site cutting can be measured precisely; on-site cuts under time pressure tend to leave more wastage. Less waste = lower material cost = smaller skip = less environmental impact. Relevant to environmental tech because: (a) the customer is by definition committed to sustainability so resource-efficient installation matches their values; (b) the trade is increasingly held to evidence-based environmental claims; (c) it's a 2357 Unit 312 AC 2.1 explicit requirement. Plus prefabrication gives faster on-site install times.",
       'Prefabrication is illegal.',
       'It applies only to cars.',
     ],
@@ -338,6 +339,8 @@ export default function Sub1() {
             correctIndex={checks[0].correctIndex}
             explanation={checks[0].explanation}
           />
+
+          <ConsumerUnit />
 
           <SectionRule />
 
@@ -711,7 +714,7 @@ export default function Sub1() {
                 check the Section 712 wording before relying on it.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Section 712 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Section 712."
           />
 
           <RegsCallout
@@ -732,7 +735,7 @@ export default function Sub1() {
                 circuits.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 643.3 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 643.3."
           />
 
           <SectionRule />

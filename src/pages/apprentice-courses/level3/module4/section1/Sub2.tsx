@@ -611,11 +611,11 @@ export default function Sub2() {
 
           <KeyTakeaways
             points={[
-              "RAMS is the documented thinking that proves the firm has considered hazards before work starts. Generic RAMS don\'t satisfy MHSWR Reg 3 \'suitable and sufficient' for a fault investigation whose outcome you don't yet know.",
+              "RAMS is the documented thinking that proves the firm has considered hazards before work starts. Generic RAMS don't satisfy MHSWR Reg 3 'suitable and sufficient' for a fault investigation whose outcome you don't yet know.",
               "JIB safe isolation is six steps in order: identify, isolate, lock-off, prove tester on known live, test circuit, re-prove tester. The before/after prove is the one apprentices skip and the one that catches a faulty tester.",
               "PPE scales with system voltage and prospective short-circuit current. Class 0 1000 V gloves and IEC 60900 insulated tools are the baseline; arc-flash kit is added for commercial 3-phase and supply-side work.",
               "Permits-to-work are formal H&S controls for higher-risk tasks. They document scope, authorised persons, isolation steps, residual hazards, PPE, and emergency response. Common on commercial sites; rare on domestic.",
-              "Lone working under HSE INDG73 needs a documented procedure: risk assessment, check-in schedule, man-down alarm, defined escalation. \'The customer was there' is not a substitute.",
+              "Lone working under HSE INDG73 needs a documented procedure: risk assessment, check-in schedule, man-down alarm, defined escalation. 'The customer was there' is not a substitute.",
               "ESD discipline (wrist strap, anti-static mat, edge handling) is mandatory when working on electronic control panels and BMS equipment. CMOS damage threshold is 5–100 V; human static can hit 15 kV.",
               "Battery rooms have unique hazards (DC shock, hydrogen, electrolyte, thermal runaway, high short-circuit current). Specific PPE, ventilation and tools required.",
               "ATEX zones (gas Zone 0/1/2, dust Zone 20/21/22) require intrinsically-safe instruments and a hot-work permit. DSEAR 2002 governs.",

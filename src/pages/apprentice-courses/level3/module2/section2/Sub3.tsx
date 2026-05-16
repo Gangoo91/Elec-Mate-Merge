@@ -658,7 +658,7 @@ export default function Sub3() {
                 is no risk-assessment exemption.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 411.3.3 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 411.3.3."
           />
 
           <RegsCallout
@@ -679,7 +679,7 @@ export default function Sub3() {
                 anyway and HRRBs bring AFDDs in via the Building Safety Act framework.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 421.1.7 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 421.1.7."
           />
 
           <SectionRule />

@@ -1,10 +1,18 @@
-import { useState, useEffect, useRef } from 'react';
+import { useMemo, useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import {
   FileText,
   CheckCircle,
@@ -19,28 +27,88 @@ import {
   Plus,
   Minus,
   Pencil,
+  CreditCard,
+  CalendarClock,
+  ExternalLink,
 } from 'lucide-react';
 import { Quote, QuoteItem } from '@/types/quote';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 import SignaturePad from '@/components/forms/SignaturePad';
 import { diffQuoteItems, formatDeltaCurrency, QuoteDiff } from '@/utils/quote-diff';
+import { buildCategoryBreakdowns } from '@/utils/quote-calculations';
+import { cn } from '@/lib/utils';
+
+// Brand defaults match the shared email design system fallbacks.
+const DEFAULT_BRAND = '#0f172a';
+const safeHex = (v: string | null | undefined, fallback = DEFAULT_BRAND): string => {
+  const raw = String(v || '').trim();
+  return /^#[0-9a-fA-F]{6}$/.test(raw) ? raw : fallback;
+};
+
+interface CompanyBrand {
+  companyName: string;
+  logoUrl: string | null;
+  primaryColor: string;
+  email: string | null;
+  phone: string | null;
+  website: string | null;
+  address: string | null;
+  vatNumber: string | null;
+  registrationNumber: string | null;
+  sparkyName: string | null;
+  sparkyAvatarUrl: string | null;
+}
+
+interface DepositInvoice {
+  invoiceId: string;
+  invoiceNumber: string;
+  total: number;
+  status: string;
+  dueDate: string | null;
+  paidAt: string | null;
+  payUrl: string | null;
+}
+
+const DEFAULT_BRAND_PROFILE: CompanyBrand = {
+  companyName: 'Your Electrician',
+  logoUrl: null,
+  primaryColor: DEFAULT_BRAND,
+  email: null,
+  phone: null,
+  website: null,
+  address: null,
+  vatNumber: null,
+  registrationNumber: null,
+  sparkyName: null,
+  sparkyAvatarUrl: null,
+};
 
 const PublicQuoteView = () => {
   const { token } = useParams<{ token: string }>();
   const [quote, setQuote] = useState<Quote | null>(null);
+  const [brand, setBrand] = useState<CompanyBrand>(DEFAULT_BRAND_PROFILE);
+
+  const categoryBreakdowns = useMemo(
+    () => (quote ? buildCategoryBreakdowns(quote.items || [], quote.settings) : []),
+    [quote]
+  );
   const [loading, setLoading] = useState(true);
   const [accepting, setAccepting] = useState(false);
   const [rejecting, setRejecting] = useState(false);
+  const [declineConfirmOpen, setDeclineConfirmOpen] = useState(false);
   const [clientName, setClientName] = useState('');
   const [clientEmail, setClientEmail] = useState('');
   const [signatureData, setSignatureData] = useState<string>('');
   const signaturePadRef = useRef<any>(null);
   const [variationDiff, setVariationDiff] = useState<QuoteDiff | null>(null);
+  const [depositInvoice, setDepositInvoice] = useState<DepositInvoice | null>(null);
 
   useEffect(() => {
     if (token) {
       loadQuote();
+      loadBrand();
+      loadDepositInvoice();
     }
   }, [token]);
 
@@ -52,14 +120,62 @@ const PublicQuoteView = () => {
         const acceptSection = document.getElementById('acceptance-section');
         if (acceptSection) {
           acceptSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          acceptSection.style.boxShadow = '0 0 0 3px rgba(250, 204, 21, 0.4)';
+          acceptSection.style.boxShadow = `0 0 0 3px ${brand.primaryColor}40`;
           setTimeout(() => {
             acceptSection.style.boxShadow = '';
           }, 2000);
         }
       }, 300);
     }
-  }, [quote]);
+  }, [quote, brand.primaryColor]);
+
+  const loadBrand = async () => {
+    if (!token) return;
+    try {
+      const { data, error } = await supabase.rpc('get_company_brand_by_quote_token', {
+        token_param: token,
+      });
+      if (error || !data || (Array.isArray(data) && data.length === 0)) return;
+      const row = (Array.isArray(data) ? data[0] : data) as Record<string, string | null>;
+      setBrand({
+        companyName: row.company_name || DEFAULT_BRAND_PROFILE.companyName,
+        logoUrl: row.logo_url || row.logo_data_url || null,
+        primaryColor: safeHex(row.primary_color),
+        email: row.company_email || null,
+        phone: row.company_phone || null,
+        website: row.company_website || null,
+        address: row.company_address || null,
+        vatNumber: row.vat_number || null,
+        sparkyName: row.sparky_full_name || null,
+        sparkyAvatarUrl: row.sparky_avatar_url || null,
+        registrationNumber: row.company_registration || null,
+      });
+    } catch {
+      // Non-fatal — fall back to defaults; the page still renders.
+    }
+  };
+
+  const loadDepositInvoice = async () => {
+    if (!token) return;
+    try {
+      const { data, error } = await supabase.rpc('get_deposit_invoice_by_quote_token', {
+        token_param: token,
+      });
+      if (error || !data || (Array.isArray(data) && data.length === 0)) return;
+      const row = (Array.isArray(data) ? data[0] : data) as Record<string, unknown>;
+      setDepositInvoice({
+        invoiceId: String(row.invoice_id || ''),
+        invoiceNumber: String(row.invoice_number || ''),
+        total: Number(row.total || 0),
+        status: String(row.status || ''),
+        dueDate: (row.due_date as string) || null,
+        paidAt: (row.paid_at as string) || null,
+        payUrl: (row.stripe_payment_link_url as string) || null,
+      });
+    } catch {
+      // Non-fatal
+    }
+  };
 
   const loadQuote = async () => {
     if (!token) return;
@@ -141,8 +257,6 @@ const PublicQuoteView = () => {
           );
         }
       }
-
-      // Note: View tracking removed - anonymous users don't have write access to quote_views
     } catch {
       toast({
         title: 'Error',
@@ -166,52 +280,57 @@ const PublicQuoteView = () => {
 
     setAccepting(true);
     try {
-      // Use secure RPC function to accept quote (prevents unauthorized updates)
+      // ELE-954/955 — Go through the accept-quote-public edge function so
+      // the deposit invoice + Stripe pay link get created in the same
+      // round-trip. (The old accept_quote_by_token RPC only flipped the
+      // status flag and silently skipped the deposit/booking flow.)
       const clientIP = await getUserIP();
-      const { data: success, error: updateError } = await supabase.rpc('accept_quote_by_token', {
-        token_param: quote.public_token,
-        accepted_name: clientName,
-        accepted_email: clientEmail,
-        signature_data: signatureData,
-        client_ip: clientIP,
-        client_user_agent: navigator.userAgent,
-      });
+      const { data: result, error: invokeError } = await supabase.functions.invoke(
+        'accept-quote-public',
+        {
+          body: {
+            token: quote.public_token,
+            name: clientName,
+            email: clientEmail,
+            signature: signatureData,
+            ip: clientIP,
+            userAgent: navigator.userAgent,
+          },
+        }
+      );
 
-      if (updateError) {
-        throw updateError;
-      }
+      if (invokeError) throw invokeError;
+      if (!result?.success) throw new Error(result?.error || 'Quote could not be accepted.');
 
-      if (!success) {
-        throw new Error('Quote could not be accepted. It may have expired.');
-      }
-
-      // Send confirmation email to client (non-blocking)
-      if (clientEmail) {
-        supabase.functions
-          .invoke('quote-acceptance-confirmation', {
-            body: {
-              quoteId: quote.id,
-              quoteNumber: quote.quoteNumber,
-              clientEmail: clientEmail,
-              clientName: clientName,
-              total: quote.total,
-            },
-          })
-          .catch(() => {});
+      // Populate the post-accept state from the edge fn response.
+      if (result.depositRequired && result.depositInvoiceId) {
+        setDepositInvoice({
+          invoiceId: result.depositInvoiceId,
+          invoiceNumber: '',
+          total: Number(result.depositAmount) || 0,
+          status: 'sent',
+          dueDate: null,
+          paidAt: null,
+          payUrl: result.depositPayUrl || null,
+        });
       }
 
       toast({
-        title: 'Quote Accepted!',
-        description:
-          "We've sent you a confirmation email. We'll be in touch soon to schedule the work.",
+        title: result.depositRequired ? 'Quote accepted — one step left' : 'Quote accepted',
+        description: result.depositRequired
+          ? `Pay the deposit below to confirm your booking.`
+          : `We've sent you a confirmation email. Pick a slot below to lock in your booking.`,
         variant: 'success',
       });
 
+      // Refresh the quote so acceptance_status reflects the new state.
       loadQuote();
-    } catch {
+      loadDepositInvoice();
+    } catch (err) {
       toast({
         title: 'Error',
-        description: 'Failed to accept quote. Please try again.',
+        description:
+          err instanceof Error ? err.message : 'Failed to accept quote. Please try again.',
         variant: 'destructive',
       });
     } finally {
@@ -224,7 +343,6 @@ const PublicQuoteView = () => {
 
     setRejecting(true);
     try {
-      // Use secure RPC function to reject quote (prevents unauthorized updates)
       const clientIP = await getUserIP();
       const { data: success, error } = await supabase.rpc('reject_quote_by_token', {
         token_param: quote.public_token,
@@ -255,19 +373,8 @@ const PublicQuoteView = () => {
       });
     } finally {
       setRejecting(false);
+      setDeclineConfirmOpen(false);
     }
-  };
-
-  const dataURLtoBlob = (dataURL: string) => {
-    const arr = dataURL.split(',');
-    const mime = arr[0].match(/:(.*?);/)![1];
-    const bstr = atob(arr[1]);
-    let n = bstr.length;
-    const u8arr = new Uint8Array(n);
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n);
-    }
-    return new Blob([u8arr], { type: mime });
   };
 
   const getUserIP = async () => {
@@ -306,491 +413,824 @@ const PublicQuoteView = () => {
     return grouped;
   };
 
-  // Loading State - Native app feel
+  // Loading state — match shared design (light slate body, white card)
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-elec-navy via-elec-navy to-black flex items-center justify-center p-4">
+      <div className="min-h-screen bg-slate-100 flex items-center justify-center px-4">
         <div className="text-center">
-          <div className="w-16 h-16 rounded-full bg-elec-yellow/20 flex items-center justify-center mx-auto mb-4">
-            <Loader2 className="h-8 w-8 text-elec-yellow animate-spin" />
-          </div>
-          <p className="text-elec-light text-lg font-medium">Loading quote...</p>
+          <Loader2 className="h-7 w-7 text-slate-400 animate-spin mx-auto mb-3" />
+          <p className="text-sm text-slate-500">Loading quote…</p>
         </div>
       </div>
     );
   }
 
-  // Not Found State
+  // Not found state
   if (!quote) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-elec-navy via-elec-navy to-black flex items-center justify-center p-4">
-        <div className="text-center max-w-sm">
-          <div className="w-20 h-20 rounded-full bg-red-500/20 flex items-center justify-center mx-auto mb-4">
-            <FileText className="h-10 w-10 text-red-400" />
+      <div className="min-h-screen bg-slate-100 flex items-center justify-center px-4">
+        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 max-w-sm w-full p-8 text-center">
+          <div className="w-12 h-12 rounded-full bg-rose-50 flex items-center justify-center mx-auto mb-4">
+            <FileText className="h-6 w-6 text-rose-500" />
           </div>
-          <h1 className="text-2xl font-bold text-white mb-2">Quote Not Found</h1>
-          <p className="text-elec-light/70">This quote may have expired or been removed.</p>
+          <h1 className="text-lg font-semibold text-slate-900 mb-1">Quote not found</h1>
+          <p className="text-sm text-slate-500">This quote may have expired or been removed.</p>
         </div>
       </div>
     );
   }
 
-  const isAccepted = quote.acceptance_status === 'accepted';
+  // ELE-954/955 — finer-grained accept states. accepted_pending_deposit
+  // means "they signed but Stripe hasn't seen the deposit yet"; once paid
+  // the stripe webhook flips it to 'accepted'.
+  const isPendingDeposit = quote.acceptance_status === 'accepted_pending_deposit';
+  const isAccepted = quote.acceptance_status === 'accepted' || isPendingDeposit;
   const isRejected = quote.acceptance_status === 'rejected';
   const isPending = !isAccepted && !isRejected;
+  const isDepositPaid = !!depositInvoice?.paidAt;
+  const bookedSlotStart =
+    (quote as { booked_slot_start?: string | Date | null }).booked_slot_start || null;
   const groupedItems = groupItemsByCategory(quote.items || []);
+  const brandHex = brand.primaryColor;
+  const expiryStr = quote.expiryDate.toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+
+  // Footer details — mirror the email's two-row layout.
+  const contactParts = [brand.address, brand.phone, brand.email, brand.website]
+    .filter(Boolean)
+    .join('  ·  ');
+  const legalParts = [
+    brand.vatNumber ? `VAT ${brand.vatNumber}` : '',
+    brand.registrationNumber ? `Co. ${brand.registrationNumber}` : '',
+  ]
+    .filter(Boolean)
+    .join('  ·  ');
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-elec-navy via-elec-navy to-black">
-      {/* Header - Sticky on mobile */}
-      <div className="sticky top-0 z-10 bg-gradient-to-r from-elec-blue to-elec-blue/90 backdrop-blur-lg border-b border-white/10 safe-area-top">
-        <div className="px-4 py-4 sm:py-5 max-w-2xl mx-auto">
-          <div className="flex items-center justify-between gap-3">
+    <div
+      className={cn(
+        'min-h-screen bg-slate-100 py-6 sm:py-12 px-4',
+        // Extra bottom padding so the sticky mobile CTA doesn't overlap
+        // the footer when the user scrolls to the end. Desktop uses normal
+        // padding since there's no sticky bar there.
+        isPending && 'pb-28 sm:pb-12'
+      )}
+    >
+      <div
+        className="max-w-2xl mx-auto bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200"
+        style={{ ['--brand' as never]: brandHex }}
+      >
+        {/* Brand accent rail — same as the email shell */}
+        <div className="h-1" style={{ backgroundColor: brandHex }} />
+
+        {/* Header — logo (or company name) + sparky avatar + status pill */}
+        <div className="px-6 sm:px-9 pt-8 pb-2 flex items-start justify-between gap-4">
+          <div className="min-w-0 flex-1 flex items-center gap-3">
+            {/* Sparky avatar — small portrait, builds trust by showing the
+                human behind the quote. Falls back to a brand-coloured initial
+                circle if no avatar is set. */}
+            {brand.sparkyAvatarUrl ? (
+              <img
+                src={brand.sparkyAvatarUrl}
+                alt={brand.sparkyName || brand.companyName}
+                className="w-11 h-11 rounded-full object-cover border border-slate-200 flex-shrink-0"
+              />
+            ) : brand.sparkyName ? (
+              <div
+                className="w-11 h-11 rounded-full flex items-center justify-center text-white font-semibold text-sm flex-shrink-0"
+                style={{ backgroundColor: brandHex }}
+                aria-hidden="true"
+              >
+                {brand.sparkyName.charAt(0).toUpperCase()}
+              </div>
+            ) : null}
             <div className="min-w-0 flex-1">
-              <h1 className="text-xl sm:text-2xl font-bold text-white truncate">
-                Quote #{quote.quoteNumber}
-              </h1>
-              <p className="text-blue-200 text-sm flex items-center gap-1.5 mt-0.5">
-                <Calendar className="h-3.5 w-3.5 flex-shrink-0" />
-                Valid until{' '}
-                {quote.expiryDate.toLocaleDateString('en-GB', {
-                  day: 'numeric',
-                  month: 'short',
-                  year: 'numeric',
-                })}
-              </p>
-            </div>
-            <div className="flex-shrink-0">
-              {isAccepted && (
-                <Badge className="bg-green-500/90 text-white border-0 h-8 px-3 text-sm">
-                  <CheckCircle className="h-4 w-4 mr-1.5" />
-                  Accepted
-                </Badge>
+              {brand.logoUrl ? (
+                <img
+                  src={brand.logoUrl}
+                  alt={brand.companyName}
+                  className="max-h-10 max-w-[180px] object-contain"
+                />
+              ) : (
+                <p className="text-[20px] font-bold text-slate-900 tracking-tight truncate">
+                  {brand.companyName}
+                </p>
               )}
-              {isRejected && (
-                <Badge className="bg-red-500/90 text-white border-0 h-8 px-3 text-sm">
-                  <X className="h-4 w-4 mr-1.5" />
-                  Declined
-                </Badge>
+              {brand.sparkyName && brand.logoUrl && (
+                <p className="text-[12px] text-slate-500 mt-0.5 truncate">{brand.sparkyName}</p>
               )}
-              {isPending && (
-                <Badge className="bg-amber-500/90 text-white border-0 h-8 px-3 text-sm">
-                  Pending
-                </Badge>
+              {brand.sparkyName && !brand.logoUrl && (
+                <p className="text-[12px] text-slate-500 mt-0.5 truncate">
+                  Quote from {brand.sparkyName}
+                </p>
               )}
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="px-4 py-4 sm:py-6 max-w-2xl mx-auto space-y-4 pb-8 safe-area-bottom">
-        {/* Total Amount - Hero Card */}
-        <div className="bg-gradient-to-br from-elec-yellow/20 to-amber-500/10 rounded-2xl p-5 sm:p-6 border border-elec-yellow/30">
-          <div className="text-center">
-            <p className="text-elec-light/70 text-sm mb-1">Quote Total</p>
-            <p className="text-4xl sm:text-5xl font-bold text-elec-yellow">
-              {formatCurrency(quote.total)}
-            </p>
-            {quote.settings?.vatRegistered && quote.vatAmount > 0 && (
-              <p className="text-elec-light/60 text-sm mt-1">
-                Inc. VAT ({formatCurrency(quote.vatAmount)})
-              </p>
+          <div className="flex-shrink-0 pt-1">
+            {isAccepted && !isPendingDeposit && (
+              <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100">
+                <CheckCircle className="h-3.5 w-3.5" />
+                Accepted
+              </span>
+            )}
+            {isPendingDeposit && (
+              <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-100">
+                <CreditCard className="h-3.5 w-3.5" />
+                Deposit due
+              </span>
+            )}
+            {isRejected && (
+              <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full bg-rose-50 text-rose-700 border border-rose-100">
+                <X className="h-3.5 w-3.5" />
+                Declined
+              </span>
+            )}
+            {isPending && (
+              <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-100">
+                Awaiting response
+              </span>
             )}
           </div>
         </div>
 
-        {/* Job Details Card */}
-        {quote.jobDetails && (
-          <div className="bg-elec-card/80 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden">
-            <div className="px-4 py-3 border-b border-white/10">
-              <h2 className="text-base font-semibold text-white flex items-center gap-2">
-                <Briefcase className="h-4 w-4 text-elec-yellow" />
-                Job Details
-              </h2>
+        {/* Revision banner — for v2+ quotes with a diff against the previous
+            version, surface this BEFORE the hero so a returning client sees
+            "what changed" before the price. Single quick-jump anchor to the
+            detailed diff section further down the page. */}
+        {variationDiff && variationDiff.hasChanges && (
+          <div className="px-6 sm:px-9 pt-6">
+            <a
+              href="#variation-diff"
+              onClick={(e) => {
+                e.preventDefault();
+                document
+                  .getElementById('variation-diff')
+                  ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }}
+              className="flex items-center justify-between gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-left no-underline"
+            >
+              <div className="flex items-center gap-2.5 min-w-0">
+                <GitBranch className="h-4 w-4 text-amber-700 flex-shrink-0" />
+                <div className="min-w-0">
+                  <p className="text-[13px] font-semibold text-amber-900">
+                    Revised quote · v{quote?.version_number ?? 2}
+                  </p>
+                  <p className="text-[12px] text-amber-800 truncate">
+                    {(() => {
+                      const n =
+                        variationDiff.added.length +
+                        variationDiff.removed.length +
+                        variationDiff.changed.length;
+                      return `${n} change${n === 1 ? '' : 's'} since v${(quote?.version_number ?? 2) - 1} — see what changed`;
+                    })()}
+                  </p>
+                </div>
+              </div>
+              <span
+                className={cn(
+                  'text-sm font-bold tabular-nums flex-shrink-0',
+                  variationDiff.totalDelta > 0
+                    ? 'text-amber-800'
+                    : variationDiff.totalDelta < 0
+                      ? 'text-emerald-700'
+                      : 'text-slate-500'
+                )}
+              >
+                {formatDeltaCurrency(variationDiff.totalDelta)}
+              </span>
+            </a>
+          </div>
+        )}
+
+        {/* Hero — small eyebrow + big total + meta grid (3 cells) */}
+        <div className="px-6 sm:px-9 pt-8 pb-2 text-center">
+          <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-[0.14em]">
+            Quote total
+          </p>
+          <p className="mt-2 text-5xl font-bold text-slate-900 tracking-tight leading-none">
+            {formatCurrency(quote.total)}
+          </p>
+          {quote.settings?.vatRegistered && quote.vatAmount > 0 && (
+            <p className="mt-2 text-[13px] text-slate-500">
+              Inc. VAT ({formatCurrency(quote.vatAmount)})
+            </p>
+          )}
+
+          <div className="mt-6 grid grid-cols-3 gap-0 border-t border-slate-200 pt-5">
+            <div className="text-center">
+              <p className="text-[10.5px] font-semibold text-slate-400 uppercase tracking-[0.12em]">
+                Quote
+              </p>
+              <p className="mt-1.5 text-sm font-semibold text-slate-900 font-mono">
+                {quote.quoteNumber}
+              </p>
             </div>
-            <div className="p-4 space-y-3">
+            <div className="text-center border-l border-slate-200">
+              <p className="text-[10.5px] font-semibold text-slate-400 uppercase tracking-[0.12em]">
+                Valid until
+              </p>
+              <p className="mt-1.5 text-sm font-semibold text-slate-900">{expiryStr}</p>
+            </div>
+            <div className="text-center border-l border-slate-200">
+              <p className="text-[10.5px] font-semibold text-slate-400 uppercase tracking-[0.12em]">
+                Status
+              </p>
+              <p className="mt-1.5 text-sm font-semibold text-slate-900">
+                {isPendingDeposit
+                  ? 'Deposit due'
+                  : isAccepted
+                    ? 'Accepted'
+                    : isRejected
+                      ? 'Declined'
+                      : 'Pending'}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Job details */}
+        {quote.jobDetails && (
+          <section className="px-6 sm:px-9 pt-8">
+            <h2 className="text-[11px] font-semibold text-slate-500 uppercase tracking-[0.12em] flex items-center gap-1.5">
+              <Briefcase className="h-3.5 w-3.5" />
+              Job details
+            </h2>
+            <div className="mt-4 space-y-4">
               {quote.jobDetails.title && (
                 <div>
-                  <p className="text-xs text-elec-light/60 uppercase tracking-wide">Project</p>
-                  <p className="text-white font-medium">{quote.jobDetails.title}</p>
+                  <p className="text-[11px] font-medium text-slate-500">Project</p>
+                  <p className="mt-1 text-[15px] font-semibold text-slate-900">
+                    {quote.jobDetails.title}
+                  </p>
                 </div>
               )}
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-4">
                 {quote.jobDetails.location && (
                   <div>
-                    <p className="text-xs text-elec-light/60 flex items-center gap-1">
+                    <p className="text-[11px] font-medium text-slate-500 flex items-center gap-1">
                       <MapPin className="h-3 w-3" />
                       Location
                     </p>
-                    <p className="text-white text-sm">{quote.jobDetails.location}</p>
+                    <p className="mt-1 text-[14px] text-slate-700 leading-snug">
+                      {quote.jobDetails.location}
+                    </p>
                   </div>
                 )}
                 {quote.jobDetails.estimatedDuration && (
                   <div>
-                    <p className="text-xs text-elec-light/60 flex items-center gap-1">
+                    <p className="text-[11px] font-medium text-slate-500 flex items-center gap-1">
                       <Clock className="h-3 w-3" />
                       Duration
                     </p>
-                    <p className="text-white text-sm">{quote.jobDetails.estimatedDuration}</p>
+                    <p className="mt-1 text-[14px] text-slate-700">
+                      {quote.jobDetails.estimatedDuration}
+                    </p>
                   </div>
                 )}
               </div>
               {quote.jobDetails.description && (
                 <div>
-                  <p className="text-xs text-elec-light/60 uppercase tracking-wide">Description</p>
-                  <p className="text-elec-light/80 text-sm mt-1">{quote.jobDetails.description}</p>
+                  <p className="text-[11px] font-medium text-slate-500">Description</p>
+                  <p className="mt-1 text-[14px] text-slate-700 leading-relaxed whitespace-pre-line">
+                    {quote.jobDetails.description}
+                  </p>
                 </div>
               )}
             </div>
-          </div>
+          </section>
         )}
 
-        {/* ELE-956 — What's changed (variation diff vs previous version) */}
+        {/* Variation diff — ELE-956. Anchor target for the revision pill
+            above the hero. */}
         {variationDiff && variationDiff.hasChanges && (
-          <div className="bg-elec-yellow/[0.06] backdrop-blur-sm rounded-2xl border border-elec-yellow/30 overflow-hidden">
-            <div className="px-4 py-3 border-b border-elec-yellow/20 flex items-center gap-2">
-              <GitBranch className="h-4 w-4 text-elec-yellow" />
-              <h2 className="text-base font-semibold text-white">
-                What's changed since v{(quote?.version_number ?? 2) - 1}
-              </h2>
-              <span
-                className={`ml-auto text-sm font-bold tabular-nums ${
-                  variationDiff.totalDelta > 0
-                    ? 'text-amber-300'
-                    : variationDiff.totalDelta < 0
-                      ? 'text-emerald-300'
-                      : 'text-white/60'
-                }`}
-              >
-                {formatDeltaCurrency(variationDiff.totalDelta)}
-              </span>
-            </div>
-            {quote?.variation_reason && (
-              <div className="px-4 py-3 border-b border-elec-yellow/10 bg-white/[0.02]">
-                <p className="text-[11px] uppercase tracking-wider text-white/50 mb-1">
-                  Why this variation
-                </p>
-                <p className="text-sm text-white/90">{quote.variation_reason}</p>
+          <section id="variation-diff" className="px-6 sm:px-9 pt-8 scroll-mt-6">
+            <div className="border-t border-slate-200 pt-6">
+              <div className="flex items-center justify-between gap-3 mb-4">
+                <h2 className="text-[11px] font-semibold text-slate-500 uppercase tracking-[0.12em] flex items-center gap-1.5">
+                  <GitBranch className="h-3.5 w-3.5" />
+                  What's changed since v{(quote?.version_number ?? 2) - 1}
+                </h2>
+                <span
+                  className={cn(
+                    'text-sm font-semibold tabular-nums',
+                    variationDiff.totalDelta > 0
+                      ? 'text-amber-700'
+                      : variationDiff.totalDelta < 0
+                        ? 'text-emerald-700'
+                        : 'text-slate-500'
+                  )}
+                >
+                  {formatDeltaCurrency(variationDiff.totalDelta)}
+                </span>
               </div>
-            )}
-            <div className="p-4 space-y-3">
-              {variationDiff.added.map((item) => (
-                <div key={`added-${item.id}`} className="flex items-start gap-2">
-                  <Plus className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm text-white">{item.description}</p>
-                    <p className="text-[11px] text-white/50">
-                      {item.quantity} {item.unit} · added
-                    </p>
-                  </div>
-                  <span className="text-sm font-semibold text-emerald-300 tabular-nums">
-                    {formatDeltaCurrency(item.totalPrice || 0)}
-                  </span>
+              {quote?.variation_reason && (
+                <div className="mb-4">
+                  <p className="text-[11px] font-medium text-slate-500">Why this variation</p>
+                  <p className="mt-1 text-[14px] text-slate-700 leading-snug">
+                    {quote.variation_reason}
+                  </p>
                 </div>
-              ))}
-              {variationDiff.removed.map((item) => (
-                <div key={`removed-${item.id}`} className="flex items-start gap-2">
-                  <Minus className="h-4 w-4 text-rose-400 shrink-0 mt-0.5" />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm text-white line-through decoration-white/30">
-                      {item.description}
-                    </p>
-                    <p className="text-[11px] text-white/50">removed</p>
-                  </div>
-                  <span className="text-sm font-semibold text-rose-300 tabular-nums">
-                    {formatDeltaCurrency(-(item.totalPrice || 0))}
-                  </span>
-                </div>
-              ))}
-              {variationDiff.changed.map((change) => (
-                <div key={`changed-${change.itemId}`} className="flex items-start gap-2">
-                  <Pencil className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm text-white">{change.description}</p>
-                    <p className="text-[11px] text-white/60">
-                      {change.changedFields.join(', ')} updated
-                    </p>
-                  </div>
-                  <span
-                    className={`text-sm font-semibold tabular-nums ${
-                      change.totalDelta > 0 ? 'text-amber-300' : 'text-emerald-300'
-                    }`}
-                  >
-                    {formatDeltaCurrency(change.totalDelta)}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Quote Breakdown Card */}
-        <div className="bg-elec-card/80 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden">
-          <div className="px-4 py-3 border-b border-white/10">
-            <h2 className="text-base font-semibold text-white">Quote Breakdown</h2>
-          </div>
-          <div className="p-4 space-y-5">
-            {Object.entries(groupedItems).map(([category, items]) => (
-              <div key={category}>
-                <h4 className="text-sm font-medium text-elec-yellow capitalize mb-2 flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                  {category} ({items.length})
-                </h4>
-                <div className="space-y-2">
-                  {items.map((item) => (
-                    <div
-                      key={item.id}
-                      className="flex justify-between items-start py-2 px-3 bg-white/5 rounded-xl"
-                    >
-                      <div className="flex-1 min-w-0 pr-3">
-                        <p className="text-white text-sm font-medium truncate">
-                          {item.description}
-                        </p>
-                        <p className="text-elec-light/60 text-xs">
-                          {item.quantity} {item.unit} × {formatCurrency(item.unitPrice)}
-                        </p>
-                        {/* ELE-888 — per-item adjustment chip */}
-                        {typeof item.itemAdjustmentPercent === 'number' &&
-                          item.itemAdjustmentPercent !== 0 && (
-                            <span
-                              className={`inline-flex items-center gap-1 mt-1 text-[10px] font-semibold px-1.5 py-0.5 rounded tabular-nums ${
-                                item.itemAdjustmentPercent > 0
-                                  ? 'bg-amber-500/15 text-amber-300'
-                                  : 'bg-emerald-500/15 text-emerald-300'
-                              }`}
-                            >
-                              {item.itemAdjustmentPercent > 0 ? '+' : ''}
-                              {item.itemAdjustmentPercent}%
-                              {item.itemAdjustmentLabel && (
-                                <span className="text-white/60 font-normal">
-                                  · {item.itemAdjustmentLabel}
-                                </span>
-                              )}
-                            </span>
-                          )}
-                      </div>
-                      <p className="text-white font-semibold text-sm flex-shrink-0">
-                        {formatCurrency(item.totalPrice)}
+              )}
+              <div className="space-y-3">
+                {variationDiff.added.map((item) => (
+                  <div key={`added-${item.id}`} className="flex items-start gap-3">
+                    <Plus className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[14px] text-slate-900">{item.description}</p>
+                      <p className="text-[12px] text-slate-500">
+                        {item.quantity} {item.unit} · added
                       </p>
                     </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-
-            <Separator className="bg-white/10" />
-
-            {/* Totals */}
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between text-elec-light/70">
-                <span>Subtotal</span>
-                <span>{formatCurrency(quote.subtotal)}</span>
-              </div>
-              {/* ELE-891 — per-category adjustment lines */}
-              {quote.settings?.categoryAdjustments &&
-                (
-                  [
-                    ['labour', quote.settings.categoryAdjustments.labour],
-                    ['materials', quote.settings.categoryAdjustments.materials],
-                    ['equipment', quote.settings.categoryAdjustments.equipment],
-                  ] as const
-                )
-                  .filter(([, v]) => typeof v === 'number' && v !== 0)
-                  .map(([cat, pct]) => (
-                    <div
-                      key={cat}
-                      className="flex justify-between text-[11px] text-elec-light/50 -mt-1"
-                    >
-                      <span className="capitalize">
-                        {cat} {pct! > 0 ? 'markup' : 'discount'} ({pct! > 0 ? '+' : ''}
-                        {pct}%)
-                      </span>
-                      <span>included</span>
+                    <span className="text-sm font-semibold text-emerald-700 tabular-nums">
+                      {formatDeltaCurrency(item.totalPrice || 0)}
+                    </span>
+                  </div>
+                ))}
+                {variationDiff.removed.map((item) => (
+                  <div key={`removed-${item.id}`} className="flex items-start gap-3">
+                    <Minus className="h-4 w-4 text-rose-500 shrink-0 mt-0.5" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[14px] text-slate-900 line-through decoration-slate-300">
+                        {item.description}
+                      </p>
+                      <p className="text-[12px] text-slate-500">removed</p>
                     </div>
-                  ))}
+                    <span className="text-sm font-semibold text-rose-600 tabular-nums">
+                      {formatDeltaCurrency(-(item.totalPrice || 0))}
+                    </span>
+                  </div>
+                ))}
+                {variationDiff.changed.map((change) => (
+                  <div key={`changed-${change.itemId}`} className="flex items-start gap-3">
+                    <Pencil className="h-4 w-4 text-slate-500 shrink-0 mt-0.5" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[14px] text-slate-900">{change.description}</p>
+                      <p className="text-[12px] text-slate-500">
+                        {change.changedFields.join(', ')} updated
+                      </p>
+                    </div>
+                    <span
+                      className={cn(
+                        'text-sm font-semibold tabular-nums',
+                        change.totalDelta > 0 ? 'text-amber-700' : 'text-emerald-700'
+                      )}
+                    >
+                      {formatDeltaCurrency(change.totalDelta)}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Quote breakdown */}
+        <section className="px-6 sm:px-9 pt-8">
+          <div className="border-t border-slate-200 pt-6">
+            <h2 className="text-[11px] font-semibold text-slate-500 uppercase tracking-[0.12em]">
+              Quote breakdown
+            </h2>
+            <div className="mt-5 space-y-7">
+              {Object.entries(groupedItems).map(([category, items]) => (
+                <div key={category}>
+                  <h4 className="text-[12px] font-semibold text-slate-700 capitalize mb-3 flex items-center gap-2">
+                    <span
+                      className="w-1.5 h-1.5 rounded-full"
+                      style={{ backgroundColor: brandHex }}
+                    />
+                    {category}{' '}
+                    <span className="text-slate-400 font-normal">({items.length})</span>
+                  </h4>
+                  <div className="space-y-2.5">
+                    {items.map((item) => (
+                      <div key={item.id} className="flex items-start justify-between gap-3 py-1.5">
+                        <div className="flex-1 min-w-0 pr-2">
+                          <p className="text-[14px] text-slate-900 font-medium leading-snug">
+                            {item.description}
+                          </p>
+                          <p className="text-[12px] text-slate-500 mt-0.5">
+                            {item.quantity} {item.unit} × {formatCurrency(item.unitPrice)}
+                          </p>
+                          {typeof item.itemAdjustmentPercent === 'number' &&
+                            item.itemAdjustmentPercent !== 0 && (
+                              <span
+                                className={cn(
+                                  'inline-flex items-center gap-1 mt-1 text-[10px] font-semibold px-1.5 py-0.5 rounded tabular-nums',
+                                  item.itemAdjustmentPercent > 0
+                                    ? 'bg-amber-100 text-amber-800'
+                                    : 'bg-emerald-100 text-emerald-800'
+                                )}
+                              >
+                                {item.itemAdjustmentPercent > 0 ? '+' : ''}
+                                {item.itemAdjustmentPercent}%
+                                {item.itemAdjustmentLabel && (
+                                  <span className="text-slate-500 font-normal">
+                                    · {item.itemAdjustmentLabel}
+                                  </span>
+                                )}
+                              </span>
+                            )}
+                        </div>
+                        <p className="text-[14px] font-semibold text-slate-900 tabular-nums flex-shrink-0">
+                          {formatCurrency(item.totalPrice)}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Totals — right-aligned column */}
+            <div className="mt-6 border-t border-slate-200 pt-4 space-y-1.5 text-[14px]">
+              <div className="flex justify-between text-slate-600">
+                <span>Subtotal</span>
+                <span className="tabular-nums">{formatCurrency(quote.subtotal)}</span>
+              </div>
+              {/* ELE-891 / ELE-973 — per-category adjustment lines with live £ delta */}
+              {categoryBreakdowns
+                .filter((b) => b.categoryAdjustmentDelta !== 0)
+                .map((b) => {
+                  const isMarkup = b.categoryAdjustmentDelta > 0;
+                  return (
+                    <div key={b.category} className="flex justify-between text-[12px]">
+                      <span
+                        className={cn(
+                          'capitalize',
+                          isMarkup ? 'text-amber-700' : 'text-emerald-700'
+                        )}
+                      >
+                        {b.category} {isMarkup ? 'markup' : 'discount'} (
+                        {b.categoryAdjustmentPercent > 0 ? '+' : ''}
+                        {b.categoryAdjustmentPercent}%)
+                      </span>
+                      <span
+                        className={cn(
+                          'tabular-nums font-medium',
+                          isMarkup ? 'text-amber-700' : 'text-emerald-700'
+                        )}
+                      >
+                        {isMarkup ? '+' : '-'}
+                        {formatCurrency(Math.abs(b.categoryAdjustmentDelta))}
+                      </span>
+                    </div>
+                  );
+                })}
               {quote.overhead > 0 && (
-                <div className="flex justify-between text-elec-light/70">
+                <div className="flex justify-between text-slate-600">
                   <span>Overhead ({quote.settings?.overheadPercentage || 0}%)</span>
-                  <span>{formatCurrency(quote.overhead)}</span>
+                  <span className="tabular-nums">{formatCurrency(quote.overhead)}</span>
                 </div>
               )}
               {quote.profit > 0 && (
-                <div className="flex justify-between text-elec-light/70">
+                <div className="flex justify-between text-slate-600">
                   <span>Profit ({quote.settings?.profitMargin || 0}%)</span>
-                  <span>{formatCurrency(quote.profit)}</span>
+                  <span className="tabular-nums">{formatCurrency(quote.profit)}</span>
                 </div>
               )}
               {quote.settings?.vatRegistered && quote.vatAmount > 0 && (
-                <div className="flex justify-between text-elec-light/70">
+                <div className="flex justify-between text-slate-600">
                   <span>VAT ({quote.settings?.vatRate || 20}%)</span>
-                  <span>{formatCurrency(quote.vatAmount)}</span>
+                  <span className="tabular-nums">{formatCurrency(quote.vatAmount)}</span>
                 </div>
               )}
-              <Separator className="bg-white/10" />
-              <div className="flex justify-between text-lg font-bold text-white pt-1">
+              <div className="flex justify-between text-[15px] font-bold text-slate-900 pt-3 border-t border-slate-200 mt-2">
                 <span>Total</span>
-                <span className="text-elec-yellow">{formatCurrency(quote.total)}</span>
+                <span className="tabular-nums">{formatCurrency(quote.total)}</span>
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
-        {/* Acceptance Section */}
+        {/* Acceptance section — only when pending */}
         {isPending && (
-          <div
+          <section
             id="acceptance-section"
-            className="bg-elec-card/80 backdrop-blur-sm rounded-2xl border border-elec-yellow/30 overflow-hidden"
+            className="px-6 sm:px-9 pt-8 transition-shadow duration-300"
           >
-            <div className="px-4 py-3 border-b border-white/10 bg-elec-yellow/10">
-              <h2 className="text-base font-semibold text-white flex items-center gap-2">
-                <FileSignature className="h-4 w-4 text-elec-yellow" />
-                Accept or Decline Quote
+            <div className="border-t border-slate-200 pt-6">
+              <h2 className="text-[11px] font-semibold text-slate-500 uppercase tracking-[0.12em] flex items-center gap-1.5">
+                <FileSignature className="h-3.5 w-3.5" />
+                Accept or decline
               </h2>
-              <p className="text-elec-light/70 text-xs mt-0.5">
-                Please review the details above and provide your response
+              <p className="mt-1 text-[13px] text-slate-600 leading-relaxed">
+                Please review the details above, then add your details and signature below to accept.
               </p>
-            </div>
-            <div className="p-4 space-y-4">
-              {/* Name & Email */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+              <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="clientName" className="text-elec-light/80 text-sm">
-                    Full Name *
+                  <Label htmlFor="clientName" className="text-[12px] font-medium text-slate-700">
+                    Full name
                   </Label>
                   <Input
                     id="clientName"
                     value={clientName}
                     onChange={(e) => setClientName(e.target.value)}
-                    placeholder="Enter your full name"
-                    className="h-12 mt-1.5 bg-white/5 border-white/20 text-white placeholder:text-white focus:border-elec-yellow focus:ring-elec-yellow touch-manipulation text-base"
+                    placeholder="Your full name"
+                    className="h-11 mt-1.5 bg-white border-slate-300 text-slate-900 placeholder:text-slate-400 touch-manipulation text-base"
+                    style={{
+                      ['--tw-ring-color' as never]: brandHex,
+                    }}
                   />
                 </div>
                 <div>
-                  <Label htmlFor="clientEmail" className="text-elec-light/80 text-sm">
-                    Email Address *
+                  <Label htmlFor="clientEmail" className="text-[12px] font-medium text-slate-700">
+                    Email address
                   </Label>
                   <Input
                     id="clientEmail"
                     type="email"
                     value={clientEmail}
                     onChange={(e) => setClientEmail(e.target.value)}
-                    placeholder="Enter your email"
-                    className="h-12 mt-1.5 bg-white/5 border-white/20 text-white placeholder:text-white focus:border-elec-yellow focus:ring-elec-yellow touch-manipulation text-base"
+                    placeholder="you@example.com"
+                    className="h-11 mt-1.5 bg-white border-slate-300 text-slate-900 placeholder:text-slate-400 touch-manipulation text-base"
                   />
                 </div>
               </div>
 
-              {/* Signature Pad */}
-              <div>
-                <Label className="text-elec-light/80 text-sm">Digital Signature *</Label>
-                <p className="text-elec-light/50 text-xs mb-2">
-                  Draw your signature in the box below using your finger or mouse — this is required to accept
+              <div className="mt-5">
+                <Label className="text-[12px] font-medium text-slate-700">Digital signature</Label>
+                <p className="mt-1 text-[12px] text-slate-500">
+                  Draw your signature in the box below using your finger or mouse.
                 </p>
-                <SignaturePad
-                  ref={signaturePadRef}
-                  onSignatureChange={setSignatureData}
-                  className="w-full"
-                />
+                <div className="mt-2">
+                  <SignaturePad
+                    ref={signaturePadRef}
+                    onSignatureChange={setSignatureData}
+                    className="w-full"
+                  />
+                </div>
                 {!signatureData && (
-                  <p className="text-amber-400/80 text-xs mt-1.5 flex items-center gap-1">
-                    ✍️ Draw your signature above to enable the Accept button
+                  <p className="text-[12px] text-amber-700 mt-2">
+                    Draw your signature above to enable the Accept button.
                   </p>
                 )}
               </div>
 
-              {/* Action Buttons - Large touch targets */}
-              <div className="grid grid-cols-2 gap-3 pt-2">
+              <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <Button
                   onClick={handleAcceptQuote}
                   disabled={accepting || rejecting || !clientName || !clientEmail || !signatureData}
-                  className="h-14 bg-green-600 hover:bg-green-700 text-white font-semibold text-base rounded-xl touch-manipulation disabled:opacity-50"
+                  className="h-12 text-white font-semibold text-[15px] rounded-xl touch-manipulation disabled:opacity-40 disabled:cursor-not-allowed sm:order-2"
+                  style={{ backgroundColor: brandHex }}
                 >
                   {accepting ? (
                     <Loader2 className="h-5 w-5 animate-spin" />
                   ) : (
                     <>
                       <CheckCircle className="h-5 w-5 mr-2" />
-                      Accept
+                      Accept quote
                     </>
                   )}
                 </Button>
                 <Button
-                  onClick={handleRejectQuote}
+                  onClick={() => setDeclineConfirmOpen(true)}
                   disabled={accepting || rejecting}
                   variant="outline"
-                  className="h-14 border-red-500/50 text-red-400 hover:bg-red-500/10 hover:text-red-300 font-semibold text-base rounded-xl touch-manipulation"
+                  className="h-12 border-slate-300 text-slate-700 hover:bg-slate-50 hover:text-slate-900 font-medium text-[15px] rounded-xl touch-manipulation sm:order-1"
                 >
-                  {rejecting ? (
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                  ) : (
-                    <>
-                      <X className="h-5 w-5 mr-2" />
-                      Decline
-                    </>
-                  )}
+                  Decline
                 </Button>
               </div>
 
-              {/* Legal Notice */}
-              <p className="text-elec-light/50 text-xs text-center pt-2">
-                By accepting, you agree to the quoted amount and terms. Your signature will be
-                stored securely.
+              <p className="mt-4 text-[12px] text-slate-500 leading-relaxed">
+                By accepting, you agree to the quoted amount and terms set out above. Your
+                signature is stored securely against your job record.
               </p>
             </div>
-          </div>
+          </section>
         )}
 
-        {/* Accepted/Rejected Confirmation */}
+        {/* Accepted / Declined confirmation + post-accept next step
+            (pay deposit → pick slot → booked). ELE-954/955. */}
         {(isAccepted || isRejected) && (
-          <div
-            className={`rounded-2xl p-6 text-center ${
-              isAccepted
-                ? 'bg-green-500/10 border border-green-500/30'
-                : 'bg-red-500/10 border border-red-500/30'
-            }`}
-          >
-            <div
-              className={`w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center ${
-                isAccepted ? 'bg-green-500/20' : 'bg-red-500/20'
-              }`}
-            >
-              {isAccepted ? (
-                <CheckCircle className="h-8 w-8 text-green-400" />
-              ) : (
-                <X className="h-8 w-8 text-red-400" />
+          <section className="px-6 sm:px-9 pt-8">
+            <div className="border-t border-slate-200 pt-6 space-y-5">
+              {/* Status pill (always shown) */}
+              <div
+                className={cn(
+                  'rounded-xl p-5 text-center',
+                  isAccepted ? 'bg-emerald-50' : 'bg-rose-50'
+                )}
+              >
+                <div
+                  className={cn(
+                    'w-11 h-11 rounded-full mx-auto mb-3 flex items-center justify-center',
+                    isAccepted ? 'bg-emerald-100' : 'bg-rose-100'
+                  )}
+                >
+                  {isAccepted ? (
+                    <CheckCircle className="h-6 w-6 text-emerald-700" />
+                  ) : (
+                    <X className="h-6 w-6 text-rose-700" />
+                  )}
+                </div>
+                <h3
+                  className={cn(
+                    'text-base font-semibold mb-1',
+                    isAccepted ? 'text-emerald-900' : 'text-rose-900'
+                  )}
+                >
+                  {isAccepted ? 'Quote accepted' : 'Quote declined'}
+                </h3>
+                <p className="text-[13px] text-slate-700">
+                  {isAccepted
+                    ? `Accepted by ${quote.accepted_by_name} on ${quote.accepted_at ? new Date(quote.accepted_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : 'N/A'}`
+                    : `Declined by ${quote.accepted_by_name || 'Client'} on ${quote.accepted_at ? new Date(quote.accepted_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : 'N/A'}`}
+                </p>
+                {isAccepted && quote.signature_url && (
+                  <div className="mt-4 pt-4 border-t border-emerald-100">
+                    <p className="text-[11px] font-medium text-slate-500 mb-2 uppercase tracking-wider">
+                      Signature on file
+                    </p>
+                    <img
+                      src={quote.signature_url}
+                      alt="Client signature"
+                      className="max-h-16 mx-auto bg-white rounded border border-slate-200 px-2"
+                    />
+                  </div>
+                )}
+              </div>
+
+              {/* Next step — pay deposit, pick slot, or booked confirmation.
+                  Walks the client through what comes next so they don't have
+                  to wait for a separate email. */}
+              {isPendingDeposit && !isDepositPaid && (
+                <div className="rounded-xl border border-slate-200 p-5">
+                  <p className="text-[10.5px] font-semibold text-amber-700 uppercase tracking-[0.12em] flex items-center gap-1.5">
+                    <CreditCard className="h-3.5 w-3.5" />
+                    One step left · pay deposit
+                  </p>
+                  <p className="mt-2 text-[15px] text-slate-700 leading-relaxed">
+                    To confirm your booking with {brand.companyName}, please pay the deposit
+                    below. The remainder is payable on completion.
+                  </p>
+                  <div className="mt-4 flex items-baseline gap-2">
+                    <span className="text-[28px] font-bold text-slate-900 tabular-nums">
+                      {formatCurrency(depositInvoice?.total || 0)}
+                    </span>
+                    <span className="text-[13px] text-slate-500">deposit</span>
+                  </div>
+                  {depositInvoice?.payUrl ? (
+                    <a
+                      href={depositInvoice.payUrl}
+                      className="mt-4 inline-flex items-center justify-center gap-2 h-12 w-full sm:w-auto px-6 rounded-xl text-white font-semibold text-[15px] touch-manipulation"
+                      style={{ backgroundColor: brandHex }}
+                    >
+                      Pay {formatCurrency(depositInvoice.total)} deposit
+                      <ExternalLink className="h-4 w-4" />
+                    </a>
+                  ) : (
+                    <p className="mt-4 text-[13px] text-slate-500">
+                      We'll send you a separate email with bank details for the deposit shortly.
+                    </p>
+                  )}
+                  <p className="mt-3 text-[12px] text-slate-400">
+                    Secure payment by card · powered by Stripe. Your booking is confirmed as
+                    soon as the payment lands.
+                  </p>
+                </div>
+              )}
+
+              {/* Slot picker prompt — shown when accepted (no deposit OR
+                  deposit paid) and we don't yet have a booked slot. */}
+              {isAccepted && !isPendingDeposit && !bookedSlotStart && (
+                <div className="rounded-xl border border-slate-200 p-5">
+                  <p className="text-[10.5px] font-semibold text-emerald-700 uppercase tracking-[0.12em] flex items-center gap-1.5">
+                    <CalendarClock className="h-3.5 w-3.5" />
+                    Last step · pick a time
+                  </p>
+                  <p className="mt-2 text-[15px] text-slate-700 leading-relaxed">
+                    {isDepositPaid
+                      ? `Thanks for the deposit. Pick a time below and ${brand.companyName} will lock it in instantly.`
+                      : `Pick a time below and ${brand.companyName} will lock it in instantly.`}
+                  </p>
+                  <a
+                    href={`/book-slot/${quote.id}`}
+                    className="mt-4 inline-flex items-center justify-center gap-2 h-12 w-full sm:w-auto px-6 rounded-xl text-white font-semibold text-[15px] touch-manipulation"
+                    style={{ backgroundColor: brandHex }}
+                  >
+                    Pick your time slot
+                    <Calendar className="h-4 w-4" />
+                  </a>
+                  <p className="mt-3 text-[12px] text-slate-400">
+                    Slots show real availability from {brand.companyName}'s calendar. We'll hold
+                    your pick for 10 minutes while you confirm.
+                  </p>
+                </div>
+              )}
+
+              {/* Booked confirmation — slot is locked in. */}
+              {isAccepted && bookedSlotStart && (
+                <div className="rounded-xl border border-slate-200 p-5 text-center">
+                  <p className="text-[10.5px] font-semibold text-emerald-700 uppercase tracking-[0.12em] flex items-center justify-center gap-1.5">
+                    <CalendarClock className="h-3.5 w-3.5" />
+                    Booked
+                  </p>
+                  <p className="mt-2 text-[15px] text-slate-700 leading-relaxed">
+                    See you on{' '}
+                    <strong className="text-slate-900">
+                      {new Date(bookedSlotStart).toLocaleString('en-GB', {
+                        weekday: 'long',
+                        day: 'numeric',
+                        month: 'long',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      })}
+                    </strong>
+                    . A calendar invite (.ics) is on its way to {quote.accepted_by_email}.
+                  </p>
+                </div>
               )}
             </div>
-            <h3
-              className={`text-xl font-semibold mb-2 ${
-                isAccepted ? 'text-green-400' : 'text-red-400'
-              }`}
-            >
-              {isAccepted ? 'Quote Accepted' : 'Quote Declined'}
-            </h3>
-            <p className="text-elec-light/70 text-sm">
-              {isAccepted
-                ? `Thank you! Accepted by ${quote.accepted_by_name} on ${quote.accepted_at ? new Date(quote.accepted_at).toLocaleDateString('en-GB') : 'N/A'}`
-                : `Declined by ${quote.accepted_by_name || 'Client'} on ${quote.accepted_at ? new Date(quote.accepted_at).toLocaleDateString('en-GB') : 'N/A'}`}
-            </p>
-            {isAccepted && quote.signature_url && (
-              <div className="mt-4 pt-4 border-t border-white/10">
-                <p className="text-elec-light/50 text-xs mb-2">Signature on file</p>
-                <img
-                  src={quote.signature_url}
-                  alt="Client signature"
-                  className="max-h-16 mx-auto rounded border border-white/10"
-                />
-              </div>
+          </section>
+        )}
+
+        {/* Sign-off — mirrors the email sign-off */}
+        <div className="px-6 sm:px-9 pt-8 pb-9">
+          <p className="text-[15px] text-slate-700 leading-relaxed">Thanks,</p>
+          <p className="text-[15px] font-semibold text-slate-900 leading-relaxed">
+            {brand.companyName}
+          </p>
+          <p className="mt-3 text-[13px] text-slate-400 leading-relaxed">
+            Any questions? Just reply to the email this came from and I'll come back to you.
+          </p>
+        </div>
+
+        {/* Footer — contact + legal, same as email */}
+        {(contactParts || legalParts) && (
+          <div className="bg-slate-50 border-t border-slate-200 px-6 sm:px-9 py-5 text-center">
+            {contactParts && (
+              <p className="text-[12px] text-slate-500 leading-relaxed">{contactParts}</p>
+            )}
+            {legalParts && (
+              <p className={cn('text-[11px] text-slate-400 leading-relaxed', contactParts && 'mt-1.5')}>
+                {legalParts}
+              </p>
             )}
           </div>
         )}
-
-        {/* Footer */}
-        <div className="text-center pt-4">
-          <p className="text-elec-light/40 text-xs">Powered by ElecMate Professional Suite</p>
-        </div>
       </div>
+
+      {/* Sticky mobile bottom CTA — pinned to the viewport on phones while
+          the quote is awaiting a response. On long quotes the Accept form
+          is well below the fold; this keeps it one tap away. Hidden on
+          ≥sm and once the quote is accepted/declined. */}
+      {isPending && (
+        <div
+          className="fixed bottom-0 inset-x-0 z-30 sm:hidden bg-white/95 backdrop-blur border-t border-slate-200"
+          style={{ paddingBottom: 'env(safe-area-inset-bottom, 0)' }}
+        >
+          <div className="px-4 py-3 flex items-center gap-3">
+            <div className="min-w-0 flex-1">
+              <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-[0.12em]">
+                Total
+              </p>
+              <p className="text-[18px] font-bold text-slate-900 leading-tight tabular-nums">
+                {formatCurrency(quote.total)}
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                const el = document.getElementById('acceptance-section');
+                el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }}
+              className="h-12 px-5 rounded-xl text-white font-semibold text-[14px] touch-manipulation active:scale-[0.98] transition-transform shadow-sm flex items-center gap-1.5"
+              style={{ backgroundColor: brandHex }}
+            >
+              <FileSignature className="h-4 w-4" />
+              Review & sign
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Decline confirm — two-step so a stray tap doesn't kill the quote */}
+      <AlertDialog open={declineConfirmOpen} onOpenChange={setDeclineConfirmOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Decline this quote?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Letting {brand.companyName} know you don't want to go ahead. You can always get back
+              in touch if you change your mind — they can send a fresh quote.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={rejecting}>Keep open</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleRejectQuote}
+              disabled={rejecting}
+              className="bg-rose-600 hover:bg-rose-700 text-white"
+            >
+              {rejecting ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Yes, decline'}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };

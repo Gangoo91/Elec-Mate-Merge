@@ -1,8 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, AlertTriangle, CheckCircle, Lock, Zap } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { ArrowLeft, AlertTriangle, CheckCircle2222, Lock, Zap } from 'lucide-react';
 import {
   PageFrame,
   PageHero,
@@ -14,14 +12,10 @@ const SafeIsolationPage = () => {
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/apprentice/safety-fundamentals')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
+        <button onClick={() => navigate('/apprentice/safety-fundamentals')} className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation">
+          <ArrowLeft className="h-4 w-4" />
           Back
-        </Button>
+        </button>
       </motion.div>
 
       <motion.div variants={itemVariants}>
@@ -34,8 +28,8 @@ const SafeIsolationPage = () => {
       </motion.div>
 
       {/* Critical Warning */}
-      <Card className="border-red-500/30 bg-red-500/10">
-        <CardContent className="p-4 space-y-3">
+      <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04]">
+        <div className="p-4 sm:p-5 space-y-3">
           <div className="flex items-center gap-2">
             <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0" />
             <h2 className="text-lg font-semibold text-red-400">
@@ -50,12 +44,11 @@ const SafeIsolationPage = () => {
             procedure — no shortcuts, no exceptions, no matter how simple the job
             seems.
           </p>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* What is Safe Isolation */}
-      <Card className="border-blue-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-white">
             What Is Safe Isolation?
           </h2>
@@ -78,12 +71,11 @@ const SafeIsolationPage = () => {
             doing it correctly requires a specific, repeatable procedure every
             single time.
           </p>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* The 6-Step Procedure */}
-      <Card className="border-red-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-red-500/25 bg-red-500/[0.04]">
+        <div className="p-4 sm:p-5 space-y-4">
           <div className="flex items-center gap-2">
             <Lock className="h-5 w-5 text-red-400" />
             <h2 className="text-lg font-semibold text-red-400">
@@ -156,7 +148,7 @@ const SafeIsolationPage = () => {
                 <p className="text-white text-sm leading-relaxed">
                   {item.detail}
                 </p>
-                <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
+                <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
                   <p className="text-white text-xs">
                     <span className="font-semibold text-blue-400">Tip: </span>
                     {item.tip}
@@ -167,8 +159,8 @@ const SafeIsolationPage = () => {
           </div>
 
           {/* Memory Aid */}
-          <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-4">
-            <h3 className="text-amber-400 font-semibold text-sm mb-2">
+          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 sm:p-4">
+            <h3 className="text-[13.5px] font-semibold text-elec-yellow tracking-tight mb-2">
               Memory Aid — "Identify, Isolate, Lock, Prove, Test, Prove"
             </h3>
             <p className="text-white text-sm">
@@ -178,12 +170,11 @@ const SafeIsolationPage = () => {
               remember the six steps. Whatever works for you — just never skip a step.
             </p>
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* GS38 Requirements */}
-      <Card className="border-blue-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-blue-400">
             HSE Guidance Note GS38 — Test Equipment
           </h2>
@@ -211,7 +202,7 @@ const SafeIsolationPage = () => {
                 key={item}
                 className="flex items-start gap-2 text-sm text-white"
               >
-                <CheckCircle className="h-4 w-4 text-blue-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                 {item}
               </div>
             ))}
@@ -227,7 +218,7 @@ const SafeIsolationPage = () => {
               are simpler, more robust, and less likely to give a false reading due
               to incorrect settings.
             </p>
-            <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
+            <div className="rounded-md border border-red-500/25 bg-red-500/[0.04] p-3">
               <p className="text-white text-xs">
                 <span className="font-semibold text-red-400">Warning: </span>
                 Never use a neon screwdriver or non-contact voltage detector
@@ -236,12 +227,11 @@ const SafeIsolationPage = () => {
               </p>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Proving Units */}
-      <Card className="border-green-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-green-400">Proving Units</h2>
           <p className="text-white text-sm leading-relaxed">
             A proving unit is a battery-powered device that provides a known voltage
@@ -270,12 +260,11 @@ const SafeIsolationPage = () => {
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Lock-Off Devices */}
-      <Card className="border-purple-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-purple-400">
             Lock-Off Devices and Tagging
           </h2>
@@ -310,7 +299,7 @@ const SafeIsolationPage = () => {
                 desc: 'Allows multiple padlocks on a single lock-off point. Used when multiple people are working on the same circuit — each person adds their own lock.',
               },
             ].map((item) => (
-              <div key={item.type} className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-3">
+              <div key={item.type} className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
                 <h4 className="text-purple-400 font-semibold text-sm mb-1">
                   {item.type}
                 </h4>
@@ -334,17 +323,16 @@ const SafeIsolationPage = () => {
                 key={item}
                 className="flex items-start gap-2 text-sm text-white"
               >
-                <CheckCircle className="h-4 w-4 text-purple-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                 {item}
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* When You Cannot Isolate */}
-      <Card className="border-orange-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <div className="flex items-center gap-2">
             <Zap className="h-5 w-5 text-orange-400" />
             <h2 className="text-lg font-semibold text-orange-400">
@@ -382,12 +370,11 @@ const SafeIsolationPage = () => {
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Common Mistakes */}
-      <Card className="border-amber-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-amber-400">
             Common Mistakes to Avoid
           </h2>
@@ -428,7 +415,7 @@ const SafeIsolationPage = () => {
             ].map((item) => (
               <div
                 key={item.mistake}
-                className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3"
+                className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3"
               >
                 <p className="text-amber-400 font-semibold text-sm">
                   {item.mistake}
@@ -437,12 +424,11 @@ const SafeIsolationPage = () => {
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* AM2 / EPA Note */}
-      <Card className="border-green-500/20 bg-green-500/10">
-        <CardContent className="p-4 space-y-3">
+      <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04]">
+        <div className="p-4 sm:p-5 space-y-3">
           <h2 className="text-sm font-semibold text-green-400">
             Safe Isolation in Your AM2 and EPA
           </h2>
@@ -453,12 +439,11 @@ const SafeIsolationPage = () => {
             demonstrate every step, including proving the tester before and after.
             Practise until it becomes second nature.
           </p>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Footer */}
-      <Card className="border-white/10 bg-white/5">
-        <CardContent className="p-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5">
           <p className="text-white text-xs leading-relaxed">
             Based on the Electricity at Work Regulations 1989, BS 7671:2018+A2:2022
             (Regulation 132.15), HSE Guidance Note GS38 (4th edition), and IET Code
@@ -466,8 +451,7 @@ const SafeIsolationPage = () => {
             Equipment. Always follow your employer's specific safe isolation
             procedures and risk assessments.
           </p>
-        </CardContent>
-      </Card>
+        </div></div>
     </PageFrame>
   );
 };

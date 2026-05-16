@@ -477,7 +477,7 @@ export default function Sub1() {
                 the H&amp;S policy alongside the legal-form decision.
               </>
             }
-            cite="Source: Health and Safety at Work etc Act 1974 (1974 c.37), Part I, s.2(3) — verbatim from legislation.gov.uk."
+            cite="Source: Health and Safety at Work etc Act 1974 (1974 c.37), Part I, s.2(3)."
           />
 
           <RegsCallout
@@ -747,7 +747,7 @@ export default function Sub1() {
                 you've considered these factors in major decisions.
               </>
             }
-            cite="Source: Companies Act 2006 (c.46) — verbatim from legislation.gov.uk."
+            cite="Source: Companies Act 2006 (c.46)."
           />
 
           <SectionRule />

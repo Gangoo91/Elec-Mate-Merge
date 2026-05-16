@@ -48,7 +48,7 @@ const checks = [
     ],
     correctIndex: 1,
     explanation:
-      "Two distinct functions. CPS = self-certification authority (regulatory). Trade association = member representation (industry voice). NICEIC, NAPIT, ELECSA, STROMA, Certsure are CPS. ECA, SELECT are trade associations. Confusion arises because some firms market 'NICEIC-approved' as a quality mark, when really it's a regulatory authorisation. Both have value; they're different things.",
+      "Two distinct functions. CPS = self-certification authority (regulatory). Trade association = member representation (industry voice). NICEIC, NAPIT, ELECSA and STROMA are the main UK electrical CPS schemes (Certsure is the operating company behind NICEIC and ELECSA, not a separate scheme). ECA, SELECT are trade associations. Confusion arises because some firms market 'NICEIC-approved' as a quality mark, when really it's a regulatory authorisation. Both have value; they're different things.",
   },
   {
     id: 'mod7-s1-sub4-costs',
@@ -56,7 +56,7 @@ const checks = [
       "Roughly what does it cost a one-person electrical firm to register with NICEIC or NAPIT for the first year?",
     options: [
       "Free.",
-      "Typical first-year cost is £700-1,200 covering application fee, annual subscription, the initial assessment visit (where the assessor visits and reviews your QS, your records and a sample of recent work), plus the cost of the QS qualification (2391-52 typically £1,200-1,800 if you don't already hold it). Annual ongoing cost (assessment + subscription) typically £400-800 thereafter.",
+      "Typical first-year cost is £700-1,200 covering application fee, annual subscription, the initial assessment visit (where the assessor visits and reviews your QS, your records and a sample of recent work), plus the cost of the QS qualification (2391-52 typically £1,200-1,800 if you don't already hold it). Year 2+ total ongoing cost is typically £700-1,500/year once subscription, assessment, insurance and calibration are stacked together — the exact range depends on which CPS and which bolt-ons.",
       "£10,000.",
       "£50.",
     ],
@@ -244,8 +244,8 @@ export default function Sub4() {
 
           <TLDR
             points={[
-              "Two different things: competent-person schemes (NICEIC, NAPIT, ELECSA, STROMA) authorise Part P self-certification in dwellings; trade associations (ECA, SELECT) represent the industry and co-run the JIB / SJIB.",
-              "First-year CPS cost typically £700-1,200 (application + subscription + assessment + QS qualification if not already held); annual ongoing cost £400-800.",
+              "Two different things: competent-person schemes (NICEIC, NAPIT, ELECSA, STROMA) authorise Part P self-certification in dwellings; trade associations (ECA, SELECT) represent the industry and co-run the JIB / SJIB. Certsure is the operating company behind NICEIC and ELECSA — not a separate fifth scheme.",
+              "First-year CPS cost typically £700-1,200 for the scheme entry (application + subscription + first assessment), plus QS qualification (£1,200-1,800) if not already held, plus insurance + calibration. Year 2+ ongoing total typically £700-1,500/year — the exact range depends on which CPS, which streams, and what insurance / calibration bolt-ons you carry.",
               "CPS pays back fast for domestic work — LABC notification is £150-300 per notifiable job, so 5-10 jobs a year covers the CPS membership.",
               "Annual assessment is substantive — assessor reviews QS, sample jobs, calibration, insurance, records. Treat it as a serious compliance event, not a rubber stamp.",
             ]}
@@ -255,7 +255,7 @@ export default function Sub4() {
             outcomes={[
               "Supplementary content — extends LO1 with apprentice-relevant career pathway material on running an electrical firm.",
               "Distinguish between competent-person schemes (regulatory) and trade associations (representational) — what each delivers.",
-              "Identify the main UK competent-person schemes (NICEIC, NAPIT, ELECSA, STROMA, Certsure) and their headline differences.",
+              "Identify the main UK competent-person schemes (NICEIC, NAPIT, ELECSA, STROMA) and their headline differences. Note that Certsure is the operating company behind NICEIC and ELECSA, not a separate scheme.",
               "State the typical annual cost of CPS membership and explain the economic case for membership against the LABC notification alternative.",
               "Identify the role of the QS (Qualified Supervisor) in CPS-registered firms and the consequences of QS coverage lapsing.",
               "Identify the role of trade associations (ECA, SELECT) in industry representation and JIB / SJIB co-management.",
@@ -276,9 +276,11 @@ export default function Sub4() {
                   Competent-person schemes (regulatory)
                 </div>
                 <p className="text-[13.5px] text-white/85 leading-relaxed">
-                  NICEIC, NAPIT, ELECSA, STROMA, Certsure. Authorised by Government to allow
+                  NICEIC, NAPIT, ELECSA, STROMA. Authorised by Government to allow
                   registered contractors to self-certify Part P notifiable electrical work in
-                  dwellings. Annual assessment, QS-required, public-register listed.
+                  dwellings. Annual assessment, QS-required, public-register listed. Certsure
+                  is the operating company behind NICEIC and ELECSA &mdash; not a separate
+                  scheme.
                 </p>
               </div>
               <div className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] p-4">
@@ -308,7 +310,7 @@ export default function Sub4() {
 
           <ConceptBlock
             title="The CPS landscape — broadly comparable, with differences in flavour"
-            plainEnglish="Five main UK CPS for electrical Part P self-certification: NICEIC and ELECSA (both operated by Certsure), NAPIT (multi-trade), STROMA (multi-discipline including environmental), and a small number of smaller schemes. Functionally they all do the same job — annual assessment, QS-required, Part P self-certification authority. Differences are in flavour: NICEIC is the oldest and most widely recognised by lay consumers; NAPIT positions itself for multi-trade firms; ELECSA is a NICEIC sister scheme often used by smaller installers."
+            plainEnglish="The main UK electrical Part P competent-person schemes are NICEIC, ELECSA, NAPIT and STROMA. NICEIC and ELECSA are both operated by the same company, Certsure (Certsure is the operating body, not a separate fifth scheme). NAPIT is multi-trade; STROMA covers multiple compliance disciplines including environmental. Functionally they all do the same job — annual assessment, QS-required, Part P self-certification authority. Differences are in flavour: NICEIC is the oldest and most widely recognised by lay consumers; NAPIT positions itself for multi-trade firms; ELECSA is a NICEIC sister scheme (also Certsure-operated) often used by smaller installers."
             onSite="For a one-person electrical firm the choice often comes down to local assessor relationship, market reputation in your area, and personal preference. Cost and capability are broadly equivalent. For multi-trade firms NAPIT typically wins on admin overhead. Switch costs are modest — most firms don't switch once registered, but you can if needed."
           >
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
@@ -361,7 +363,7 @@ export default function Sub4() {
 
           <ConceptBlock
             title="First-year cost vs annual ongoing — the membership bill"
-            plainEnglish="First-year CPS cost is typically £700-1,200 covering application fee, annual subscription, the initial assessment visit, and (if you don't already hold it) the QS qualification (C&G 2391-52 typically £1,200-1,800). Annual ongoing cost is £400-800 covering subscription and the annual assessment visit. Add insurance (PL £5-10m typically £200-500/year, EL if you have employees, PI if you do design — £300-800/year)."
+            plainEnglish="First-year CPS cost is typically £700-1,200 covering application fee, annual subscription, the initial assessment visit, and (if you don't already hold it) the QS qualification (C&G 2391-52 typically £1,200-1,800). The scheme-only ongoing cost (subscription + annual assessment) sits around £400-800; once you stack the bolted-on insurance (PL £5-10m typically £200-500/year, EL if you have employees, PI if you do design — £300-800/year) and test-equipment calibration (~£100-180/year), the realistic Year 2+ total ongoing cost is £700-1,500/year. The range depends on which CPS, which streams and what insurance you carry."
             onSite="The headline membership cost looks meaningful for a sole trader but the comparison is against the LABC notification alternative — typically £150-300 per notifiable job. A busy domestic installer doing 30-50 notifiable jobs a year would face £4,500-15,000 in LABC fees without CPS membership. CPS pays for itself many times over within months for any meaningful domestic workload."
           >
             <p>
@@ -754,7 +756,7 @@ export default function Sub4() {
           <KeyTakeaways
             points={[
               "Competent-person schemes (NICEIC, NAPIT, ELECSA, STROMA) authorise Part P self-certification in dwellings; trade associations (ECA, SELECT) represent the industry. Most established firms hold both.",
-              "First-year CPS cost typically £700-1,200 plus QS qualification (£1,200-1,800 if not already held); annual ongoing cost £400-800.",
+              "First-year CPS cost typically £700-1,200 plus QS qualification (£1,200-1,800 if not already held); Year 2+ ongoing total typically £700-1,500/year (scheme subscription + assessment + insurance + calibration combined — the range depends on bolt-ons).",
               "Economic case is strong — LABC notification £150-300 per notifiable job, so 5-10 jobs a year covers CPS membership.",
               "Annual assessment is substantive — assessor reviews QS, sample jobs, calibration, insurance, records. Treat as serious compliance event.",
               "QS continuity is a scheme rule — at least one named QS must hold a current 2391-52 (or equivalent); QS leaving requires immediate replacement.",

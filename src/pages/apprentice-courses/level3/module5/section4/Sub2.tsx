@@ -244,7 +244,7 @@ export default function Sub2() {
 
           <TLDR
             points={[
-              "No-trip / low-current mode injects under 15 mA peak (below the 30 mA RCD threshold) and uses DC bias / fast pulse techniques to avoid tripping the RCD. Slightly less accurate (plus or minus 10 percent) but doesn\'t interrupt the supply.",
+              "No-trip / low-current mode injects under 15 mA peak (below the 30 mA RCD threshold) and uses DC bias / fast pulse techniques to avoid tripping the RCD. Slightly less accurate (plus or minus 10 percent) but doesn't interrupt the supply.",
               "Full trip-current mode injects 10-25 A briefly, gives best accuracy (plus or minus 5 percent), but trips RCDs. Use selectively on borderline readings after preparing for the trip.",
               "GN3 warns of touch-voltage on earthed metalwork during EFLI tests — I_test x R_CPC briefly raises exposed-conductive-parts above true earth. Manage access during testing in public / commercial spaces.",
               "BS EN 61557-3 governs loop impedance testers. Verify instrument range matches expected Zs (low range for TN, high range for TT), and check fused leads (typically 7 A or 10 A) before testing.",
@@ -797,11 +797,11 @@ export default function Sub2() {
               "No-trip / low-current mode (under 15 mA peak) is the default for RCD-protected circuits. Full trip-current mode (10-25 A) is for non-RCD circuits or borderline confirmation after preparing for the trip.",
               "GN3 warns of touch-voltage on earthed metalwork during EFLI tests — I_test x R_CPC briefly raises ECPs above true earth. Manage access in commercial / public installations.",
               "BS EN 61557-3 conformance underpins instrument trust. Verify range matches expected Zs (low for TN, high for TT) and check calibration is current.",
-              "Resolution and accuracy are different — modern MFTs achieve both (typically 0.01 Omega resolution, plus or minus 5-10 percent accuracy). Don\'t over-trust precise-looking readings on a poorly-specified instrument.",
-              "Lead fuses (typically 7 A or 10 A) are a maintenance item. Check on each visit; carry spares; don\'t over-fuse.",
+              "Resolution and accuracy are different — modern MFTs achieve both (typically 0.01 Omega resolution, plus or minus 5-10 percent accuracy). Don't over-trust precise-looking readings on a poorly-specified instrument.",
+              "Lead fuses (typically 7 A or 10 A) are a maintenance item. Check on each visit; carry spares; don't over-fuse.",
               "Standard board sequence: Ze first, then each circuit at the furthest point in label / RCD-group order. Sanity-check each reading against Ze + R1+R2 from dead testing.",
               "A4:2026 Table 41.3 max Zs for Type B 32 A = 1.37 Omega table, 1.10 Omega measured. Carry the corrected limits in your head — B6 5.83, B16 2.19, B32 1.10.",
-              "Borderline readings warrant retest in full trip mode for confirmation. Failing readings warrant investigation — terminations, route length, CPC size, parallel paths. Don\'t proceed past a failing circuit.",
+              "Borderline readings warrant retest in full trip mode for confirmation. Failing readings warrant investigation — terminations, route length, CPC size, parallel paths. Don't proceed past a failing circuit.",
             ]}
           />
 

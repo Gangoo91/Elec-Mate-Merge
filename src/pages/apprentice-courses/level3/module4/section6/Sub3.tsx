@@ -213,7 +213,7 @@ const faqs = [
   {
     question: "Why does PV always need a DC isolator near the inverter?",
     answer:
-      "BS 7671 712.537.2.2.5 (A4:2026) requires a means of isolating the inverter from the DC side, located so that maintenance can be carried out safely. Without it, the only way to make the DC side safe is to cover the panels with an opaque tarp — impractical on a roof and unsafe to do while working at height under a live array. The DC isolator (Santon, ABB OTDC, Hager SBN, all DC-PV2 rated) gives a definitive means of breaking the DC supply between the array and the inverter. The L3 apprentice's first move on any PV fault is to operate the DC isolator (and verify dead at the inverter DC terminals) before any other action.",
+      "BS 7671 Section 712 (Solar photovoltaic power supply systems) requires a means of isolating the inverter from the DC side, located so that maintenance can be carried out safely. Without it, the only way to make the DC side safe is to cover the panels with an opaque tarp — impractical on a roof and unsafe to do while working at height under a live array. The DC isolator (Santon, ABB OTDC, Hager SBN, all DC-PV2 rated) gives a definitive means of breaking the DC supply between the array and the inverter. The L3 apprentice's first move on any PV fault is to operate the DC isolator (and verify dead at the inverter DC terminals) before any other action.",
   },
   {
     question: "What's the difference between TN-C-S and PNB on the BS 7671 A4:2026 certificate?",

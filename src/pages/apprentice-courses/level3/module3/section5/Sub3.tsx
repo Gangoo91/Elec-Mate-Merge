@@ -28,6 +28,7 @@ import {
   SectionRule,
   VideoCard,
 } from '@/components/study-centre/learning';
+import { ThreePhaseWave, MotorEffect } from '@/components/study-centre/diagrams';
 import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
@@ -235,6 +236,8 @@ export default function Sub3() {
             initialVisibleCount={3}
           />
 
+          <ThreePhaseWave />
+
           <ContentEyebrow>Synchronous speed and slip</ContentEyebrow>
 
           <ConceptBlock
@@ -294,6 +297,8 @@ export default function Sub3() {
               swapping any two phases at the terminal box.
             </p>
           </ConceptBlock>
+
+          <MotorEffect />
 
           <SectionRule />
 

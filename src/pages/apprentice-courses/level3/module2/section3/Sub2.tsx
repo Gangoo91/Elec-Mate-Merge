@@ -789,7 +789,7 @@ export default function Sub2() {
                 spec sheets you&apos;ll see AFDDs fitted as standard.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 421.1.7 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 421.1.7."
           />
 
           <SectionRule />
@@ -807,7 +807,7 @@ export default function Sub2() {
               "Refrigerant work is F-Gas-certified-only. Connecting pipework, charging, leak testing — criminal offence to do without certification.",
               "MCS MIS 3005 is the installer-competence and design standard. The MCS pack includes heat-loss calc, emitter sizing, SCOP estimate, electrical schedule.",
               "BS 7671 Section 411 / 415 (general earthing and bonding) applies; Section 753 applies to embedded heating systems if the install includes electric heating cables.",
-              "Trade boundaries on a heat-pump install are unambiguous — F-Gas for refrigerant, electrician for electrical, plumber for wet system. Don\'t cross them for customer convenience.",
+              "Trade boundaries on a heat-pump install are unambiguous — F-Gas for refrigerant, electrician for electrical, plumber for wet system. Don't cross them for customer convenience.",
             ]}
           />
 

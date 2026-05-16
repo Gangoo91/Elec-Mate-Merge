@@ -337,7 +337,7 @@ export default function Sub1() {
                 hold at least EFAW; many firms now require FAW for L3 and above.
               </>
             }
-            cite="Source: Health and Safety (First Aid) Regulations 1981 (SI 1981/917), Reg 3 — verbatim from legislation.gov.uk."
+            cite="Source: Health and Safety (First Aid) Regulations 1981 (SI 1981/917), Reg 3."
           />
 
           <InlineCheck
@@ -405,7 +405,7 @@ export default function Sub1() {
                 offence.
               </>
             }
-            cite="Source: Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 (SI 2013/1471), Reg 4, Reg 6 — verbatim from legislation.gov.uk."
+            cite="Source: Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 (SI 2013/1471), Reg 4, Reg 6."
           />
 
           <SectionRule />
@@ -531,7 +531,7 @@ export default function Sub1() {
                 because the role frequently includes site responsibility.
               </>
             }
-            cite="Source: Health and Safety (First Aid) Regulations 1981 (SI 1981/917), Reg 3 — verbatim from legislation.gov.uk."
+            cite="Source: Health and Safety (First Aid) Regulations 1981 (SI 1981/917), Reg 3."
           />
 
           <SectionRule />
@@ -678,12 +678,12 @@ export default function Sub1() {
             points={[
               "Remember from L2 — isolation first, DR ABC, 999, casualty care. These reflexes are still right at L3.",
               "L3 depth: scene preservation, witness handling, evidence chain. The 30 minutes after the incident is when evidence is created or destroyed.",
-              "Mandatory medical assessment after any mains shock — even \'I\'m fine\'. Cardiac arrhythmia can develop hours later. Document recommendation, refusal and escalation.",
+              "Mandatory medical assessment after any mains shock — even 'I'm fine'. Cardiac arrhythmia can develop hours later. Document recommendation, refusal and escalation.",
               "Electrical burns are small at the surface, deep at the tissue. Treat as more serious than they look.",
-              "Don\'t tidy the scene. Don\'t restore power. Don\'t continue work. Photograph everything as found. Witness statements on the day, in writing, in their own words.",
-              "Casualty\'s wishes ≠ supervisor\'s duty. Respect autonomy on treatment AND discharge HASAWA s.2/s.7 by declining release to safety-critical work without medical clearance.",
-              "Notify the firm\'s responsible person immediately by phone. RIDDOR escalation runs through them, not through you.",
-              "When HSE arrives next day — cooperate, factual, don\'t speculate, don\'t volunteer past-practice admissions. Phone the firm\'s H&S manager; let them handle the formal interview.",
+              "Don't tidy the scene. Don't restore power. Don't continue work. Photograph everything as found. Witness statements on the day, in writing, in their own words.",
+              "Casualty's wishes ≠ supervisor's duty. Respect autonomy on treatment AND discharge HASAWA s.2/s.7 by declining release to safety-critical work without medical clearance.",
+              "Notify the firm's responsible person immediately by phone. RIDDOR escalation runs through them, not through you.",
+              "When HSE arrives next day — cooperate, factual, don't speculate, don't volunteer past-practice admissions. Phone the firm's H&S manager; let them handle the formal interview.",
             ]}
           />
 

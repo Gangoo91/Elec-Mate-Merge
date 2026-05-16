@@ -6,10 +6,11 @@
  *   areas in building services which run competent person schemes" by contrasting
  *   CPS membership with chartered/incorporated engineer routes.
  *
- * IET membership tiers (Affiliate, Associate, MIET, FIET) and the linked
- * Engineering Council professional registrations (EngTech, IEng, CEng).
- * Why join, what each tier delivers, the application process, costs,
- * member benefits and the relationship with vocational career routes.
+ * IET membership tiers (Student/Apprentice, Affiliate, TMIET, MIET, FIET) and
+ * the linked Engineering Council professional registrations (EngTech, IEng,
+ * CEng). The older "Associate" tier was removed in the IET's 2008 restructure.
+ * Why join, what each tier delivers, the application process, costs, member
+ * benefits and the relationship with vocational career routes.
  */
 
 import { useNavigate } from 'react-router-dom';
@@ -34,7 +35,7 @@ import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'IET membership routes | Level 3 Module 7.4.2 | Elec-Mate';
 const DESCRIPTION =
-  'IET membership tiers (Affiliate, Associate, MIET, FIET) and linked Engineering Council registrations (EngTech, IEng, CEng). Application, costs, benefits and how vocational practitioners qualify.';
+  'IET membership tiers (Student/Apprentice, Affiliate, TMIET, MIET, FIET) and linked Engineering Council registrations (EngTech, IEng, CEng). Application, costs, benefits and how vocational practitioners qualify. (The older "Associate" tier was removed in the 2008 IET restructure.)';
 
 const checks = [
   {
@@ -53,16 +54,16 @@ const checks = [
   {
     id: 'mod7-s4-sub2-tiers',
     question:
-      "What are the IET membership tiers in order?",
+      "What are the current IET membership tiers in order?",
     options: [
       "Just one tier.",
-      "Affiliate (entry, anyone with interest, no qualifications) → Associate (typically Level 3 vocational + experience) → MIET (Member, equivalent to EngTech academic standard) → FIET (Fellow, senior tier with significant career achievement). Each tier has its own application criteria and annual subscription. Most working electricians who join settle at Associate or MIET; FIET is for senior practitioners.",
+      "Student / Apprentice (entry tier for those in formal study), Affiliate (anyone with an interest, no qualifications required), Technician Member (TMIET — typically Level 3 vocational + experience, often paired with EngTech registration), Member (MIET — incorporated/chartered-level competence), Fellow (FIET — senior career achievement). Each tier has its own application criteria and annual subscription. (The older 'Associate' tier was removed in the IET's 2008 restructure.)",
       "Only Fellow.",
       "Only academic.",
     ],
     correctIndex: 1,
     explanation:
-      "Four-tier IET membership structure. Most apprentices and early-career electricians start as Affiliate or Associate during the apprenticeship; many progress to MIET in the post-AM2 / post-2391-52 window. FIET requires substantial career achievement — typically 10+ years of senior engineering practice. Each tier has subscription cost: Affiliate £40-80/year, Associate similar, MIET £150-200/year, FIET £200-300/year.",
+      "Modern IET membership structure (post-2008 restructure): Student/Apprentice and Affiliate are entry tiers; Technician Member (TMIET) is the vocational-route professional tier (often held alongside EngTech); MIET is the standard professional tier (often paired with IEng or CEng); FIET is for senior career achievement. The 'Associate' tier was discontinued in the 2008 restructure when IET introduced the current Technician Member designation. Subscription costs: Affiliate £40-80/year, TMIET around £100-150, MIET £150-200/year, FIET £200-300/year.",
   },
   {
     id: 'mod7-s4-sub2-engtech',
@@ -151,7 +152,7 @@ const quizQuestions = [
     question: "How does professional registration relate to JIB grading?",
     options: [
       "Same thing.",
-      "Different but parallel. JIB grading (Apprentice / Improver / Electrician / Approved / Technician) is the trade-collective competence framework recognised in JIB-graded employment contracts. Engineering Council registration (EngTech / IEng / CEng) is the wider engineering profession's competence framework recognised across the engineering sector. Many electrical practitioners hold both — JIB Approved AND EngTech is common.",
+      "Different but parallel. The formal JIB grading ladder (Apprentice / Adult Trainee / Electrician / Approved / Technician) is the trade-collective competence framework recognised in JIB-graded employment contracts — note 'Improver' is colloquial industry shorthand and NOT a formal JIB grade. Engineering Council registration (EngTech / IEng / CEng) is the wider engineering profession's competence framework recognised across the engineering sector. Many electrical practitioners hold both — JIB Approved AND EngTech is common.",
       "JIB only Scottish.",
       "EngTech replaces JIB.",
     ],
@@ -193,7 +194,7 @@ const faqs = [
   {
     question: "Is IET membership the same as Engineering Council registration?",
     answer:
-      "No, but they're linked. IET membership is the institution's own membership tier (Affiliate / Associate / MIET / FIET). Engineering Council registration (EngTech / IEng / CEng) is the wider profession's regulatory registration. You can be MIET without being EngTech (membership only, no registration); you can be EngTech without MIET (registration through another institution). Most engineering-focused IET members hold both.",
+      "No, but they're linked. IET membership is the institution's own membership tier (Student/Apprentice / Affiliate / TMIET / MIET / FIET). Engineering Council registration (EngTech / IEng / CEng) is the wider profession's regulatory registration. You can be MIET without being CEng-registered (membership only, no registration); you can be EngTech without being TMIET (registration through another institution). Most engineering-focused IET members hold both.",
   },
   {
     question: "How long does an EngTech application take?",
@@ -240,17 +241,17 @@ export default function Sub2() {
           <PageHero
             eyebrow="Module 7 · Section 4 · Subsection 2"
             title="IET membership routes"
-            description="IET membership tiers (Affiliate, Associate, MIET, FIET) and linked Engineering Council registrations (EngTech, IEng, CEng). Application, costs, benefits."
+            description="IET membership tiers (Student/Apprentice, Affiliate, TMIET, MIET, FIET) and linked Engineering Council registrations (EngTech, IEng, CEng). Application, costs, benefits."
             tone="emerald"
           />
 
           <TLDR
             points={[
               "IET (Institution of Engineering and Technology) is the dominant UK professional body for electrical engineering — 156,000 members worldwide.",
-              "Membership tiers: Affiliate (entry) → Associate (Level 3 + experience) → MIET (Member, EngTech-academic equivalent) → FIET (Fellow, senior career achievement).",
+              "Current membership tiers: Student/Apprentice → Affiliate (entry) → TMIET (Technician Member, vocational professional tier, typically paired with EngTech) → MIET (Member, incorporated/chartered-level competence) → FIET (Fellow, senior career achievement). The older 'Associate' tier was removed in the IET's 2008 restructure.",
               "Linked Engineering Council registrations: EngTech (technician), IEng (incorporated, degree-level), CEng (chartered, master's level).",
               "Annual subscription £40-300/year depending on tier. Tax-deductible against income tax under HMRC List 3.",
-              "IET specifically promotes EngTech as accessible to vocational-route practitioners — JIB Approved + 2391-52 + portfolio = typical EngTech qualification.",
+              "IET specifically promotes EngTech (paired with TMIET) as accessible to vocational-route practitioners — JIB Approved + 2391-52 + portfolio = typical TMIET / EngTech qualification.",
               "Member benefits: BS 7671 access, Wiring Matters, IET Online archive, IET Academy CPD, regional events, professional registration support.",
             ]}
           />
@@ -259,7 +260,7 @@ export default function Sub2() {
             outcomes={[
               "Maps to C&G 2365-03 / Unit 308 / LO2 / AC 2.4 — identify the importance of CPD, including the role of professional bodies.",
               "State the IET's role as the UK's dominant professional body for electrical engineering.",
-              "Distinguish between IET membership tiers (Affiliate, Associate, MIET, FIET) and the entry criteria for each.",
+              "Distinguish between current IET membership tiers (Student/Apprentice, Affiliate, TMIET, MIET, FIET) and the entry criteria for each. The older 'Associate' tier was removed in the 2008 restructure.",
               "Identify the linked Engineering Council registrations (EngTech, IEng, CEng) and the relationship with IET tiers.",
               "Identify the practical benefits of IET membership (BS 7671, IET Online, IET Academy, regional events, professional registration).",
               "State that IET subscriptions are tax-deductible under HMRC List 3.",
@@ -279,7 +280,7 @@ export default function Sub2() {
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>Publisher of BS 7671 (the Wiring Regulations) jointly with BSI.</li>
-              <li>Membership institution &mdash; 4 tiers (Affiliate / Associate / MIET / FIET).</li>
+              <li>Membership institution &mdash; current tiers (Student/Apprentice / Affiliate / TMIET / MIET / FIET).</li>
               <li>Engineering Council licensed body for EngTech / IEng / CEng registration.</li>
               <li>Publisher of IET Standards, Wiring Matters magazine, technical journals.</li>
               <li>Operator of IET Online (large technical archive) and IET Academy (CPD).</li>
@@ -301,27 +302,37 @@ export default function Sub2() {
           <ContentEyebrow>The membership tiers</ContentEyebrow>
 
           <ConceptBlock
-            title="Affiliate → Associate → MIET → FIET — the membership ladder"
-            plainEnglish="Four IET membership tiers, each with its own application criteria and annual subscription. Affiliate is entry — anyone with an interest, no qualifications required. Associate is the next tier — typically Level 3 vocational + experience. MIET (Member) is the standard professional tier with EngTech-equivalent academic anchor. FIET (Fellow) is the senior tier requiring substantial career achievement."
-            onSite="Most apprentices and early-career electricians start as Affiliate or Associate during the apprenticeship — low cost, immediate access to member benefits. Progress to MIET in the post-AM2 / post-2391-52 window when you can evidence the academic and competence anchor. FIET is for senior practitioners 10+ years into their careers with demonstrable contribution beyond their day-job."
+            title="Student/Apprentice → Affiliate → TMIET → MIET → FIET — the membership ladder"
+            plainEnglish="The IET's current membership structure (post-2008 restructure) has five main tiers: Student/Apprentice (for those in formal study), Affiliate (anyone with an interest, no qualifications required), Technician Member (TMIET — vocational professional tier, typically paired with EngTech registration), Member (MIET — incorporated or chartered-level competence), and Fellow (FIET — senior career achievement). The older 'Associate' tier was discontinued in 2008 when TMIET was introduced."
+            onSite="Most apprentices start as Student/Apprentice or Affiliate during the apprenticeship — low cost, immediate access to member benefits. Progress to TMIET in the post-AM2 / post-2391-52 window (often paired with EngTech registration). Progress to MIET when you can evidence IEng/CEng-level competence (typically post-HNC plus design or engineering responsibility). FIET is for senior practitioners 10+ years into their careers with demonstrable contribution beyond their day-job."
           >
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
+              <div className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] p-4">
+                <div className="text-[11px] uppercase tracking-[0.18em] text-elec-yellow mb-2">
+                  Student / Apprentice
+                </div>
+                <p className="text-[13.5px] text-white/85 leading-relaxed">
+                  Entry tier for those in formal study (apprenticeship, HNC, HND, BEng).
+                  Free or heavily discounted. Suitable for the apprenticeship years.
+                </p>
+              </div>
               <div className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] p-4">
                 <div className="text-[11px] uppercase tracking-[0.18em] text-elec-yellow mb-2">
                   Affiliate
                 </div>
                 <p className="text-[13.5px] text-white/85 leading-relaxed">
-                  Entry tier. No qualifications required. Subscription
-                  &pound;40-80/year. Suitable for apprentices and anyone with interest.
+                  Open tier. No qualifications required. Subscription
+                  &pound;40-80/year. Suitable for anyone with interest in engineering.
                 </p>
               </div>
               <div className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] p-4">
                 <div className="text-[11px] uppercase tracking-[0.18em] text-elec-yellow mb-2">
-                  Associate
+                  TMIET (Technician Member)
                 </div>
                 <p className="text-[13.5px] text-white/85 leading-relaxed">
-                  Typically Level 3 vocational qualifications (e.g. C&amp;G 2365-03) plus
-                  some experience. Subscription &pound;80-120/year.
+                  Vocational professional tier &mdash; typically Level 3 vocational
+                  qualifications (e.g. C&amp;G 2365-03) plus experience, often paired with
+                  EngTech registration. Subscription around &pound;100-150/year.
                 </p>
               </div>
               <div className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] p-4">
@@ -329,12 +340,12 @@ export default function Sub2() {
                   MIET (Member)
                 </div>
                 <p className="text-[13.5px] text-white/85 leading-relaxed">
-                  Standard professional tier. EngTech-equivalent academic anchor.
-                  Subscription &pound;150-200/year. Standard tier for career-focused
-                  practitioners.
+                  Standard professional tier. Incorporated or chartered-level competence
+                  anchor (typically HNC+ plus design or engineering responsibility).
+                  Subscription &pound;150-200/year.
                 </p>
               </div>
-              <div className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] p-4">
+              <div className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] p-4 sm:col-span-2">
                 <div className="text-[11px] uppercase tracking-[0.18em] text-elec-yellow mb-2">
                   FIET (Fellow)
                 </div>
@@ -345,6 +356,11 @@ export default function Sub2() {
                 </p>
               </div>
             </div>
+            <p className="mt-3 text-[13px] text-white/70">
+              Note: the older &quot;Associate&quot; tier was discontinued in the IET&apos;s
+              2008 restructure, replaced by the current Technician Member (TMIET)
+              designation.
+            </p>
           </ConceptBlock>
 
           <InlineCheck
@@ -371,7 +387,7 @@ export default function Sub2() {
               <li>JIB Approved Electrician grade (or equivalent).</li>
               <li>2391-52 (or equivalent inspection and testing qualification).</li>
               <li>2-3+ years of post-AM2 site experience.</li>
-              <li>IET membership (Associate or MIET).</li>
+              <li>IET membership (TMIET or MIET).</li>
               <li>
                 Portfolio of evidence against UK-SPEC EngTech competences (knowledge and
                 understanding, design, leadership, communication, professional commitment).
@@ -501,18 +517,20 @@ export default function Sub2() {
               <>
                 Apprentice joins IET as Affiliate during apprenticeship for the
                 BS 7671 access and CPD content. Pays subscription year after year but
-                never upgrades to Associate or MIET. Five years post-AM2 still on Affiliate
-                tier &mdash; missing the credibility signal of MIET on quotes and CV, missing
-                the EngTech eligibility, missing access to MIET-specific events.
+                never upgrades to TMIET or MIET. Five years post-AM2 still on Affiliate
+                tier &mdash; missing the credibility signal of TMIET / MIET on quotes and CV,
+                missing the EngTech eligibility, missing access to higher-tier events.
               </>
             }
             doInstead={
               <>
-                Plan progression: Affiliate during apprenticeship; upgrade to Associate
-                post-AM2; upgrade to MIET in the 2-3 year post-2391-52 window. Each upgrade
-                requires application but criteria are well-documented at theiet.org.
-                Most upgrades complete within 6-8 weeks. Worth the small effort &mdash; the
-                MIET letters after your name are a meaningful credibility signal.
+                Plan progression: Student/Apprentice or Affiliate during apprenticeship;
+                upgrade to TMIET (typically paired with EngTech) post-AM2 + 2391-52; upgrade
+                to MIET later when you can evidence incorporated or chartered-level
+                competence. Each upgrade requires application but criteria are
+                well-documented at theiet.org. Most upgrades complete within 6-8 weeks.
+                Worth the small effort &mdash; the post-nominal letters after your name are
+                a meaningful credibility signal.
               </>
             }
           />
@@ -576,33 +594,37 @@ export default function Sub2() {
           <ContentEyebrow>The IET membership ladder in practice</ContentEyebrow>
 
           <ConceptBlock
-            title="Affiliate to MIET — the membership tier ladder"
-            plainEnglish="IET membership runs Affiliate (free, open to anyone with interest in engineering), Associate (free for students/apprentices, ~£60/yr otherwise — for those without formal IET-recognised qualifications but working in engineering), MIET (Member of IET, ~£200/yr — formally recognised competent engineer, typically post-HNC + experience), FIET (Fellow, ~£250/yr — senior engineering practice, typically 10+ years post-MIET, application-based and selective). Each tier opens different IET resources and confers different status. Apprentices typically start as Associate, upgrade to MIET post-HNC + experience."
-            onSite="Most working electricians never use IET membership beyond the Wiring Regs subscription — that's missing the wider value. MIET status is increasingly looked for by main contractors on technical roles (Project Engineer, Design Engineer) as a competence signal beyond AM2 alone. The journals and online resources (engineering papers, technical guides, industry research) compound over a career. Local IET branch events are also strong for networking — particularly useful when changing firms or moving into specialist sectors. Treat membership as career infrastructure, not just a Wiring Regs paywall."
+            title="Student/Apprentice to MIET — the membership tier ladder"
+            plainEnglish="IET membership runs Student/Apprentice (free for those in formal study), Affiliate (~£40-80/yr, open to anyone with interest in engineering), TMIET (Technician Member, ~£100-150/yr — vocational professional tier typically paired with EngTech registration), MIET (Member of IET, ~£200/yr — incorporated or chartered-level competence, typically post-HNC + experience), FIET (Fellow, ~£250/yr — senior engineering practice, typically 10+ years post-MIET, application-based and selective). Each tier opens different IET resources and confers different status. Apprentices typically start as Student/Apprentice, upgrade to TMIET post-AM2 + 2391-52, and progress to MIET post-HNC + experience. The older 'Associate' tier was discontinued in the 2008 IET restructure."
+            onSite="Most working electricians never use IET membership beyond the Wiring Regs subscription — that's missing the wider value. TMIET / MIET status is increasingly looked for by main contractors on technical roles (Project Engineer, Design Engineer) as a competence signal beyond AM2 alone. The journals and online resources (engineering papers, technical guides, industry research) compound over a career. Local IET branch events are also strong for networking — particularly useful when changing firms or moving into specialist sectors. Treat membership as career infrastructure, not just a Wiring Regs paywall."
           >
             <p>
               IET membership tiers:
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
-                <strong>Affiliate</strong> &mdash; free, open access, basic resource access.
+                <strong>Student / Apprentice</strong> &mdash; free or heavily discounted while in formal study, basic resource access.
               </li>
               <li>
-                <strong>Associate</strong> &mdash; ~&pound;60/yr (free for students/apprentices), broader resource access.
+                <strong>Affiliate</strong> &mdash; ~&pound;40-80/yr, open access for anyone with interest.
               </li>
               <li>
-                <strong>MIET (Member)</strong> &mdash; ~&pound;200/yr, designation MIET, full Engineering Council route eligibility.
+                <strong>TMIET (Technician Member)</strong> &mdash; ~&pound;100-150/yr, vocational professional tier typically paired with EngTech registration.
+              </li>
+              <li>
+                <strong>MIET (Member)</strong> &mdash; ~&pound;200/yr, designation MIET, full Engineering Council IEng/CEng route eligibility.
               </li>
               <li>
                 <strong>FIET (Fellow)</strong> &mdash; ~&pound;250/yr, senior recognised engineering practice, selective.
               </li>
               <li>
-                <strong>Senior Member</strong> &mdash; honorary tier for distinguished long-service members.
-              </li>
-              <li>
-                <strong>Apprentice route</strong> &mdash; Associate (free) → MIET post-HNC + experience.
+                <strong>Apprentice route</strong> &mdash; Student/Apprentice (free) → TMIET post-AM2 + 2391-52 → MIET post-HNC + experience.
               </li>
             </ul>
+            <p className="mt-3 text-[13px] text-white/70">
+              Note: the older &quot;Associate&quot; tier was removed in the IET&apos;s 2008
+              restructure when TMIET was introduced.
+            </p>
           </ConceptBlock>
 
           <ConceptBlock
@@ -671,7 +693,7 @@ export default function Sub2() {
           <ConceptBlock
             title="The IET as career infrastructure — branches, mentoring, journals"
             plainEnglish="Beyond the formal designation, IET membership provides career infrastructure: local branches (UK-wide network of branch events, technical talks, networking dinners — typically 1-2 events/month per branch), mentoring schemes (matching newer members with senior MIET/FIET mentors), technical journals (Engineering & Technology magazine monthly, plus specialist journals), online libraries (IET Inspec engineering literature database, IET TV technical videos), formal CPD logging tools, and the IET Wiring Regs publication. Annual subscription pays for itself many times over for a member who actively engages."
-            onSite="Local IET branch events are particularly valuable for career mobility — they're where you meet senior engineers in your geographic market, hear about emerging technologies, and build the network that surfaces job opportunities. Most branches actively welcome apprentices and Associate members at events — turn up, introduce yourself, ask questions. Mentoring schemes pair you with a senior member who can guide career decisions, qualification routes, application support for EngTech/IEng/CEng. The technical journals are valuable CPD reading material — they meet most CPS schemes' CPD evidence requirements when logged."
+            onSite="Local IET branch events are particularly valuable for career mobility — they're where you meet senior engineers in your geographic market, hear about emerging technologies, and build the network that surfaces job opportunities. Most branches actively welcome apprentices and Affiliate / TMIET members at events — turn up, introduce yourself, ask questions. Mentoring schemes pair you with a senior member who can guide career decisions, qualification routes, application support for EngTech/IEng/CEng. The technical journals are valuable CPD reading material — they meet most CPS schemes' CPD evidence requirements when logged."
           >
             <p>
               IET career infrastructure resources:
@@ -707,7 +729,7 @@ export default function Sub2() {
           <ConceptBlock
             title="Cost-benefit — when £200/yr IET subscription pays back"
             plainEnglish="MIET subscription at ~£200/yr pays back fastest for engineering-direction careers — Project Engineer, Design Engineer, M&E Consultancy roles where MIET (or working toward it) is increasingly the implicit baseline for hire. For pure installation careers the payback is slower but still positive (Wiring Regs subscription value alone typically £80/yr; technical resource access; networking value). The marginal cost beyond the publications and resource access is often offset by employer reimbursement — many established firms cover MIET/IET subs as a CPD investment. Ask at your firm before assuming you have to fund yourself."
-            onSite="Build the IET membership decision into your annual CPD plan. If your career direction is install-focused, Associate (~£60/yr) may be sufficient; consider upgrading to MIET only when a specific role demands it. If your direction is engineering/design, MIET as soon as you qualify (post-HNC) signals intent and starts building the EngTech evidence base. Many firms reimburse — ask. The cost is modest; the optionality value (keeping doors open to engineering routes) is substantial. Don't dismiss IET membership as 'just for graduates' — vocational routes to MIET, EngTech, IEng and CEng are increasingly recognised."
+            onSite="Build the IET membership decision into your annual CPD plan. If your career direction is install-focused, Affiliate (~£40-80/yr) or TMIET (~£100-150/yr, paired with EngTech) may be sufficient; consider upgrading to MIET only when a specific role demands it. If your direction is engineering/design, MIET as soon as you qualify (post-HNC) signals intent and starts building the IEng/CEng evidence base. Many firms reimburse — ask. The cost is modest; the optionality value (keeping doors open to engineering routes) is substantial. Don't dismiss IET membership as 'just for graduates' — vocational routes to TMIET, EngTech, MIET, IEng and CEng are increasingly recognised."
           >
             <p>
               IET membership ROI checklist:
@@ -746,7 +768,7 @@ export default function Sub2() {
           <KeyTakeaways
             points={[
               "IET (Institution of Engineering and Technology) is the dominant UK professional body for electrical engineering — 156,000 members worldwide, publishes BS 7671.",
-              "Four membership tiers: Affiliate (entry, £40-80/year), Associate (Level 3 + experience, £80-120), MIET (EngTech-academic equivalent, £150-200), FIET (senior career, £200-300).",
+              "Current membership tiers: Student/Apprentice (free or discounted while in study), Affiliate (entry, £40-80/year), TMIET (Technician Member, vocational professional tier, £100-150/year, typically paired with EngTech), MIET (Member, IEng/CEng-level, £150-200), FIET (Fellow, senior career, £200-300). The older 'Associate' tier was removed in the 2008 restructure.",
               "Engineering Council registrations linked: EngTech (technician), IEng (incorporated, degree-level), CEng (chartered, master's-level). Separate annual fees (£30-300) on top of IET subscription.",
               "IET specifically promotes EngTech as accessible to vocational-route practitioners — JIB Approved + 2391-52 + portfolio + professional review = typical EngTech qualification.",
               "Subscriptions tax-deductible under HMRC List 3 — effective cost reduced by marginal tax rate.",

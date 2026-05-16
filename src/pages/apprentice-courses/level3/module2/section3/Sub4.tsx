@@ -800,7 +800,7 @@ export default function Sub4() {
                 only applies outside dwellings.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 411.3.3 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 411.3.3."
           />
 
           <SectionRule />

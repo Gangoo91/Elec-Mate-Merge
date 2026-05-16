@@ -616,7 +616,7 @@ export default function Sub3() {
                 rules to read.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Chapter 57 — definition, verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Chapter 57."
           />
 
           <SectionRule />

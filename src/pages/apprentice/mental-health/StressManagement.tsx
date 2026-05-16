@@ -1,6 +1,12 @@
+/**
+ * StressManagement — editorial workplace stress management page.
+ *
+ * Composes shared mental-health components plus an editorial
+ * "stress management techniques" card and a "when to seek additional
+ * help" block. Wrapper handles eyebrow/headline.
+ */
+
 import MentalHealthPageLayout from '@/components/mental-health/MentalHealthPageLayout';
-import { AlertTriangle } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import InteractiveStressAssessment from '@/components/mental-health/stress/InteractiveStressAssessment';
 import BreathingExercise from '@/components/mental-health/stress/BreathingExercise';
 import ApprenticeScenarios from '@/components/mental-health/stress/ApprenticeScenarios';
@@ -10,69 +16,104 @@ import QuickTips from '@/components/mental-health/stress/QuickTips';
 import AdvancedTechniques from '@/components/mental-health/stress/AdvancedTechniques';
 import ResourcesSection from '@/components/mental-health/stress/ResourcesSection';
 import SupportCallout from '@/components/mental-health/stress/SupportCallout';
+import { AlertTriangle, PhoneCall } from 'lucide-react';
+import {
+  Eyebrow,
+  SectionHeader,
+} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+
+const warningSigns = [
+  'Persistent feelings of overwhelm',
+  'Physical symptoms affecting work performance',
+  'Difficulty sleeping for several nights',
+  'Withdrawing from colleagues and friends',
+  'Increased irritability or mood swings',
+];
+
+const whoToContact = [
+  'Your line manager or supervisor',
+  'Training provider or college support team',
+  'GP or occupational health service',
+  'Employee assistance programme (if available)',
+  'Mental health crisis services if urgent',
+];
 
 const StressManagement = () => {
   return (
     <MentalHealthPageLayout
-      title="Managing Workplace Stress"
-      description="Techniques for handling stress on job sites and during training"
-      icon={<AlertTriangle className="h-6 w-6 text-orange-400" />}
-      color="orange"
+      title="Managing workplace stress"
+      description="Techniques for handling stress on job sites and during training. Self-assessment, breathing exercises, real apprentice scenarios, and where to turn when it's more than you can manage alone."
     >
-      <div className="space-y-6">
+      <div className="space-y-7 sm:space-y-8">
         <InteractiveStressAssessment />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
           <BreathingExercise />
           <ApprenticeScenarios />
         </div>
 
         <ApprenticeStressors />
-
         <StressSignsCards />
 
-        <Card className="border-orange-500/20 bg-white/5">
-          <CardHeader>
-            <CardTitle className="text-orange-400">Stress Management Techniques</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
+        {/* ── Techniques ─────────────────────────────────────────── */}
+        <section className="space-y-3">
+          <SectionHeader
+            eyebrow="Techniques"
+            title="Stress management toolbox"
+            meta="Quick tips for the moment, advanced techniques for the long term"
+          />
+          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-6">
             <QuickTips />
             <AdvancedTechniques />
-          </CardContent>
-        </Card>
+          </div>
+        </section>
 
         <ResourcesSection />
 
-        <Card className="border-elec-yellow/20 bg-white/5">
-          <CardHeader>
-            <CardTitle className="text-elec-yellow">When to Seek Additional Help</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="border border-red-500/20 rounded-lg p-4 bg-red-500/5">
-                <h4 className="font-semibold text-red-400 mb-2">Warning Signs</h4>
-                <ul className="space-y-1 text-sm text-white">
-                  <li>• Persistent feelings of overwhelm</li>
-                  <li>• Physical symptoms affecting work performance</li>
-                  <li>• Difficulty sleeping for several nights</li>
-                  <li>• Withdrawing from colleagues and friends</li>
-                  <li>• Increased irritability or mood swings</li>
-                </ul>
+        {/* ── When to seek help ─────────────────────────────────── */}
+        <section className="space-y-3">
+          <SectionHeader
+            eyebrow="When to seek additional help"
+            title="Recognising the line"
+            meta="No shame in asking — it's the strong move"
+          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+            <div className="rounded-xl border border-red-500/25 bg-red-500/[0.04] p-4 sm:p-5 space-y-3">
+              <div className="flex items-center gap-2">
+                <AlertTriangle className="h-4 w-4 text-red-300 flex-shrink-0" />
+                <Eyebrow className="text-red-300">Warning signs</Eyebrow>
               </div>
-
-              <div className="border border-blue-500/20 rounded-lg p-4 bg-blue-500/5">
-                <h4 className="font-semibold text-blue-400 mb-2">Who to Contact</h4>
-                <ul className="space-y-1 text-sm text-white">
-                  <li>• Your line manager or supervisor</li>
-                  <li>• Training provider or college support team</li>
-                  <li>• GP or occupational health service</li>
-                  <li>• Employee assistance programme (if available)</li>
-                  <li>• Mental health crisis services if urgent</li>
-                </ul>
-              </div>
+              <ul className="space-y-1.5">
+                {warningSigns.map((sign) => (
+                  <li
+                    key={sign}
+                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  >
+                    <span className="text-red-300 mt-0.5">·</span>
+                    <span>{sign}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
-          </CardContent>
-        </Card>
+            <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-3">
+              <div className="flex items-center gap-2">
+                <PhoneCall className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+                <Eyebrow className="text-elec-yellow/85">Who to contact</Eyebrow>
+              </div>
+              <ul className="space-y-1.5">
+                {whoToContact.map((contact) => (
+                  <li
+                    key={contact}
+                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  >
+                    <span className="text-elec-yellow/70 mt-0.5">·</span>
+                    <span>{contact}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
 
         <SupportCallout />
       </div>

@@ -29,6 +29,7 @@ import {
   AppendixTable,
   VideoCard,
 } from '@/components/study-centre/learning';
+import { EarthingSystemDiagram } from '@/components/study-centre/diagrams';
 import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
@@ -392,6 +393,8 @@ export default function Sub1() {
             duration={videos.zeTest.duration}
             topic={videos.zeTest.topic}
           />
+
+          <EarthingSystemDiagram />
 
           <SectionRule />
 

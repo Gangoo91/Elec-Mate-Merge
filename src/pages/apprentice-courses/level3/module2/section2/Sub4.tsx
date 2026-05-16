@@ -31,7 +31,10 @@ import {
   LearningOutcomes,
   ContentEyebrow,
   SectionRule,
+  VideoCard,
 } from '@/components/study-centre/learning';
+import { TransformerSchematic } from '@/components/study-centre/diagrams';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE =
@@ -338,6 +341,17 @@ export default function Sub4() {
               </>
             }
             cite="Source: ENA EREC G98 (paraphrased from the latest published Issue — full text on the Energy Networks Association website)."
+          />
+
+          <TransformerSchematic />
+
+          <VideoCard
+            url={videos.threePhaseTransformers.url}
+            title={videos.threePhaseTransformers.title}
+            channel={videos.threePhaseTransformers.channel}
+            duration={videos.threePhaseTransformers.duration}
+            topic="Three-phase distribution — the network G98/G99 protects"
+            caption="G98 and G99 exist because the DNO needs to manage how customer-side generation interacts with the distribution transformer and the rest of the local network. Knowing how the transformer behaves makes the 16 A per phase boundary and the anti-islanding requirements easier to read."
           />
 
           <SectionRule />

@@ -1,8 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, CheckCircle, AlertTriangle } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { ArrowLeft, CheckCircle2222, AlertTriangle } from 'lucide-react';
 import {
   PageFrame,
   PageHero,
@@ -15,14 +13,10 @@ const WagesPage = () => {
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/apprentice/rights-and-pay')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
+        <button onClick={() => navigate('/apprentice/rights-and-pay')} className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation">
+          <ArrowLeft className="h-4 w-4" />
           Back
-        </Button>
+        </button>
       </motion.div>
 
       <motion.div variants={itemVariants}>
@@ -36,8 +30,8 @@ const WagesPage = () => {
 
       <motion.section variants={itemVariants} className="space-y-4">
         <SectionHeader eyebrow="Current rates" title="From April 2026" />
-        <Card className="border-white/10 bg-[hsl(0_0%_10%)]">
-          <CardContent className="p-5 space-y-3">
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+          <div className="p-4 sm:p-5 space-y-3">
             {[
               { age: 'Apprentice rate (Year 1, any age)', rate: '£8.00/hr' },
               { age: 'Under 18 (after Year 1)', rate: '£8.00/hr' },
@@ -58,14 +52,13 @@ const WagesPage = () => {
               After Year 1 you move to the National Minimum Wage for your age band — figures change
               each April. Check gov.uk for the current rate before you sign anything.
             </p>
-          </CardContent>
-        </Card>
+          </div></div>
       </motion.section>
 
       <motion.section variants={itemVariants} className="space-y-4">
         <SectionHeader eyebrow="Entitlements" title="What you should be paid for" />
-        <Card className="border-white/10 bg-[hsl(0_0%_10%)]">
-          <CardContent className="p-5 space-y-2">
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+          <div className="p-4 sm:p-5 space-y-2">
             <ul className="space-y-2.5">
               {[
                 'All hours worked on site, including travel between sites during the day',
@@ -80,14 +73,13 @@ const WagesPage = () => {
                 </li>
               ))}
             </ul>
-          </CardContent>
-        </Card>
+          </div></div>
       </motion.section>
 
       <motion.section variants={itemVariants} className="space-y-4">
         <SectionHeader eyebrow="Red Flags" title="When something is wrong" />
-        <Card className="border-red-500/20 bg-red-500/[0.04]">
-          <CardContent className="p-5 space-y-2">
+        <div className="rounded-xl border border-red-500/25 bg-red-500/[0.04]">
+          <div className="p-4 sm:p-5 space-y-2">
             <ul className="space-y-2.5">
               {[
                 'Being asked to pay for your own training, tools, or college fees',
@@ -110,14 +102,13 @@ const WagesPage = () => {
               If two or more of these apply to you, that's not normal. Talk to your training
               provider, the JIB, or ACAS before you let it slide.
             </p>
-          </CardContent>
-        </Card>
+          </div></div>
       </motion.section>
 
       <motion.section variants={itemVariants} className="space-y-4">
         <SectionHeader eyebrow="JIB rates" title="The industry-standard scale" />
-        <Card className="border-elec-yellow/20 bg-elec-yellow/[0.04]">
-          <CardContent className="p-5 space-y-3">
+        <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04]">
+          <div className="p-4 sm:p-5 space-y-3">
             <p className="text-[13px] text-white/80 leading-relaxed">
               The Joint Industry Board (JIB) sets recommended pay rates for the UK electrical
               industry. Many employers follow JIB grading, which is typically above the legal
@@ -144,8 +135,7 @@ const WagesPage = () => {
               JIB rates are updated annually. The figures above are indicative ranges — check the
               latest JIB National Working Rules for the current week's rate.
             </p>
-          </CardContent>
-        </Card>
+          </div></div>
       </motion.section>
     </PageFrame>
   );

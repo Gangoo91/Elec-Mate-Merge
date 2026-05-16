@@ -315,7 +315,7 @@ export default function Sub5() {
                 requirements.
               </>
             }
-            cite="Source: Environmental Protection Act 1990 (1990 c.43), s.34 — verbatim from legislation.gov.uk."
+            cite="Source: Environmental Protection Act 1990 (1990 c.43), s.34."
           />
 
           <InlineCheck
@@ -367,7 +367,7 @@ export default function Sub5() {
                 and Northern Ireland; Wales follows the England regime.
               </>
             }
-            cite="Source: Hazardous Waste (England and Wales) Regulations 2005 (SI 2005/894), Reg 35 — verbatim from legislation.gov.uk."
+            cite="Source: Hazardous Waste (England and Wales) Regulations 2005 (SI 2005/894), Reg 35."
           />
 
           <InlineCheck
@@ -503,7 +503,7 @@ export default function Sub5() {
                 wasn&apos;t commissioned.
               </>
             }
-            cite="Source: Control of Asbestos Regulations 2012 (SI 2012/632), Reg 5 — verbatim from legislation.gov.uk."
+            cite="Source: Control of Asbestos Regulations 2012 (SI 2012/632), Reg 5."
           />
 
           <SectionRule />

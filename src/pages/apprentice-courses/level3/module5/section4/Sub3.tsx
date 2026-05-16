@@ -748,7 +748,7 @@ NOTE: Regardless of RCD Type, effectiveness is deemed to have been verified wher
               "TT installations: Ra x I delta n less than or equal to 50 V is the RCD-based ADS acceptance test. For 100 Omega Ra and 30 mA RCD: 3 V — comfortable pass.",
               "Manufacturer test button verifies mechanical operation only. Customer-operated quarterly per Reg 132.13. NOT a substitute for the instrument trip-time test at EICR intervals.",
               "On all-RCBO consumer unit, test each RCBO individually. Record type and trip time per circuit on the Schedule of Test Results.",
-              "Failed RCD (trip time exceeds 300 ms) = EICR Code C2 (potentially dangerous). Replace, retest, document. Don\'t leave a failed RCD in service.",
+              "Failed RCD (trip time exceeds 300 ms) = EICR Code C2 (potentially dangerous). Replace, retest, document. Don't leave a failed RCD in service.",
               "Healthy modern RCDs trip in 20-100 ms at 1 x I delta n. Drift toward 300 ms is the warning sign — replace before actual failure.",
             ]}
           />

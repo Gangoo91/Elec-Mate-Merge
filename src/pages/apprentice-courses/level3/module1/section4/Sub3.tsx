@@ -89,7 +89,7 @@ export default function Sub3() {
             </ul>
           </ConceptBlock>
 
-          <RegsCallout source="EAWR 1989 — Reg 4(1) and Reg 14" clause={<>Reg 4(1): "All systems shall at all times be of such construction as to prevent, so far as is reasonably practicable, danger." Reg 14: live working only via the three-test (unreasonable to be dead AND reasonable to be live AND suitable precautions).</>} meaning={<>The legal framework for electrical hazard control. Reg 4 = system level (design and maintain safe). Reg 14 = work activity level (default to dead-working; live only via three-test). Reg 13 = isolation. Reg 16 = competence. Together they cover the electrical hazard system.</>} cite="Source: Electricity at Work Regulations 1989 (SI 1989/635), Regs 4, 13, 14, 16 — verbatim from legislation.gov.uk." />
+          <RegsCallout source="EAWR 1989 — Reg 4(1) and Reg 14" clause={<>Reg 4(1): "All systems shall at all times be of such construction as to prevent, so far as is reasonably practicable, danger." Reg 14: live working only via the three-test (unreasonable to be dead AND reasonable to be live AND suitable precautions).</>} meaning={<>The legal framework for electrical hazard control. Reg 4 = system level (design and maintain safe). Reg 14 = work activity level (default to dead-working; live only via three-test). Reg 13 = isolation. Reg 16 = competence. Together they cover the electrical hazard system.</>} cite="Source: Electricity at Work Regulations 1989 (SI 1989/635), Regs 4, 13, 14, 16." />
 
           <InlineCheck {...checks[0]} />
 
@@ -190,9 +190,9 @@ export default function Sub3() {
             </ol>
           </ConceptBlock>
 
-          <RegsCallout source="EAWR 1989 — Reg 16 (Persons to be competent to prevent danger and injury)" clause={<>"No person shall be engaged in any work activity where technical knowledge or experience is necessary to prevent danger or, where appropriate, injury, unless he possesses such knowledge or experience, or is under such degree of supervision as may be appropriate having regard to the nature of the work."</>} meaning={<>Reg 16 — competence and supervision. Technical knowledge / experience required, OR appropriate supervision. The L3 is often the &apos;appropriate supervision&apos; for L2 / apprentices. Failure to provide competent supervision where the work requires it is a Reg 16 breach.</>} cite="Source: Electricity at Work Regulations 1989 (SI 1989/635), Reg 16 — verbatim from legislation.gov.uk." />
+          <RegsCallout source="EAWR 1989 — Reg 16 (Persons to be competent to prevent danger and injury)" clause={<>"No person shall be engaged in any work activity where technical knowledge or experience is necessary to prevent danger or, where appropriate, injury, unless he possesses such knowledge or experience, or is under such degree of supervision as may be appropriate having regard to the nature of the work."</>} meaning={<>Reg 16 — competence and supervision. Technical knowledge / experience required, OR appropriate supervision. The L3 is often the &apos;appropriate supervision&apos; for L2 / apprentices. Failure to provide competent supervision where the work requires it is a Reg 16 breach.</>} cite="Source: Electricity at Work Regulations 1989 (SI 1989/635), Reg 16." />
 
-          <RegsCallout source="RIDDOR 2013 — Reg 7 (Reportable dangerous occurrences)" clause={<>"Where an event listed in Schedule 2 (electrical short circuit / overload causing fire or explosion) occurs at any place of work which results in stoppage of the plant involved for more than 24 hours or could have caused death or serious injury, the responsible person must follow the reporting procedure."</>} meaning={<>RIDDOR Reg 7 + Sched 2 — dangerous occurrences. Electrical short circuit causing fire / explosion / 24h stoppage / could-have-caused serious injury all reportable. Even without injury, the dangerous occurrence is RIDDOR-reportable. The L3 supervisor recognises and escalates.</>} cite="Source: Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 (SI 2013/1471), Reg 7 + Sched 2 — verbatim from legislation.gov.uk." />
+          <RegsCallout source="RIDDOR 2013 — Reg 7 (Reportable dangerous occurrences)" clause={<>"Where an event listed in Schedule 2 (electrical short circuit / overload causing fire or explosion) occurs at any place of work which results in stoppage of the plant involved for more than 24 hours or could have caused death or serious injury, the responsible person must follow the reporting procedure."</>} meaning={<>RIDDOR Reg 7 + Sched 2 — dangerous occurrences. Electrical short circuit causing fire / explosion / 24h stoppage / could-have-caused serious injury all reportable. Even without injury, the dangerous occurrence is RIDDOR-reportable. The L3 supervisor recognises and escalates.</>} cite="Source: Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 (SI 2013/1471), Reg 7 + Sched 2." />
 
           <SectionRule />
           <CommonMistake title="Treating arc-flash as something that 'happens to other electricians'" whatHappens={<>Apprentice working on a 250A commercial DB without arc-flash PPE; assumes it&apos;s &quot;just a switchroom&quot;. Slipped screwdriver triggers phase-to-phase fault; arc-flash incident; serious burns; multi-week hospital stay; HSE prosecution; firm + supervisor liable; arc-flash PPE was available but not used.</>} doInstead={<>Treat all commercial / industrial switchgear as arc-flash hazardous until proven otherwise. EN 61482 ATPV-rated PPE for any work at the working position. Design controls (de-energise, remote racking) preferred to working live.</>} />
@@ -202,11 +202,50 @@ export default function Sub3() {
           <Scenario title="Switchroom inspection — mapping hazards to regulations" situation={<>You're scheduled for a planned EICR + remedial visit at a small commercial switchroom: 400V three-phase distribution, 250A main switch, several sub-DBs, mid-week, customer\'s operations continuing in the building.</>} whatToDo={<>Map hazards. Shock — EAWR Reg 13 isolation. Arc-flash — EAWR Reg 14 (default to dead working; if any live work needed, three-test + permit + EN 61482 PPE). Fire — RRFSO 2005 + EAWR Reg 4 (system maintained safely); CO2 extinguisher available. Secondary injury — MHSWR Reg 3 risk assessment of consequence chain (e.g. fall from access platform if startled). Specific controls: full isolation strategy planned in advance with customer (out-of-hours window if needed); GS38 voltage indicator + proving unit; lock-off on each sub-DB worked; EN 61482 PPE + EN 60903 Class 0 gloves for any live test work; second person present for arc-flash potential; clear access route maintained for emergency egress; CO2 extinguisher within reach; first-aid kit on site; FAW first aider identified. Document on dynamic risk assessment. Brief any L2 mate on the specific hazards. Customer briefed on which areas will be isolated and when.</>} whyItMatters={<>Mapping each hazard to its regulation gives the assessment structure and demonstrates competence. The HSE inspector reviewing after any incident sees thoughtful engagement with the framework. The customer sees a professional approach. The L3 supervisor&apos;s reflex to map hazard → regulation → control is what distinguishes mature practice from intuition.</>} />
 
           <SectionRule />
+          <ContentEyebrow>Arc-flash incident energy — the IEEE 1584 framework</ContentEyebrow>
+
+          <ConceptBlock
+            title="Why the same DB can have different arc-flash energies at different positions"
+            plainEnglish="Arc-flash incident energy at a given working position depends on the available fault current, the system voltage, the protective device clearing time, the working distance from the arc, the gap between conductors, and the enclosure geometry. The IEEE 1584 method (and the simpler Lee method for higher voltages) calculates incident energy in cal/cm² for a given position. The same DB can show 8 cal/cm² at the closed cover with a quick-clearing breaker and 25+ cal/cm² with the cover open, the breaker degraded, or working close to the bus. PPE selection has to match the calculated energy at the actual working position."
+            onSite="The L3 supervisor doesn&apos;t typically perform the IEEE 1584 calculation but should know it exists and should ask &apos;what is the arc-flash study at this site?&apos;. Modern industrial sites increasingly have labels on switchgear showing the incident energy and required PPE class. Where no study exists, conservative assumption (treat as 12 cal/cm² minimum for any commercial DB; 25+ for any large industrial gear) is the practical fallback."
+          >
+            <p>Factors driving arc-flash incident energy:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Available fault current</strong> — higher fault current = more energy
+                released; depends on transformer size and impedance.
+              </li>
+              <li>
+                <strong>Protective device clearing time</strong> — quicker disconnection = less
+                energy; coordination affects the time.
+              </li>
+              <li>
+                <strong>Working distance</strong> — incident energy reduces with distance from
+                arc; closer working = higher energy.
+              </li>
+              <li>
+                <strong>Conductor gap</strong> — wider gaps sustain longer arcs.
+              </li>
+              <li>
+                <strong>Enclosure geometry</strong> — enclosed arcs reflect heat outward;
+                higher delivered energy.
+              </li>
+              <li>
+                <strong>System voltage</strong> — higher voltage = higher energy per second.
+              </li>
+              <li>
+                <strong>Equipment condition</strong> — degraded contacts, contamination
+                affect arc behaviour.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
           <FAQ items={faqs} />
           <SectionRule />
           <KeyTakeaways points={[
             "Remember from L2 — shock, burn, fire are headline electrical hazards. At L3 you add arc-flash and secondary injury and map each to regulation.",
-            "Shock thresholds: perception 1mA, pain 5-10mA, can\'t-let-go 10-20mA, ventricular fibrillation 50-100mA+.",
+            "Shock thresholds: perception 1mA, pain 5-10mA, can't-let-go 10-20mA, ventricular fibrillation 50-100mA+.",
             "Burns deceptive — small surface, deep internal. Mandatory A&E.",
             "Arc-flash ~19,000°C. EN 61482 ATPV PPE; design controls preferred (de-energise, remote racking).",
             "Most common electrical fire cause = loose connections. Installation discipline + periodic inspection.",

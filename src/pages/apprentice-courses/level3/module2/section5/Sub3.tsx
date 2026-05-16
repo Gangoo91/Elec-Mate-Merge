@@ -779,7 +779,7 @@ export default function Sub3() {
                 battery isolator or EV charger label captures the install state cleanly.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulations 653.1 and 653.2 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulations 653.1 and 653.2."
           />
 
           <SectionRule />

@@ -1,6 +1,10 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { encode as base64Encode } from 'https://deno.land/std@0.168.0/encoding/base64.ts';
+import {
+  buildBriefingSignOffEmail,
+  type BriefingRiskLevel,
+} from '../_shared/email-templates/briefing-sign-off.ts';
 import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
@@ -77,14 +81,12 @@ const handler = async (req: Request): Promise<Response> => {
       user.email ||
       'noreply@elec-mate.com'
     ).trim();
-    const companyPhone = companyProfile?.company_phone || '';
 
     console.log(
       `Sending briefing signing link to ${recipientEmail} for "${briefing.briefing_name}"`
     );
 
-    // Build hazards list
-    const hazards = (briefing.identified_hazards || []) as string[];
+    // Translate hazard slugs into display labels for the email.
     const hazardLabels: Record<string, string> = {
       electrical: 'Electrical',
       fire: 'Fire',
@@ -99,132 +101,34 @@ const handler = async (req: Request): Promise<Response> => {
       machinery: 'Machinery',
       asbestos: 'Asbestos',
     };
+    const hazardDisplay = ((briefing.identified_hazards || []) as string[]).map(
+      (h) => hazardLabels[h] || h.replace(/^custom-/, '').replace(/-/g, ' ')
+    );
 
-    const hazardPills = hazards
-      .map((h) => hazardLabels[h] || h.replace(/^custom-/, '').replace(/-/g, ' '))
-      .map(
-        (label) =>
-          `<span style="display:inline-block;padding:4px 12px;background:#fef3c7;color:#92400e;border-radius:20px;font-size:12px;font-weight:600;margin:2px 4px 2px 0;">${label}</span>`
-      )
-      .join('');
-
-    const riskLevel = briefing.risk_level || 'medium';
-    const riskColour =
-      riskLevel === 'high' ? '#ef4444' : riskLevel === 'medium' ? '#f59e0b' : '#10b981';
-    const riskLabel = riskLevel.charAt(0).toUpperCase() + riskLevel.slice(1);
-
-    const briefingDate = briefing.briefing_date || '';
-    const briefingTime = briefing.briefing_time || '';
-
-    // Email HTML
-    const emailBody = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign Team Briefing</title>
-</head>
-<body style="margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background-color:#f3f4f6;">
-  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color:#f3f4f6;">
-    <tr>
-      <td style="padding:40px 20px;">
-        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width:560px;margin:0 auto;background-color:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.1);">
-
-          <!-- Header -->
-          <tr>
-            <td style="background:#0f172a;padding:28px 32px;">
-              <span style="color:#fbbf24;font-size:17px;font-weight:700;letter-spacing:0.3px;">&#9889; ${companyName}</span>
-            </td>
-          </tr>
-
-          <!-- Title -->
-          <tr>
-            <td style="padding:32px 32px 8px;">
-              <p style="margin:0 0 4px;font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:1px;">Team Briefing</p>
-              <h1 style="margin:0;font-size:22px;font-weight:700;color:#0f172a;line-height:1.3;">${briefing.briefing_name}</h1>
-            </td>
-          </tr>
-
-          <!-- Risk Badge -->
-          <tr>
-            <td style="padding:12px 32px 0;">
-              <span style="display:inline-block;padding:5px 14px;background:${riskColour}15;color:${riskColour};border:1px solid ${riskColour}40;border-radius:8px;font-size:12px;font-weight:700;">&#9888; ${riskLabel} Risk</span>
-            </td>
-          </tr>
-
-          <!-- Details -->
-          <tr>
-            <td style="padding:24px 32px;">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                <tr>
-                  <td style="width:50%;vertical-align:top;padding-right:16px;">
-                    <p style="margin:0 0 4px;font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:0.5px;">Location</p>
-                    <p style="margin:0 0 16px;font-size:14px;color:#1f2937;">${briefing.location}</p>
-                    <p style="margin:0 0 4px;font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:0.5px;">Presented By</p>
-                    <p style="margin:0;font-size:14px;color:#1f2937;">${briefing.created_by_name || 'Team Lead'}</p>
-                  </td>
-                  <td style="width:50%;vertical-align:top;padding-left:16px;">
-                    <p style="margin:0 0 4px;font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:0.5px;">Date</p>
-                    <p style="margin:0 0 16px;font-size:14px;color:#1f2937;">${briefingDate}</p>
-                    <p style="margin:0 0 4px;font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:0.5px;">Time</p>
-                    <p style="margin:0;font-size:14px;color:#1f2937;">${briefingTime}</p>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-          ${
-            hazardPills
-              ? `<!-- Hazards -->
-          <tr>
-            <td style="padding:0 32px 24px;">
-              <p style="margin:0 0 8px;font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:0.5px;">Identified Hazards</p>
-              <div>${hazardPills}</div>
-            </td>
-          </tr>`
-              : ''
-          }
-
-          <!-- Divider -->
-          <tr>
-            <td style="padding:0 32px;">
-              <div style="height:1px;background:#e5e7eb;"></div>
-            </td>
-          </tr>
-
-          <!-- CTA -->
-          <tr>
-            <td style="padding:32px;">
-              <p style="margin:0 0 20px;font-size:15px;line-height:1.6;color:#374151;">You are required to read and sign this team briefing. Please tap the button below to review the briefing details and provide your signature.</p>
-              <a href="${signingUrl}" style="display:block;padding:16px 24px;background:#10b981;color:#ffffff;text-align:center;text-decoration:none;font-size:16px;font-weight:700;border-radius:10px;">&#9998; Sign This Briefing</a>
-              <p style="margin:16px 0 0;font-size:12px;color:#9ca3af;text-align:center;">No login required. Opens in your browser.</p>
-            </td>
-          </tr>
-
-          <!-- Closing -->
-          <tr>
-            <td style="padding:0 32px 32px;">
-              <p style="margin:0 0 4px;font-size:14px;color:#374151;">Kind regards,</p>
-              <p style="margin:0 0 16px;font-size:14px;font-weight:600;color:#0f172a;">${companyName}</p>
-              ${companyPhone ? `<p style="margin:0;font-size:13px;color:#6b7280;">${companyPhone}</p>` : ''}
-            </td>
-          </tr>
-
-          <!-- Footer -->
-          <tr>
-            <td style="background:#f9fafb;padding:20px 32px;border-top:1px solid #e5e7eb;">
-              <p style="margin:0;font-size:11px;color:#9ca3af;text-align:center;">Powered by <span style="font-weight:600;color:#374151;">Elec-Mate</span> | Secure Digital Briefing Sign-Off</p>
-            </td>
-          </tr>
-
-        </table>
-      </td>
-    </tr>
-  </table>
-</body>
-</html>`;
+    const briefingPayload = buildBriefingSignOffEmail({
+      company: {
+        name: companyName,
+        logoUrl: companyProfile?.logo_url || companyProfile?.logo_data_url || null,
+        primaryColor: companyProfile?.primary_color || null,
+        email: companyProfile?.company_email || null,
+        phone: companyProfile?.company_phone || null,
+        website: companyProfile?.company_website || null,
+        address: companyProfile?.company_address || null,
+        vatNumber: companyProfile?.vat_number || null,
+        registrationNumber: companyProfile?.company_registration || null,
+      },
+      recipientName: null,
+      briefingName: briefing.briefing_name,
+      location: briefing.location || null,
+      briefingDate: briefing.briefing_date || null,
+      briefingTime: briefing.briefing_time || null,
+      presentedBy: briefing.created_by_name || 'Team Lead',
+      hazards: hazardDisplay,
+      riskLevel: (briefing.risk_level || 'medium') as BriefingRiskLevel,
+      signingUrl,
+      trackingPixelUrl: `${Deno.env.get('SUPABASE_URL')}/functions/v1/email-open?type=briefing_sign_off&id=${briefingId}`,
+    });
+    const emailBody = briefingPayload.html;
 
     // Gmail credentials
     const sanitise = (v: string) => v.trim().replace(/^['"]|['"]$/g, '');
@@ -256,7 +160,7 @@ const handler = async (req: Request): Promise<Response> => {
     const accessToken = tokenData.access_token;
 
     // Build email
-    const emailSubject = `Team Briefing: ${briefing.briefing_name} - Please Sign`;
+    const emailSubject = briefingPayload.subject;
     const boundary = '----=_Part_' + Date.now();
 
     const emailMessage = [

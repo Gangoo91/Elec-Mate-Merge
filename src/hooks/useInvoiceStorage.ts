@@ -184,21 +184,27 @@ export const useInvoiceStorage = () => {
           // network blips (Supabase reconnects automatically). Only escalate
           // when there's a real error payload to investigate.
           if (err) {
-            // The "mismatch between server and client bindings" error is a known
-            // Supabase realtime negotiation failure — usually a stale schema
-            // cache after a migration, or a token-refresh race. The initial
-            // fetchInvoices() above has already loaded the data; live updates
-            // simply won't fire for this session. Don't pollute Sentry with it
-            // (was 2+ events/day per Sentry on 2026-04-29).
             const message =
               err instanceof Error
                 ? err.message
                 : String((err as { message?: string })?.message ?? '');
-            const isKnownBindingsMismatch =
-              typeof message === 'string' &&
-              message.toLowerCase().includes('mismatch between server and client bindings');
+            const lowered = typeof message === 'string' ? message.toLowerCase() : '';
+            // Known-recoverable realtime errors. Don't escalate to Sentry:
+            //   - "bindings mismatch" — stale schema cache / token-refresh race
+            //   - "InvalidJWTToken" / "Token has expired" — JWT TTL ran out
+            //     while the tab was idle; the auth listener below calls
+            //     supabase.realtime.setAuth on TOKEN_REFRESHED so the channel
+            //     reconnects automatically (Sentry REACT-A1).
+            const isKnownBindingsMismatch = lowered.includes('mismatch between server and client bindings');
+            const isExpiredJwt =
+              lowered.includes('invalidjwttoken') || lowered.includes('token has expired');
             if (isKnownBindingsMismatch) {
               addBreadcrumb('Realtime bindings mismatch (recoverable)', 'realtime', {
+                channel: 'invoice-realtime',
+                status,
+              });
+            } else if (isExpiredJwt) {
+              addBreadcrumb('Realtime JWT expired (recoverable)', 'realtime', {
                 channel: 'invoice-realtime',
                 status,
               });
@@ -210,16 +216,28 @@ export const useInvoiceStorage = () => {
           }
         });
 
-      return channel;
+      // Keep the realtime channel's JWT fresh. Supabase realtime keeps the
+      // token it was opened with — when the access token refreshes (every
+      // ~1h) we must push the new one in, otherwise the channel eventually
+      // errors with "Token has expired" (Sentry REACT-A1).
+      const { data: authSub } = supabase.auth.onAuthStateChange((event, session) => {
+        if (event === 'TOKEN_REFRESHED' && session?.access_token) {
+          supabase.realtime.setAuth(session.access_token);
+        }
+      });
+
+      return { channel, authSub };
     };
 
-    let channel: any = null;
-    setupRealtimeSubscription().then((ch) => {
-      channel = ch;
+    let cleanup: { channel: any; authSub: { subscription: { unsubscribe: () => void } } } | null =
+      null;
+    setupRealtimeSubscription().then((res) => {
+      cleanup = res;
     });
 
     return () => {
-      if (channel) supabase.removeChannel(channel);
+      if (cleanup?.channel) supabase.removeChannel(cleanup.channel);
+      cleanup?.authSub?.subscription?.unsubscribe();
     };
   }, [fetchInvoices]);
 

@@ -30,7 +30,9 @@ import {
   LearningOutcomes,
   ContentEyebrow,
   SectionRule,
+  VideoCard,
 } from '@/components/study-centre/learning';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE =
@@ -357,7 +359,15 @@ export default function Sub3() {
                 A borderline reading is, by definition, &ldquo;deterioration&rdquo;. Reg 651.4 says it shall be recorded &mdash; not optional, not at the firm&apos;s discretion. That&apos;s the regulation that backs your &ldquo;passes minimum but flag for investigation&rdquo; entry on the job sheet.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 — Reg 651.4, verbatim."
+            cite="Source: BS 7671:2018+A4:2026 — Reg 651.4."
+          />
+
+          <VideoCard
+            url={videos.multimeter.url}
+            title={videos.multimeter.title}
+            channel={videos.multimeter.channel}
+            duration={videos.multimeter.duration}
+            topic={videos.multimeter.topic}
           />
 
           <SectionRule />

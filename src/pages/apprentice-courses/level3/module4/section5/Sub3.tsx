@@ -527,7 +527,7 @@ export default function Sub3() {
               "Standard make-good kit: bonding plaster, filler, plasterboard offcuts, scrim tape, fire-stop sealant, touch-up paint. £40–60 cost, lasts months.",
               "Document pre-existing damage at start of work — 5-second mobile photo prevents 90% of damage disputes.",
               "Trade boundaries: electrician = electrical + make-good; plasterer / tiler / decorator = finishing trades. Refer for specialist work.",
-              "Customer brief on scope (what\'s included / not included / who to use) at the start of work prevents post-work disputes.",
+              "Customer brief on scope (what's included / not included / who to use) at the start of work prevents post-work disputes.",
             ]}
           />
 

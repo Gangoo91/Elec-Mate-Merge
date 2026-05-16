@@ -472,7 +472,7 @@ export default function Sub1() {
                 competence including 2391-52 (or equivalent) for the QS.
               </>
             }
-            cite="Source: Electricity at Work Regulations 1989 (SI 1989/635), reg. 16 — verbatim from legislation.gov.uk."
+            cite="Source: Electricity at Work Regulations 1989 (SI 1989/635), reg. 16."
           />
 
           <RegsCallout
@@ -494,7 +494,7 @@ export default function Sub1() {
                 work as part of your role, that&apos;s a HASAWA point worth raising.
               </>
             }
-            cite="Source: Health and Safety at Work etc Act 1974 (1974 c.37), Part I, s.2 — verbatim from legislation.gov.uk."
+            cite="Source: Health and Safety at Work etc Act 1974 (1974 c.37), Part I, s.2."
           />
 
           <SectionRule />

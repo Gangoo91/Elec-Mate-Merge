@@ -152,7 +152,7 @@ const faqs = [
       "Resistors dissipate energy as heat — current and voltage rise and fall together. Inductors store energy in a magnetic field; the field can't change instantly so the current lags. Capacitors store charge; the charge can't appear instantly so the voltage lags the current. Both store-and-release behaviours produce the 90° phase shift.",
   },
   {
-    question: "What\'s the difference between resistance and reactance?",
+    question: "What's the difference between resistance and reactance?",
     answer:
       "Both oppose current and have units of ohms. Resistance dissipates energy as heat (real power, watts). Reactance just stores and returns energy each cycle — no net energy lost (reactive power, VAr). Both contribute to total impedance Z.",
   },

@@ -1,751 +1,685 @@
-import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, CheckCircle, Clock, FileText, ClipboardCheck, MessageSquare } from 'lucide-react';
+/**
+ * EPA · ComponentsPage — editorial breakdown of the three EPA components.
+ *
+ * Knowledge test (25%), practical observation (50%), professional
+ * discussion (25%) — what to expect, what's assessed, and how to
+ * prepare. Full editorial rewrite of the previous multi-colour pattern.
+ */
+
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
+import {
+  ArrowLeft,
+  CheckCircle2,
+  Clock,
+  FileText,
+  ClipboardCheck,
+  MessageSquare,
+  AlertTriangle,
+} from 'lucide-react';
 import {
   PageFrame,
   PageHero,
   itemVariants,
 } from '@/components/college/primitives';
+import {
+  Eyebrow,
+  SectionHeader,
+} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+
+const knowledgeTopics = [
+  'Electrical science and principles — Ohm\'s law, power, AC theory, three-phase, impedance, reactance',
+  'BS 7671:2018+A2:2022 — Parts 1–7, especially Part 4 (Protection for Safety) and Part 6 (Inspection & Testing)',
+  'Health and safety legislation — Electricity at Work 1989, CDM 2015, HSWA 1974, PUWER, LOLER',
+  'Installation methods and materials — cable types, containment, earthing (TN-S, TN-C-S, TT), CPDs',
+  'Testing and inspection — initial verification, periodic inspection, safe isolation, instruments',
+  'Fault diagnosis theory — Zs, PFC, IR, RCD, continuity',
+  'Environmental technology — energy efficiency, renewables, EV charging',
+  'Special locations — BS 7671 Part 7: bathrooms, pools, agricultural, sites, marinas',
+];
+
+const knowledgeOnDay = [
+  'Supervised exam conditions — no phones, no talking, invigilator present',
+  'Non-programmable calculator permitted',
+  'Clean copy of BS 7671 usually permitted — confirm with your EPAO',
+  'On-Site Guide may also be permitted — confirm with your EPAO',
+  'Mix of recall, application, and scenario questions',
+  'Result typically within 10 working days',
+];
+
+const practicalAssessed = [
+  'Safe isolation — 5-step procedure followed correctly every time, with lock-off/tag-out and proving dead',
+  'Installation — wiring circuits, connecting accessories, installing containment, working from drawings',
+  'Testing and verification — continuity, IR, Zs, RCD operation, polarity',
+  'Correct use of tools and equipment — calibrated test instruments, hand tools, power tools',
+  'BS 7671 compliance — cable selection, protection, earthing, circuit design',
+  'Quality of workmanship — neat cable runs, correct terminations, labelling, tidy work area',
+  'Risk assessment and method statements — hazards, controls, safe systems of work',
+  'Working to specifications — interpreting drawings, following instructions, meeting requirements',
+];
+
+const safeIsolationSteps = [
+  { step: 1, text: 'Identify the circuit or equipment to be worked on using drawings, schedules, and labels' },
+  { step: 2, text: 'Switch off — isolate the supply using the appropriate isolator, switch, or MCB' },
+  { step: 3, text: 'Secure the isolation — apply lock-off device and warning tags (LOTO)' },
+  { step: 4, text: 'Test — prove voltage indicator on a known live source, test the isolated circuit dead, then retest the indicator on the known live source' },
+  { step: 5, text: 'Begin work only when you have confirmed the circuit is dead' },
+];
+
+const practicalOnDay = [
+  'Bring your own calibrated test instruments (multifunction tester, voltage indicator, proving unit)',
+  'Bring appropriate PPE and hand tools',
+  'The assessor will observe silently — they may ask you to explain what you\'re doing',
+  'Work at your normal pace — quality over speed',
+  'If you make a mistake, acknowledge it, correct it, explain what you did',
+  'A brief break is built into the schedule',
+];
+
+const discussionTopics = [
+  'Portfolio evidence — specific examples of work with photos, test results, certs, job sheets',
+  'Problem-solving approaches — how you diagnosed faults and made decisions',
+  'Professional behaviours — punctuality, reliability, working with others',
+  'Health and safety in practice — risk assessments, safe systems of work, near-miss reporting',
+  'Customer service — how you communicated with clients, managed expectations',
+  'Career development — CPD activities, future goals, keeping up with regulation changes',
+  'Regulatory knowledge — how you applied BS 7671 and other standards',
+  'Environmental awareness — energy efficiency, waste, sustainable practices',
+];
+
+const portfolioMust = [
+  'Evidence mapped to each KSB in the apprenticeship standard',
+  'Photographs of completed work with descriptions',
+  'Test results and certificates (initial verification, periodic inspection)',
+  'Risk assessments and method statements you created or used',
+  'Witness testimonies from your employer or supervisor',
+  'CPD records — courses, training days, self-study logs',
+  'Reflective accounts — what you learned from specific experiences',
+  'Additional certificates (PASMA, IPAF, asbestos awareness)',
+];
+
+const discussionTips = [
+  'Know your portfolio inside out — the assessor will pick examples from it',
+  'Use the STAR method — Situation, Task, Action, Result',
+  'Don\'t just describe what you did — explain WHY you made those decisions',
+  'Be honest about mistakes — assessors value reflection and learning',
+  'Speak confidently and professionally — show you\'re a competent electrician',
+  'If you don\'t understand a question, ask the assessor to rephrase it',
+];
+
+const assessorsLookFor = [
+  {
+    title: 'Safety consciousness',
+    description:
+      'Above everything else, assessors check that you work safely. Safe isolation, correct PPE, hazard awareness, safe systems of work — non-negotiable. An unsafe act can fail you instantly.',
+  },
+  {
+    title: 'Competence, not perfection',
+    description:
+      'Assessors aren\'t expecting perfection. They want to see a competent, reliable electrician who works to industry standards. Making a small mistake and correcting it is fine — not recognising it is the problem.',
+  },
+  {
+    title: 'Understanding, not just doing',
+    description:
+      'Can you explain WHY, not just WHAT? This is the difference between a Pass and a higher grade. Understanding the principles behind the regulations shows deeper competence.',
+  },
+  {
+    title: 'Professional behaviour',
+    description:
+      'How you conduct yourself matters. Punctuality, communication, tidiness, respect for the environment, and professional attitude all contribute to the assessor\'s impression.',
+  },
+  {
+    title: 'Self-checking',
+    description:
+      'Do you check your own work? Verify test results make sense? Inspect connections before closing up? Self-checking shows a mature, quality-focused approach.',
+  },
+  {
+    title: 'Regulatory awareness',
+    description:
+      'Can you reference specific regulations when explaining decisions? "BS 7671 requires..." or "Regulation 411.3.3 states..." shows you know the standards, not just the habits.',
+  },
+];
+
+const componentLinks = [
+  'Knowledge test checks you understand the theory — practical checks you can apply it',
+  'Topics in your knowledge test may come up in your professional discussion — consistency matters',
+  'Portfolio evidence should support what you demonstrate in the practical',
+  'Problem-solving in the practical may be discussed further in the professional discussion',
+  'Assessors cross-reference your performance across components',
+  'Preparing for all three simultaneously is more effective than treating them separately',
+];
+
+const dayChecklists = [
+  {
+    component: 'Knowledge test day',
+    items: [
+      'Photo ID (driving licence or passport)',
+      'Non-programmable calculator',
+      'Clean copy of BS 7671 (if EPAO permits)',
+      'On-Site Guide (if EPAO permits)',
+      'Pens (black ink) and pencils',
+      'Water bottle (usually allowed)',
+      'Arrive 15+ minutes early',
+    ],
+  },
+  {
+    component: 'Practical observation day',
+    items: [
+      'Photo ID',
+      'Calibrated multifunction tester (check cal sticker)',
+      'Calibrated voltage indicator (GS38 compliant)',
+      'Proving unit',
+      'Lock-off devices and warning tags',
+      'Full set of hand tools',
+      'PPE: safety boots, eye protection, gloves',
+      'Tape measure, spirit level, pencil',
+      'Cable knife or stripping tools',
+      'Packed lunch and water — you may be there all day',
+      'Arrive 20+ minutes early',
+    ],
+  },
+  {
+    component: 'Professional discussion day',
+    items: [
+      'Photo ID',
+      'Your portfolio of evidence (physical or digital, as agreed)',
+      'Additional certificates or documents referenced',
+      'Notes if permitted (check with EPAO)',
+      'Smart, clean appearance — professional dress',
+      'Arrive 15+ minutes early',
+    ],
+  },
+];
 
 const ComponentsPage = () => {
   const navigate = useNavigate();
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
+        <button
           onClick={() => navigate('/apprentice/toolbox/end-point-assessment')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+          className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation"
         >
-          <ArrowLeft className="mr-2 h-5 w-5" />
+          <ArrowLeft className="h-4 w-4" />
           Back
-        </Button>
+        </button>
       </motion.div>
 
       <motion.div variants={itemVariants}>
         <PageHero
           eyebrow="Apprentice · EPA"
-          title="EPA Components"
+          title="EPA components"
+          description="Three components, one final grade. Knowledge test, practical observation, professional discussion — what each is, what you'll be assessed on, and how to prepare for it."
           tone="yellow"
         />
       </motion.div>
 
-      {/* Overview */}
-      <Card className="border-blue-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-3">
-          <h2 className="text-lg font-semibold text-white">
-            Three Components, One Grade
+      {/* ── Overview ────────────────────────────────────────────── */}
+      <motion.div variants={itemVariants}>
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+          <Eyebrow>Overview</Eyebrow>
+          <h2 className="text-[18px] sm:text-[20px] font-semibold text-white tracking-tight">
+            Three components, one grade
           </h2>
-          <p className="text-white text-sm leading-relaxed">
+          <p className="text-[13.5px] text-white/85 leading-relaxed">
             Your EPA consists of three components that together assess all the
             Knowledge, Skills, and Behaviours (KSBs) from the apprenticeship
             standard. You must pass all three to achieve your apprenticeship.
-            Each component is assessed independently by your EPAO, and your
-            overall grade reflects your combined performance across all three.
+            Each is assessed independently by your EPAO, and your overall grade
+            reflects your combined performance.
           </p>
-          <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
-            <p className="text-white text-sm">
-              <span className="text-blue-400 font-semibold">
-                Assessment window:
-              </span>{' '}
-              All three components must be completed within a 3-month window
-              after passing Gateway. Your EPAO will schedule each component
-              within this period.
+          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
+            <p className="text-[12.5px] text-white/85 leading-relaxed">
+              <span className="font-semibold text-elec-yellow">Assessment window:</span>{' '}
+              all three components must be completed within 3 months after passing
+              Gateway. Your EPAO will schedule each component within this period.
             </p>
           </div>
-        </CardContent>
-      </Card>
-
-      {/* Component 1: Knowledge Test */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-blue-400" />
-          <h2 className="text-base font-semibold text-white">
-            Component 1: Knowledge Test (25%)
-          </h2>
         </div>
+      </motion.div>
 
-        <Card className="border-blue-500/20 bg-white/5">
-          <CardContent className="p-4 space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-                <FileText className="h-5 w-5 text-blue-400" />
+      {/* ── Component weightings ─────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Weightings"
+          title="The 25 / 50 / 25 split"
+          meta="Practical carries half — but you must pass all three"
+        />
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+          {[
+            { name: 'Knowledge test', weight: 25 },
+            { name: 'Practical observation', weight: 50 },
+            { name: 'Professional discussion', weight: 25 },
+          ].map((comp) => (
+            <div key={comp.name} className="space-y-1.5">
+              <div className="flex items-baseline justify-between">
+                <span className="text-[13px] text-white">{comp.name}</span>
+                <span className="text-[13px] font-mono tabular-nums text-elec-yellow">
+                  {comp.weight}%
+                </span>
               </div>
-              <div>
-                <h3 className="font-semibold text-blue-400 text-sm">
-                  Written Examination
-                </h3>
-                <div className="flex items-center gap-2 mt-0.5">
-                  <Clock className="h-3 w-3 text-white" />
-                  <span className="text-white text-xs">
-                    2 hours | Multiple choice & short answer
-                  </span>
-                </div>
+              <div className="h-1.5 rounded-full bg-white/[0.04] overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${comp.weight}%` }}
+                  transition={{ duration: 0.7, ease: 'easeOut' }}
+                  className="h-full bg-elec-yellow rounded-full"
+                />
               </div>
             </div>
+          ))}
+          <p className="text-[11.5px] text-white/55 pt-2 border-t border-white/[0.04]">
+            Practical carries the most weight because it directly demonstrates
+            your competence — but a strong practical alone is not enough.
+          </p>
+        </div>
+      </motion.section>
 
-            <p className="text-white text-sm leading-relaxed">
-              The knowledge test assesses your understanding of electrical
-              theory, regulations, and safety principles. It is a written
-              examination with a mix of multiple-choice questions and short-answer
-              questions. You sit this under supervised exam conditions at a venue
-              arranged by your EPAO.
-            </p>
-
-            <div className="space-y-2">
-              <h4 className="text-white font-semibold text-sm">
-                Topics Covered
-              </h4>
-              {[
-                'Electrical science and principles — Ohm\'s law, power calculations, AC theory, three-phase systems, impedance, reactance',
-                'BS 7671:2018+A2:2022 Wiring Regulations — Part 1 to Part 7, especially Part 4 (Protection for Safety) and Part 6 (Inspection & Testing)',
-                'Health and safety legislation — Electricity at Work Regulations 1989, CDM 2015, HASAWA 1974, PUWER, LOLER',
-                'Installation methods and materials — cable types, containment systems, earthing arrangements (TN-S, TN-C-S, TT), circuit protective devices',
-                'Testing and inspection procedures — initial verification, periodic inspection, safe isolation, instruments and their use',
-                'Fault diagnosis theory — earth fault loop impedance, prospective fault current, insulation resistance, RCD testing, continuity',
-                'Environmental technology — energy efficiency, renewable energy systems, EV charging installations',
-                'Special locations — BS 7671 Part 7: bathrooms, swimming pools, agricultural, construction sites, marinas',
-              ].map((topic) => (
-                <div key={topic} className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-blue-400 flex-shrink-0 mt-0.5" />
-                  <span className="text-white text-sm">{topic}</span>
-                </div>
+      {/* ── Component 1: Knowledge test ─────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Component 1 · 25%"
+          title="Knowledge test"
+          meta="2 hours · multiple choice + short answer · supervised"
+          action={<ComponentChip icon={FileText} />}
+        />
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
+          <p className="text-[13px] text-white/85 leading-relaxed">
+            The knowledge test assesses your understanding of electrical theory,
+            regulations, and safety principles. Written examination, mix of
+            multiple-choice and short-answer questions, under supervised exam
+            conditions at a venue arranged by your EPAO.
+          </p>
+          <div className="space-y-2">
+            <Eyebrow>Topics covered</Eyebrow>
+            <ul className="space-y-1.5">
+              {knowledgeTopics.map((t) => (
+                <li
+                  key={t}
+                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                >
+                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                  <span>{t}</span>
+                </li>
               ))}
-            </div>
-
-            <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
-              <h4 className="text-blue-400 font-semibold text-sm mb-2">
-                What to Expect on the Day
-              </h4>
-              <ul className="space-y-1.5">
-                {[
-                  'Supervised exam conditions — no phones, no talking, invigilator present',
-                  'You may use a non-programmable calculator',
-                  'BS 7671 Wiring Regulations book (clean copy, no annotations) is usually permitted — check with your EPAO',
-                  'On-Site Guide may also be permitted — check with your EPAO',
-                  'Questions are a mix of recall, application, and scenario-based',
-                  'You will receive your result typically within 10 working days',
-                ].map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-2 text-white text-sm"
-                  >
-                    <span className="text-blue-400 font-bold">-</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
-              <p className="text-white text-sm">
-                <span className="text-amber-400 font-semibold">
-                  Typical pass mark:
-                </span>{' '}
-                Around 60% for Pass, 70%+ for Merit, 80%+ for Distinction. Exact
-                thresholds vary by EPAO — your training provider will confirm
-                the specific grade boundaries.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Component 2: Practical Observation */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-green-400" />
-          <h2 className="text-base font-semibold text-white">
-            Component 2: Practical Observation (50%)
-          </h2>
-        </div>
-
-        <Card className="border-green-500/20 bg-white/5">
-          <CardContent className="p-4 space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-lg bg-green-500/20 flex items-center justify-center flex-shrink-0">
-                <ClipboardCheck className="h-5 w-5 text-green-400" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-green-400 text-sm">
-                  Observed Practical Assessment
-                </h3>
-                <div className="flex items-center gap-2 mt-0.5">
-                  <Clock className="h-3 w-3 text-white" />
-                  <span className="text-white text-xs">
-                    6-8 hours | Observed by EPAO assessor
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-white text-sm leading-relaxed">
-              This is the largest component at 50% of your overall grade. An
-              independent assessor from your EPAO observes you completing
-              electrical installation work in a realistic working environment.
-              This can take place at your workplace, your training provider's
-              workshop, or at a designated assessment centre. The assessor
-              watches you work, takes notes, and may ask clarifying questions.
-            </p>
-
-            <div className="space-y-2">
-              <h4 className="text-white font-semibold text-sm">
-                What You Will Be Assessed On
-              </h4>
-              {[
-                'Safe isolation procedures — the 5-step procedure must be followed correctly every time, including lock-off/tag-out and proving dead',
-                'Installation of electrical systems — wiring circuits, connecting accessories, installing containment, working from drawings and specifications',
-                'Testing and verification — continuity of protective conductors, insulation resistance, earth fault loop impedance, RCD operation, polarity',
-                'Correct use of tools and equipment — calibrated test instruments, appropriate hand tools, power tools used safely',
-                'Compliance with BS 7671 — correct cable selection, adequate protection, correct earthing arrangements, appropriate circuit design',
-                'Quality of workmanship — neat cable runs, correct terminations, appropriate labelling, clean and tidy work area',
-                'Risk assessment and method statements — identifying hazards, control measures, safe systems of work',
-                'Working to specifications — interpreting drawings, following installation instructions, meeting customer requirements',
-              ].map((topic) => (
-                <div key={topic} className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                  <span className="text-white text-sm">{topic}</span>
-                </div>
+            </ul>
+          </div>
+          <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
+            <Eyebrow>On the day</Eyebrow>
+            <ul className="space-y-1.5">
+              {knowledgeOnDay.map((t) => (
+                <li
+                  key={t}
+                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                >
+                  <span className="text-elec-yellow font-mono mt-0.5">—</span>
+                  <span>{t}</span>
+                </li>
               ))}
-            </div>
-
-            <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
-              <h4 className="text-green-400 font-semibold text-sm mb-2">
-                The Safe Isolation Procedure (5 Steps)
-              </h4>
-              <div className="space-y-2">
-                {[
-                  { step: '1', text: 'Identify the circuit or equipment to be worked on using drawings, schedules, and labels' },
-                  { step: '2', text: 'Switch off — isolate the supply using the appropriate isolator, switch, or MCB' },
-                  { step: '3', text: 'Secure the isolation — apply lock-off device and warning tags (LOTO)' },
-                  { step: '4', text: 'Test — prove the voltage indicator is working on a known live source, test the isolated circuit to prove dead, then retest the voltage indicator on the known live source' },
-                  { step: '5', text: 'Begin work only when you have confirmed the circuit is dead' },
-                ].map((item) => (
-                  <div key={item.step} className="flex items-start gap-3">
-                    <div className="w-6 h-6 rounded-full bg-green-500/20 border border-green-500/30 flex items-center justify-center flex-shrink-0">
-                      <span className="text-green-400 text-xs font-bold">
-                        {item.step}
-                      </span>
-                    </div>
-                    <span className="text-white text-sm">{item.text}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
-              <p className="text-white text-sm">
-                <span className="text-red-400 font-semibold">
-                  Critical:
-                </span>{' '}
-                Failure to follow safe isolation correctly can result in an
-                immediate fail of the practical observation, regardless of the
-                quality of all other work. This is a safety-critical procedure —
-                practise it until it is second nature.
-              </p>
-            </div>
-
-            <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
-              <h4 className="text-amber-400 font-semibold text-sm mb-2">
-                On the Day
-              </h4>
-              <ul className="space-y-1.5">
-                {[
-                  'Bring your own calibrated test instruments (multifunction tester, voltage indicator, proving unit)',
-                  'Bring appropriate PPE and hand tools',
-                  'The assessor will observe silently — they may ask you to explain what you are doing',
-                  'Work at your normal pace — do not rush, quality matters more than speed',
-                  'If you make a mistake, acknowledge it, correct it, and explain what you did',
-                  'You will have a brief break built into the schedule',
-                ].map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-2 text-white text-sm"
-                  >
-                    <span className="text-amber-400 font-bold">-</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Component 3: Professional Discussion */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-purple-400" />
-          <h2 className="text-base font-semibold text-white">
-            Component 3: Professional Discussion (25%)
-          </h2>
-        </div>
-
-        <Card className="border-purple-500/20 bg-white/5">
-          <CardContent className="p-4 space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-lg bg-purple-500/20 flex items-center justify-center flex-shrink-0">
-                <MessageSquare className="h-5 w-5 text-purple-400" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-purple-400 text-sm">
-                  Portfolio-Based Discussion
-                </h3>
-                <div className="flex items-center gap-2 mt-0.5">
-                  <Clock className="h-3 w-3 text-white" />
-                  <span className="text-white text-xs">
-                    60 minutes | 1-to-1 with EPAO assessor
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-white text-sm leading-relaxed">
-              The professional discussion is a structured, in-depth conversation
-              between you and an EPAO assessor. It is based on your portfolio of
-              evidence and covers the KSBs that are not fully assessed through
-              the knowledge test and practical observation. This is NOT a
-              question-and-answer exam — it is a professional conversation where
-              you demonstrate your understanding, decision-making, and growth
-              throughout your apprenticeship.
+            </ul>
+          </div>
+          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
+            <p className="text-[12.5px] text-white/85 leading-relaxed">
+              <span className="font-semibold text-elec-yellow">Typical pass mark:</span>{' '}
+              ~60% Pass, ~70% Merit, ~80%+ Distinction. Exact thresholds vary by
+              EPAO — your provider will confirm the grade boundaries.
             </p>
+          </div>
+        </div>
+      </motion.section>
 
-            <div className="space-y-2">
-              <h4 className="text-white font-semibold text-sm">
-                Topics You Will Discuss
-              </h4>
-              {[
-                'Portfolio evidence — specific examples of work you have completed, with photographs, test results, certificates, and job sheets as evidence',
-                'Problem-solving approaches — how you diagnosed faults, overcame challenges, and made decisions on site',
-                'Professional behaviours — punctuality, reliability, working with others, representing your employer professionally',
-                'Health and safety in practice — real examples of risk assessments, safe systems of work, near-miss reporting',
-                'Customer service — how you communicated with clients, managed expectations, handled complaints or queries',
-                'Career development — your CPD activities, future goals, how you keep up with regulation changes',
-                'Regulatory knowledge — how you applied BS 7671, building regulations, and other standards in your work',
-                'Environmental awareness — energy efficiency considerations, waste management, sustainable practices you have used',
-              ].map((topic) => (
-                <div key={topic} className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-purple-400 flex-shrink-0 mt-0.5" />
-                  <span className="text-white text-sm">{topic}</span>
-                </div>
+      {/* ── Component 2: Practical observation ──────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Component 2 · 50%"
+          title="Practical observation"
+          meta="6–8 hours · observed by EPAO assessor"
+          action={<ComponentChip icon={ClipboardCheck} />}
+        />
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
+          <p className="text-[13px] text-white/85 leading-relaxed">
+            The largest component at 50%. An independent assessor observes you
+            completing electrical installation work in a realistic working
+            environment — your workplace, your training provider's workshop, or
+            a designated assessment centre. The assessor watches, takes notes,
+            and may ask clarifying questions.
+          </p>
+          <div className="space-y-2">
+            <Eyebrow>What you'll be assessed on</Eyebrow>
+            <ul className="space-y-1.5">
+              {practicalAssessed.map((t) => (
+                <li
+                  key={t}
+                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                >
+                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                  <span>{t}</span>
+                </li>
               ))}
-            </div>
+            </ul>
+          </div>
 
-            <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-3">
-              <h4 className="text-purple-400 font-semibold text-sm mb-2">
-                Your Portfolio Must Include
-              </h4>
-              <ul className="space-y-1.5">
-                {[
-                  'Evidence mapped to each KSB in the apprenticeship standard',
-                  'Photographs of completed work with descriptions',
-                  'Test results and certificates (e.g. initial verification, periodic inspection)',
-                  'Risk assessments and method statements you created or used',
-                  'Witness testimonies from your employer or supervisor',
-                  'CPD records — courses, training days, self-study logs',
-                  'Reflective accounts — what you learned from specific experiences',
-                  'Any additional certificates (e.g. PASMA, IPAF, asbestos awareness)',
-                ].map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-2 text-white text-sm"
-                  >
-                    <span className="text-purple-400 font-bold">-</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
-              <h4 className="text-amber-400 font-semibold text-sm mb-2">
-                How to Perform Well
-              </h4>
-              <ul className="space-y-1.5">
-                {[
-                  'Know your portfolio inside out — the assessor will pick examples from it',
-                  'Use the STAR method: Situation, Task, Action, Result',
-                  'Do not just describe what you did — explain WHY you made those decisions',
-                  'Be honest about mistakes — assessors value reflection and learning',
-                  'Speak confidently and professionally — this is your chance to demonstrate you are a competent electrician',
-                  'If you do not understand a question, ask the assessor to rephrase it',
-                ].map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-2 text-white text-sm"
-                  >
-                    <span className="text-amber-400 font-bold">-</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Weighting Summary */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-elec-yellow" />
-          <h2 className="text-base font-semibold text-white">
-            Component Weightings
-          </h2>
-        </div>
-
-        <Card className="border-elec-yellow/20 bg-white/5">
-          <CardContent className="p-4 space-y-3">
-            {[
-              { name: 'Knowledge Test', weight: '25%', colour: 'text-blue-400', bar: 'bg-blue-400', width: 'w-1/4' },
-              { name: 'Practical Observation', weight: '50%', colour: 'text-green-400', bar: 'bg-green-400', width: 'w-1/2' },
-              { name: 'Professional Discussion', weight: '25%', colour: 'text-purple-400', bar: 'bg-purple-400', width: 'w-1/4' },
-            ].map((comp) => (
-              <div key={comp.name} className="space-y-1">
-                <div className="flex items-center justify-between">
-                  <span className={`text-sm font-medium ${comp.colour}`}>
-                    {comp.name}
-                  </span>
-                  <span className="text-white text-sm font-bold">
-                    {comp.weight}
-                  </span>
-                </div>
-                <div className="h-2 rounded-full bg-white/10">
-                  <div
-                    className={`h-2 rounded-full ${comp.bar} ${comp.width}`}
-                  />
-                </div>
-              </div>
-            ))}
-            <p className="text-white text-xs mt-2">
-              The practical observation carries the most weight because it
-              directly demonstrates your competence as an electrician. However,
-              you must pass all three components — a strong practical alone
-              is not enough.
-            </p>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Installation vs Maintenance Pathway */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-amber-400" />
-          <h2 className="text-base font-semibold text-white">
-            Installation vs Maintenance Pathway
-          </h2>
-        </div>
-
-        <Card className="border-amber-500/20 bg-white/5">
-          <CardContent className="p-4 space-y-4">
-            <p className="text-white text-sm leading-relaxed">
-              Both pathways fall under the same apprenticeship standard (ST0152
-              v1.2) and the same EPA structure, but the focus of your assessment
-              will differ based on your pathway.
-            </p>
-
-            <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
-              <h4 className="text-blue-400 font-semibold text-sm mb-2">
-                Installation Electrician
-              </h4>
-              <ul className="space-y-1.5">
-                {[
-                  'Practical observation focuses on new installation work — wiring from scratch, installing containment and accessories, working from plans',
-                  'Knowledge test emphasises circuit design, cable selection, installation methods, and initial verification',
-                  'Portfolio should demonstrate a range of installation projects — domestic, commercial, industrial',
-                  'Professional discussion covers installation planning, specification interpretation, and quality assurance',
-                ].map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-2 text-white text-sm"
-                  >
-                    <span className="text-blue-400 font-bold">-</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
-              <h4 className="text-green-400 font-semibold text-sm mb-2">
-                Maintenance Electrician
-              </h4>
-              <ul className="space-y-1.5">
-                {[
-                  'Practical observation focuses on fault finding, repair, and maintenance tasks — diagnosing issues, replacing components, periodic inspection',
-                  'Knowledge test emphasises fault diagnosis theory, periodic inspection and testing, and maintenance planning',
-                  'Portfolio should demonstrate maintenance activities — fault logs, repair records, planned preventive maintenance schedules',
-                  'Professional discussion covers diagnostic approaches, maintenance strategies, and equipment lifecycle management',
-                ].map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-2 text-white text-sm"
-                  >
-                    <span className="text-green-400 font-bold">-</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
-              <p className="text-white text-sm">
-                <span className="text-amber-400 font-semibold">Note:</span>{' '}
-                The core KSBs are the same for both pathways. The difference is
-                in the emphasis and the types of tasks you will encounter during
-                the practical observation. Discuss your pathway with your
-                training provider to ensure your preparation is correctly
-                focused.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* What Assessors Are Looking For */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-red-400" />
-          <h2 className="text-base font-semibold text-white">
-            What Assessors Are Actually Looking For
-          </h2>
-        </div>
-
-        <Card className="border-red-500/20 bg-white/5">
-          <CardContent className="p-4 space-y-4">
-            <p className="text-white text-sm leading-relaxed">
-              Understanding what assessors prioritise helps you focus your
-              preparation on what matters most.
-            </p>
-
-            {[
-              {
-                title: 'Safety consciousness',
-                description:
-                  'Above everything else, assessors are checking that you work safely. Safe isolation, correct PPE, awareness of hazards, and safe systems of work are non-negotiable. An unsafe act can fail you instantly.',
-              },
-              {
-                title: 'Competence, not perfection',
-                description:
-                  'Assessors are not expecting perfection. They want to see that you are a competent, reliable electrician who can work to industry standards. Making a small mistake and correcting it is fine — not recognising the mistake is the problem.',
-              },
-              {
-                title: 'Understanding, not just doing',
-                description:
-                  'Can you explain WHY you are doing something, not just WHAT you are doing? This is the difference between a Pass and a higher grade. Understanding the principles behind the regulations shows deeper competence.',
-              },
-              {
-                title: 'Professional behaviour',
-                description:
-                  'How you conduct yourself matters. Punctuality, communication, tidiness, respect for the assessment environment, and a professional attitude all contribute to the assessor\'s overall impression.',
-              },
-              {
-                title: 'Self-checking and quality assurance',
-                description:
-                  'Do you check your own work? Do you verify test results make sense? Do you inspect connections before closing up? Self-checking demonstrates a mature, quality-focused approach.',
-              },
-              {
-                title: 'Regulatory awareness',
-                description:
-                  'Can you reference specific regulations when explaining your decisions? Saying "BS 7671 requires..." or "Regulation 411.3.3 states..." shows you know the standards, not just the habits.',
-              },
-            ].map((item) => (
-              <div key={item.title} className="flex items-start gap-2">
-                <CheckCircle className="h-4 w-4 text-red-400 flex-shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-red-400 font-semibold text-sm">
-                    {item.title}
-                  </p>
-                  <p className="text-white text-sm mt-0.5">
-                    {item.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* How Components Link Together */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-blue-400" />
-          <h2 className="text-base font-semibold text-white">
-            How the Components Link Together
-          </h2>
-        </div>
-
-        <Card className="border-blue-500/20 bg-white/5">
-          <CardContent className="p-4 space-y-3">
-            <p className="text-white text-sm leading-relaxed">
-              The three components are not isolated tests — they are designed to
-              work together to give a complete picture of your competence.
-            </p>
-            {[
-              'The knowledge test checks you understand the theory — the practical checks you can apply it',
-              'Topics in your knowledge test may come up in your professional discussion — consistency matters',
-              'Your portfolio evidence should support what you demonstrate in the practical — if you claim experience in three-phase work, your portfolio should show it',
-              'Problem-solving demonstrated in the practical may be discussed further in the professional discussion',
-              'Assessors may cross-reference your performance across components — strong practical but weak knowledge may raise questions',
-              'Preparing for all three simultaneously is more effective than treating them as separate events',
-            ].map((item) => (
-              <div key={item} className="flex items-start gap-2">
-                <CheckCircle className="h-4 w-4 text-blue-400 flex-shrink-0 mt-0.5" />
-                <span className="text-white text-sm">{item}</span>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Day-Of Checklist */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-green-400" />
-          <h2 className="text-base font-semibold text-white">
-            Assessment Day Checklist
-          </h2>
-        </div>
-
-        <Card className="border-green-500/20 bg-white/5">
-          <CardContent className="p-4 space-y-4">
-            <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
-              <h4 className="text-blue-400 font-semibold text-sm mb-2">
-                Knowledge Test Day
-              </h4>
-              <div className="space-y-1.5">
-                {[
-                  'Photo ID (driving licence or passport)',
-                  'Non-programmable calculator',
-                  'Clean copy of BS 7671 (if permitted by your EPAO)',
-                  'On-Site Guide (if permitted by your EPAO)',
-                  'Pens (black ink) and pencils',
-                  'Water bottle (usually allowed)',
-                  'Arrive at least 15 minutes early',
-                ].map((item) => (
-                  <div key={item} className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-blue-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-white text-sm">{item}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
-              <h4 className="text-green-400 font-semibold text-sm mb-2">
-                Practical Observation Day
-              </h4>
-              <div className="space-y-1.5">
-                {[
-                  'Photo ID',
-                  'Calibrated multifunction tester (check calibration sticker)',
-                  'Calibrated voltage indicator (GS38 compliant)',
-                  'Proving unit',
-                  'Lock-off devices and warning tags',
-                  'Full set of hand tools (screwdrivers, pliers, cutters, strippers, etc.)',
-                  'PPE: safety boots, eye protection, gloves',
-                  'Tape measure, spirit level, pencil',
-                  'Cable knife or stripping tools',
-                  'Packed lunch and water (you may be there all day)',
-                  'Arrive at least 20 minutes early',
-                ].map((item) => (
-                  <div key={item} className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-white text-sm">{item}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-3">
-              <h4 className="text-purple-400 font-semibold text-sm mb-2">
-                Professional Discussion Day
-              </h4>
-              <div className="space-y-1.5">
-                {[
-                  'Photo ID',
-                  'Your portfolio of evidence (physical or digital, as agreed)',
-                  'Any additional certificates or documents referenced in your portfolio',
-                  'Notes if permitted (check with your EPAO — some allow brief notes)',
-                  'Smart/clean appearance — professional dress, not necessarily a suit',
-                  'Arrive at least 15 minutes early',
-                ].map((item) => (
-                  <div key={item} className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-purple-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-white text-sm">{item}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Typical Assessment Order */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-purple-400" />
-          <h2 className="text-base font-semibold text-white">
-            Typical Assessment Order
-          </h2>
-        </div>
-
-        <Card className="border-purple-500/20 bg-white/5">
-          <CardContent className="p-4 space-y-3">
-            <p className="text-white text-sm leading-relaxed">
-              The order of your EPA components is decided by your EPAO, but a
-              common sequence is:
-            </p>
-            {[
-              {
-                step: '1',
-                title: 'Knowledge Test (first)',
-                description:
-                  'Usually scheduled first because it confirms your theoretical understanding before the practical. Results may be available before your other components.',
-              },
-              {
-                step: '2',
-                title: 'Practical Observation (second)',
-                description:
-                  'Typically the most complex to schedule due to the 6-8 hour duration. May take place at your workplace, training provider, or assessment centre.',
-              },
-              {
-                step: '3',
-                title: 'Professional Discussion (last)',
-                description:
-                  'Often scheduled last because the assessor can reference your practical performance during the discussion. Usually at your training provider or via video call.',
-              },
-            ].map((item) => (
-              <div key={item.step} className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-purple-500/20 border border-purple-500/30 flex items-center justify-center flex-shrink-0">
-                  <span className="text-purple-400 text-xs font-bold">
+          {/* Safe isolation procedure */}
+          <div className="rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.04] p-3 space-y-2">
+            <Eyebrow className="text-elec-yellow/85">Safe isolation — 5 steps</Eyebrow>
+            <ol className="space-y-2">
+              {safeIsolationSteps.map((item) => (
+                <li key={item.step} className="flex items-start gap-3">
+                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[11px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
                     {item.step}
                   </span>
-                </div>
-                <div>
-                  <p className="text-white font-semibold text-sm">
+                  <span className="text-[12.5px] text-white/85 leading-relaxed">
+                    {item.text}
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          <div className="rounded-md border border-red-500/30 bg-red-500/[0.04] p-3">
+            <div className="flex items-start gap-2">
+              <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
+              <p className="text-[12.5px] text-white/85 leading-relaxed">
+                <span className="font-semibold text-red-300">Critical:</span>{' '}
+                Failure to follow safe isolation correctly can result in an
+                immediate fail of the practical, regardless of the quality of
+                other work. Practise it until it\'s second nature.
+              </p>
+            </div>
+          </div>
+
+          <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
+            <Eyebrow>On the day</Eyebrow>
+            <ul className="space-y-1.5">
+              {practicalOnDay.map((t) => (
+                <li
+                  key={t}
+                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                >
+                  <span className="text-elec-yellow font-mono mt-0.5">—</span>
+                  <span>{t}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* ── Component 3: Professional discussion ────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Component 3 · 25%"
+          title="Professional discussion"
+          meta="60 minutes · 1-to-1 with EPAO assessor · portfolio-based"
+          action={<ComponentChip icon={MessageSquare} />}
+        />
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
+          <p className="text-[13px] text-white/85 leading-relaxed">
+            A structured, in-depth conversation between you and an EPAO assessor,
+            based on your portfolio. Covers the KSBs not fully assessed through
+            the knowledge test and practical. NOT a Q&A exam — a professional
+            conversation where you demonstrate understanding, decision-making,
+            and growth throughout your apprenticeship.
+          </p>
+          <div className="space-y-2">
+            <Eyebrow>Topics you'll discuss</Eyebrow>
+            <ul className="space-y-1.5">
+              {discussionTopics.map((t) => (
+                <li
+                  key={t}
+                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                >
+                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                  <span>{t}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.04] p-3 space-y-2">
+            <Eyebrow className="text-elec-yellow/85">Your portfolio must include</Eyebrow>
+            <ul className="space-y-1.5">
+              {portfolioMust.map((t) => (
+                <li
+                  key={t}
+                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                >
+                  <span className="text-elec-yellow font-mono mt-0.5">—</span>
+                  <span>{t}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
+            <Eyebrow>How to perform well</Eyebrow>
+            <ul className="space-y-1.5">
+              {discussionTips.map((t) => (
+                <li
+                  key={t}
+                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                >
+                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                  <span>{t}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* ── Pathways ─────────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Pathways"
+          title="Installation vs maintenance"
+          meta="Same standard, same EPA — different emphasis"
+        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+          <PathwayCard
+            title="Installation electrician"
+            items={[
+              'Practical focuses on new installation — wiring from scratch, containment, working from plans',
+              'Knowledge test emphasises circuit design, cable selection, installation methods, initial verification',
+              'Portfolio shows a range of installation projects — domestic, commercial, industrial',
+              'Professional discussion covers installation planning, specification interpretation, QA',
+            ]}
+          />
+          <PathwayCard
+            title="Maintenance electrician"
+            items={[
+              'Practical focuses on fault finding, repair, and maintenance — diagnosing issues, replacing components, periodic inspection',
+              'Knowledge test emphasises fault diagnosis theory, periodic inspection, maintenance planning',
+              'Portfolio shows maintenance activities — fault logs, repair records, PPM schedules',
+              'Professional discussion covers diagnostic approaches, maintenance strategies, equipment lifecycle',
+            ]}
+          />
+        </div>
+        <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
+          <p className="text-[12.5px] text-white/85 leading-relaxed">
+            <span className="font-semibold text-elec-yellow">Note:</span> The
+            core KSBs are the same for both pathways. The difference is
+            emphasis and the types of tasks during the practical. Discuss your
+            pathway with your training provider to focus your preparation.
+          </p>
+        </div>
+      </motion.section>
+
+      {/* ── What assessors look for ─────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="What assessors look for"
+          title="Six priorities — in order"
+          meta="What separates Pass from Distinction"
+        />
+        <ul className="space-y-2">
+          {assessorsLookFor.map((item) => (
+            <li
+              key={item.title}
+              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+            >
+              <div className="flex items-start gap-2.5">
+                <CheckCircle2 className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                <div className="space-y-1">
+                  <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
                     {item.title}
-                  </p>
-                  <p className="text-white text-sm mt-0.5">
+                  </h3>
+                  <p className="text-[13px] text-white/85 leading-relaxed">
                     {item.description}
                   </p>
                 </div>
               </div>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      {/* ── How components link ─────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="How they link"
+          title="Not isolated tests — connected components"
+          meta="Prepare for all three simultaneously"
+        />
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+          <ul className="space-y-1.5">
+            {componentLinks.map((t) => (
+              <li
+                key={t}
+                className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+              >
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                <span>{t}</span>
+              </li>
             ))}
-            <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-3 mt-2">
-              <p className="text-white text-sm">
-                <span className="text-purple-400 font-semibold">Note:</span>{' '}
-                Some EPAOs schedule all three on consecutive days, while others
-                spread them over several weeks. Your training provider will
-                confirm the schedule once your EPAO has arranged the dates.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+          </ul>
+        </div>
+      </motion.section>
+
+      {/* ── Day-of checklists ────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Day-of checklists"
+          title="What to bring, by component"
+          meta="Print these, tick them off, sleep well"
+        />
+        <ul className="space-y-2.5">
+          {dayChecklists.map((c) => (
+            <li
+              key={c.component}
+              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2"
+            >
+              <div className="flex items-center gap-2">
+                <Clock className="h-4 w-4 text-elec-yellow/85 flex-shrink-0" />
+                <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                  {c.component}
+                </h3>
+              </div>
+              <ul className="space-y-1.5">
+                {c.items.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  >
+                    <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      {/* ── Typical order ────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Typical order"
+          title="Knowledge → practical → discussion"
+          meta="Decided by your EPAO, but a common sequence"
+        />
+        <ol className="space-y-2">
+          {[
+            {
+              step: 1,
+              title: 'Knowledge test first',
+              description:
+                'Usually scheduled first — confirms theoretical understanding before the practical. Results may be available before your other components.',
+            },
+            {
+              step: 2,
+              title: 'Practical observation',
+              description:
+                'Most complex to schedule due to the 6–8 hour duration. May take place at your workplace, training provider, or assessment centre.',
+            },
+            {
+              step: 3,
+              title: 'Professional discussion last',
+              description:
+                'Often last because the assessor can reference your practical performance during the discussion. Usually at your training provider or video call.',
+            },
+          ].map((item) => (
+            <li
+              key={item.step}
+              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+            >
+              <div className="flex items-start gap-3">
+                <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[12px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
+                  {item.step}
+                </span>
+                <div className="space-y-1">
+                  <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                    {item.title}
+                  </h3>
+                  <p className="text-[13px] text-white/85 leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
+          <p className="text-[12.5px] text-white/85 leading-relaxed">
+            <span className="font-semibold text-elec-yellow">Note:</span> Some
+            EPAOs schedule all three on consecutive days, others spread them
+            over weeks. Your training provider will confirm the schedule once
+            your EPAO has arranged dates.
+          </p>
+        </div>
+      </motion.section>
     </PageFrame>
   );
 };
+
+/* ─────────────────── small helpers ─────────────────── */
+
+import type { LucideIcon } from 'lucide-react';
+
+function ComponentChip({ icon: Icon }: { icon: LucideIcon }) {
+  return (
+    <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
+      <Icon className="h-4 w-4 text-elec-yellow" />
+    </span>
+  );
+}
+
+function PathwayCard({ title, items }: { title: string; items: string[] }) {
+  return (
+    <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2">
+      <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
+        {title}
+      </h3>
+      <ul className="space-y-1.5">
+        {items.map((item) => (
+          <li
+            key={item}
+            className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+          >
+            <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 export default ComponentsPage;

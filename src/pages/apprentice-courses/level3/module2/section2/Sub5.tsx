@@ -596,7 +596,7 @@ export default function Sub5() {
                 RCBO and an AFDD-RCBO has narrowed and the safety case is well-evidenced.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 421.1.7 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 421.1.7."
           />
 
           <ConceptBlock
@@ -840,7 +840,7 @@ export default function Sub5() {
                 irrespective of RCD type. Older test schedules need updating.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 643.3 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 643.3."
           />
 
           <SectionRule />

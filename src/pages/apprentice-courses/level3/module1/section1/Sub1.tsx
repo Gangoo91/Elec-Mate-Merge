@@ -361,7 +361,7 @@ export default function Sub1() {
                 environment.
               </>
             }
-            cite="Source: Health and Safety at Work etc Act 1974 (1974 c.37), Part I, s.2 — verbatim from legislation.gov.uk."
+            cite="Source: Health and Safety at Work etc Act 1974 (1974 c.37), Part I, s.2."
           />
 
           <RegsCallout
@@ -386,7 +386,7 @@ export default function Sub1() {
                 directors aren&apos;t shielded by the corporate veil from HSE prosecution.
               </>
             }
-            cite="Source: Health and Safety at Work etc Act 1974 (1974 c.37), Part I, s.37 — verbatim from legislation.gov.uk."
+            cite="Source: Health and Safety at Work etc Act 1974 (1974 c.37), Part I, s.37."
           />
 
           <InlineCheck
@@ -624,7 +624,7 @@ export default function Sub1() {
                 someone else&apos;s customer.
               </>
             }
-            cite="Source: Health and Safety at Work etc Act 1974 (1974 c.37), Part I, s.3 — verbatim from legislation.gov.uk."
+            cite="Source: Health and Safety at Work etc Act 1974 (1974 c.37), Part I, s.3."
           />
 
           <SectionRule />
@@ -709,7 +709,7 @@ export default function Sub1() {
                 knowing it exists raises the bar on personal conduct.
               </>
             }
-            cite="Source: Health and Safety at Work etc Act 1974 (1974 c.37), Part I, s.36 — verbatim from legislation.gov.uk."
+            cite="Source: Health and Safety at Work etc Act 1974 (1974 c.37), Part I, s.36."
           />
 
           <SectionRule />
@@ -740,10 +740,10 @@ export default function Sub1() {
           <KeyTakeaways
             points={[
               "HASAWA is a layered duty system. s.2 (employer→employee), s.3 (employer→non-employee), s.7 (employee personal), s.37 (director personal). They stack — one incident usually breaches two or three.",
-              "Remember from L2 — s.2/s.3/s.7 are the trio you already met. The L3 add is s.37 (director liability) and the dutyholder mindset of asking \'who else is on the duty list with me?'.",
+              "Remember from L2 — s.2/s.3/s.7 are the trio you already met. The L3 add is s.37 (director liability) and the dutyholder mindset of asking 'who else is on the duty list with me?'.",
               "SFAIRP — Edwards v NCB [1949] — costs (money, time, trouble) must not be grossly disproportionate to the residual risk. The dutyholder bears the burden of proof.",
               "The Sentencing Council Definitive Guideline (2016) gives the courts a structured matrix — culpability × harm × turnover for companies, with a separate matrix for individuals that includes custody.",
-              "\'I was told to do it' is no defence to a s.7 prosecution. ERA 1996 s.44 protects you from detriment for raising a safety concern. Document the refusal in writing at the time.",
+              "'I was told to do it' is no defence to a s.7 prosecution. ERA 1996 s.44 protects you from detriment for raising a safety concern. Document the refusal in writing at the time.",
               "Personal liability under s.37 reaches directors, managers, secretaries and similar officers — not just the company. Knowing this changes how a senior conversation about a job stop goes.",
               "HASAWA applies to all work activity — domestic call-outs as much as commercial sites. The duty doesn't scale with contract value.",
               "Paperwork is the defence. Risk assessments, training records, toolbox talks, near-miss logs, contemporaneous notebook entries — these are the evidence the SFAIRP defence rests on.",

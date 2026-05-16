@@ -1,6 +1,7 @@
 import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
-import { Resend } from '../_shared/mailer.ts';
+import { Resend, clientFacingSender, htmlToPlainText } from '../_shared/mailer.ts';
+import { renderEmailShell } from '../_shared/email-template.ts';
 import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
@@ -15,104 +16,21 @@ const corsHeaders = {
  *
  * Takes: { to, subject, body, clientName?, attachmentUrl?, attachmentFilename? }
  * Auth:  JWT verified via supabase.auth.getUser()
- * From:  "Company Name <founder@elec-mate.com>" — reply-to is the user's company email
+ * From:  "Company Name <noreply@elec-mate.com>" (DMARC-aligned); Reply-To is the user's company email
  *
  * The agent is responsible for the FULL email body including greeting and sign-off.
  * The template provides branded framing only — no injected greetings or sign-offs.
  */
 
-/** Convert plain text body to HTML paragraphs */
-function textToHtml(text: string): string {
+/** Convert the agent's plain-text body into HTML paragraphs that match
+ *  the shared body style (15px slate-700, 1.65 line-height). */
+function agentBodyToHtml(text: string): string {
+  const escape = (s: string) =>
+    s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   return text
     .split(/\n\n+/)
-    .map((para) => `<p style="margin:0 0 16px;font-size:16px;line-height:1.65;color:#374151;">${para.replace(/\n/g, '<br>')}</p>`)
+    .map((para) => `<p style="margin:0 0 16px;font-size:15px;line-height:1.65;color:#334155;">${escape(para).replace(/\n/g, '<br>')}</p>`)
     .join('');
-}
-
-/** Build the branded HTML email */
-function buildEmailHtml(opts: {
-  body: string;
-  companyName: string;
-  logoUrl?: string | null;
-  phone?: string | null;
-  website?: string | null;
-  address?: string | null;
-  postcode?: string | null;
-}): string {
-  const { body, companyName, logoUrl, phone, website, address, postcode } = opts;
-
-  // Header: logo image if available, else company name in yellow
-  const headerContent = logoUrl
-    ? `<img src="${logoUrl}" alt="${companyName}" style="max-height:60px;max-width:200px;display:block;margin:0 auto;" />`
-    : `<h1 style="margin:0;color:#FFC800;font-size:22px;font-weight:700;letter-spacing:-0.3px;">${companyName}</h1>`;
-
-  // Footer details
-  const footerParts: string[] = [];
-  if (phone) footerParts.push(`<a href="tel:${phone}" style="color:#9ca3af;text-decoration:none;">${phone}</a>`);
-  if (website) {
-    const displayUrl = website.replace(/^https?:\/\//, '');
-    footerParts.push(`<a href="${website.startsWith('http') ? website : 'https://' + website}" style="color:#9ca3af;text-decoration:none;">${displayUrl}</a>`);
-  }
-  if (address) {
-    const fullAddress = [address, postcode].filter(Boolean).join(', ');
-    footerParts.push(`<span style="color:#9ca3af;">${fullAddress}</span>`);
-  }
-
-  const footerDetails = footerParts.length > 0
-    ? `<p style="margin:8px 0 0;font-size:13px;line-height:1.8;">${footerParts.join(' &nbsp;·&nbsp; ')}</p>`
-    : '';
-
-  return `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="color-scheme" content="light" />
-</head>
-<body style="margin:0;padding:0;background-color:#f3f4f6;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;">
-  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color:#f3f4f6;">
-    <tr>
-      <td style="padding:32px 16px;">
-
-        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"
-          style="max-width:600px;margin:0 auto;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.10);">
-
-          <!-- ── Header ───────────────────────────────── -->
-          <tr>
-            <td style="background:linear-gradient(135deg,#111111 0%,#1f1f1f 100%);padding:28px 32px;text-align:center;border-bottom:3px solid #FFC800;">
-              ${headerContent}
-            </td>
-          </tr>
-
-          <!-- ── Body ────────────────────────────────── -->
-          <tr>
-            <td style="background:#ffffff;padding:36px 36px 28px;">
-              ${textToHtml(body)}
-            </td>
-          </tr>
-
-          <!-- ── Divider ──────────────────────────────── -->
-          <tr>
-            <td style="background:#ffffff;padding:0 36px 28px;">
-              <div style="height:1px;background:linear-gradient(90deg,transparent,#e5e7eb,transparent);"></div>
-            </td>
-          </tr>
-
-          <!-- ── Footer ──────────────────────────────── -->
-          <tr>
-            <td style="background:#111111;padding:24px 32px;text-align:center;">
-              <p style="margin:0;font-size:14px;font-weight:700;color:#ffffff;">${companyName}</p>
-              ${footerDetails}
-              <p style="margin:16px 0 0;font-size:11px;color:#4b5563;letter-spacing:0.5px;text-transform:uppercase;">Sent via Elec-Mate</p>
-            </td>
-          </tr>
-
-        </table>
-      </td>
-    </tr>
-  </table>
-</body>
-</html>`;
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -153,24 +71,40 @@ const handler = async (req: Request): Promise<Response> => {
     // ── Fetch company profile ─────────────────────────────────────
     const { data: profile } = await supabaseClient
       .from('company_profiles')
-      .select('company_name, company_email, company_phone, company_website, company_address, company_postcode, logo_url, logo_data_url')
+      .select('*')
       .eq('user_id', user.id)
       .single();
 
     const companyName = profile?.company_name || 'Elec-Mate';
-    const replyTo = profile?.company_email || user.email || 'info@elec-mate.com';
-    // Prefer hosted logo URL, fall back to data URL (inline base64)
-    const logoUrl = profile?.logo_url || profile?.logo_data_url || null;
-
-    // ── Build HTML ────────────────────────────────────────────────
-    const html = buildEmailHtml({
-      body: emailBody,
+    // ELE-662 — centralised sender. See _shared/mailer.ts:clientFacingSender.
+    const sender = clientFacingSender({
       companyName,
-      logoUrl,
-      phone: profile?.company_phone || null,
-      website: profile?.company_website || null,
-      address: profile?.company_address || null,
-      postcode: profile?.company_postcode || null,
+      companyEmail: profile?.company_email,
+      userEmail: user.email,
+    });
+
+    // ── Build HTML using shared shell. Agent owns the body in full
+    //    (greeting + sign-off included), so we insert it as a raw row
+    //    via the card slot to avoid the shell's <p> wrapper, and pass
+    //    an empty signoff so the shell doesn't append its default. ──
+    const preheader = emailBody.replace(/\s+/g, ' ').slice(0, 120);
+    const agentBodyRow = `<tr><td style="padding:24px 36px 28px;">${agentBodyToHtml(emailBody)}</td></tr>`;
+    const html = renderEmailShell({
+      subject,
+      preheader,
+      company: {
+        name: companyName,
+        logoUrl: profile?.logo_url || profile?.logo_data_url || null,
+        primaryColor: profile?.primary_color || null,
+        email: profile?.company_email || null,
+        phone: profile?.company_phone || null,
+        website: profile?.company_website || null,
+        address: profile?.company_address || null,
+        vatNumber: profile?.vat_number || null,
+        registrationNumber: profile?.company_registration || null,
+      },
+      card: agentBodyRow,
+      signoff: '',
     });
 
     // ── Handle optional attachment ────────────────────────────────
@@ -202,17 +136,18 @@ const handler = async (req: Request): Promise<Response> => {
 
     const emailOptions: {
       from: string;
-      replyTo: string;
+      replyTo?: string;
       to: string[];
       subject: string;
       html: string;
+      text?: string;
       attachments?: Array<{ filename: string; content: string }>;
     } = {
-      from: `${companyName} <founder@elec-mate.com>`,
-      replyTo: replyTo,
+      ...sender,
       to: [to.trim()],
       subject,
       html,
+      text: htmlToPlainText(html),
     };
 
     if (attachments.length > 0) {

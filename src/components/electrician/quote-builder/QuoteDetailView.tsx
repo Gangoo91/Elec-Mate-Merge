@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Quote } from '@/types/quote';
+import { buildCategoryBreakdowns } from '@/utils/quote-calculations';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -37,6 +38,12 @@ interface QuoteDetailViewProps {
 
 export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
   const [variationOpen, setVariationOpen] = useState(false);
+
+  const categoryBreakdowns = useMemo(
+    () => buildCategoryBreakdowns(quote.items || [], quote.settings),
+    [quote.items, quote.settings]
+  );
+
   const getCategoryIcon = (category: string) => {
     switch (category) {
       case 'labour':
@@ -482,28 +489,27 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
             <span className="font-medium">£{(quote.subtotal || 0).toFixed(2)}</span>
           </div>
 
-          {/* ELE-891 — per-category adjustment lines (show only if non-zero) */}
-          {quote.settings?.categoryAdjustments &&
-            (
-              [
-                ['labour', quote.settings.categoryAdjustments.labour],
-                ['materials', quote.settings.categoryAdjustments.materials],
-                ['equipment', quote.settings.categoryAdjustments.equipment],
-              ] as const
-            )
-              .filter(([, v]) => typeof v === 'number' && v !== 0)
-              .map(([cat, pct]) => (
+          {/* ELE-891 / ELE-973 — per-category adjustment lines with live £ delta */}
+          {categoryBreakdowns
+            .filter((b) => b.categoryAdjustmentDelta !== 0)
+            .map((b) => {
+              const isMarkup = b.categoryAdjustmentDelta > 0;
+              return (
                 <div
-                  key={cat}
-                  className="flex justify-between text-[12px] text-white/70 -mt-1"
+                  key={b.category}
+                  className="flex justify-between text-[12px] -mt-1"
                 >
-                  <span className="capitalize">
-                    {cat} {pct! > 0 ? 'markup' : 'discount'} ({pct! > 0 ? '+' : ''}
-                    {pct}%)
+                  <span className={cn('capitalize', isMarkup ? 'text-amber-300/80' : 'text-emerald-300/80')}>
+                    {b.category} {isMarkup ? 'markup' : 'discount'} (
+                    {b.categoryAdjustmentPercent > 0 ? '+' : ''}
+                    {b.categoryAdjustmentPercent}%)
                   </span>
-                  <span className="font-medium">included in subtotal</span>
+                  <span className={cn('font-medium tabular-nums', isMarkup ? 'text-amber-300' : 'text-emerald-300')}>
+                    {isMarkup ? '+' : '-'}£{Math.abs(b.categoryAdjustmentDelta).toFixed(2)}
+                  </span>
                 </div>
-              ))}
+              );
+            })}
 
           {quote.overhead !== undefined && quote.overhead > 0 && (
             <div className="flex justify-between text-white">

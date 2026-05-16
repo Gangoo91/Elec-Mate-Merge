@@ -502,10 +502,10 @@ export default function Sub2() {
               "Customer symptoms are starting hypotheses, not facts. Verify with measurement; treat customer descriptions as approximately 70% accurate.",
               "Time-correlated faults are easiest to diagnose — the trigger time identifies the cause. PQ analyser captures the conditions at the reported moment.",
               "Burning plastic smell is always urgent — HRJ at char point, fire-risk window open. Treat as Code 1; isolate immediately; investigate same visit.",
-              "Common false-alarm symptoms: \'lights flicker' often = LED lamp/dimmer incompatibility; 'breaker trips' often = overloaded extension; 'socket dead' sometimes = upstream tripped GFCI.",
+              "Common false-alarm symptoms: 'lights flicker' often = LED lamp/dimmer incompatibility; 'breaker trips' often = overloaded extension; 'socket dead' sometimes = upstream tripped GFCI.",
               "Weather-correlated faults indicate environmental triggers — rain → outdoor leakage, temperature → cable / termination effects, wind → mechanical movement at supply.",
               "Load-correlated faults reveal the load that exposes the fault — kettle inrush exposes HRJ on the supply, motor start exposes loose terminal in the breaker.",
-              "Document interviews in the standard job sheet 'Symptoms' section — customer\'s words in quotes, timeline, conditions, what they\'ve tried.",
+              "Document interviews in the standard job sheet 'Symptoms' section — customer's words in quotes, timeline, conditions, what they've tried.",
             ]}
           />
 

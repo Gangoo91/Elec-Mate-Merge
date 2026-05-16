@@ -432,6 +432,16 @@ const Subscriptions = () => {
           </p>
         )}
 
+        {/* Where-to-manage notice */}
+        <div className="rounded-xl border border-blue-500/20 bg-blue-500/[0.06] px-4 py-3">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-blue-300 mb-1">
+            Manage your subscription where you bought it
+          </p>
+          <p className="text-[13px] text-white/80 leading-relaxed">
+            Apple and Google require subscriptions purchased through their stores to be managed in their settings, and Stripe subscriptions can only be managed via the web. If you bought on the web and signed in on the iOS app, you'll need to cancel or change your plan from a browser — not in the app. Same the other way around.
+          </p>
+        </div>
+
         {/* Current subscription — proper billing card */}
         {isSubscribed && (
           <section className="relative rounded-3xl border border-white/10 overflow-hidden">

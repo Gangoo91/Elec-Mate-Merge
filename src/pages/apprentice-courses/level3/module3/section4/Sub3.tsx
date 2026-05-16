@@ -27,6 +27,7 @@ import {
   SectionRule,
   VideoCard,
 } from '@/components/study-centre/learning';
+import { TransformerSchematic } from '@/components/study-centre/diagrams';
 import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
@@ -218,6 +219,8 @@ export default function Sub3() {
             ]}
             initialVisibleCount={3}
           />
+
+          <TransformerSchematic />
 
           <ContentEyebrow>Single-phase worked examples</ContentEyebrow>
 

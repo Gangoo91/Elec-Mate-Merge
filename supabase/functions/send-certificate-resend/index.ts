@@ -7,7 +7,8 @@
 
 import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
-import { Resend } from '../_shared/mailer.ts';
+import { Resend, clientFacingSender, htmlToPlainText } from '../_shared/mailer.ts';
+import { buildCertificateSendEmail } from '../_shared/email-templates/certificate-send.ts';
 import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
@@ -33,270 +34,6 @@ function isValidEmail(email: string | null | undefined): boolean {
   return emailRegex.test(email.trim());
 }
 
-function formatDate(dateInput: string | number | Date | null | undefined): string {
-  if (!dateInput) return 'N/A';
-  try {
-    const date = new Date(dateInput);
-    if (isNaN(date.getTime())) return 'N/A';
-    return date.toLocaleDateString('en-GB', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-    });
-  } catch (e) {
-    return 'N/A';
-  }
-}
-
-// ============================================================================
-// EMAIL HTML BUILDER
-// ============================================================================
-
-function buildCertificateEmailHtml(data: {
-  certificateType: string;
-  certificateNumber?: string;
-  clientName?: string;
-  installationAddress?: string;
-  inspectionDate?: string;
-  overallAssessment?: string;
-  companyName?: string;
-  companyPhone?: string;
-  companyEmail?: string;
-  companyAddress?: string;
-  companyLogo?: string;
-  customMessage?: string;
-}): string {
-  const isPass = data.overallAssessment === 'satisfactory';
-  const assessmentColor = isPass ? '#10b981' : '#ef4444';
-  const assessmentText = isPass ? 'SATISFACTORY' : data.overallAssessment?.toUpperCase() || '';
-
-  const formattedDate = data.inspectionDate ? formatDate(data.inspectionDate) : '';
-
-  const certificateTitles: Record<string, string> = {
-    EICR: 'Electrical Installation Condition Report',
-    EIC: 'Electrical Installation Certificate',
-    'Minor Works': 'Minor Electrical Installation Works Certificate',
-  };
-  const certificateTitle = certificateTitles[data.certificateType] || 'Electrical Certificate';
-
-  const firstName = data.clientName?.split(' ')[0] || 'there';
-
-  return `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your ${data.certificateType} Certificate</title>
-  <!--[if mso]>
-  <style type="text/css">
-    body, table, td {font-family: Arial, Helvetica, sans-serif !important;}
-  </style>
-  <![endif]-->
-</head>
-<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f8fafc; -webkit-font-smoothing: antialiased;">
-
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #f8fafc;">
-    <tr>
-      <td align="center" style="padding: 32px 16px;">
-        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width: 540px;">
-
-          <!-- Company Header -->
-          <tr>
-            <td style="padding-bottom: 32px; text-align: center;">
-              ${
-                data.companyLogo
-                  ? `
-                <img src="${data.companyLogo}" alt="${data.companyName}" style="max-height: 56px; max-width: 180px; margin-bottom: 12px;" />
-              `
-                  : `
-                <div style="font-size: 28px; margin-bottom: 8px;"></div>
-              `
-              }
-              <h1 style="margin: 0 0 4px 0; font-size: 22px; font-weight: 700; color: #0f172a;">
-                ${data.companyName || 'Your Electrician'}
-              </h1>
-              ${
-                data.companyPhone || data.companyEmail
-                  ? `
-                <p style="margin: 0; font-size: 14px; color: #64748b;">
-                  ${data.companyPhone ? data.companyPhone : ''}${data.companyPhone && data.companyEmail ? ' · ' : ''}${data.companyEmail ? data.companyEmail : ''}
-                </p>
-              `
-                  : ''
-              }
-            </td>
-          </tr>
-
-          <!-- Main Content -->
-          <tr>
-            <td>
-              <!-- Greeting -->
-              <p style="margin: 0 0 24px 0; font-size: 17px; line-height: 1.6; color: #334155;">
-                Hi ${firstName},
-              </p>
-
-              <p style="margin: 0 0 24px 0; font-size: 17px; line-height: 1.6; color: #334155;">
-                Thank you for choosing us for your electrical work. We've attached your official certificate for the completed installation.
-              </p>
-
-              <!-- Certificate Summary -->
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 28px; background: #f9fafb; border-radius: 16px; border: 1px solid #fde047;">
-                <tr>
-                  <td style="padding: 24px;">
-                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
-                      <tr>
-                        <td>
-                          <span style="display: inline-block; background-color: #fbbf24; color: #78350f; font-size: 11px; font-weight: 700; padding: 5px 10px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px;">
-                            ${data.certificateType}
-                          </span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td style="padding-top: 12px;">
-                          <p style="margin: 0; font-size: 18px; font-weight: 600; color: #1e293b;">
-                            ${certificateTitle}
-                          </p>
-                        </td>
-                      </tr>
-                      ${
-                        data.certificateNumber
-                          ? `
-                      <tr>
-                        <td style="padding-top: 8px;">
-                          <p style="margin: 0; font-size: 13px; color: #64748b; font-family: 'SF Mono', Monaco, 'Courier New', monospace;">
-                            Ref: ${data.certificateNumber}
-                          </p>
-                        </td>
-                      </tr>
-                      `
-                          : ''
-                      }
-                    </table>
-                  </td>
-                </tr>
-              </table>
-
-              <!-- Details Grid -->
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 28px;">
-                ${
-                  data.installationAddress
-                    ? `
-                <tr>
-                  <td style="padding-bottom: 16px;">
-                    <p style="margin: 0 0 4px 0; font-size: 12px; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px;">Property</p>
-                    <p style="margin: 0; font-size: 15px; color: #334155; line-height: 1.5;">${data.installationAddress}</p>
-                  </td>
-                </tr>
-                `
-                    : ''
-                }
-                ${
-                  formattedDate
-                    ? `
-                <tr>
-                  <td style="padding-bottom: 16px;">
-                    <p style="margin: 0 0 4px 0; font-size: 12px; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px;">Inspection Date</p>
-                    <p style="margin: 0; font-size: 15px; color: #334155;">${formattedDate}</p>
-                  </td>
-                </tr>
-                `
-                    : ''
-                }
-                ${
-                  data.overallAssessment
-                    ? `
-                <tr>
-                  <td>
-                    <p style="margin: 0 0 4px 0; font-size: 12px; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px;">Result</p>
-                    <p style="margin: 0; font-size: 15px; font-weight: 600; color: ${assessmentColor};">
-                      ${isPass ? '✓' : '✗'} ${assessmentText}
-                    </p>
-                  </td>
-                </tr>
-                `
-                    : ''
-                }
-              </table>
-
-              ${
-                data.customMessage
-                  ? `
-              <!-- Custom Message -->
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 28px;">
-                <tr>
-                  <td style="padding: 16px 20px; background-color: #f1f5f9; border-radius: 12px; border-left: 4px solid #fbbf24;">
-                    <p style="margin: 0; font-size: 15px; color: #475569; line-height: 1.6; font-style: italic;">
-                      "${data.customMessage}"
-                    </p>
-                  </td>
-                </tr>
-              </table>
-              `
-                  : ''
-              }
-
-              <!-- PDF Attachment Notice -->
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 32px;">
-                <tr>
-                  <td style="padding: 20px; background-color: #eff6ff; border-radius: 12px; text-align: center;">
-                    <p style="margin: 0 0 4px 0; font-size: 24px;"></p>
-                    <p style="margin: 0 0 4px 0; font-size: 15px; font-weight: 600; color: #1e40af;">
-                      Your certificate is attached
-                    </p>
-                    <p style="margin: 0; font-size: 13px; color: #374151;">
-                      Download the PDF for your records
-                    </p>
-                  </td>
-                </tr>
-              </table>
-
-              <!-- Closing -->
-              <p style="margin: 0 0 8px 0; font-size: 15px; color: #334155; line-height: 1.6;">
-                If you have any questions about your certificate or need any further electrical work, please don't hesitate to get in touch.
-              </p>
-
-              <p style="margin: 24px 0 0 0; font-size: 15px; color: #334155;">
-                Many thanks,<br>
-                <strong>${data.companyName || 'Your Electrician'}</strong>
-              </p>
-            </td>
-          </tr>
-
-          <!-- Footer -->
-          <tr>
-            <td style="padding-top: 40px; text-align: center;">
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-top: 1px solid #e2e8f0;">
-                <tr>
-                  <td style="padding-top: 24px;">
-                    <p style="margin: 0 0 16px 0; font-size: 12px; color: #94a3b8;">
-                      This certificate complies with BS 7671:2018+A3:2024
-                    </p>
-                    <table role="presentation" cellspacing="0" cellpadding="0" style="margin: 0 auto;">
-                      <tr>
-                        <td style="padding: 10px 20px; background: #f9fafb; border-radius: 8px; border: 1px solid #fde047;">
-                          <a href="https://elec-mate.com" style="text-decoration: none;">
-                            <span style="font-size: 16px; vertical-align: middle;"></span>
-                            <span style="font-size: 13px; font-weight: 600; color: #78350f; vertical-align: middle; margin-left: 4px;">Sent via Elec-Mate</span>
-                          </a>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-        </table>
-      </td>
-    </tr>
-  </table>
-
-</body>
-</html>
-  `.trim();
-}
 
 // ============================================================================
 // MAIN HANDLER
@@ -345,27 +82,32 @@ const handler = async (req: Request): Promise<Response> => {
     if (body.testMode && body.recipientEmail) {
       console.log('🧪 TEST MODE - Sending sample certificate email');
 
-      const testEmailHtml = buildCertificateEmailHtml({
+      const testPayload = buildCertificateSendEmail({
+        company: {
+          name: 'Spark & Sons Electrical',
+          phone: '020 7123 4567',
+          email: 'info@sparkandsons.co.uk',
+        },
+        clientName: 'Sarah Thompson',
         certificateType: 'EICR',
         certificateNumber: 'EICR-2026-001234',
-        clientName: 'Sarah Thompson',
         installationAddress: '47 Riverside Gardens, Putney, London, SW15 2JQ',
         inspectionDate: new Date().toISOString(),
-        overallAssessment: 'satisfactory',
-        companyName: 'Spark & Sons Electrical',
-        companyPhone: '020 7123 4567',
-        companyEmail: 'info@sparkandsons.co.uk',
-        customMessage: undefined,
+        overallAssessment: 'Satisfactory',
+        pdfAttached: false,
       });
+      const testEmailHtml = testPayload.html;
 
+      const testSender = clientFacingSender({
+        companyName: 'Spark & Sons Electrical',
+        companyEmail: 'info@sparkandsons.co.uk',
+      });
       const { data: testEmailData, error: testEmailError } = await resend.emails.send({
-        from: 'Spark & Sons Electrical <founder@elec-mate.com>',
-        // ELE-662 — was hardcoded info@elec-mate.com (unmonitored). For test
-        // mode mirror the fake company so the Reply-To matches sender brand.
-        replyTo: 'info@sparkandsons.co.uk',
+        ...testSender,
         to: [String(body.recipientEmail)],
         subject: 'Your EICR Certificate - 47 Riverside Gardens',
         html: testEmailHtml,
+        text: htmlToPlainText(testEmailHtml),
       });
 
       if (testEmailError) {
@@ -618,31 +360,56 @@ const handler = async (req: Request): Promise<Response> => {
                   ? 'Solar PV'
                   : reportType.toUpperCase();
 
-    const emailHtml = buildCertificateEmailHtml({
+    const rawAssessment =
+      reportData.overallAssessment || reportData.overall_assessment || report.overall_assessment;
+    const assessmentDisplay = rawAssessment
+      ? String(rawAssessment).charAt(0).toUpperCase() + String(rawAssessment).slice(1).toLowerCase()
+      : null;
+
+    const certEmailPayload = buildCertificateSendEmail({
+      company: {
+        name: companyName,
+        logoUrl: companyProfile?.logo_url || companyProfile?.logo_data_url || null,
+        primaryColor: companyProfile?.primary_color || null,
+        email: companyProfile?.company_email || null,
+        phone: companyProfile?.company_phone || null,
+        website: companyProfile?.company_website || null,
+        address: companyProfile?.company_address || null,
+        vatNumber: companyProfile?.vat_number || null,
+        registrationNumber: companyProfile?.company_registration || null,
+      },
+      clientName: report.client_name || reportData.clientName || reportData.client_name || '',
       certificateType: certificateTypeDisplay,
-      certificateNumber: report.certificate_number,
-      clientName: report.client_name || reportData.clientName || reportData.client_name,
+      certificateNumber: report.certificate_number || '',
       installationAddress:
         report.installation_address ||
         reportData.installationAddress ||
-        reportData.installation_address,
+        reportData.installation_address ||
+        null,
       inspectionDate:
-        report.inspection_date || reportData.inspectionDate || reportData.inspection_date,
-      overallAssessment:
-        reportData.overallAssessment || reportData.overall_assessment || report.overall_assessment,
-      companyName: companyName,
-      companyPhone: companyProfile?.company_phone,
-      companyEmail: companyProfile?.company_email,
-      companyLogo: companyProfile?.logo_url,
-      customMessage: customMessage,
+        report.inspection_date || reportData.inspectionDate || reportData.inspection_date || null,
+      overallAssessment: assessmentDisplay,
+      nextInspectionDue:
+        reportData.nextInspectionDate ||
+        reportData.next_inspection_date ||
+        report.next_inspection_date ||
+        null,
+      pdfUrl: pdfUrl || null,
+      pdfAttached: pdfAttachmentSuccess,
+      customMessage: customMessage || null,
+      trackingPixelUrl: `${supabaseUrl}/functions/v1/email-open?type=cert_send&id=${report.id}`,
     });
+    const emailHtml = certEmailPayload.html;
 
     // ========================================================================
     // STEP 9: Send email via Resend
     // ========================================================================
-    // Reply-To cascade (ELE-662): company email → user's auth email. NEVER
-    // info@elec-mate.com — that's an unmonitored alias.
-    const replyToEmail = companyProfile?.company_email || user.email || '';
+    // ELE-662 — centralised sender. See _shared/mailer.ts:clientFacingSender.
+    const sender = clientFacingSender({
+      companyName,
+      companyEmail: companyProfile?.company_email,
+      userEmail: user.email,
+    });
     const addressOrRef = String(report.installation_address || report.certificate_number || '')
       .replace(/[\r\n\t]+/g, ' ')
       .replace(/\s{2,}/g, ' ')
@@ -650,7 +417,8 @@ const handler = async (req: Request): Promise<Response> => {
     const subject = `Your ${certificateTypeDisplay} Certificate - ${addressOrRef}`.trim();
 
     console.log(`📧 Sending to: ${clientEmail}`);
-    console.log(`📧 Reply-to: ${replyToEmail || '(none — no company_email or auth email)'}`);
+    console.log(`📧 From: ${sender.from}`);
+    console.log(`📧 Reply-to: ${sender.replyTo || '(none — no company_email or auth email)'}`);
 
     const emailOptions: {
       from: string;
@@ -658,16 +426,15 @@ const handler = async (req: Request): Promise<Response> => {
       to: string[];
       subject: string;
       html: string;
+      text?: string;
       attachments?: Array<{ filename: string; content: string }>;
     } = {
-      from: `${companyName} <founder@elec-mate.com>`,
+      ...sender,
       to: [clientEmail],
       subject: subject,
       html: emailHtml,
+      text: htmlToPlainText(emailHtml),
     };
-    if (replyToEmail) {
-      emailOptions.replyTo = replyToEmail;
-    }
 
     if (pdfAttachmentSuccess && pdfBase64) {
       const filename = `${certificateTypeDisplay.replace(/\s+/g, '-')}_${certificateNumber}.pdf`;

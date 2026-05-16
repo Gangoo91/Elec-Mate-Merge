@@ -303,7 +303,7 @@ export default function Sub4() {
                 The Duty of Care travels with the waste-producer (the contractor) all the way until the waste reaches a licensed facility. Practical implications &mdash; (1) prevent escape (closed bags, no fly-tipping), (2) authorised transfer only (registered carrier), (3) Waste Transfer Note accompanies every transfer (Consignment Note for hazardous), (4) records kept for two years (three for hazardous). Leaving waste in a customer's bin transfers neither the waste nor the duty &mdash; the contractor remains liable.
               </>
             }
-            cite="Source: Environmental Protection Act 1990 s.34 — verbatim from legislation.gov.uk."
+            cite="Source: Environmental Protection Act 1990 s.34."
           />
 
           <InlineCheck
@@ -343,7 +343,7 @@ export default function Sub4() {
                 Every transfer of hazardous waste off the premises requires a Consignment Note. The firm completes the producer section; the carrier completes the transport section; the disposal facility completes the destination section. The note has to be retained for three years. For an L3 apprentice, the practical implication is &mdash; ensure waste leaves with documentation, never in a back-of-van pile that would not survive an Environment Agency stop-check.
               </>
             }
-            cite="Source: Hazardous Waste (England and Wales) Regulations 2005, Reg 35 — verbatim from legislation.gov.uk."
+            cite="Source: Hazardous Waste (England and Wales) Regulations 2005, Reg 35."
           />
 
           <InlineCheck

@@ -1,8 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, CheckCircle, AlertTriangle, ClipboardList } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { ArrowLeft, CheckCircle2222, AlertTriangle, ClipboardList } from 'lucide-react';
 import {
   PageFrame,
   PageHero,
@@ -14,14 +12,10 @@ const RiskAssessmentPage = () => {
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/apprentice/safety-fundamentals')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
+        <button onClick={() => navigate('/apprentice/safety-fundamentals')} className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation">
+          <ArrowLeft className="h-4 w-4" />
           Back
-        </Button>
+        </button>
       </motion.div>
 
       <motion.div variants={itemVariants}>
@@ -34,8 +28,8 @@ const RiskAssessmentPage = () => {
       </motion.div>
 
       {/* Intro */}
-      <Card className="border-green-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <div className="flex items-center gap-2">
             <ClipboardList className="h-5 w-5 text-green-400" />
             <h2 className="text-lg font-semibold text-white">
@@ -59,12 +53,11 @@ const RiskAssessmentPage = () => {
             </span>
             .
           </p>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* The 5 Steps */}
-      <Card className="border-green-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-green-400">
             The HSE 5 Steps to Risk Assessment
           </h2>
@@ -139,7 +132,7 @@ const RiskAssessmentPage = () => {
             ].map((item) => (
               <div
                 key={item.step}
-                className="border border-green-500/20 rounded-lg p-4 space-y-3"
+                className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 sm:p-4 space-y-3"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
@@ -169,12 +162,11 @@ const RiskAssessmentPage = () => {
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Hierarchy of Controls */}
-      <Card className="border-blue-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-blue-400">
             Hierarchy of Controls
           </h2>
@@ -234,12 +226,11 @@ const RiskAssessmentPage = () => {
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* RAMS */}
-      <Card className="border-purple-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-purple-400">
             RAMS — Risk Assessment and Method Statement
           </h2>
@@ -270,13 +261,13 @@ const RiskAssessmentPage = () => {
                 key={item}
                 className="flex items-start gap-2 text-sm text-white"
               >
-                <CheckCircle className="h-4 w-4 text-purple-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                 {item}
               </div>
             ))}
           </div>
 
-          <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-3">
+          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
             <p className="text-white text-xs">
               <span className="font-semibold text-purple-400">
                 As an apprentice:{' '}
@@ -287,12 +278,11 @@ const RiskAssessmentPage = () => {
               before signing.
             </p>
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Dynamic Risk Assessment */}
-      <Card className="border-orange-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <div className="flex items-center gap-2">
             <AlertTriangle className="h-5 w-5 text-orange-400" />
             <h2 className="text-lg font-semibold text-orange-400">
@@ -334,7 +324,7 @@ const RiskAssessmentPage = () => {
             ].map((item) => (
               <div
                 key={item.letter}
-                className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-3"
+                className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3"
               >
                 <div className="flex items-center gap-2 mb-1">
                   <span className="text-orange-400 font-bold text-lg">
@@ -371,12 +361,11 @@ const RiskAssessmentPage = () => {
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* COSHH */}
-      <Card className="border-amber-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-amber-400">
             COSHH — Hazardous Substances
           </h2>
@@ -416,7 +405,7 @@ const RiskAssessmentPage = () => {
             ].map((item) => (
               <div
                 key={item.substance}
-                className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3"
+                className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3"
               >
                 <h4 className="text-amber-400 font-semibold text-sm mb-1">
                   {item.substance}
@@ -432,12 +421,11 @@ const RiskAssessmentPage = () => {
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Manual Handling */}
-      <Card className="border-blue-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-blue-400">
             Manual Handling
           </h2>
@@ -474,7 +462,7 @@ const RiskAssessmentPage = () => {
             ))}
           </div>
 
-          <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
+          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
             <p className="text-white text-xs">
               <span className="font-semibold text-blue-400">
                 HSE guideline weights:{' '}
@@ -486,12 +474,11 @@ const RiskAssessmentPage = () => {
               drum stand, or ask for help.
             </p>
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Your Role */}
-      <Card className="border-green-500/20 bg-green-500/10">
-        <CardContent className="p-4 space-y-3">
+      <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04]">
+        <div className="p-4 sm:p-5 space-y-3">
           <h2 className="text-sm font-semibold text-green-400">
             Your Role as an Apprentice
           </h2>
@@ -510,17 +497,16 @@ const RiskAssessmentPage = () => {
                 key={item}
                 className="flex items-start gap-2 text-sm text-white"
               >
-                <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                 {item}
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Footer */}
-      <Card className="border-white/10 bg-white/5">
-        <CardContent className="p-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5">
           <p className="text-white text-xs leading-relaxed">
             Based on the Management of Health and Safety at Work Regulations 1999,
             HSE guidance INDG163 (Five Steps to Risk Assessment), the Control of
@@ -528,8 +514,7 @@ const RiskAssessmentPage = () => {
             Handling Operations Regulations 1992. Always follow your employer's
             specific risk assessment and method statement for each task.
           </p>
-        </CardContent>
-      </Card>
+        </div></div>
     </PageFrame>
   );
 };

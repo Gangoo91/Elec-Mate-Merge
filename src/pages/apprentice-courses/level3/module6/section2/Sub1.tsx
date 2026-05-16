@@ -28,6 +28,7 @@ import {
   ContentEyebrow,
   SectionRule,
 } from '@/components/study-centre/learning';
+import { ConsumerUnit } from '@/components/study-centre/diagrams';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Maximum demand fundamentals (2.1) | Level 3 Module 6.2.1 | Elec-Mate';
@@ -300,6 +301,8 @@ export default function Sub1() {
             }
             cite="Source: BS 7671:2018+A4:2026 Part 3, Regulation 311.1. See also Appendix 1 (British Standards) and the IET On-Site Guide Table A1."
           />
+
+          <ConsumerUnit />
 
           <SectionRule />
 

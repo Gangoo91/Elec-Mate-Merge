@@ -841,7 +841,7 @@ export default function Sub1() {
                 against the published amendment text before being relied on.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Section 712 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Section 712."
           />
 
           <SectionRule />

@@ -90,7 +90,8 @@ export const MobileQuoteItemCard = ({
           inputMode="decimal"
           value={qtyDraft}
           onChange={(e) => {
-            const val = e.target.value;
+            // ELE-974 — iOS UK keyboards surface comma on the decimal key
+            const val = e.target.value.replace(',', '.');
             if (val === '' || /^\d*\.?\d*$/.test(val)) setQtyDraft(val);
           }}
           onBlur={() => {
@@ -107,7 +108,8 @@ export const MobileQuoteItemCard = ({
           inputMode="decimal"
           value={priceDraft}
           onChange={(e) => {
-            const val = e.target.value;
+            // ELE-974 — iOS UK keyboards surface comma on the decimal key
+            const val = e.target.value.replace(',', '.');
             if (val === '' || /^\d*\.?\d*$/.test(val)) setPriceDraft(val);
           }}
           onBlur={() => {

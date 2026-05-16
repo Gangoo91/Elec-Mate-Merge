@@ -1,429 +1,397 @@
-import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, CheckCircle } from 'lucide-react';
+/**
+ * Portfolio · ReflectivePracticePage — editorial guide to reflective writing.
+ *
+ * Why reflection matters, STAR method, writing tips, Gibbs cycle, topics
+ * worth reflecting on, linking to EPA, full example, frequency guide.
+ */
+
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
+import { ArrowLeft, CheckCircle2, Quote } from 'lucide-react';
 import {
   PageFrame,
   PageHero,
   itemVariants,
 } from '@/components/college/primitives';
+import {
+  Eyebrow,
+  SectionHeader,
+} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+
+const starSteps = [
+  {
+    letter: 'S',
+    title: 'Situation',
+    description: 'Describe the context. Where were you? What was the project? What was the task?',
+    example:
+      'I was on a domestic rewire project in a 3-bedroom semi-detached house. The existing wiring was TT earthing with old rubber-sheathed cables.',
+  },
+  {
+    letter: 'T',
+    title: 'Task',
+    description: 'What was your specific role and responsibility? What were you asked to do?',
+    example:
+      'I was tasked with installing the new consumer unit and first-fix wiring for the upstairs circuits, working under my supervisor\'s guidance.',
+  },
+  {
+    letter: 'A',
+    title: 'Action',
+    description: 'What did you actually do? Be specific about your actions, decisions, and the regulations or standards you followed.',
+    example:
+      'I performed safe isolation of the existing supply using the GS38 procedure. I then installed a 10-way split-load consumer unit with dual RCDs, ran 2.5mm² T&E for ring finals and 1.5mm² for lighting circuits through the first-floor void, following BS 7671 Table 4D5.',
+  },
+  {
+    letter: 'R',
+    title: 'Result',
+    description: 'What was the outcome? What did you learn? What would you do differently?',
+    example:
+      'All circuits tested satisfactorily — R1+R2 within expected ranges, IR >200MΩ, Zs values within limits. I learned that planning cable routes before starting saves significant time. Next time I\'d draw a full routing plan before cutting any cables.',
+  },
+];
+
+const writingTips = [
+  'Write in the first person — "I installed…", "I learned…", "I decided…"',
+  'Be honest about mistakes — assessors value honesty and learning more than perfection',
+  'Include technical detail — mention specific regulations, cable sizes, test values',
+  'Explain your reasoning — why did you choose that approach? What alternatives were there?',
+  'Link to KSBs — explicitly state which Knowledge, Skills, or Behaviours your reflection covers',
+  'Keep it concise — 300–500 words per reflective account is usually sufficient',
+  'Write soon after the event — you will forget important details if you wait weeks',
+  'Show progression — early reflections simpler, later ones more detailed and analytical',
+  'Include what went wrong — a reflection about a mistake you corrected is extremely valuable',
+  'Don\'t copy from textbooks — use your own words and your own experience',
+];
+
+const gibbsStages = [
+  { stage: '1. Description', description: 'What happened? Describe the event factually.' },
+  { stage: '2. Feelings', description: 'What were you thinking and feeling at the time?' },
+  { stage: '3. Evaluation', description: 'What was good and bad about the experience?' },
+  { stage: '4. Analysis', description: 'What sense can you make of the situation? Why did things go that way?' },
+  { stage: '5. Conclusion', description: 'What else could you have done? What did you learn?' },
+  { stage: '6. Action plan', description: 'What will you do differently next time?' },
+];
+
+const reflectionTopics = [
+  {
+    category: 'Technical work',
+    topics: [
+      'Your first consumer unit installation',
+      'A complex fault you helped diagnose',
+      'Testing and inspecting a completed installation',
+      'Working with 3-phase systems for the first time',
+      'Installing an EV charging point',
+      'Your first EICR contribution',
+    ],
+  },
+  {
+    category: 'Problem solving',
+    topics: [
+      'A time when something went wrong and how you fixed it',
+      'An unexpected fault that required creative thinking',
+      'Adapting your approach when original plans changed',
+      'Working around access difficulties on site',
+      'Dealing with damaged or incorrect materials',
+    ],
+  },
+  {
+    category: 'Professional development',
+    topics: [
+      'How your confidence has grown over your apprenticeship',
+      'A skill you struggled with but eventually mastered',
+      'What you learned from a more experienced electrician',
+      'How college theory helped you on site',
+      'Your preparation for the AM2 assessment',
+    ],
+  },
+  {
+    category: 'Working with others',
+    topics: [
+      'Coordinating with other trades on a project',
+      'Explaining electrical work to a non-technical client',
+      'Working effectively as part of a team on a large job',
+      'Dealing with a disagreement on site',
+      'Mentoring a newer apprentice',
+    ],
+  },
+  {
+    category: 'Health & safety',
+    topics: [
+      'A near-miss incident and what you learned',
+      'Implementing safe isolation on a live system',
+      'Identifying and reporting a safety hazard',
+      'Working at height for the first time',
+      'Dealing with asbestos discovery during a rewire',
+    ],
+  },
+];
+
+const assessorUse = [
+  'They read your reflective accounts before the Professional Discussion',
+  'They use them as starting points for deeper questions',
+  'They look for evidence of genuine understanding, not rehearsed answers',
+  'They want to see progression in your reflective ability over time',
+  'They assess whether you can apply theory to practice',
+  'They check that you understand why regulations exist, not just what they are',
+];
+
+const fullExample = [
+  {
+    label: 'Situation',
+    text: 'During a kitchen refurbishment in a domestic property, I was asked to install a new radial circuit for a cooker supply. The existing installation was a TN-C-S system with a 100A main fuse and 16mm² tails.',
+  },
+  {
+    label: 'Task',
+    text: 'I needed to install a 32A radial circuit using 6mm² T&E from the consumer unit to a 45A cooker switch with a 13A socket outlet, a distance of approximately 18 metres.',
+  },
+  {
+    label: 'Action',
+    text: 'I first performed safe isolation of the consumer unit using GS38. I then referred to BS 7671 Table 4D5 to confirm that 6mm² T&E was suitable for the 32A circuit, considering the installation method (clipped direct, method C) and the route length. I calculated the voltage drop using the mV/A/m values and confirmed it was within the 5% limit. I installed the cable, terminated at both ends, and fitted the cooker switch. I then tested the circuit: R1+R2 was 0.82Ω, insulation resistance >200MΩ, Zs 0.94Ω — all within acceptable limits.',
+  },
+  {
+    label: 'Result',
+    text: 'The circuit passed all tests and was signed off by my supervisor. I learned the importance of checking voltage drop calculations before starting — if the route had been 5 metres longer, I would have needed 10mm² cable. In future, I\'ll always calculate voltage drop as part of my planning before pulling cable.',
+  },
+];
+
+const frequencyGuide = [
+  'Aim for at least one detailed reflective account per month',
+  'Write brief notes after significant tasks (even just bullet points)',
+  'Complete a full STAR reflection after each major installation or project',
+  'Reflect on college learning and how it connects to site work',
+  'Write a reflection whenever something unexpected happens',
+  'By gateway, aim for 15–20 quality reflective accounts covering all KSBs',
+];
 
 const ReflectivePracticePage = () => {
   const navigate = useNavigate();
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
+        <button
           onClick={() => navigate('/apprentice/toolbox/portfolio-building')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+          className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation"
         >
-          <ArrowLeft className="mr-2 h-5 w-5" />
+          <ArrowLeft className="h-4 w-4" />
           Back
-        </Button>
+        </button>
       </motion.div>
 
       <motion.div variants={itemVariants}>
         <PageHero
           eyebrow="Apprentice · Portfolio"
-          title="Reflective Practice"
+          title="Reflective practice"
+          description="Thinking about what you did, why, and what you'd do differently. The part of your portfolio that shows assessors you understand your work — not just that you can do it."
           tone="yellow"
         />
       </motion.div>
 
-      {/* Intro */}
-      <Card className="border-purple-500/30 bg-white/5">
-        <CardContent className="p-4 space-y-3">
-          <h2 className="text-lg font-semibold text-purple-400">
-            Why Reflection Matters
-          </h2>
-          <p className="text-white text-sm leading-relaxed">
-            Reflective practice is the process of thinking about what you
-            did, why you did it, what went well, what could be better, and
-            what you will do differently next time. It is a critical part
-            of your portfolio because it shows assessors that you
-            understand your work, not just that you can do it.
+      {/* ── Why reflection matters ──────────────────────────────── */}
+      <motion.div variants={itemVariants}>
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2">
+          <Eyebrow>Why reflection matters</Eyebrow>
+          <p className="text-[13.5px] text-white/85 leading-relaxed">
+            Reflective practice is the process of thinking about what you did,
+            why you did it, what went well, what could be better, and what
+            you\'ll do differently next time. It\'s a critical part of your
+            portfolio because it shows assessors that you understand your work.
           </p>
-          <p className="text-white text-sm leading-relaxed">
-            In the Professional Discussion component of your EPA, the
-            assessor will ask you to reflect on your experiences. Practising
-            reflection throughout your apprenticeship means you will be
-            prepared and confident when that conversation happens.
+          <p className="text-[13px] text-white/85 leading-relaxed">
+            In the Professional Discussion at EPA, the assessor will ask you to
+            reflect on your experiences. Practising reflection throughout your
+            apprenticeship means you\'ll be prepared and confident.
           </p>
-        </CardContent>
-      </Card>
+        </div>
+      </motion.div>
 
-      {/* STAR Method */}
-      <Card className="border-blue-500/30 bg-white/5">
-        <CardContent className="p-4 space-y-3">
-          <h2 className="text-lg font-semibold text-blue-400">
-            The STAR Method
-          </h2>
-          <p className="text-white text-sm leading-relaxed">
-            STAR is the most commonly used framework for reflective
-            writing in apprenticeships. Use it for every reflective
-            account in your portfolio.
-          </p>
-          <div className="space-y-3">
-            {[
-              {
-                letter: 'S',
-                title: 'Situation',
-                desc: 'Describe the context. Where were you? What was the project? What was the task?',
-                example: 'I was on a domestic rewire project in a 3-bedroom semi-detached house. The existing wiring was TT earthing with old rubber-sheathed cables.',
-                colour: 'text-blue-400',
-                border: 'border-blue-500/20',
-                bg: 'bg-blue-500/10',
-              },
-              {
-                letter: 'T',
-                title: 'Task',
-                desc: 'What was your specific role and responsibility? What were you asked to do?',
-                example: 'I was tasked with installing the new consumer unit and first-fix wiring for the upstairs circuits, working under my supervisor\'s guidance.',
-                colour: 'text-green-400',
-                border: 'border-green-500/20',
-                bg: 'bg-green-500/10',
-              },
-              {
-                letter: 'A',
-                title: 'Action',
-                desc: 'What did you actually do? Be specific about your actions, decisions, and the regulations or standards you followed.',
-                example: 'I performed safe isolation of the existing supply using the GS38 procedure. I then installed a 10-way split-load consumer unit with dual RCDs, ran 2.5mm² T&E for ring finals and 1.5mm² for lighting circuits through the first-floor void, following BS 7671 Table 4D5.',
-                colour: 'text-amber-400',
-                border: 'border-amber-500/20',
-                bg: 'bg-amber-500/10',
-              },
-              {
-                letter: 'R',
-                title: 'Result',
-                desc: 'What was the outcome? What did you learn? What would you do differently?',
-                example: 'All circuits tested satisfactorily — R1+R2 within expected ranges, insulation resistance >200MΩ, Zs values within limits. I learned that planning cable routes before starting saves significant time. Next time I would draw a full routing plan before cutting any cables.',
-                colour: 'text-purple-400',
-                border: 'border-purple-500/20',
-                bg: 'bg-purple-500/10',
-              },
-            ].map((item) => (
-              <div
-                key={item.letter}
-                className={`${item.bg} border ${item.border} rounded-lg p-3`}
-              >
-                <div className="flex items-center gap-2 mb-2">
-                  <div className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center">
-                    <span className={`${item.colour} font-bold text-sm`}>
-                      {item.letter}
-                    </span>
-                  </div>
-                  <h3 className={`${item.colour} font-semibold text-sm`}>
-                    {item.title}
-                  </h3>
-                </div>
-                <p className="text-white text-sm mb-2">{item.desc}</p>
-                <div className="bg-white/5 rounded p-2">
-                  <p className="text-white text-xs italic">
-                    Example: {item.example}
-                  </p>
-                </div>
+      {/* ── STAR method ─────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="STAR method"
+          title="The most-used reflective framework"
+          meta="Use it for every reflective account in your portfolio"
+        />
+        <ul className="space-y-2.5">
+          {starSteps.map((step) => (
+            <li
+              key={step.letter}
+              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
+            >
+              <div className="flex items-center gap-3">
+                <span className="inline-flex items-center justify-center w-9 h-9 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[16px] font-mono font-semibold text-elec-yellow flex-shrink-0">
+                  {step.letter}
+                </span>
+                <h3 className="text-[15px] font-semibold text-elec-yellow tracking-tight">
+                  {step.title}
+                </h3>
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+              <p className="text-[13px] text-white/85 leading-relaxed pl-12">
+                {step.description}
+              </p>
+              <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 ml-12">
+                <Eyebrow>Example</Eyebrow>
+                <p className="text-[12.5px] text-white/85 italic leading-relaxed mt-1">
+                  {step.example}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
 
-      {/* Writing Tips */}
-      <Card className="border-green-500/30 bg-white/5">
-        <CardContent className="p-4 space-y-3">
-          <h2 className="text-lg font-semibold text-green-400">
-            Reflective Writing Tips
-          </h2>
-          <ul className="space-y-2">
-            {[
-              'Write in the first person — "I installed...", "I learned...", "I decided..."',
-              'Be honest about mistakes — assessors value honesty and learning more than perfection',
-              'Include technical detail — mention specific regulations, cable sizes, test values',
-              'Explain your reasoning — why did you choose that approach? What alternatives were there?',
-              'Link to KSBs — explicitly state which Knowledge, Skills, or Behaviours your reflection covers',
-              'Keep it concise — 300-500 words per reflective account is usually sufficient',
-              'Write soon after the event — you will forget important details if you wait weeks',
-              'Show progression — early reflections should be simpler, later ones more detailed and analytical',
-              'Include what went wrong — a reflection about a mistake you corrected is extremely valuable evidence',
-              'Do not copy from textbooks — use your own words and your own experience',
-            ].map((item) => (
+      {/* ── Writing tips ────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Writing tips"
+          title="Ten rules for stronger reflections"
+          meta="The difference between a Pass and a Distinction"
+        />
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+          <ul className="space-y-1.5">
+            {writingTips.map((tip) => (
               <li
-                key={item}
-                className="flex items-start gap-2 text-sm text-white"
+                key={tip}
+                className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
               >
-                <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                {item}
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                <span>{tip}</span>
               </li>
             ))}
           </ul>
-        </CardContent>
-      </Card>
+        </div>
+      </motion.section>
 
-      {/* Gibbs Reflective Cycle */}
-      <Card className="border-amber-500/30 bg-white/5">
-        <CardContent className="p-4 space-y-3">
-          <h2 className="text-lg font-semibold text-amber-400">
-            Gibbs Reflective Cycle (Alternative Method)
-          </h2>
-          <p className="text-white text-sm leading-relaxed">
-            Some training providers prefer the Gibbs Reflective Cycle
-            instead of STAR. This 6-stage model goes deeper into your
-            feelings and analysis:
-          </p>
-          <div className="space-y-2">
-            {[
-              {
-                stage: '1. Description',
-                desc: 'What happened? Describe the event factually.',
-              },
-              {
-                stage: '2. Feelings',
-                desc: 'What were you thinking and feeling at the time?',
-              },
-              {
-                stage: '3. Evaluation',
-                desc: 'What was good and bad about the experience?',
-              },
-              {
-                stage: '4. Analysis',
-                desc: 'What sense can you make of the situation? Why did things go the way they did?',
-              },
-              {
-                stage: '5. Conclusion',
-                desc: 'What else could you have done? What did you learn?',
-              },
-              {
-                stage: '6. Action Plan',
-                desc: 'What will you do differently next time?',
-              },
-            ].map((item) => (
-              <div
-                key={item.stage}
-                className="bg-white/5 border border-amber-500/20 rounded-lg p-3"
-              >
-                <h3 className="text-amber-400 font-semibold text-sm">
-                  {item.stage}
-                </h3>
-                <p className="text-white text-sm mt-1">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+      {/* ── Gibbs cycle ─────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Gibbs reflective cycle"
+          title="Alternative 6-stage method"
+          meta="Some training providers prefer this over STAR"
+        />
+        <ul className="space-y-2">
+          {gibbsStages.map((item) => (
+            <li
+              key={item.stage}
+              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+            >
+              <h3 className="text-[13.5px] font-semibold text-elec-yellow tracking-tight">
+                {item.stage}
+              </h3>
+              <p className="text-[12.5px] text-white/85 leading-relaxed mt-1">
+                {item.description}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
 
-      {/* Topics to Reflect On */}
-      <Card className="border-blue-500/30 bg-white/5">
-        <CardContent className="p-4 space-y-3">
-          <h2 className="text-lg font-semibold text-blue-400">
-            Topics Worth Reflecting On
-          </h2>
-          <p className="text-white text-sm leading-relaxed">
-            Not sure what to write about? Here are excellent topics for
-            reflective accounts that cover a range of KSBs:
-          </p>
-          <div className="space-y-3">
-            {[
-              {
-                category: 'Technical Work',
-                topics: [
-                  'Your first consumer unit installation',
-                  'A complex fault you helped diagnose',
-                  'Testing and inspecting a completed installation',
-                  'Working with 3-phase systems for the first time',
-                  'Installing an EV charging point',
-                  'Your first EICR contribution',
-                ],
-              },
-              {
-                category: 'Problem Solving',
-                topics: [
-                  'A time when something went wrong and how you fixed it',
-                  'An unexpected fault that required creative thinking',
-                  'Adapting your approach when original plans changed',
-                  'Working around access difficulties on site',
-                  'Dealing with damaged or incorrect materials',
-                ],
-              },
-              {
-                category: 'Professional Development',
-                topics: [
-                  'How your confidence has grown over your apprenticeship',
-                  'A skill you struggled with but eventually mastered',
-                  'What you learned from a more experienced electrician',
-                  'How college theory helped you on site',
-                  'Your preparation for the AM2 assessment',
-                ],
-              },
-              {
-                category: 'Working with Others',
-                topics: [
-                  'Coordinating with other trades on a project',
-                  'Explaining electrical work to a non-technical client',
-                  'Working effectively as part of a team on a large job',
-                  'Dealing with a disagreement on site',
-                  'Mentoring a newer apprentice',
-                ],
-              },
-              {
-                category: 'Health & Safety',
-                topics: [
-                  'A near-miss incident and what you learned from it',
-                  'Implementing safe isolation on a live system',
-                  'Identifying and reporting a safety hazard',
-                  'Working at height for the first time',
-                  'Dealing with asbestos discovery during a rewire',
-                ],
-              },
-            ].map((section) => (
-              <div
-                key={section.category}
-                className="bg-white/5 border border-blue-500/20 rounded-lg p-3"
-              >
-                <h3 className="text-blue-400 font-semibold text-sm mb-2">
-                  {section.category}
-                </h3>
-                <ul className="space-y-1">
-                  {section.topics.map((topic) => (
-                    <li
-                      key={topic}
-                      className="flex items-start gap-2 text-sm text-white"
-                    >
-                      <span className="text-blue-400 flex-shrink-0">
-                        &bull;
-                      </span>
-                      {topic}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+      {/* ── Topics worth reflecting on ──────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Topics worth reflecting on"
+          title="Five categories of strong material"
+          meta="Excellent topics for reflective accounts covering a range of KSBs"
+        />
+        <ul className="space-y-2">
+          {reflectionTopics.map((section) => (
+            <li
+              key={section.category}
+              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2"
+            >
+              <h3 className="text-[13.5px] font-semibold text-elec-yellow tracking-tight">
+                {section.category}
+              </h3>
+              <ul className="space-y-1">
+                {section.topics.map((topic) => (
+                  <li
+                    key={topic}
+                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  >
+                    <span className="text-elec-yellow/70 mt-0.5">·</span>
+                    <span>{topic}</span>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
 
-      {/* Linking to EPA */}
-      <Card className="border-red-500/30 bg-white/5">
-        <CardContent className="p-4 space-y-3">
-          <h2 className="text-lg font-semibold text-red-400">
-            Linking Reflection to Your EPA
-          </h2>
-          <p className="text-white text-sm leading-relaxed">
-            Your reflective accounts directly prepare you for the
-            Professional Discussion component of your EPA. The assessor
-            will ask you to discuss your experiences, explain your
-            reasoning, and demonstrate your understanding. If you have
-            been writing quality reflections throughout your apprenticeship,
-            you will find this conversation natural and confident.
+      {/* ── Linking to EPA ──────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Linking reflection to EPA"
+          title="How assessors use your reflections"
+          meta="Reflection prep = professional discussion prep"
+        />
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+          <p className="text-[13px] text-white/85 leading-relaxed">
+            Your reflective accounts directly prepare you for the Professional
+            Discussion. If you\'ve been writing quality reflections throughout,
+            you\'ll find this conversation natural and confident.
           </p>
-          <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
-            <h3 className="text-red-400 font-semibold text-sm mb-2">
-              How Assessors Use Your Reflections
-            </h3>
-            <ul className="space-y-1">
-              {[
-                'They read your reflective accounts before the Professional Discussion',
-                'They use them as starting points for deeper questions',
-                'They look for evidence of genuine understanding, not rehearsed answers',
-                'They want to see progression in your reflective ability over time',
-                'They assess whether you can apply theory to practice',
-                'They check that you understand why regulations exist, not just what they are',
-              ].map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2 text-sm text-white"
-                >
-                  <span className="text-red-400 flex-shrink-0">&bull;</span>
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Example Reflective Account */}
-      <Card className="border-purple-500/30 bg-purple-500/10">
-        <CardContent className="p-4 space-y-3">
-          <h2 className="text-lg font-semibold text-purple-400">
-            Full Example: Reflective Account
-          </h2>
-          <p className="text-white text-sm italic leading-relaxed">
-            KSBs covered: S5 (Install wiring systems), K3 (BS 7671),
-            B1 (Safe working)
-          </p>
-          <div className="bg-white/5 rounded-lg p-3 space-y-2">
-            <p className="text-white text-sm leading-relaxed">
-              <span className="text-blue-400 font-semibold">Situation:</span>{' '}
-              During a kitchen refurbishment in a domestic property, I was
-              asked to install a new radial circuit for a cooker supply.
-              The existing installation was a TN-C-S system with a 100A
-              main fuse and 16mm² tails.
-            </p>
-            <p className="text-white text-sm leading-relaxed">
-              <span className="text-green-400 font-semibold">Task:</span>{' '}
-              I needed to install a 32A radial circuit using 6mm² T&E
-              from the consumer unit to a 45A cooker switch with a 13A
-              socket outlet, a distance of approximately 18 metres.
-            </p>
-            <p className="text-white text-sm leading-relaxed">
-              <span className="text-amber-400 font-semibold">Action:</span>{' '}
-              I first performed safe isolation of the consumer unit using
-              the approved procedure (GS38). I then referred to BS 7671
-              Table 4D5 to confirm that 6mm² T&E was suitable for the
-              32A circuit, considering the installation method (clipped
-              direct, method C) and the route length. I calculated the
-              voltage drop using the mV/A/m values and confirmed it was
-              within the 5% limit. I installed the cable, terminated at
-              both ends, and fitted the cooker switch. I then tested the
-              circuit: R1+R2 was 0.82Ω, insulation resistance was greater
-              than 200MΩ, and Zs was 0.94Ω — all within acceptable limits.
-            </p>
-            <p className="text-white text-sm leading-relaxed">
-              <span className="text-purple-400 font-semibold">Result:</span>{' '}
-              The circuit passed all tests and was signed off by my
-              supervisor. I learned the importance of checking voltage
-              drop calculations before starting the installation — if
-              the route had been 5 metres longer, I would have needed
-              to use 10mm² cable. In future, I will always calculate
-              voltage drop as part of my planning before pulling cable.
-            </p>
-          </div>
-          <p className="text-white text-sm leading-relaxed">
-            This single reflective account covers installation skills,
-            BS 7671 knowledge, and safe working behaviours — mapping to
-            three KSBs with one piece of evidence.
-          </p>
-        </CardContent>
-      </Card>
-
-      {/* How Often */}
-      <Card className="border-green-500/30 bg-white/5">
-        <CardContent className="p-4 space-y-3">
-          <h2 className="text-lg font-semibold text-green-400">
-            How Often Should You Reflect?
-          </h2>
-          <ul className="space-y-2">
-            {[
-              'Aim for at least one detailed reflective account per month',
-              'Write brief notes after significant tasks (even just bullet points)',
-              'Complete a full STAR reflection after each major installation or project',
-              'Reflect on college learning and how it connects to site work',
-              'Write a reflection whenever something unexpected happens',
-              'By gateway, aim for 15-20 quality reflective accounts covering all KSBs',
-            ].map((item) => (
+          <ul className="space-y-1.5">
+            {assessorUse.map((item) => (
               <li
                 key={item}
-                className="flex items-start gap-2 text-sm text-white"
+                className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
               >
-                <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                {item}
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                <span>{item}</span>
               </li>
             ))}
           </ul>
-        </CardContent>
-      </Card>
+        </div>
+      </motion.section>
+
+      {/* ── Full example ────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Full example"
+          title="A complete STAR reflective account"
+          meta="KSBs covered: S5 (Install wiring), K3 (BS 7671), B1 (Safe working)"
+          action={
+            <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
+              <Quote className="h-4 w-4 text-elec-yellow" />
+            </span>
+          }
+        />
+        <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-3">
+          {fullExample.map((part) => (
+            <div key={part.label} className="space-y-0.5">
+              <Eyebrow className="text-elec-yellow/85">{part.label}</Eyebrow>
+              <p className="text-[12.5px] text-white/85 leading-relaxed">
+                {part.text}
+              </p>
+            </div>
+          ))}
+          <p className="text-[12px] text-white/70 leading-relaxed pt-2 border-t border-elec-yellow/15 italic">
+            This single account covers installation skills, BS 7671 knowledge,
+            and safe working behaviours — three KSBs with one piece of evidence.
+          </p>
+        </div>
+      </motion.section>
+
+      {/* ── Frequency ───────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="How often to reflect"
+          title="A cadence that works"
+          meta="Monthly minimum; more around major events"
+        />
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+          <ul className="space-y-1.5">
+            {frequencyGuide.map((item) => (
+              <li
+                key={item}
+                className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+              >
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </motion.section>
     </PageFrame>
   );
 };

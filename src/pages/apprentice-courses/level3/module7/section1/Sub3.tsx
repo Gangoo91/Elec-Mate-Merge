@@ -97,7 +97,7 @@ const quizQuestions = [
     question: "What information appears on the front of an ECS card?",
     options: [
       "Just a name.",
-      "Your photo, full name, JIB grade (Apprentice / Improver / Electrician / Approved / Technician), card expiry date, qualifications listed, specialist endorsements (if any), and a unique card number for register lookup. Card colour and design indicate the grade tier (Gold for qualified Electrician/Approved, etc.).",
+      "Your photo, full name, formal JIB grade (Apprentice / Adult Trainee / Electrician / Approved / Technician), card expiry date, qualifications listed, specialist endorsements (if any), and a unique card number for register lookup. Card colour and design indicate the grade tier (Gold for qualified Electrician/Approved, etc.).",
       "Only your H&S test pass date.",
       "Only your address.",
     ],
@@ -110,13 +110,13 @@ const quizQuestions = [
     question: "When does an ECS card expire?",
     options: [
       "Never.",
-      "Three years from issue. Renewal requires a current ECS H&S assessment pass (taken within the previous 3 years) and current employment / qualification evidence. Card renewal is initiated through the JIB ECS portal — your employer typically handles renewals for employed staff; self-employed apprentices and electricians manage their own.",
-      "5 years.",
+      "Five years from issue. Renewal requires a current ECS Health & Safety Assessment pass (which itself is only valid for 3 years) plus current employment / qualification evidence. Card renewal is initiated through the JIB ECS portal — your employer typically handles renewals for employed staff; self-employed apprentices and electricians manage their own.",
+      "3 years.",
       "10 years.",
     ],
     correctAnswer: 1,
     explanation:
-      "Three-year cycle. The most common cause of card lapse is forgetting the H&S assessment renewal. Calendar the H&S assessment renewal at the 30-month mark — gives you time to re-take if you fail first time. Missing renewal means losing site access overnight; some main contractors won't let you back on with an expired card even if you've booked the renewal.",
+      "ECS card validity is 5 years; ECS Health & Safety Assessment validity is 3 years — two separate cycles. The most common cause of card lapse is letting the H&S assessment expire (because a valid H&S Assessment is required to keep or renew the card). Calendar the H&S Assessment renewal well before its 3-year expiry, and the card renewal before the 5-year expiry. Missing either means losing site access overnight; some main contractors won't let you back on with an expired card even if you've booked the renewal.",
   },
   {
     id: 4,
@@ -244,7 +244,7 @@ export default function Sub3() {
             points={[
               "The ECS card is the industry-standard proof of competence for electrical workers — issued by JIB, records your grade, qualifications, H&S assessment pass and specialist endorsements.",
               "Required for entry on most CDM-regulated UK construction sites — main contractors use it to discharge their CDM duty to check worker competence.",
-              "ECS H&S Assessment (50-question CBT, 80% pass mark) valid 3 years; card renewal also 3-yearly. Calendar the renewal at month 30.",
+              "ECS card validity is 5 years from issue. The JIB ECS Health & Safety Assessment (50-question CBT, 80% pass mark) is valid 3 years — and you must hold a valid H&S Assessment to renew (or maintain) your ECS card. Two separate renewal cycles to track.",
               "Specialist endorsements (Solar PV, EV Charging, Hazardous Areas / CompEx, Fire Detection / BAFE) are increasingly required for specialist work and earn higher day rates.",
             ]}
           />
@@ -273,7 +273,7 @@ export default function Sub3() {
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>Photo</li>
               <li>Full name</li>
-              <li>JIB grade (Apprentice / Improver / Electrician / Approved / Technician)</li>
+              <li>Formal JIB grade (Apprentice / Adult Trainee / Electrician / Approved / Technician)</li>
               <li>Card expiry date</li>
               <li>Qualifications listed</li>
               <li>Specialist endorsements (if any)</li>
@@ -470,13 +470,13 @@ export default function Sub3() {
                 HASAWA s.2(2)(c) is the explicit training duty on the Employer. Funding the
                 ECS H&amp;S assessment, the AM2S, the CompEx or the BAFE training is part of
                 discharging this duty &mdash; particularly when the firm is moving into a new
-                specialism that requires staff to upskill. Apprentices and improvers should
+                specialism that requires staff to upskill. Apprentices and pre-AM2 staff should
                 expect the employer to fund baseline ECS card and H&amp;S assessment costs;
                 specialist endorsements often sit somewhere between employer-funded and
                 self-funded by negotiation.
               </>
             }
-            cite="Source: Health and Safety at Work etc Act 1974 (1974 c.37), Part I, s.2 — verbatim from legislation.gov.uk."
+            cite="Source: Health and Safety at Work etc Act 1974 (1974 c.37), Part I, s.2."
           />
 
           <RegsCallout
@@ -488,11 +488,14 @@ export default function Sub3() {
                 </p>
                 <ul className="space-y-1 list-disc pl-5 text-[14px]">
                   <li>
-                    Card valid 3 years from issue.
+                    Card valid 5 years from issue.
                   </li>
                   <li>
-                    Renewal requires a current ECS H&amp;S assessment pass (within 3 years)
-                    and current employment / qualification evidence.
+                    ECS Health &amp; Safety Assessment valid 3 years from pass date.
+                  </li>
+                  <li>
+                    Card renewal requires a current ECS H&amp;S assessment pass (within its
+                    3-year validity) and current employment / qualification evidence.
                   </li>
                   <li>
                     Specialist endorsements require evidence of the underlying training and
@@ -531,19 +534,22 @@ export default function Sub3() {
             whatHappens={
               <>
                 Apprentice or electrician forgets when their ECS H&amp;S assessment expires.
-                Three years pass quietly. The card&apos;s 3-year cycle ends; the card
-                renewal application gets blocked because the H&amp;S assessment is no longer
-                current. Cards expire on a Monday morning; the next site visit on Tuesday
-                ends with a polite turn-around at the gate. Two weeks of lost work while the
-                H&amp;S assessment is rebooked, taken, passed, and the new card produced.
+                Three years pass quietly. The H&amp;S Assessment lapses; even though the ECS
+                card itself runs to 5 years, the card renewal application (or the card&apos;s
+                continued validity) gets blocked because a valid H&amp;S Assessment is a
+                required condition. Cards effectively lock out on a Monday morning; the next
+                site visit on Tuesday ends with a polite turn-around at the gate. Two weeks of
+                lost work while the H&amp;S Assessment is rebooked, taken, passed, and the new
+                card produced.
               </>
             }
             doInstead={
               <>
-                Calendar the H&amp;S assessment renewal at month 30 of its 3-year validity
-                &mdash; six months of buffer before the card itself expires. If you fail the
-                H&amp;S test first try, you&apos;ve still got time to rebook and pass before
-                the card lapses. Set a phone reminder; don&apos;t rely on JIB email reminders
+                Calendar the H&amp;S Assessment renewal at month 30 of its 3-year validity
+                &mdash; six months of buffer before the H&amp;S pass would expire. Separately,
+                calendar the ECS card renewal at year 4.5 of its 5-year validity. If you fail
+                the H&amp;S test first try, you&apos;ve still got time to rebook and pass before
+                anything lapses. Set phone reminders; don&apos;t rely on JIB email reminders
                 alone &mdash; they sometimes go to spam.
               </>
             }
@@ -569,9 +575,9 @@ export default function Sub3() {
                 window.
                 <br /><br />
                 <strong>Step 2 &mdash; book the ECS H&amp;S assessment for the earliest
-                slot</strong>. Most testing centres have walk-in or next-day slots. Pearson
-                VUE and CITB-approved centres are the typical providers. Book online tonight
-                if possible.
+                slot</strong>. Most testing centres have walk-in or next-day slots. JIB ECS
+                Approved Centres (typically CITB-approved test centres) are the providers.
+                Book online tonight if possible.
                 <br /><br />
                 <strong>Step 3 &mdash; revise tonight</strong>. JIB publishes a revision
                 booklet free at jib.org.uk; the CITB H&amp;S app is also widely used. Two
@@ -709,11 +715,11 @@ export default function Sub3() {
             points={[
               "ECS card is the industry-standard competence card for UK electrical workers — issued by JIB, records grade, qualifications, H&S assessment pass and specialist endorsements.",
               "Required for entry on most CDM-regulated UK construction sites; main contractors use it to discharge their CDM 2015 duty to check competence.",
-              "Three-year validity; ECS H&S Assessment also 3-year validity (50 questions, 80% pass); calendar the H&S renewal at month 30 to give buffer.",
+              "ECS card validity is 5 years; the ECS Health & Safety Assessment is 3-year validity (50 questions, 80% pass) — and you must hold a valid H&S Assessment to maintain or renew the card. Calendar the H&S renewal at month 30; the card renewal around year 4.5.",
               "Specialist endorsements (Solar PV / AM2S, EV Charging / BPEC, Hazardous Areas / CompEx, Fire Detection / BAFE) unlock specialist work and significantly higher day rates.",
               "Application and renewal through jib.org.uk; first-issue typically £36-40; H&S assessment £20-30; specialist courses £300-1,500+.",
               "Lost or stolen cards replaceable through the JIB ECS portal for a small admin fee; public register confirms status while physical card is in production.",
-              "Card grade tracks your JIB grade — Apprentice → Improver → Electrician (Gold) → Approved → Technician — and updates as your grade upgrades.",
+              "Card grade tracks your formal JIB grade — Apprentice → Adult Trainee → Electrician (Gold) → Approved → Technician — and updates as your grade upgrades.",
               "Calendar discipline matters — let the card lapse and you lose site access overnight. Treat renewals as a fixed personal-admin priority.",
             ]}
           />

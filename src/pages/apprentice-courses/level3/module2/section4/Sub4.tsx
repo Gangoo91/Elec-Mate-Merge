@@ -28,6 +28,7 @@ import {
   ContentEyebrow,
   SectionRule,
 } from '@/components/study-centre/learning';
+import { EarthingSystemDiagram } from '@/components/study-centre/diagrams';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE =
@@ -62,7 +63,7 @@ const checks = [
     ],
     correctIndex: 1,
     explanation:
-      "Section 722 carves out a specific AFDD exemption for EV charging equipment that meets the BS EN 61851 series. The acceptance facets in bs7671_facets are explicit — the exemption applies only where the equipment conforms (verify by documentation) and where the connector conforms to BS EN IEC 62196-2. A verifier should never accept the exemption on verbal assurance — the documentary evidence must be present in the install file. The reasoning is that the BS EN 61851 series imposes its own protective measures within the charging equipment, including arc-fault detection mechanisms appropriate to the EV charging duty cycle.",
+      "Section 722 carves out a specific AFDD exemption for EV charging equipment that meets the BS EN 61851 series. The acceptance rules are explicit — the exemption applies only where the equipment conforms (verify by documentation) and where the connector conforms to BS EN IEC 62196-2. A verifier should never accept the exemption on verbal assurance — the documentary evidence must be present in the install file. The reasoning is that the BS EN 61851 series imposes its own protective measures within the charging equipment, including arc-fault detection mechanisms appropriate to the EV charging duty cycle.",
   },
   {
     id: 'l3-m2-s4-sub4-protective-measures',
@@ -76,7 +77,7 @@ const checks = [
     ],
     correctIndex: 1,
     explanation:
-      "Section 722 explicitly prohibits four specific protective measures — obstacles, placing out of reach (722.410.3.5), non-conducting location, and earth-free local equipotential bonding (722.410.3.6). The reasoning is that EV charging brings members of the public (and their vehicles) into electrical contact with the installation in conditions that those four measures cannot safely manage. The acceptable protective measures are the conventional Part 4 set — ADS with appropriate RCDs, SELV / PELV where applicable, and double or reinforced insulation. The Action facet captured in bs7671_facets is direct — any design proposing non-conducting location or earth-free bonding in an EV charging context shall be revised.",
+      "Section 722 explicitly prohibits four specific protective measures — obstacles, placing out of reach (722.410.3.5), non-conducting location, and earth-free local equipotential bonding (722.410.3.6). The reasoning is that EV charging brings members of the public (and their vehicles) into electrical contact with the installation in conditions that those four measures cannot safely manage. The acceptable protective measures are the conventional Part 4 set — ADS with appropriate RCDs, SELV / PELV where applicable, and double or reinforced insulation. The required action is direct — any design proposing non-conducting location or earth-free bonding in an EV charging context shall be revised.",
   },
 ];
 
@@ -93,7 +94,7 @@ const quizQuestions = [
       ],
     correctAnswer: 1,
     explanation:
-      "The applicability test from bs7671_facets is precise — the circuit must be intended to supply EVs for charging. A general-purpose 13 A socket sometimes used for granny-charging is in scope only if the circuit design intent includes EV charging. A dedicated EV charging final circuit is always in scope. Section 722 is one of the most actively revised sections of BS 7671 — A1:2020 introduced significant changes, and A4:2026 incorporated A1:2020 alongside further changes affecting EV charging installations.",
+      "The applicability test is precise — the circuit must be intended to supply EVs for charging. A general-purpose 13 A socket sometimes used for granny-charging is in scope only if the circuit design intent includes EV charging. A dedicated EV charging final circuit is always in scope. Section 722 is one of the most actively revised sections of BS 7671 — A1:2020 introduced significant changes, and A4:2026 incorporated A1:2020 alongside further changes affecting EV charging installations.",
   },
   {
     id: 2,
@@ -107,7 +108,7 @@ const quizQuestions = [
       ],
     correctAnswer: 1,
     explanation:
-      "The verbatim scope of Reg 722.411.4 from bs7671_facets makes the rule and the rationale clear. The PME (Protective Multiple Earthing) arrangement is fine for the property as long as the PEN remains intact, but a broken PEN raises the property's earth potential toward line voltage. For an EV on a driveway the surrounding ground stays at true earth potential while the car body sits at the elevated PME potential — the touch voltage can be lethal. The four alternative routes manage that risk in different ways.",
+      "The scope of Reg 722.411.4 makes the rule and the rationale clear. The PME (Protective Multiple Earthing) arrangement is fine for the property as long as the PEN remains intact, but a broken PEN raises the property's earth potential toward line voltage. For an EV on a driveway the surrounding ground stays at true earth potential while the car body sits at the elevated PME potential — the touch voltage can be lethal. The four alternative routes manage that risk in different ways.",
   },
   {
     id: 3,
@@ -149,7 +150,7 @@ const quizQuestions = [
       ],
     correctAnswer: 1,
     explanation:
-      "Section 722 carves out a specific AFDD exemption for compliant EV charging equipment because the BS EN 61851 series imposes its own arc-detection regime within the charging equipment. The acceptance facets in bs7671_facets are explicit — the exemption applies only with documentary evidence of conformity. A verifier accepting the exemption without documentation is operating outside Section 722.",
+      "Section 722 carves out a specific AFDD exemption for compliant EV charging equipment because the BS EN 61851 series imposes its own arc-detection regime within the charging equipment. The acceptance rules are explicit — the exemption applies only with documentary evidence of conformity. A verifier accepting the exemption without documentation is operating outside Section 722.",
   },
   {
     id: 6,
@@ -163,7 +164,7 @@ const quizQuestions = [
       ],
     correctAnswer: 1,
     explanation:
-      "The four prohibited measures are deliberately narrow. They are unsafe in EV charging contexts because members of the public (the customer, family, visitors) interact with the installation while connected to a vehicle that is itself connected to the surrounding ground. Obstacles and placing out of reach do not cope with a connected charging cable. Non-conducting location and earth-free bonding do not cope with the vehicle being inherently part of the protective system. The Action facet from bs7671_facets is direct — designs proposing those measures must be revised before installation.",
+      "The four prohibited measures are deliberately narrow. They are unsafe in EV charging contexts because members of the public (the customer, family, visitors) interact with the installation while connected to a vehicle that is itself connected to the surrounding ground. Obstacles and placing out of reach do not cope with a connected charging cable. Non-conducting location and earth-free bonding do not cope with the vehicle being inherently part of the protective system. The required action is direct — designs proposing those measures must be revised before installation.",
   },
   {
     id: 7,
@@ -320,7 +321,7 @@ export default function Sub4() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Reg 722.411.4 (TN system scope, verbatim)"
+            source="BS 7671:2018+A4:2026 — Reg 722.411.4 (TN system scope, paraphrased)"
             clause={
               <>
                 &quot;Regulation 722.411.4 applies to TN systems and addresses requirements
@@ -334,7 +335,7 @@ export default function Sub4() {
             }
             meaning={
               <>
-                The verbatim scope is unambiguous. PME (Protective Multiple Earthing — the
+                The scope is unambiguous. PME (Protective Multiple Earthing — the
                 domestic name for the TN-C-S arrangement most UK distribution networks use)
                 cannot be used directly as the charge point's protective-earth reference for
                 outdoor charging on a TN supply. Routes (b) to (e) are the four alternative
@@ -343,8 +344,10 @@ export default function Sub4() {
                 reach an outdoor parking position — outdoor use is the trigger.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Reg 722.411.4 (verbatim scope via bs7671_facets — IET Wiring Regulations 18th Edition A4:2026)."
+            cite="Source: BS 7671:2018+A4:2026 Reg 722.411.4 — IET Wiring Regulations 18th Edition A4:2026."
           />
+
+          <EarthingSystemDiagram />
 
           <SectionRule />
 
@@ -400,8 +403,7 @@ export default function Sub4() {
             onSite="On the install you do not see the open-PEN fault directly — you see its consequences. The whole rationale of Reg 722.411.4 is that you cannot rely on the PEN remaining intact for the lifetime of the EV charging point. Reasonable foreseeability is the standard. The four routes of Reg 722.411.4 either remove the dependence on the PEN (route b — installation earth electrode) or detect the open-PEN condition through its voltage signature and disconnect the EV (route d — voltage-window detection). Either route delivers a charging point that stays safe even under an open-PEN fault."
           >
             <p>
-              The numbers from Annex A722 Item A722.3 (referenced in the verbatim NOTE
-              captured in bs7671_facets):
+              The numbers from Annex A722 Item A722.3:
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
@@ -429,7 +431,7 @@ export default function Sub4() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Reg 722.411.4(b) (Installation earth electrode, verbatim)"
+            source="BS 7671:2018+A4:2026 — Reg 722.411.4(b) (Installation earth electrode, paraphrased)"
             clause={
               <>
                 &quot;The main earthing terminal of the installation shall be connected to an
@@ -452,11 +454,11 @@ export default function Sub4() {
                 to keep the EV charging point safe under PEN-fault conditions.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Reg 722.411.4(b) (verbatim via bs7671_facets — IET Wiring Regulations 18th Edition A4:2026)."
+            cite="Source: BS 7671:2018+A4:2026 Reg 722.411.4(b) — IET Wiring Regulations 18th Edition A4:2026."
           />
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Reg 722.411.4(d) (Voltage-window detection, verbatim)"
+            source="BS 7671:2018+A4:2026 — Reg 722.411.4(d) (Voltage-window detection, paraphrased)"
             clause={
               <>
                 &quot;Protection against electric shock shall be provided by a device which
@@ -480,7 +482,7 @@ export default function Sub4() {
                 route on that basis. The device shall be selected per Table 537.4.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Reg 722.411.4(d) (verbatim via bs7671_facets — IET Wiring Regulations 18th Edition A4:2026)."
+            cite="Source: BS 7671:2018+A4:2026 Reg 722.411.4(d) — IET Wiring Regulations 18th Edition A4:2026."
           />
 
           <InlineCheck
@@ -598,7 +600,7 @@ export default function Sub4() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Reg 722.421.1.7.201 (AFDD exemption, verbatim)"
+            source="BS 7671:2018+A4:2026 — Reg 722.421.1.7.201 (AFDD exemption, paraphrased)"
             clause={
               <>
                 &quot;Regulation 722.421.1.7.201 states that AFDDs are not required for
@@ -618,7 +620,7 @@ export default function Sub4() {
                 conformity, markings, datasheets or test reports demonstrating compliance.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Reg 722.421.1.7.201 (verbatim via bs7671_facets — IET Wiring Regulations 18th Edition A4:2026)."
+            cite="Source: BS 7671:2018+A4:2026 Reg 722.421.1.7.201 — IET Wiring Regulations 18th Edition A4:2026."
           />
 
           <InlineCheck
@@ -636,7 +638,7 @@ export default function Sub4() {
           <ConceptBlock
             title="Four protective measures Section 722 forbids — and the alternatives"
             plainEnglish="Section 722 explicitly prohibits four protective measures inside its scope. Reg 722.410.3.5 prohibits obstacles and placing out of reach (the Section 417 measures). Reg 722.410.3.6 prohibits non-conducting location and earth-free local equipotential bonding. The reasoning in each case is that EV charging brings members of the public into electrical contact with the installation in conditions those four measures cannot safely manage. The acceptable measures are the conventional Part 4 set — automatic disconnection of supply with appropriate RCDs, SELV / PELV where applicable, double or reinforced insulation."
-            onSite="On site you do not normally see designs that propose any of the four prohibited measures because most modern EV charger designs use ADS plus RCD by default. But on bespoke commercial installations, particularly retrofits in unusual locations, the prohibited measures occasionally appear in initial design proposals and need to be challenged. The Action facet from bs7671_facets is direct — if a design or installation proposal for a location within Chapter 72 includes non-conducting location or earth-free local equipotential bonding as protective measures, the installer or design team shall revise the proposal to use permitted protective measures."
+            onSite="On site you do not normally see designs that propose any of the four prohibited measures because most modern EV charger designs use ADS plus RCD by default. But on bespoke commercial installations, particularly retrofits in unusual locations, the prohibited measures occasionally appear in initial design proposals and need to be challenged. The required action is direct — if a design or installation proposal for a location within Chapter 72 includes non-conducting location or earth-free local equipotential bonding as protective measures, the installer or design team shall revise the proposal to use permitted protective measures."
           >
             <p>
               Why each prohibition exists:
@@ -671,7 +673,7 @@ export default function Sub4() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Reg 722.410.3.6 (prohibition, verbatim implication)"
+            source="BS 7671:2018+A4:2026 — Reg 722.410.3.6 (prohibition, paraphrased)"
             clause={
               <>
                 &quot;Regulation 722.410.3.6 sits in Chapter 72 (Part 7 — Special
@@ -692,7 +694,7 @@ export default function Sub4() {
                 placing out of reach (Section 417 measures) on the same rationale.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Reg 722.410.3.6 and 722.410.3.5 (verbatim via bs7671_facets — IET Wiring Regulations 18th Edition A4:2026)."
+            cite="Source: BS 7671:2018+A4:2026 Reg 722.410.3.6 and 722.410.3.5 — IET Wiring Regulations 18th Edition A4:2026."
           />
 
           <InlineCheck
@@ -783,9 +785,8 @@ export default function Sub4() {
                 in a modern dedicated EV charger — is the most common modern answer for
                 domestic installs. Route (b) — installation earth electrode — is the answer
                 where the equipment does not have built-in detection or where the design
-                prefers an independent earth reference. The verbatim scope of Reg 722.411.4
-                from bs7671_facets is clear — PME may not be used directly for outdoor
-                charging on TN systems.
+                prefers an independent earth reference. The scope of Reg 722.411.4 is
+                clear — PME may not be used directly for outdoor charging on TN systems.
               </>
             }
           />
@@ -805,7 +806,7 @@ export default function Sub4() {
             doInstead={
               <>
                 Verify the BS EN 61851 series conformity before accepting the AFDD
-                exemption. The acceptance facet from bs7671_facets is explicit — manufacturer
+                exemption. The acceptance rule is explicit — manufacturer
                 declaration, marking, datasheet or test report. Verify the connector
                 conformity to BS EN IEC 62196-2. File both pieces of evidence in the
                 customer handover pack. The exemption is real but conditional — without

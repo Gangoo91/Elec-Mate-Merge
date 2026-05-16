@@ -34,7 +34,9 @@ import {
   LearningOutcomes,
   ContentEyebrow,
   SectionRule,
+  VideoCard,
 } from '@/components/study-centre/learning';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE =
@@ -310,7 +312,7 @@ export default function Sub4() {
                 HSWA s.3 puts the duty on the firm (and through it, on the L3 apprentice as the firm's representative on site) towards anyone who isn't an employee &mdash; the customer, the customer's family, the postman, the next tenant. When an L3 apprentice discovers a safety finding during a visit, the s.3 duty is engaged regardless of whether the customer asked about it. The right response is to document, brief, and offer rectification &mdash; not to ignore. Ignoring known safety issues breaches the duty and exposes the firm to civil and potentially criminal liability if harm later occurs.
               </>
             }
-            cite="Source: Health and Safety at Work etc. Act 1974, Section 3 — verbatim from legislation.gov.uk."
+            cite="Source: Health and Safety at Work etc. Act 1974, Section 3."
           />
 
           <InlineCheck
@@ -319,6 +321,14 @@ export default function Sub4() {
             options={checks[0].options}
             correctIndex={checks[0].correctIndex}
             explanation={checks[0].explanation}
+          />
+
+          <VideoCard
+            url={videos.faultFinding.url}
+            title={videos.faultFinding.title}
+            channel={videos.faultFinding.channel}
+            duration={videos.faultFinding.duration}
+            topic={videos.faultFinding.topic}
           />
 
           <SectionRule />

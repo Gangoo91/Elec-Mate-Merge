@@ -75,13 +75,15 @@ export const InvoiceGenerationStep = ({
         throw new Error('User not authenticated');
       }
 
-      // Use items directly from invoice - they're already merged in DB
-      const mergedItems = invoice.items || [];
+      const mergedItems = [
+        ...(invoice.items || []),
+        ...(invoice.additional_invoice_items || []),
+      ];
 
       const completeInvoice = {
         ...invoice,
         items: mergedItems,
-        additional_invoice_items: [], // Already merged
+        additional_invoice_items: [],
         jobDetails: invoice.jobDetails,
       };
 

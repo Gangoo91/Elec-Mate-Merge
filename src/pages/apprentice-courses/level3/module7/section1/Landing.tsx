@@ -16,14 +16,14 @@ const subsections = [
   {
     number: 'Subsection 1',
     title: 'Industry structure + roles in building services engineering',
-    description: 'How the UK electrical contracting industry is structured — main contractor, sub-contractor, domestic installer — and the roles within a firm: Apprentice, Improver, Electrician, Approved Electrician, Technician,…',
+    description: 'How the UK electrical contracting industry is structured — main contractor, sub-contractor, domestic installer — and the roles within a firm: Apprentice, Electrician, Approved Electrician, Technician,…',
     icon: FileText,
     href: '/study-centre/apprentice/level3-module7-section1-1',
   },
   {
     number: 'Subsection 2',
     title: 'JIB grading deep dive',
-    description: 'The JIB grading ladder — Apprentice, Stage 1-4, Improver, Electrician, Approved Electrician, Technician — what each grade means, the evidence you need to progress, and how the JIB pay framework links your grade to…',
+    description: 'The formal JIB grading ladder — Apprentice (Stage 1-4), Adult Trainee, Electrician, Approved Electrician, Technician — what each grade means, the evidence you need to progress, and how the JIB pay framework links your grade to…',
     icon: ClipboardCheck,
     href: '/study-centre/apprentice/level3-module7-section1-2',
   },

@@ -26,7 +26,9 @@ import {
   LearningOutcomes,
   ContentEyebrow,
   SectionRule,
+  VideoCard,
 } from '@/components/study-centre/learning';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE =
@@ -305,6 +307,15 @@ export default function Sub5() {
             </ul>
           </ConceptBlock>
 
+          <VideoCard
+            url={videos.inverter.url}
+            title={videos.inverter.title}
+            channel={videos.inverter.channel}
+            duration={videos.inverter.duration}
+            topic="The inverter — central component in a whole-system install"
+            caption="In an integrated PV + battery + heat-pump + EV property the inverter (or inverters) is the shared component that ties DC harvest and storage to the AC consumer unit. Understanding the inverter is foundational to reading the whole system."
+          />
+
           <SectionRule />
 
           <ContentEyebrow>The HEMS supervisory layer</ContentEyebrow>
@@ -461,7 +472,7 @@ export default function Sub5() {
                 the location of the example layouts has moved.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Section 514 — revisions, verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Section 514."
           />
 
           <RegsCallout
@@ -485,7 +496,7 @@ export default function Sub5() {
                 protective measures match the equipment you actually installed.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 133.1.3 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 133.1.3."
           />
 
           <SectionRule />

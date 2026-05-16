@@ -29,6 +29,7 @@ import {
   SectionRule,
   VideoCard,
 } from '@/components/study-centre/learning';
+import { MotorEffect, SineWave } from '@/components/study-centre/diagrams';
 import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
@@ -257,6 +258,8 @@ export default function Sub2() {
             ]}
             initialVisibleCount={3}
           />
+
+          <SineWave />
 
           <ContentEyebrow>Why single-phase is hard</ContentEyebrow>
 

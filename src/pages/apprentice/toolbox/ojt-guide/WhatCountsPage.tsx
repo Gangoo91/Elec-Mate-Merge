@@ -1,5 +1,4 @@
-import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, CheckCircle, AlertCircle, HelpCircle, Clock } from 'lucide-react';
+import { ArrowLeft, CheckCircle2222, AlertTriangle, HelpCircle, Clock } from 'lucide-react';
 
 const activitiesThatCount = [
   {
@@ -114,7 +113,6 @@ const trackingTips = [
 ];
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
 import {
   PageFrame,
   PageHero,
@@ -126,14 +124,10 @@ const WhatCountsPage = () => {
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/apprentice/toolbox/off-job-training-guide')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
+        <button onClick={() => navigate('/apprentice/toolbox/off-job-training-guide')} className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation">
+          <ArrowLeft className="h-4 w-4" />
           Back
-        </Button>
+        </button>
       </motion.div>
 
       <motion.div variants={itemVariants}>
@@ -146,89 +140,71 @@ const WhatCountsPage = () => {
 
       {/* Activities That Count */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-green-400" />
-          <h2 className="text-base font-semibold text-white">Activities That Count</h2>
-        </div>
+        <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">Activities That Count</span></div></div>
 
         {activitiesThatCount.map((item) => (
-          <Card key={item.title} className="border-green-500/20 bg-white/5">
-            <CardContent className="p-4 flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
+          <div key={item.title} className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+            <div className="p-4 sm:p-5 flex items-start gap-3">
+              <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-medium text-white text-sm">{item.title}</h3>
                 <p className="text-white text-sm mt-1">{item.desc}</p>
               </div>
-            </CardContent>
-          </Card>
+            </div></div>
         ))}
       </div>
 
       {/* Activities That Don't Count */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-red-400" />
-          <h2 className="text-base font-semibold text-white">What Does NOT Count</h2>
-        </div>
+        <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">What Does NOT Count</span></div></div>
 
         {activitiesThatDont.map((item) => (
-          <Card key={item.title} className="border-red-500/20 bg-white/5">
-            <CardContent className="p-4 flex items-start gap-3">
-              <AlertCircle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
+          <div key={item.title} className="rounded-xl border border-red-500/25 bg-red-500/[0.04]">
+            <div className="p-4 sm:p-5 flex items-start gap-3">
+              <AlertTriangle className="h-3.5 w-3.5 text-red-300 mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-medium text-white text-sm">{item.title}</h3>
                 <p className="text-white text-sm mt-1">{item.desc}</p>
               </div>
-            </CardContent>
-          </Card>
+            </div></div>
         ))}
       </div>
 
       {/* Grey Area Scenarios */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-amber-400" />
-          <h2 className="text-base font-semibold text-white">Grey Area Scenarios</h2>
-        </div>
+        <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">Grey Area Scenarios</span></div></div>
 
         <p className="text-white text-sm">
           Not sure if something counts? Here are real-world examples with verdicts:
         </p>
 
         {greyAreaScenarios.map((item) => (
-          <Card
-            key={item.scenario}
-            className={`${item.verdict ? 'border-green-500/20' : 'border-red-500/20'} bg-white/5`}
-          >
-            <CardContent className="p-4 space-y-2">
+          <div key={item.scenario} className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+            <div className="p-4 sm:p-5 space-y-2">
               <div className="flex items-start gap-2">
-                <HelpCircle className="h-5 w-5 text-amber-400 mt-0.5 flex-shrink-0" />
+                <HelpCircle className="h-3.5 w-3.5 text-elec-yellow/85 mt-0.5 flex-shrink-0" />
                 <p className="text-white text-sm font-medium">{item.scenario}</p>
               </div>
               <div className="flex items-start gap-2 ml-7">
                 {item.verdict ? (
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 mt-0.5 flex-shrink-0" />
                 ) : (
-                  <AlertCircle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
+                  <AlertTriangle className="h-3.5 w-3.5 text-red-300 mt-0.5 flex-shrink-0" />
                 )}
                 <p className="text-white text-sm">{item.explanation}</p>
               </div>
-            </CardContent>
-          </Card>
+            </div></div>
         ))}
       </div>
 
       {/* Hours Tracking Tips */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-blue-400" />
-          <h2 className="text-base font-semibold text-white">Hours Tracking Tips</h2>
-        </div>
+        <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">Hours Tracking Tips</span></div></div>
 
-        <Card className="border-blue-500/20 bg-white/5">
-          <CardContent className="p-4 space-y-3">
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+          <div className="p-4 sm:p-5 space-y-3">
             <div className="flex items-center gap-2 mb-2">
-              <Clock className="h-4 w-4 text-blue-400" />
+              <Clock className="h-3.5 w-3.5 text-elec-yellow/85" />
               <p className="text-white text-sm font-medium">
                 Keep accurate records from day one
               </p>
@@ -236,26 +212,24 @@ const WhatCountsPage = () => {
             <ul className="space-y-2">
               {trackingTips.map((tip) => (
                 <li key={tip} className="flex items-start gap-2 text-sm text-white">
-                  <span className="text-blue-400 mt-0.5">•</span>
+                  <span className="text-elec-yellow/70 mt-0.5">·</span>
                   {tip}
                 </li>
               ))}
             </ul>
-          </CardContent>
-        </Card>
+          </div></div>
       </div>
 
       {/* ST0152 Note */}
-      <Card className="border-amber-500/20 bg-amber-500/10">
-        <CardContent className="p-4">
+      <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04]">
+        <div className="p-4 sm:p-5">
           <p className="text-white text-sm leading-relaxed">
             All off-the-job training must be directly relevant to apprenticeship standard
             ST0152 v1.2. Your training provider should map each activity to specific
             knowledge, skills, and behaviours (KSBs) in the standard. If you are unsure
             whether an activity qualifies, ask your training provider before logging it.
           </p>
-        </CardContent>
-      </Card>
+        </div></div>
     </PageFrame>
   );
 };

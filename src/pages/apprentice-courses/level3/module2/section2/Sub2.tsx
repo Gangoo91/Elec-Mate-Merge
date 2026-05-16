@@ -29,6 +29,7 @@ import {
   ContentEyebrow,
   SectionRule,
 } from '@/components/study-centre/learning';
+import { EarthingSystemDiagram } from '@/components/study-centre/diagrams';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE =
@@ -317,6 +318,8 @@ export default function Sub2() {
             correctIndex={checks[0].correctIndex}
             explanation={checks[0].explanation}
           />
+
+          <EarthingSystemDiagram />
 
           <SectionRule />
 
@@ -661,7 +664,7 @@ export default function Sub2() {
                 checked against current text.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Section 722 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Section 722."
           />
 
           <RegsCallout
@@ -683,7 +686,7 @@ export default function Sub2() {
                 upstream. There is no longer a documentation-only escape.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 722.411.4.1 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 722.411.4.1."
           />
 
           <SectionRule />

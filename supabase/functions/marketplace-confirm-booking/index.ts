@@ -94,10 +94,11 @@ serve(async (req) => {
       );
     }
 
-    // Pull quote + client + sparky for the booking metadata
+    // Pull quote + client + sparky for the booking metadata.
+    // (Columns are snake_case: client_data + job_details, not client/jobDetails.)
     const { data: quote } = await supabase
       .from('quotes')
-      .select('id, user_id, quote_number, total, client, jobDetails, accepted_by_email, accepted_by_name')
+      .select('id, user_id, quote_number, total, client_data, job_details, accepted_by_email, accepted_by_name')
       .eq('id', hold.quote_id)
       .maybeSingle();
 
@@ -116,18 +117,18 @@ serve(async (req) => {
 
     const clientName: string =
       quote.accepted_by_name ||
-      (quote.client && (quote.client as Record<string, string>).name) ||
+      (quote.client_data && (quote.client_data as Record<string, string>).name) ||
       'Client';
     const clientEmail: string =
       quote.accepted_by_email ||
-      (quote.client && (quote.client as Record<string, string>).email) ||
+      (quote.client_data && (quote.client_data as Record<string, string>).email) ||
       '';
     const jobTitle: string =
-      (quote.jobDetails && (quote.jobDetails as Record<string, string>).title) ||
+      (quote.job_details && (quote.job_details as Record<string, string>).title) ||
       `Quote ${quote.quote_number || ''}`.trim() ||
       'Electrical work';
     const jobLocation: string =
-      (quote.jobDetails && (quote.jobDetails as Record<string, string>).location) || '';
+      (quote.job_details && (quote.job_details as Record<string, string>).location) || '';
 
     // Create calendar_events row for the sparky
     const { data: calEvent, error: calErr } = await supabase

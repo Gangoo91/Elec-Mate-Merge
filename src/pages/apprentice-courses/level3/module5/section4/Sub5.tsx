@@ -28,7 +28,9 @@ import {
   LearningOutcomes,
   ContentEyebrow,
   SectionRule,
+  VideoCard,
 } from '@/components/study-centre/learning';
+import { videos } from '@/data/study-centre/video-library';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'PFC + PSCC + voltage drop measurement | Level 3 Module 5.4.5 | Elec-Mate';
@@ -313,6 +315,15 @@ export default function Sub5() {
               </>
             }
             cite="Source: IET Guidance Note 3 — Inspection and Testing, PFC measurement guidance."
+          />
+
+          <VideoCard
+            url={videos.zeTest.url}
+            title={videos.zeTest.title}
+            channel={videos.zeTest.channel}
+            duration={videos.zeTest.duration}
+            topic="Ze and PFC at the origin — single-phase supply"
+            caption="The PFC measurement uses the same L-N and L-E loop test as Ze, just reported as prospective current rather than impedance. Same instrument, same connections, different output column on the EIC."
           />
 
           <InlineCheck

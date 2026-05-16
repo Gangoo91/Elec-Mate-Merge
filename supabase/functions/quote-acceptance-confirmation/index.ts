@@ -6,7 +6,8 @@
 
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
-import { Resend } from '../_shared/mailer.ts';
+import { Resend, clientFacingSender, htmlToPlainText } from '../_shared/mailer.ts';
+import { buildQuoteAcceptanceEmail } from '../_shared/email-templates/quote-acceptance.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -45,188 +46,68 @@ serve(async (req: Request) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') as string
     );
 
-    // Fetch quote to get user_id
-    let companyName = 'Your Electrician';
-    // ELE-662 — drop info@elec-mate.com fallback (unmonitored).
-    let replyToEmail = '';
+    // Fetch quote + full company profile so the email matches the shared
+    // design system (logo, primary colour, address, VAT, registration).
+    let companyProfile: any = null;
+    let publicToken: string | null = null;
 
     if (quoteId) {
       const { data: quote } = await supabase
         .from('quotes')
-        .select('user_id')
+        .select('user_id, public_token')
         .eq('id', quoteId)
         .single();
 
       if (quote?.user_id) {
         const { data: company } = await supabase
           .from('company_profiles')
-          .select('company_name, company_email, email')
+          .select('*')
           .eq('user_id', quote.user_id)
           .single();
-
-        if (company) {
-          companyName = company.company_name || 'Your Electrician';
-          replyToEmail = company.company_email || company.email || '';
-        }
+        companyProfile = company || null;
       }
+
+      publicToken = (quote as any)?.public_token || null;
     }
 
-    const formattedTotal = new Intl.NumberFormat('en-GB', {
-      style: 'currency',
-      currency: 'GBP',
-    }).format(total || 0);
+    const companyName = companyProfile?.company_name || 'Your Electrician';
+    const companyEmail = companyProfile?.company_email || companyProfile?.email || null;
 
-    const html = `
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="color-scheme" content="light dark">
-        <meta name="supported-color-schemes" content="light dark">
-      </head>
-      <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #0f172a; margin: 0; padding: 0; -webkit-font-smoothing: antialiased;">
-        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #0f172a;">
-          <tr>
-            <td align="center" style="padding: 48px 16px;">
+    // ELE-662 — centralised sender. See _shared/mailer.ts:clientFacingSender.
+    const sender = clientFacingSender({
+      companyName,
+      companyEmail,
+    });
 
-              <!-- Main Card -->
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width: 420px; background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%); border-radius: 24px; overflow: hidden; border: 1px solid rgba(250, 204, 21, 0.2);">
-
-                <!-- Success Tick Emoji -->
-                <tr>
-                  <td align="center" style="padding: 56px 32px 24px 32px;">
-                    <span style="font-size: 72px; line-height: 1;">✅</span>
-                  </td>
-                </tr>
-
-                <!-- Title -->
-                <tr>
-                  <td align="center" style="padding: 0 32px 12px 32px;">
-                    <h1 style="margin: 0; font-size: 28px; font-weight: 700; color: #ffffff; line-height: 1.3;">Quote Accepted!</h1>
-                  </td>
-                </tr>
-
-                <!-- Quote Badge -->
-                <tr>
-                  <td align="center" style="padding: 0 32px 40px 32px;">
-                    <table role="presentation" cellspacing="0" cellpadding="0">
-                      <tr>
-                        <td style="background: rgba(250, 204, 21, 0.15); border: 1px solid rgba(250, 204, 21, 0.3); border-radius: 12px; padding: 12px 24px;">
-                          <span style="font-size: 15px; font-weight: 600; color: #facc15;">${quoteNumber}</span>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-
-                <!-- Amount Card -->
-                <tr>
-                  <td style="padding: 0 24px 40px 24px;">
-                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background: linear-gradient(135deg, rgba(250, 204, 21, 0.15) 0%, rgba(245, 158, 11, 0.1) 100%); border-radius: 20px; border: 1px solid rgba(250, 204, 21, 0.2);">
-                      <tr>
-                        <td align="center" style="padding: 28px;">
-                          <p style="margin: 0 0 8px 0; font-size: 13px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1.5px;">Total Amount</p>
-                          <p style="margin: 0; font-size: 40px; font-weight: 700; color: #facc15;">${formattedTotal}</p>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-
-                <!-- Greeting -->
-                <tr>
-                  <td style="padding: 0 32px 32px 32px;">
-                    <p style="margin: 0; font-size: 17px; color: #e2e8f0; line-height: 1.6;">Hi ${clientName || 'there'},</p>
-                    <p style="margin: 20px 0 0 0; font-size: 16px; color: #94a3b8; line-height: 1.7;">Thank you for accepting our quote. We're excited to get started on your project!</p>
-                  </td>
-                </tr>
-
-                <!-- What Happens Next -->
-                <tr>
-                  <td style="padding: 0 24px 32px 24px;">
-                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background: rgba(16, 185, 129, 0.08); border-radius: 20px; border: 1px solid rgba(16, 185, 129, 0.15);">
-                      <tr>
-                        <td style="padding: 28px;">
-                          <p style="margin: 0 0 20px 0; font-size: 13px; font-weight: 600; color: #10b981; text-transform: uppercase; letter-spacing: 1px;">What Happens Next</p>
-
-                          <!-- Step 1 -->
-                          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 18px;">
-                            <tr>
-                              <td width="36" valign="top">
-                                <div style="width: 28px; height: 28px; background: #10b981; border-radius: 50%; text-align: center; line-height: 28px; font-size: 13px; font-weight: 700; color: white;">1</div>
-                              </td>
-                              <td style="padding-left: 14px; padding-top: 4px;">
-                                <p style="margin: 0; font-size: 15px; color: #e2e8f0; line-height: 1.5;">We'll contact you within <strong style="color: #10b981;">24 hours</strong> to schedule</p>
-                              </td>
-                            </tr>
-                          </table>
-
-                          <!-- Step 2 -->
-                          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 18px;">
-                            <tr>
-                              <td width="36" valign="top">
-                                <div style="width: 28px; height: 28px; background: #10b981; border-radius: 50%; text-align: center; line-height: 28px; font-size: 13px; font-weight: 700; color: white;">2</div>
-                              </td>
-                              <td style="padding-left: 14px; padding-top: 4px;">
-                                <p style="margin: 0; font-size: 15px; color: #e2e8f0; line-height: 1.5;">Confirm start date and site requirements</p>
-                              </td>
-                            </tr>
-                          </table>
-
-                          <!-- Step 3 -->
-                          <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
-                            <tr>
-                              <td width="36" valign="top">
-                                <div style="width: 28px; height: 28px; background: #10b981; border-radius: 50%; text-align: center; line-height: 28px; font-size: 13px; font-weight: 700; color: white;">3</div>
-                              </td>
-                              <td style="padding-left: 14px; padding-top: 4px;">
-                                <p style="margin: 0; font-size: 15px; color: #e2e8f0; line-height: 1.5;">Receive formal confirmation with timeline</p>
-                              </td>
-                            </tr>
-                          </table>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-
-                <!-- Questions Box -->
-                <tr>
-                  <td style="padding: 0 24px 40px 24px;">
-                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background: rgba(250, 204, 21, 0.08); border-radius: 16px; border: 1px solid rgba(250, 204, 21, 0.15);">
-                      <tr>
-                        <td style="padding: 20px 24px;">
-                          <p style="margin: 0; font-size: 15px; color: #fbbf24;"><strong>Questions?</strong> Just reply to this email - we're here to help!</p>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-
-                <!-- Footer -->
-                <tr>
-                  <td style="padding: 28px 32px; border-top: 1px solid rgba(148, 163, 184, 0.1);">
-                    <p style="margin: 0; font-size: 13px; color: #64748b; text-align: center;">Powered by ElecMate Professional Suite</p>
-                  </td>
-                </tr>
-
-              </table>
-            </td>
-          </tr>
-        </table>
-      </body>
-      </html>
-    `;
+    const acceptancePayload = buildQuoteAcceptanceEmail({
+      company: {
+        name: companyName,
+        logoUrl: companyProfile?.logo_url || companyProfile?.logo_data_url || null,
+        primaryColor: companyProfile?.primary_color || null,
+        email: companyEmail,
+        phone: companyProfile?.company_phone || null,
+        website: companyProfile?.company_website || null,
+        address: companyProfile?.company_address || null,
+        vatNumber: companyProfile?.vat_number || null,
+        registrationNumber: companyProfile?.company_registration || null,
+      },
+      acceptedByName: clientName || 'there',
+      quoteNumber,
+      total: Number(total) || 0,
+      acceptedAt: new Date().toISOString(),
+      viewQuoteUrl: publicToken ? `https://www.elec-mate.com/public-quote/${publicToken}` : null,
+      trackingPixelUrl: `${Deno.env.get('SUPABASE_URL')}/functions/v1/email-open?type=quote_acceptance&id=${quoteId}`,
+    });
+    const html = acceptancePayload.html;
 
     // ELE-662 — migrated from direct Resend fetch to Brevo via mailer shim.
     const resend = new Resend(resendApiKey);
     const { data: result, error: emailError } = await resend.emails.send({
-      from: `${companyName} <founder@elec-mate.com>`,
-      ...(replyToEmail ? { replyTo: replyToEmail } : {}),
+      ...sender,
       to: clientEmail,
-      subject: `Quote Accepted - Next Steps | ${quoteNumber}`,
+      subject: acceptancePayload.subject,
       html: html,
+      text: htmlToPlainText(html),
     });
 
     if (emailError) {

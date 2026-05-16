@@ -48,7 +48,7 @@ const checks = [
     ],
     correctIndex: 1,
     explanation:
-      "Section 753 is explicit on RCD ratings for electrical heating. The 30 mA limit is a fire-prevention requirement for resistive faults in heating elements, not just the conventional shock-protection limit. Standing leakage on long heating runs is a real installation challenge, but the answer is to design around it (sectioning, lower-leakage heating mat, Class II construction with appropriate Section 753 routes) rather than to relax the RCD rating. The acceptance facets in bs7671_facets are direct — 30 mA for underfloor heating, 30 mA where resistive faults could cause fire.",
+      "Section 753 is explicit on RCD ratings for electrical heating. The 30 mA limit is a fire-prevention requirement for resistive faults in heating elements, not just the conventional shock-protection limit. Standing leakage on long heating runs is a real installation challenge, but the answer is to design around it (sectioning, lower-leakage heating mat, Class II construction with appropriate Section 753 routes) rather than to relax the RCD rating. The acceptance rules are direct — 30 mA for underfloor heating, 30 mA where resistive faults could cause fire.",
   },
   {
     id: 'l3-m2-s4-sub5-floor-temperature',
@@ -62,7 +62,7 @@ const checks = [
     ],
     correctIndex: 1,
     explanation:
-      "Section 753 sets a hard 80 degrees Celsius limit on floor and ceiling heated surfaces where contact is possible, with at least one of the three permitted measures actively implemented. The acceptance facets in bs7671_facets are explicit — the 80 degrees Celsius cap is mandatory where heating units are installed, and skin or footwear contact triggers Reg 753.423. The customer turning the thermostat down is not an acceptance route — the limit must be designed into the install.",
+      "Section 753 sets a hard 80 degrees Celsius limit on floor and ceiling heated surfaces where contact is possible, with at least one of the three permitted measures actively implemented. The acceptance rules are explicit — the 80 degrees Celsius cap is mandatory where heating units are installed, and skin or footwear contact triggers Reg 753.423. The customer turning the thermostat down is not an acceptance route — the limit must be designed into the install.",
   },
   {
     id: 'l3-m2-s4-sub5-fgas',
@@ -107,7 +107,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      "The Section 753 RCD regime is layered. The base requirement is additional RCD protection per Reg 415.1.1. The fire-prevention overlay drops the rated residual operating current to at most 30 mA where a resistive fault could cause fire (for example overhead heating with heating film). The underfloor heating overlay applies a blanket 30 mA limit across all underfloor heating installations. Class II construction circuits in not-completely-wet areas also get the 30 mA limit. The acceptance facets in bs7671_facets capture all four rules verbatim.",
+      "The Section 753 RCD regime is layered. The base requirement is additional RCD protection per Reg 415.1.1. The fire-prevention overlay drops the rated residual operating current to at most 30 mA where a resistive fault could cause fire (for example overhead heating with heating film). The underfloor heating overlay applies a blanket 30 mA limit across all underfloor heating installations. Class II construction circuits in not-completely-wet areas also get the 30 mA limit. Section 753 captures all four rules.",
   },
   {
     id: 3,
@@ -121,7 +121,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      "The 80 degrees Celsius cap is set by Reg 753.424.201 with at least one of the three measures actively implemented. Reg 753.423 widens the contact trigger from barefoot to include footwear contact — the regulator recognised that a heated floor at 90 degrees can burn through a thin shoe sole. The acceptance facets from bs7671_facets are explicit on both points.",
+      "The 80 degrees Celsius cap is set by Reg 753.424.201 with at least one of the three measures actively implemented. Reg 753.423 widens the contact trigger from barefoot to include footwear contact — the regulator recognised that a heated floor at 90 degrees can burn through a thin shoe sole. The acceptance rules are explicit on both points.",
   },
   {
     id: 4,
@@ -163,7 +163,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      "Reg 753.522.1.3 closes a real-world failure mode — cold-lead cables and control wiring run within the heated zone of the floor or ceiling experience higher ambient temperature than the rest of the install, and standard 70 degrees Celsius cable can degrade prematurely. The fix is in design — derate the cable, select higher-temperature insulation, and route the lead to minimise time in the heated zone. The acceptance facet from bs7671_facets is direct — the increased ambient must be taken into account.",
+      "Reg 753.522.1.3 closes a real-world failure mode — cold-lead cables and control wiring run within the heated zone of the floor or ceiling experience higher ambient temperature than the rest of the install, and standard 70 degrees Celsius cable can degrade prematurely. The fix is in design — derate the cable, select higher-temperature insulation, and route the lead to minimise time in the heated zone. The acceptance rule is direct — the increased ambient must be taken into account.",
   },
   {
     id: 7,
@@ -191,7 +191,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      "The mesh-omission route is conditional on documented Class II compliance per Reg 412.2.1.1. The acceptance facet from bs7671_facets is direct — verify and document before omitting the mesh. Class II equipment must be type-tested and marked to the relevant standards, and the install file must contain the evidence. A verifier confronted with a missing mesh and no Class II evidence shall record non-compliance.",
+      "The mesh-omission route is conditional on documented Class II compliance per Reg 412.2.1.1. The acceptance rule is direct — verify and document before omitting the mesh. Class II equipment must be type-tested and marked to the relevant standards, and the install file must contain the evidence. A verifier confronted with a missing mesh and no Class II evidence shall record non-compliance.",
   },
 ];
 
@@ -219,12 +219,12 @@ const faqs = [
   {
     question: "Are there any specific Section 753 implications when the heat pump's outdoor unit shares a special location like a swimming pool surround?",
     answer:
-      "Yes. Reg 702.55.4 covers floor heating units in pool areas with three permitted compliance options — option (a) protection by SELV with the source outside zones 0, 1 and 2; option (b) embedded unit with earthed metallic sheath connected to supplementary protective equipotential bonding plus additional RCD protection per Reg 415.1.1; option (c) embedded unit covered by an embedded earthed metallic grid plus the same bonding and RCD overlay. The Reg 702 special-location rules layer on top of Section 753, and the acceptance facets in bs7671_facets capture all three options verbatim. On a heat pump install where the outdoor unit sits in or adjacent to a pool zone, the same special-location overlay applies to the unit's bonding.",
+      "Yes. Reg 702.55.4 covers floor heating units in pool areas with three permitted compliance options — option (a) protection by SELV with the source outside zones 0, 1 and 2; option (b) embedded unit with earthed metallic sheath connected to supplementary protective equipotential bonding plus additional RCD protection per Reg 415.1.1; option (c) embedded unit covered by an embedded earthed metallic grid plus the same bonding and RCD overlay. The Reg 702 special-location rules layer on top of Section 753, and Reg 702.55.4 captures all three options. On a heat pump install where the outdoor unit sits in or adjacent to a pool zone, the same special-location overlay applies to the unit's bonding.",
   },
   {
     question: "Why do Section 753 and Reg 753.412 specifically allow double or reinforced insulation as an alternative protective measure where ADS is impractical?",
     answer:
-      "Reg 753.412 allows double or reinforced insulation as the protective measure in special locations where other protective measures (such as earthing and ADS) are impractical or inappropriate, subject to the requirements of the regulation and any relevant subsidiary clauses in Part 7. The reasoning is practical — embedded heating elements that already form part of a Class II equipment design (with type-test evidence per Reg 412.2.1.1) deliver shock protection without needing the mesh metal grid required by the alternative route in Reg 753.411.3.2. The mesh omission is conditional on documented Class II evidence — the install file must contain the type-test or declaration of conformity. The acceptance facet from bs7671_facets is direct on the verification requirement.",
+      "Reg 753.412 allows double or reinforced insulation as the protective measure in special locations where other protective measures (such as earthing and ADS) are impractical or inappropriate, subject to the requirements of the regulation and any relevant subsidiary clauses in Part 7. The reasoning is practical — embedded heating elements that already form part of a Class II equipment design (with type-test evidence per Reg 412.2.1.1) deliver shock protection without needing the mesh metal grid required by the alternative route in Reg 753.411.3.2. The mesh omission is conditional on documented Class II evidence — the install file must contain the type-test or declaration of conformity. The acceptance rule is direct on the verification requirement.",
   },
 ];
 
@@ -330,12 +330,10 @@ export default function Sub5() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Reg 753.415.1 (additional RCD protection on heating-unit circuits, verbatim)"
+            source="BS 7671:2018+A4:2026 — Reg 753.415.1 (additional RCD protection on heating-unit circuits)"
             clause={
               <>
-                &quot;Circuits supplying heating units shall have additional protection by
-                the use of RCDs having the characteristics specified in Regulation 415.1.1.
-                Time delayed type RCDs shall not be used.&quot;
+                &quot;Circuits supplying heating units shall have additional protection by the use of RCDs having the characteristics specified in Regulation 415.1.1. Time delayed type RCDs shall not be used.&quot;
               </>
             }
             meaning={
@@ -349,7 +347,7 @@ export default function Sub5() {
                 non-compliance under Reg 753.415.1.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Reg 753.415.1 (verbatim via bs7671_facets — IET Wiring Regulations 18th Edition A4:2026)."
+            cite="Source: BS 7671:2018+A4:2026 Reg 753.415.1 — IET Wiring Regulations 18th Edition A4:2026."
           />
 
           <SectionRule />
@@ -392,7 +390,7 @@ export default function Sub5() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Reg 753 underfloor heating RCD requirement (verbatim)"
+            source="BS 7671:2018+A4:2026 — Section 753 underfloor heating RCD requirement (paraphrased)"
             clause={
               <>
                 &quot;All underfloor heating installations shall have additional protection
@@ -412,11 +410,11 @@ export default function Sub5() {
                 installations — not only in special locations.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Section 753 verbatim acceptance via bs7671_facets and IET On-Site Guide — IET Wiring Regulations 18th Edition A4:2026."
+            cite="Source: BS 7671:2018+A4:2026 Section 753 and IET On-Site Guide — IET Wiring Regulations 18th Edition A4:2026."
           />
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Reg 753 fire-prevention 30 mA limit (verbatim)"
+            source="BS 7671:2018+A4:2026 — Section 753 fire-prevention 30 mA limit (paraphrased)"
             clause={
               <>
                 &quot;Where a resistive fault may cause a fire, for example for overhead
@@ -437,7 +435,7 @@ export default function Sub5() {
                 starting.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Section 753 verbatim acceptance via bs7671_facets — IET Wiring Regulations 18th Edition A4:2026."
+            cite="Source: BS 7671:2018+A4:2026 Section 753 — IET Wiring Regulations 18th Edition A4:2026."
           />
 
           <InlineCheck
@@ -489,7 +487,7 @@ export default function Sub5() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Reg 753.424.201 (surface temperature cap, verbatim)"
+            source="BS 7671:2018+A4:2026 — Reg 753.424.201 (surface temperature cap, paraphrased)"
             clause={
               <>
                 &quot;Where floor or ceiling heating units are installed, at least one of the
@@ -510,7 +508,7 @@ export default function Sub5() {
                 the chosen measure.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Reg 753.424.201 (verbatim acceptance via bs7671_facets — IET Wiring Regulations 18th Edition A4:2026)."
+            cite="Source: BS 7671:2018+A4:2026 Reg 753.424.201 — IET Wiring Regulations 18th Edition A4:2026."
           />
 
           <InlineCheck
@@ -663,7 +661,7 @@ export default function Sub5() {
           <ConceptBlock
             title="Cold leads and control leads in the heated zone — Reg 753.522.1.3"
             plainEnglish="A heating mat or cable enters the heated zone via cold leads — the unheated lengths of cable that run from the connection terminal to the start of the heating element. Inside the heated zone, the cold lead sits in elevated ambient temperature alongside the active heating element. Reg 753.522.1.3 requires that for cold leads and control leads installed in the zone of heated surfaces, the increase of ambient temperature shall be taken into account. That means conductor current-carrying capacity, derating, insulation temperature ratings and routing shall be adjusted to reflect the higher ambient where the lead is installed in the heated zone."
-            onSite="In practice — choose cable with insulation rated for the elevated temperature (silicone-insulated or PTFE rather than standard 70 degrees Celsius PVC), apply current-carrying capacity derate factors per BS 7671 Appendix 4 for the elevated ambient, and route the cold lead to minimise time in the heated zone. The manufacturer's installation manual normally specifies the cold-lead cable type and length — comply with it. The acceptance facet from bs7671_facets is direct — the increased ambient must be taken into account at design and install."
+            onSite="In practice — choose cable with insulation rated for the elevated temperature (silicone-insulated or PTFE rather than standard 70 degrees Celsius PVC), apply current-carrying capacity derate factors per BS 7671 Appendix 4 for the elevated ambient, and route the cold lead to minimise time in the heated zone. The manufacturer's installation manual normally specifies the cold-lead cable type and length — comply with it. The acceptance rule is direct — the increased ambient must be taken into account at design and install."
           >
             <p>
               Other Section 753 small details that the L3 electrician needs to recognise:
@@ -714,7 +712,7 @@ export default function Sub5() {
           <ConceptBlock
             title="Reg 753.412 — double or reinforced insulation as the protective measure"
             plainEnglish="Section 753 recognises that ADS is not always practical or appropriate as the shock-protection route in special locations. Reg 753.412 allows double or reinforced insulation to be used as the protective measure where other measures are impractical or inappropriate, subject to the requirements of the regulation and any relevant subsidiary clauses in Part 7. The route is conditional on the heating equipment meeting Reg 412.2.1.1 — Class II equipment type-tested and marked, or assemblies of electrical equipment having total insulation per BS EN 61439 series declared equivalent to Class II, or basic-insulated equipment with supplementary insulation applied in the install process per Reg 412.2.1.2, or equipment with uninsulated live parts having reinforced insulation applied per Reg 412.2.1.3."
-            onSite="On a Section 753 install where Reg 753.412 is the chosen protective measure, the verifier checks for documented Reg 412.2.1.1 compliance evidence — the type-test certificate, the manufacturer marking on the equipment, the declaration of conformity, or the BS EN 61439 series assembly evidence where applicable. The acceptance facet from bs7671_facets is direct on the verification requirement. Where the basic-insulated route is used (Reg 412.2.1.2), supplementary insulation must be applied during install per Reg 412.2.2.3 and the resulting safety must be equivalent to Reg 412.2.1.1 equipment. Where the uninsulated-parts route is used (Reg 412.2.1.3), reinforced insulation must be applied during install per Regs 412.2.2.2 and 412.2.2.3."
+            onSite="On a Section 753 install where Reg 753.412 is the chosen protective measure, the verifier checks for documented Reg 412.2.1.1 compliance evidence — the type-test certificate, the manufacturer marking on the equipment, the declaration of conformity, or the BS EN 61439 series assembly evidence where applicable. The acceptance rule is direct on the verification requirement. Where the basic-insulated route is used (Reg 412.2.1.2), supplementary insulation must be applied during install per Reg 412.2.2.3 and the resulting safety must be equivalent to Reg 412.2.1.1 equipment. Where the uninsulated-parts route is used (Reg 412.2.1.3), reinforced insulation must be applied during install per Regs 412.2.2.2 and 412.2.2.3."
           >
             <p>
               Conditions and consequences of going down the Reg 753.412 route:
@@ -755,7 +753,7 @@ export default function Sub5() {
           <ConceptBlock
             title="Pool zone heating — Reg 702.55.4 three options layered on top of Section 753"
             plainEnglish="Where electrical heating units are installed in or adjacent to a swimming pool surround, Reg 702 (special locations: swimming pools and other basins) overlays its zone-based protective regime on top of Section 753. Reg 702.55.4 gives three permitted compliance options for floor heating units in pool areas — option (a) protection by SELV with the source installed outside zones 0, 1 and 2; option (b) embedded electric heating unit with an earthed metallic sheath connected to the supplementary protective equipotential bonding specified in Reg 702.415.2 and supply circuit additionally protected by an RCD per Reg 415.1.1; option (c) embedded electric heating unit covered by an embedded earthed metallic grid connected to the same supplementary bonding plus the same RCD overlay."
-            onSite="On a Section 753 install that touches a Reg 702 zone, the Reg 702.55.4 options take precedence and the design pack must declare which of the three options is in use. Acceptance evidence varies by option — option (a) requires the SELV source location to be documented and verified outside zones 0, 1 and 2; options (b) and (c) require the bonding scheme to be physically connected and continuity tested, and the RCD selection to be verified per Reg 415.1.1. The acceptance facets in bs7671_facets capture all three options verbatim. The L3 electrician's job is to recognise the Reg 702 overlay early in the design — pool zones change the answer."
+            onSite="On a Section 753 install that touches a Reg 702 zone, the Reg 702.55.4 options take precedence and the design pack must declare which of the three options is in use. Acceptance evidence varies by option — option (a) requires the SELV source location to be documented and verified outside zones 0, 1 and 2; options (b) and (c) require the bonding scheme to be physically connected and continuity tested, and the RCD selection to be verified per Reg 415.1.1. Reg 702.55.4 captures all three options. The L3 electrician's job is to recognise the Reg 702 overlay early in the design — pool zones change the answer."
           >
             <p>
               When pool-zone considerations apply to a heat pump install:
@@ -788,7 +786,7 @@ export default function Sub5() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Reg 702.55.4 (pool-zone floor heating, options verbatim)"
+            source="BS 7671:2018+A4:2026 — Reg 702.55.4 (pool-zone floor heating, options paraphrased)"
             clause={
               <>
                 <p className="mb-2">Three permitted options under Reg 702.55.4:</p>
@@ -827,7 +825,7 @@ export default function Sub5() {
                 702 options are an overlay, not a replacement.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Reg 702.55.4 (verbatim options via bs7671_facets — IET Wiring Regulations 18th Edition A4:2026)."
+            cite="Source: BS 7671:2018+A4:2026 Reg 702.55.4 — IET Wiring Regulations 18th Edition A4:2026."
           />
 
           <SectionRule />

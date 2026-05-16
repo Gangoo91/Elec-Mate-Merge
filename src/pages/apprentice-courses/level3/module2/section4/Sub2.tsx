@@ -193,7 +193,7 @@ const quizQuestions = [
       'How does the L3 electrician\'s role differ between an MCS-certified install and a non-MCS install, in terms of BS 7671 compliance?',
     options: [
       'MCS-certified installs don\'t need BS 7671.',
-      "BS 7671 applies regardless of whether the install is MCS-certified — it\'s the electrical safety regulation, not an MCS option. On both MCS and non-MCS installs the L3 electrician is responsible for BS 7671 compliance — design, installation, inspection and testing, certification (EIC). On MCS installs the certified installer additionally signs off the MCS install pack and accesses the funding incentives. On non-MCS installs there\'s no MCS sign-off and no incentive access, but BS 7671 compliance is unchanged. The distinction matters for the customer\'s funding access; it doesn't matter for the L3 electrician's electrical responsibility.",
+      "BS 7671 applies regardless of whether the install is MCS-certified — it's the electrical safety regulation, not an MCS option. On both MCS and non-MCS installs the L3 electrician is responsible for BS 7671 compliance — design, installation, inspection and testing, certification (EIC). On MCS installs the certified installer additionally signs off the MCS install pack and accesses the funding incentives. On non-MCS installs there's no MCS sign-off and no incentive access, but BS 7671 compliance is unchanged. The distinction matters for the customer's funding access; it doesn't matter for the L3 electrician's electrical responsibility.",
       'Only MCS installs need an EIC.',
       'BS 7671 only applies on Sundays.',
     ],

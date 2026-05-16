@@ -1,9 +1,7 @@
-import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, CheckCircle } from 'lucide-react';
+import { ArrowLeft, CheckCircle2 } from 'lucide-react';
 import ProfessionalSkillsTab from '@/components/apprentice/communication-skills/ProfessionalSkillsTab';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
 import {
   PageFrame,
   PageHero,
@@ -15,14 +13,10 @@ const ProfessionalSkillsPage = () => {
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/apprentice/toolbox/communication-skills')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
+        <button onClick={() => navigate('/apprentice/toolbox/communication-skills')} className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation">
+          <ArrowLeft className="h-4 w-4" />
           Back
-        </Button>
+        </button>
       </motion.div>
 
       <motion.div variants={itemVariants}>
@@ -34,8 +28,7 @@ const ProfessionalSkillsPage = () => {
       </motion.div>
 
       {/* Intro Card */}
-      <Card className="border-green-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-white">
             Building Professional Communication
           </h2>
@@ -46,11 +39,11 @@ const ProfessionalSkillsPage = () => {
             apart and are essential for career progression.
           </p>
 
-          <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
-            <h3 className="text-green-400 font-semibold text-sm mb-3">
+          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 sm:p-4 space-y-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
               Core Skills Covered
-            </h3>
-            <ul className="space-y-2">
+            </span>
+            <ul className="space-y-1.5">
               {[
                 'Active listening — hear what is actually being said',
                 'Clear speaking — get your point across effectively',
@@ -60,16 +53,15 @@ const ProfessionalSkillsPage = () => {
               ].map((item) => (
                 <li
                   key={item}
-                  className="flex items-center gap-2 text-sm text-white"
+                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
                 >
-                  <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0" />
+                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                   {item}
                 </li>
               ))}
             </ul>
           </div>
-        </CardContent>
-      </Card>
+        </div>
 
       {/* Main Content */}
       <ProfessionalSkillsTab />

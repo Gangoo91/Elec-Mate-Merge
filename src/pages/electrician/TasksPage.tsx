@@ -1,7 +1,18 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Plus, ClipboardCheck, Loader2, AlertTriangle } from 'lucide-react';
+import {
+  ArrowLeft,
+  Plus,
+  ClipboardCheck,
+  Loader2,
+  AlertTriangle,
+  Flame,
+  CalendarClock,
+  CalendarDays,
+  Inbox,
+  Sparkles,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
 import { TaskCard } from '@/components/tasks/TaskCard';
@@ -9,12 +20,14 @@ import { TaskForm } from '@/components/tasks/TaskForm';
 import { TaskDetailSheet } from '@/components/tasks/TaskDetailSheet';
 import { TaskQuickAdd } from '@/components/tasks/TaskQuickAdd';
 import { TaskTemplates } from '@/components/tasks/TaskTemplates';
+import { Assistant } from '@/components/business-hub/Assistant';
 import {
   useSparkTasks,
   type SparkTask,
   type TaskView,
   type UpdateTaskInput,
 } from '@/hooks/useSparkTasks';
+import { useSparkProjects } from '@/hooks/useSparkProjects';
 import PushNotificationPrompt from '@/components/notifications/PushNotificationPrompt';
 import { cn } from '@/lib/utils';
 
@@ -163,6 +176,15 @@ const TasksPage = () => {
     refreshTasks,
   } = useSparkTasks(activeView);
 
+  // Projects — for AI assistant context (linking snags to projects, etc.)
+  const {
+    projects,
+    createProject,
+    updateProject,
+    completeProject,
+    deleteProject,
+  } = useSparkProjects('all');
+
   // Group tasks by urgency when in "All Open" view
   const groups = useMemo(
     () => (activeView === 'all' ? groupTasksByUrgency(tasks) : null),
@@ -174,6 +196,7 @@ const TasksPage = () => {
   const [editTask, setEditTask] = useState<SparkTask | null>(null);
   const [detailTask, setDetailTask] = useState<SparkTask | null>(null);
   const [templatesOpen, setTemplatesOpen] = useState(false);
+  const [aiOpen, setAiOpen] = useState(false);
 
   async function handleQuickSave(title: string) {
     return saveTask({ title });
@@ -198,11 +221,65 @@ const TasksPage = () => {
 
   const empty = EMPTY_MESSAGES[activeView];
 
+  // Editorial summary line — live counts woven into a sentence.
+  const summaryParts: string[] = [];
+  if (counts.overdue > 0) summaryParts.push(`${counts.overdue} overdue`);
+  if (counts.today > 0) summaryParts.push(`${counts.today} due today`);
+  if (counts.week > 0 && counts.week !== counts.today) summaryParts.push(`${counts.week} this week`);
+  if (counts.all > 0) summaryParts.push(`${counts.all} open in total`);
+  const summaryLine =
+    summaryParts.length > 0 ? summaryParts.join(' · ') + '.' : 'Nothing on the board right now.';
+
+  // Stat strip — clickable mini-cards mapped to filter views.
+  // The most pressing one (overdue → today → week) gets the gold accent.
+  const accentKey: 'overdue' | 'today' | 'week' | 'all' =
+    counts.overdue > 0 ? 'overdue' : counts.today > 0 ? 'today' : counts.week > 0 ? 'week' : 'all';
+
+  const stats: {
+    key: 'overdue' | 'today' | 'week' | 'all';
+    label: string;
+    value: number;
+    icon: typeof Flame;
+    onClick: () => void;
+  }[] = [
+    {
+      key: 'overdue',
+      label: 'Overdue',
+      value: counts.overdue,
+      icon: Flame,
+      // Overdue lives inside "today" group in the data model — switch
+      // to All Open so the user lands on the urgency-grouped view that
+      // surfaces overdue at the top.
+      onClick: () => setActiveView('all'),
+    },
+    {
+      key: 'today',
+      label: 'Today',
+      value: counts.today,
+      icon: CalendarClock,
+      onClick: () => setActiveView('today'),
+    },
+    {
+      key: 'week',
+      label: 'This week',
+      value: counts.week,
+      icon: CalendarDays,
+      onClick: () => setActiveView('week'),
+    },
+    {
+      key: 'all',
+      label: 'Open',
+      value: counts.all,
+      icon: Inbox,
+      onClick: () => setActiveView('all'),
+    },
+  ];
+
   return (
     <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24 min-h-screen">
-      {/* Sticky header */}
+      {/* Sticky compact bar — back, title, add */}
       <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
-        <div className="px-4 py-2">
+        <div className="px-4 lg:px-8 py-2 lg:max-w-[1200px] lg:mx-auto">
           <div className="flex items-center justify-between h-11">
             <div className="flex items-center gap-2">
               <Button
@@ -240,7 +317,7 @@ const TasksPage = () => {
         </div>
 
         {/* Filter tabs */}
-        <div className="px-4 pb-2">
+        <div className="px-4 lg:px-8 pb-2 lg:max-w-[1200px] lg:mx-auto">
           <div className="relative">
             <div className="flex gap-1 overflow-x-auto scrollbar-hide">
               {VIEWS.map((v) => (
@@ -284,8 +361,73 @@ const TasksPage = () => {
         </div>
       </div>
 
-      {/* Quick-add + notification prompt */}
-      <div className="px-4 pt-3 space-y-3">
+      {/* ─── Editorial intro + stat strip + quick-add ─── */}
+      <div className="px-4 lg:px-8 pt-4 lg:pt-6 lg:max-w-[1200px] lg:mx-auto">
+        {/* Editorial header */}
+        <p className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.18em] text-white/50 mb-2">
+          Business · Workload
+        </p>
+        <h2 className="text-[28px] sm:text-[34px] lg:text-[44px] font-bold leading-[1.05] tracking-tight mb-2">
+          <span className="text-elec-yellow">Today's</span> <span className="text-white">tasks.</span>
+        </h2>
+        <p className="text-[13px] sm:text-[14px] text-white/70 leading-relaxed max-w-[640px] mb-4">
+          {summaryLine}
+        </p>
+
+        {/* Stat strip — 2×2 mobile, 4-up desktop */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 mb-4">
+          {stats.map((s) => {
+            const isAccent = s.key === accentKey && s.value > 0;
+            const Icon = s.icon;
+            return (
+              <button
+                key={s.key}
+                type="button"
+                onClick={s.onClick}
+                className={cn(
+                  'group relative text-left rounded-xl p-3 sm:p-4 border touch-manipulation transition-all active:scale-[0.98]',
+                  isAccent
+                    ? 'bg-gradient-to-br from-elec-yellow/15 to-amber-500/5 border-elec-yellow/30'
+                    : 'bg-white/[0.03] border-white/[0.08] hover:bg-white/[0.05]'
+                )}
+              >
+                <div className="flex items-center justify-between mb-1.5">
+                  <span
+                    className={cn(
+                      'text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.14em]',
+                      isAccent ? 'text-elec-yellow' : 'text-white/60'
+                    )}
+                  >
+                    {s.label}
+                  </span>
+                  <Icon
+                    className={cn(
+                      'h-3.5 w-3.5 sm:h-4 sm:w-4',
+                      isAccent
+                        ? 'text-elec-yellow'
+                        : s.key === 'overdue' && s.value > 0
+                          ? 'text-red-400'
+                          : 'text-white/40'
+                    )}
+                  />
+                </div>
+                <div
+                  className={cn(
+                    'text-2xl sm:text-3xl font-bold tabular-nums leading-none',
+                    isAccent
+                      ? 'text-white'
+                      : s.key === 'overdue' && s.value > 0
+                        ? 'text-red-400'
+                        : 'text-white'
+                  )}
+                >
+                  {s.value}
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
         {/* Quick-add bar */}
         <TaskQuickAdd
           onQuickSave={handleQuickSave}
@@ -293,16 +435,18 @@ const TasksPage = () => {
           onShowTemplates={() => setTemplatesOpen(true)}
         />
         {/* Push notification opt-in (compact, shows once if not subscribed) */}
-        <PushNotificationPrompt
-          compact
-          delay={2000}
-          context="Get reminders for overdue and upcoming tasks"
-        />
+        <div className="mt-3">
+          <PushNotificationPrompt
+            compact
+            delay={2000}
+            context="Get reminders for overdue and upcoming tasks"
+          />
+        </div>
       </div>
 
       {/* Task list */}
       <PullToRefresh onRefresh={refreshTasks} isRefreshing={isLoading}>
-        <div className="px-4 py-4">
+        <div className="px-4 lg:px-8 py-4 lg:max-w-[1200px] lg:mx-auto">
           {isLoading && tasks.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-16">
               <Loader2 className="h-8 w-8 text-white animate-spin" />
@@ -335,11 +479,16 @@ const TasksPage = () => {
             >
               {groups.map((group) => (
                 <motion.div key={group.key} variants={itemVariants} className="space-y-2">
-                  {/* Section header */}
-                  <div className="flex items-center justify-between px-1">
+                  {/* Section header — gold divider underneath, editorial style */}
+                  <div className="flex items-center justify-between px-1 pb-2 border-b border-elec-yellow/20">
                     <div className="flex items-center gap-2">
                       <div className={cn('w-1 h-4 rounded-full', group.dot)} />
-                      <span className={cn('text-[13px] font-bold', group.labelColour)}>
+                      <span
+                        className={cn(
+                          'text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.14em]',
+                          group.labelColour
+                        )}
+                      >
                         {group.label}
                       </span>
                     </div>
@@ -358,33 +507,35 @@ const TasksPage = () => {
                       {group.tasks.length}
                     </span>
                   </div>
-                  {/* Tasks in this group */}
-                  <AnimatePresence mode="popLayout">
-                    {group.tasks.map((task) => (
-                      <motion.div
-                        key={task.id}
-                        variants={itemVariants}
-                        layout
-                        exit={{ opacity: 0, x: -100, transition: { duration: 0.2 } }}
-                      >
-                        <TaskCard
-                          task={task}
-                          onTap={handleTapTask}
-                          onSwipeComplete={handleSwipeComplete}
-                        />
-                      </motion.div>
-                    ))}
-                  </AnimatePresence>
+                  {/* Tasks in this group — 2-col grid on lg+ */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-3">
+                    <AnimatePresence mode="popLayout">
+                      {group.tasks.map((task) => (
+                        <motion.div
+                          key={task.id}
+                          variants={itemVariants}
+                          layout
+                          exit={{ opacity: 0, x: -100, transition: { duration: 0.2 } }}
+                        >
+                          <TaskCard
+                            task={task}
+                            onTap={handleTapTask}
+                            onSwipeComplete={handleSwipeComplete}
+                          />
+                        </motion.div>
+                      ))}
+                    </AnimatePresence>
+                  </div>
                 </motion.div>
               ))}
             </motion.div>
           ) : (
-            /* Flat list for Today, This Week, Completed */
+            /* Flat list for Today, This Week, Completed — 2-col grid on lg+ */
             <motion.div
               variants={containerVariants}
               initial="hidden"
               animate="visible"
-              className="space-y-2"
+              className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-3"
             >
               <AnimatePresence mode="popLayout">
                 {tasks.map((task) => (
@@ -437,6 +588,33 @@ const TasksPage = () => {
         onClose={() => setTemplatesOpen(false)}
         onSelect={saveTask}
       />
+
+      {/* AI assistant sheet */}
+      <Assistant
+        isOpen={aiOpen}
+        onClose={() => setAiOpen(false)}
+        currentTasks={tasks}
+        currentProjects={projects}
+        onSave={saveTask}
+        onUpdate={handleUpdate}
+        onMarkDone={markDone}
+        onDelete={deleteTask}
+        onCreateProject={createProject}
+        onUpdateProject={updateProject}
+        onCompleteProject={completeProject}
+        onDeleteProject={deleteProject}
+      />
+
+      {/* AI FAB — anchored bottom-right above the tab bar */}
+      <button
+        type="button"
+        onClick={() => setAiOpen(true)}
+        aria-label="Open AI task assistant"
+        className="fixed right-4 bottom-[max(env(safe-area-inset-bottom),16px)] sm:bottom-6 z-40 h-14 w-14 rounded-full bg-gradient-to-br from-elec-yellow to-amber-500 text-black shadow-xl shadow-elec-yellow/30 flex items-center justify-center active:scale-[0.96] touch-manipulation"
+      >
+        <Sparkles className="h-6 w-6" />
+        <span className="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-emerald-400 ring-2 ring-background" />
+      </button>
     </div>
   );
 };

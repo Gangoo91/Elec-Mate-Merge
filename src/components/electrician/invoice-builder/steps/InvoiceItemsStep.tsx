@@ -45,48 +45,7 @@ const UNIT_PRESETS = [
   'visit',
 ] as const;
 
-// InlineDecimalInput: local string state prevents parseFloat stripping trailing dots (ELE-14)
-function InlineDecimalInput({
-  value,
-  onChange,
-  className,
-  style,
-  placeholder,
-}: {
-  value: number;
-  onChange: (val: number) => void;
-  className?: string;
-  style?: React.CSSProperties;
-  placeholder?: string;
-}) {
-  const [draft, setDraft] = React.useState(value === 0 ? '' : String(value));
-
-  React.useEffect(() => {
-    // Sync if parent value changes externally (e.g. item reset)
-    setDraft(value === 0 ? '' : String(value));
-  }, [value]);
-
-  return (
-    <input
-      type="text"
-      inputMode="decimal"
-      style={style}
-      value={draft}
-      placeholder={placeholder}
-      onChange={(e) => {
-        const val = e.target.value;
-        if (val === '' || /^\d*\.?\d*$/.test(val)) setDraft(val);
-      }}
-      onBlur={() => {
-        const parsed = parseFloat(draft);
-        const final = isNaN(parsed) ? 0 : parsed;
-        onChange(final);
-        setDraft(final === 0 ? '' : String(final));
-      }}
-      className={className}
-    />
-  );
-}
+import { DecimalInput as InlineDecimalInput } from '@/components/ui/decimal-input';
 
 interface InvoiceItemsStepProps {
   originalItems: InvoiceItem[];
@@ -932,20 +891,10 @@ export const InvoiceItemsStep = ({
                 <label className="text-[11px] text-white uppercase tracking-wider block mb-1.5">
                   Quantity
                 </label>
-                <input
-                  type="text"
-                  inputMode="decimal"
+                <InlineDecimalInput
+                  value={newItem.quantity}
+                  onChange={(quantity) => setNewItem((prev) => ({ ...prev, quantity }))}
                   style={darkInputStyle}
-                  value={newItem.quantity === 0 ? '' : newItem.quantity}
-                  onChange={(e) => {
-                    const val = e.target.value;
-                    if (val === '' || /^\d*\.?\d*$/.test(val)) {
-                      const quantity = val === '' ? 0 : parseFloat(val);
-                      if (!isNaN(quantity)) {
-                        setNewItem((prev) => ({ ...prev, quantity }));
-                      }
-                    }
-                  }}
                   className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border-0 text-[15px] text-white focus:outline-none focus:ring-2 focus:ring-elec-yellow/20 focus:border-elec-yellow"
                   placeholder="1"
                 />
@@ -954,20 +903,10 @@ export const InvoiceItemsStep = ({
                 <label className="text-[11px] text-white uppercase tracking-wider block mb-1.5">
                   Unit Price (£)
                 </label>
-                <input
-                  type="text"
-                  inputMode="decimal"
+                <InlineDecimalInput
+                  value={newItem.unitPrice}
+                  onChange={(unitPrice) => setNewItem((prev) => ({ ...prev, unitPrice }))}
                   style={darkInputStyle}
-                  value={newItem.unitPrice === 0 ? '' : newItem.unitPrice}
-                  onChange={(e) => {
-                    const val = e.target.value;
-                    if (val === '' || /^\d*\.?\d*$/.test(val)) {
-                      const unitPrice = val === '' ? 0 : parseFloat(val);
-                      if (!isNaN(unitPrice)) {
-                        setNewItem((prev) => ({ ...prev, unitPrice }));
-                      }
-                    }
-                  }}
                   className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border-0 text-[15px] text-white focus:outline-none focus:ring-2 focus:ring-elec-yellow/20 focus:border-elec-yellow"
                   placeholder="0.00"
                 />
@@ -1144,6 +1083,31 @@ export const InvoiceItemsStep = ({
                       <Copy className="h-4 w-4 text-white" />
                     </button>
                     <button
+                      type="button"
+                      onClick={() =>
+                        setAdjustingItemId(adjustingItemId === item.id ? null : item.id)
+                      }
+                      className={cn(
+                        'w-9 h-9 rounded-lg flex items-center justify-center touch-manipulation active:scale-95',
+                        adjustingItemId === item.id ||
+                          (typeof item.itemAdjustmentPercent === 'number' &&
+                            item.itemAdjustmentPercent !== 0)
+                          ? 'bg-elec-yellow/20'
+                          : 'bg-white/[0.08]'
+                      )}
+                      aria-label="Per-item adjustment"
+                    >
+                      <Percent
+                        className={cn(
+                          'h-4 w-4',
+                          typeof item.itemAdjustmentPercent === 'number' &&
+                            item.itemAdjustmentPercent !== 0
+                            ? 'text-elec-yellow'
+                            : 'text-white'
+                        )}
+                      />
+                    </button>
+                    <button
                       onClick={() => {
                         onRemoveItem(item.id);
                         toast({ title: 'Item removed' });
@@ -1154,38 +1118,75 @@ export const InvoiceItemsStep = ({
                     </button>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <input
-                    type="text"
-                    inputMode="decimal"
-                    style={darkInputStyle}
-                    value={item.quantity === 0 ? '' : item.quantity}
-                    onChange={(e) => {
-                      const val = e.target.value;
-                      if (val === '' || /^\d*\.?\d*$/.test(val)) {
-                        const quantity = val === '' ? 0 : parseFloat(val);
-                        if (!isNaN(quantity)) {
-                          onUpdateItem(item.id, { quantity });
-                        }
+                {typeof item.itemAdjustmentPercent === 'number' &&
+                  item.itemAdjustmentPercent !== 0 &&
+                  adjustingItemId !== item.id && (
+                    <div className="mb-2 flex items-center gap-1.5 text-[11px]">
+                      <span
+                        className={cn(
+                          'px-1.5 py-0.5 rounded font-semibold tabular-nums',
+                          item.itemAdjustmentPercent > 0
+                            ? 'bg-amber-500/15 text-amber-300'
+                            : 'bg-emerald-500/15 text-emerald-300'
+                        )}
+                      >
+                        {item.itemAdjustmentPercent > 0 ? '+' : ''}
+                        {item.itemAdjustmentPercent}%
+                      </span>
+                      {item.itemAdjustmentLabel && (
+                        <span className="text-white/60">{item.itemAdjustmentLabel}</span>
+                      )}
+                    </div>
+                  )}
+                {adjustingItemId === item.id && (
+                  <div className="mb-2 p-2 rounded-lg bg-white/[0.04] border border-white/[0.08] flex items-center gap-2">
+                    <input
+                      type="number"
+                      step="0.1"
+                      autoFocus
+                      placeholder="± %"
+                      value={item.itemAdjustmentPercent ?? ''}
+                      onChange={(e) => {
+                        const v = e.target.value;
+                        onUpdateItem(item.id, {
+                          itemAdjustmentPercent: v === '' ? undefined : parseFloat(v),
+                        });
+                      }}
+                      className="w-20 h-8 px-2 text-center text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Reason"
+                      value={item.itemAdjustmentLabel ?? ''}
+                      onChange={(e) =>
+                        onUpdateItem(item.id, {
+                          itemAdjustmentLabel: e.target.value || undefined,
+                        })
                       }
-                    }}
+                      className="flex-1 h-8 px-2 text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation placeholder:text-white/40"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setAdjustingItemId(null)}
+                      className="w-8 h-8 rounded-lg bg-elec-yellow/20 flex items-center justify-center"
+                      aria-label="Done"
+                    >
+                      <Check className="h-3.5 w-3.5 text-elec-yellow" />
+                    </button>
+                  </div>
+                )}
+                <div className="flex items-center gap-2">
+                  <InlineDecimalInput
+                    value={item.quantity}
+                    onChange={(quantity) => onUpdateItem(item.id, { quantity })}
+                    style={darkInputStyle}
                     className="h-8 w-16 px-2 py-0 text-[13px] text-white bg-white/[0.06] border border-white/[0.12] rounded-lg caret-white focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
                   />
                   <span className="text-[12px] text-white">×</span>
-                  <input
-                    type="text"
-                    inputMode="decimal"
+                  <InlineDecimalInput
+                    value={item.unitPrice}
+                    onChange={(unitPrice) => onUpdateItem(item.id, { unitPrice })}
                     style={darkInputStyle}
-                    value={item.unitPrice === 0 ? '' : item.unitPrice}
-                    onChange={(e) => {
-                      const val = e.target.value;
-                      if (val === '' || /^\d*\.?\d*$/.test(val)) {
-                        const unitPrice = val === '' ? 0 : parseFloat(val);
-                        if (!isNaN(unitPrice)) {
-                          onUpdateItem(item.id, { unitPrice });
-                        }
-                      }
-                    }}
                     className="h-8 w-20 px-2 py-0 text-[13px] text-white bg-white/[0.06] border border-white/[0.12] rounded-lg caret-white focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
                   />
                   <span className="text-[12px] text-white flex-1">{item.unit}</span>

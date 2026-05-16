@@ -10,7 +10,8 @@
 
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
-import { Resend } from '../_shared/mailer.ts';
+import { Resend, clientFacingSender, htmlToPlainText } from '../_shared/mailer.ts';
+import { buildPaymentReminderEmail } from '../_shared/email-templates/payment-reminder.ts';
 import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
@@ -148,26 +149,34 @@ serve(async (req: Request) => {
         }
       }
 
-      // Get company profile for sender info
+      // Get company profile for sender info + branded template
       let companyName = 'Your Electrician';
-      // ELE-662 — drop info@elec-mate.com fallback (unmonitored).
-      let replyToEmail = '';
+      let companyEmail: string | null = null;
 
       const { data: company } = await supabase
         .from('company_profiles')
-        .select('company_name, company_email')
+        .select('*')
         .eq('user_id', invoice.user_id)
         .single();
 
       if (company) {
         companyName = company.company_name || 'Your Electrician';
-        replyToEmail = company.company_email || '';
+        companyEmail = company.company_email || null;
       }
-      // ELE-662 fix: if no company_email, fall back to auth user email
-      if (!replyToEmail) {
+      // If no company_email, fall back to auth user email for Reply-To
+      let userEmail: string | null = null;
+      if (!companyEmail) {
         const { data: authUser } = await supabase.auth.admin.getUserById(invoice.user_id);
-        replyToEmail = authUser?.user?.email || '';
+        userEmail = authUser?.user?.email || null;
       }
+
+      // ELE-662 — centralised sender. See _shared/mailer.ts:clientFacingSender.
+      const sender = clientFacingSender({
+        companyName,
+        companyEmail,
+        userEmail,
+      });
+      const electricianCopyBcc = sender.replyTo || undefined;
 
       // ELE-880 — mint a mark-paid token so the reminder includes a one-tap
       // "Mark this invoice as paid" button (visible in the BCC'd electrician
@@ -191,16 +200,36 @@ serve(async (req: Request) => {
         console.warn('[automated-invoice-reminders] token mint exception', mintErr);
       }
 
-      // Generate email content
-      const emailContent = generateReminderEmail(
-        reminderType,
+      // Generate email content via shared payment-reminder template.
+      const bankDetails = company?.bank_details || invoice.settings?.bankDetails || null;
+      const emailContent = buildPaymentReminderEmail({
+        company: {
+          name: companyName,
+          logoUrl: company?.logo_url || company?.logo_data_url || null,
+          primaryColor: company?.primary_color || null,
+          email: companyEmail,
+          phone: company?.company_phone || null,
+          website: company?.company_website || null,
+          address: company?.company_address || null,
+          vatNumber: company?.vat_number || null,
+          registrationNumber: company?.company_registration || null,
+        },
         clientName,
-        invoice.invoice_number,
-        invoice.total,
-        daysOverdue,
-        companyName,
-        markPaidUrl
-      );
+        invoiceNumber: invoice.invoice_number || 'N/A',
+        total: Number(invoice.total) || 0,
+        dueDate: invoice.invoice_due_date || null,
+        payNowUrl: invoice.stripe_payment_link_url || invoice.external_invoice_url || null,
+        bankDetails: bankDetails
+          ? {
+              bankName: bankDetails.bankName || null,
+              accountName: bankDetails.accountName || null,
+              accountNumber: bankDetails.accountNumber || null,
+              sortCode: bankDetails.sortCode || null,
+            }
+          : null,
+        tone: reminderType,
+        markPaidUrl,
+      });
 
       // ELE-662 + ELE-880 — Send via Brevo (Resend banned us at the domain
       // level). BCC the electrician so they receive a copy with the
@@ -208,12 +237,12 @@ serve(async (req: Request) => {
       const resend = new Resend(resendApiKey);
       try {
         const { data, error } = await resend.emails.send({
-          from: `${companyName} <founder@elec-mate.com>`,
-          ...(replyToEmail ? { replyTo: replyToEmail } : {}),
-          ...(replyToEmail ? { bcc: [replyToEmail] } : {}),
+          ...sender,
+          ...(electricianCopyBcc ? { bcc: [electricianCopyBcc] } : {}),
           to: [clientEmail],
           subject: emailContent.subject,
           html: emailContent.html,
+          text: htmlToPlainText(emailContent.html),
         });
 
         if (error) {
@@ -273,6 +302,7 @@ serve(async (req: Request) => {
       functionName: 'automated-invoice-reminders',
       requestUrl: req.url,
       requestMethod: req.method,
+      trackingPixelUrl: `${Deno.env.get('SUPABASE_URL')}/functions/v1/email-open?type=payment_reminder&id=${invoice.id}`,
     });
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,
@@ -280,188 +310,3 @@ serve(async (req: Request) => {
     });
   }
 });
-
-function generateReminderEmail(
-  type: 'gentle' | 'firm' | 'final',
-  clientName: string,
-  invoiceNumber: string,
-  total: number,
-  daysOverdue: number,
-  companyName: string,
-  markPaidUrl: string | null = null
-): { subject: string; html: string } {
-  const formattedTotal = new Intl.NumberFormat('en-GB', {
-    style: 'currency',
-    currency: 'GBP',
-  }).format(total || 0);
-
-  const configs = {
-    gentle: {
-      subject: `Friendly Reminder: Invoice ${invoiceNumber} is now due`,
-      title: 'Payment Reminder',
-      accentColor: '#FFD700',
-      bannerBg: '',
-      bannerBorder: '',
-      bannerTextColor: '',
-      message: `Just a friendly reminder that payment for invoice <strong>${invoiceNumber}</strong> was due <strong>${daysOverdue} day${daysOverdue === 1 ? '' : 's'} ago</strong>.`,
-      cta: "If you've already made the payment, please disregard this message. Otherwise, we'd appreciate if you could arrange payment at your earliest convenience.",
-      urgency: '',
-    },
-    firm: {
-      subject: `Second Notice: Invoice ${invoiceNumber} - ${daysOverdue} days overdue`,
-      title: 'Payment Overdue',
-      accentColor: '#d97706',
-      bannerBg: '#fffbeb',
-      bannerBorder: '#fde68a',
-      bannerTextColor: '#92400e',
-      message: `This is a follow-up regarding invoice <strong>${invoiceNumber}</strong>, which is now <strong>${daysOverdue} days overdue</strong>.`,
-      cta: "Please arrange payment within the next 7 days. If you're experiencing any issues, please contact us immediately to discuss payment arrangements.",
-      urgency: 'This matter requires your prompt attention.',
-    },
-    final: {
-      subject: `Final Notice: Invoice ${invoiceNumber} - Immediate action required`,
-      title: 'Final Payment Notice',
-      accentColor: '#dc2626',
-      bannerBg: '#fef2f2',
-      bannerBorder: '#fecaca',
-      bannerTextColor: '#991b1b',
-      message: `Despite previous reminders, invoice <strong>${invoiceNumber}</strong> remains unpaid and is now <strong>${daysOverdue} days overdue</strong>.`,
-      cta: "To avoid further action, please ensure payment is made within <strong>48 hours</strong>. If you're experiencing financial difficulties, please contact us immediately.",
-      urgency: 'This is a final notice before we consider further recovery action.',
-    },
-  };
-
-  const config = configs[type];
-
-  // Urgency banner for firm/final
-  let urgencyBanner = '';
-  if (type === 'firm' || type === 'final') {
-    urgencyBanner = `
-      <tr>
-        <td style="padding: 0 32px 24px;">
-          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"
-            style="background-color: ${config.bannerBg}; border: 1px solid ${config.bannerBorder}; border-radius: 8px; border-left: 4px solid ${config.accentColor};">
-            <tr>
-              <td style="padding: 16px 20px;">
-                <p style="margin: 0; font-size: 14px; color: ${config.bannerTextColor}; font-weight: 600;">
-                  ${type === 'final' ? 'Final Notice' : 'Second Notice'} — ${daysOverdue} day${daysOverdue !== 1 ? 's' : ''} overdue
-                </p>
-                ${config.urgency ? `<p style="margin: 6px 0 0; font-size: 14px; color: ${config.bannerTextColor};">${config.urgency}</p>` : ''}
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>`;
-  }
-
-  const html = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body style="margin: 0; padding: 0; background-color: #f6f6f6; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; -webkit-font-smoothing: antialiased;">
-  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f6f6f6;">
-    <tr>
-      <td style="padding: 40px 16px;">
-
-        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"
-          style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #e5e7eb;">
-
-          <!-- Header -->
-          <tr>
-            <td style="background-color: #111111; padding: 24px 32px;">
-              <p style="margin: 0; font-size: 20px; font-weight: 700; color: #ffffff;">${companyName}</p>
-            </td>
-          </tr>
-
-          <!-- Greeting -->
-          <tr>
-            <td style="padding: 32px 32px 20px;">
-              <p style="margin: 0 0 16px; font-size: 16px; color: #1a1a1a;">Hi <strong>${clientName}</strong>,</p>
-              <p style="margin: 0; font-size: 15px; color: #4b5563; line-height: 1.6;">${config.message}</p>
-              <p style="margin: 16px 0 0; font-size: 15px; color: #4b5563; line-height: 1.6;">${config.cta}</p>
-            </td>
-          </tr>
-
-          <!-- Urgency banner -->
-          ${urgencyBanner}
-
-          <!-- Amount card -->
-          <tr>
-            <td style="padding: 0 32px 24px;">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"
-                style="background-color: #fafafa; border: 1px solid #e5e7eb; border-radius: 10px;">
-                <tr>
-                  <td style="padding: 28px; text-align: center;">
-                    <p style="margin: 0 0 4px; font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.8px;">Invoice Reference</p>
-                    <p style="margin: 0 0 20px; font-size: 16px; font-weight: 600; color: #1a1a1a;">${invoiceNumber}</p>
-                    <p style="margin: 0 0 4px; font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.8px;">Amount Due</p>
-                    <p style="margin: 0 0 12px; font-size: 40px; font-weight: 700; color: #1a1a1a; line-height: 1.1;">${formattedTotal}</p>
-                    <p style="margin: 0; font-size: 13px; font-weight: 600; color: ${config.accentColor};">${daysOverdue} day${daysOverdue !== 1 ? 's' : ''} overdue</p>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-          <!-- Contact prompt -->
-          <tr>
-            <td style="padding: 0 32px 24px;">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"
-                style="background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px;">
-                <tr>
-                  <td style="padding: 16px 20px;">
-                    <p style="margin: 0; font-size: 14px; color: #4b5563;"><strong style="color: #1a1a1a;">Questions?</strong> Just reply to this email — we're here to help.</p>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-          <!-- Sign-off -->
-          <tr>
-            <td style="padding: 0 32px 32px;">
-              <p style="margin: 0; font-size: 15px; color: #4b5563; line-height: 1.6;">
-                Kind regards,<br><strong style="color: #1a1a1a;">${companyName}</strong>
-              </p>
-            </td>
-          </tr>
-
-          ${
-            markPaidUrl
-              ? `
-          <!-- ELE-880 electrician mark-paid one-tap button -->
-          <tr>
-            <td style="border-top: 1px solid #e5e7eb; padding: 16px 32px 0;">
-              <p style="margin: 0 0 6px; font-size: 11px; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.08em;">
-                For ${companyName} only
-              </p>
-              <p style="margin: 0 0 10px; font-size: 12.5px; color: #6b7280; line-height: 1.5;">
-                If your customer has already paid, mark this invoice as paid in one tap so reminders stop.
-              </p>
-              <a href="${markPaidUrl}"
-                style="display: inline-block; font-size: 12.5px; font-weight: 600; color: #1a1a1a; background: #FFD700; text-decoration: none; padding: 8px 14px; border-radius: 8px;">
-                Mark this invoice as paid →
-              </a>
-            </td>
-          </tr>`
-              : ''
-          }
-
-          <!-- Footer -->
-          <tr>
-            <td style="border-top: 1px solid #e5e7eb; padding: 20px 32px; text-align: center;">
-              <p style="margin: 0; font-size: 11px; color: #9ca3af;">Sent via Elec-Mate</p>
-            </td>
-          </tr>
-
-        </table>
-      </td>
-    </tr>
-  </table>
-</body>
-</html>`;
-
-  return { subject: config.subject, html };
-}

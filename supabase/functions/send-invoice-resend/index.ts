@@ -1,6 +1,7 @@
 import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
-import { Resend } from '../_shared/mailer.ts';
+import { Resend, clientFacingSender, htmlToPlainText } from '../_shared/mailer.ts';
+import { buildInvoiceSendEmail } from '../_shared/email-templates/invoice-send.ts';
 import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
@@ -41,63 +42,6 @@ function isValidEmail(email: string | null | undefined): boolean {
   if (!email || typeof email !== 'string') return false;
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email.trim());
-}
-
-/**
- * Safely format currency - handles NaN, undefined, null, strings
- */
-function formatCurrency(amount: any): string {
-  let numAmount = 0;
-
-  if (typeof amount === 'number' && !isNaN(amount)) {
-    numAmount = amount;
-  } else if (typeof amount === 'string') {
-    const parsed = parseFloat(amount);
-    if (!isNaN(parsed)) numAmount = parsed;
-  }
-
-  return new Intl.NumberFormat('en-GB', {
-    style: 'currency',
-    currency: 'GBP',
-  }).format(numAmount);
-}
-
-/**
- * Safely format date - handles invalid dates
- */
-function formatDate(dateInput: any): string {
-  if (!dateInput) return 'N/A';
-
-  try {
-    const date = new Date(dateInput);
-    if (isNaN(date.getTime())) return 'N/A';
-
-    return date.toLocaleDateString('en-GB', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-    });
-  } catch (e) {
-    console.warn('⚠️ Date format failed:', e);
-    return 'N/A';
-  }
-}
-
-/**
- * Safely get nested property
- */
-function safeGet(obj: any, path: string, fallback: any = ''): any {
-  try {
-    const keys = path.split('.');
-    let result = obj;
-    for (const key of keys) {
-      if (result === null || result === undefined) return fallback;
-      result = result[key];
-    }
-    return result ?? fallback;
-  } catch (e) {
-    return fallback;
-  }
 }
 
 // ============================================================================
@@ -404,292 +348,70 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     // ========================================================================
-    // STEP 9: Parse settings and prepare invoice items safely
+    // STEP 9: Parse settings + job details for email payload
     // ========================================================================
     const settings = safeJsonParse(invoice.settings, {});
-    const items = Array.isArray(invoice.items) ? invoice.items : [];
-    const showSummaryView = settings.showSummaryView || false;
-
-    let itemsHtml: string;
-
-    if (showSummaryView) {
-      // Summary view: Group items by category
-      const categoryTotals: Record<string, number> = {};
-      const categoryLabels: Record<string, string> = {
-        labour: 'Labour',
-        materials: 'Materials',
-        equipment: 'Equipment Hire',
-        manual: 'Other',
-      };
-
-      for (const item of items) {
-        const category = (item as any).category || 'manual';
-        const qty = (item as any).actualQuantity ?? safeGet(item, 'quantity', 0);
-        const unitPrice = safeGet(item, 'unitPrice', 0);
-        const total = qty * unitPrice;
-        if (!categoryTotals[category]) categoryTotals[category] = 0;
-        categoryTotals[category] += total;
-      }
-
-      // Build summary rows
-      const categoryOrder = ['labour', 'materials', 'equipment', 'manual'];
-      itemsHtml = categoryOrder
-        .filter((cat) => categoryTotals[cat] && categoryTotals[cat] > 0)
-        .map((category, index) => {
-          const label = categoryLabels[category] || category;
-          const total = categoryTotals[category];
-          return `
-            <tr style="background: ${index % 2 === 0 ? '#ffffff' : '#f9fafb'};">
-              <td style="padding: 12px; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb;">${label}</td>
-              <td style="padding: 12px; text-align: center; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb;">1</td>
-              <td style="padding: 12px; text-align: right; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb; white-space: nowrap;">${formatCurrency(total)}</td>
-              <td style="padding: 12px; text-align: right; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb; white-space: nowrap; font-weight: 600;">${formatCurrency(total)}</td>
-            </tr>
-          `;
-        })
-        .join('');
-    } else {
-      // Detailed view: Show all items individually
-      itemsHtml = items
-        .map((item: any, index: number) => {
-          const description = safeGet(item, 'description', 'Item');
-          const quantity = safeGet(item, 'quantity', 0);
-          const unitPrice = safeGet(item, 'unitPrice', 0);
-          const lineTotal = item.total ?? item.totalPrice ?? quantity * unitPrice;
-
-          return `
-          <tr style="background: ${index % 2 === 0 ? '#ffffff' : '#f9fafb'};">
-            <td style="padding: 12px; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb;">${description}</td>
-            <td style="padding: 12px; text-align: center; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb;">${quantity}</td>
-            <td style="padding: 12px; text-align: right; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb; white-space: nowrap;">${formatCurrency(unitPrice)}</td>
-            <td style="padding: 12px; text-align: right; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb; white-space: nowrap; font-weight: 600;">${formatCurrency(lineTotal)}</td>
-          </tr>
-        `;
-        })
-        .join('');
-    }
-
-    // ========================================================================
-    // STEP 10: Extract payment settings
-    // ========================================================================
-    const bankDetails = settings.bankDetails;
+    const bankDetails = settings.bankDetails || null;
     const paymentTerms = settings.paymentTerms || 'Due within 30 days';
+    const jobDetails = safeJsonParse(invoice.job_details, {});
+    const jobTitle = jobDetails?.title || null;
 
     // ========================================================================
-    // STEP 11: Build email HTML
+    // STEP 10: Build email via shared template
     // ========================================================================
-    const emailHtml = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
-  <title>Invoice from ${companyName}</title>
-  <!--[if mso]>
-  <style type="text/css">
-    body, table, td {font-family: Arial, sans-serif !important;}
-  </style>
-  <![endif]-->
-</head>
-<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f8f9fa; -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;">
-
-  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f8f9fa;">
-    <tr>
-      <td style="padding: 20px 10px;">
-        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); border-radius: 12px; overflow: hidden;">
-
-          <!-- Header -->
-          <tr>
-            <td style="padding: 32px 24px 24px; border-bottom: 1px solid #e5e7eb;">
-              <h1 style="margin: 0; color: #1f2937; font-size: 22px; font-weight: 700;">${companyName}</h1>
-              ${companyProfile?.company_phone ? `<p style="margin: 6px 0 0; font-size: 13px; color: #6b7280;">${companyProfile.company_phone}${companyProfile?.company_email ? ` · ${companyProfile.company_email}` : ''}</p>` : ''}
-            </td>
-          </tr>
-
-          <!-- Greeting -->
-          <tr>
-            <td style="padding: 32px 24px 0;">
-              <p style="margin: 0 0 16px; font-size: 16px; line-height: 1.6; color: #374151;">
-                Dear <strong style="color: #1f2937;">${clientName}</strong>,
-              </p>
-              <p style="margin: 0 0 24px; font-size: 16px; line-height: 1.6; color: #374151;">
-                Thank you for your business. Please find your invoice details below:
-              </p>
-            </td>
-          </tr>
-
-          <!-- Invoice Card -->
-          <tr>
-            <td style="padding: 0 24px 24px;">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f8f9fa;  border-radius: 12px; border: 2px solid #e5e7eb;">
-                <tr>
-                  <td style="padding: 24px;">
-                    <h2 style="margin: 0 0 16px; font-size: 28px; font-weight: 700; color: #1f2937;">Invoice #${invoiceNumber}</h2>
-                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                      <tr><td style="padding: 6px 0; font-size: 14px; color: #6b7280;">Invoice Date:</td><td style="text-align: right; font-size: 14px; color: #1f2937; font-weight: 600;">${formatDate(invoice.invoice_date)}</td></tr>
-                      <tr><td style="padding: 6px 0; font-size: 14px; color: #6b7280;">Due Date:</td><td style="text-align: right; font-size: 14px; color: #dc2626; font-weight: 600;">${formatDate(invoice.invoice_due_date)}</td></tr>
-                      <tr><td style="padding: 6px 0; font-size: 14px; color: #6b7280;">Payment Terms:</td><td style="text-align: right; font-size: 14px; color: #1f2937; font-weight: 600;">${paymentTerms}</td></tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-          <!-- View PDF Button -->
-          ${
-            pdfUrl
-              ? `
-          <tr>
-            <td style="padding: 0 24px 24px;">
-              <a href="${pdfUrl}" target="_blank" style="display: block; background-color: #FFD700; color: #000000; text-align: center; text-decoration: none; padding: 16px 24px; border-radius: 10px; font-size: 16px; font-weight: 600; box-shadow: 0 4px 12px rgba(255, 215, 0, 0.2);">
-                View Invoice PDF
-              </a>
-              <p style="margin: 12px 0 0; text-align: center; font-size: 13px; color: #6b7280;">
-                ${pdfAttachmentSuccess ? `Invoice_${invoiceNumber}.pdf is attached to this email` : 'Click above to view and download your invoice'}
-              </p>
-            </td>
-          </tr>
-          `
-              : ''
+    const emailPayload = buildInvoiceSendEmail({
+      company: {
+        name: companyName,
+        logoUrl: companyProfile?.logo_url || companyProfile?.logo_data_url || null,
+        primaryColor: companyProfile?.primary_color || null,
+        email: companyProfile?.company_email || null,
+        phone: companyProfile?.company_phone || null,
+        website: companyProfile?.company_website || null,
+        address: companyProfile?.company_address || null,
+        vatNumber: companyProfile?.vat_number || null,
+        registrationNumber: companyProfile?.company_registration || null,
+      },
+      clientName,
+      invoiceNumber,
+      total: Number(invoice.total) || 0,
+      subtotal: typeof invoice.subtotal === 'number' ? invoice.subtotal : Number(invoice.subtotal) || null,
+      vatAmount: typeof invoice.vat_amount === 'number' ? invoice.vat_amount : Number(invoice.vat_amount) || null,
+      invoiceDate: invoice.invoice_date || null,
+      dueDate: invoice.invoice_due_date || null,
+      paymentTerms,
+      payNowUrl: stripePaymentUrl,
+      pdfUrl,
+      pdfAttached: pdfAttachmentSuccess,
+      bankDetails: bankDetails
+        ? {
+            bankName: bankDetails.bankName || null,
+            accountName: bankDetails.accountName || null,
+            accountNumber: bankDetails.accountNumber || null,
+            sortCode: bankDetails.sortCode || null,
           }
-
-          <!-- Pay Now Button -->
-          ${
-            stripePaymentUrl
-              ? `
-          <tr>
-            <td style="padding: 0 24px 24px;">
-              <a href="${stripePaymentUrl}" target="_blank" style="display: block; background-color: #FFD700; color: #000000; text-align: center; text-decoration: none; padding: 20px 24px; border-radius: 12px; font-size: 18px; font-weight: 700; box-shadow: 0 4px 12px rgba(255, 215, 0, 0.2);">
-                Pay Now - Secure Card Payment
-              </a>
-              <p style="margin: 12px 0 0; text-align: center; font-size: 13px; color: #6b7280;">
-                Fast, secure payment via Stripe
-              </p>
-            </td>
-          </tr>
-          `
-              : ''
-          }
-
-          <!-- Bank Details -->
-          ${
-            bankDetails
-              ? `
-          <tr>
-            <td style="padding: 0 24px 24px;">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px;">
-                <tr>
-                  <td style="padding: 20px;">
-                    <h3 style="margin: 0 0 16px; font-size: 16px; font-weight: 700; color: #1f2937;">Payment Details (Bank Transfer)</h3>
-                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                      ${bankDetails.bankName ? `<tr><td style="padding: 4px 0; font-size: 14px; color: #374151;"><strong>Bank:</strong></td><td style="text-align: right; font-size: 14px; color: #374151; font-weight: 600;">${bankDetails.bankName}</td></tr>` : ''}
-                      ${bankDetails.accountName ? `<tr><td style="padding: 4px 0; font-size: 14px; color: #374151;"><strong>Account:</strong></td><td style="text-align: right; font-size: 14px; color: #374151; font-weight: 600;">${bankDetails.accountName}</td></tr>` : ''}
-                      ${bankDetails.accountNumber ? `<tr><td style="padding: 4px 0; font-size: 14px; color: #374151;"><strong>Acc No:</strong></td><td style="text-align: right; font-size: 14px; color: #374151; font-weight: 600;">${bankDetails.accountNumber}</td></tr>` : ''}
-                      ${bankDetails.sortCode ? `<tr><td style="padding: 4px 0; font-size: 14px; color: #374151;"><strong>Sort Code:</strong></td><td style="text-align: right; font-size: 14px; color: #374151; font-weight: 600;">${bankDetails.sortCode}</td></tr>` : ''}
-                      <tr><td style="padding: 8px 0 0; font-size: 14px; color: #374151;"><strong>Reference:</strong></td><td style="text-align: right; font-size: 14px; color: #1f2937; font-weight: 700;">${invoiceNumber}</td></tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          `
-              : ''
-          }
-
-          <!-- Items Table -->
-          ${
-            items.length > 0
-              ? `
-          <tr>
-            <td style="padding: 0 24px 24px;">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden;">
-                <tr style="background: #f9fafb;">
-                  <th style="padding: 12px; text-align: left; font-size: 13px; font-weight: 700; color: #374151; border-bottom: 2px solid #e5e7eb;">Description</th>
-                  <th style="padding: 12px; text-align: center; font-size: 13px; font-weight: 700; color: #374151; border-bottom: 2px solid #e5e7eb;">Qty</th>
-                  <th style="padding: 12px; text-align: right; font-size: 13px; font-weight: 700; color: #374151; border-bottom: 2px solid #e5e7eb;">Price</th>
-                  <th style="padding: 12px; text-align: right; font-size: 13px; font-weight: 700; color: #374151; border-bottom: 2px solid #e5e7eb;">Total</th>
-                </tr>
-                ${itemsHtml}
-              </table>
-            </td>
-          </tr>
-          `
-              : ''
-          }
-
-          <!-- Totals -->
-          <tr>
-            <td style="padding: 0 24px 32px;">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin-left: auto;">
-                <tr><td style="padding: 6px 12px 6px 0; font-size: 15px; color: #6b7280;">Subtotal:</td><td style="font-size: 15px; color: #1f2937; font-weight: 600; text-align: right;">${formatCurrency(invoice.subtotal)}</td></tr>
-                <tr><td style="padding: 6px 12px 6px 0; font-size: 15px; color: #6b7280;">VAT (20%):</td><td style="font-size: 15px; color: #1f2937; font-weight: 600; text-align: right;">${formatCurrency(invoice.vat_amount)}</td></tr>
-                <tr><td colspan="2" style="padding: 12px 0 0; border-top: 2px solid #e5e7eb;"></td></tr>
-                <tr><td style="padding: 12px 12px 0 0; font-size: 16px; color: #374151; font-weight: 700;">Total:</td><td style="padding: 12px 0 0; font-size: 36px; color: #FFD700; font-weight: 700; text-align: right;">${formatCurrency(invoice.total)}</td></tr>
-              </table>
-            </td>
-          </tr>
-
-          <!-- Notes -->
-          ${
-            invoice.invoice_notes
-              ? `
-          <tr>
-            <td style="padding: 0 24px 24px;">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px;">
-                <tr>
-                  <td style="padding: 16px;">
-                    <p style="margin: 0 0 8px; font-size: 14px; font-weight: 700; color: #1f2937;">Notes:</p>
-                    <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #374151;">${invoice.invoice_notes}</p>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          `
-              : ''
-          }
-
-          <!-- Footer -->
-          <tr>
-            <td style="padding: 24px; border-top: 1px solid #e5e7eb;">
-              <p style="margin: 0 0 12px; font-size: 14px; line-height: 1.6; color: #6b7280;">
-                If you have any questions, please reply to this email or contact us directly.
-              </p>
-              <p style="margin: 0; font-size: 14px; font-weight: 600; color: #1f2937;">${companyName}</p>
-              ${companyProfile?.company_phone ? `<p style="margin: 4px 0 0; font-size: 13px; color: #6b7280;">${companyProfile.company_phone}</p>` : ''}
-              ${companyProfile?.company_email ? `<p style="margin: 2px 0 0; font-size: 13px; color: #6b7280;">${companyProfile.company_email}</p>` : ''}
-            </td>
-          </tr>
-
-          <tr>
-            <td style="padding: 16px 24px; text-align: center;">
-              <p style="margin: 0; font-size: 11px; color: #9ca3af;">Sent via Elec-Mate</p>
-            </td>
-          </tr>
-
-        </table>
-      </td>
-    </tr>
-  </table>
-
-</body>
-</html>
-    `;
+        : null,
+      notes: invoice.invoice_notes || null,
+      jobTitle,
+      trackingPixelUrl: `${Deno.env.get('SUPABASE_URL')}/functions/v1/email-open?type=invoice_send&id=${invoiceId}`,
+    });
+    const emailHtml = emailPayload.html;
 
     // ========================================================================
     // STEP 12: Send email via Resend
     // ========================================================================
-    // Reply-To cascade (ELE-662): company email → user's auth email. NEVER
-    // info@elec-mate.com — that's an unmonitored alias and replies bounce.
-    const replyToEmail = companyProfile?.company_email || userEmail || '';
+    // ELE-662 — centralised sender. From: "<CompanyName> <invoices@elec-mate.com>"
+    // (DMARC-aligned; Brevo signs elec-mate.com). Reply-To: company_email
+    // or user.email. Never founder@. See _shared/mailer.ts:clientFacingSender.
+    const sender = clientFacingSender({
+      companyName,
+      companyEmail: companyProfile?.company_email,
+      userEmail,
+    });
     const subject = `Invoice ${invoiceNumber} - ${companyName}`;
 
     console.log(`📧 Sending to: ${clientEmail}`);
-    console.log(`📧 Reply-to: ${replyToEmail || '(none — no company_email or auth email)'}`);
+    console.log(`📧 From: ${sender.from}`);
+    console.log(`📧 Reply-to: ${sender.replyTo || '(none — no company_email or auth email)'}`);
     console.log(`📧 Company profile email: ${companyProfile?.company_email || 'NOT SET'}`);
 
     const emailOptions: {
@@ -698,18 +420,15 @@ const handler = async (req: Request): Promise<Response> => {
       to: string[];
       subject: string;
       html: string;
+      text?: string;
       attachments?: Array<{ filename: string; content: string }>;
     } = {
-      from: `${companyName} <founder@elec-mate.com>`,
+      ...sender,
       to: [clientEmail],
       subject: subject,
       html: emailHtml,
+      text: htmlToPlainText(emailHtml),
     };
-    // Only set Reply-To if we have a real address — otherwise omit, so
-    // Brevo doesn't write a header pointing at the unmonitored sender.
-    if (replyToEmail) {
-      emailOptions.replyTo = replyToEmail;
-    }
 
     if (pdfAttachmentSuccess && pdfBase64) {
       emailOptions.attachments = [

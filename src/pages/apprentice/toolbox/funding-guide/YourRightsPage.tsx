@@ -1,123 +1,157 @@
+/**
+ * Funding · YourRightsPage — editorial guide to apprentice funding rights.
+ *
+ * 8 rights you have, 10 red flags, escalation steps, complaint template,
+ * official links.
+ */
+
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { ArrowLeft, CheckCircle, AlertTriangle, ExternalLink, ChevronRight } from 'lucide-react';
-import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import {
+  ArrowLeft,
+  CheckCircle2,
+  AlertTriangle,
+  ExternalLink,
+  ChevronRight,
+  Scale,
+  Phone,
+} from 'lucide-react';
+import {
+  PageFrame,
+  PageHero,
+  itemVariants,
+} from '@/components/college/primitives';
+import {
+  Eyebrow,
+  SectionHeader,
+} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 
 const rights = [
   {
-    title: 'Free Training Guaranteed by Law',
+    title: 'Free training guaranteed by law',
     description:
-      'Your apprenticeship training must be fully funded. You should never be asked to pay any training fees or contribute towards the cost of your programme. This is a non-negotiable ESFA funding rule.',
+      'Your apprenticeship training must be fully funded. You should never be asked to pay any training fees. Non-negotiable ESFA funding rule.',
   },
   {
-    title: 'No Deductions from Wages',
+    title: 'No deductions from wages',
     description:
-      'Your employer cannot deduct training costs from your wages. This includes any contribution towards co-investment — that is the employer\'s responsibility, not yours. Check your payslips regularly.',
+      'Your employer cannot deduct training costs from your wages. This includes any contribution towards co-investment — employer\'s responsibility, not yours.',
   },
   {
     title: 'Funded End Point Assessment',
     description:
-      'Your End Point Assessment (EPA) is included in the funding band. Neither you nor your employer should be paying the EPAO separately — it comes out of the £23,000. This includes knowledge test, practical assessment, and professional discussion.',
+      'Your EPA is included in the funding band. Neither you nor your employer should be paying the EPAO separately — it comes out of the £23,000.',
   },
   {
-    title: 'Funded Learning Materials',
+    title: 'Funded learning materials',
     description:
-      'Your training provider must provide all learning materials required for your apprenticeship. You should not be asked to buy textbooks, workbooks, online access, or any other study materials separately.',
+      'Your training provider must provide all learning materials. You shouldn\'t be asked to buy textbooks, workbooks, online access, or study materials separately.',
   },
   {
-    title: 'Employer Covers Co-Investment',
+    title: 'Employer covers co-investment',
     description:
-      'If your employer is a non-levy SME, they pay the 5% co-investment contribution (maximum £1,150 for Level 3 Electrical). This must never be passed on to you in any form — direct payment, wage deduction, or otherwise.',
+      'If your employer is a non-levy SME, they pay the 5% co-investment (max £1,150 for Level 3). Must never be passed on to you in any form.',
   },
   {
-    title: 'No Additional Provider Fees',
+    title: 'No additional provider fees',
     description:
-      'Your training provider cannot charge you additional fees for registration, assessment, materials, certification, or any other aspect of your apprenticeship training. Everything is covered by the funding band.',
+      'Your training provider cannot charge additional fees for registration, assessment, materials, or certification. Everything is covered by the funding band.',
   },
   {
-    title: 'AM2 Assessment is Funded',
+    title: 'AM2 assessment is funded',
     description:
-      'Your AM2 practical assessment at a NET centre is part of your apprenticeship and covered by the funding band. You should not be asked to pay for AM2 separately.',
+      'Your AM2 practical at a NET centre is part of your apprenticeship and covered by the funding band. You should not be asked to pay separately.',
   },
   {
-    title: 'Functional Skills are Funded',
+    title: 'Functional Skills are funded',
     description:
-      'If you need Functional Skills in English or Maths, these are fully funded as part of your apprenticeship. You should not be charged for Functional Skills exams or tuition.',
+      'If you need Functional Skills in English or Maths, these are fully funded. You shouldn\'t be charged for Functional Skills exams or tuition.',
   },
 ];
 
 const warningSignals = [
   'Being asked to pay any amount towards your training fees',
-  'Wage deductions labelled as "training contribution" or "course fees"',
+  'Wage deductions labelled "training contribution" or "course fees"',
   'Being asked to buy textbooks, workbooks, or online course access',
   'Being told you must pay for your AM2 assessment or EPA',
-  'Employer saying they will "take it out of your wages" for college costs',
+  'Employer saying they\'ll "take it out of your wages" for college costs',
   'Training provider asking for a "registration fee" or "admin fee"',
   'Being asked to sign a loan agreement for training costs',
   'Being told you must repay training costs if you leave early',
-  'Employer deducting travel costs to college from your wages without agreement',
-  'Any payment request that is not clearly for personal items (own tools, clothing)',
+  'Employer deducting travel costs to college without agreement',
+  'Any payment request that isn\'t clearly for personal items (own tools, clothing)',
 ];
 
 const escalation = [
   {
-    step: '1',
-    title: 'Document the Issue',
+    step: 1,
+    title: 'Document the issue',
     description:
-      'Write down exactly what happened — dates, amounts, who asked you to pay, and any evidence (emails, texts, payslips showing deductions). Screenshot everything. Keep copies somewhere safe outside of work.',
+      'Write down exactly what happened — dates, amounts, who asked you to pay, evidence (emails, texts, payslips). Screenshot everything. Keep copies somewhere safe outside of work.',
   },
   {
-    step: '2',
-    title: 'Contact Your Training Provider',
+    step: 2,
+    title: 'Contact your training provider',
     description:
-      'Raise the issue with your training provider first. They have a duty to ensure funding rules are followed and may be able to resolve it directly with your employer. Ask to speak to the apprenticeship manager or compliance team.',
+      'Raise the issue with your training provider first. They have a duty to ensure funding rules are followed. Ask to speak to the apprenticeship manager or compliance team.',
   },
   {
-    step: '3',
+    step: 3,
     title: 'Report to ESFA',
     description:
-      'Email complaints.esfa@education.gov.uk with your evidence. Include your apprenticeship details, employer name, training provider name, and a clear description of the issue. The ESFA takes funding rule breaches seriously and will investigate.',
+      'Email complaints.esfa@education.gov.uk with your evidence. Include apprenticeship details, employer name, training provider name, and a clear description.',
   },
   {
-    step: '4',
+    step: 4,
     title: 'National Apprenticeship Helpline',
     description:
-      'Call 0800 015 0400 (free, Monday–Friday 8am–8pm). They can advise you on your rights and next steps. They can also escalate your complaint if the ESFA response is slow.',
+      'Call 0800 015 0400 (free, Mon–Fri 8am–8pm). They can advise on your rights and next steps, and escalate your complaint if needed.',
   },
   {
-    step: '5',
+    step: 5,
     title: 'Citizens Advice',
     description:
-      'Contact Citizens Advice for free, independent guidance on your employment and training rights. They can help you understand your legal position and what action you can take. Find your local bureau at citizensadvice.org.uk.',
+      'Contact Citizens Advice for free, independent guidance on your employment and training rights. Local bureaux at citizensadvice.org.uk.',
   },
   {
-    step: '6',
+    step: 6,
     title: 'ACAS',
     description:
-      'Contact ACAS (Advisory, Conciliation and Arbitration Service) on 0300 123 1100 for employment-related advice if the issue involves wage deductions, contractual problems, or you are being treated unfairly because you raised concerns.',
+      'Contact ACAS on 0300 123 1100 for employment-related advice if the issue involves wage deductions, contractual problems, or unfair treatment.',
   },
+];
+
+const complaintTemplate = [
+  'Your full name and contact details',
+  'Your employer name and address',
+  'Your training provider name',
+  'Your apprenticeship standard and start date',
+  'What happened — clear description of the issue',
+  'When it happened — specific dates',
+  'Who was involved — names and roles',
+  'What amount was requested or deducted',
+  'Evidence — copies of emails, texts, payslips, letters, screenshots',
+  'What you want to happen — the outcome you are seeking',
 ];
 
 const links = [
   {
-    title: 'Gov.uk Apprenticeships',
+    title: 'Gov.uk apprenticeships',
     description: 'Official government guide to apprenticeships',
     url: 'https://www.gov.uk/topic/further-education-skills/apprenticeships',
   },
   {
-    title: 'ESFA Funding Rules',
+    title: 'ESFA funding rules',
     description: 'Full apprenticeship funding rules and guidance',
     url: 'https://www.gov.uk/guidance/apprenticeship-funding-rules',
   },
   {
-    title: 'CITB Grants Portal',
+    title: 'CITB grants portal',
     description: 'Apply for and track CITB grants',
     url: 'https://www.citb.co.uk/levy-grants-and-funding/grants-and-funding/',
   },
   {
-    title: 'Find an Apprenticeship',
+    title: 'Find an apprenticeship',
     description: 'Search for apprenticeship vacancies',
     url: 'https://www.findapprenticeship.service.gov.uk/',
   },
@@ -140,18 +174,16 @@ const links = [
 
 const YourRightsPage = () => {
   const navigate = useNavigate();
-
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
+        <button
           onClick={() => navigate('/apprentice/toolbox/apprenticeship-funding')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+          className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation"
         >
-          <ArrowLeft className="mr-2 h-5 w-5" />
+          <ArrowLeft className="h-4 w-4" />
           Back
-        </Button>
+        </button>
       </motion.div>
 
       <motion.div variants={itemVariants}>
@@ -163,211 +195,194 @@ const YourRightsPage = () => {
         />
       </motion.div>
 
-      {/* Key Message */}
-      <Card className="border-red-500/20 bg-red-500/5">
-        <CardContent className="p-4">
-          <p className="text-red-400 font-bold text-lg">
-            You should NEVER be asked to pay for your training
+      {/* ── Key message ─────────────────────────────────────────── */}
+      <motion.div variants={itemVariants}>
+        <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-2">
+          <div className="flex items-center gap-2">
+            <AlertTriangle className="h-4 w-4 text-red-300 flex-shrink-0" />
+            <Eyebrow className="text-red-300">The headline</Eyebrow>
+          </div>
+          <p className="text-[15px] font-semibold text-red-300 leading-snug">
+            You should NEVER be asked to pay for your training.
           </p>
-          <p className="text-white text-sm mt-2">
+          <p className="text-[13px] text-white/85 leading-relaxed">
             Apprenticeship training is funded by the government and/or your
-            employer. If anyone asks you to pay for your training, this is a breach
-            of ESFA funding rules and should be reported.
-          </p>
-        </CardContent>
-      </Card>
-
-      {/* Link to full Rights & Pay page */}
-      <button
-        onClick={() => navigate('/apprentice/rights-and-pay')}
-        className="w-full flex items-center gap-3 p-4 rounded-lg bg-white/5 border border-elec-yellow/20
-          touch-manipulation active:scale-[0.98] transition-transform min-h-[44px] text-left"
-      >
-        <span className="text-xl flex-shrink-0">⚖️</span>
-        <div className="flex-1 min-w-0">
-          <span className="font-medium text-sm text-elec-yellow">
-            Full Rights & Pay Guide
-          </span>
-          <p className="text-white text-xs mt-0.5">
-            Wages, employment rights, support resources & tools
+            employer. If anyone asks you to pay, this is a breach of ESFA funding
+            rules — and should be reported.
           </p>
         </div>
-        <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
-      </button>
+      </motion.div>
 
-      {/* Your Funding Rights */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-green-400" />
-          <h2 className="text-base font-semibold text-white">
-            Your Funding Rights
-          </h2>
-        </div>
-
-        {rights.map((right) => (
-          <Card key={right.title} className="border-green-500/20 bg-white/5">
-            <CardContent className="p-4 space-y-2">
-              <div className="flex items-start gap-2">
-                <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                <h3 className="font-semibold text-green-400 text-sm">
-                  {right.title}
-                </h3>
-              </div>
-              <p className="text-white text-sm leading-relaxed pl-6">
-                {right.description}
-              </p>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      {/* Warning Signs */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-red-400" />
-          <h2 className="text-base font-semibold text-white">
-            Warning Signs — Red Flags
-          </h2>
-        </div>
-
-        <Card className="border-red-500/20 bg-white/5">
-          <CardContent className="p-4 space-y-3">
-            <p className="text-white text-sm leading-relaxed">
-              If any of these happen, your funding rights may be being breached:
+      {/* ── Link to Rights & Pay ────────────────────────────────── */}
+      <motion.div variants={itemVariants}>
+        <button
+          onClick={() => navigate('/apprentice/rights-and-pay')}
+          className="w-full flex items-center gap-3 p-4 rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] active:bg-elec-yellow/[0.08] active:scale-[0.99] transition-all touch-manipulation text-left"
+        >
+          <Scale className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+          <div className="flex-1 min-w-0 space-y-0.5">
+            <Eyebrow className="text-elec-yellow/85">Full guide</Eyebrow>
+            <p className="text-[13.5px] font-medium text-white leading-snug">
+              Rights & Pay — wages, employment rights, support resources & tools
             </p>
-            <ul className="space-y-2">
-              {warningSignals.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2 text-sm text-white"
-                >
-                  <AlertTriangle className="h-4 w-4 text-red-400 flex-shrink-0 mt-0.5" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-      </div>
+          </div>
+          <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0" />
+        </button>
+      </motion.div>
 
-      {/* What to Include in a Complaint */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-purple-400" />
-          <h2 className="text-base font-semibold text-white">
-            What to Include in a Complaint
-          </h2>
-        </div>
-
-        <Card className="border-purple-500/20 bg-white/5">
-          <CardContent className="p-4 space-y-3">
-            <p className="text-white text-sm leading-relaxed">
-              If you need to report a funding rules breach to the ESFA, include:
-            </p>
-            <ul className="space-y-1.5">
-              {[
-                'Your full name and contact details',
-                'Your employer name and address',
-                'Your training provider name',
-                'Your apprenticeship standard and start date',
-                'What happened — clear description of the issue',
-                'When it happened — specific dates',
-                'Who was involved — names and roles',
-                'What amount was requested or deducted',
-                'Evidence — copies of emails, texts, payslips, letters, or screenshots',
-                'What you want to happen — the outcome you are seeking',
-              ].map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2 text-sm text-white"
-                >
-                  <CheckCircle className="h-4 w-4 text-purple-400 flex-shrink-0 mt-0.5" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-3">
-              <p className="text-white text-sm">
-                <span className="text-purple-400 font-semibold">
-                  Email to:
-                </span>{' '}
-                complaints.esfa@education.gov.uk
-              </p>
-              <p className="text-white text-sm mt-1">
-                <span className="text-purple-400 font-semibold">
-                  Or call:
-                </span>{' '}
-                0800 015 0400 (free, Mon–Fri 8am–8pm)
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* If Something Goes Wrong */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-amber-400" />
-          <h2 className="text-base font-semibold text-white">
-            Escalation Steps
-          </h2>
-        </div>
-
-        <Card className="border-amber-500/20 bg-white/5">
-          <CardContent className="p-4 space-y-4">
-            <p className="text-white text-sm leading-relaxed">
-              If you believe your funding rights are being breached, follow these
-              steps in order:
-            </p>
-            {escalation.map((item) => (
-              <div key={item.step} className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-amber-500/20 border border-amber-500/30 flex items-center justify-center flex-shrink-0">
-                  <span className="text-amber-400 text-xs font-bold">
-                    {item.step}
-                  </span>
-                </div>
-                <div>
-                  <p className="text-white font-semibold text-sm">
-                    {item.title}
+      {/* ── Your funding rights ─────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Your funding rights"
+          title="Eight things the law guarantees"
+          meta="Print these. Save them. Show them to anyone who tries to charge you."
+        />
+        <ul className="space-y-2">
+          {rights.map((right) => (
+            <li
+              key={right.title}
+              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+            >
+              <div className="flex items-start gap-2.5">
+                <CheckCircle2 className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                <div className="space-y-1">
+                  <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
+                    {right.title}
+                  </h3>
+                  <p className="text-[13px] text-white/85 leading-relaxed">
+                    {right.description}
                   </p>
-                  <p className="text-white text-sm mt-0.5">
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      {/* ── Warning signals ─────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Warning signs — red flags"
+          title={`${warningSignals.length} situations to escalate`}
+          meta="If any of these happen, your funding rights may be being breached"
+        />
+        <div className="rounded-xl border border-red-500/25 bg-red-500/[0.04] p-4 sm:p-5">
+          <ul className="space-y-2">
+            {warningSignals.map((item) => (
+              <li
+                key={item}
+                className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+              >
+                <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </motion.section>
+
+      {/* ── Complaint template ──────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="What to include in a complaint"
+          title="10 items for ESFA"
+          meta="Build the file before you escalate"
+        />
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+          <ul className="space-y-1.5">
+            {complaintTemplate.map((item) => (
+              <li
+                key={item}
+                className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+              >
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-1">
+            <p className="text-[12.5px] text-white/85 leading-relaxed">
+              <span className="font-semibold text-elec-yellow">Email to:</span>{' '}
+              <span className="font-mono">complaints.esfa@education.gov.uk</span>
+            </p>
+            <p className="text-[12.5px] text-white/85 leading-relaxed">
+              <span className="font-semibold text-elec-yellow">Or call:</span>{' '}
+              <span className="font-mono">0800 015 0400</span> (free, Mon–Fri 8am–8pm)
+            </p>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* ── Escalation ──────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Escalation steps"
+          title="Six escalation routes — in order"
+          meta="Start internal, build evidence, then escalate externally"
+        />
+        <ol className="space-y-2">
+          {escalation.map((item) => (
+            <li
+              key={item.step}
+              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+            >
+              <div className="flex items-start gap-3">
+                <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[12px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
+                  {item.step}
+                </span>
+                <div className="space-y-1">
+                  <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                    {item.title}
+                  </h3>
+                  <p className="text-[13px] text-white/85 leading-relaxed">
                     {item.description}
                   </p>
                 </div>
               </div>
-            ))}
-          </CardContent>
-        </Card>
-      </div>
+            </li>
+          ))}
+        </ol>
+      </motion.section>
 
-      {/* Useful Links */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-blue-400" />
-          <h2 className="text-base font-semibold text-white">Useful Links</h2>
-        </div>
+      {/* ── Useful links ────────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Useful links"
+          title={`${links.length} official resources`}
+          meta="All open in a new tab"
+        />
+        <ul className="space-y-2">
+          {links.map((link) => (
+            <li key={link.title}>
+              <a
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full p-4 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] active:bg-white/[0.04] active:scale-[0.99] transition-all touch-manipulation"
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-start gap-2.5 min-w-0">
+                    <ExternalLink className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                    <div className="min-w-0 space-y-0.5">
+                      <p className="text-[14px] font-semibold text-elec-yellow tracking-tight">
+                        {link.title}
+                      </p>
+                      <p className="text-[12.5px] text-white/70 leading-relaxed">
+                        {link.description}
+                      </p>
+                    </div>
+                  </div>
+                  <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0" />
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
 
-        {links.map((link) => (
-          <a
-            key={link.title}
-            href={link.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block w-full p-4 rounded-lg bg-white/5 border border-blue-500/20
-              touch-manipulation active:scale-[0.98] transition-transform min-h-[44px]"
-          >
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-blue-400 font-semibold text-sm">
-                  {link.title}
-                </p>
-                <p className="text-white text-xs mt-0.5">{link.description}</p>
-              </div>
-              <ExternalLink className="h-4 w-4 text-white flex-shrink-0" />
-            </div>
-          </a>
-        ))}
-      </div>
+      <span className="hidden">
+        <Phone />
+      </span>
     </PageFrame>
   );
 };

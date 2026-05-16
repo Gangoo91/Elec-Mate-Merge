@@ -1,5 +1,4 @@
-import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, CheckCircle, Target, Scale, FileText } from 'lucide-react';
+import { ArrowLeft, CheckCircle2222, Target, Scale, FileText } from 'lucide-react';
 
 const apprenticeRights = [
   {
@@ -107,7 +106,6 @@ Kind regards,
 };
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
 import {
   PageFrame,
   PageHero,
@@ -119,14 +117,10 @@ const RightsPage = () => {
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/apprentice/toolbox/off-job-training-guide')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
+        <button onClick={() => navigate('/apprentice/toolbox/off-job-training-guide')} className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation">
+          <ArrowLeft className="h-4 w-4" />
           Back
-        </Button>
+        </button>
       </motion.div>
 
       <motion.div variants={itemVariants}>
@@ -139,58 +133,47 @@ const RightsPage = () => {
 
       {/* Your Rights */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-green-400" />
-          <h2 className="text-base font-semibold text-white">Your Rights as an Apprentice</h2>
-        </div>
+        <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">Your Rights as an Apprentice</span></div></div>
 
         {apprenticeRights.map((right) => (
-          <Card key={right.title} className="border-green-500/20 bg-white/5">
-            <CardContent className="p-4 flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
+          <div key={right.title} className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+            <div className="p-4 sm:p-5 flex items-start gap-3">
+              <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-medium text-white text-sm">{right.title}</h3>
                 <p className="text-white text-sm mt-1">{right.desc}</p>
               </div>
-            </CardContent>
-          </Card>
+            </div></div>
         ))}
       </div>
 
       {/* Employer Responsibilities */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-blue-400" />
-          <h2 className="text-base font-semibold text-white">Employer Responsibilities</h2>
-        </div>
+        <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">Employer Responsibilities</span></div></div>
 
         {employerDuties.map((duty) => (
-          <Card key={duty.title} className="border-blue-500/20 bg-white/5">
-            <CardContent className="p-4 flex items-start gap-3">
+          <div key={duty.title} className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+            <div className="p-4 sm:p-5 flex items-start gap-3">
               <Target className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-medium text-white text-sm">{duty.title}</h3>
                 <p className="text-white text-sm mt-1">{duty.desc}</p>
               </div>
-            </CardContent>
-          </Card>
+            </div></div>
         ))}
       </div>
 
       {/* Key Legislation */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-purple-400" />
-          <h2 className="text-base font-semibold text-white">Key Legislation</h2>
-        </div>
+        <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">Key Legislation</span></div></div>
 
         <p className="text-white text-sm">
           Your rights are backed by law. Here are the key pieces of legislation that protect you:
         </p>
 
         {legislation.map((law) => (
-          <Card key={law.title} className="border-purple-500/20 bg-white/5">
-            <CardContent className="p-4">
+          <div key={law.title} className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+            <div className="p-4 sm:p-5">
               <div className="flex items-start gap-2">
                 <Scale className="h-5 w-5 text-purple-400 mt-0.5 flex-shrink-0" />
                 <div>
@@ -198,20 +181,16 @@ const RightsPage = () => {
                   <p className="text-white text-sm mt-1">{law.desc}</p>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </div></div>
         ))}
       </div>
 
       {/* Apprenticeship Agreement */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-amber-400" />
-          <h2 className="text-base font-semibold text-white">Your Apprenticeship Agreement</h2>
-        </div>
+        <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">Your Apprenticeship Agreement</span></div></div>
 
-        <Card className="border-amber-500/20 bg-amber-500/10">
-          <CardContent className="p-4 space-y-3">
+        <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04]">
+          <div className="p-4 sm:p-5 space-y-3">
             <div className="flex items-center gap-2">
               <FileText className="h-4 w-4 text-amber-400" />
               <p className="text-white text-sm font-medium">
@@ -224,7 +203,7 @@ const RightsPage = () => {
             <ul className="space-y-2">
               {agreementContents.map((item) => (
                 <li key={item} className="flex items-start gap-2 text-sm text-white">
-                  <span className="text-amber-400 mt-0.5">•</span>
+                  <span className="text-elec-yellow/70 mt-0.5">·</span>
                   {item}
                 </li>
               ))}
@@ -234,19 +213,15 @@ const RightsPage = () => {
               training provider for one immediately. You should have received this at the
               start of your apprenticeship.
             </p>
-          </CardContent>
-        </Card>
+          </div></div>
       </div>
 
       {/* Template for Raising Concerns */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-cyan-400" />
-          <h2 className="text-base font-semibold text-white">Template: Raising Concerns</h2>
-        </div>
+        <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">Template: Raising Concerns</span></div></div>
 
-        <Card className="border-cyan-500/20 bg-white/5">
-          <CardContent className="p-4 space-y-3">
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+          <div className="p-4 sm:p-5 space-y-3">
             <p className="text-white text-sm">
               If your employer is not providing your OJT, use this template as a starting
               point. Always copy your training provider in:
@@ -261,19 +236,15 @@ const RightsPage = () => {
               Adapt this to your situation. Keep a copy of everything you send. If the issue
               is not resolved within 4 weeks, escalate to your training provider.
             </p>
-          </CardContent>
-        </Card>
+          </div></div>
       </div>
 
       {/* When Things Go Wrong */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-red-400" />
-          <h2 className="text-base font-semibold text-white">When Things Go Wrong</h2>
-        </div>
+        <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">When Things Go Wrong</span></div></div>
 
-        <Card className="border-red-500/20 bg-red-500/10">
-          <CardContent className="p-4 space-y-4">
+        <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04]">
+          <div className="p-4 sm:p-5 space-y-4">
             <p className="text-white text-sm">
               If your employer is not meeting their off-the-job training obligations:
             </p>
@@ -285,19 +256,19 @@ const RightsPage = () => {
                 </h3>
                 <ul className="mt-1 space-y-1">
                   <li className="text-white text-sm flex items-start gap-2">
-                    <span className="text-red-400 mt-0.5">•</span>
+                    <span className="text-red-300 mt-0.5">·</span>
                     Keep records of missed training time with dates and reasons
                   </li>
                   <li className="text-white text-sm flex items-start gap-2">
-                    <span className="text-red-400 mt-0.5">•</span>
+                    <span className="text-red-300 mt-0.5">·</span>
                     Note specific incidents (e.g. "asked to stay on site instead of college")
                   </li>
                   <li className="text-white text-sm flex items-start gap-2">
-                    <span className="text-red-400 mt-0.5">•</span>
+                    <span className="text-red-300 mt-0.5">·</span>
                     Calculate the hours shortfall against your training plan
                   </li>
                   <li className="text-white text-sm flex items-start gap-2">
-                    <span className="text-red-400 mt-0.5">•</span>
+                    <span className="text-red-300 mt-0.5">·</span>
                     Save any text messages or emails as evidence
                   </li>
                 </ul>
@@ -307,15 +278,15 @@ const RightsPage = () => {
                 <h3 className="font-medium text-amber-400 text-sm">Step 2: Raise It Formally</h3>
                 <ul className="mt-1 space-y-1">
                   <li className="text-white text-sm flex items-start gap-2">
-                    <span className="text-red-400 mt-0.5">•</span>
+                    <span className="text-red-300 mt-0.5">·</span>
                     Use the template above to write to your employer
                   </li>
                   <li className="text-white text-sm flex items-start gap-2">
-                    <span className="text-red-400 mt-0.5">•</span>
+                    <span className="text-red-300 mt-0.5">·</span>
                     Copy your training provider into all correspondence
                   </li>
                   <li className="text-white text-sm flex items-start gap-2">
-                    <span className="text-red-400 mt-0.5">•</span>
+                    <span className="text-red-300 mt-0.5">·</span>
                     Raise it at your next progress review — it will be recorded
                   </li>
                 </ul>
@@ -325,26 +296,25 @@ const RightsPage = () => {
                 <h3 className="font-medium text-amber-400 text-sm">Step 3: Seek External Support</h3>
                 <ul className="mt-1 space-y-1">
                   <li className="text-white text-sm flex items-start gap-2">
-                    <span className="text-red-400 mt-0.5">•</span>
+                    <span className="text-red-300 mt-0.5">·</span>
                     Contact the ESFA / Skills England complaints service
                   </li>
                   <li className="text-white text-sm flex items-start gap-2">
-                    <span className="text-red-400 mt-0.5">•</span>
+                    <span className="text-red-300 mt-0.5">·</span>
                     Speak to ACAS for free, impartial employment advice
                   </li>
                   <li className="text-white text-sm flex items-start gap-2">
-                    <span className="text-red-400 mt-0.5">•</span>
+                    <span className="text-red-300 mt-0.5">·</span>
                     Contact Unite the Union or another trade union for support
                   </li>
                   <li className="text-white text-sm flex items-start gap-2">
-                    <span className="text-red-400 mt-0.5">•</span>
+                    <span className="text-red-300 mt-0.5">·</span>
                     As a last resort, you can transfer to a different employer
                   </li>
                 </ul>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div></div>
       </div>
     </PageFrame>
   );

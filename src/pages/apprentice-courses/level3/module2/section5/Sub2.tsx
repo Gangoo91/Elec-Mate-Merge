@@ -30,6 +30,7 @@ import {
   ContentEyebrow,
   SectionRule,
 } from '@/components/study-centre/learning';
+import { ConsumerUnit } from '@/components/study-centre/diagrams';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE =
@@ -187,7 +188,7 @@ const quizQuestions = [
       'What happens to the customer\'s EPC after an environmental tech install, and why does it matter?',
     options: [
       'EPCs aren\'t affected by environmental tech.',
-      "The EPC should be re-issued to reflect the new performance — heat pump, PV, MVHR, insulation upgrades all change the SAP rating. The MCS-certified installer normally arranges the EPC update. An updated EPC matters for: (a) future house sale (the buyer\'s solicitor sees current performance); (b) mortgage applications (lenders increasingly weight EPC ratings); (c) insurance (some insurers now adjust premium for low-EPC properties); (d) BUS grant requires a valid EPC at the time of install. EPCs are valid for 10 years from issue.",
+      "The EPC should be re-issued to reflect the new performance — heat pump, PV, MVHR, insulation upgrades all change the SAP rating. The MCS-certified installer normally arranges the EPC update. An updated EPC matters for: (a) future house sale (the buyer's solicitor sees current performance); (b) mortgage applications (lenders increasingly weight EPC ratings); (c) insurance (some insurers now adjust premium for low-EPC properties); (d) BUS grant requires a valid EPC at the time of install. EPCs are valid for 10 years from issue.",
       'EPCs are issued by the milkman.',
       'EPCs only apply to commercial.',
     ],
@@ -324,6 +325,8 @@ export default function Sub2() {
             correctIndex={checks[0].correctIndex}
             explanation={checks[0].explanation}
           />
+
+          <ConsumerUnit />
 
           <SectionRule />
 
@@ -771,7 +774,7 @@ export default function Sub2() {
                 measures.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 133.1.3 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 133.1.3."
           />
 
           <RegsCallout
@@ -794,7 +797,7 @@ export default function Sub2() {
                 toolbox-talks need updating to match.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Regulation 643.3 — verbatim from published facets."
+            cite="Source: BS 7671:2018+A4:2026 Regulation 643.3."
           />
 
           <SectionRule />

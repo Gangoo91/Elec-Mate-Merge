@@ -1,16 +1,37 @@
-import { Card, CardContent } from '@/components/ui/card';
+/**
+ * Certifications — editorial directory of UK electrical certifications.
+ *
+ * Core certs, specialist categories, competent-person schemes, planning
+ * strategy, and a recommended order. Replaces the previous yellow/blue/
+ * green/purple section dots + multi-coloured Card chrome with the
+ * editorial pattern.
+ */
+
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { ArrowLeft, CheckCircle2 } from 'lucide-react';
 import {
   PageFrame,
   PageHero,
   itemVariants,
 } from '@/components/college/primitives';
-import { CheckCircle } from 'lucide-react';
+import {
+  Eyebrow,
+  SectionHeader,
+} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 
-const coreCertifications = [
+interface CoreCert {
+  title: string;
+  provider: string;
+  cost: string;
+  duration: string;
+  validity: string;
+  renewalRequired: boolean;
+  prerequisites: string;
+  description: string;
+}
+
+const coreCertifications: CoreCert[] = [
   {
     title: '18th Edition BS 7671 (Wiring Regulations)',
     provider: 'City & Guilds 2382 / EAL',
@@ -64,97 +85,64 @@ const coreCertifications = [
     renewalRequired: false,
     prerequisites: 'Basic electrical knowledge — no formal prerequisites',
     description:
-      'Portable appliance testing qualification covering visual inspection, earth continuity, insulation resistance, and functional checks. Widely required in commercial and industrial environments. Good entry-level certification with steady demand.',
+      'Portable appliance testing qualification covering visual inspection, earth continuity, insulation resistance, and functional checks. Widely required in commercial and industrial environments.',
   },
 ];
 
-const specialistCategories = [
+interface SpecialistCert {
+  name: string;
+  cost: string;
+  duration: string;
+  note?: string;
+}
+
+const specialistCategories: { category: string; growth: string; certs: SpecialistCert[] }[] = [
   {
-    category: 'Electric Vehicle Charging',
+    category: 'Electric vehicle charging',
     growth: '45%',
     certs: [
+      { name: 'City & Guilds 2919 (EV Charging)', cost: '£400–£600', duration: '2 days' },
+      { name: 'Smart charging & load management', cost: '£300–£500', duration: '1 day' },
       {
-        name: 'City & Guilds 2919 (EV Charging)',
-        cost: '£400–£600',
-        duration: '2 days',
-      },
-      {
-        name: 'Smart Charging & Load Management',
-        cost: '£300–£500',
-        duration: '1 day',
-      },
-      {
-        name: 'EV Infrastructure Certification',
+        name: 'EV infrastructure certification',
         cost: '£500–£800',
         duration: '2–3 days',
-        note: 'Note: The OZEV Electric Vehicle Homecharge Scheme (EVHS) closed in March 2024. Current EV certification focuses on IET Code of Practice for EV Charging Equipment Installation.',
+        note: 'The OZEV Electric Vehicle Homecharge Scheme (EVHS) closed in March 2024. Current EV certification focuses on the IET Code of Practice for EV Charging Equipment Installation.',
       },
     ],
   },
   {
-    category: 'Battery Storage (BESS)',
+    category: 'Battery storage (BESS)',
     growth: '42%',
     certs: [
-      {
-        name: 'MCS Approved Battery Storage',
-        cost: '£600–£1,000',
-        duration: '3 days',
-      },
-      {
-        name: 'G99/G100 Grid Connection',
-        cost: '£400–£600',
-        duration: '1–2 days',
-      },
+      { name: 'MCS approved battery storage', cost: '£600–£1,000', duration: '3 days' },
+      { name: 'G99/G100 grid connection', cost: '£400–£600', duration: '1–2 days' },
     ],
   },
   {
-    category: 'Heat Pumps',
+    category: 'Heat pumps',
     growth: '38%',
     certs: [
-      {
-        name: 'MCS Approved Heat Pump Installation',
-        cost: '£800–£1,200',
-        duration: '3–5 days',
-      },
-      {
-        name: 'F-Gas Handling Certification',
-        cost: '£500–£800',
-        duration: '2–3 days',
-      },
+      { name: 'MCS approved heat pump installation', cost: '£800–£1,200', duration: '3–5 days' },
+      { name: 'F-Gas handling certification', cost: '£500–£800', duration: '2–3 days' },
     ],
   },
   {
     category: 'Solar PV',
     growth: 'Established',
     certs: [
-      {
-        name: 'Solar PV Installation',
-        cost: '£800–£1,200',
-        duration: '5 days',
-      },
-      {
-        name: 'City & Guilds 2399 (PV Design)',
-        cost: '£600–£900',
-        duration: '3 days',
-      },
+      { name: 'Solar PV installation', cost: '£800–£1,200', duration: '5 days' },
+      { name: 'City & Guilds 2399 (PV design)', cost: '£600–£900', duration: '3 days' },
     ],
   },
   {
-    category: 'Fire Detection & Alarm Systems',
+    category: 'Fire detection & alarm',
     growth: '20%',
     certs: [
+      { name: 'BS 5839 fire detection & alarm', cost: '£600–£1,000', duration: '3–5 days' },
+      { name: 'Emergency lighting (BS 5266)', cost: '£400–£700', duration: '2–3 days' },
       {
-        name: 'BS 5839 Fire Detection & Alarm (FD&A)',
-        cost: '£600–£1,000',
-        duration: '3–5 days',
-      },
-      {
-        name: 'Emergency Lighting (BS 5266)',
-        cost: '£400–£700',
-        duration: '2–3 days',
-      },
-      {
-        name: 'Fire Alarm Commissioning & Maintenance',
+        name: 'Fire alarm commissioning & maintenance',
         cost: '£500–£800',
         duration: '2–3 days',
         note: 'Required for commercial and industrial fire alarm maintenance contracts. Strong demand from facilities management companies.',
@@ -162,37 +150,21 @@ const specialistCategories = [
     ],
   },
   {
-    category: 'High Voltage',
-    growth: 'Premium rates',
+    category: 'High voltage',
+    growth: 'Premium',
     certs: [
-      {
-        name: 'HV Switching Operations',
-        cost: '£2,000–£3,500',
-        duration: '3–5 days',
-      },
-      {
-        name: 'HV Cable Jointing',
-        cost: '£3,500–£5,500',
-        duration: '5–10 days',
-      },
+      { name: 'HV switching operations', cost: '£2,000–£3,500', duration: '3–5 days' },
+      { name: 'HV cable jointing', cost: '£3,500–£5,500', duration: '5–10 days' },
     ],
   },
   {
-    category: 'Data Centres',
+    category: 'Data centres',
     growth: '35%',
     certs: [
+      { name: 'CDCDP (Certified Data Centre Design Professional)', cost: '£2,000–£3,500', duration: '5 days' },
+      { name: 'UPS systems & power distribution', cost: '£800–£1,500', duration: '3 days' },
       {
-        name: 'CDCDP (Certified Data Centre Design Professional)',
-        cost: '£2,000–£3,500',
-        duration: '5 days',
-      },
-      {
-        name: 'UPS Systems & Power Distribution',
-        cost: '£800–£1,500',
-        duration: '3 days',
-      },
-      {
-        name: 'Raised Floor & Containment Systems',
+        name: 'Raised floor & containment systems',
         cost: '£500–£800',
         duration: '2 days',
         note: 'Data centres are one of the fastest-growing sectors in the UK. Hyperscale facilities along the M4/M62 corridors are creating thousands of specialist electrical roles.',
@@ -200,19 +172,11 @@ const specialistCategories = [
     ],
   },
   {
-    category: 'Industrial & Automation',
+    category: 'Industrial & automation',
     growth: 'Steady',
     certs: [
-      {
-        name: 'PLC Programming (Siemens/AB)',
-        cost: '£1,500–£3,000',
-        duration: '5 days',
-      },
-      {
-        name: 'Motor Control Systems',
-        cost: '£800–£1,200',
-        duration: '3 days',
-      },
+      { name: 'PLC programming (Siemens / AB)', cost: '£1,500–£3,000', duration: '5 days' },
+      { name: 'Motor control systems', cost: '£800–£1,200', duration: '3 days' },
     ],
   },
 ];
@@ -220,7 +184,7 @@ const specialistCategories = [
 const competentPersonSchemes = [
   {
     name: 'NICEIC',
-    cost: '£500–£900/year',
+    cost: '£500–£900/yr',
     description:
       'The most widely recognised competent person scheme in the UK. Offers Domestic Installer and Approved Contractor registration. Rigorous assessment process builds strong customer trust.',
     benefits: [
@@ -232,7 +196,7 @@ const competentPersonSchemes = [
   },
   {
     name: 'NAPIT',
-    cost: '£400–£750/year',
+    cost: '£400–£750/yr',
     description:
       'Multi-trade competent person scheme offering registration across electrical, plumbing, heating, and ventilation. Competitive pricing with comprehensive support.',
     benefits: [
@@ -244,9 +208,9 @@ const competentPersonSchemes = [
   },
   {
     name: 'Stroma',
-    cost: '£400–£650/year',
+    cost: '£400–£650/yr',
     description:
-      'Competent person scheme covering electrical, gas, and building control certification. Formerly separate schemes now consolidated under the Stroma brand. Good option for multi-skilled installers.',
+      'Competent person scheme covering electrical, gas, and building control certification. Formerly separate schemes now consolidated under the Stroma brand. Good for multi-skilled installers.',
     benefits: [
       'Electrical, gas, and building control',
       'Self-certification of Part P work',
@@ -256,195 +220,244 @@ const competentPersonSchemes = [
   },
 ];
 
+const planningTips = [
+  'Start with core certifications — 18th Edition and AM2 are your foundation',
+  'Add the 2391 once you have 2–3 years of practical experience',
+  'Consider PAT Testing early — quick, affordable, steady demand',
+  'Choose specialist certifications based on your local market demand',
+  'Fire alarm (BS 5839) and emergency lighting (BS 5266) are valuable for commercial work',
+  'Check if your employer will fund training — many will cover all or part',
+  'Book courses well in advance — popular ones fill up months ahead',
+  'Keep a CPD log of all training and development activities',
+  'Join a competent person scheme once you\'re working independently',
+];
+
 const Certifications = () => {
   const navigate = useNavigate();
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
+        <button
           onClick={() => navigate('/apprentice/professional-development')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+          className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation"
         >
-          <ArrowLeft className="mr-2 h-5 w-5" />
+          <ArrowLeft className="h-4 w-4" />
           Back
-        </Button>
+        </button>
       </motion.div>
 
       <motion.div variants={itemVariants}>
         <PageHero
           eyebrow="Apprentice · Qualifications"
           title="Certifications & qualifications"
-          description="The right certifications open doors to higher pay, specialist work and career progression. From essentials to competent-person schemes — what each one is for and when to chase it."
+          description="The right certifications open doors to higher pay, specialist work, and career progression. From essentials to competent-person schemes — what each one is for and when to chase it."
           tone="yellow"
         />
       </motion.div>
 
-      {/* Core Certifications */}
-      <div className="flex items-center gap-2">
-        <div className="w-2 h-2 rounded-full bg-yellow-400" />
-        <h2 className="text-base font-semibold text-white">Core Certifications</h2>
-      </div>
-
-      <div className="space-y-3">
-        {coreCertifications.map((cert) => (
-          <Card key={cert.title} className="border-yellow-500/20 bg-white/5">
-            <CardContent className="p-4 space-y-3">
-              <h3 className="font-semibold text-yellow-400 text-sm">{cert.title}</h3>
-              <p className="text-white text-sm leading-relaxed">{cert.description}</p>
-
-              <div className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <span className="text-white text-xs font-semibold">Provider:</span>
-                  <span className="text-white text-xs">{cert.provider}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-white text-xs font-semibold">Cost:</span>
-                  <span className="text-white text-xs">{cert.cost}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-white text-xs font-semibold">Duration:</span>
-                  <span className="text-white text-xs">{cert.duration}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-white text-xs font-semibold">Validity:</span>
-                  <span className="text-white text-xs">{cert.validity}</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="text-white text-xs font-semibold flex-shrink-0">
-                    Prerequisites:
-                  </span>
-                  <span className="text-white text-xs">{cert.prerequisites}</span>
-                </div>
+      {/* ── Core certifications ──────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Core certifications"
+          title="The five every electrician needs"
+          meta="Foundation tier — most employers and schemes expect these"
+        />
+        <ul className="space-y-2.5">
+          {coreCertifications.map((cert) => (
+            <li
+              key={cert.title}
+              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
+            >
+              <h3 className="text-[15px] font-semibold text-white tracking-tight leading-snug">
+                {cert.title}
+              </h3>
+              <p className="text-[13px] text-white/85 leading-relaxed">
+                {cert.description}
+              </p>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 pt-1 border-t border-white/[0.04]">
+                <KpiTile label="Provider" value={cert.provider} />
+                <KpiTile label="Cost" value={cert.cost} mono />
+                <KpiTile label="Duration" value={cert.duration} mono />
+                <KpiTile label="Validity" value={cert.validity} />
               </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+              <div className="pt-1">
+                <Eyebrow>Prerequisites</Eyebrow>
+                <p className="text-[12px] text-white/70 leading-relaxed mt-1">
+                  {cert.prerequisites}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
 
-      {/* Specialist Certifications */}
-      <div className="flex items-center gap-2">
-        <div className="w-2 h-2 rounded-full bg-blue-400" />
-        <h2 className="text-base font-semibold text-white">Specialist Certifications</h2>
-      </div>
-
-      <div className="space-y-3">
-        {specialistCategories.map((cat) => (
-          <Card key={cat.category} className="border-blue-500/20 bg-white/5">
-            <CardContent className="p-4 space-y-3">
-              <div className="flex items-center justify-between">
-                <h3 className="font-semibold text-blue-400 text-sm">{cat.category}</h3>
-                <span className="text-xs font-medium text-white bg-blue-500/20 border border-blue-500/30 rounded-full px-2 py-0.5">
+      {/* ── Specialist certifications ────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Specialist categories"
+          title="Eight high-demand areas"
+          meta="Pick what matches your local market"
+        />
+        <ul className="space-y-2.5">
+          {specialistCategories.map((cat) => (
+            <li
+              key={cat.category}
+              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
+            >
+              <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                <h3 className="text-[15px] font-semibold text-white tracking-tight">
+                  {cat.category}
+                </h3>
+                <span
+                  className={
+                    'inline-flex items-center h-6 px-2 rounded-md border text-[10px] font-medium uppercase tracking-[0.14em] ' +
+                    (cat.growth === 'Premium' || cat.growth.endsWith('%')
+                      ? 'border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow'
+                      : 'border-white/[0.10] bg-white/[0.03] text-white/85')
+                  }
+                >
                   {cat.growth} growth
                 </span>
               </div>
-
-              <div className="space-y-2">
-                {cat.certs.map((cert) => (
-                  <div
-                    key={cert.name}
-                    className="p-3 bg-white/5 border border-white/10 rounded-lg space-y-1"
+              <ul className="space-y-2">
+                {cat.certs.map((c) => (
+                  <li
+                    key={c.name}
+                    className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
                   >
-                    <p className="text-white text-sm font-medium">{cert.name}</p>
-                    <div className="flex items-center gap-3 text-xs text-white">
-                      <span>{cert.cost}</span>
+                    <p className="text-[13px] font-medium text-white leading-snug">
+                      {c.name}
+                    </p>
+                    <div className="flex items-center gap-2 text-[11px] font-mono tabular-nums text-white/55">
+                      <span>{c.cost}</span>
                       <span>·</span>
-                      <span>{cert.duration}</span>
+                      <span>{c.duration}</span>
                     </div>
-                    {'note' in cert && cert.note && (
-                      <p className="text-white text-xs leading-relaxed mt-1">{cert.note}</p>
+                    {c.note && (
+                      <p className="text-[11.5px] text-white/70 leading-relaxed mt-1">
+                        {c.note}
+                      </p>
                     )}
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      {/* Competent Person Schemes */}
-      <div className="flex items-center gap-2">
-        <div className="w-2 h-2 rounded-full bg-green-400" />
-        <h2 className="text-base font-semibold text-white">Competent Person Schemes</h2>
-      </div>
-
-      <div className="space-y-3">
-        {competentPersonSchemes.map((scheme) => (
-          <Card key={scheme.name} className="border-green-500/20 bg-white/5">
-            <CardContent className="p-4 space-y-3">
-              <div className="flex items-center justify-between">
-                <h3 className="font-semibold text-green-400">{scheme.name}</h3>
-                <span className="text-xs font-medium text-white bg-green-500/20 border border-green-500/30 rounded-full px-2 py-0.5">
-                  {scheme.cost}
-                </span>
-              </div>
-              <p className="text-white text-sm leading-relaxed">{scheme.description}</p>
-              <ul className="space-y-1">
-                {scheme.benefits.map((benefit) => (
-                  <li key={benefit} className="flex items-start gap-2 text-sm text-white">
-                    <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                    {benefit}
                   </li>
                 ))}
               </ul>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
 
-      {/* Certification Planning Strategy */}
-      <div className="flex items-center gap-2">
-        <div className="w-2 h-2 rounded-full bg-purple-400" />
-        <h2 className="text-base font-semibold text-white">Certification Planning Strategy</h2>
-      </div>
+      {/* ── Competent person schemes ─────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Competent person schemes"
+          title="Three main routes"
+          meta="Required once you self-certify Part P work"
+        />
+        <ul className="space-y-2.5">
+          {competentPersonSchemes.map((scheme) => (
+            <li
+              key={scheme.name}
+              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
+            >
+              <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                <h3 className="text-[15px] font-semibold text-white tracking-tight">
+                  {scheme.name}
+                </h3>
+                <span className="text-[11px] font-mono text-elec-yellow tabular-nums">
+                  {scheme.cost}
+                </span>
+              </div>
+              <p className="text-[13px] text-white/85 leading-relaxed">
+                {scheme.description}
+              </p>
+              <ul className="space-y-1.5">
+                {scheme.benefits.map((b) => (
+                  <li
+                    key={b}
+                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  >
+                    <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                    <span>{b}</span>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
 
-      <Card className="border-purple-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-3">
+      {/* ── Planning strategy ────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Planning"
+          title="Nine moves that pay off"
+          meta="The sequencing that gets you the highest return"
+        />
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
           <ul className="space-y-2">
-            {[
-              'Start with core certifications — 18th Edition and AM2 are your foundation',
-              'Add the 2391 once you have 2–3 years of practical experience',
-              'Consider PAT Testing early — it is quick, affordable, and in steady demand',
-              'Choose specialist certifications based on your local market demand',
-              'Fire alarm (BS 5839) and emergency lighting (BS 5266) are valuable additions for commercial work',
-              'Check if your employer will fund training — many will cover all or part of the cost',
-              'Book courses well in advance — popular ones fill up months ahead',
-              'Keep a CPD log of all training and development activities',
-              'Join a competent person scheme once you are working independently',
-            ].map((tip) => (
-              <li key={tip} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-purple-400 flex-shrink-0 mt-0.5" />
-                {tip}
+            {planningTips.map((tip) => (
+              <li
+                key={tip}
+                className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+              >
+                <CheckCircle2 className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                <span>{tip}</span>
               </li>
             ))}
           </ul>
-        </CardContent>
-      </Card>
+        </div>
+      </motion.section>
 
-      {/* Certification Order Guide */}
-      <Card className="border-yellow-500/20 bg-yellow-500/5">
-        <CardContent className="p-4 space-y-2">
-          <h3 className="font-semibold text-yellow-400 text-sm">Recommended Certification Order</h3>
-          <p className="text-white text-sm leading-relaxed">
-            Year 1–3: 18th Edition + AM2 + Part P. Year 3–5: 2391 + PAT Testing + first specialist
-            cert (EV, Solar, or Fire Alarm). Year 5+: Advanced specialisms (BESS, HV, Data Centres,
-            PLC) + competent person scheme. This gives you the widest range of opportunities while
-            building on solid foundations.
+      {/* ── Recommended order ────────────────────────────────────── */}
+      <motion.section variants={itemVariants}>
+        <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-1.5">
+          <Eyebrow className="text-elec-yellow/85">Recommended order</Eyebrow>
+          <p className="text-[13.5px] text-white/85 leading-relaxed">
+            Years 1–3: 18th Edition + AM2 + Part P. Years 3–5: 2391 + PAT Testing
+            + first specialist cert (EV, Solar, or Fire Alarm). Year 5+: advanced
+            specialisms (BESS, HV, Data Centres, PLC) + competent person scheme.
+            This gives you the widest range of opportunities while building on
+            solid foundations.
           </p>
-        </CardContent>
-      </Card>
+        </div>
+      </motion.section>
 
-      {/* Footer */}
-      <Card className="border-white/10 bg-white/5">
-        <CardContent className="p-4">
-          <p className="text-white text-xs leading-relaxed">
-            Certification costs and durations are indicative and vary by provider and location.
-            Check with approved training providers for current pricing. Reflects BS 7671:2018+A4:2026.
-          </p>
-        </CardContent>
-      </Card>
+      {/* ── Footnote ─────────────────────────────────────────────── */}
+      <motion.section variants={itemVariants}>
+        <p className="text-[11px] text-white/40 leading-relaxed">
+          Certification costs and durations are indicative and vary by provider
+          and location. Check with approved training providers for current
+          pricing. Reflects BS 7671:2018+A4:2026.
+        </p>
+      </motion.section>
     </PageFrame>
   );
 };
+
+/* ─────────────────── KPI tile ─────────────────── */
+
+function KpiTile({
+  label,
+  value,
+  mono,
+}: {
+  label: string;
+  value: string;
+  mono?: boolean;
+}) {
+  return (
+    <div className="space-y-0.5 min-w-0">
+      <Eyebrow className="text-[9px]">{label}</Eyebrow>
+      <p
+        className={
+          'text-[11.5px] text-white leading-snug break-words ' +
+          (mono ? 'font-mono tabular-nums' : '')
+        }
+      >
+        {value}
+      </p>
+    </div>
+  );
+}
 
 export default Certifications;

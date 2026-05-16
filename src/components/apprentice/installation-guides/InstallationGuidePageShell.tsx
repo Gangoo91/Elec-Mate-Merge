@@ -2,13 +2,16 @@ import { useState, type ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, AlertTriangle, type LucideIcon } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import {
+  Eyebrow,
+} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 import type { ToggleCardDef, SafetyNotice } from '@/types/installation-guides';
+import { cn } from '@/lib/utils';
 
 interface InstallationGuidePageShellProps {
   title: string;
-  /** @deprecated Decorative icon — no longer rendered in editorial layout. Kept for backwards compatibility. */
+  /** @deprecated Decorative icon — no longer rendered in editorial layout. */
   icon?: LucideIcon;
   cards: ToggleCardDef[];
   renderPanel: (cardId: string) => ReactNode;
@@ -18,6 +21,12 @@ interface InstallationGuidePageShellProps {
   backRoute?: string;
 }
 
+/**
+ * Editorial shell for installation-type guides (Commercial, Industrial,
+ * Domestic). Replaces per-card multi-colour metadata with single
+ * elec-yellow accent. Card colour properties are still accepted on the
+ * ToggleCardDef for backwards-compat but ignored.
+ */
 const InstallationGuidePageShell = ({
   title,
   cards,
@@ -37,22 +46,21 @@ const InstallationGuidePageShell = ({
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
+        <button
           onClick={() => navigate(backRoute)}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+          className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation"
         >
-          <ArrowLeft className="mr-2 h-5 w-5" />
+          <ArrowLeft className="h-4 w-4" />
           Back
-        </Button>
+        </button>
       </motion.div>
 
       <motion.div variants={itemVariants}>
         <PageHero eyebrow={eyebrow} title={title} description={description} tone="yellow" />
       </motion.div>
 
-      {/* ── Toggle Card Grid ───────────────────────────────────────── */}
-      <div className="grid grid-cols-3 gap-2">
+      {/* ── Toggle card grid (editorial) ────────────────────────── */}
+      <motion.div variants={itemVariants} className="grid grid-cols-3 sm:grid-cols-5 gap-2 sm:gap-3">
         {cards.map((card) => {
           const isActive = card.id === activeCardId;
           const CardIcon = card.icon;
@@ -60,40 +68,57 @@ const InstallationGuidePageShell = ({
             <button
               key={card.id}
               onClick={() => toggleCard(card.id)}
-              className={`flex flex-col items-center justify-center gap-1.5 rounded-xl border p-3 min-h-[72px] transition-all touch-manipulation ${
+              className={cn(
+                'flex flex-col items-center justify-center gap-1.5 rounded-xl border p-3 sm:p-4 min-h-[72px] transition-all touch-manipulation',
                 isActive
-                  ? `${card.bgColour} ${card.borderColour} ring-2 ${card.ringColour}`
-                  : 'bg-white/5 border-white/10 active:bg-white/10'
-              }`}
+                  ? 'border-elec-yellow/30 bg-elec-yellow/[0.06]'
+                  : 'border-white/[0.06] bg-[hsl(0_0%_10%)] active:bg-white/[0.04]'
+              )}
             >
-              <CardIcon className={`h-5 w-5 ${isActive ? card.textColour : 'text-white'}`} />
+              <CardIcon
+                className={cn(
+                  'h-4 w-4',
+                  isActive ? 'text-elec-yellow' : 'text-white/55'
+                )}
+              />
               <span
-                className={`text-[11px] leading-tight text-center font-medium ${isActive ? card.textColour : 'text-white'}`}
+                className={cn(
+                  'text-[11px] leading-tight text-center font-medium',
+                  isActive ? 'text-elec-yellow' : 'text-white/85'
+                )}
               >
                 {card.label}
               </span>
             </button>
           );
         })}
-      </div>
+      </motion.div>
 
-      {/* ── Active Panel ───────────────────────────────────────────── */}
+      {/* ── Active panel ────────────────────────────────────────── */}
       {activeCardId && renderPanel(activeCardId)}
 
-      {/* ── Safety Notice Banner ───────────────────────────────────── */}
+      {/* ── Safety notice ───────────────────────────────────────── */}
       {safetyNotice && (
-        <div className="flex items-start gap-3 p-4 rounded-xl border border-red-500/30 bg-red-500/10">
-          <AlertTriangle className="h-5 w-5 text-red-400 shrink-0 mt-0.5" />
-          <div className="space-y-3">
-            <p className="text-white text-sm font-semibold">{safetyNotice.title}</p>
-            {safetyNotice.points.map((point, idx) => (
-              <div key={idx} className="space-y-0.5">
-                <p className="text-white text-sm font-medium">{point.title}</p>
-                <p className="text-white text-sm">{point.content}</p>
-              </div>
-            ))}
+        <motion.div variants={itemVariants}>
+          <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-3">
+            <div className="flex items-center gap-2">
+              <AlertTriangle className="h-4 w-4 text-red-300 flex-shrink-0" />
+              <Eyebrow className="text-red-300">{safetyNotice.title}</Eyebrow>
+            </div>
+            <ul className="space-y-2">
+              {safetyNotice.points.map((point, idx) => (
+                <li key={idx} className="space-y-0.5">
+                  <p className="text-[13.5px] font-semibold text-white leading-snug">
+                    {point.title}
+                  </p>
+                  <p className="text-[13px] text-white/85 leading-relaxed">
+                    {point.content}
+                  </p>
+                </li>
+              ))}
+            </ul>
           </div>
-        </div>
+        </motion.div>
       )}
     </PageFrame>
   );

@@ -1,8 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, CheckCircle, AlertTriangle, Shield, Users } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { ArrowLeft, CheckCircle2222, AlertTriangle, Shield, Users } from 'lucide-react';
 import {
   PageFrame,
   PageHero,
@@ -14,14 +12,10 @@ const SiteSafetyRulesPage = () => {
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/apprentice/safety-fundamentals')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
+        <button onClick={() => navigate('/apprentice/safety-fundamentals')} className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation">
+          <ArrowLeft className="h-4 w-4" />
           Back
-        </Button>
+        </button>
       </motion.div>
 
       <motion.div variants={itemVariants}>
@@ -34,8 +28,8 @@ const SiteSafetyRulesPage = () => {
       </motion.div>
 
       {/* Intro */}
-      <Card className="border-purple-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <div className="flex items-center gap-2">
             <Shield className="h-5 w-5 text-purple-400" />
             <h2 className="text-lg font-semibold text-white">
@@ -54,12 +48,11 @@ const SiteSafetyRulesPage = () => {
             is not an excuse, and breaking rules can result in being removed from
             site.
           </p>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Site Inductions */}
-      <Card className="border-blue-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-blue-400">
             Site Inductions
           </h2>
@@ -94,13 +87,13 @@ const SiteSafetyRulesPage = () => {
                 key={item}
                 className="flex items-start gap-2 text-sm text-white"
               >
-                <CheckCircle className="h-4 w-4 text-blue-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                 {item}
               </div>
             ))}
           </div>
 
-          <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
+          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
             <p className="text-white text-xs">
               <span className="font-semibold text-blue-400">Tip: </span>
               Take notes during your induction. Keep your induction card safe — you
@@ -108,12 +101,11 @@ const SiteSafetyRulesPage = () => {
               get a replacement before returning to site.
             </p>
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* CSCS / ECS Cards */}
-      <Card className="border-green-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-green-400">
             CSCS and ECS Cards
           </h2>
@@ -179,7 +171,7 @@ const SiteSafetyRulesPage = () => {
             ))}
           </div>
 
-          <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
+          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
             <p className="text-white text-xs">
               <span className="font-semibold text-amber-400">Important: </span>
               Always carry your CSCS or ECS card on site. You may be asked to show
@@ -187,12 +179,11 @@ const SiteSafetyRulesPage = () => {
               you can be refused entry to site.
             </p>
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Permits to Work */}
-      <Card className="border-red-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-red-500/25 bg-red-500/[0.04]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-red-400">
             Permits to Work
           </h2>
@@ -232,7 +223,7 @@ const SiteSafetyRulesPage = () => {
             ].map((item) => (
               <div
                 key={item.permit}
-                className="bg-red-500/10 border border-red-500/20 rounded-lg p-3"
+                className="rounded-md border border-red-500/25 bg-red-500/[0.04] p-3"
               >
                 <h4 className="text-red-400 font-semibold text-sm mb-1">
                   {item.permit}
@@ -261,12 +252,11 @@ const SiteSafetyRulesPage = () => {
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* CDM Overview */}
-      <Card className="border-purple-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-purple-400">
             CDM Regulations 2015
           </h2>
@@ -305,7 +295,7 @@ const SiteSafetyRulesPage = () => {
             ].map((item) => (
               <div
                 key={item.role}
-                className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-3"
+                className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3"
               >
                 <h4 className="text-purple-400 font-semibold text-sm mb-1">
                   {item.role}
@@ -314,12 +304,11 @@ const SiteSafetyRulesPage = () => {
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Welfare */}
-      <Card className="border-blue-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <div className="flex items-center gap-2">
             <Users className="h-5 w-5 text-blue-400" />
             <h2 className="text-lg font-semibold text-blue-400">
@@ -346,13 +335,13 @@ const SiteSafetyRulesPage = () => {
                 key={item}
                 className="flex items-start gap-2 text-sm text-white"
               >
-                <CheckCircle className="h-4 w-4 text-blue-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                 {item}
               </div>
             ))}
           </div>
 
-          <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
+          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
             <p className="text-white text-xs">
               <span className="font-semibold text-blue-400">
                 If facilities are inadequate:{' '}
@@ -363,12 +352,11 @@ const SiteSafetyRulesPage = () => {
               water, and skin conditions from lack of washing facilities.
             </p>
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Toolbox Talks */}
-      <Card className="border-green-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-green-400">
             Toolbox Talks
           </h2>
@@ -392,17 +380,16 @@ const SiteSafetyRulesPage = () => {
                 key={item}
                 className="flex items-start gap-2 text-sm text-white"
               >
-                <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                 {item}
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Common Site Rules */}
-      <Card className="border-amber-500/20 bg-white/5">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-amber-400">
             Common Site Rules
           </h2>
@@ -444,7 +431,7 @@ const SiteSafetyRulesPage = () => {
             ].map((item) => (
               <div
                 key={item.rule}
-                className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3"
+                className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3"
               >
                 <h4 className="text-amber-400 font-semibold text-sm mb-1">
                   {item.rule}
@@ -453,12 +440,11 @@ const SiteSafetyRulesPage = () => {
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Your Legal Duties */}
-      <Card className="border-red-500/20 bg-red-500/10">
-        <CardContent className="p-4 space-y-4">
+      <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04]">
+        <div className="p-4 sm:p-5 space-y-4">
           <h2 className="text-lg font-semibold text-red-400">
             Your Legal Duties as a Worker
           </h2>
@@ -487,12 +473,11 @@ const SiteSafetyRulesPage = () => {
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Right to Refuse */}
-      <Card className="border-green-500/20 bg-green-500/10">
-        <CardContent className="p-4 space-y-3">
+      <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04]">
+        <div className="p-4 sm:p-5 space-y-3">
           <h2 className="text-sm font-semibold text-green-400">
             Your Right to Refuse Unsafe Work
           </h2>
@@ -504,12 +489,11 @@ const SiteSafetyRulesPage = () => {
             If you are pressured to do unsafe work, speak to your training
             provider, your union, or call the HSE.
           </p>
-        </CardContent>
-      </Card>
+        </div></div>
 
       {/* Footer */}
-      <Card className="border-white/10 bg-white/5">
-        <CardContent className="p-4">
+      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className="p-4 sm:p-5">
           <p className="text-white text-xs leading-relaxed">
             Based on the Construction (Design and Management) Regulations 2015,
             Health and Safety at Work Act 1974, Workplace (Health, Safety and
@@ -517,8 +501,7 @@ const SiteSafetyRulesPage = () => {
             industry. Site-specific rules may vary — always follow the site
             induction and your principal contractor's requirements.
           </p>
-        </CardContent>
-      </Card>
+        </div></div>
     </PageFrame>
   );
 };

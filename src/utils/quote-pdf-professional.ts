@@ -487,6 +487,73 @@ export const generateProfessionalQuotePDF = async ({
     return yPosition;
   };
 
+  // ELE-975 — customer signature box (opt-in via settings.showSignatureBox).
+  // Renders the captured signature image if the quote has been accepted,
+  // otherwise blank signed-by / date lines for offline signing.
+  const renderSignatureBox = () => {
+    if (quote.settings?.showSignatureBox !== true) return;
+
+    // Reserve ~50mm; force a new page if we'd collide with the bottom footer.
+    if (yPosition + 50 > pageHeight - 30) {
+      pdf.addPage();
+      yPosition = margin;
+    }
+
+    yPosition += 8;
+    yPosition = addText('CUSTOMER ACCEPTANCE', margin, yPosition, {
+      fontSize: 10,
+      fontStyle: 'bold',
+      color: primaryColor,
+    });
+    yPosition += 4;
+
+    const sigBoxWidth = 70;
+    const sigBoxHeight = 25;
+    const colGap = 10;
+    const dateColX = margin + sigBoxWidth + colGap;
+
+    // Labels
+    addText('Signature', margin, yPosition, { fontSize: 9, color: [100, 100, 100] });
+    addText('Date', dateColX, yPosition, { fontSize: 9, color: [100, 100, 100] });
+    yPosition += 4;
+
+    if (quote.signature_url) {
+      try {
+        pdf.addImage(quote.signature_url, 'PNG', margin, yPosition, sigBoxWidth, sigBoxHeight);
+      } catch {
+        // Image render failed — fall back to a line
+        pdf.setDrawColor(150, 150, 150);
+        pdf.setLineWidth(0.3);
+        pdf.line(margin, yPosition + sigBoxHeight, margin + sigBoxWidth, yPosition + sigBoxHeight);
+      }
+    } else {
+      pdf.setDrawColor(150, 150, 150);
+      pdf.setLineWidth(0.3);
+      pdf.line(margin, yPosition + sigBoxHeight, margin + sigBoxWidth, yPosition + sigBoxHeight);
+    }
+
+    // Date line (always blank for offline signing, or filled if accepted)
+    pdf.setDrawColor(150, 150, 150);
+    pdf.setLineWidth(0.3);
+    pdf.line(dateColX, yPosition + sigBoxHeight, dateColX + 50, yPosition + sigBoxHeight);
+
+    if (quote.accepted_at) {
+      addText(safeDate(quote.accepted_at), dateColX, yPosition + sigBoxHeight - 2, {
+        fontSize: 10,
+      });
+    }
+
+    yPosition += sigBoxHeight + 4;
+
+    if (quote.accepted_by_name) {
+      addText(`Signed by: ${safeText(quote.accepted_by_name)}`, margin, yPosition, {
+        fontSize: 9,
+        color: [80, 80, 80],
+      });
+      yPosition += 5;
+    }
+  };
+
   // Footer section - now minimal since terms are in totals panel
   const renderFooter = () => {
     // Only add custom notes if they exist
@@ -543,6 +610,7 @@ export const generateProfessionalQuotePDF = async ({
     yPosition = renderQuoteDetails();
     yPosition = renderItemsTable();
     yPosition = renderTotals();
+    renderSignatureBox();
     renderFooter();
 
     // Add footer to all pages

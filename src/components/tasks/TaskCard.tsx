@@ -112,10 +112,18 @@ export function TaskCard({ task, onTap, onSwipeComplete }: TaskCardProps) {
         </motion.div>
       )}
 
-      {/* Card content — draggable */}
-      <motion.button
-        type="button"
+      {/* Card content — draggable. Uses a div with role="button" so the
+          inner checkbox button is valid (button-in-button is illegal DOM). */}
+      <motion.div
+        role="button"
+        tabIndex={0}
         onClick={() => !swiping && onTap(task)}
+        onKeyDown={(e) => {
+          if ((e.key === 'Enter' || e.key === ' ') && !swiping) {
+            e.preventDefault();
+            onTap(task);
+          }
+        }}
         drag={canSwipe ? 'x' : false}
         dragConstraints={{ left: 0, right: 150 }}
         dragElastic={0.1}
@@ -123,7 +131,7 @@ export function TaskCard({ task, onTap, onSwipeComplete }: TaskCardProps) {
         onDragEnd={handleDragEnd}
         style={canSwipe ? { x } : undefined}
         className={cn(
-          'relative w-full text-left rounded-xl border-l-4 p-4',
+          'relative w-full text-left rounded-xl border-l-4 p-4 cursor-pointer',
           'bg-white/[0.03] border border-white/[0.08]',
           'active:bg-white/[0.06] transition-colors',
           'touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50',
@@ -247,7 +255,7 @@ export function TaskCard({ task, onTap, onSwipeComplete }: TaskCardProps) {
           )}
         </div>
 
-      </motion.button>
+      </motion.div>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
-import { Resend } from '../_shared/mailer.ts';
+import { Resend, clientFacingSender, htmlToPlainText } from '../_shared/mailer.ts';
+import { buildQuoteSendEmail } from '../_shared/email-templates/quote-send.ts';
 import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
@@ -369,192 +370,47 @@ const handler = async (req: Request): Promise<Response> => {
     const jobDescription = jobDetails?.description || '';
 
     // ========================================================================
-    // STEP 10: Build email HTML
+    // STEP 10: Build email HTML (modern shared template — _shared/email-template.ts)
     // ========================================================================
-    const emailHtml = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
-  <title>Quote from ${companyName}</title>
-  <!--[if mso]>
-  <style type="text/css">
-    body, table, td {font-family: Arial, sans-serif !important;}
-  </style>
-  <![endif]-->
-</head>
-<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f8f9fa; -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;">
+    const emailPayload = buildQuoteSendEmail({
+      company: {
+        name: companyName,
+        logoUrl: companyProfile?.logo_url || companyProfile?.logo_data_url || null,
+        primaryColor: companyProfile?.primary_color || null,
+        email: companyProfile?.company_email || null,
+        phone: companyProfile?.company_phone || null,
+        website: companyProfile?.company_website || null,
+        address: companyProfile?.company_address || null,
+        vatNumber: companyProfile?.vat_number || null,
+        registrationNumber: companyProfile?.company_registration || null,
+      },
+      clientName,
+      quoteNumber,
+      total: Number(quote.total) || 0,
+      validUntil: quote.expiry_date,
+      jobTitle,
+      jobDescription,
+      acceptUrl,
+      pdfAttached: pdfAttachmentSuccess,
+      trackingPixelUrl: `${supabaseUrl}/functions/v1/email-open?type=quote_send&id=${quoteId}`,
+    });
+    const emailHtml = emailPayload.html;
 
-  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f8f9fa;">
-    <tr>
-      <td style="padding: 20px 10px;">
-        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); border-radius: 12px; overflow: hidden;">
-
-          <!-- Header -->
-          <tr>
-            <td style="padding: 32px 24px 24px; border-bottom: 1px solid #e5e7eb;">
-              <h1 style="margin: 0; color: #1f2937; font-size: 22px; font-weight: 700;">${companyName}</h1>
-            </td>
-          </tr>
-
-          <!-- Greeting -->
-          <tr>
-            <td style="padding: 32px 24px 0;">
-              <p style="margin: 0 0 16px; font-size: 16px; line-height: 1.6; color: #374151;">
-                Dear <strong style="color: #1f2937;">${clientName}</strong>,
-              </p>
-              <p style="margin: 0 0 24px; font-size: 16px; line-height: 1.6; color: #374151;">
-                Thank you for the opportunity to provide this quote. Please find the details below:
-              </p>
-            </td>
-          </tr>
-
-          <!-- Quote Card -->
-          <tr>
-            <td style="padding: 0 24px 24px;">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f8f9fa;  border-radius: 12px; border: 2px solid #e5e7eb;">
-                <tr>
-                  <td style="padding: 24px;">
-                    <h2 style="margin: 0 0 16px; font-size: 28px; font-weight: 700; color: #1f2937;">Quote #${quoteNumber}</h2>
-                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                      <tr><td style="padding: 6px 0; font-size: 14px; color: #6b7280;">Quote Date:</td><td style="text-align: right; font-size: 14px; color: #1f2937; font-weight: 600;">${formatDate(quote.created_at)}</td></tr>
-                      <tr><td style="padding: 6px 0; font-size: 14px; color: #6b7280;">Valid Until:</td><td style="text-align: right; font-size: 14px; color: #dc2626; font-weight: 600;">${formatDate(quote.expiry_date)}</td></tr>
-                      ${jobTitle ? `<tr><td style="padding: 6px 0; font-size: 14px; color: #6b7280;">Job:</td><td style="text-align: right; font-size: 14px; color: #1f2937; font-weight: 600;">${jobTitle}</td></tr>` : ''}
-                    </table>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-          <!-- Total Amount -->
-          <tr>
-            <td style="padding: 0 24px 24px;">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fffbeb;  border-left: 4px solid #FFD700; border-radius: 8px;">
-                <tr>
-                  <td style="padding: 20px;">
-                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                      <tr>
-                        <td style="font-size: 14px; color: #92400e; font-weight: 500;">Total Quote Amount</td>
-                        <td style="text-align: right;">
-                          <span style="font-size: 32px; font-weight: 700; color: #1f2937;">${formatCurrency(quote.total)}</span>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-          <!-- PDF Attachment Notice -->
-          ${
-            pdfAttachmentSuccess
-              ? `
-          <tr>
-            <td style="padding: 0 24px 24px;">
-              <div style="background-color: #FFD700; color: #000000; text-align: center; padding: 16px 24px; border-radius: 10px; font-size: 16px; font-weight: 600;">
-                Quote PDF Attached
-              </div>
-              <p style="margin: 12px 0 0; text-align: center; font-size: 13px; color: #6b7280;">
-                Quote_${quoteNumber}.pdf is attached to this email
-              </p>
-            </td>
-          </tr>
-          `
-              : ''
-          }
-
-          <!-- Accept/Reject Buttons -->
-          <tr>
-            <td style="padding: 0 24px 32px;">
-              <p style="margin: 0 0 16px; text-align: center; font-size: 15px; color: #374151; font-weight: 600;">
-                Ready to proceed?
-              </p>
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                <tr>
-                  <td style="padding-right: 8px; width: 50%;">
-                    <a href="${acceptUrl}" style="display: block; background-color: #22c55e;  color: #ffffff; text-align: center; text-decoration: none; padding: 16px 12px; border-radius: 10px; font-size: 16px; font-weight: 600;">
-                      ✓ Accept & Sign
-                    </a>
-                  </td>
-                  <td style="padding-left: 8px; width: 50%;">
-                    <a href="${rejectUrl}" style="display: block; background-color: #6b7280;  color: #ffffff; text-align: center; text-decoration: none; padding: 16px 12px; border-radius: 10px; font-size: 16px; font-weight: 600;">
-                      ✗ Decline
-                    </a>
-                  </td>
-                </tr>
-              </table>
-              <p style="margin: 12px 0 0; text-align: center; font-size: 12px; color: #9ca3af;">
-                You'll be taken to a secure page to review and sign
-              </p>
-            </td>
-          </tr>
-
-          ${
-            jobDescription
-              ? `
-          <!-- Job Description -->
-          <tr>
-            <td style="padding: 0 24px 24px;">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: #f9fafb; border-radius: 8px;">
-                <tr>
-                  <td style="padding: 16px;">
-                    <p style="margin: 0 0 8px; font-size: 14px; font-weight: 700; color: #374151;">Scope of Work:</p>
-                    <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #6b7280;">${jobDescription}</p>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          `
-              : ''
-          }
-
-          <!-- Footer -->
-          <tr>
-            <td style="padding: 0 24px 32px;">
-              <p style="margin: 0 0 16px; font-size: 15px; line-height: 1.6; color: #374151;">
-                If you have any questions about this quote, please don't hesitate to contact us.
-              </p>
-              <p style="margin: 0; font-size: 16px; font-weight: 700; color: #1f2937;">${companyName}</p>
-              ${companyProfile?.company_phone ? `<p style="margin: 8px 0 0; font-size: 14px; color: #6b7280;"><a href="tel:${companyProfile.company_phone}" style="color: #1f2937; text-decoration: none;">${companyProfile.company_phone}</a></p>` : ''}
-              ${companyProfile?.company_email ? `<p style="margin: 4px 0 0; font-size: 14px; color: #6b7280;"><a href="mailto:${companyProfile.company_email}" style="color: #1f2937; text-decoration: none;">${companyProfile.company_email}</a></p>` : ''}
-            </td>
-          </tr>
-
-          <tr>
-            <td style="padding: 16px 24px; text-align: center;">
-              <p style="margin: 0 0 8px; font-size: 11px; color: #9ca3af;">Sent via Elec-Mate</p>
-              <p style="margin: 0; font-size: 13px; color: #9ca3af;">Professional electrical contracting tools</p>
-            </td>
-          </tr>
-
-        </table>
-      </td>
-    </tr>
-  </table>
-
-  <!-- Email tracking pixel - invisible 1x1 image to track opens -->
-  <img src="${supabaseUrl}/functions/v1/quote-email-tracking?t=${publicToken}&q=${quoteId}" width="1" height="1" style="display:none;visibility:hidden;width:1px;height:1px;opacity:0;" alt="" />
-
-</body>
-</html>
-    `;
 
     // ========================================================================
     // STEP 11: Send email via Resend
     // ========================================================================
-    // ELE-662 — drop info@elec-mate.com fallback (unmonitored); cascade to
-    // user's auth email instead, then omit if neither set.
-    const replyToEmail = companyProfile?.company_email || userEmail || '';
+    // ELE-662 — centralised sender. See _shared/mailer.ts:clientFacingSender.
+    const sender = clientFacingSender({
+      companyName,
+      companyEmail: companyProfile?.company_email,
+      userEmail,
+    });
     const subject = `Quote ${quoteNumber} - ${companyName}`;
 
     console.log(`📧 Sending to: ${clientEmail}`);
-    console.log(`📧 Reply-to: ${replyToEmail || '(none)'}`);
+    console.log(`📧 From: ${sender.from}`);
+    console.log(`📧 Reply-to: ${sender.replyTo || '(none)'}`);
     console.log(`📧 Company profile email: ${companyProfile?.company_email || 'NOT SET'}`);
 
     const emailOptions: {
@@ -563,16 +419,15 @@ const handler = async (req: Request): Promise<Response> => {
       to: string[];
       subject: string;
       html: string;
+      text?: string;
       attachments?: Array<{ filename: string; content: string }>;
     } = {
-      from: `${companyName} <founder@elec-mate.com>`,
+      ...sender,
       to: [clientEmail],
       subject: subject,
       html: emailHtml,
+      text: htmlToPlainText(emailHtml),
     };
-    if (replyToEmail) {
-      emailOptions.replyTo = replyToEmail;
-    }
 
     if (pdfAttachmentSuccess && pdfBase64) {
       emailOptions.attachments = [
