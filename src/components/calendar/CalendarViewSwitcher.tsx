@@ -13,17 +13,17 @@ const views: { value: CalendarView; label: string }[] = [
 ];
 
 const CalendarViewSwitcher = ({ view, onViewChange }: CalendarViewSwitcherProps) => (
-  <div className="flex bg-white/[0.04] rounded-xl p-0.5">
+  <div className="inline-flex bg-white/[0.04] rounded-lg p-0.5 border border-white/[0.06] self-start">
     {views.map((v) => (
       <button
         key={v.value}
         type="button"
         onClick={() => onViewChange(v.value)}
         className={cn(
-          'flex-1 h-11 text-xs font-bold rounded-[10px] touch-manipulation transition-all',
+          'px-3.5 h-8 text-[12.5px] font-semibold rounded-md touch-manipulation transition-colors',
           view === v.value
-            ? 'bg-elec-yellow text-black shadow-sm'
-            : 'text-white active:bg-white/[0.06]'
+            ? 'bg-white/[0.10] text-white'
+            : 'text-white/55 hover:text-white active:bg-white/[0.06]'
         )}
       >
         {v.label}

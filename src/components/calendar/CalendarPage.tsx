@@ -21,6 +21,8 @@ import CalendarEventSheet from './CalendarEventSheet';
 import CalendarEventDetail from './CalendarEventDetail';
 import CalendarSettingsSheet from './CalendarSettingsSheet';
 import CalendarEmptyState from './CalendarEmptyState';
+import CalendarAgendaStrip from './CalendarAgendaStrip';
+import { Plus } from 'lucide-react';
 import {
   useCalendarEvents,
   useCalendarRealtimeInvalidation,
@@ -155,12 +157,18 @@ const CalendarPageContent = () => {
 
   const goToday = useCallback(() => setCurrentDate(new Date()), []);
 
-  // Date selection — tap a day in month view
+  // Date selection — tap a day in month view. We DON'T auto-switch to day
+  // view; instead we just set selectedDate, and the agenda strip below the
+  // grid updates to show that day's events. User can tap the strip heading
+  // to open Day view if they want detail.
   const handleDateSelect = useCallback((date: Date) => {
     setSelectedDate(date);
-    setCurrentDate(date);
-    setView('day');
   }, []);
+
+  const handleOpenSelectedAsDay = useCallback(() => {
+    setCurrentDate(selectedDate ?? new Date());
+    setView('day');
+  }, [selectedDate]);
 
   // Event tap — task events navigate to tasks page
   const handleEventTap = useCallback(
@@ -232,10 +240,13 @@ const CalendarPageContent = () => {
     [setDefaultView]
   );
 
+  // Agenda strip date — selected day in month view, today otherwise.
+  const agendaDate = view === 'month' ? selectedDate ?? new Date() : currentDate;
+
   return (
-    <div className="space-y-4">
+    <div className="space-y-3 pb-24">
       {/* Navigation & View Switcher */}
-      <div className="space-y-3">
+      <div className="space-y-2">
         <CalendarHeader
           currentDate={currentDate}
           view={view}
@@ -249,20 +260,37 @@ const CalendarPageContent = () => {
       </div>
 
       {/* View content */}
-      <div className="min-h-[400px]">
+      <div className="min-h-[300px]">
         {!isLoading && allEvents.length === 0 ? (
           <CalendarEmptyState onCreateEvent={handleCreateNew} />
         ) : (
           <>
             {view === 'month' && (
-              <CalendarMonthView
-                currentDate={currentDate}
-                events={allEvents}
-                onDateSelect={handleDateSelect}
-                onSwipeLeft={goNext}
-                onSwipeRight={goPrevious}
-                selectedDate={selectedDate}
-              />
+              <>
+                <CalendarMonthView
+                  currentDate={currentDate}
+                  events={allEvents}
+                  onDateSelect={handleDateSelect}
+                  onSwipeLeft={goNext}
+                  onSwipeRight={goPrevious}
+                  selectedDate={selectedDate}
+                />
+                {/* Agenda strip — events for selected day (or today) */}
+                <div className="mt-4">
+                  <CalendarAgendaStrip
+                    date={agendaDate}
+                    events={allEvents}
+                    onEventTap={handleEventTap}
+                    onAdd={() => {
+                      setNewEventDate(agendaDate);
+                      setNewEventHour(undefined);
+                      setEditingEvent(null);
+                      setEventSheetOpen(true);
+                    }}
+                    onOpenDayView={handleOpenSelectedAsDay}
+                  />
+                </div>
+              </>
             )}
             {view === 'week' && (
               <CalendarWeekView
@@ -329,6 +357,17 @@ const CalendarPageContent = () => {
         defaultReminderMinutes={settings.defaultReminderMinutes}
         onDefaultReminderChange={setDefaultReminder}
       />
+
+      {/* Floating add-event button — replaces the toolbar + that was eating
+          the month label space on mobile. */}
+      <button
+        type="button"
+        onClick={handleCreateNew}
+        aria-label="New event"
+        className="fixed right-4 bottom-[max(env(safe-area-inset-bottom),16px)] sm:bottom-6 z-40 h-14 w-14 rounded-full bg-elec-yellow text-black shadow-xl shadow-elec-yellow/30 flex items-center justify-center active:scale-[0.96] touch-manipulation"
+      >
+        <Plus className="h-6 w-6" strokeWidth={2.5} />
+      </button>
     </div>
   );
 };

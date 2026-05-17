@@ -263,6 +263,23 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
     try {
       const invoiceNumber = await generateSequentialInvoiceNumber();
       const dueDate = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
+
+      // ELE-954 — when the parent quote already has a deposit paid,
+      // stash the deposit info on the invoice's settings so the PDF
+      // renders it as a clean "Deposit Applied · −£X" totals row +
+      // "Balance Due" line. Invoice total stays at the original gross
+      // amount; the deposit is shown as a credit against it, not
+      // baked into the line items.
+      const q = quoteForInvoice as unknown as {
+        deposit_paid_at?: string | null;
+        deposit_amount_pennies?: number | null;
+        deposit_invoice_id?: string | null;
+      };
+      const depositPaidAmt =
+        q?.deposit_paid_at && Number(q.deposit_amount_pennies || 0) > 0
+          ? Number(q.deposit_amount_pennies) / 100
+          : 0;
+
       const invoiceData = {
         ...quoteForInvoice,
         id: quoteForInvoice.id,
@@ -275,6 +292,17 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
           ...quoteForInvoice.settings,
           paymentTerms: '30 days',
           dueDate: dueDate,
+          // Deposit-already-paid record carried forward from the parent
+          // quote. Drives the PDF's "Deposit Applied" totals row +
+          // "Balance Due" final line, and powers the in-app summary.
+          depositApplied:
+            depositPaidAmt > 0 && q.deposit_paid_at
+              ? {
+                  amount: depositPaidAmt,
+                  paidAt: q.deposit_paid_at,
+                  depositInvoiceId: q.deposit_invoice_id || null,
+                }
+              : null,
         },
       };
 

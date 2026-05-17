@@ -13,6 +13,7 @@ import { AiEpaReadinessSheet } from '@/components/college/sheets/AiEpaReadinessS
 import { AiSignalsInspectorSheet } from '@/components/college/sheets/AiSignalsInspectorSheet';
 import { RecordEpaOutcomeSheet } from '@/components/college/sheets/RecordEpaOutcomeSheet';
 import { EpaBriefSheet } from '@/components/college/sheets/EpaBriefSheet';
+import { MockGradingSheet } from '@/components/college/sheets/MockGradingSheet';
 import { EpaReadinessGauge } from '@/components/college/student360/EpaReadinessGauge';
 import { EpaVerdictHistory } from '@/components/college/student360/EpaVerdictHistory';
 import { EpaCalibrationCard } from '@/components/college/student360/EpaCalibrationCard';
@@ -64,6 +65,7 @@ export function SectionEpaReadiness({
   const [signalsOpen, setSignalsOpen] = useState(false);
   const [outcomeOpen, setOutcomeOpen] = useState(false);
   const [briefOpen, setBriefOpen] = useState(false);
+  const [mockOpen, setMockOpen] = useState(false);
   const [tutorSheet, setTutorSheet] = useState<
     | null
     | { mode: 'create' | 'edit' }
@@ -351,17 +353,31 @@ export function SectionEpaReadiness({
         </div>
       )}
 
-      {/* Mock sessions strip — small, since the learner column already summarises */}
-      {judge.mocks.length > 0 && (
-        <div className="mt-4 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
-          <div className="px-5 py-3 border-b border-white/[0.06] flex items-center justify-between">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-              Simulator history
-            </div>
+      {/* Mock sessions strip — combined AI simulator runs + tutor-recorded mocks */}
+      <div className="mt-4 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
+        <div className="px-5 py-3 border-b border-white/[0.06] flex items-center justify-between gap-3">
+          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Mock sessions
+          </div>
+          <div className="flex items-center gap-3">
             <div className="text-[10.5px] text-white/55 tabular-nums">
               {judge.mocks.length} session{judge.mocks.length === 1 ? '' : 's'}
             </div>
+            <button
+              type="button"
+              onClick={() => setMockOpen(true)}
+              disabled={!userId}
+              className="inline-flex items-center h-7 px-2.5 rounded-full bg-elec-yellow/[0.12] border border-elec-yellow/40 text-elec-yellow text-[11px] font-semibold hover:bg-elec-yellow/[0.18] disabled:opacity-40 touch-manipulation"
+            >
+              + Record mock
+            </button>
           </div>
+        </div>
+        {judge.mocks.length === 0 ? (
+          <div className="px-5 py-6 text-[11.5px] text-white/45 leading-snug">
+            No mock sessions yet. Record a tutor-led mock (portfolio walkthrough, professional discussion, practical or knowledge review) to start tracking dry-run performance.
+          </div>
+        ) : (
           <ul className="divide-y divide-white/[0.04]">
             {judge.mocks.slice(0, 5).map((m) => (
               <li key={m.id} className="px-5 py-3 flex items-center gap-3">
@@ -386,8 +402,8 @@ export function SectionEpaReadiness({
               </li>
             ))}
           </ul>
-        </div>
-      )}
+        )}
+      </div>
 
       {/* Verdict history timeline */}
       <div className="mt-4">
@@ -428,6 +444,17 @@ export function SectionEpaReadiness({
         onOpenChange={setBriefOpen}
         collegeStudentId={collegeStudentId}
         studentName={studentName}
+      />
+      <MockGradingSheet
+        open={mockOpen}
+        onOpenChange={setMockOpen}
+        userId={userId}
+        studentName={studentName}
+        qualificationCode={epa.latestSnapshot?.qualification_code ?? null}
+        onSaved={() => {
+          void epa.refresh();
+          void judge.refresh();
+        }}
       />
       <TutorEpaJudgementSheet
         open={tutorSheet !== null}

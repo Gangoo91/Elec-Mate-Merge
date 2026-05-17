@@ -1,13 +1,10 @@
 import { useState, useCallback, useEffect } from 'react';
 import {
-  Camera,
   Save,
   Check,
   Loader2,
-  Image,
   Receipt,
   Download,
-  ArrowLeftRight,
   PenTool,
   Send,
 } from 'lucide-react';
@@ -24,6 +21,7 @@ import { CompletionShareButton } from './CompletionShareButton';
 import { downloadCompletionCertificatePDF } from '@/utils/completion-certificate-pdf';
 import { supabase } from '@/integrations/supabase/client';
 import type { SiteVisit, SiteVisitPhoto } from '@/types/siteVisit';
+import { Eyebrow, Dot } from '@/components/college/primitives';
 
 interface PostJobTabProps {
   visit: SiteVisit;
@@ -290,258 +288,295 @@ export const PostJobTab = ({ visit, onVisitUpdate }: PostJobTabProps) => {
   const maxCompareIndex = Math.min(beforePhotos.length, savedAfterPhotos.length) - 1;
 
   return (
-    <div className="space-y-6">
-      {/* Before Photos Grid */}
-      {beforePhotos.length > 0 && (
-        <div className="space-y-2">
-          <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-            <Image className="h-4 w-4 text-blue-400" />
-            Before Photos ({beforePhotos.length})
-          </h3>
-          <div className="grid grid-cols-3 gap-2">
-            {beforePhotos.map((photo) => (
-              <div
-                key={photo.id}
-                className="aspect-square rounded-xl overflow-hidden bg-white/[0.03] border border-white/[0.06]"
-              >
-                <img
-                  src={photo.photoUrl}
-                  alt={photo.description || 'Before photo'}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            ))}
+    <div className="space-y-5">
+      {/* Section 01 — After photos capture */}
+      <section className="overflow-hidden rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] p-5">
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <Eyebrow>01 · AFTER PHOTOS</Eyebrow>
+            <h3 className="mt-1.5 text-[18px] font-semibold tracking-tight text-white sm:text-[20px]">
+              Capture the finished work
+            </h3>
+            <p className="mt-1 text-[12.5px] text-white/65">
+              Match the same areas as the before-photos — handover pack pairs them automatically.
+            </p>
           </div>
+          {photosSaved && (
+            <span className="inline-flex h-7 items-center gap-1.5 rounded-full border border-emerald-500/25 bg-emerald-500/[0.10] px-2.5 text-[11px] font-medium text-emerald-400">
+              <Dot tone="emerald" />
+              Saved
+            </span>
+          )}
         </div>
-      )}
+        <div className="mt-4">
+          <RoomPhotoCapture
+            photos={afterPhotos}
+            roomId=""
+            photoPhase="after"
+            onAddPhoto={handleAddAfterPhoto}
+            onRemovePhoto={handleRemoveAfterPhoto}
+          />
+        </div>
+        {afterPhotos.length > 0 && (
+          <Button
+            onClick={handleSaveAfterPhotos}
+            disabled={isSavingPhotos || photosSaved}
+            className="mt-4 h-11 w-full rounded-xl bg-elec-yellow text-[13px] font-semibold text-black hover:bg-elec-yellow/90 disabled:opacity-50 touch-manipulation"
+          >
+            {isSavingPhotos ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Uploading…
+              </>
+            ) : photosSaved ? (
+              <>
+                <Check className="mr-2 h-4 w-4" />
+                Photos saved
+              </>
+            ) : (
+              <>
+                <Save className="mr-2 h-4 w-4" />
+                Save after photos
+              </>
+            )}
+          </Button>
+        )}
+      </section>
 
-      {/* After Photos Capture */}
-      <div className="space-y-2">
-        <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-          <Camera className="h-4 w-4 text-emerald-400" />
-          After Photos
-        </h3>
-        <p className="text-xs text-white">Capture photos of the completed work</p>
-        <RoomPhotoCapture
-          photos={afterPhotos}
-          roomId=""
-          photoPhase="after"
-          onAddPhoto={handleAddAfterPhoto}
-          onRemovePhoto={handleRemoveAfterPhoto}
-        />
-      </div>
+      {/* Section 02 — Before / after gallery */}
+      {beforePhotos.length > 0 && (
+        <section className="overflow-hidden rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] p-5">
+          <Eyebrow>
+            02 · BEFORE {canCompare ? '& AFTER' : ''} · {beforePhotos.length} photo
+            {beforePhotos.length !== 1 ? 's' : ''}
+          </Eyebrow>
+          <h3 className="mt-1.5 text-[18px] font-semibold tracking-tight text-white sm:text-[20px]">
+            {canCompare ? 'Side-by-side compare' : 'Before photos'}
+          </h3>
 
-      {/* Save After Photos */}
-      {afterPhotos.length > 0 && (
-        <Button
-          onClick={handleSaveAfterPhotos}
-          disabled={isSavingPhotos || photosSaved}
-          className="w-full h-12 text-base font-semibold touch-manipulation bg-emerald-600 hover:bg-emerald-700 text-white"
-        >
-          {isSavingPhotos ? (
+          {canCompare ? (
             <>
-              <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-              Uploading & saving...
-            </>
-          ) : photosSaved ? (
-            <>
-              <Check className="h-5 w-5 mr-2" />
-              Photos Saved
+              <div className="mt-4 grid grid-cols-2 gap-2">
+                <div className="space-y-1.5">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-blue-400">
+                    Before
+                  </span>
+                  <div className="aspect-square overflow-hidden rounded-xl border border-blue-500/20 bg-white/[0.03]">
+                    <img
+                      src={beforePhotos[compareIndex]?.photoUrl}
+                      alt="Before"
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                </div>
+                <div className="space-y-1.5">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-emerald-400">
+                    After
+                  </span>
+                  <div className="aspect-square overflow-hidden rounded-xl border border-emerald-500/20 bg-white/[0.03]">
+                    <img
+                      src={savedAfterPhotos[compareIndex]?.photoUrl}
+                      alt="After"
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                </div>
+              </div>
+              {maxCompareIndex > 0 && (
+                <div className="mt-3 flex items-center justify-center gap-1.5">
+                  {Array.from({ length: maxCompareIndex + 1 }).map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setCompareIndex(i)}
+                      className={`h-8 w-8 touch-manipulation rounded-full text-[12px] font-semibold transition-colors ${
+                        i === compareIndex
+                          ? 'bg-elec-yellow text-black'
+                          : 'border border-white/[0.08] bg-white/[0.04] text-white/65 hover:bg-white/[0.08]'
+                      }`}
+                    >
+                      {i + 1}
+                    </button>
+                  ))}
+                </div>
+              )}
             </>
           ) : (
-            <>
-              <Save className="h-5 w-5 mr-2" />
-              Save After Photos
-            </>
-          )}
-        </Button>
-      )}
-
-      {/* Before/After Comparison */}
-      {canCompare && (
-        <div className="space-y-2 pt-2">
-          <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-            <ArrowLeftRight className="h-4 w-4 text-amber-400" />
-            Before & After Comparison
-          </h3>
-          <div className="grid grid-cols-2 gap-2">
-            <div className="space-y-1">
-              <span className="text-[10px] font-semibold text-blue-400 uppercase tracking-wider">
-                Before
-              </span>
-              <div className="aspect-square rounded-xl overflow-hidden bg-white/[0.03] border border-blue-500/20">
-                <img
-                  src={beforePhotos[compareIndex]?.photoUrl}
-                  alt="Before"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
-            <div className="space-y-1">
-              <span className="text-[10px] font-semibold text-emerald-400 uppercase tracking-wider">
-                After
-              </span>
-              <div className="aspect-square rounded-xl overflow-hidden bg-white/[0.03] border border-emerald-500/20">
-                <img
-                  src={savedAfterPhotos[compareIndex]?.photoUrl}
-                  alt="After"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
-          </div>
-          {maxCompareIndex > 0 && (
-            <div className="flex items-center justify-center gap-2">
-              {Array.from({ length: maxCompareIndex + 1 }).map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setCompareIndex(i)}
-                  className={`w-8 h-8 rounded-full touch-manipulation flex items-center justify-center text-xs font-semibold ${
-                    i === compareIndex ? 'bg-elec-yellow text-black' : 'bg-white/[0.06] text-white'
-                  }`}
+            <div className="mt-4 grid grid-cols-3 gap-2">
+              {beforePhotos.map((photo) => (
+                <div
+                  key={photo.id}
+                  className="aspect-square overflow-hidden rounded-xl border border-white/[0.06] bg-white/[0.03]"
                 >
-                  {i + 1}
-                </button>
+                  <img
+                    src={photo.photoUrl}
+                    alt={photo.description || 'Before photo'}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
               ))}
             </div>
           )}
-        </div>
+        </section>
       )}
 
-      {/* Client Sign-Off */}
+      {/* Section 03 — Client sign-off */}
       {!isCompletionSent && !completionSigned && hasAfterPhotos && photosSaved && (
-        <div className="pt-4 border-t border-white/[0.06] space-y-4">
-          <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-            <PenTool className="h-4 w-4 text-amber-400" />
-            Client Sign-Off
-          </h3>
-          <p className="text-xs text-white">
-            Hand the device to the client to sign off the completed work
-          </p>
-
-          {/* Client name input */}
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium text-white">Client Name</label>
-            <Input
-              value={completionClientName}
-              onChange={(e) => setCompletionClientName(e.target.value)}
-              placeholder="Enter client name"
-              className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-            />
+        <section className="overflow-hidden rounded-2xl border border-elec-yellow/25 bg-gradient-to-b from-elec-yellow/[0.04] to-white/[0.015] p-5">
+          <div
+            aria-hidden
+            className="-mx-5 -mt-5 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0"
+          />
+          <div className="pt-5">
+            <Eyebrow>03 · CLIENT SIGN-OFF</Eyebrow>
+            <h3 className="mt-1.5 text-[18px] font-semibold tracking-tight text-white sm:text-[20px]">
+              Hand over the device to sign
+            </h3>
+            <p className="mt-1 text-[12.5px] text-white/65">
+              Client name + signature locks in the completion record.
+            </p>
           </div>
 
-          {/* Signature capture */}
-          <SignatureCapture
-            onCapture={handleCompletionSignatureCapture}
-            variant="dark"
-            showActions={false}
-            height={180}
-          />
-
-          {/* Confirm Completion button */}
-          <Button
-            onClick={handleSignCompletion}
-            disabled={!completionSignatureData || !completionClientName.trim() || isSigningCompletion}
-            className="w-full h-12 text-base font-semibold touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90"
-          >
-            {isSigningCompletion ? (
-              <>
-                <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-                Saving signature...
-              </>
-            ) : (
-              <>
-                <PenTool className="h-5 w-5 mr-2" />
-                Confirm Completion
-              </>
-            )}
-          </Button>
-
-          {/* Fallback: Send link instead */}
-          {!showCompletionFallback ? (
-            <button
-              onClick={() => setShowCompletionFallback(true)}
-              className="w-full text-center text-sm text-white underline underline-offset-2 py-2 touch-manipulation"
-            >
-              <Send className="h-3.5 w-3.5 inline mr-1.5" />
-              Client not present? Send a link instead
-            </button>
-          ) : (
-            <div className="space-y-2 pt-2 border-t border-white/[0.06]">
-              <p className="text-xs text-white text-center">
-                Send a link for the client to sign remotely
-              </p>
-              <CompletionShareButton visit={visit} />
+          <div className="mt-4 space-y-3">
+            <div className="space-y-1.5">
+              <label className="text-[11.5px] font-medium text-white/65">Client name</label>
+              <Input
+                value={completionClientName}
+                onChange={(e) => setCompletionClientName(e.target.value)}
+                placeholder="Enter client name"
+                className="h-11 rounded-xl border-white/[0.08] bg-[hsl(0_0%_10%)] text-[14px] text-white placeholder:text-white/35 focus:border-elec-yellow/40 focus:ring-elec-yellow/20 touch-manipulation"
+              />
             </div>
-          )}
-        </div>
+
+            <SignatureCapture
+              onCapture={handleCompletionSignatureCapture}
+              variant="dark"
+              showActions={false}
+              height={180}
+            />
+
+            <Button
+              onClick={handleSignCompletion}
+              disabled={
+                !completionSignatureData || !completionClientName.trim() || isSigningCompletion
+              }
+              className="h-12 w-full rounded-xl bg-elec-yellow text-[14px] font-semibold text-black hover:bg-elec-yellow/90 disabled:opacity-50 touch-manipulation"
+            >
+              {isSigningCompletion ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Saving signature…
+                </>
+              ) : (
+                <>
+                  <PenTool className="mr-2 h-4 w-4" />
+                  Confirm completion
+                </>
+              )}
+            </Button>
+
+            {!showCompletionFallback ? (
+              <button
+                onClick={() => setShowCompletionFallback(true)}
+                className="w-full text-center text-[12.5px] text-elec-yellow/90 underline underline-offset-2 transition-colors hover:text-elec-yellow touch-manipulation"
+              >
+                <Send className="mr-1.5 inline h-3.5 w-3.5" />
+                Client not present? Send a link instead
+              </button>
+            ) : (
+              <div className="mt-3 border-t border-white/[0.06] pt-3">
+                <CompletionShareButton visit={visit} />
+              </div>
+            )}
+          </div>
+        </section>
       )}
 
-      {/* Prompt to save photos before signing */}
+      {/* Pre-condition prompts */}
       {!isCompletionSent && !completionSigned && hasAfterPhotos && !photosSaved && (
-        <div className="pt-4 border-t border-white/[0.06]">
-          <p className="text-xs text-amber-400 text-center">
-            Save your after photos above before requesting client sign-off
+        <div className="rounded-2xl border border-amber-500/25 bg-amber-500/[0.06] p-4 text-center">
+          <p className="text-[12.5px] font-medium text-amber-400">
+            Save your after-photos before requesting client sign-off
           </p>
         </div>
       )}
-
-      {/* Prompt to add photos */}
       {!isCompletionSent && !completionSigned && !hasAfterPhotos && (
-        <div className="pt-4 border-t border-white/[0.06]">
-          <p className="text-xs text-amber-400 text-center">
-            Add and save at least one after photo before requesting client sign-off
+        <div className="rounded-2xl border border-amber-500/25 bg-amber-500/[0.06] p-4 text-center">
+          <p className="text-[12.5px] font-medium text-amber-400">
+            Add and save at least one after-photo before client sign-off
           </p>
         </div>
       )}
 
-      {/* Download Certificate — shown after completion is signed */}
+      {/* Section 04 — Completion certificate */}
       {(isCompletionSent || completionSigned) && (
-        <div className="pt-4 border-t border-white/[0.06]">
-          <Button
-            onClick={handleDownloadCertificate}
-            disabled={isDownloading}
-            className="w-full h-12 text-base font-semibold touch-manipulation bg-blue-600 hover:bg-blue-700 text-white"
-          >
-            {isDownloading ? (
-              <>
-                <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-                Generating PDF...
-              </>
-            ) : (
-              <>
-                <Download className="h-5 w-5 mr-2" />
-                Download Completion Certificate
-              </>
-            )}
-          </Button>
-        </div>
+        <section className="overflow-hidden rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] p-5">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <Eyebrow>04 · COMPLETION PDF</Eyebrow>
+              <h3 className="mt-1.5 text-[16px] font-semibold tracking-tight text-white sm:text-[17px]">
+                Hand the customer their copy
+              </h3>
+              <p className="mt-1 text-[12.5px] text-white/65">
+                Before/after photos, signatures, scope summary — all in one PDF.
+              </p>
+            </div>
+            <Button
+              onClick={handleDownloadCertificate}
+              disabled={isDownloading}
+              className="h-11 shrink-0 rounded-full bg-white/[0.04] border border-white/[0.12] px-5 text-[13px] font-medium text-white hover:bg-white/[0.08] disabled:opacity-50 touch-manipulation"
+            >
+              {isDownloading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Generating…
+                </>
+              ) : (
+                <>
+                  <Download className="mr-2 h-4 w-4" />
+                  Download PDF
+                </>
+              )}
+            </Button>
+          </div>
+        </section>
       )}
 
-      {/* Raise Invoice — shown after completion is sent or signed */}
+      {/* Section 05 — Raise invoice */}
       {isCompletionSent && visit.quoteId && (
-        <div className="pt-4 border-t border-white/[0.06]">
-          <Button
-            onClick={handleRaiseInvoice}
-            disabled={isRaisingInvoice}
-            className="w-full h-12 text-base font-semibold touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90"
-          >
-            {isRaisingInvoice ? (
-              <>
-                <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-                Creating invoice...
-              </>
-            ) : (
-              <>
-                <Receipt className="h-5 w-5 mr-2" />
-                Raise Invoice
-              </>
-            )}
-          </Button>
-          <p className="text-xs text-white text-center mt-2">
-            Creates an invoice from the accepted quote
-          </p>
-        </div>
+        <section className="relative overflow-hidden rounded-2xl border border-elec-yellow/25 bg-gradient-to-r from-elec-yellow/[0.06] to-transparent p-5">
+          <div
+            aria-hidden
+            className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/80 to-elec-yellow/0"
+          />
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <Eyebrow>05 · GET PAID</Eyebrow>
+              <h3 className="mt-1.5 text-[16px] font-semibold tracking-tight text-white sm:text-[17px]">
+                Raise the invoice
+              </h3>
+              <p className="mt-1 text-[12.5px] text-white/65">
+                Creates an invoice from the accepted quote. Stripe link included.
+              </p>
+            </div>
+            <Button
+              onClick={handleRaiseInvoice}
+              disabled={isRaisingInvoice}
+              className="h-11 shrink-0 rounded-full bg-elec-yellow px-5 text-[13px] font-semibold text-black hover:bg-elec-yellow/90 disabled:opacity-50 touch-manipulation"
+            >
+              {isRaisingInvoice ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Creating…
+                </>
+              ) : (
+                <>
+                  <Receipt className="mr-2 h-4 w-4" />
+                  Raise invoice →
+                </>
+              )}
+            </Button>
+          </div>
+        </section>
       )}
     </div>
   );

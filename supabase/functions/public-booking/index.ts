@@ -18,8 +18,27 @@ const corsHeaders = {
 };
 
 const SLOT_DURATION_MINUTES = 60;
-const WORK_START_HOUR = 8;
-const WORK_END_HOUR = 18;
+
+// Fallback working hours when the electrician hasn't set their schedule
+// preferences yet. Matches the column DEFAULT on profiles.scheduling_working_hours.
+const DAY_KEYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'] as const;
+type DayKey = (typeof DAY_KEYS)[number];
+type DayWindow = { start: string; end: string } | null;
+type WorkingHours = Record<DayKey, DayWindow>;
+
+const DEFAULT_WORKING_HOURS: WorkingHours = {
+  sun: null,
+  mon: { start: '08:00', end: '18:00' },
+  tue: { start: '08:00', end: '18:00' },
+  wed: { start: '08:00', end: '18:00' },
+  thu: { start: '08:00', end: '18:00' },
+  fri: { start: '08:00', end: '18:00' },
+  sat: null,
+};
+
+const DEFAULT_MIN_NOTICE_HOURS = 24;
+const DEFAULT_BUFFER_MINUTES = 30;
+const DEFAULT_MAX_BOOKINGS_PER_DAY = 4;
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -76,10 +95,14 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
     });
   }
 
-  // Fetch electrician profile + company name
+  // Fetch electrician profile + scheduling preferences (working hours,
+  // buffer, daily cap, min notice, blackouts) — set on profiles via the
+  // ELE-955 migration. Falls back to sensible defaults if unset.
   const { data: profile, error: profileError } = await supabase
     .from('profiles')
-    .select('full_name')
+    .select(
+      'full_name, scheduling_working_hours, scheduling_buffer_minutes, scheduling_max_bookings_per_day, scheduling_min_notice_hours, scheduling_blackout_dates'
+    )
     .eq('id', electricianId)
     .single();
 
@@ -90,10 +113,28 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
     });
   }
 
+  const workingHours: WorkingHours = {
+    ...DEFAULT_WORKING_HOURS,
+    ...((profile.scheduling_working_hours as Partial<WorkingHours>) || {}),
+  };
+  const bufferMinutes: number =
+    Number(profile.scheduling_buffer_minutes) || DEFAULT_BUFFER_MINUTES;
+  const maxBookingsPerDay: number =
+    Number(profile.scheduling_max_bookings_per_day) || DEFAULT_MAX_BOOKINGS_PER_DAY;
+  const minNoticeHours: number =
+    Number(profile.scheduling_min_notice_hours) || DEFAULT_MIN_NOTICE_HOURS;
+  const blackoutDates = (profile.scheduling_blackout_dates as Array<{
+    start?: string;
+    end?: string;
+  }>) || [];
+
+  // company_profiles is keyed by user_id, not id (long-standing bug
+  // returning null here — preserved profile lookup above is what
+  // actually drives the response).
   const { data: companyProfile } = await supabase
     .from('company_profiles')
     .select('company_name')
-    .eq('id', electricianId)
+    .eq('user_id', electricianId)
     .maybeSingle();
 
   // Compute date range (UK dates — we work in UTC as a proxy since all our times are UK)
@@ -110,29 +151,42 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
     .lte('start_at', dateTo.toISOString())
     .order('start_at', { ascending: true });
 
-  // Find available 1-hour slots: 8am-6pm weekdays, skip past times for today
+  // Find available 1-hour slots using the electrician's working hours.
+  // Skips: days with no window set (closed days), past times, days
+  // already at their daily booking cap, and any blackout windows.
   const slots: Array<{ date: string; start: string; end: string }> = [];
   const durationMs = SLOT_DURATION_MINUTES * 60 * 1000;
+  const bufferMs = bufferMinutes * 60 * 1000;
+  const minNoticeMs = minNoticeHours * 60 * 60 * 1000;
+
+  const isBlackedOut = (dateStr: string): boolean => {
+    if (!Array.isArray(blackoutDates) || blackoutDates.length === 0) return false;
+    return blackoutDates.some((b) => {
+      if (!b?.start) return false;
+      const start = b.start.slice(0, 10);
+      const end = (b.end || b.start).slice(0, 10);
+      return dateStr >= start && dateStr <= end;
+    });
+  };
 
   for (let d = new Date(dateFrom); d < dateTo; d.setUTCDate(d.getUTCDate() + 1)) {
     const day = d.getUTCDay();
-    if (day === 0 || day === 6) continue; // Skip weekends
+    const dayKey = DAY_KEYS[day];
+    const window = workingHours[dayKey];
+    if (!window) continue; // Day closed in working hours
 
     const dateStr = d.toISOString().split('T')[0];
-    const dayStartMs = new Date(
-      `${dateStr}T${String(WORK_START_HOUR).padStart(2, '0')}:00:00Z`
-    ).getTime();
-    const dayEndMs = new Date(
-      `${dateStr}T${String(WORK_END_HOUR).padStart(2, '0')}:00:00Z`
-    ).getTime();
+    if (isBlackedOut(dateStr)) continue;
 
-    // For today: require at least 1hr from now
-    const isToday = dateStr === now.toISOString().split('T')[0];
-    let effectiveStart = dayStartMs;
-    if (isToday) {
-      const earliest = now.getTime() + 60 * 60 * 1000;
-      effectiveStart = Math.max(dayStartMs, earliest);
-    }
+    // Working window for the day
+    const dayStartMs = new Date(`${dateStr}T${window.start}:00Z`).getTime();
+    const dayEndMs = new Date(`${dateStr}T${window.end}:00Z`).getTime();
+
+    // Apply min-notice for today (or future days within notice window)
+    const earliestBookable = now.getTime() + minNoticeMs;
+    let effectiveStart = Math.max(dayStartMs, earliestBookable);
+    // If even the day end is before the notice cutoff, skip the day
+    if (effectiveStart >= dayEndMs) continue;
 
     // Round cursor up to the next whole hour
     const cursorDate = new Date(effectiveStart);
@@ -141,19 +195,29 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
     }
     let cursor = cursorDate.getTime();
 
-    // Get events for this specific day
+    // Get events for this specific day. Pad each event by the
+    // configured buffer on either side so the sparky has travel time
+    // between jobs.
     const dayEvents = (events || [])
       .filter((e) => (e.start_at as string).startsWith(dateStr))
       .map((e) => ({
-        start: new Date(e.start_at as string).getTime(),
-        end: new Date(e.end_at as string).getTime(),
+        start: new Date(e.start_at as string).getTime() - bufferMs,
+        end: new Date(e.end_at as string).getTime() + bufferMs,
       }))
       .sort((a, b) => a.start - b.start);
+
+    // Daily booking cap — if the day already has the max number of
+    // calendar events, surface zero slots for it.
+    if ((events || []).filter((e) => (e.start_at as string).startsWith(dateStr)).length >= maxBookingsPerDay) {
+      continue;
+    }
+
+    const daySlots: Array<{ date: string; start: string; end: string }> = [];
 
     // Walk through events and fill gaps
     for (const event of dayEvents) {
       while (cursor + durationMs <= event.start && cursor + durationMs <= dayEndMs) {
-        slots.push({
+        daySlots.push({
           date: dateStr,
           start: formatHHMM(new Date(cursor)),
           end: formatHHMM(new Date(cursor + durationMs)),
@@ -171,13 +235,15 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
 
     // Remaining slots after last event
     while (cursor + durationMs <= dayEndMs) {
-      slots.push({
+      daySlots.push({
         date: dateStr,
         start: formatHHMM(new Date(cursor)),
         end: formatHHMM(new Date(cursor + durationMs)),
       });
       cursor += durationMs;
     }
+
+    slots.push(...daySlots);
   }
 
   return new Response(
@@ -202,6 +268,11 @@ async function handleBookSlot(req: Request, supabase: ReturnType<typeof createCl
     client_phone,
     client_email,
     job_description,
+    // ELE-955 — optional. When the booking is for an accepted quote
+    // (post-acceptance / post-deposit handoff), the quote_id is passed
+    // through so we can link the calendar event back to the quote and
+    // mark booked_slot_start/end on the quote row.
+    quote_id,
   } = body;
 
   if (!electrician_id || !date || !start_time || !client_name || !client_phone) {
@@ -315,6 +386,30 @@ async function handleBookSlot(req: Request, supabase: ReturnType<typeof createCl
 
   if (eventError) throw new Error(`Failed to create booking: ${eventError.message}`);
 
+  // ELE-955 — if this booking is tied to an accepted quote, persist the
+  // link both ways so the quote detail view shows "Booked for ..." and
+  // the calendar event can be traced back. Non-fatal — the booking
+  // itself is already saved.
+  let quoteForPush: { quote_number?: string | null } | null = null;
+  if (quote_id) {
+    try {
+      const { data: linkedQuote } = await supabase
+        .from('quotes')
+        .update({
+          booked_slot_start: startAt.toISOString(),
+          booked_slot_end: endAt.toISOString(),
+          booking_calendar_event_id: event.id,
+        })
+        .eq('id', quote_id)
+        .eq('user_id', electrician_id)
+        .select('quote_number')
+        .maybeSingle();
+      quoteForPush = linkedQuote || null;
+    } catch (linkErr) {
+      console.warn('quote ↔ booking link failed (non-fatal):', linkErr);
+    }
+  }
+
   // Create a task for the electrician so it shows in their task list
   const formattedDate = new Date(startAt).toLocaleDateString('en-GB', {
     weekday: 'short',
@@ -393,13 +488,19 @@ async function handleBookSlot(req: Request, supabase: ReturnType<typeof createCl
         },
         body: JSON.stringify({
           userId: electrician_id,
-          title: `📅 New booking — ${client_name}`,
-          body: `${formattedDate} at ${start_time}${jobLine}`,
+          // ELE-955 — quote-context push title is more useful for the
+          // sparky than a generic "New booking" when this came from
+          // a quote-acceptance handoff.
+          title: quoteForPush?.quote_number
+            ? `📅 Quote ${quoteForPush.quote_number} — booked`
+            : `📅 New booking — ${client_name}`,
+          body: `${client_name} · ${formattedDate} at ${start_time}${jobLine}`,
           type: 'default',
           data: {
             deep_link: '/electrician?tab=calendar',
             category: 'booking_received',
             event_id: event.id,
+            quote_id: quote_id || null,
           },
           skipQuietHours: true,
         }),

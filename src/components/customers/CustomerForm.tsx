@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -22,6 +22,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Customer } from '@/hooks/useCustomers';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
+import { X } from 'lucide-react';
 
 const customerSchema = z.object({
   name: z.string().min(1, 'Name is required').max(100, 'Name must be less than 100 characters'),
@@ -40,13 +41,122 @@ const customerSchema = z.object({
 });
 
 type CustomerFormData = z.infer<typeof customerSchema>;
+type SubmitPayload = CustomerFormData & { tags: string[] };
 
 interface CustomerFormProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   customer?: Customer | null;
-  onSave: (data: CustomerFormData) => Promise<void>;
+  onSave: (data: SubmitPayload) => Promise<void>;
 }
+
+// Pre-baked tag suggestions surfaced to nudge consistent categorisation.
+const SUGGESTED_TAGS = [
+  'Residential',
+  'Commercial',
+  'Landlord',
+  'Letting Agent',
+  'Contractor',
+  'Repeat',
+  'High-value',
+];
+
+const normaliseTag = (raw: string): string =>
+  raw
+    .trim()
+    .replace(/\s+/g, ' ')
+    .slice(0, 32);
+
+// TagInput — pill list + suggestions + free-form add (Enter or comma).
+const TagInput = ({
+  value,
+  onChange,
+}: {
+  value: string[];
+  onChange: (next: string[]) => void;
+}) => {
+  const [draft, setDraft] = useState('');
+
+  const add = (raw: string) => {
+    const t = normaliseTag(raw);
+    if (!t) return;
+    if (value.some((v) => v.toLowerCase() === t.toLowerCase())) {
+      setDraft('');
+      return;
+    }
+    onChange([...value, t]);
+    setDraft('');
+  };
+  const remove = (tag: string) => {
+    onChange(value.filter((v) => v !== tag));
+  };
+
+  const availableSuggestions = SUGGESTED_TAGS.filter(
+    (s) => !value.some((v) => v.toLowerCase() === s.toLowerCase())
+  );
+
+  return (
+    <div className="space-y-2.5">
+      {/* Current tags */}
+      {value.length > 0 && (
+        <div className="flex flex-wrap gap-1.5">
+          {value.map((tag) => (
+            <span
+              key={tag}
+              className="inline-flex h-7 items-center gap-1.5 rounded-full border border-elec-yellow/30 bg-elec-yellow/[0.08] pl-3 pr-1 text-[12px] font-medium text-elec-yellow"
+            >
+              {tag}
+              <button
+                type="button"
+                onClick={() => remove(tag)}
+                className="flex h-5 w-5 items-center justify-center rounded-full text-elec-yellow/70 transition-colors hover:bg-elec-yellow/15 hover:text-elec-yellow touch-manipulation"
+                aria-label={`Remove ${tag}`}
+              >
+                <X className="h-3 w-3" />
+              </button>
+            </span>
+          ))}
+        </div>
+      )}
+
+      {/* Add input */}
+      <Input
+        value={draft}
+        onChange={(e) => setDraft(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ',') {
+            e.preventDefault();
+            add(draft);
+          }
+          if (e.key === 'Backspace' && !draft && value.length > 0) {
+            remove(value[value.length - 1]);
+          }
+        }}
+        onBlur={() => {
+          if (draft.trim()) add(draft);
+        }}
+        placeholder="Add tag and press Enter"
+        className="h-10 rounded-xl border-white/10 bg-white/[0.02] text-foreground placeholder:text-white/35 focus:border-elec-yellow/40 focus:ring-elec-yellow/20"
+      />
+
+      {/* Suggestions */}
+      {availableSuggestions.length > 0 && (
+        <div className="flex flex-wrap gap-1.5">
+          {availableSuggestions.slice(0, 6).map((s) => (
+            <button
+              key={s}
+              type="button"
+              onClick={() => add(s)}
+              className="inline-flex h-7 items-center rounded-full border border-white/[0.08] bg-white/[0.03] px-2.5 text-[11.5px] font-medium text-white/65 transition-colors hover:border-elec-yellow/30 hover:bg-elec-yellow/[0.04] hover:text-elec-yellow touch-manipulation"
+            >
+              + {s}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
 
 // Form content component to avoid duplication
 const FormContent = ({
@@ -57,6 +167,8 @@ const FormContent = ({
   handleSubmit,
   onSubmit,
   onOpenChange,
+  tags,
+  setTags,
 }: {
   customer?: Customer | null;
   register: ReturnType<typeof useForm<CustomerFormData>>['register'];
@@ -65,6 +177,8 @@ const FormContent = ({
   handleSubmit: ReturnType<typeof useForm<CustomerFormData>>['handleSubmit'];
   onSubmit: (data: CustomerFormData) => Promise<void>;
   onOpenChange: (open: boolean) => void;
+  tags: string[];
+  setTags: (next: string[]) => void;
 }) => (
   <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
     {/* Name */}
@@ -75,7 +189,7 @@ const FormContent = ({
       <Input
         id="name"
         {...register('name')}
-        className="h-12 bg-white/[0.02] border-white/10 focus:border-blue-500 focus:ring-blue-500/20 text-foreground rounded-xl"
+        className="h-12 rounded-xl border-white/10 bg-white/[0.02] text-foreground focus:border-blue-500 focus:ring-blue-500/20"
         placeholder="Enter customer name"
       />
       {errors.name && <p className="text-sm text-red-400">{errors.name.message}</p>}
@@ -90,7 +204,7 @@ const FormContent = ({
         id="email"
         type="email"
         {...register('email')}
-        className="h-12 bg-white/[0.02] border-white/10 focus:border-blue-500 focus:ring-blue-500/20 text-foreground rounded-xl"
+        className="h-12 rounded-xl border-white/10 bg-white/[0.02] text-foreground focus:border-blue-500 focus:ring-blue-500/20"
         placeholder="customer@example.com"
       />
       {errors.email && <p className="text-sm text-red-400">{errors.email.message}</p>}
@@ -104,7 +218,7 @@ const FormContent = ({
       <Input
         id="phone"
         {...register('phone')}
-        className="h-12 bg-white/[0.02] border-white/10 focus:border-blue-500 focus:ring-blue-500/20 text-foreground rounded-xl"
+        className="h-12 rounded-xl border-white/10 bg-white/[0.02] text-foreground focus:border-blue-500 focus:ring-blue-500/20"
         placeholder="01234 567890"
       />
       {errors.phone && <p className="text-sm text-red-400">{errors.phone.message}</p>}
@@ -118,11 +232,17 @@ const FormContent = ({
       <Textarea
         id="address"
         {...register('address')}
-        className="bg-white/[0.02] border-white/10 focus:border-blue-500 focus:ring-blue-500/20 text-foreground resize-none rounded-xl min-h-[80px]"
+        className="min-h-[80px] resize-none rounded-xl border-white/10 bg-white/[0.02] text-foreground focus:border-blue-500 focus:ring-blue-500/20"
         placeholder="Enter full address"
         rows={3}
       />
       {errors.address && <p className="text-sm text-red-400">{errors.address.message}</p>}
+    </div>
+
+    {/* Tags */}
+    <div className="space-y-2">
+      <Label className="text-sm font-medium text-foreground">Tags</Label>
+      <TagInput value={tags} onChange={setTags} />
     </div>
 
     {/* Notes */}
@@ -133,30 +253,30 @@ const FormContent = ({
       <Textarea
         id="notes"
         {...register('notes')}
-        className="bg-white/[0.02] border-white/10 focus:border-blue-500 focus:ring-blue-500/20 text-foreground resize-none rounded-xl min-h-[80px]"
-        placeholder="Add any additional notes..."
+        className="min-h-[80px] resize-none rounded-xl border-white/10 bg-white/[0.02] text-foreground focus:border-blue-500 focus:ring-blue-500/20"
+        placeholder="Add any additional notes…"
         rows={3}
       />
       {errors.notes && <p className="text-sm text-red-400">{errors.notes.message}</p>}
     </div>
 
     {/* Actions */}
-    <div className="flex flex-col-reverse sm:flex-row justify-end gap-2 sm:gap-3 pt-4">
+    <div className="flex flex-col-reverse justify-end gap-2 pt-4 sm:flex-row sm:gap-3">
       <Button
         type="button"
         variant="ghost"
         onClick={() => onOpenChange(false)}
         disabled={isSubmitting}
-        className="w-full sm:w-auto h-12 sm:h-11 bg-white/[0.02] border border-white/10 hover:bg-white/[0.04] rounded-xl"
+        className="h-12 w-full rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.04] sm:h-11 sm:w-auto"
       >
         Cancel
       </Button>
       <Button
         type="submit"
         disabled={isSubmitting}
-        className="w-full sm:w-auto h-12 sm:h-11 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 border-0 shadow-lg shadow-blue-500/20 rounded-xl"
+        className="h-12 w-full rounded-xl border-0 bg-gradient-to-r from-blue-500 to-indigo-600 shadow-lg shadow-blue-500/20 hover:from-blue-600 hover:to-indigo-700 sm:h-11 sm:w-auto"
       >
-        {isSubmitting ? 'Saving...' : customer ? 'Update Customer' : 'Add Customer'}
+        {isSubmitting ? 'Saving…' : customer ? 'Update customer' : 'Add customer'}
       </Button>
     </div>
   </form>
@@ -164,6 +284,7 @@ const FormContent = ({
 
 export const CustomerForm = ({ open, onOpenChange, customer, onSave }: CustomerFormProps) => {
   const isMobile = useMediaQuery('(max-width: 640px)');
+  const [tags, setTags] = useState<string[]>([]);
 
   const {
     register,
@@ -191,27 +312,31 @@ export const CustomerForm = ({ open, onOpenChange, customer, onSave }: CustomerF
         address: customer?.address || '',
         notes: customer?.notes || '',
       });
+      setTags(customer?.tags ? [...customer.tags] : []);
     }
   }, [open, customer, reset]);
 
   const onSubmit = async (data: CustomerFormData) => {
     // Sanitize all inputs before saving
-    const { sanitizeTextInput, sanitizeEmail, sanitizePhone } =
-      await import('@/utils/inputSanitization');
+    const { sanitizeTextInput, sanitizeEmail, sanitizePhone } = await import(
+      '@/utils/inputSanitization'
+    );
 
-    const sanitizedData: CustomerFormData = {
+    const sanitizedData: SubmitPayload = {
       name: sanitizeTextInput(data.name),
       email: data.email ? sanitizeEmail(data.email) : '',
       phone: data.phone ? sanitizePhone(data.phone) : '',
       address: data.address ? sanitizeTextInput(data.address) : '',
       notes: data.notes ? sanitizeTextInput(data.notes) : '',
+      tags,
     };
 
     await onSave(sanitizedData);
     reset();
+    setTags([]);
   };
 
-  const title = customer ? 'Edit Customer' : 'Add New Customer';
+  const title = customer ? 'Edit customer' : 'Add new customer';
   const description = customer
     ? 'Update customer information below.'
     : 'Enter the customer details to add them to your database.';
@@ -222,19 +347,17 @@ export const CustomerForm = ({ open, onOpenChange, customer, onSave }: CustomerF
       <Sheet open={open} onOpenChange={onOpenChange}>
         <SheetContent
           side="bottom"
-          className="h-[85vh] rounded-t-2xl p-0 overflow-hidden bg-card/95 backdrop-blur-xl border-white/10"
+          className="h-[85vh] overflow-hidden rounded-t-2xl border-white/10 bg-card/95 p-0 backdrop-blur-xl"
         >
           {/* Drag handle */}
           <div className="flex justify-center py-3">
-            <div className="w-10 h-1 rounded-full bg-white/20" />
+            <div className="h-1 w-10 rounded-full bg-white/20" />
           </div>
 
-          <div className="px-4 pb-8 overflow-y-auto h-[calc(85vh-48px)]">
+          <div className="h-[calc(85vh-48px)] overflow-y-auto px-4 pb-8">
             <SheetHeader className="mb-6">
               <SheetTitle className="text-lg font-bold text-foreground">{title}</SheetTitle>
-              <SheetDescription className="text-sm text-white">
-                {description}
-              </SheetDescription>
+              <SheetDescription className="text-sm text-white">{description}</SheetDescription>
             </SheetHeader>
 
             <FormContent
@@ -245,6 +368,8 @@ export const CustomerForm = ({ open, onOpenChange, customer, onSave }: CustomerF
               handleSubmit={handleSubmit}
               onSubmit={onSubmit}
               onOpenChange={onOpenChange}
+              tags={tags}
+              setTags={setTags}
             />
           </div>
         </SheetContent>
@@ -255,12 +380,10 @@ export const CustomerForm = ({ open, onOpenChange, customer, onSave }: CustomerF
   // Desktop: Dialog
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[calc(100%-2rem)] max-w-[500px] max-h-[90vh] overflow-y-auto bg-card/95 backdrop-blur-xl border-white/10 p-4 sm:p-6 rounded-2xl">
+      <DialogContent className="max-h-[90vh] w-[calc(100%-2rem)] max-w-[500px] overflow-y-auto rounded-2xl border-white/10 bg-card/95 p-4 backdrop-blur-xl sm:p-6">
         <DialogHeader>
-          <DialogTitle className="text-lg sm:text-xl text-foreground">{title}</DialogTitle>
-          <DialogDescription className="text-sm text-white">
-            {description}
-          </DialogDescription>
+          <DialogTitle className="text-lg text-foreground sm:text-xl">{title}</DialogTitle>
+          <DialogDescription className="text-sm text-white">{description}</DialogDescription>
         </DialogHeader>
 
         <div className="mt-4">
@@ -272,6 +395,8 @@ export const CustomerForm = ({ open, onOpenChange, customer, onSave }: CustomerF
             handleSubmit={handleSubmit}
             onSubmit={onSubmit}
             onOpenChange={onOpenChange}
+            tags={tags}
+            setTags={setTags}
           />
         </div>
       </DialogContent>

@@ -2,10 +2,27 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
+export interface SnagAnalysis {
+  /** Mate's title suggestion at the time the photo was analysed. */
+  title?: string;
+  /** Mate's priority suggestion. */
+  priority?: 'low' | 'normal' | 'high' | 'urgent';
+  /** AI-generated details (may include inline reg citation). */
+  details?: string;
+  /** AI-guessed location hint. */
+  location_hint?: string | null;
+  /** RAG-grounded BS 7671 citations the synthesis used. */
+  citations?: Array<{ ref: string; topic?: string }>;
+  /** True if the synthesis pass anchored on RAG, false if vision-only. */
+  grounded?: boolean;
+}
+
 export interface SnagPhoto {
   id: string;
   url: string;
   caption?: string;
+  /** Stored AI analysis from parse-snag-photo (when this photo was used to suggest the snag). */
+  analysis?: SnagAnalysis;
 }
 
 export interface Snag {
@@ -48,12 +65,26 @@ interface ProjectGroup {
   snags: Snag[];
 }
 
+export interface SnagPhotoUpload {
+  /** Raw base64 (without data: prefix). */
+  base64: string;
+  /** Mime type — image/jpeg | image/png | image/heic | image/webp. */
+  type: string;
+  /**
+   * Optional AI analysis result from parse-snag-photo — stored on the
+   * photo_analyses row so the suggestion is preserved alongside the photo.
+   */
+  analysis?: Record<string, unknown>;
+}
+
 export interface CreateSnagInput {
   title: string;
   details?: string;
   priority: 'low' | 'normal' | 'high' | 'urgent';
   location?: string;
   projectId?: string;
+  /** Optional photos to attach after the snag row is inserted. */
+  photos?: SnagPhotoUpload[];
 }
 
 export interface ProjectOption {
@@ -152,12 +183,29 @@ export const useSnags = () => {
             }[]) {
               const taskId = p.linked_task_id;
               if (!photoMap[taskId]) photoMap[taskId] = [];
+              const analysis = (p.analysis_result as Record<string, unknown>) || null;
               photoMap[taskId].push({
                 id: p.id,
                 url: p.image_url,
-                caption: (p.analysis_result as Record<string, unknown>)?.caption as
-                  | string
-                  | undefined,
+                caption: analysis?.caption as string | undefined,
+                analysis:
+                  analysis && (analysis.title || analysis.citations || analysis.grounded != null)
+                    ? {
+                        title: analysis.title as string | undefined,
+                        priority: analysis.priority as
+                          | 'low'
+                          | 'normal'
+                          | 'high'
+                          | 'urgent'
+                          | undefined,
+                        details: analysis.details as string | undefined,
+                        location_hint: (analysis.location_hint as string | null | undefined) ?? null,
+                        citations: Array.isArray(analysis.citations)
+                          ? (analysis.citations as Array<{ ref: string; topic?: string }>)
+                          : [],
+                        grounded: analysis.grounded as boolean | undefined,
+                      }
+                    : undefined,
               });
             }
           }
@@ -291,18 +339,62 @@ export const useSnags = () => {
       if (!user) throw new Error('Not authenticated');
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { error } = await (supabase as any).from('spark_tasks').insert({
-        user_id: user.id,
-        title: input.title,
-        details: input.details || null,
-        status: 'open',
-        priority: input.priority,
-        location: input.location || null,
-        project_id: input.projectId || null,
-        tags: ['snagging'],
-      });
+      const { data: created, error } = await (supabase as any)
+        .from('spark_tasks')
+        .insert({
+          user_id: user.id,
+          title: input.title,
+          details: input.details || null,
+          status: 'open',
+          priority: input.priority,
+          location: input.location || null,
+          project_id: input.projectId || null,
+          tags: ['snagging'],
+        })
+        .select('id')
+        .single();
 
       if (error) throw error;
+      const snagId: string | undefined = created?.id;
+
+      // Attach photos (best-effort — snag is saved even if a photo fails)
+      if (snagId && input.photos && input.photos.length > 0) {
+        await Promise.allSettled(
+          input.photos.map(async (photo, idx) => {
+            try {
+              const ext = (photo.type.split('/')[1] || 'jpg').toLowerCase();
+              const path = `${user.id}/${snagId}/${Date.now()}-${idx}.${ext}`;
+              // Convert base64 → Blob for storage upload
+              const binary = atob(photo.base64);
+              const bytes = new Uint8Array(binary.length);
+              for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+              const blob = new Blob([bytes], { type: photo.type });
+              const { error: uploadError } = await supabase.storage
+                .from('job-photos')
+                .upload(path, blob, {
+                  contentType: photo.type,
+                  cacheControl: '3600',
+                  upsert: false,
+                });
+              if (uploadError) throw uploadError;
+              const {
+                data: { publicUrl },
+              } = supabase.storage.from('job-photos').getPublicUrl(path);
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              await (supabase as any).from('photo_analyses').insert({
+                user_id: user.id,
+                analysis_type: 'snag-photo',
+                image_url: publicUrl,
+                analysis_result: photo.analysis || {},
+                observations: [],
+                linked_task_id: snagId,
+              });
+            } catch (err) {
+              console.warn('Snag photo upload failed:', err);
+            }
+          })
+        );
+      }
 
       toast({ title: 'Snag added', description: input.title });
       loadSnags();

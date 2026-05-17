@@ -3,7 +3,19 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.7.1';
 import { callOpenAI } from '../_shared/ai-providers.ts';
 import { searchFacets, formatFacetsForPrompt } from '../_shared/bs7671-facets-rag.ts';
 import { searchPracticalWorkIntelligence } from '../_shared/rag-practical-work.ts';
+import {
+  findDocuments,
+  sendDocument,
+  createQuote,
+  createInvoice,
+} from '../_shared/mate-documents.ts';
+import {
+  getBusinessSnapshot,
+  formatSnapshotForPrompt,
+  findPastPricing,
+} from '../_shared/mate-business-brain.ts';
 import { captureException } from '../_shared/sentry.ts';
+import { BUSINESS_HUB_SOUL } from '../_shared/business-hub-soul.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -11,144 +23,7 @@ const corsHeaders = {
     'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
-const SYSTEM_PROMPT = `You are Mate — the same Mate that lives in the electrician's WhatsApp, now sitting inside their Business Hub. You are their AI business partner: trade-aware, direct, no waffle. You drive work through the pipeline — Lead → Quote → Job → Cert → Invoice → Paid.
-
-You speak to qualified UK electricians, not beginners. Trade language is fine (CU, T&E, R1+R2, Zs, ring final, MCB, RCBO, AFDD). UK English — colour, organise, prioritise, metre. No emoji.
-
-═══════════════════════════════════════════════
-DATA MODEL — four entities in the same workspace
-═══════════════════════════════════════════════
-- CUSTOMER (customers): person/company. name, email, phone, address.
-- PROJECT (spark_projects): the big thing. Rewire, CU change, EICR, school refurb. title, customerName, location, priority, status, estimatedValue, startDate, dueDate.
-- TASK (spark_tasks): single to-do. Stands alone OR attached to a project via projectId.
-- SNAG: defect spotted on site. A task with tag 'snagging'. Best linked to a project via projectId.
-
-═══════════════════════════════════════════════
-HOW YOU THINK — PARTNER, NOT STENOGRAPHER
-═══════════════════════════════════════════════
-The user is not dictating to you. They're thinking out loud — often on site, between jobs, with their hands dirty. Your job is to read intent, anticipate what they probably need next, and either do it or ask the smallest useful question.
-
-When the user mentions a JOB — "I'm starting…", "got a job at…", "doing a [job type] for [name]", "new project for…" — your mental checklist:
-
-  1. Customer — name in context? Findable via find_customer? Brand new?
-  2. Job type — EICR, CU change, rewire, EV install, fault find, fire alarm, emergency lighting, periodic test.
-  3. Location — site address. Often = customer's address; check.
-  4. When — start date, due date.
-  5. Scope — for known job types, call find_similar_jobs to pull THIS user's past task list as a template. Don't invent boilerplate.
-  6. Knowledge — proactively call search_bs7671 and/or search_practical_knowledge for the job type. Surface what's relevant — disconnection times for an EICR, AFDD requirements for a CU change in an HMO, RCD coordination for a kitchen rewire, earthing for an EV install.
-
-You don't dump all of this. Pick the ONE or TWO follow-ups that unlock the most, propose something concrete, and offer the next step.
-
-═══════════════════════════════════════════════
-KNOWLEDGE SURFACING — BE THE EXPERT IN THE ROOM
-═══════════════════════════════════════════════
-You have two knowledge sources. USE THEM PROACTIVELY — not just when asked a direct regulation question.
-
-- **search_bs7671** — BS 7671:2018+A4:2026, GN3, OSG. Regulation grounding. Cite reg numbers from results.
-- **search_practical_knowledge** — hands-on installation, commissioning, fault-finding, equipment-level detail (tools required, test values, expected results, cross-referenced regulations).
-
-When the user mentions a job type or a symptom, call ONE of these proactively to bring real info into the conversation. Examples:
-
-- "Got an EV install at Mrs Patel's" → search_practical_knowledge("EV charger install domestic") + search_bs7671("EV charging point Section 722 TN-C-S"). Surface: load assessment, earthing implications, AFDD requirement, RCD type. Then propose tasks based on what comes back.
-- "RCD keeps tripping at Oak Lane" → search_practical_knowledge("RCD nuisance tripping fault find"). Surface: likely causes, IR test approach. Propose a fault-find task with diagnostic steps.
-- "Doing a CU change at Hilltop" → search_bs7671("AFDD HMO consumer unit A4:2026") + find_similar_jobs("CU change"). Surface: A4:2026 AFDD requirements + this user's past CU change task list. Propose customer + project + task list together.
-- "Periodic test for a chip shop" → search_practical_knowledge("EICR commercial kitchen") + search_bs7671("commercial inspection testing intervals"). Surface: relevant test intervals, location-specific hazards.
-
-NEVER quote BS 7671 from training data. NEVER invent practical detail. If the lookup returns nothing useful, say so plainly.
-
-═══════════════════════════════════════════════
-ALWAYS LEAD BACK TO ACTION
-═══════════════════════════════════════════════
-Every response — even an info answer — ends with a concrete next step the user can accept in one tap. Phrasings:
-
-- "I'd suggest these three tasks for that job — want me to add them?"
-- "Based on your past EICRs the task list usually runs… shall I set it up?"
-- "Sounds like a fault-find first — want me to book it in for tomorrow morning?"
-- "Want me to draft a quote off the back of this?"
-- "I can pull the previous cert if it helps — say the word."
-
-Information without a proposal is half the job. Information → proposal. Proposal → action card.
-
-═══════════════════════════════════════════════
-ASKING QUESTIONS — DON'T INTERROGATE, DON'T BAIL OUT
-═══════════════════════════════════════════════
-- If the request is complete and unambiguous, JUST DO IT. "Add 3 snags for Oak Lane: X, Y, Z" → propose the cards. No questions. Proactivity is for incomplete or strategic asks, not for narrating obvious actions.
-- If something genuinely blocks acting, ask the smallest useful question. One or two at most, never a form dump.
-- You can ask again later in the thread if a new gap opens up — there is NO hard cap. But every question must earn its place. If you've asked twice and the user still hasn't given a detail, create with what you have and note the gap in the rationale.
-- Track info across turns. "Henry Moore" turn 3 + "£750" turn 5 = customer + value. Enough.
-- When a named entity isn't in context, call find_customer / find_project FIRST. Don't ask the user for an id.
-- Natural references ("his home address", "her usual place", "where we worked last time") are real instructions, not gaps — resolve via find_customer and use the address field. Mention the resolution in the rationale ("Location = Henry Moore's address on file").
-- Only treat input as a placeholder if it's literally bracketed (e.g. [customer]) or contains "placeholder", "fill in", "TBC".
-
-═══════════════════════════════════════════════
-TOOL SELECTION
-═══════════════════════════════════════════════
-Mutations: create_tasks / create_snags / create_projects / create_customers / amend_* / complete_* / delete_*.
-
-Lookups & prep:
-- search_bs7671 → regulations grounding. Cite reg numbers.
-- search_practical_knowledge → hands-on / installation / fault-finding / equipment.
-- find_customer / find_project → resolve named entities not in context.
-- find_similar_jobs → ANY job-type keyword (EICR, CU change, rewire, EV install, fault find, fire alarm, emergency lighting, periodic test). Pulls THIS user's past task list as the template — always call before proposing a multi-step plan for a recognisable job type.
-- summarise_customer → "where am I on X" / "tell me about X".
-- query_outstanding_invoices → money owed, overdue, chases.
-- query_pipeline_quotes → quotes outstanding.
-- plan_my_day → "what's on", "plan my day". Group by time + location.
-- draft_chase_email → chase invoices. Always query_outstanding_invoices FIRST for real numbers — never invent.
-- ask_clarification → only when a real fork needs the user.
-
-Common chains:
-- "set up the X job for Y" → find_customer → find_similar_jobs → search_bs7671 + search_practical_knowledge → propose customer (if new) + project + task list together with the knowledge framed in the reply.
-- "chase Mrs Smith's invoice" → query_outstanding_invoices → draft_chase_email.
-- "plan my day" → plan_my_day → 2-3 sentence summary + ONE concrete next action.
-
-═══════════════════════════════════════════════
-APPROVAL & SAFETY (carried from Mate's soul)
-═══════════════════════════════════════════════
-- The electrician is always in control. You propose; they confirm.
-- Mutations surface as proposed cards. You never auto-execute a destructive action.
-- Prefer amend / complete over delete. If user says "remove" or "cancel", check delete vs mark-cancelled.
-- NEVER fabricate test results, regulation numbers, invoice amounts, certificate data, or practical procedures. If a lookup returns nothing, say so — don't guess.
-- NEVER discuss how you work internally — not the knowledge sources, not the tools, not the architecture, not "search_bs7671", not databases. If asked: "I'm Mate — what can I help you with?"
-
-═══════════════════════════════════════════════
-RATIONALE & ECHO-BACK
-═══════════════════════════════════════════════
-On every create / amend / delete: include short \`rationale\` (≤80 chars) explaining the inference:
-- "Set urgent — you said 'ASAP'."
-- "Due tomorrow 09:00 — read as next working morning."
-- "Linked to Oak Lane via fuzzy match."
-- "Location = Henry Moore's address on file."
-- "New customer — no match in your existing list."
-
-Echo back inferred priority, dates, and project links in your reply so the user can correct in one tap.
-
-═══════════════════════════════════════════════
-VOICE
-═══════════════════════════════════════════════
-- Friendly, not matey. Direct, like a calm site agent.
-- Match the user's energy. Short ask → short reply. Strategic ask → think out loud briefly before proposing.
-- No corporate language ("I'd be happy to assist"). No tutorial tone. No emoji.
-- DO surface your thinking on bigger asks: "Reading this as a 3-day EICR — pulling your last EICR task list, then I'll line up the customer and project." Then deliver.
-- ALWAYS finish with the next-step offer.
-
-═══════════════════════════════════════════════
-DATE HANDLING (electrician's local time)
-═══════════════════════════════════════════════
-- "tomorrow" → tomorrow 09:00
-- "this afternoon" → today 14:00
-- "next week" → next Monday 09:00
-- "end of week" → Friday 17:00
-- "in two weeks" → today + 14 days 09:00
-
-═══════════════════════════════════════════════
-RULES
-═══════════════════════════════════════════════
-- Priority: low, normal, high, urgent.
-- Task/snag tags: snagging, quote, follow-up, booking, urgent, inspection, testing. (For create_snags, 'snagging' is implicit.)
-- Match customerName / location / projectId against existing rows if there's an obvious fuzzy match (e.g. "Oak Lane" → "14 Oak Lane Rewire").
-- Use projectId from context — never invent.
-- For lists, emit one action per item.`;
+const SYSTEM_PROMPT = BUSINESS_HUB_SOUL;
 
 const TOOLS: any[] = [
   {
@@ -510,6 +385,186 @@ const TOOLS: any[] = [
   {
     type: 'function',
     function: {
+      name: 'find_documents',
+      description:
+        "Find the user's existing quotes, invoices and certificates. Use when the user asks to send/resend/look-up something they already have (e.g. 'send Mrs Smith her EICR', 'send the quote for Oak Lane again', 'list my draft invoices'). Returns one line per match with the id, reference, customer, total and status. You MUST call this BEFORE send_document so you have the real id and customer email. Never guess document ids.",
+      parameters: {
+        type: 'object',
+        properties: {
+          query: {
+            type: 'string',
+            description: 'Customer name to match (case-insensitive). Optional — omit to list recent.',
+          },
+          kind: {
+            type: 'string',
+            enum: ['quote', 'invoice', 'cert', 'all'],
+            description: "Filter by document kind. Default 'all'.",
+          },
+          status: {
+            type: 'string',
+            description:
+              "Filter by status (e.g. 'draft', 'sent', 'overdue', 'complete'). Optional.",
+          },
+          limit: { type: 'number', description: 'Max results per kind, default 8.' },
+        },
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'send_document',
+      description:
+        "Actually send an existing quote / invoice / certificate to the recorded client, with the real PDF attached. This DOES real work — an email goes out. NEVER call this unless: (a) you have a valid doc_id (from find_documents or a fresh create_quote/create_invoice — never invent one), AND (b) the user has explicitly confirmed they want to send (a 'yes', 'send', 'go', 'fire it'). Show the user the document reference + recipient + the email subject + body draft BEFORE calling, and wait for confirmation. custom_message overrides the default email body paragraph — pass the user-approved wording here so the recipient sees exactly what you showed in chat. custom_subject overrides the default subject line (quote/invoice). After a successful call say 'Sent — PDF was attached'. If the call fails, say so plainly.",
+      parameters: {
+        type: 'object',
+        properties: {
+          doc_type: {
+            type: 'string',
+            enum: ['quote', 'invoice', 'cert'],
+            description: 'Which kind of document — must match the source.',
+          },
+          doc_id: {
+            type: 'string',
+            description: 'The UUID from find_documents / create_quote / create_invoice. Never guess.',
+          },
+          recipient_email: {
+            type: 'string',
+            description:
+              'Optional override of the recipient email. CERT ONLY — quote/invoice use the client_data on the row.',
+          },
+          custom_subject: {
+            type: 'string',
+            description:
+              'Optional override of the email subject line. Quote + invoice only. Cert subject is template-driven.',
+          },
+          custom_message: {
+            type: 'string',
+            description:
+              'Optional body paragraph that REPLACES the default. Supported on quote, invoice and cert. Pass the wording the user approved in chat verbatim.',
+          },
+        },
+        required: ['doc_type', 'doc_id'],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'find_past_pricing',
+      description:
+        "Pricing brain. Look up THIS user's past quotes for a given job type and return the median + range per line item description. ALWAYS call this BEFORE create_quote or create_invoice for any recognisable job type (EICR, CU change, rewire, EV install, fault find, fire alarm, periodic test, board change, first fix, second fix, etc.) so the proposed line items anchor on the user's REAL historical rates rather than invented numbers. If the result shows no past quotes, be transparent with the user that you're starting fresh.",
+      parameters: {
+        type: 'object',
+        properties: {
+          job_type: {
+            type: 'string',
+            description:
+              "Job keyword to search (matches against quote job_details title/description). E.g. 'EICR', 'CU change', 'board install', 'rewire'.",
+          },
+          limit: {
+            type: 'number',
+            description: 'Max past quotes to scan, default 12.',
+          },
+        },
+        required: ['job_type'],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'create_quote',
+      description:
+        "Create a real draft quote with line items. The quote row is inserted in the user's account in 'draft' status — NOT sent. After this returns, you can call send_document with doc_type='quote' and the returned doc_id to actually email it with the PDF attached. Use this when the user wants a NEW quote for a job. Gather customer + job + line items first; if line items are unclear, propose a sensible draft (qty + rate per line) and confirm with the user BEFORE calling. Always use real customer details (resolve via find_customer first). Currency: GBP. Default VAT 20% unless user says otherwise.",
+      parameters: {
+        type: 'object',
+        properties: {
+          client_name: { type: 'string', description: 'Customer full name.' },
+          client_email: { type: 'string', description: 'Customer email — needed for sending later.' },
+          client_phone: { type: 'string' },
+          client_address: { type: 'string' },
+          client_postcode: { type: 'string' },
+          job_title: {
+            type: 'string',
+            description: "Short title, e.g. 'New board install and first fix'.",
+          },
+          job_description: {
+            type: 'string',
+            description: 'Optional longer description of scope (will appear on PDF).',
+          },
+          line_items: {
+            type: 'array',
+            description:
+              'Each line: description + quantity + unitPrice (GBP). Subtotal/VAT/total computed server-side.',
+            items: {
+              type: 'object',
+              properties: {
+                description: { type: 'string' },
+                quantity: { type: 'number' },
+                unitPrice: { type: 'number' },
+              },
+              required: ['description', 'quantity', 'unitPrice'],
+            },
+            minItems: 1,
+          },
+          vat_rate: {
+            type: 'number',
+            description: 'VAT % (default 20). Pass 0 if user is not VAT-registered.',
+          },
+          expiry_days: {
+            type: 'number',
+            description: 'Quote validity in days from today (default 30).',
+          },
+          notes: { type: 'string', description: 'Optional notes on the quote.' },
+        },
+        required: ['client_name', 'job_title', 'line_items'],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'create_invoice',
+      description:
+        "Create a real draft invoice with line items. Inserted in 'draft' status — NOT sent. After this returns, call send_document with doc_type='invoice' and the returned doc_id to email it with PDF + payment link. Use when the user wants to bill a customer for completed work. Default payment terms 30 days. Default VAT 20%.",
+      parameters: {
+        type: 'object',
+        properties: {
+          client_name: { type: 'string' },
+          client_email: { type: 'string' },
+          client_phone: { type: 'string' },
+          client_address: { type: 'string' },
+          client_postcode: { type: 'string' },
+          job_title: { type: 'string' },
+          job_description: { type: 'string' },
+          line_items: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                description: { type: 'string' },
+                quantity: { type: 'number' },
+                unitPrice: { type: 'number' },
+              },
+              required: ['description', 'quantity', 'unitPrice'],
+            },
+            minItems: 1,
+          },
+          vat_rate: { type: 'number' },
+          payment_days: {
+            type: 'number',
+            description: 'Days until due (default 30).',
+          },
+          notes: { type: 'string' },
+        },
+        required: ['client_name', 'job_title', 'line_items'],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
       name: 'query_outstanding_invoices',
       description:
         "Pull the user's unpaid invoices. Use when the user asks about money owed, overdue, chases, cash flow, who hasn't paid. Returns invoice id, number, customer, total, due_date, days_overdue.",
@@ -733,6 +788,10 @@ serve(async (req) => {
     return new Response('ok', { headers: corsHeaders });
   }
 
+  // Capture the user's Authorization header — forwarded to send-*-resend
+  // edge functions when Mate sends a real document.
+  const authHeader = req.headers.get('Authorization');
+
   try {
     const {
       messages,
@@ -782,6 +841,11 @@ serve(async (req) => {
       )
       .join('\n');
 
+    // Cash brain — always-on awareness of outstanding, overdue, win rate.
+    // Fetched per turn so Mate reasons WITH the live state of the books.
+    const businessSnapshot = await getBusinessSnapshot(supabase, userId);
+    const snapshotBlock = formatSnapshotForPrompt(businessSnapshot);
+
     const contextMsg = `Now: ${new Date().toISOString()}
 Recent customer names: ${(userContext.recentCustomers || []).slice(0, 12).join(', ') || 'none yet'}
 Recent locations: ${(userContext.recentLocations || []).slice(0, 12).join(', ') || 'none yet'}
@@ -793,11 +857,38 @@ Current projects (id, status, due, title):
 ${projectSummary || 'no projects yet'}
 
 Current open tasks (id, status, priority, due, title) — items with #snagging are snags:
-${taskSummary || 'no open tasks'}`;
+${taskSummary || 'no open tasks'}
+
+${snapshotBlock}`;
+
+    // Pre-flight: if the user named a customer in their last message,
+    // load that customer's full summary into context so the model lands
+    // already informed instead of asking "let me look that up".
+    let enrichedContext = contextMsg;
+    if (userId) {
+      const lastUserMsg = [...messages].reverse().find((m: any) => m.role === 'user');
+      const text = String(lastUserMsg?.content || '').toLowerCase();
+      if (text.length > 0) {
+        const matchedCustomer = (currentCustomers as any[]).find((c) => {
+          const name = String(c.name || '').toLowerCase().trim();
+          if (name.length < 4) return false;
+          const parts = name.split(/\s+/).filter((p: string) => p.length >= 4);
+          return parts.some((p: string) => text.includes(p));
+        });
+        if (matchedCustomer) {
+          try {
+            const summary = await summariseCustomer(supabase, userId, matchedCustomer.name);
+            enrichedContext += `\n\n[PRE-FLIGHT — user mentioned ${matchedCustomer.name}, pre-loading full summary so you don't need to look it up]\n${summary}`;
+          } catch (e) {
+            console.warn('[preflight] summariseCustomer failed', e);
+          }
+        }
+      }
+    }
 
     const conversation: any[] = [
       { role: 'system', content: SYSTEM_PROMPT },
-      { role: 'system', content: contextMsg },
+      { role: 'system', content: enrichedContext },
       ...messages,
     ];
 
@@ -844,6 +935,11 @@ ${taskSummary || 'no open tasks'}`;
       'search_practical_knowledge',
       'find_customer',
       'find_project',
+      'find_documents',
+      'find_past_pricing',
+      'send_document',
+      'create_quote',
+      'create_invoice',
       'query_outstanding_invoices',
       'query_pipeline_quotes',
       'summarise_customer',
@@ -861,6 +957,7 @@ ${taskSummary || 'no open tasks'}`;
         userId,
         citations,
         LOOKUP_TOOLS,
+        authHeader,
       });
       return await packageResponse(finalResp, citations, supabase, userId, conversationId);
     }
@@ -886,7 +983,7 @@ ${taskSummary || 'no open tasks'}`;
           const collectedActions: any[] = [];
           let collectedClarification: any = null;
 
-          for (let round = 0; round < 5; round++) {
+          for (let round = 0; round < 8; round++) {
             const result = await callOpenAIStreaming({
               conversation,
               tools: TOOLS,
@@ -960,6 +1057,30 @@ ${taskSummary || 'no open tasks'}`;
                 toolOutput = formatFacetsForPrompt(facets);
               } else if (call.name === 'search_practical_knowledge') {
                 toolOutput = await runPracticalKnowledgeSearch(supabase, args.query || '');
+              } else if (call.name === 'find_documents') {
+                toolOutput = await findDocuments(supabase, userId, {
+                  query: args.query,
+                  kind: args.kind,
+                  status: args.status,
+                  limit: args.limit,
+                });
+              } else if (call.name === 'send_document') {
+                toolOutput = await sendDocument(authHeader, {
+                  doc_type: args.doc_type,
+                  doc_id: args.doc_id,
+                  recipient_email: args.recipient_email,
+                  custom_message: args.custom_message,
+                  custom_subject: args.custom_subject,
+                });
+              } else if (call.name === 'create_quote') {
+                toolOutput = await createQuote(supabase, userId, args);
+              } else if (call.name === 'create_invoice') {
+                toolOutput = await createInvoice(supabase, userId, args, authHeader);
+              } else if (call.name === 'find_past_pricing') {
+                toolOutput = await findPastPricing(supabase, userId, {
+                  job_type: args.job_type || '',
+                  limit: args.limit,
+                });
               } else if (call.name === 'find_customer') {
                 toolOutput = await searchCustomers(supabase, userId, args.query || '');
               } else if (call.name === 'find_project') {
@@ -1077,8 +1198,13 @@ async function callOpenAIStreaming({
   onToken: (delta: string) => void;
   onLookupStarted?: (toolName: string) => void;
 }): Promise<{ textContent: string; toolCalls: StreamedToolCall[] }> {
+  // NOTE: reasoning_effort is NOT supported by gpt-5.5 + function tools on
+  // /v1/chat/completions — OpenAI requires /v1/responses for that combo.
+  // We keep Chat Completions for now (streaming + tool-loop shape is built
+  // around it). Migrating to Responses API is tracked as a separate piece
+  // of work — it would unlock reasoning_effort: 'high'.
   const body = {
-    model: 'gpt-5.4-mini-2026-03-17',
+    model: 'gpt-5.5',
     messages: conversation,
     tools,
     stream: true,
@@ -1317,6 +1443,7 @@ async function runToolLoopBuffered({
   userId,
   citations,
   LOOKUP_TOOLS,
+  authHeader,
 }: {
   conversation: any[];
   openAiKey: string;
@@ -1324,13 +1451,14 @@ async function runToolLoopBuffered({
   userId: string | null;
   citations: Citation[];
   LOOKUP_TOOLS: Set<string>;
+  authHeader: string | null;
 }): Promise<{ content: string; toolCalls: any[] }> {
   let aiResp = await callOpenAI(
-    { messages: conversation, tools: TOOLS, model: 'gpt-5.4-mini-2026-03-17' },
+    { messages: conversation, tools: TOOLS, model: 'gpt-5.5' },
     openAiKey,
     60000
   );
-  for (let round = 0; round < 5; round++) {
+  for (let round = 0; round < 8; round++) {
     if (!aiResp.toolCalls?.length) break;
     const lookupCalls = aiResp.toolCalls.filter((c: any) =>
       LOOKUP_TOOLS.has(c.function.name)
@@ -1360,6 +1488,30 @@ async function runToolLoopBuffered({
         toolOutput = formatFacetsForPrompt(facets);
       } else if (toolName === 'search_practical_knowledge') {
         toolOutput = await runPracticalKnowledgeSearch(supabase, args.query || '');
+      } else if (toolName === 'find_documents') {
+        toolOutput = await findDocuments(supabase, userId, {
+          query: args.query,
+          kind: args.kind,
+          status: args.status,
+          limit: args.limit,
+        });
+      } else if (toolName === 'send_document') {
+        toolOutput = await sendDocument(authHeader, {
+          doc_type: args.doc_type,
+          doc_id: args.doc_id,
+          recipient_email: args.recipient_email,
+          custom_message: args.custom_message,
+          custom_subject: args.custom_subject,
+        });
+      } else if (toolName === 'create_quote') {
+        toolOutput = await createQuote(supabase, userId, args);
+      } else if (toolName === 'create_invoice') {
+        toolOutput = await createInvoice(supabase, userId, args, authHeader);
+      } else if (toolName === 'find_past_pricing') {
+        toolOutput = await findPastPricing(supabase, userId, {
+          job_type: args.job_type || '',
+          limit: args.limit,
+        });
       } else if (toolName === 'find_customer') {
         toolOutput = await searchCustomers(supabase, userId, args.query || '');
       } else if (toolName === 'find_project') {
@@ -1392,7 +1544,7 @@ async function runToolLoopBuffered({
       });
     }
     aiResp = await callOpenAI(
-      { messages: conversation, tools: TOOLS, model: 'gpt-5.4-mini-2026-03-17' },
+      { messages: conversation, tools: TOOLS, model: 'gpt-5.5' },
       openAiKey,
       60000
     );

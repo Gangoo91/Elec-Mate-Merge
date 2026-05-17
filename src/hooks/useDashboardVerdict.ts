@@ -150,7 +150,7 @@ export function useDashboardVerdict(): DashboardVerdict {
       activeQuotes,
       pendingQuotes,
       formattedQuoteValue,
-      activeJobs,
+      activeProjects,
     } = data.business;
 
     const { expiringSoon: incompleteCerts } = data.certificates;
@@ -170,9 +170,9 @@ export function useDashboardVerdict(): DashboardVerdict {
         label: 'Open certificates',
         href: '/electrician/inspection-testing?section=my-reports',
       };
-    } else if (activeJobs > 0) {
-      verdict = `${activeJobs} job${activeJobs > 1 ? 's' : ''} on the books — and nothing overdue, certs all closed out.`;
-      cta = { label: 'Open jobs', href: '/electrician/jobs' };
+    } else if (activeProjects > 0) {
+      verdict = `${activeProjects} project${activeProjects > 1 ? 's' : ''} on the books — and nothing overdue, certs all closed out.`;
+      cta = { label: 'Open projects', href: '/electrician/projects' };
     } else if (unpaidInvoices > 0) {
       verdict = `${unpaidInvoices} invoice${unpaidInvoices > 1 ? 's' : ''} out for payment, nothing overdue yet.`;
       cta = { label: 'View invoices', href: '/electrician/invoices' };

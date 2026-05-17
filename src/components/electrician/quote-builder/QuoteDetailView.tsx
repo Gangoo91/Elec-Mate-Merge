@@ -136,8 +136,46 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
           </div>
 
           <div className="text-right">
-            <p className="text-sm text-white mb-1">Total Amount</p>
-            <p className="text-4xl font-bold text-elec-yellow">£{(quote.total || 0).toFixed(2)}</p>
+            {(() => {
+              // ELE-954 — show Total + Deposit paid + Balance when a deposit
+              // landed on the quote, so the electrician sees what's still owed
+              // before converting to an invoice.
+              const depositPaidAmount = (() => {
+                const q = quote as unknown as {
+                  deposit_paid_at?: string | null;
+                  deposit_amount_pennies?: number | null;
+                };
+                if (!q?.deposit_paid_at) return 0;
+                const pennies = Number(q.deposit_amount_pennies || 0);
+                return pennies > 0 ? pennies / 100 : 0;
+              })();
+              const total = Number(quote.total || 0);
+              const balance = Math.max(0, total - depositPaidAmount);
+
+              if (depositPaidAmount > 0) {
+                return (
+                  <>
+                    <p className="text-xs text-white/60 mb-0.5">Total</p>
+                    <p className="text-xl font-semibold text-white tabular-nums">
+                      £{total.toFixed(2)}
+                    </p>
+                    <p className="mt-2 text-xs text-emerald-400 tabular-nums">
+                      − £{depositPaidAmount.toFixed(2)} deposit paid
+                    </p>
+                    <p className="mt-1 text-sm text-white/80 mb-0.5">Balance outstanding</p>
+                    <p className="text-3xl font-bold text-elec-yellow tabular-nums">
+                      £{balance.toFixed(2)}
+                    </p>
+                  </>
+                );
+              }
+              return (
+                <>
+                  <p className="text-sm text-white mb-1">Total Amount</p>
+                  <p className="text-4xl font-bold text-elec-yellow">£{total.toFixed(2)}</p>
+                </>
+              );
+            })()}
           </div>
         </div>
 

@@ -40,6 +40,10 @@ export interface InvoiceSendData {
   jobTitle?: string | null;
   /** Email-open tracking pixel URL (see _shared/email-template.ts ShellOptions.trackingPixelUrl). */
   trackingPixelUrl?: string | null;
+  /** Optional override of the email subject line. */
+  customSubject?: string | null;
+  /** Optional override of the email body paragraph. */
+  customMessage?: string | null;
 }
 
 export interface InvoiceSendEmail {
@@ -63,11 +67,16 @@ export function buildInvoiceSendEmail(data: InvoiceSendData): InvoiceSendEmail {
   const issueDateStr = formatDateLong(data.invoiceDate);
   const firstName = (data.clientName || 'there').split(' ')[0] || 'there';
 
-  const subject = `Invoice ${data.invoiceNumber} from ${data.company.name} — ${totalStr}`;
+  const subject =
+    data.customSubject?.trim() ||
+    `Invoice ${data.invoiceNumber} from ${data.company.name} — ${totalStr}`;
   const preheader = `${totalStr}${dueDateStr ? ` due ${dueDateStr}` : ''} · Invoice ${data.invoiceNumber}${data.jobTitle ? ` · ${data.jobTitle}` : ''}`;
 
   const greeting = `Hi <strong style="color:#0f172a">${firstName}</strong>,`;
-  const body = `Thanks for your business. Your invoice for ${data.jobTitle ? `the ${data.jobTitle.toLowerCase()}` : 'the work we completed'} is ready — full breakdown attached as a PDF. The fastest way to settle it is the button below.`;
+  const customBody = (data.customMessage || '').trim();
+  const body = customBody
+    ? customBody.replace(/\n/g, '<br>')
+    : `Thanks for your business. Your invoice for ${data.jobTitle ? `the ${data.jobTitle.toLowerCase()}` : 'the work we completed'} is ready — full breakdown attached as a PDF. The fastest way to settle it is the button below.`;
 
   // Hero — total + meta grid (Invoice #, Due date, Terms)
   const meta: Array<{ label: string; value: string }> = [

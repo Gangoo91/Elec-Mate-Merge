@@ -27,7 +27,10 @@ import {
   Trash2,
   X,
   LayoutGrid,
+  Timer,
+  Sparkles,
 } from 'lucide-react';
+import { Assistant } from '@/components/business-hub/Assistant';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -222,6 +225,106 @@ const ProjectDetailPage = () => {
 
   // Task truncation
   const [showAllTasks, setShowAllTasks] = useState(false);
+
+  // ─── Time logged on this project ─────────────────────────────────
+  const [timeSummary, setTimeSummary] = useState<{
+    totalSec: number;
+    unbilledSec: number;
+    unbilledValue: number;
+  }>({ totalSec: 0, unbilledSec: 0, unbilledValue: 0 });
+  useEffect(() => {
+    if (!id) return;
+    let cancelled = false;
+    (async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return;
+      const { data } = await supabase
+        .from('time_sessions')
+        .select('duration_seconds, hourly_rate, invoice_id')
+        .eq('user_id', user.id)
+        .eq('project_id', id);
+      if (cancelled || !data) return;
+      let totalSec = 0;
+      let unbilledSec = 0;
+      let unbilledValue = 0;
+      for (const s of data) {
+        const sec = (s.duration_seconds as number | null) ?? 0;
+        const rate = Number(s.hourly_rate ?? 0);
+        totalSec += sec;
+        if (!s.invoice_id) {
+          unbilledSec += sec;
+          unbilledValue += (sec / 3600) * rate;
+        }
+      }
+      setTimeSummary({
+        totalSec,
+        unbilledSec,
+        unbilledValue: Math.round(unbilledValue * 100) / 100,
+      });
+    })();
+    return () => {
+      cancelled = true;
+    };
+    // Re-fetch when tasks/invoices change in case an invoice was just attached
+  }, [id, tasks.length, invoices.length]);
+
+  // ─── AI assistant — context-aware prompts ────────────────────────
+  const [aiOpen, setAiOpen] = useState(false);
+  const [aiPrompt, setAiPrompt] = useState<string | undefined>(undefined);
+
+  const askMateAboutProject = useCallback(() => {
+    if (!project) return;
+    const parts = [`I'm working on the "${project.title}" project`];
+    if (project.customer_name) parts.push(`for ${project.customer_name}`);
+    if (project.location) parts.push(`at ${project.location}`);
+    parts.push(
+      `— what's outstanding? Pull tasks, overdue items, any draft quotes/invoices, and tell me what to do next.`
+    );
+    setAiPrompt(parts.join(' '));
+    setAiOpen(true);
+  }, [project]);
+
+  const askMateToInvoiceUnbilled = useCallback(() => {
+    if (!project) return;
+    const customer = project.customer_name ? ` to ${project.customer_name}` : '';
+    setAiPrompt(
+      `Draft an invoice${customer} for the unbilled time on "${project.title}" — find every time session tagged to this project that hasn't been billed and bundle them into one invoice. Show me the line items before sending.`
+    );
+    setAiOpen(true);
+  }, [project]);
+
+  // Start the timer pre-tagged to this project (cross-page hand-off via sessionStorage)
+  const handleStartTimerForProject = useCallback(() => {
+    if (!project) return;
+    try {
+      sessionStorage.setItem(
+        'time-tracker-prefill',
+        JSON.stringify({ projectId: project.id, label: project.title })
+      );
+    } catch {
+      /* ignore */
+    }
+    navigate('/electrician/time-tracker');
+  }, [project, navigate]);
+
+  // Helpers used in the new hero
+  const formatHoursMinutes = (seconds: number): string => {
+    if (!seconds) return '0h 0m';
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    if (h === 0) return `${m}m`;
+    return `${h}h ${String(m).padStart(2, '0')}m`;
+  };
+
+  const formatGBP = (n: number): string =>
+    new Intl.NumberFormat('en-GB', {
+      style: 'currency',
+      currency: 'GBP',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(n || 0);
   const visibleTasks = showAllTasks ? regularTasks : regularTasks.slice(0, TASK_PREVIEW_COUNT);
 
   // Sheet states
@@ -527,87 +630,182 @@ const ProjectDetailPage = () => {
         animate="visible"
         className="px-4 py-3 space-y-3"
       >
-        {/* Summary Card — full title, metadata, edit pencil */}
+        {/* ── Smart hero — title · subtitle · 3 metrics · action row ── */}
         <motion.div
           variants={itemVariants}
-          className="p-4 rounded-2xl bg-white/[0.04] border border-white/[0.08] space-y-3"
+          className="rounded-2xl bg-white/[0.06] border border-white/[0.12] overflow-hidden shadow-sm shadow-black/20"
         >
-          <div className="flex items-start justify-between gap-3">
-            <h1 className="text-xl font-bold text-white leading-tight">{project.title}</h1>
+          {/* Header — priority dot · title · status · edit */}
+          <div className="p-4">
+            <div className="flex items-start gap-3">
+              <span
+                aria-hidden="true"
+                className={cn(
+                  'w-2 h-2 rounded-full shrink-0 mt-2',
+                  PRIORITY_COLOURS[project.priority]
+                )}
+              />
+              <div className="flex-1 min-w-0">
+                <h1 className="text-[20px] sm:text-[22px] font-semibold text-white leading-tight">
+                  {project.title}
+                </h1>
+                {(project.customer_name || project.location) && (
+                  <p className="mt-1 text-[13px] text-white/55 truncate flex items-center gap-1.5">
+                    {project.customer_name && (
+                      <>
+                        <Users className="h-3 w-3 text-white/35" />
+                        <span>{project.customer_name}</span>
+                      </>
+                    )}
+                    {project.customer_name && project.location && (
+                      <span className="text-white/25">·</span>
+                    )}
+                    {project.location && (
+                      <>
+                        <MapPin className="h-3 w-3 text-white/35" />
+                        <span>{project.location}</span>
+                      </>
+                    )}
+                  </p>
+                )}
+              </div>
+              <div className="flex items-center gap-1.5 shrink-0">
+                <span
+                  className={cn(
+                    'text-[10.5px] font-medium px-2 py-0.5 rounded-full',
+                    project.status === 'completed'
+                      ? 'bg-emerald-500/15 text-emerald-400 ring-1 ring-emerald-500/20'
+                      : 'bg-blue-500/15 text-blue-400 ring-1 ring-blue-500/20'
+                  )}
+                >
+                  {project.status}
+                </span>
+                <button
+                  type="button"
+                  onClick={openEditSheet}
+                  aria-label="Edit project"
+                  className="w-8 h-8 flex items-center justify-center rounded-lg text-white/55 hover:text-white hover:bg-white/[0.06] touch-manipulation"
+                >
+                  <Pencil className="h-3.5 w-3.5" />
+                </button>
+              </div>
+            </div>
+
+            {project.description && (
+              <p className="mt-2.5 text-[13px] text-white/55 leading-snug">
+                {project.description}
+              </p>
+            )}
+
+            {(project.project_type || project.due_date) && (
+              <div className="mt-2.5 ml-5 flex items-center gap-3 text-[11.5px] text-white/40">
+                {project.project_type && <span className="capitalize">{project.project_type}</span>}
+                {project.due_date && (
+                  <span className="flex items-center gap-1">
+                    <Calendar className="h-3 w-3" /> Due {formatShortDate(project.due_date)}
+                  </span>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Metrics — 3 tiles, hairline dividers */}
+          <div className="grid grid-cols-3 border-t border-white/[0.08] divide-x divide-white/[0.06]">
+            <div className="px-3 py-3 sm:px-4">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45">
+                Tasks
+              </p>
+              <p className="mt-1 text-[17px] sm:text-[18px] font-bold text-white tabular-nums leading-none">
+                {totalTasks > 0 ? `${progress}%` : '—'}
+              </p>
+              <p className="mt-1 text-[11.5px] text-white/45 tabular-nums">
+                {totalTasks > 0 ? `${doneTasks}/${totalTasks} done` : 'No tasks yet'}
+              </p>
+            </div>
+            <div className="px-3 py-3 sm:px-4">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45">
+                Time logged
+              </p>
+              <p className="mt-1 text-[17px] sm:text-[18px] font-bold text-white tabular-nums leading-none">
+                {formatHoursMinutes(timeSummary.totalSec)}
+              </p>
+              <p className="mt-1 text-[11.5px] text-white/45 tabular-nums">
+                across all sessions
+              </p>
+            </div>
+            <div className="px-3 py-3 sm:px-4">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45">
+                {project.estimated_value && project.estimated_value > 0 ? 'Value' : 'Unbilled'}
+              </p>
+              <p
+                className={cn(
+                  'mt-1 text-[17px] sm:text-[18px] font-bold tabular-nums leading-none',
+                  project.estimated_value && project.estimated_value > 0
+                    ? 'text-emerald-400'
+                    : timeSummary.unbilledValue > 0
+                      ? 'text-elec-yellow'
+                      : 'text-white/40'
+                )}
+              >
+                {project.estimated_value && project.estimated_value > 0
+                  ? formatGBP(project.estimated_value)
+                  : formatGBP(timeSummary.unbilledValue)}
+              </p>
+              <p className="mt-1 text-[11.5px] text-white/45 tabular-nums">
+                {project.estimated_value && project.estimated_value > 0
+                  ? 'estimated'
+                  : timeSummary.unbilledSec > 0
+                    ? `${formatHoursMinutes(timeSummary.unbilledSec)} to bill`
+                    : 'nothing to bill'}
+              </p>
+            </div>
+          </div>
+
+          {/* Action row — Start timer · Ask Mate */}
+          <div className="border-t border-white/[0.08] flex items-stretch">
             <button
               type="button"
-              onClick={openEditSheet}
-              className="w-9 h-9 flex items-center justify-center flex-shrink-0 rounded-lg bg-white/[0.06] touch-manipulation active:bg-white/10 transition-colors"
+              onClick={handleStartTimerForProject}
+              disabled={project.status === 'completed'}
+              className="flex-1 h-11 flex items-center justify-center gap-1.5 text-[12.5px] font-medium text-white/70 hover:text-white hover:bg-white/[0.06] active:bg-white/[0.08] touch-manipulation transition-colors disabled:opacity-30 disabled:hover:bg-transparent"
             >
-              <Pencil className="h-4 w-4 text-elec-yellow" />
+              <Timer className="h-3.5 w-3.5" />
+              Start timer
+            </button>
+            <div className="w-px bg-white/[0.06]" />
+            <button
+              type="button"
+              onClick={askMateAboutProject}
+              className="flex-1 h-11 flex items-center justify-center gap-1.5 text-[12.5px] font-medium text-elec-yellow hover:text-yellow-300 hover:bg-elec-yellow/[0.06] active:bg-elec-yellow/[0.10] touch-manipulation transition-colors"
+            >
+              <Sparkles className="h-3.5 w-3.5" />
+              Ask Mate
             </button>
           </div>
-          {project.description && <p className="text-sm text-white">{project.description}</p>}
-          <div className="flex flex-wrap gap-2">
-            <span
-              className={cn(
-                'text-[11px] font-medium px-2 py-0.5 rounded-full',
-                project.status === 'completed'
-                  ? 'bg-emerald-500/20 text-emerald-400'
-                  : 'bg-blue-500/20 text-blue-400'
-              )}
-            >
-              {project.status}
-            </span>
-            <div className="flex items-center gap-1">
-              <div className={cn('w-2 h-2 rounded-full', PRIORITY_COLOURS[project.priority])} />
-              <span className="text-[11px] font-medium text-white capitalize">
-                {project.priority}
-              </span>
-            </div>
-            {project.project_type && (
-              <span className="text-[11px] font-medium bg-elec-yellow/15 text-elec-yellow px-2 py-0.5 rounded-full">
-                {project.project_type}
-              </span>
-            )}
-            {project.due_date && (
-              <span className="text-[11px] font-medium text-white flex items-center gap-1">
-                <Calendar className="h-3 w-3" /> Due {formatShortDate(project.due_date)}
-              </span>
-            )}
-          </div>
-          <div className="flex flex-wrap gap-4 text-[13px] text-white">
-            {project.customer_name && (
-              <span className="flex items-center gap-1">
-                <Users className="h-3.5 w-3.5" /> {project.customer_name}
-              </span>
-            )}
-            {project.location && (
-              <span className="flex items-center gap-1">
-                <MapPin className="h-3.5 w-3.5" /> {project.location}
-              </span>
-            )}
-          </div>
-          {project.estimated_value != null && project.estimated_value > 0 && (
-            <p className="text-sm text-white">
-              Estimated value:{' '}
-              <span className="font-semibold text-elec-yellow">
-                £{project.estimated_value.toLocaleString()}
-              </span>
-            </p>
-          )}
         </motion.div>
 
-        {/* Progress Bar */}
-        {totalTasks > 0 && (
-          <motion.div variants={itemVariants} className="px-1">
-            <div className="flex items-center justify-between mb-1.5">
-              <span className="text-sm font-medium text-white">
-                {doneTasks} of {totalTasks} done
-              </span>
-              <span className="text-sm font-bold text-elec-yellow">{progress}%</span>
+        {/* Smart suggestion — only renders when there's unbilled time worth flagging */}
+        {timeSummary.unbilledSec > 0 && project.status !== 'completed' && (
+          <motion.div
+            variants={itemVariants}
+            className="rounded-xl bg-elec-yellow/[0.08] border border-elec-yellow/30 px-3.5 py-2.5 flex items-center gap-3"
+          >
+            <Sparkles className="h-4 w-4 text-elec-yellow shrink-0" />
+            <div className="flex-1 min-w-0">
+              <p className="text-[13px] font-medium text-white leading-snug">
+                {formatHoursMinutes(timeSummary.unbilledSec)} unbilled — worth{' '}
+                {formatGBP(timeSummary.unbilledValue)}
+              </p>
+              <p className="text-[11.5px] text-white/55 leading-snug">
+                Ask Mate to draft an invoice for these sessions.
+              </p>
             </div>
-            <div className="h-2.5 bg-white/10 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-elec-yellow rounded-full transition-all duration-500"
-                style={{ width: `${progress}%` }}
-              />
-            </div>
+            <Button
+              onClick={askMateToInvoiceUnbilled}
+              className="bg-elec-yellow hover:bg-elec-yellow/90 text-black h-9 px-3 text-[12px] font-semibold rounded-lg shrink-0"
+            >
+              Draft invoice
+            </Button>
           </motion.div>
         )}
 
@@ -618,14 +816,14 @@ const ProjectDetailPage = () => {
             onOpenChange={() => toggleSection('siteVisits')}
           >
             <CollapsibleTrigger asChild>
-              <button className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation h-14 active:bg-white/[0.06] transition-colors">
+              <button className="w-full flex items-center justify-between px-3.5 rounded-xl bg-white/[0.05] border border-white/[0.10] hover:bg-white/[0.08] hover:border-white/[0.18] touch-manipulation h-12 active:bg-white/[0.10] transition-colors group">
                 <div className="flex items-center gap-3">
                   <HardHat className="h-5 w-5 text-sky-400" />
-                  <span className="text-[15px] font-bold text-white">Site Visits</span>
+                  <span className="text-[14px] font-semibold text-white">Site Visits</span>
                 </div>
                 <div className="flex items-center gap-2">
                   {siteVisits.length > 0 && (
-                    <span className="text-[12px] font-bold text-white bg-white/10 px-2.5 py-0.5 rounded-full">
+                    <span className="text-[11px] font-semibold text-white/70 bg-white/[0.10] px-2 py-0.5 rounded-full tabular-nums">
                       {siteVisits.length}
                     </span>
                   )}
@@ -635,14 +833,14 @@ const ProjectDetailPage = () => {
                       e.stopPropagation();
                       setLinkType('siteVisit');
                     }}
-                    className="text-[12px] font-medium text-elec-yellow"
+                    className="text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow px-2 py-1 rounded-md hover:bg-elec-yellow/[0.08] transition-colors"
                   >
                     + Link
                   </span>
                   {openSections.has('siteVisits') ? (
-                    <ChevronUp className="h-4 w-4 text-white" />
+                    <ChevronUp className="h-4 w-4 text-white/45" />
                   ) : (
-                    <ChevronDown className="h-4 w-4 text-white" />
+                    <ChevronDown className="h-4 w-4 text-white/45" />
                   )}
                 </div>
               </button>
@@ -716,21 +914,21 @@ const ProjectDetailPage = () => {
         <motion.div variants={itemVariants}>
           <Collapsible open={openSections.has('tasks')} onOpenChange={() => toggleSection('tasks')}>
             <CollapsibleTrigger asChild>
-              <button className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation h-14 active:bg-white/[0.06] transition-colors">
+              <button className="w-full flex items-center justify-between px-3.5 rounded-xl bg-white/[0.05] border border-white/[0.10] hover:bg-white/[0.08] hover:border-white/[0.18] touch-manipulation h-12 active:bg-white/[0.10] transition-colors group">
                 <div className="flex items-center gap-3">
                   <ClipboardCheck className="h-5 w-5 text-amber-400" />
-                  <span className="text-[15px] font-bold text-white">Tasks</span>
+                  <span className="text-[14px] font-semibold text-white">Tasks</span>
                 </div>
                 <div className="flex items-center gap-2">
                   {regularTasks.length > 0 && (
-                    <span className="text-[12px] font-bold text-white bg-white/10 px-2.5 py-0.5 rounded-full">
+                    <span className="text-[11px] font-semibold text-white/70 bg-white/[0.10] px-2 py-0.5 rounded-full tabular-nums">
                       {regularTasks.length}
                     </span>
                   )}
                   {openSections.has('tasks') ? (
-                    <ChevronUp className="h-4 w-4 text-white" />
+                    <ChevronUp className="h-4 w-4 text-white/45" />
                   ) : (
-                    <ChevronDown className="h-4 w-4 text-white" />
+                    <ChevronDown className="h-4 w-4 text-white/45" />
                   )}
                 </div>
               </button>
@@ -832,14 +1030,14 @@ const ProjectDetailPage = () => {
             onOpenChange={() => toggleSection('quotes')}
           >
             <CollapsibleTrigger asChild>
-              <button className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation h-14 active:bg-white/[0.06] transition-colors">
+              <button className="w-full flex items-center justify-between px-3.5 rounded-xl bg-white/[0.05] border border-white/[0.10] hover:bg-white/[0.08] hover:border-white/[0.18] touch-manipulation h-12 active:bg-white/[0.10] transition-colors group">
                 <div className="flex items-center gap-3">
                   <FileText className="h-5 w-5 text-emerald-400" />
-                  <span className="text-[15px] font-bold text-white">Quotes</span>
+                  <span className="text-[14px] font-semibold text-white">Quotes</span>
                 </div>
                 <div className="flex items-center gap-2">
                   {quotes.length > 0 && (
-                    <span className="text-[12px] font-bold text-white bg-white/10 px-2.5 py-0.5 rounded-full">
+                    <span className="text-[11px] font-semibold text-white/70 bg-white/[0.10] px-2 py-0.5 rounded-full tabular-nums">
                       {quotes.length}
                     </span>
                   )}
@@ -849,14 +1047,14 @@ const ProjectDetailPage = () => {
                       e.stopPropagation();
                       setLinkType('quote');
                     }}
-                    className="text-[12px] font-medium text-elec-yellow"
+                    className="text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow px-2 py-1 rounded-md hover:bg-elec-yellow/[0.08] transition-colors"
                   >
                     + Link
                   </span>
                   {openSections.has('quotes') ? (
-                    <ChevronUp className="h-4 w-4 text-white" />
+                    <ChevronUp className="h-4 w-4 text-white/45" />
                   ) : (
-                    <ChevronDown className="h-4 w-4 text-white" />
+                    <ChevronDown className="h-4 w-4 text-white/45" />
                   )}
                 </div>
               </button>
@@ -916,14 +1114,14 @@ const ProjectDetailPage = () => {
             onOpenChange={() => toggleSection('invoices')}
           >
             <CollapsibleTrigger asChild>
-              <button className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation h-14 active:bg-white/[0.06] transition-colors">
+              <button className="w-full flex items-center justify-between px-3.5 rounded-xl bg-white/[0.05] border border-white/[0.10] hover:bg-white/[0.08] hover:border-white/[0.18] touch-manipulation h-12 active:bg-white/[0.10] transition-colors group">
                 <div className="flex items-center gap-3">
                   <PoundSterling className="h-5 w-5 text-blue-400" />
-                  <span className="text-[15px] font-bold text-white">Invoices</span>
+                  <span className="text-[14px] font-semibold text-white">Invoices</span>
                 </div>
                 <div className="flex items-center gap-2">
                   {invoices.length > 0 && (
-                    <span className="text-[12px] font-bold text-white bg-white/10 px-2.5 py-0.5 rounded-full">
+                    <span className="text-[11px] font-semibold text-white/70 bg-white/[0.10] px-2 py-0.5 rounded-full tabular-nums">
                       {invoices.length}
                     </span>
                   )}
@@ -933,14 +1131,14 @@ const ProjectDetailPage = () => {
                       e.stopPropagation();
                       setLinkType('invoice');
                     }}
-                    className="text-[12px] font-medium text-elec-yellow"
+                    className="text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow px-2 py-1 rounded-md hover:bg-elec-yellow/[0.08] transition-colors"
                   >
                     + Link
                   </span>
                   {openSections.has('invoices') ? (
-                    <ChevronUp className="h-4 w-4 text-white" />
+                    <ChevronUp className="h-4 w-4 text-white/45" />
                   ) : (
-                    <ChevronDown className="h-4 w-4 text-white" />
+                    <ChevronDown className="h-4 w-4 text-white/45" />
                   )}
                 </div>
               </button>
@@ -1000,14 +1198,14 @@ const ProjectDetailPage = () => {
             onOpenChange={() => toggleSection('certificates')}
           >
             <CollapsibleTrigger asChild>
-              <button className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation h-14 active:bg-white/[0.06] transition-colors">
+              <button className="w-full flex items-center justify-between px-3.5 rounded-xl bg-white/[0.05] border border-white/[0.10] hover:bg-white/[0.08] hover:border-white/[0.18] touch-manipulation h-12 active:bg-white/[0.10] transition-colors group">
                 <div className="flex items-center gap-3">
                   <Shield className="h-5 w-5 text-amber-400" />
-                  <span className="text-[15px] font-bold text-white">Certificates</span>
+                  <span className="text-[14px] font-semibold text-white">Certificates</span>
                 </div>
                 <div className="flex items-center gap-2">
                   {certificates.length > 0 && (
-                    <span className="text-[12px] font-bold text-white bg-white/10 px-2.5 py-0.5 rounded-full">
+                    <span className="text-[11px] font-semibold text-white/70 bg-white/[0.10] px-2 py-0.5 rounded-full tabular-nums">
                       {certificates.length}
                     </span>
                   )}
@@ -1017,14 +1215,14 @@ const ProjectDetailPage = () => {
                       e.stopPropagation();
                       setLinkType('certificate');
                     }}
-                    className="text-[12px] font-medium text-elec-yellow"
+                    className="text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow px-2 py-1 rounded-md hover:bg-elec-yellow/[0.08] transition-colors"
                   >
                     + Link
                   </span>
                   {openSections.has('certificates') ? (
-                    <ChevronUp className="h-4 w-4 text-white" />
+                    <ChevronUp className="h-4 w-4 text-white/45" />
                   ) : (
-                    <ChevronDown className="h-4 w-4 text-white" />
+                    <ChevronDown className="h-4 w-4 text-white/45" />
                   )}
                 </div>
               </button>
@@ -1077,14 +1275,14 @@ const ProjectDetailPage = () => {
         <motion.div variants={itemVariants}>
           <Collapsible open={openSections.has('rams')} onOpenChange={() => toggleSection('rams')}>
             <CollapsibleTrigger asChild>
-              <button className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation h-14 active:bg-white/[0.06] transition-colors">
+              <button className="w-full flex items-center justify-between px-3.5 rounded-xl bg-white/[0.05] border border-white/[0.10] hover:bg-white/[0.08] hover:border-white/[0.18] touch-manipulation h-12 active:bg-white/[0.10] transition-colors group">
                 <div className="flex items-center gap-3">
                   <Zap className="h-5 w-5 text-purple-400" />
-                  <span className="text-[15px] font-bold text-white">RAMS</span>
+                  <span className="text-[14px] font-semibold text-white">RAMS</span>
                 </div>
                 <div className="flex items-center gap-2">
                   {rams.length > 0 && (
-                    <span className="text-[12px] font-bold text-white bg-white/10 px-2.5 py-0.5 rounded-full">
+                    <span className="text-[11px] font-semibold text-white/70 bg-white/[0.10] px-2 py-0.5 rounded-full tabular-nums">
                       {rams.length}
                     </span>
                   )}
@@ -1094,14 +1292,14 @@ const ProjectDetailPage = () => {
                       e.stopPropagation();
                       setLinkType('rams');
                     }}
-                    className="text-[12px] font-medium text-elec-yellow"
+                    className="text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow px-2 py-1 rounded-md hover:bg-elec-yellow/[0.08] transition-colors"
                   >
                     + Link
                   </span>
                   {openSections.has('rams') ? (
-                    <ChevronUp className="h-4 w-4 text-white" />
+                    <ChevronUp className="h-4 w-4 text-white/45" />
                   ) : (
-                    <ChevronDown className="h-4 w-4 text-white" />
+                    <ChevronDown className="h-4 w-4 text-white/45" />
                   )}
                 </div>
               </button>
@@ -1149,14 +1347,14 @@ const ProjectDetailPage = () => {
             onOpenChange={() => toggleSection('circuitDesign')}
           >
             <CollapsibleTrigger asChild>
-              <button className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation h-14 active:bg-white/[0.06] transition-colors">
+              <button className="w-full flex items-center justify-between px-3.5 rounded-xl bg-white/[0.05] border border-white/[0.10] hover:bg-white/[0.08] hover:border-white/[0.18] touch-manipulation h-12 active:bg-white/[0.10] transition-colors group">
                 <div className="flex items-center gap-3">
                   <Zap className="h-5 w-5 text-purple-400" />
-                  <span className="text-[15px] font-bold text-white">Circuit Design</span>
+                  <span className="text-[14px] font-semibold text-white">Circuit Design</span>
                 </div>
                 <div className="flex items-center gap-2">
                   {circuitDesigns.length > 0 && (
-                    <span className="text-[12px] font-bold text-white bg-white/10 px-2.5 py-0.5 rounded-full">
+                    <span className="text-[11px] font-semibold text-white/70 bg-white/[0.10] px-2 py-0.5 rounded-full tabular-nums">
                       {circuitDesigns.length}
                     </span>
                   )}
@@ -1166,14 +1364,14 @@ const ProjectDetailPage = () => {
                       e.stopPropagation();
                       setLinkType('circuitDesign');
                     }}
-                    className="text-[12px] font-medium text-elec-yellow"
+                    className="text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow px-2 py-1 rounded-md hover:bg-elec-yellow/[0.08] transition-colors"
                   >
                     + Link
                   </span>
                   {openSections.has('circuitDesign') ? (
-                    <ChevronUp className="h-4 w-4 text-white" />
+                    <ChevronUp className="h-4 w-4 text-white/45" />
                   ) : (
-                    <ChevronDown className="h-4 w-4 text-white" />
+                    <ChevronDown className="h-4 w-4 text-white/45" />
                   )}
                 </div>
               </button>
@@ -1223,14 +1421,14 @@ const ProjectDetailPage = () => {
             onOpenChange={() => toggleSection('costEstimate')}
           >
             <CollapsibleTrigger asChild>
-              <button className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation h-14 active:bg-white/[0.06] transition-colors">
+              <button className="w-full flex items-center justify-between px-3.5 rounded-xl bg-white/[0.05] border border-white/[0.10] hover:bg-white/[0.08] hover:border-white/[0.18] touch-manipulation h-12 active:bg-white/[0.10] transition-colors group">
                 <div className="flex items-center gap-3">
                   <PoundSterling className="h-5 w-5 text-green-400" />
-                  <span className="text-[15px] font-bold text-white">Cost Estimates</span>
+                  <span className="text-[14px] font-semibold text-white">Cost Estimates</span>
                 </div>
                 <div className="flex items-center gap-2">
                   {costEstimates.length > 0 && (
-                    <span className="text-[12px] font-bold text-white bg-white/10 px-2.5 py-0.5 rounded-full">
+                    <span className="text-[11px] font-semibold text-white/70 bg-white/[0.10] px-2 py-0.5 rounded-full tabular-nums">
                       {costEstimates.length}
                     </span>
                   )}
@@ -1240,14 +1438,14 @@ const ProjectDetailPage = () => {
                       e.stopPropagation();
                       setLinkType('costEstimate');
                     }}
-                    className="text-[12px] font-medium text-elec-yellow"
+                    className="text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow px-2 py-1 rounded-md hover:bg-elec-yellow/[0.08] transition-colors"
                   >
                     + Link
                   </span>
                   {openSections.has('costEstimate') ? (
-                    <ChevronUp className="h-4 w-4 text-white" />
+                    <ChevronUp className="h-4 w-4 text-white/45" />
                   ) : (
-                    <ChevronDown className="h-4 w-4 text-white" />
+                    <ChevronDown className="h-4 w-4 text-white/45" />
                   )}
                 </div>
               </button>
@@ -1295,14 +1493,14 @@ const ProjectDetailPage = () => {
             onOpenChange={() => toggleSection('floorPlan')}
           >
             <CollapsibleTrigger asChild>
-              <button className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation h-14 active:bg-white/[0.06] transition-colors">
+              <button className="w-full flex items-center justify-between px-3.5 rounded-xl bg-white/[0.05] border border-white/[0.10] hover:bg-white/[0.08] hover:border-white/[0.18] touch-manipulation h-12 active:bg-white/[0.10] transition-colors group">
                 <div className="flex items-center gap-3">
                   <LayoutGrid className="h-5 w-5 text-cyan-400" />
-                  <span className="text-[15px] font-bold text-white">Floor Plans</span>
+                  <span className="text-[14px] font-semibold text-white">Floor Plans</span>
                 </div>
                 <div className="flex items-center gap-2">
                   {floorPlans.length > 0 && (
-                    <span className="text-[12px] font-bold text-white bg-white/10 px-2.5 py-0.5 rounded-full">
+                    <span className="text-[11px] font-semibold text-white/70 bg-white/[0.10] px-2 py-0.5 rounded-full tabular-nums">
                       {floorPlans.length}
                     </span>
                   )}
@@ -1312,14 +1510,14 @@ const ProjectDetailPage = () => {
                       e.stopPropagation();
                       setLinkType('floorPlan');
                     }}
-                    className="text-[12px] font-medium text-elec-yellow"
+                    className="text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow px-2 py-1 rounded-md hover:bg-elec-yellow/[0.08] transition-colors"
                   >
                     + Link
                   </span>
                   {openSections.has('floorPlan') ? (
-                    <ChevronUp className="h-4 w-4 text-white" />
+                    <ChevronUp className="h-4 w-4 text-white/45" />
                   ) : (
-                    <ChevronDown className="h-4 w-4 text-white" />
+                    <ChevronDown className="h-4 w-4 text-white/45" />
                   )}
                 </div>
               </button>
@@ -1373,7 +1571,7 @@ const ProjectDetailPage = () => {
                 <button className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-orange-500/20 touch-manipulation h-14 active:bg-white/[0.06] transition-colors">
                   <div className="flex items-center gap-3">
                     <AlertTriangle className="h-5 w-5 text-orange-400" />
-                    <span className="text-[15px] font-bold text-white">Snagging</span>
+                    <span className="text-[14px] font-semibold text-white">Snagging</span>
                     {openSnags > 0 && (
                       <span className="text-[11px] font-medium bg-orange-500/20 text-orange-400 px-2 py-0.5 rounded-full">
                         {openSnags} open
@@ -1381,13 +1579,13 @@ const ProjectDetailPage = () => {
                     )}
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-[12px] font-bold text-white bg-white/10 px-2.5 py-0.5 rounded-full">
+                    <span className="text-[11px] font-semibold text-white/70 bg-white/[0.10] px-2 py-0.5 rounded-full tabular-nums">
                       {snaggingTasks.length}
                     </span>
                     {openSections.has('snagging') ? (
-                      <ChevronUp className="h-4 w-4 text-white" />
+                      <ChevronUp className="h-4 w-4 text-white/45" />
                     ) : (
-                      <ChevronDown className="h-4 w-4 text-white" />
+                      <ChevronDown className="h-4 w-4 text-white/45" />
                     )}
                   </div>
                 </button>
@@ -1457,14 +1655,14 @@ const ProjectDetailPage = () => {
             onOpenChange={() => toggleSection('photos')}
           >
             <CollapsibleTrigger asChild>
-              <button className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation h-14 active:bg-white/[0.06] transition-colors">
+              <button className="w-full flex items-center justify-between px-3.5 rounded-xl bg-white/[0.05] border border-white/[0.10] hover:bg-white/[0.08] hover:border-white/[0.18] touch-manipulation h-12 active:bg-white/[0.10] transition-colors group">
                 <div className="flex items-center gap-3">
                   <Camera className="h-5 w-5 text-sky-400" />
-                  <span className="text-[15px] font-bold text-white">Photos</span>
+                  <span className="text-[14px] font-semibold text-white">Photos</span>
                 </div>
                 <div className="flex items-center gap-2">
                   {projectPhotos.length > 0 && (
-                    <span className="text-[12px] font-bold text-white bg-white/10 px-2.5 py-0.5 rounded-full">
+                    <span className="text-[11px] font-semibold text-white/70 bg-white/[0.10] px-2 py-0.5 rounded-full tabular-nums">
                       {projectPhotos.length}
                     </span>
                   )}
@@ -1474,14 +1672,14 @@ const ProjectDetailPage = () => {
                       e.stopPropagation();
                       setPhotoSheetOpen(true);
                     }}
-                    className="text-[12px] font-medium text-elec-yellow"
+                    className="text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow px-2 py-1 rounded-md hover:bg-elec-yellow/[0.08] transition-colors"
                   >
                     + Add
                   </span>
                   {openSections.has('photos') ? (
-                    <ChevronUp className="h-4 w-4 text-white" />
+                    <ChevronUp className="h-4 w-4 text-white/45" />
                   ) : (
-                    <ChevronDown className="h-4 w-4 text-white" />
+                    <ChevronDown className="h-4 w-4 text-white/45" />
                   )}
                 </div>
               </button>
@@ -1557,14 +1755,14 @@ const ProjectDetailPage = () => {
             onOpenChange={() => toggleSection('documents')}
           >
             <CollapsibleTrigger asChild>
-              <button className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation h-14 active:bg-white/[0.06] transition-colors">
+              <button className="w-full flex items-center justify-between px-3.5 rounded-xl bg-white/[0.05] border border-white/[0.10] hover:bg-white/[0.08] hover:border-white/[0.18] touch-manipulation h-12 active:bg-white/[0.10] transition-colors group">
                 <div className="flex items-center gap-3">
                   <FileText className="h-5 w-5 text-amber-400" />
-                  <span className="text-[15px] font-bold text-white">Documents</span>
+                  <span className="text-[14px] font-semibold text-white">Documents</span>
                 </div>
                 <div className="flex items-center gap-2">
                   {projectDocuments.length > 0 && (
-                    <span className="text-[12px] font-bold text-white bg-white/10 px-2.5 py-0.5 rounded-full">
+                    <span className="text-[11px] font-semibold text-white/70 bg-white/[0.10] px-2 py-0.5 rounded-full tabular-nums">
                       {projectDocuments.length}
                     </span>
                   )}
@@ -1574,14 +1772,14 @@ const ProjectDetailPage = () => {
                       e.stopPropagation();
                       setDocSheetOpen(true);
                     }}
-                    className="text-[12px] font-medium text-elec-yellow"
+                    className="text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow px-2 py-1 rounded-md hover:bg-elec-yellow/[0.08] transition-colors"
                   >
                     + Add
                   </span>
                   {openSections.has('documents') ? (
-                    <ChevronUp className="h-4 w-4 text-white" />
+                    <ChevronUp className="h-4 w-4 text-white/45" />
                   ) : (
-                    <ChevronDown className="h-4 w-4 text-white" />
+                    <ChevronDown className="h-4 w-4 text-white/45" />
                   )}
                 </div>
               </button>
@@ -1906,6 +2104,34 @@ const ProjectDetailPage = () => {
           />
         </>
       )}
+
+      {/* AI sparkle FAB — always-on entry to Mate, with project context */}
+      <button
+        type="button"
+        onClick={askMateAboutProject}
+        aria-label="Ask Mate about this project"
+        className="fixed right-4 bottom-[max(env(safe-area-inset-bottom),16px)] sm:bottom-6 z-40 h-14 w-14 rounded-full bg-gradient-to-br from-elec-yellow to-amber-500 text-black shadow-xl shadow-elec-yellow/30 flex items-center justify-center active:scale-[0.96] touch-manipulation"
+      >
+        <Sparkles className="h-6 w-6" strokeWidth={2.4} />
+      </button>
+
+      {/* Mate assistant — context-loaded with this project on tap */}
+      <Assistant
+        isOpen={aiOpen}
+        onClose={() => {
+          setAiOpen(false);
+          setAiPrompt(undefined);
+        }}
+        initialPrompt={aiPrompt}
+        currentTasks={tasks}
+        onSave={saveTask}
+        onUpdate={(taskId, input) => updateTask(taskId, input)}
+        onMarkDone={markDone}
+        onDelete={deleteTask}
+        onCompleteProject={async () => {
+          await completeProject();
+        }}
+      />
 
       {linkType && (
         <LinkEntitySheet

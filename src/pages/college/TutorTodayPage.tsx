@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { PageFrame, itemVariants, containerVariants } from '@/components/college/primitives';
@@ -13,6 +14,8 @@ import {
 import { ShowMePanel } from '@/components/college/compliance/ShowMePanel';
 import { useMarkingQueue } from '@/hooks/useMarkingQueue';
 import { useUnifiedInbox } from '@/hooks/useUnifiedInbox';
+import { AddPastoralNoteDialog } from '@/components/college/dialogs/AddPastoralNoteDialog';
+import { MarkAttendanceSheet } from '@/components/college/sheets/MarkAttendanceSheet';
 import { cn } from '@/lib/utils';
 
 /* ==========================================================================
@@ -83,6 +86,18 @@ export function TutorTodayBody({
   const { stats: markingStats } = useMarkingQueue();
   const { stats: inboxStats } = useUnifiedInbox();
   const navigate = useNavigate();
+
+  // Quick actions — open inline sheets pre-filled with the chosen learner so
+  // the tutor never has to navigate away to add a pastoral note or take a
+  // single-learner register entry.
+  const [pastoralNoteFor, setPastoralNoteFor] = useState<{
+    id: string;
+    name: string;
+  } | null>(null);
+  const [attendanceFor, setAttendanceFor] = useState<{
+    id: string;
+    name: string;
+  } | null>(null);
 
   const firstName = data?.core.staff_name?.split(' ')[0] ?? null;
   const todayLong = new Date().toLocaleDateString('en-GB', {
@@ -359,6 +374,12 @@ export function TutorTodayBody({
                 row={r}
                 onOpenLearner={() => navigate(`/college/students/${r.student_id}`)}
                 onOpenEvidence={() => navigate(`/college/students/${r.student_id}/evidence`)}
+                onAddNote={() =>
+                  setPastoralNoteFor({ id: r.student_id, name: r.student_name })
+                }
+                onMarkAttendance={() =>
+                  setAttendanceFor({ id: r.student_id, name: r.student_name })
+                }
               />
             ))}
           </Section>
@@ -380,6 +401,32 @@ export function TutorTodayBody({
           </Section>
         </motion.div>
       )}
+
+      {/* Quick-action sheets — pre-filled with the chosen learner */}
+      <AddPastoralNoteDialog
+        open={pastoralNoteFor !== null}
+        onOpenChange={(o) => {
+          if (!o) setPastoralNoteFor(null);
+        }}
+        studentId={pastoralNoteFor?.id ?? ''}
+        studentName={pastoralNoteFor?.name ?? ''}
+        onSaved={() => {
+          setPastoralNoteFor(null);
+          void refresh();
+        }}
+      />
+      <MarkAttendanceSheet
+        open={attendanceFor !== null}
+        onOpenChange={(o) => {
+          if (!o) setAttendanceFor(null);
+        }}
+        studentId={attendanceFor?.id ?? ''}
+        studentName={attendanceFor?.name ?? ''}
+        onSaved={() => {
+          setAttendanceFor(null);
+          void refresh();
+        }}
+      />
     </>
   );
 }
@@ -659,10 +706,14 @@ function AtRiskRow({
   row,
   onOpenLearner,
   onOpenEvidence,
+  onAddNote,
+  onMarkAttendance,
 }: {
   row: TodayAtRiskLearner;
   onOpenLearner: () => void;
   onOpenEvidence: () => void;
+  onAddNote: () => void;
+  onMarkAttendance: () => void;
 }) {
   return (
     <li className="px-4 sm:px-5 py-3 hover:bg-white/[0.02] transition-colors">
@@ -690,7 +741,21 @@ function AtRiskRow({
             <div className="mt-0.5 text-[11.5px] text-white leading-snug">{row.top_factor}</div>
           )}
         </div>
-        <div className="flex items-center gap-1.5 shrink-0">
+        <div className="flex items-center gap-1.5 shrink-0 flex-wrap">
+          <button
+            type="button"
+            onClick={onMarkAttendance}
+            className="inline-flex items-center h-7 px-2.5 rounded-md text-[11px] font-semibold text-emerald-200 bg-emerald-500/[0.10] border border-emerald-300/30 hover:bg-emerald-500/[0.18] transition-colors touch-manipulation"
+          >
+            Register
+          </button>
+          <button
+            type="button"
+            onClick={onAddNote}
+            className="inline-flex items-center h-7 px-2.5 rounded-md text-[11px] font-semibold text-amber-200 bg-amber-500/[0.10] border border-amber-300/30 hover:bg-amber-500/[0.18] transition-colors touch-manipulation"
+          >
+            + Note
+          </button>
           <button
             type="button"
             onClick={onOpenEvidence}

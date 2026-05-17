@@ -5,9 +5,12 @@
 
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link as LinkIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import { useToast } from '@/hooks/use-toast';
+import { useCollegeEmployers } from '@/hooks/useCollegeEmployers';
+import { EmployerLinkSheet } from '@/components/college/sheets/EmployerLinkSheet';
 import {
   SectionHeader,
   ListCard,
@@ -93,6 +96,13 @@ export function EmployerPortalSection() {
 
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedEmployer, setExpandedEmployer] = useState<string | null>(null);
+  const [linkSheetEmployerId, setLinkSheetEmployerId] = useState<string | null>(null);
+
+  const { employers: registeredEmployers } = useCollegeEmployers();
+  const registeredMap = useMemo(
+    () => new Map(registeredEmployers.map((e) => [e.id, e])),
+    [registeredEmployers]
+  );
 
   const now = useMemo(() => new Date(), []);
 
@@ -182,7 +192,9 @@ export function EmployerPortalSection() {
           : 0;
       const totalOtjRequired = apprentices.reduce((s, a) => s + a.otjTarget, 0);
       const totalOtjCompleted = apprentices.reduce((s, a) => s + a.otjCompleted, 0);
-      const label = id.length > 8 ? `Employer ${id.slice(0, 8)}` : `Employer ${id}`;
+      const registered = registeredMap.get(id);
+      const label = registered?.company_name
+        ?? (id.length > 8 ? `Employer ${id.slice(0, 8)}` : `Employer ${id}`);
 
       groups.push({
         id,
@@ -196,7 +208,7 @@ export function EmployerPortalSection() {
     });
 
     return groups.sort((a, b) => b.apprentices.length - a.apprentices.length);
-  }, [students, courses, attendance, epaRecords, ilps, now]);
+  }, [students, courses, attendance, epaRecords, ilps, now, registeredMap]);
 
   /* ---------- KPI calculations ---------- */
 
@@ -374,7 +386,19 @@ export function EmployerPortalSection() {
                         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                         className="overflow-hidden"
                       >
-                        <div className="mt-2 ml-4 sm:ml-6">
+                        <div className="mt-2 ml-4 sm:ml-6 space-y-3">
+                          <div className="flex items-center justify-end">
+                            <button
+                              type="button"
+                              onClick={() => setLinkSheetEmployerId(employer.id)}
+                              className="inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-elec-yellow/[0.10] border border-elec-yellow/40 text-elec-yellow text-[11.5px] font-semibold hover:bg-elec-yellow/[0.18] touch-manipulation"
+                            >
+                              <LinkIcon className="h-3 w-3" />
+                              {registeredMap.has(employer.id)
+                                ? 'Manage share link'
+                                : 'Set up share link'}
+                            </button>
+                          </div>
                           <ListCard>
                             {employer.apprentices.map((a) => {
                               const epaTone: Tone = a.epaStatus === 'Complete'
@@ -555,6 +579,24 @@ export function EmployerPortalSection() {
           </div>
         )}
       </motion.section>
+
+      <EmployerLinkSheet
+        open={linkSheetEmployerId !== null}
+        onOpenChange={(o) => {
+          if (!o) setLinkSheetEmployerId(null);
+        }}
+        employerId={linkSheetEmployerId ?? ''}
+        presumedLabel={
+          linkSheetEmployerId
+            ? employers.find((e) => e.id === linkSheetEmployerId)?.label
+            : undefined
+        }
+        apprenticeCount={
+          linkSheetEmployerId
+            ? employers.find((e) => e.id === linkSheetEmployerId)?.apprentices.length
+            : undefined
+        }
+      />
     </motion.div>
   );
 }

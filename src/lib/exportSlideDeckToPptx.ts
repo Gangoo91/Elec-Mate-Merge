@@ -53,18 +53,38 @@ const FONT_HEADING = 'Calibri';
 
 export async function exportSlideDeckToPptx(opts: ExportOptions): Promise<void> {
   const { deck, lessonTitle, brand, theme = 'dark' } = opts;
-  const C = theme === 'dark' ? DARK : LIGHT;
+  // Build the palette, overriding accent with the college's brand colour
+  // when one is configured (settings.brand_color).
+  const basePal = theme === 'dark' ? DARK : LIGHT;
+  const C: Pal = brand?.accent_color
+    ? { ...basePal, accent: brand.accent_color }
+    : basePal;
 
   const pptx = new PptxGenJS();
   pptx.layout = 'LAYOUT_WIDE'; // 13.333 × 7.5 inches, 16:9
   pptx.title = lessonTitle;
   pptx.author = brand?.name ?? 'Elec-Mate';
+  pptx.company = brand?.name ?? 'Elec-Mate';
 
-  // Master slide — sets default background + footer.
+  // Master slide — sets default background, top accent strip + footer.
+  const footerText = brand?.name
+    ? `${brand.name} · ${lessonTitle}`
+    : lessonTitle;
   pptx.defineSlideMaster({
     title: 'MASTER',
     background: { color: C.bg },
     objects: [
+      // Top accent strip in college brand colour
+      {
+        rect: {
+          x: 0,
+          y: 0,
+          w: 13.333,
+          h: 0.08,
+          fill: { color: C.accent },
+        },
+      },
+      // Footer strip
       {
         rect: {
           x: 0,
@@ -76,7 +96,7 @@ export async function exportSlideDeckToPptx(opts: ExportOptions): Promise<void> 
       },
       {
         text: {
-          text: lessonTitle,
+          text: footerText,
           options: {
             x: 0.4,
             y: 7.3,
@@ -179,6 +199,20 @@ function renderSlide(ps: PptxGenJS.Slide, slide: Slide, C: Pal, brand: CollegeBr
   // Per-kind body.
   switch (slide.kind) {
     case 'title':
+      // College name eyebrow over the title (replaces the generic "Title" label)
+      if (brand?.name) {
+        ps.addText(brand.name.toUpperCase(), {
+          x: 0.6,
+          y: 1.7,
+          w: 12,
+          h: 0.35,
+          fontFace: FONT,
+          fontSize: 14,
+          color: C.accent,
+          bold: true,
+          charSpacing: 6,
+        });
+      }
       addTextHeading(ps, slide.heading ?? '', C, { y: 2.2, fontSize: 54 });
       if (slide.subtitle) addBody(ps, slide.subtitle, C, { y: 4.5, fontSize: 22 });
       if (slide.duration_label)

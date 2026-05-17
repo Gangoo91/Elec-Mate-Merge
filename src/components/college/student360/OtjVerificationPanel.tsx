@@ -339,6 +339,25 @@ function PendingRow({
         </p>
       )}
 
+      {/* Employer attestation comment — surfaces concerns/praise the
+          supervisor flagged at sign-off so the tutor sees it without
+          digging. Only shown for employer-attested rows. */}
+      {row.source_kind === 'employer_attested' && row.attestation_comment && (
+        <div className="mt-2 rounded-lg border border-purple-400/30 bg-purple-500/[0.06] px-3 py-2">
+          <div className="text-[9.5px] font-medium uppercase tracking-[0.16em] text-purple-200/85">
+            Employer comment
+            {row.attested_by_name && (
+              <span className="ml-1.5 normal-case text-white/55 tracking-normal">
+                — {row.attested_by_name}
+              </span>
+            )}
+          </div>
+          <p className="mt-1 text-[12px] text-white/90 leading-snug whitespace-pre-wrap">
+            {row.attestation_comment}
+          </p>
+        </div>
+      )}
+
       {/* AI verdict — pre-grade so the tutor knows what to spot-check. */}
       {(verdictLoading || verdict || verdictError) && (
         <div className="mt-2.5">

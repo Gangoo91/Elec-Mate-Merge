@@ -62,8 +62,12 @@ export const SiteVisitScopeStep = ({
   return (
     <div className="space-y-4">
       <div>
-        <h2 className="text-lg font-bold text-white">Scope of Works</h2>
-        <p className="text-sm text-white mt-1">Review and edit the scope before generating</p>
+        <h2 className="text-[18px] font-semibold tracking-tight text-white sm:text-[20px]">
+          Scope of works
+        </h2>
+        <p className="mt-1 text-[12.5px] text-white/65">
+          Review and edit the scope before generating.
+        </p>
       </div>
 
       <ScopeOfWorksEditor

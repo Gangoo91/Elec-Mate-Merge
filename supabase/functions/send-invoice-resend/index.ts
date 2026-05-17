@@ -110,9 +110,19 @@ const handler = async (req: Request): Promise<Response> => {
     // STEP 3: Parse and validate request
     // ========================================================================
     let invoiceId: string;
+    let customSubject: string | undefined;
+    let customMessage: string | undefined;
     try {
       const body = await req.json();
       invoiceId = body.invoiceId;
+      customSubject =
+        typeof body.customSubject === 'string' && body.customSubject.trim()
+          ? body.customSubject.trim()
+          : undefined;
+      customMessage =
+        typeof body.customMessage === 'string' && body.customMessage.trim()
+          ? body.customMessage.trim()
+          : undefined;
     } catch (e) {
       console.error('❌ Failed to parse request body:', e);
       throw new Error('Invalid request format.');
@@ -393,6 +403,8 @@ const handler = async (req: Request): Promise<Response> => {
       notes: invoice.invoice_notes || null,
       jobTitle,
       trackingPixelUrl: `${Deno.env.get('SUPABASE_URL')}/functions/v1/email-open?type=invoice_send&id=${invoiceId}`,
+      customSubject,
+      customMessage,
     });
     const emailHtml = emailPayload.html;
 
@@ -407,7 +419,7 @@ const handler = async (req: Request): Promise<Response> => {
       companyEmail: companyProfile?.company_email,
       userEmail,
     });
-    const subject = `Invoice ${invoiceNumber} - ${companyName}`;
+    const subject = customSubject || `Invoice ${invoiceNumber} - ${companyName}`;
 
     console.log(`📧 Sending to: ${clientEmail}`);
     console.log(`📧 From: ${sender.from}`);

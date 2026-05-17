@@ -366,10 +366,10 @@ self.addEventListener('notificationclick', (event: NotificationEvent) => {
       url =
         role === 'employer'
           ? `/employer/recruitment?tab=applications&id=${data.applicationId || ''}`
-          : `/electrician/jobs?tab=applications&id=${data.applicationId || ''}`;
+          : `/electrician/job-vacancies?tab=applications&id=${data.applicationId || ''}`;
       break;
     case 'vacancy':
-      url = `/electrician/jobs?vacancy=${data.vacancyId || ''}`;
+      url = `/electrician/job-vacancies?vacancy=${data.vacancyId || ''}`;
       break;
     case 'certificate':
       url = `/electrician/inspection-testing`;

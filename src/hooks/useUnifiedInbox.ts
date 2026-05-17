@@ -36,6 +36,7 @@ export interface InboxItem {
 
 export interface InboxStats {
   total: number;
+  unread: number;
   portfolio: number;
   otj: number;
   iqa: number;
@@ -107,6 +108,21 @@ export function useUnifiedInbox() {
         .eq('college_id', collegeId);
       const planIds = ((planRows ?? []) as Array<{ id: string }>).map((p) => p.id);
 
+      // Per-staff read-state map so unread badge actually reflects reality.
+      // college_inbox_read_states is keyed by (staff_id, source, source_id).
+      const staffPk = (staffRow as { id?: string | null } | null)?.id ?? null;
+      const readKeys = new Set<string>();
+      if (staffPk) {
+        const { data: readRows } = await supabase
+          .from('college_inbox_read_states')
+          .select('source, source_id')
+          .eq('staff_id', staffPk)
+          .not('read_at', 'is', null);
+        for (const r of (readRows ?? []) as Array<{ source: string; source_id: string }>) {
+          readKeys.add(`${r.source}:${r.source_id}`);
+        }
+      }
+
       // Fan-out queries — wider window than Today (no date cap).
       const [commentsRes, otjRes, iqaRes, conversationsRes] = await Promise.all([
         supabase
@@ -171,7 +187,7 @@ export function useUnifiedInbox() {
           context: cohortName,
           occurred_at: c.created_at,
           href: `/college/students/${author.id}#portfolio`,
-          unread: true,
+          unread: !readKeys.has(`portfolio:${c.id}`),
         });
       }
 
@@ -205,7 +221,7 @@ export function useUnifiedInbox() {
           context: cohortName,
           occurred_at: o.created_at ?? o.activity_date,
           href: `/college/students/${student.id}#otj`,
-          unread: true,
+          unread: !readKeys.has(`otj:${o.id}`),
         });
       }
 
@@ -229,7 +245,7 @@ export function useUnifiedInbox() {
           context: s.observation_id ? 'Observation' : 'OTJ',
           occurred_at: s.sampled_at,
           href: `/college/iqa/sampling/${s.sampling_plan_id}`,
-          unread: true,
+          unread: !readKeys.has(`iqa:${s.id}`),
         });
       }
 
@@ -258,7 +274,7 @@ export function useUnifiedInbox() {
           context: myUnread > 1 ? `${myUnread} unread` : null,
           occurred_at: c.last_message_at ?? new Date().toISOString(),
           href: otherStudent ? `/college/students/${otherStudent.id}#messages` : `/college`,
-          unread: true,
+          unread: !readKeys.has(`message:${c.id}`),
         });
       }
 
@@ -314,8 +330,38 @@ export function useUnifiedInbox() {
     const otj = items.filter((i) => i.kind === 'otj').length;
     const iqa = items.filter((i) => i.kind === 'iqa').length;
     const message = items.filter((i) => i.kind === 'message').length;
-    return { total: items.length, portfolio, otj, iqa, message };
+    const unread = items.filter((i) => i.unread).length;
+    return { total: items.length, unread, portfolio, otj, iqa, message };
   }, [items]);
 
-  return { items, stats, loading, error, refresh: fetch };
+  // Bulk-mark every currently-unread item as read. Upserts into
+  // college_inbox_read_states keyed by (staff_id, source, source_id).
+  // Idempotent: marking already-read items just refreshes read_at.
+  const markAllAsRead = useCallback(async () => {
+    const { data: userRes } = await supabase.auth.getUser();
+    const userId = userRes?.user?.id;
+    if (!userId) return 0;
+    const { data: staffRow } = await supabase
+      .from('college_staff')
+      .select('id')
+      .eq('user_id', userId)
+      .maybeSingle();
+    const staffPk = (staffRow as { id?: string | null } | null)?.id;
+    if (!staffPk) return 0;
+    const unreadItems = items.filter((i) => i.unread);
+    if (unreadItems.length === 0) return 0;
+    const now = new Date().toISOString();
+    const rows = unreadItems.map((i) => {
+      const [source, source_id] = i.key.split(':');
+      return { staff_id: staffPk, source, source_id, read_at: now };
+    });
+    const { error: upsertErr } = await supabase
+      .from('college_inbox_read_states')
+      .upsert(rows, { onConflict: 'staff_id,source,source_id' });
+    if (upsertErr) throw upsertErr;
+    await fetch();
+    return unreadItems.length;
+  }, [items, fetch]);
+
+  return { items, stats, loading, error, refresh: fetch, markAllAsRead };
 }

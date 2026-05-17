@@ -178,12 +178,14 @@ serve(async (req) => {
         },
       },
       customer_email: clientData?.email || undefined,
-      // ELE-955 — for deposit invoices, hop to the slot picker after pay so
-      // the client can finish booking. For regular invoices, fall back to the
-      // generic success page.
+      // ELE-955 — for deposit invoices, hop to the existing PublicBooking
+      // page after pay so the client can finish booking. We pass the
+      // electrician's user_id and the quote_id so PublicBooking pre-fills
+      // from the quote and links the booking back. For regular invoices,
+      // fall back to the generic success page.
       success_url:
-        invoice.deposit_for_quote && invoice.parent_quote_id
-          ? `${appUrl}/book-slot/${invoice.parent_quote_id}`
+        invoice.deposit_for_quote && invoice.parent_quote_id && invoice.user_id
+          ? `${appUrl}/book/${invoice.user_id}?quote=${invoice.parent_quote_id}`
           : `${appUrl}/invoice-payment-success?invoice=${invoiceId}&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${appUrl}/invoice/${invoiceId}?cancelled=true`,
       metadata: {

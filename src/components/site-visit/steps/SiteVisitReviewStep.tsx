@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Home, Camera, HelpCircle, Package, AlertTriangle } from 'lucide-react';
+import { AlertTriangle } from 'lucide-react';
 import type { SiteVisit } from '@/types/siteVisit';
 import { SurveyAnalysisPanel } from '../review/SurveyAnalysisPanel';
 import { GLOBAL_PROMPTS, ROOM_PROMPTS } from '@/data/siteVisit/smartPrompts';
@@ -55,47 +55,49 @@ export const SiteVisitReviewStep = ({
 
   return (
     <div className="space-y-4">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-elec-yellow/20 to-amber-600/20 border border-elec-yellow/30 rounded-xl px-4 py-3">
-        <h2 className="text-lg font-bold text-white flex items-center gap-2">
-          <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-          Review Site Visit
+      {/* Editorial header */}
+      <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] p-5">
+        <div
+          aria-hidden
+          className="-mx-5 -mt-5 mb-5 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0"
+        />
+        <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+          REVIEW
+        </div>
+        <h2 className="mt-1.5 text-[18px] font-semibold tracking-tight text-white sm:text-[20px]">
+          Check it before you generate
         </h2>
-        <p className="text-sm text-white mt-0.5">
-          Check everything looks right before generating outputs
+        <p className="mt-1 text-[12.5px] text-white/65">
+          Last chance to fix anything missing — rooms, prompts or notes.
         </p>
       </div>
 
-      {/* Summary stats bar */}
-      <div className="grid grid-cols-4 gap-2">
-        <div className="flex flex-col items-center p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-          <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center mb-1">
-            <Home className="h-4 w-4 text-blue-400" />
+      {/* Editorial StatStrip */}
+      <div className="grid grid-cols-4 gap-px overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.06]">
+        {[
+          { label: 'Rooms', value: totalRooms },
+          { label: 'Items', value: totalItems },
+          { label: 'Photos', value: totalPhotos },
+          { label: 'Prompts', value: totalPromptsAnswered },
+        ].map((stat, i) => (
+          <div
+            key={stat.label}
+            className="relative flex flex-col items-start bg-[hsl(0_0%_12%)] p-3 sm:p-4"
+          >
+            {i === 0 && (
+              <div
+                aria-hidden
+                className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 opacity-80"
+              />
+            )}
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              {String(i + 1).padStart(2, '0')} · {stat.label}
+            </div>
+            <p className="mt-2 text-[22px] font-semibold tabular-nums leading-none tracking-tight text-white sm:text-[26px]">
+              {stat.value}
+            </p>
           </div>
-          <p className="text-lg font-bold text-white">{totalRooms}</p>
-          <p className="text-[11px] text-white">Rooms</p>
-        </div>
-        <div className="flex flex-col items-center p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-          <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center mb-1">
-            <Package className="h-4 w-4 text-emerald-400" />
-          </div>
-          <p className="text-lg font-bold text-white">{totalItems}</p>
-          <p className="text-[11px] text-white">Items</p>
-        </div>
-        <div className="flex flex-col items-center p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-          <div className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center mb-1">
-            <Camera className="h-4 w-4 text-purple-400" />
-          </div>
-          <p className="text-lg font-bold text-white">{totalPhotos}</p>
-          <p className="text-[11px] text-white">Photos</p>
-        </div>
-        <div className="flex flex-col items-center p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-          <div className="w-8 h-8 rounded-lg bg-orange-500/20 flex items-center justify-center mb-1">
-            <HelpCircle className="h-4 w-4 text-orange-400" />
-          </div>
-          <p className="text-lg font-bold text-white">{totalPromptsAnswered}</p>
-          <p className="text-[11px] text-white">Prompts</p>
-        </div>
+        ))}
       </div>
 
       {/* Missing required prompts warning */}

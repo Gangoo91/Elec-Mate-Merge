@@ -19,6 +19,7 @@ import {
 } from '@/components/college/primitives';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { PresenceBadges } from '@/components/college/ui/PresenceBadges';
 
 /* ==========================================================================
    QuizAttemptReviewSheet — tutor / assessor view of a learner's quiz attempt
@@ -222,6 +223,15 @@ export function QuizAttemptReviewSheet({ open, onOpenChange, attemptId, studentN
             </>
           }
         >
+          {attemptId && (
+            <div className="flex justify-end -mt-1">
+              <PresenceBadges
+                channelKey={`quiz:attempt:${attemptId}`}
+                verb="reviewing"
+                compact
+              />
+            </div>
+          )}
           {loading ? (
             <div className="text-[12.5px] text-white">Loading attempt…</div>
           ) : !attempt || !quiz ? (

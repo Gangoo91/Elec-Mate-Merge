@@ -1,11 +1,11 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { Check, CalendarDays, Clock, Loader2, AlertCircle, ChevronLeft, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '@/integrations/supabase/client';
+import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, supabase } from '@/integrations/supabase/client';
 
 const SLOT_DURATION_MINUTES = 60;
 
@@ -37,6 +37,12 @@ function formatUKPhone(value: string): string {
 
 const PublicBooking = () => {
   const { electricianId } = useParams<{ electricianId: string }>();
+  // ELE-955 — when arriving from a quote-acceptance handoff, the URL
+  // carries `?quote=<uuid>` so we can pre-fill the form and link the
+  // booking back to the quote on confirmation.
+  const [searchParams] = useSearchParams();
+  const quoteId = searchParams.get('quote');
+
   const [step, setStep] = useState<Step>('loading');
   const [error, setError] = useState('');
   const [electrician, setElectrician] = useState<ElectricianInfo | null>(null);
@@ -50,6 +56,7 @@ const PublicBooking = () => {
   const [submitting, setSubmitting] = useState(false);
   const [bookingDate, setBookingDate] = useState('');
   const [bookingTime, setBookingTime] = useState('');
+  const [quoteNumber, setQuoteNumber] = useState<string | null>(null);
 
   // Fetch available slots — extracted so we can re-fetch after booking or conflict
   const refreshSlots = useCallback(async () => {
@@ -87,6 +94,47 @@ const PublicBooking = () => {
       else setStep('error');
     });
   }, [refreshSlots]);
+
+  // ELE-955 — pre-fill from the linked quote when arriving via the
+  // quote-acceptance handoff. Best-effort: failure to fetch just leaves
+  // the fields blank for the client to fill in manually.
+  useEffect(() => {
+    if (!quoteId) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const { data, error: rpcErr } = await supabase.rpc('get_public_quote_for_booking', {
+          quote_id_param: quoteId,
+        });
+        if (rpcErr || cancelled) return;
+        const row = (Array.isArray(data) ? data[0] : data) as
+          | {
+              client_name: string | null;
+              client_phone: string | null;
+              client_email: string | null;
+              job_title: string | null;
+              job_location: string | null;
+              quote_number: string | null;
+            }
+          | null;
+        if (!row) return;
+        if (row.client_name) setName(row.client_name);
+        if (row.client_phone) setPhone(formatUKPhone(row.client_phone));
+        if (row.client_email) setEmail(row.client_email);
+        if (row.job_title) {
+          setJobDescription(
+            row.job_location ? `${row.job_title}\n${row.job_location}` : row.job_title
+          );
+        }
+        if (row.quote_number) setQuoteNumber(row.quote_number);
+      } catch {
+        /* non-fatal */
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [quoteId]);
 
   // Available dates (unique)
   const availableDates = useMemo(() => {
@@ -155,6 +203,10 @@ const PublicBooking = () => {
               : phone.trim(),
           client_email: email.trim() || undefined,
           job_description: jobDescription.trim() || undefined,
+          // ELE-955 — link the booking back to the accepted quote so
+          // the quote detail view shows "Booked for ..." and the
+          // calendar event carries the quote reference.
+          quote_id: quoteId || undefined,
         }),
       });
 
@@ -283,6 +335,18 @@ const PublicBooking = () => {
       </div>
 
       <div className="px-4 py-6 max-w-lg mx-auto space-y-6">
+        {/* Quote-context banner — only shown when arrived via ?quote= handoff */}
+        {quoteNumber && (
+          <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center gap-2">
+            <Check className="h-4 w-4 text-emerald-400 flex-shrink-0" />
+            <p className="text-sm text-white">
+              Booking for quote{' '}
+              <span className="font-semibold text-emerald-300">{quoteNumber}</span> — pick a time
+              and we'll lock it in.
+            </p>
+          </div>
+        )}
+
         {/* Error banner */}
         {error && step !== 'error' && (
           <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/30 flex items-start gap-2">

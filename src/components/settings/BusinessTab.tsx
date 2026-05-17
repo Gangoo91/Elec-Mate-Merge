@@ -22,6 +22,7 @@ import {
   InspectorSheet,
   InstrumentsSheet,
   RegionalSheet,
+  BookingAvailabilitySheet,
 } from '@/components/settings/business-sheets';
 
 interface BusinessRow {
@@ -64,6 +65,17 @@ const GROUPS: BusinessGroup[] = [
   },
   {
     eyebrow: '04',
+    title: 'Scheduling',
+    rows: [
+      {
+        id: 'booking-availability',
+        title: 'Booking availability',
+        subtitle: 'Working hours, buffer, daily cap',
+      },
+    ],
+  },
+  {
+    eyebrow: '05',
     title: 'Professional',
     rows: [
       { id: 'inspector', title: 'Inspector', subtitle: 'Credentials and qualifications' },
@@ -214,6 +226,10 @@ const BusinessTab = () => {
         onOpenChange={(o) => !o && setOpenSheet(null)}
         profile={companyProfile}
         onSave={handleSave}
+      />
+      <BookingAvailabilitySheet
+        open={openSheet === 'booking-availability'}
+        onOpenChange={(o) => !o && setOpenSheet(null)}
       />
     </motion.div>
   );

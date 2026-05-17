@@ -96,11 +96,14 @@ export interface Slide {
 export type DeckTone = 'academic' | 'practical' | 'gen_z';
 export type DeckDepth = 'overview' | 'standard' | 'deep_dive';
 export type DeckTheme = 'dark' | 'light';
+/** Inclusion differentiation variant — drives language complexity + scaffolding. */
+export type DeckDifferentiation = 'standard' | 'send_eal' | 'stretch';
 
 export interface DeckPreflight {
   slide_count?: number;
   tone?: DeckTone;
   depth?: DeckDepth;
+  differentiation?: DeckDifferentiation;
 }
 
 export interface SlideDeck {
@@ -123,6 +126,8 @@ export interface CollegeBrand {
   id: string;
   name: string;
   logo_url: string | null;
+  /** Hex without leading # — e.g. 'FACC15'. Loaded from colleges.settings.brand_color when set. */
+  accent_color: string | null;
 }
 
 export function useSlideDeck(lessonPlanId: string | null) {
@@ -159,10 +164,32 @@ export function useSlideDeck(lessonPlanId: string | null) {
       if (planRow?.college_id) {
         const { data: collegeRow } = await supabase
           .from('colleges')
-          .select('id, name, logo_url')
+          .select('id, name, logo_url, settings')
           .eq('id', planRow.college_id)
           .maybeSingle();
-        setBrand((collegeRow as CollegeBrand | null) ?? null);
+        if (collegeRow) {
+          const settings = (collegeRow as { settings?: Record<string, unknown> | null }).settings ?? null;
+          // accept either 'brand_color' or 'accent_color' from settings; strip leading #
+          let accent: string | null = null;
+          if (settings && typeof settings === 'object') {
+            const raw =
+              (settings as Record<string, unknown>)['brand_color'] ??
+              (settings as Record<string, unknown>)['accent_color'] ??
+              null;
+            if (typeof raw === 'string' && raw.trim()) {
+              accent = raw.trim().replace(/^#/, '').toUpperCase();
+              if (!/^[0-9A-F]{6}$/.test(accent)) accent = null;
+            }
+          }
+          setBrand({
+            id: (collegeRow as { id: string }).id,
+            name: (collegeRow as { name: string }).name,
+            logo_url: (collegeRow as { logo_url: string | null }).logo_url,
+            accent_color: accent,
+          });
+        } else {
+          setBrand(null);
+        }
       } else {
         setBrand(null);
       }
@@ -191,6 +218,7 @@ export function useSlideDeck(lessonPlanId: string | null) {
             slide_count: preflight?.slide_count,
             tone: preflight?.tone,
             depth: preflight?.depth,
+            differentiation: preflight?.differentiation,
           },
         });
         if (fnErr) throw new Error(fnErr.message);

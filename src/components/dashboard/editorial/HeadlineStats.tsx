@@ -83,10 +83,10 @@ export function HeadlineStats({ number = '01', label = 'THIS MONTH' }: HeadlineS
           href: '/electrician/inspection-testing?section=my-reports',
         },
         {
-          label: 'Jobs',
-          value: data.business.activeJobs,
+          label: 'Projects',
+          value: data.business.activeProjects,
           sub: 'On the books',
-          href: '/electrician/jobs',
+          href: '/electrician/projects',
         },
         {
           label: 'Overdue',

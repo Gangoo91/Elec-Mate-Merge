@@ -27,6 +27,9 @@ import {
   textareaClass,
   fieldLabelClass,
 } from '@/components/college/primitives';
+import { useTutorVoiceFeedback } from '@/hooks/useTutorVoiceFeedback';
+import { Sparkles } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 interface AddCommentDialogProps {
   open: boolean;
@@ -56,6 +59,42 @@ export function AddCommentDialog({
   const [requiresAction, setRequiresAction] = useState(false);
   const [selectedMentions, setSelectedMentions] = useState<{ id: string; name: string }[]>([]);
   const [mentionPopoverOpen, setMentionPopoverOpen] = useState(false);
+  const { generate: generateInVoice, generating } = useTutorVoiceFeedback();
+  const { toast } = useToast();
+
+  // Polish the current draft into the tutor's own matched style. The current
+  // textarea content is treated as the rough version + brief description of
+  // the learner work. The AI samples past comments by this user and rewrites
+  // in their voice. Tutor can still edit before posting.
+  const handlePolishInVoice = async () => {
+    if (!content.trim()) {
+      toast({
+        title: 'Type a quick draft first',
+        description: 'Paste the learner work or rough feedback notes — Mate will rewrite it in your voice.',
+        variant: 'destructive',
+      });
+      return;
+    }
+    try {
+      const result = await generateInVoice({
+        learnerWork: content.trim(),
+        kind: contextType === 'evidence' ? 'portfolio' : contextType === 'assessment' ? 'quiz' : 'portfolio',
+      });
+      if (result?.feedback) {
+        setContent(result.feedback);
+        toast({
+          title: 'Drafted in your voice',
+          description: 'Edit as you like before posting.',
+        });
+      }
+    } catch (e) {
+      toast({
+        title: 'Could not draft',
+        description: e instanceof Error ? e.message : String(e),
+        variant: 'destructive',
+      });
+    }
+  };
 
   const mentionableUsers = [
     ...staff
@@ -202,12 +241,21 @@ export function AddCommentDialog({
           {/* Comment content */}
           <Field label="Comment">
             <Textarea
-              placeholder="Write your comment..."
+              placeholder="Write your comment, or paste rough notes + click ✨ to polish in your voice."
               value={content}
               onChange={(e) => setContent(e.target.value)}
               className={`min-h-[120px] ${textareaClass}`}
               rows={4}
             />
+            <button
+              type="button"
+              onClick={handlePolishInVoice}
+              disabled={generating || !content.trim()}
+              className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-elec-yellow/30 bg-elec-yellow/10 px-3 py-1.5 text-[11px] font-semibold text-elec-yellow hover:bg-elec-yellow/20 disabled:opacity-40 touch-manipulation"
+            >
+              <Sparkles className="h-3 w-3" />
+              {generating ? 'Drafting…' : 'Polish in my voice'}
+            </button>
           </Field>
 
           {/* Mentions */}

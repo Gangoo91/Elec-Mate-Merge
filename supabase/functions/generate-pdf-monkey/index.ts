@@ -292,6 +292,96 @@ serve(async (req) => {
     const freshQuote = quote;
     const freshCompanyProfile = companyProfile;
 
+    // ELE-956 — for v2+ quotes, compute the variation diff (added /
+    // removed / changed line items) so the PDF template can render
+    // "what changed since v{n-1}" the same way the email + public web
+    // view do. Failure is non-fatal — the PDF still renders without
+    // the diff block.
+    let variationDiff: {
+      hasChanges: boolean;
+      added: Array<Record<string, unknown>>;
+      removed: Array<Record<string, unknown>>;
+      changed: Array<{
+        itemId: string;
+        description: string;
+        changedFields: string[];
+        totalDelta: number;
+      }>;
+      totalDelta: number;
+    } | null = null;
+    try {
+      if (
+        (freshQuote?.version_number || 1) > 1 &&
+        freshQuote?.supersedes_id
+      ) {
+        const supabaseUrl = Deno.env.get('SUPABASE_URL');
+        const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+        if (supabaseUrl && serviceKey) {
+          const sb = createClient(supabaseUrl, serviceKey);
+          const { data: prev } = await sb
+            .from('quotes')
+            .select('items')
+            .eq('id', freshQuote.supersedes_id)
+            .maybeSingle();
+          const prevItems = Array.isArray(prev?.items) ? prev.items : [];
+          const currentItems = Array.isArray(freshQuote.items) ? freshQuote.items : [];
+          const prevById = new Map(prevItems.map((i: { id: string }) => [i.id, i]));
+          const currentById = new Map(currentItems.map((i: { id: string }) => [i.id, i]));
+
+          const added: Array<Record<string, unknown>> = [];
+          const changed: Array<{
+            itemId: string;
+            description: string;
+            changedFields: string[];
+            totalDelta: number;
+          }> = [];
+          for (const cur of currentItems) {
+            const prevRow = prevById.get(cur.id) as Record<string, unknown> | undefined;
+            if (!prevRow) {
+              added.push(cur);
+            } else {
+              const fields: string[] = [];
+              if (prevRow.description !== cur.description) fields.push('description');
+              if (Number(prevRow.quantity || 0) !== Number(cur.quantity || 0))
+                fields.push('quantity');
+              if (Number(prevRow.unitPrice || 0) !== Number(cur.unitPrice || 0))
+                fields.push('unitPrice');
+              if (fields.length > 0) {
+                const delta =
+                  Number(cur.totalPrice || 0) - Number(prevRow.totalPrice || 0);
+                changed.push({
+                  itemId: String(cur.id),
+                  description: String(cur.description || ''),
+                  changedFields: fields,
+                  totalDelta: delta,
+                });
+              }
+            }
+          }
+          const removed = prevItems.filter(
+            (i: { id: string }) => !currentById.has(i.id)
+          );
+          const totalDelta =
+            added.reduce((s, i) => s + Number((i as { totalPrice?: number }).totalPrice || 0), 0) -
+            removed.reduce(
+              (s: number, i: { totalPrice?: number }) => s + Number(i.totalPrice || 0),
+              0
+            ) +
+            changed.reduce((s, c) => s + c.totalDelta, 0);
+
+          variationDiff = {
+            hasChanges: added.length + removed.length + changed.length > 0,
+            added,
+            removed,
+            changed,
+            totalDelta,
+          };
+        }
+      }
+    } catch (diffErr) {
+      console.warn('[PDF-MONKEY] variation diff lookup failed (non-fatal):', diffErr);
+    }
+
     // Validation: ensure required data is present for quote/invoice mode
     if ((invoice_mode || !briefing_mode) && !quote?.id) {
       console.error('[PDF-MONKEY] Missing quote data');
@@ -499,14 +589,17 @@ serve(async (req) => {
 
       const transformedCompanyProfile = {
         logo_url: freshCompanyProfile?.logo_url || '',
+        logo_width: freshCompanyProfile?.logo_width || null,
+        logo_height: freshCompanyProfile?.logo_height || null,
         company_name: freshCompanyProfile?.company_name || '',
         company_address: freshCompanyProfile?.company_address
           ? `${freshCompanyProfile.company_address}${freshCompanyProfile.company_postcode ? '\n' + freshCompanyProfile.company_postcode : ''}`
           : '',
         company_phone: freshCompanyProfile?.company_phone || '',
         company_email: freshCompanyProfile?.company_email || '',
-        vat_number: freshCompanyProfile?.vat_number || '',
         company_website: freshCompanyProfile?.company_website || '',
+        vat_number: freshCompanyProfile?.vat_number || '',
+        company_registration: freshCompanyProfile?.company_registration || '',
         bank_name: bankDetails?.bankName || bankDetails?.bank_name || '',
         account_name:
           bankDetails?.accountName ||
@@ -516,7 +609,6 @@ serve(async (req) => {
         account_number: bankDetails?.accountNumber || bankDetails?.account_number || '',
         sort_code: bankDetails?.sortCode || bankDetails?.sort_code || '',
         payment_terms: freshQuote?.settings?.paymentTerms || '30 days',
-        company_registration: freshCompanyProfile?.company_registration || '',
       };
 
       // Use client_data from database (snake_case) as primary source since that's what's saved
@@ -584,7 +676,10 @@ serve(async (req) => {
           }));
 
       } else {
-        // Detailed view: Show all items individually with adjustments applied
+        // Detailed view: Show all items individually with adjustments applied.
+        // ELE-T-inv-extra — also surface labour breakdown (hours/rate/worker)
+        // and subcategory on the line so the template can show "8h × £45/hr"
+        // beneath the description.
         processedItems = adjustedRawItems.map((it) => ({
           name: it.description,
           description: it.raw.notes || '',
@@ -593,6 +688,11 @@ serve(async (req) => {
           unitPrice: it.unitPrice,
           totalPrice: it.totalPrice,
           category: it.category,
+          subcategory: it.raw.subcategory || '',
+          workerType: it.raw.workerType || it.raw.worker_type || '',
+          hours: parseFloat(it.raw.hours) || 0,
+          hourlyRate:
+            parseFloat(it.raw.hourlyRate) || parseFloat(it.raw.hourly_rate) || 0,
           itemAdjustmentPercent: it.adjustmentPercent || 0,
           itemAdjustmentLabel: it.adjustmentLabel || '',
         }));
@@ -614,6 +714,43 @@ serve(async (req) => {
           ? new Date(freshQuote.invoice_due_date).toISOString().split('T')[0]
           : '',
         purchaseOrder: freshQuote?.purchase_order || '',
+        // Paid status (template renders the "✓ Paid in Full" banner +
+        // metadata when set). Reads new column names from the invoices
+        // table, then falls back to legacy invoice_* names on quotes
+        // table for backwards compat with the pre-March-2026 dual-write.
+        isPaid:
+          freshQuote?.status === 'paid' ||
+          freshQuote?.invoice_status === 'paid',
+        paidAt: (freshQuote?.paid_at || freshQuote?.invoice_paid_at)
+          ? new Date(freshQuote.paid_at || freshQuote.invoice_paid_at).toLocaleDateString(
+              'en-GB',
+              { day: '2-digit', month: '2-digit', year: 'numeric' }
+            )
+          : null,
+        paymentMethod: freshQuote?.payment_method || freshQuote?.invoice_payment_method || null,
+        paymentReference:
+          freshQuote?.payment_reference || freshQuote?.invoice_payment_reference || null,
+        // Booking info (mirrors the quote payload). When the parent
+        // quote had a slot booked via /book/...?quote=..., that info
+        // carries to the invoice so the PDF shows "Work Carried Out:
+        // Tue 21 May 09:00".
+        isBooked: !!(freshQuote?.booked_slot_start && freshQuote?.booked_slot_end),
+        bookedSlotStart: freshQuote?.booked_slot_start
+          ? new Date(freshQuote.booked_slot_start).toLocaleString('en-GB', {
+              weekday: 'short',
+              day: '2-digit',
+              month: 'short',
+              year: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit',
+            })
+          : null,
+        bookedSlotEnd: freshQuote?.booked_slot_end
+          ? new Date(freshQuote.booked_slot_end).toLocaleString('en-GB', {
+              hour: '2-digit',
+              minute: '2-digit',
+            })
+          : null,
         client: {
           name: clientData?.name || '',
           contactName: clientData?.contactName || '',
@@ -651,8 +788,43 @@ serve(async (req) => {
             '',
         },
         items: processedItems,
-        notes: freshQuote?.invoice_notes || '',
+        notes: freshQuote?.invoice_notes || freshQuote?.notes || '',
         showSummaryView: showSummaryView,
+        // ELE-T-inv-extra — Stripe pay-now link (template renders a CTA
+        // block when present and the invoice is unpaid). Column lives
+        // directly on invoices.stripe_payment_link_url.
+        payLink:
+          (freshQuote as Record<string, unknown> | null)?.stripe_payment_link_url || null,
+        // ELE-T-inv-extra — partial payment surfacing (totalPaid is
+        // numeric pennies on the row; partialPayments is a JSONB array
+        // of past payment events). Used when invoice is partially paid
+        // but not fully settled — template shows "Paid £X of £Y so far".
+        totalPaidFormatted: (() => {
+          const tp = Number(
+            (freshQuote as Record<string, unknown> | null)?.total_paid || 0
+          );
+          return tp > 0 ? `£${(tp / 100).toFixed(2)}` : null;
+        })(),
+        totalPaidPence: Number(
+          (freshQuote as Record<string, unknown> | null)?.total_paid || 0
+        ),
+        partialPayments:
+          ((freshQuote as Record<string, unknown> | null)
+            ?.partial_payments as unknown[]) || [],
+        // ELE-T-inv-extra — linked certificate (when invoice has a cert
+        // attached, template shows a small "Certificate attached" callout
+        // with the cert reference + type).
+        linkedCertificate:
+          (freshQuote as Record<string, unknown> | null)?.linked_certificate_id
+            ? {
+                id: (freshQuote as Record<string, unknown>).linked_certificate_id,
+                reference: (freshQuote as Record<string, unknown>)
+                  .linked_certificate_reference,
+                type: (freshQuote as Record<string, unknown>).linked_certificate_type,
+                pdfUrl: (freshQuote as Record<string, unknown>)
+                  .linked_certificate_pdf_url,
+              }
+            : null,
       };
 
       // ELE-888 + ELE-891 — calculate totals using item-adjusted lines + per-category
@@ -694,6 +866,133 @@ serve(async (req) => {
         : 0;
       const total = invNetAfterDiscount + vatAmount;
 
+      // ELE-954 — "Deposit paid" summary. Resolved from (in priority):
+      //   1. invoice settings.depositApplied (set on quote→invoice conversion)
+      //   2. invoice row's own deposit_paid_at / deposit_amount_pennies
+      //      (legacy, when fields were copied directly onto the invoice)
+      //   3. parent quote lookup via parent_quote_id (catches invoices
+      //      that don't carry deposit info themselves)
+      // Returns null when there's no deposit on the chain, in which
+      // case the totals row + "Balance Due" treatment skip.
+      const invForDeposit = freshQuote as Record<string, unknown> | null;
+      let depositPaidIso: string | null = null;
+      let depositPaidPennies = 0;
+      let depositInvoiceIdRef: string | null = null;
+
+      const settingsDepositApplied =
+        (invForDeposit?.settings as Record<string, unknown> | undefined)?.depositApplied as
+          | { paidAt?: string; amount?: number; depositInvoiceId?: string }
+          | undefined;
+      if (settingsDepositApplied?.paidAt && Number(settingsDepositApplied.amount) > 0) {
+        depositPaidIso = settingsDepositApplied.paidAt;
+        depositPaidPennies = Math.round(Number(settingsDepositApplied.amount) * 100);
+        depositInvoiceIdRef = settingsDepositApplied.depositInvoiceId || null;
+      } else if (invForDeposit?.deposit_paid_at) {
+        depositPaidIso = invForDeposit.deposit_paid_at as string;
+        depositPaidPennies = Number(invForDeposit.deposit_amount_pennies || 0);
+        depositInvoiceIdRef = (invForDeposit.deposit_invoice_id as string | null) || null;
+      } else if (invForDeposit?.parent_quote_id) {
+        // Last resort — fetch the parent quote for deposit info. Cheap
+        // single-row lookup, non-fatal on failure.
+        try {
+          const supabaseUrl = Deno.env.get('SUPABASE_URL');
+          const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+          if (supabaseUrl && serviceKey) {
+            const sb = createClient(supabaseUrl, serviceKey);
+            const { data: parent } = await sb
+              .from('quotes')
+              .select('deposit_paid_at, deposit_amount_pennies, deposit_invoice_id')
+              .eq('id', invForDeposit.parent_quote_id as string)
+              .maybeSingle();
+            if (parent?.deposit_paid_at && Number(parent.deposit_amount_pennies) > 0) {
+              depositPaidIso = parent.deposit_paid_at as string;
+              depositPaidPennies = Number(parent.deposit_amount_pennies);
+              depositInvoiceIdRef = (parent.deposit_invoice_id as string | null) || null;
+            }
+          }
+        } catch (e) {
+          console.warn('[PDF-MONKEY] parent-quote deposit lookup failed:', e);
+        }
+      }
+
+      const depositPaidSummary =
+        depositPaidIso && depositPaidPennies > 0
+          ? {
+              amount: depositPaidPennies / 100,
+              amountFormatted: `£${(depositPaidPennies / 100).toFixed(2)}`,
+              paidAt: new Date(depositPaidIso).toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+              }),
+              depositInvoiceId: depositInvoiceIdRef,
+            }
+          : null;
+
+      // Balance due = total minus any deposit already paid. When no
+      // deposit, balanceDue == total (and the template falls back to
+      // showing "Amount Due" with total).
+      const depositAmt = depositPaidSummary?.amount || 0;
+      const balanceDue = Math.max(0, total - depositAmt);
+
+      // ELE-T-inv-extra — three extra lookups (parent quote number,
+      // deposit invoice number, view tracking). All non-fatal — if any
+      // fail the template just skips the corresponding block.
+      let parentQuoteNumber: string | null = null;
+      let depositInvoiceNumber: string | null = null;
+      let lastViewedAt: string | null = null;
+      let viewCount = 0;
+      try {
+        const supabaseUrl = Deno.env.get('SUPABASE_URL');
+        const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+        if (supabaseUrl && serviceKey) {
+          const sb = createClient(supabaseUrl, serviceKey);
+          const invRow = freshQuote as Record<string, unknown> | null;
+
+          // 1. Parent quote — for "Converted from Quote #..." header line
+          if (invRow?.parent_quote_id) {
+            const { data: pq } = await sb
+              .from('quotes')
+              .select('quote_number')
+              .eq('id', invRow.parent_quote_id as string)
+              .maybeSingle();
+            parentQuoteNumber = (pq?.quote_number as string) || null;
+          }
+
+          // 2. Deposit invoice number — for "(Deposit Invoice #DEP-001)"
+          //    reference next to the take-off totals row.
+          if (depositInvoiceIdRef) {
+            const { data: dep } = await sb
+              .from('invoices')
+              .select('invoice_number')
+              .eq('id', depositInvoiceIdRef)
+              .maybeSingle();
+            depositInvoiceNumber = (dep?.invoice_number as string) || null;
+          }
+
+          // 3. Email open tracking — unified `email_opens` table keyed
+          //    by entity_type + entity_id. Returns first/last opened
+          //    timestamps and open count for the PDF footer.
+          if (invRow?.id) {
+            const { data: opens } = await sb
+              .from('email_opens')
+              .select('last_opened_at, open_count')
+              .eq('entity_type', 'invoice')
+              .eq('entity_id', invRow.id as string)
+              .maybeSingle();
+            if (opens?.last_opened_at) {
+              lastViewedAt = new Date(opens.last_opened_at as string).toLocaleString(
+                'en-GB',
+                { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }
+              );
+              viewCount = Number(opens.open_count || 0);
+            }
+          }
+        }
+      } catch (e) {
+        console.warn('[PDF-MONKEY] invoice extra lookups failed:', e);
+      }
+
       payload = {
         companyProfile: transformedCompanyProfile,
         invoice: {
@@ -704,6 +1003,24 @@ serve(async (req) => {
           profit: profit,
           vatAmount: vatAmount,
           total: total,
+          // Nested summary (for templates that prefer the object) +
+          // flat convenience fields (for templates that use them
+          // directly — your invoice template above uses these).
+          depositPaid: depositPaidSummary,
+          depositPaidAt: depositPaidSummary?.paidAt || null,
+          depositAmount: depositPaidSummary?.amount || null,
+          depositAmountFormatted: depositPaidSummary?.amountFormatted || null,
+          // Balance Due — total minus deposit. When no deposit, equals
+          // total; when paid, shows the remaining amount the client owes.
+          balanceDue,
+          balanceDueFormatted: `£${balanceDue.toFixed(2)}`,
+          // ELE-T-inv-extra — audit trail fields (lookups above).
+          parentQuoteNumber,
+          parentQuoteId:
+            (freshQuote as Record<string, unknown> | null)?.parent_quote_id || null,
+          depositInvoiceNumber,
+          lastViewedAt,
+          viewCount,
         },
         // Add explicit calculation fields for template
         calculations: {
@@ -893,6 +1210,11 @@ serve(async (req) => {
           variationType: freshQuote?.variation_type || null,
           parentQuoteId: freshQuote?.parent_quote_id || null,
           supersedesId: freshQuote?.supersedes_id || null,
+          // Full diff against the previous version when this is v2+.
+          // Lists added/removed/changed items with the £ delta so the
+          // PDF template can render a "what changed since v{n-1}" block
+          // matching the email + public web view.
+          variationDiff,
           // ELE-954 — deposit info (amount in £ for templates)
           depositRequired: !!freshQuote?.deposit_required,
           depositAmount:
@@ -939,6 +1261,23 @@ serve(async (req) => {
           address: clientData.address || '',
           postcode: clientData.postcode || '',
         },
+        // Bank details on the quote payload too — needed when a deposit
+        // is required and the electrician doesn't have Stripe Connect
+        // active. Same shape as the invoice payload's bank fields so
+        // a single template snippet works for both. Falls back to the
+        // company profile when no per-quote override is set.
+        bank_details: (() => {
+          const bd =
+            freshQuote?.settings?.bankDetails || freshCompanyProfile?.bank_details || {};
+          return {
+            bank_name: bd?.bankName || bd?.bank_name || '',
+            account_name:
+              bd?.accountName || bd?.account_name || freshCompanyProfile?.company_name || '',
+            account_number: bd?.accountNumber || bd?.account_number || '',
+            sort_code: bd?.sortCode || bd?.sort_code || '',
+            payment_reference: freshQuote?.quote_number || '',
+          };
+        })(),
         // Job details
         jobDetails: {
           title: jobDetails.title || '',

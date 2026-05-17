@@ -58,6 +58,19 @@ interface CompanyBrand {
   registrationNumber: string | null;
   sparkyName: string | null;
   sparkyAvatarUrl: string | null;
+  /** Bank transfer details for the deposit-by-bank fallback */
+  bankDetails: {
+    bankName: string | null;
+    accountName: string | null;
+    accountNumber: string | null;
+    sortCode: string | null;
+  } | null;
+  /** 'active' if the sparky has live Stripe Connect; anything else means
+   *  card payment isn't available — fall back to bank transfer. */
+  stripeAccountStatus: string | null;
+  /** % of the total taken as deposit — set on company_profiles or
+   *  overridden per-quote on quote.settings.depositPercentage */
+  depositPercentage: number | null;
 }
 
 interface DepositInvoice {
@@ -82,6 +95,9 @@ const DEFAULT_BRAND_PROFILE: CompanyBrand = {
   registrationNumber: null,
   sparkyName: null,
   sparkyAvatarUrl: null,
+  bankDetails: null,
+  stripeAccountStatus: null,
+  depositPercentage: null,
 };
 
 const PublicQuoteView = () => {
@@ -136,19 +152,36 @@ const PublicQuoteView = () => {
         token_param: token,
       });
       if (error || !data || (Array.isArray(data) && data.length === 0)) return;
-      const row = (Array.isArray(data) ? data[0] : data) as Record<string, string | null>;
+      const row = (Array.isArray(data) ? data[0] : data) as Record<string, unknown>;
+      const str = (v: unknown): string | null =>
+        typeof v === 'string' && v.length > 0 ? v : null;
+      const rawBank = row.bank_details as
+        | { bankName?: string; accountName?: string; accountNumber?: string; sortCode?: string }
+        | null
+        | undefined;
       setBrand({
-        companyName: row.company_name || DEFAULT_BRAND_PROFILE.companyName,
-        logoUrl: row.logo_url || row.logo_data_url || null,
-        primaryColor: safeHex(row.primary_color),
-        email: row.company_email || null,
-        phone: row.company_phone || null,
-        website: row.company_website || null,
-        address: row.company_address || null,
-        vatNumber: row.vat_number || null,
-        sparkyName: row.sparky_full_name || null,
-        sparkyAvatarUrl: row.sparky_avatar_url || null,
-        registrationNumber: row.company_registration || null,
+        companyName: str(row.company_name) || DEFAULT_BRAND_PROFILE.companyName,
+        logoUrl: str(row.logo_url) || str(row.logo_data_url) || null,
+        primaryColor: safeHex(str(row.primary_color)),
+        email: str(row.company_email),
+        phone: str(row.company_phone),
+        website: str(row.company_website),
+        address: str(row.company_address),
+        vatNumber: str(row.vat_number),
+        sparkyName: str(row.sparky_full_name),
+        sparkyAvatarUrl: str(row.sparky_avatar_url),
+        registrationNumber: str(row.company_registration),
+        bankDetails: rawBank
+          ? {
+              bankName: rawBank.bankName || null,
+              accountName: rawBank.accountName || null,
+              accountNumber: rawBank.accountNumber || null,
+              sortCode: rawBank.sortCode || null,
+            }
+          : null,
+        stripeAccountStatus: str(row.stripe_account_status),
+        depositPercentage:
+          typeof row.deposit_percentage === 'number' ? row.deposit_percentage : null,
       });
     } catch {
       // Non-fatal — fall back to defaults; the page still renders.
@@ -203,6 +236,7 @@ const PublicQuoteView = () => {
       const convertedQuote: Quote = {
         id: quoteData.id,
         quoteNumber: quoteData.quote_number,
+        user_id: quoteData.user_id,
         client: quoteData.client_data as any,
         items: quoteData.items as any,
         settings: quoteData.settings as any,
@@ -1075,23 +1109,78 @@ const PublicQuoteView = () => {
                     <span className="text-[13px] text-slate-500">deposit</span>
                   </div>
                   {depositInvoice?.payUrl ? (
-                    <a
-                      href={depositInvoice.payUrl}
-                      className="mt-4 inline-flex items-center justify-center gap-2 h-12 w-full sm:w-auto px-6 rounded-xl text-white font-semibold text-[15px] touch-manipulation"
-                      style={{ backgroundColor: brandHex }}
-                    >
-                      Pay {formatCurrency(depositInvoice.total)} deposit
-                      <ExternalLink className="h-4 w-4" />
-                    </a>
+                    <>
+                      <a
+                        href={depositInvoice.payUrl}
+                        className="mt-4 inline-flex items-center justify-center gap-2 h-12 w-full sm:w-auto px-6 rounded-xl text-white font-semibold text-[15px] touch-manipulation"
+                        style={{ backgroundColor: brandHex }}
+                      >
+                        Pay {formatCurrency(depositInvoice.total)} deposit
+                        <ExternalLink className="h-4 w-4" />
+                      </a>
+                      <p className="mt-3 text-[12px] text-slate-400">
+                        Secure payment by card · powered by Stripe. Your booking is confirmed as
+                        soon as the payment lands.
+                      </p>
+                    </>
+                  ) : brand.bankDetails &&
+                    (brand.bankDetails.accountNumber || brand.bankDetails.sortCode) ? (
+                    // No Stripe Connect — show bank details inline so the
+                    // client can pay the deposit by bank transfer. The
+                    // quote number doubles as the payment reference so
+                    // the sparky can match it up when it lands.
+                    <div className="mt-4 rounded-lg bg-slate-50 border border-slate-200 p-4 text-left">
+                      <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-[0.12em]">
+                        Pay by bank transfer
+                      </p>
+                      <table className="mt-3 w-full text-[13px]">
+                        <tbody>
+                          {brand.bankDetails.accountName && (
+                            <tr>
+                              <td className="py-1 text-slate-500 w-[42%]">Account name</td>
+                              <td className="py-1 text-slate-900 font-medium font-mono">
+                                {brand.bankDetails.accountName}
+                              </td>
+                            </tr>
+                          )}
+                          {brand.bankDetails.sortCode && (
+                            <tr>
+                              <td className="py-1 text-slate-500">Sort code</td>
+                              <td className="py-1 text-slate-900 font-medium font-mono">
+                                {brand.bankDetails.sortCode}
+                              </td>
+                            </tr>
+                          )}
+                          {brand.bankDetails.accountNumber && (
+                            <tr>
+                              <td className="py-1 text-slate-500">Account number</td>
+                              <td className="py-1 text-slate-900 font-medium font-mono">
+                                {brand.bankDetails.accountNumber}
+                              </td>
+                            </tr>
+                          )}
+                          {brand.bankDetails.bankName && (
+                            <tr>
+                              <td className="py-1 text-slate-500">Bank</td>
+                              <td className="py-1 text-slate-900 font-medium">
+                                {brand.bankDetails.bankName}
+                              </td>
+                            </tr>
+                          )}
+                        </tbody>
+                      </table>
+                      <p className="mt-3 text-[12px] text-slate-600">
+                        Use{' '}
+                        <strong className="font-mono text-slate-900">{quote.quoteNumber}</strong>{' '}
+                        as the payment reference. Once {brand.companyName} sees the deposit
+                        they'll confirm and book a time with you.
+                      </p>
+                    </div>
                   ) : (
                     <p className="mt-4 text-[13px] text-slate-500">
-                      We'll send you a separate email with bank details for the deposit shortly.
+                      {brand.companyName} will be in touch shortly with deposit details.
                     </p>
                   )}
-                  <p className="mt-3 text-[12px] text-slate-400">
-                    Secure payment by card · powered by Stripe. Your booking is confirmed as
-                    soon as the payment lands.
-                  </p>
                 </div>
               )}
 
@@ -1109,7 +1198,11 @@ const PublicQuoteView = () => {
                       : `Pick a time below and ${brand.companyName} will lock it in instantly.`}
                   </p>
                   <a
-                    href={`/book-slot/${quote.id}`}
+                    href={
+                      quote.user_id
+                        ? `/book/${quote.user_id}?quote=${quote.id}`
+                        : `/book/${quote.id}`
+                    }
                     className="mt-4 inline-flex items-center justify-center gap-2 h-12 w-full sm:w-auto px-6 rounded-xl text-white font-semibold text-[15px] touch-manipulation"
                     style={{ backgroundColor: brandHex }}
                   >

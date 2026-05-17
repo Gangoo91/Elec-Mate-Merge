@@ -2,6 +2,8 @@ import { motion } from 'framer-motion';
 import { PullToRefresh } from '@/components/college/ui/PullToRefresh';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
+import { useEffect, useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 import {
   PageFrame,
   PageHero,
@@ -19,6 +21,21 @@ interface ResourcesHubProps {
 export function ResourcesHub({ onNavigate }: ResourcesHubProps) {
   const { staff } = useCollegeSupabase();
   const activeStaff = staff.filter((s) => s.status === 'Active').length;
+  const [vleConnected, setVleConnected] = useState<number | null>(null);
+  const [complianceDocs, setComplianceDocs] = useState<number | null>(null);
+
+  // Real stats: live count of LTI platforms + compliance documents,
+  // scoped to the caller's college via RLS.
+  useEffect(() => {
+    void (async () => {
+      const [ltiRes, docsRes] = await Promise.all([
+        supabase.from('lti_platforms').select('id', { count: 'exact', head: true }),
+        supabase.from('compliance_documents').select('id', { count: 'exact', head: true }),
+      ]);
+      setVleConnected(ltiRes.count ?? 0);
+      setComplianceDocs(docsRes.count ?? 0);
+    })();
+  }, []);
 
   const handleRefresh = async () => {
     await new Promise((resolve) => setTimeout(resolve, 600));
@@ -48,12 +65,12 @@ export function ResourcesHub({ onNavigate }: ResourcesHubProps) {
                 sub: 'Across all roles',
               },
               {
-                value: 0,
+                value: vleConnected ?? '—',
                 label: 'VLE Connected',
                 sub: 'Canvas / Moodle / LTI',
               },
               {
-                value: 0,
+                value: complianceDocs ?? '—',
                 label: 'Compliance Docs',
                 sub: 'On file',
               },
@@ -83,6 +100,15 @@ export function ResourcesHub({ onNavigate }: ResourcesHubProps) {
               meta="Resource library"
               onClick={() => onNavigate('teachingresources')}
             />
+            <HubCard
+              number="03"
+              eyebrow="Usage & Gold Standard"
+              title="Resource Analytics"
+              description="See what's being used. Tag the top performers as gold standard."
+              tone="yellow"
+              meta="Views + downloads"
+              onClick={() => onNavigate('resourceanalytics')}
+            />
           </HubGrid>
         </motion.section>
 
@@ -91,21 +117,21 @@ export function ResourcesHub({ onNavigate }: ResourcesHubProps) {
           <SectionHeader eyebrow="Integrations" title="Connect external systems" />
           <HubGrid columns={2}>
             <HubCard
-              number="03"
+              number="04"
               eyebrow="VLE & Learning"
               title="VLE Integration"
               description="Connect Canvas, Moodle or any LTI 1.3 learning platform."
               tone="blue"
-              meta="Not connected"
+              meta={vleConnected !== null ? `${vleConnected} connected` : 'Loading…'}
               onClick={() => onNavigate('ltisettings')}
             />
             <HubCard
-              number="04"
+              number="05"
               eyebrow="Workplace Partners"
               title="Employer Portal"
               description="Apprentice progress visibility and employer engagement."
               tone="green"
-              meta="0 employers"
+              meta="See employers"
               onClick={() => onNavigate('employerportal')}
             />
           </HubGrid>
@@ -114,15 +140,24 @@ export function ResourcesHub({ onNavigate }: ResourcesHubProps) {
         {/* ADMINISTRATION */}
         <motion.section variants={itemVariants} className="space-y-6 sm:space-y-7">
           <SectionHeader eyebrow="Administration" title="Institution configuration" />
-          <HubGrid columns={1}>
+          <HubGrid columns={2}>
             <HubCard
-              number="05"
+              number="06"
               eyebrow="Preferences & Setup"
               title="College Settings"
               description="Institution preferences, defaults and system configuration."
               tone="indigo"
               meta="Admin only"
               onClick={() => onNavigate('collegesettings')}
+            />
+            <HubCard
+              number="07"
+              eyebrow="Who did what · when"
+              title="Audit log"
+              description="Append-only record of every sensitive action. Built for Ofsted + funding audits."
+              tone="amber"
+              meta="Append-only"
+              onClick={() => onNavigate('auditlog')}
             />
           </HubGrid>
         </motion.section>

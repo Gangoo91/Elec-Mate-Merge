@@ -1,16 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
-import {
-  ArrowLeft,
-  ArrowRight,
-  User,
-  MapPin,
-  ClipboardList,
-  Eye,
-  FileText,
-  Zap,
-  PenTool,
-} from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useNavigate } from 'react-router-dom';
 import { draftStorage } from '@/utils/draftStorage';
@@ -27,6 +17,7 @@ import { SiteVisitGenerateStep } from './steps/SiteVisitGenerateStep';
 import { SiteVisitSignOffStep } from './steps/SiteVisitSignOffStep';
 import { GoogleMapsProvider } from '@/contexts/GoogleMapsContext';
 import type { SiteVisit } from '@/types/siteVisit';
+import { Eyebrow } from '@/components/college/primitives';
 
 type RecoveredDraft = Partial<SiteVisit> & {
   currentStep?: number;
@@ -35,13 +26,13 @@ type RecoveredDraft = Partial<SiteVisit> & {
 };
 
 const STEPS = [
-  { id: 0, title: 'Client', shortTitle: 'Client', icon: User },
-  { id: 1, title: 'Property', shortTitle: 'Property', icon: MapPin },
-  { id: 2, title: 'Capture', shortTitle: 'Capture', icon: ClipboardList },
-  { id: 3, title: 'Review', shortTitle: 'Review', icon: Eye },
-  { id: 4, title: 'Scope', shortTitle: 'Scope', icon: FileText },
-  { id: 5, title: 'Generate', shortTitle: 'Generate', icon: Zap },
-  { id: 6, title: 'Sign-Off', shortTitle: 'Sign', icon: PenTool },
+  { id: 0, title: 'Client', shortTitle: 'Client' },
+  { id: 1, title: 'Property', shortTitle: 'Property' },
+  { id: 2, title: 'Capture', shortTitle: 'Capture' },
+  { id: 3, title: 'Review', shortTitle: 'Review' },
+  { id: 4, title: 'Scope', shortTitle: 'Scope' },
+  { id: 5, title: 'Generate', shortTitle: 'Generate' },
+  { id: 6, title: 'Sign-off', shortTitle: 'Sign' },
 ];
 
 interface SiteVisitWizardProps {
@@ -121,74 +112,90 @@ export const SiteVisitWizard = ({ initialVisit, onComplete }: SiteVisitWizardPro
     }
   };
 
+  const currentStepTitle = STEPS[sv.currentStep]?.title || '';
+  const currentStepNumber = String(sv.currentStep + 1).padStart(2, '0');
+
   return (
     <GoogleMapsProvider>
-      <div className="space-y-4">
+      <div className="space-y-5">
         {/* Draft recovery banner */}
         {showRecoveryBanner && (
-          <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/20">
-            <div className="flex-1">
-              <p className="text-[15px] font-medium text-amber-400">Unsaved site visit found</p>
-              <p className="text-[13px] text-white">Would you like to recover your progress?</p>
+          <div className="flex flex-col gap-3 rounded-2xl border border-amber-500/30 bg-gradient-to-r from-amber-500/[0.08] to-transparent p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
+            <div>
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-amber-400">
+                Unsaved draft found
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white">
+                Recover where you left off?
+              </div>
+              <p className="mt-0.5 text-[12.5px] text-white/65">
+                Your last session was saved locally and never uploaded.
+              </p>
             </div>
-            <div className="flex gap-2">
-              <Button
-                size="sm"
-                variant="ghost"
+            <div className="flex items-center gap-2">
+              <button
                 onClick={handleDiscardDraft}
-                className="text-xs touch-manipulation text-white"
+                className="flex h-9 items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-3 text-[12px] font-medium text-white transition-colors hover:bg-white/[0.08] touch-manipulation"
               >
                 Discard
-              </Button>
-              <Button
-                size="sm"
+              </button>
+              <button
                 onClick={handleRecoverDraft}
-                className="text-xs touch-manipulation bg-amber-500 text-black hover:bg-amber-600"
+                className="flex h-9 items-center rounded-full bg-elec-yellow px-3.5 text-[12px] font-semibold text-black hover:bg-elec-yellow/90 touch-manipulation"
               >
-                Recover
-              </Button>
+                Recover →
+              </button>
             </div>
           </div>
         )}
 
-        {/* Step progress bar */}
-        <div className="flex gap-1 overflow-x-auto pb-1">
-          {STEPS.map((step) => {
-            const isActive = sv.currentStep === step.id;
-            const isComplete = sv.currentStep > step.id;
-            const Icon = step.icon;
-            return (
-              <button
-                key={step.id}
-                onClick={() => {
-                  if (step.id <= sv.currentStep) sv.setStep(step.id);
-                }}
-                disabled={step.id > sv.currentStep}
-                className={cn(
-                  'flex-1 flex flex-col items-center gap-1 py-2 px-1 rounded-xl transition-all touch-manipulation min-w-[60px]',
-                  isActive && 'bg-elec-yellow/20 border border-elec-yellow',
-                  isComplete && 'bg-emerald-500/10',
-                  !isActive && !isComplete && 'opacity-40'
-                )}
-              >
-                <Icon
-                  className={cn(
-                    'h-4 w-4',
-                    isActive ? 'text-elec-yellow' : isComplete ? 'text-emerald-400' : 'text-white'
-                  )}
-                />
-                <span
-                  className={cn('text-[10px] font-medium', isActive ? 'text-white' : 'text-white')}
-                >
-                  {step.shortTitle}
-                </span>
-              </button>
-            );
-          })}
-        </div>
+        {/* Editorial step header */}
+        <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] p-4 sm:p-5">
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              <Eyebrow>
+                STEP {currentStepNumber} OF {String(STEPS.length).padStart(2, '0')} ·{' '}
+                {currentStepTitle.toUpperCase()}
+              </Eyebrow>
+              <h2 className="mt-1.5 text-[20px] font-semibold leading-tight tracking-tight text-white sm:text-[22px]">
+                {currentStepTitle}
+              </h2>
+            </div>
+            <AutoSaveIndicator lastSaved={sv.lastSaved} isSaving={sv.isSaving} />
+          </div>
 
-        {/* Auto-save indicator */}
-        <AutoSaveIndicator lastSaved={sv.lastSaved} isSaving={sv.isSaving} />
+          {/* Numbered step pills */}
+          <div className="mt-4 flex gap-1.5 overflow-x-auto scrollbar-hide">
+            {STEPS.map((step) => {
+              const isActive = sv.currentStep === step.id;
+              const isComplete = sv.currentStep > step.id;
+              const accessible = step.id <= sv.currentStep;
+              return (
+                <button
+                  key={step.id}
+                  onClick={() => {
+                    if (accessible) sv.setStep(step.id);
+                  }}
+                  disabled={!accessible}
+                  className={cn(
+                    'flex h-8 shrink-0 items-center gap-1.5 rounded-full px-3 text-[11px] font-medium transition-colors touch-manipulation',
+                    isActive
+                      ? 'bg-elec-yellow text-black'
+                      : isComplete
+                        ? 'border border-emerald-500/30 bg-emerald-500/[0.08] text-emerald-400 hover:bg-emerald-500/[0.14]'
+                        : 'border border-white/[0.08] bg-white/[0.04] text-white/45'
+                  )}
+                >
+                  <span className="tabular-nums opacity-60">
+                    {String(step.id + 1).padStart(2, '0')}
+                  </span>
+                  <span>{step.shortTitle}</span>
+                  {isComplete && <span aria-hidden>✓</span>}
+                </button>
+              );
+            })}
+          </div>
+        </div>
 
         {/* Step content */}
         <div ref={contentRef}>
@@ -257,24 +264,26 @@ export const SiteVisitWizard = ({ initialVisit, onComplete }: SiteVisitWizardPro
 
         {/* Bottom navigation */}
         {sv.currentStep < 5 && (
-          <div className="flex gap-3 pt-2">
-            {sv.currentStep > 0 && (
+          <div className="flex items-center gap-3 pt-2">
+            {sv.currentStep > 0 ? (
               <Button
                 variant="outline"
                 onClick={sv.prevStep}
-                className="flex-1 h-12 touch-manipulation text-white border-white/20"
+                className="h-12 flex-1 rounded-xl border-white/[0.12] bg-white/[0.04] text-white hover:bg-white/[0.08] touch-manipulation"
               >
-                <ArrowLeft className="h-4 w-4 mr-2" />
+                <ArrowLeft className="mr-2 h-4 w-4" />
                 Back
               </Button>
+            ) : (
+              <div className="hidden flex-1 sm:block" />
             )}
             <Button
               onClick={sv.nextStep}
               disabled={!canProceed()}
-              className="flex-1 h-12 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold"
+              className="h-12 flex-[2] rounded-xl bg-elec-yellow font-semibold text-black hover:bg-elec-yellow/90 disabled:opacity-50 touch-manipulation"
             >
               Continue
-              <ArrowRight className="h-4 w-4 ml-2" />
+              <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </div>
         )}

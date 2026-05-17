@@ -41,6 +41,7 @@ const PublicSignature = lazy(() => import('@/pages/PublicSignature'));
 const BriefingSignOff = lazy(() => import('@/pages/BriefingSignOff'));
 const PublicBriefingSign = lazy(() => import('@/pages/PublicBriefingSign'));
 const ClientPortalView = lazy(() => import('@/pages/public/ClientPortalView'));
+const ParentDigestPage = lazy(() => import('@/pages/public/ParentDigestPage'));
 const PublicBooking = lazy(() => import('@/pages/public/PublicBooking'));
 const PublicElecIdView = lazy(() => import('@/pages/public/PublicElecIdView'));
 const SupervisorVerificationPage = lazy(() => import('@/pages/public/SupervisorVerificationPage'));
@@ -49,7 +50,14 @@ const ScopeSharePage = lazy(() => import('@/pages/public/ScopeSharePage'));
 const CompletionSignOffPage = lazy(() => import('@/pages/public/CompletionSignOffPage'));
 const SharedPortfolioView = lazy(() => import('@/pages/public/SharedPortfolioView'));
 const InvoiceMarkPaid = lazy(() => import('@/pages/public/InvoiceMarkPaid'));
-const BookingSlotPicker = lazy(() => import('@/pages/public/BookingSlotPicker'));
+// ELE-955 — BookingSlotPicker retired. Quote-accept flow now hands off
+// to the existing PublicBooking page at /book/:electricianId?quote=...
+// so we share one availability source + UX. Old /book-slot/:quoteId
+// route kept around as a redirect target so already-sent emails / Stripe
+// success_urls that reference the old path don't 404.
+const BookingSlotPickerRedirect = lazy(
+  () => import('@/pages/public/BookingSlotRedirect')
+);
 const ForCollegesPage = lazy(() => import('@/pages/public/ForCollegesPage'));
 const LaTeXPDFGeneratorPage = lazy(() => import('@/pages/LaTeXPDFGeneratorPage'));
 const InvoiceQuoteBuilder = lazy(() => import('@/pages/electrician/InvoiceQuoteBuilder'));
@@ -122,6 +130,11 @@ const PolicyDetailPage = lazy(() => import('@/pages/college/PolicyDetailPage'));
 const CompliancePackPage = lazy(() => import('@/pages/college/CompliancePackPage'));
 const OfstedEifPage = lazy(() => import('@/pages/college/OfstedEifPage'));
 const ComplianceHubPage = lazy(() => import('@/pages/college/ComplianceHubPage'));
+const SarDraftPage = lazy(() => import('@/pages/college/SarDraftPage'));
+const QipTrackerPage = lazy(() => import('@/pages/college/QipTrackerPage'));
+const InspectionRehearsalPage = lazy(() => import('@/pages/college/InspectionRehearsalPage'));
+const AcDetailPage = lazy(() => import('@/pages/college/AcDetailPage'));
+const ReportsPage = lazy(() => import('@/pages/college/ReportsPage'));
 const EvidenceTimelinePage = lazy(() => import('@/pages/college/EvidenceTimelinePage'));
 const TutorTodayPage = lazy(() => import('@/pages/college/TutorTodayPage'));
 const MarkingQueuePage = lazy(() => import('@/pages/college/MarkingQueuePage'));
@@ -264,6 +277,8 @@ const ElectricalSymbolsChartPage = lazy(() => import('@/pages/seo/ElectricalSymb
 // Lazy-loaded route modules (with retry for chunk failures)
 const ApprenticeRoutes = lazyWithRetry(() => import('@/routes/ApprenticeRoutes'));
 const AttestOJT = lazyWithRetry(() => import('@/pages/AttestOJT'));
+const EmployerPortalView = lazyWithRetry(() => import('@/pages/public/EmployerPortalView'));
+const CohortComparePage = lazyWithRetry(() => import('@/pages/college/CohortComparePage'));
 const ElectricianHubRoutes = lazyWithRetry(() => import('@/routes/ElectricianHubRoutes'));
 const ElectricianRoutes = lazyWithRetry(() => import('@/routes/ElectricianRoutes'));
 const InspectionRoutes = lazyWithRetry(() => import('@/routes/InspectionRoutes'));
@@ -313,6 +328,16 @@ const AppRouter = () => {
           element={
             <LazyRoute>
               <AttestOJT />
+            </LazyRoute>
+          }
+        />
+        {/* Employer magic-link dashboard — public, no auth, college issues
+            the token per employer. Read-only view of placed apprentices. */}
+        <Route
+          path="/employer-view/:token"
+          element={
+            <LazyRoute>
+              <EmployerPortalView />
             </LazyRoute>
           }
         />
@@ -501,6 +526,16 @@ const AppRouter = () => {
             </LazyRoute>
           }
         />
+        {/* J3 — Parent / guardian weekly-digest magic-link view. Public,
+            single-use token. */}
+        <Route
+          path="/p/:token"
+          element={
+            <LazyRoute>
+              <ParentDigestPage />
+            </LazyRoute>
+          }
+        />
         <Route
           path="/book/:electricianId"
           element={
@@ -509,12 +544,13 @@ const AppRouter = () => {
             </LazyRoute>
           }
         />
-        {/* ELE-955 — public slot picker reached after a quote is accepted */}
+        {/* ELE-955 — legacy slot-picker route now redirects to the
+            unified PublicBooking page at /book/:electricianId?quote=... */}
         <Route
           path="/book-slot/:quoteId"
           element={
             <LazyRoute>
-              <BookingSlotPicker />
+              <BookingSlotPickerRedirect />
             </LazyRoute>
           }
         />
@@ -2107,6 +2143,78 @@ const AppRouter = () => {
               <LazyRoute>
                 <CollegeGuard>
                   <OfstedEifPage />
+                </CollegeGuard>
+              </LazyRoute>
+            }
+          />
+
+          {/* Compliance — Self-Assessment Report draft */}
+          <Route
+            path="college/compliance/sar"
+            element={
+              <LazyRoute>
+                <CollegeGuard>
+                  <SarDraftPage />
+                </CollegeGuard>
+              </LazyRoute>
+            }
+          />
+
+          {/* Compliance — Quality Improvement Plan tracker */}
+          <Route
+            path="college/compliance/qip"
+            element={
+              <LazyRoute>
+                <CollegeGuard>
+                  <QipTrackerPage />
+                </CollegeGuard>
+              </LazyRoute>
+            }
+          />
+
+          {/* Compliance — AI inspection rehearsal (Mate-as-inspector) */}
+          <Route
+            path="college/compliance/rehearsal"
+            element={
+              <LazyRoute>
+                <CollegeGuard>
+                  <InspectionRehearsalPage />
+                </CollegeGuard>
+              </LazyRoute>
+            }
+          />
+
+          {/* Curriculum — per-AC detail (resources, lessons, learner progress) */}
+          <Route
+            path="college/curriculum/ac/:qualificationCode/:unitCode/:acCode"
+            element={
+              <LazyRoute>
+                <CollegeGuard>
+                  <AcDetailPage />
+                </CollegeGuard>
+              </LazyRoute>
+            }
+          />
+
+          {/* Reports — central CSV export hub (funding / Ofsted / AO / quality) */}
+          <Route
+            path="college/reports"
+            element={
+              <LazyRoute>
+                <CollegeGuard>
+                  <ReportsPage />
+                </CollegeGuard>
+              </LazyRoute>
+            }
+          />
+
+          {/* Cohort comparison — HoD compares 2-3 cohorts side-by-side */}
+          <Route
+            path="college/compare"
+            element={
+              <LazyRoute>
+                <CollegeGuard>
+                  <CohortComparePage />
                 </CollegeGuard>
               </LazyRoute>
             }

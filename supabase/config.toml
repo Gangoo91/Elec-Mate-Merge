@@ -347,4 +347,13 @@ verify_jwt = false
 [functions.mark-invoice-paid-token]
 verify_jwt = false
 
+# Public employer-facing endpoints — supervisor opens a link the apprentice
+# shared (ojt-employer-attest) or the college issued (employer-portal-view).
+# No login. The unguessable UUID / random token in the URL is the auth.
+[functions.ojt-employer-attest]
+verify_jwt = false
+
+[functions.employer-portal-view]
+verify_jwt = false
+
 

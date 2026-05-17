@@ -245,7 +245,7 @@ export function CollegePeopleHub({ onNavigate }: CollegePeopleHubProps) {
         {/* STAFF */}
         <motion.section variants={itemVariants} className="space-y-6 sm:space-y-7">
           <SectionHeader eyebrow="Staff" title="Teaching & support" />
-          <HubGrid columns={2}>
+          <HubGrid columns={3}>
             <HubCard
               number="01"
               eyebrow="Teaching Staff"
@@ -257,6 +257,15 @@ export function CollegePeopleHub({ onNavigate }: CollegePeopleHubProps) {
             />
             <HubCard
               number="02"
+              eyebrow="Heatmap"
+              title="Workload"
+              description="Who's overloaded? Cohorts, lessons, marking and observation recency per tutor."
+              tone="amber"
+              meta="Red rows first"
+              onClick={() => onNavigate('tutorworkload')}
+            />
+            <HubCard
+              number="03"
               eyebrow="Assessors & Admin"
               title="Support Staff"
               description="Assessors, admin team and IQA — all non-teaching staff."
@@ -272,7 +281,7 @@ export function CollegePeopleHub({ onNavigate }: CollegePeopleHubProps) {
           <SectionHeader eyebrow="Students & Groups" title="Learners & cohorts" />
           <HubGrid columns={3}>
             <HubCard
-              number="03"
+              number="04"
               eyebrow="Enrolled Learners"
               title="Students"
               description="Enrolments, profiles and learner records."
@@ -281,7 +290,7 @@ export function CollegePeopleHub({ onNavigate }: CollegePeopleHubProps) {
               onClick={() => onNavigate('students')}
             />
             <HubCard
-              number="04"
+              number="05"
               eyebrow="Class Groups"
               title="Cohorts"
               description="Active cohorts and their learners."
@@ -290,13 +299,22 @@ export function CollegePeopleHub({ onNavigate }: CollegePeopleHubProps) {
               onClick={() => onNavigate('cohorts')}
             />
             <HubCard
-              number="05"
+              number="06"
               eyebrow="Records & Registers"
               title="Attendance"
               description="Session registers and attendance tracking."
               tone="purple"
               meta={overdueILPs > 0 ? `${overdueILPs} ILPs overdue` : 'Up to date'}
               onClick={() => onNavigate('attendance')}
+            />
+            <HubCard
+              number="07"
+              eyebrow="HoD Insights"
+              title="Compare cohorts"
+              description="Pick 2–3 cohorts and see progress, attendance, OTJ and EPA readiness side-by-side. Best / amber / worst auto-coloured."
+              tone="cyan"
+              meta="Side-by-side"
+              onClick={() => navigate('/college/compare')}
             />
           </HubGrid>
         </motion.section>
@@ -306,7 +324,7 @@ export function CollegePeopleHub({ onNavigate }: CollegePeopleHubProps) {
           <SectionHeader eyebrow="Employer Partners" title="Employer engagement" />
           <HubGrid columns={1}>
             <HubCard
-              number="06"
+              number="08"
               eyebrow="Workplace Partners"
               title="Employer Portal"
               description="View apprentice progress, workplace reviews and employer engagement."

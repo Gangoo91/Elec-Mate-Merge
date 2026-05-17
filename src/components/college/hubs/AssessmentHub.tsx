@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { PullToRefresh } from '@/components/college/ui/PullToRefresh';
 import { RecordGradeSheet } from '@/components/college/sheets/RecordGradeSheet';
+import { CalibrationSessionSheet } from '@/components/college/sheets/CalibrationSessionSheet';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 import { usePendingGrades } from '@/hooks/college/useCollegeGrades';
 import { useOverdueILPReviews } from '@/hooks/college/useCollegeILP';
@@ -32,6 +34,8 @@ export function AssessmentHub({ onNavigate }: AssessmentHubProps) {
   const { stats: workStats } = useWorkQueue();
   const queryClient = useQueryClient();
   const [gradeSheetOpen, setGradeSheetOpen] = useState(false);
+  const [calibrationOpen, setCalibrationOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleRefresh = async () => {
     await Promise.all([
@@ -173,24 +177,105 @@ export function AssessmentHub({ onNavigate }: AssessmentHubProps) {
               badge={<Pill tone="yellow">AI</Pill>}
               onClick={() => onNavigate('portfolio')}
             />
+            <HubCard
+              number="06"
+              eyebrow="Mastery Loop"
+              title="AC Sign-off Queue"
+              description="When a learner clears the mastery threshold on evidence, approve the AC sign-off in one tap."
+              tone="emerald"
+              meta="Auto-proposed"
+              badge={<Pill tone="yellow">AI</Pill>}
+              onClick={() => onNavigate('masteryqueue')}
+            />
+          </HubGrid>
+        </motion.section>
+
+        {/* QUALITY ASSURANCE */}
+        <motion.section variants={itemVariants} className="space-y-6 sm:space-y-7">
+          <SectionHeader eyebrow="Quality Assurance" title="IQA, observation & audit" />
+          <HubGrid columns={2}>
+            <HubCard
+              number="07"
+              eyebrow="Internal Quality Assurance"
+              title="IQA Dashboard"
+              description="Sampling plans, findings log and standardisation meetings."
+              tone="purple"
+              meta="Sampling + verdicts"
+              onClick={() => navigate('/college/iqa')}
+            />
+            <HubCard
+              number="08"
+              eyebrow="OTJ Audit"
+              title="IQA · OTJ verdicts"
+              description="Sample assessor-verified OTJ entries. Track per-assessor agreement rate."
+              tone="amber"
+              meta="Assessor agreement"
+              onClick={() => onNavigate('iqaotjaudit')}
+            />
+            <HubCard
+              number="09"
+              eyebrow="Teaching Quality"
+              title="Lesson observations"
+              description="Peer, HoD, IQA and learning walk observations across every tutor."
+              tone="emerald"
+              meta="360 view"
+              onClick={() => onNavigate('tutorobs')}
+            />
+            <HubCard
+              number="10"
+              eyebrow="Schedule"
+              title="Assessment calendar"
+              description="Assessment, IQA and observation dates across cohorts."
+              tone="blue"
+              meta="Cross-cohort timeline"
+              onClick={() => onNavigate('assessmentcalendar')}
+            />
+            <HubCard
+              number="11"
+              eyebrow="Exports · Funding · Ofsted"
+              title="Reports"
+              description="Funding, Ofsted, awarding-body and quality CSVs. Filter, preview, download."
+              tone="yellow"
+              meta="7 reports"
+              onClick={() => navigate('/college/reports')}
+            />
+            <HubCard
+              number="12"
+              eyebrow="Inter-rater calibration"
+              title="Calibration sessions"
+              description="Post an anonymised sample. Every tutor marks it independently. Agreement % and outliers surface automatically."
+              tone="purple"
+              meta="Standardise grading"
+              onClick={() => setCalibrationOpen(true)}
+            />
           </HubGrid>
         </motion.section>
 
         {/* EPA */}
         <motion.section variants={itemVariants} className="space-y-6 sm:space-y-7">
           <SectionHeader eyebrow="End Point Assessment" title="Gateway to EPA" />
-          <HubGrid columns={2}>
+          <HubGrid columns={3}>
             <HubCard
-              number="06"
-              eyebrow="Gateway Readiness"
-              title="EPA Tracking"
-              description="Gateway readiness checks, EPA scheduling and outcomes."
+              number="13"
+              eyebrow="Cohort Readiness"
+              title="Gateway readiness"
+              description="Every active apprentice on one page — learner, tutor and AI verdicts side by side. Sort by readiness, filter by blocker."
               tone="green"
-              meta={studentsAtGateway > 0 ? `${studentsAtGateway} at gateway` : 'None ready'}
+              meta={studentsAtGateway > 0 ? `${studentsAtGateway} at gateway` : 'Cohort view'}
+              badge={<Pill tone="yellow">AI</Pill>}
+              onClick={() => navigate('/college/epa')}
+            />
+            <HubCard
+              number="14"
+              eyebrow="EPA Records"
+              title="EPA admin"
+              description="Status records, gateway dates, outcomes and Functional Skills tracking — per learner."
+              tone="blue"
+              meta="Records & dates"
               onClick={() => onNavigate('epatracking')}
             />
             <HubCard
-              number="07"
+              number="15"
               eyebrow="Review Queue"
               title="Work Queue"
               description="Pending reviews, assignments and assessor tasks."
@@ -203,6 +288,7 @@ export function AssessmentHub({ onNavigate }: AssessmentHubProps) {
         </motion.section>
 
         <RecordGradeSheet open={gradeSheetOpen} onOpenChange={setGradeSheetOpen} />
+        <CalibrationSessionSheet open={calibrationOpen} onOpenChange={setCalibrationOpen} />
       </PageFrame>
     </PullToRefresh>
   );

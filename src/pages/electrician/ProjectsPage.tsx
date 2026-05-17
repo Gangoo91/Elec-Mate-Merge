@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -12,7 +12,12 @@ import {
   CheckCircle2,
   MoreVertical,
   Trash2,
+  Timer,
+  Sparkles,
+  ChevronRight,
 } from 'lucide-react';
+import { Assistant } from '@/components/business-hub/Assistant';
+import { useSparkTasks } from '@/hooks/useSparkTasks';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
@@ -96,8 +101,100 @@ const ProjectsPage = () => {
   const navigate = useNavigate();
   const [view, setView] = useState<ProjectView>('active');
   const [showCreate, setShowCreate] = useState(false);
-  const { projects, counts, isLoading, createProject, completeProject, deleteProject, refreshProjects } = useSparkProjects(view);
+  const {
+    projects,
+    counts,
+    isLoading,
+    createProject,
+    completeProject,
+    deleteProject,
+    refreshProjects,
+  } = useSparkProjects(view);
   const [deleteTarget, setDeleteTarget] = useState<{ id: string; title: string } | null>(null);
+
+  // Task hook — Mate needs the handlers to propose/apply task actions.
+  // We load 'all' so the assistant has context regardless of which view we're on.
+  const {
+    tasks: assistantTasks,
+    saveTask,
+    updateTask,
+    deleteTask,
+    markDone,
+  } = useSparkTasks('all');
+
+  // AI assistant — opened with project-context prompt from the cards
+  const [aiOpen, setAiOpen] = useState(false);
+  const [aiPrompt, setAiPrompt] = useState<string | undefined>(undefined);
+
+  const openAiForProject = (project: (typeof projects)[number]) => {
+    const parts = [`Tell me what's outstanding on the "${project.title}" project`];
+    if (project.customerName) parts.push(`for ${project.customerName}`);
+    if (project.location) parts.push(`at ${project.location}`);
+    parts.push(
+      `— pull tasks, overdue items, any draft quotes/invoices, and tell me what I should do next.`
+    );
+    setAiPrompt(parts.join(' '));
+    setAiOpen(true);
+  };
+
+  // Start the timer on the Time Tracker page with this project pre-tagged.
+  // We hand off via sessionStorage so Time Tracker reads it on mount.
+  const startTimerForProject = (project: (typeof projects)[number]) => {
+    try {
+      sessionStorage.setItem(
+        'time-tracker-prefill',
+        JSON.stringify({
+          projectId: project.id,
+          label: project.title,
+        })
+      );
+    } catch {
+      /* ignore quota / disabled */
+    }
+    navigate('/electrician/time-tracker');
+  };
+
+  // ─── Hero metrics ─────────────────────────────────────────────────
+  // Active value: sum of estimatedValue across active (open/active) projects.
+  // To bill: project count + total value where status='completed' and we
+  //   haven't yet invoiced — proxy = completed projects (we don't have an
+  //   invoiced flag on projects, so we surface it as a rollup that nudges
+  //   the user to bill out completed work).
+  // Won this month: count of projects with status='completed' that
+  //   completed in the current calendar month (updated_at as proxy).
+  const metrics = useMemo(() => {
+    const now = new Date();
+    const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+    let activeValue = 0;
+    let activeCount = 0;
+    let toBillValue = 0;
+    let toBillCount = 0;
+    let wonThisMonthCount = 0;
+    let wonThisMonthValue = 0;
+    for (const p of projects) {
+      const val = Number(p.estimatedValue ?? 0);
+      if (p.status === 'completed') {
+        toBillCount += 1;
+        toBillValue += val;
+        const updated = p.updatedAt ? new Date(p.updatedAt) : null;
+        if (updated && updated >= monthStart) {
+          wonThisMonthCount += 1;
+          wonThisMonthValue += val;
+        }
+      } else {
+        activeCount += 1;
+        activeValue += val;
+      }
+    }
+    return {
+      activeCount,
+      activeValue,
+      toBillCount,
+      toBillValue,
+      wonThisMonthCount,
+      wonThisMonthValue,
+    };
+  }, [projects]);
 
   // Customers for the create form
   const [customers, setCustomers] = useState<SimpleCustomer[]>([]);
@@ -182,25 +279,24 @@ const ProjectsPage = () => {
   };
 
   return (
-    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
-      {/* Sticky Header */}
+    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24 min-h-screen">
+      {/* Sticky compact header — matches Tasks/Calendar/Time-Tracker pattern */}
       <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
-        <div className="px-4 py-2">
+        <div className="px-4 lg:px-8 py-2 lg:max-w-[1200px] lg:mx-auto">
           <div className="flex items-center justify-between h-11">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => navigate('/electrician/business')}
-              className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
             <div className="flex items-center gap-2">
-              <FolderKanban className="h-5 w-5 text-elec-yellow" />
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => navigate('/electrician/business')}
+                className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"
+              >
+                <ArrowLeft className="h-5 w-5" />
+              </Button>
               <h1 className="text-lg font-bold text-white">Projects</h1>
-              {counts.active > 0 && (
-                <span className="text-[11px] font-bold bg-elec-yellow/20 text-elec-yellow px-2 py-0.5 rounded-full">
-                  {counts.active}
+              {counts[view] > 0 && (
+                <span className="text-[11px] font-bold bg-white/[0.08] text-white/70 px-2 py-0.5 rounded-full">
+                  {counts[view]}
                 </span>
               )}
             </div>
@@ -208,7 +304,8 @@ const ProjectsPage = () => {
               variant="ghost"
               size="icon"
               onClick={() => setShowCreate(true)}
-              className="text-elec-yellow hover:text-elec-yellow hover:bg-elec-yellow/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"
+              aria-label="New project"
+              className="text-white/80 hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"
             >
               <Plus className="h-5 w-5" />
             </Button>
@@ -216,25 +313,76 @@ const ProjectsPage = () => {
         </div>
       </div>
 
-      {/* View Tabs */}
-      <div className="px-4 pt-3 pb-2">
-        <div className="flex gap-2">
+      {/* Hero metrics — three tiles, like Time Tracker */}
+      <div className="px-4 lg:px-8 pt-4 lg:max-w-[1200px] lg:mx-auto">
+        <div className="grid grid-cols-3 gap-2 sm:gap-3">
+          <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] px-3 py-3 sm:px-4 sm:py-3.5">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45">
+              Active
+            </p>
+            <p className="mt-1 text-[18px] sm:text-[20px] font-bold text-white tabular-nums leading-none">
+              {formatCurrency(metrics.activeValue)}
+            </p>
+            <p className="mt-1 text-[11.5px] text-white/45 tabular-nums">
+              {metrics.activeCount} project{metrics.activeCount === 1 ? '' : 's'}
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => setView('completed')}
+            className={cn(
+              'rounded-xl border px-3 py-3 sm:px-4 sm:py-3.5 text-left touch-manipulation transition-colors',
+              metrics.toBillCount > 0
+                ? 'bg-elec-yellow/[0.06] border-elec-yellow/25 hover:bg-elec-yellow/[0.10]'
+                : 'bg-white/[0.03] border-white/[0.06]'
+            )}
+          >
+            <p
+              className={cn(
+                'text-[10px] font-semibold uppercase tracking-[0.16em]',
+                metrics.toBillCount > 0 ? 'text-elec-yellow' : 'text-white/45'
+              )}
+            >
+              To bill {metrics.toBillCount > 0 ? `· ${metrics.toBillCount}` : ''}
+            </p>
+            <p className="mt-1 text-[18px] sm:text-[20px] font-bold text-white tabular-nums leading-none">
+              {formatCurrency(metrics.toBillValue)}
+            </p>
+            <p className="mt-1 text-[11.5px] text-white/45 tabular-nums">completed jobs</p>
+          </button>
+          <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] px-3 py-3 sm:px-4 sm:py-3.5">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45">
+              Won this month
+            </p>
+            <p className="mt-1 text-[18px] sm:text-[20px] font-bold text-white tabular-nums leading-none">
+              {formatCurrency(metrics.wonThisMonthValue)}
+            </p>
+            <p className="mt-1 text-[11.5px] text-emerald-400 tabular-nums">
+              {metrics.wonThisMonthCount} job{metrics.wonThisMonthCount === 1 ? '' : 's'}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* View tabs — slimmed to match the rest of the app */}
+      <div className="px-4 lg:px-8 pt-4 pb-2 lg:max-w-[1200px] lg:mx-auto">
+        <div className="flex gap-1">
           {VIEWS.map((v) => (
             <button
               key={v.key}
               onClick={() => setView(v.key)}
               className={cn(
-                'px-4 py-2 rounded-full text-sm font-medium transition-all touch-manipulation h-11 flex items-center gap-1.5',
+                'flex items-center gap-1.5 px-2.5 h-7 rounded-full text-[12px] font-medium transition-colors touch-manipulation',
                 view === v.key
-                  ? 'bg-elec-yellow text-black'
-                  : 'bg-white/[0.06] text-white active:bg-white/10'
+                  ? 'bg-white/[0.10] text-white'
+                  : 'text-white/45 hover:text-white hover:bg-white/[0.05]'
               )}
             >
               {v.label}
               <span
                 className={cn(
-                  'text-[11px] font-bold px-1.5 py-0.5 rounded-full',
-                  view === v.key ? 'bg-black/20 text-black' : 'bg-white/10 text-white'
+                  'text-[10px] font-semibold tabular-nums',
+                  view === v.key ? 'text-white/60' : 'text-white/35'
                 )}
               >
                 {counts[v.key]}
@@ -246,184 +394,257 @@ const ProjectsPage = () => {
 
       {/* Content */}
       <PullToRefresh onRefresh={refreshProjects}>
-        <div className="px-4 py-2">
+        <div className="px-4 lg:px-8 py-2 lg:max-w-[1200px] lg:mx-auto">
           {isLoading ? (
             <div className="flex justify-center py-16">
               <Loader2 className="h-6 w-6 animate-spin text-white" />
             </div>
           ) : projects.length === 0 ? (
-            /* Enhanced Empty State */
-            <div className="flex flex-col items-center py-12 text-center px-4">
-              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-amber-400/20 to-orange-500/20 border border-amber-400/30 flex items-center justify-center mb-5">
-                <FolderKanban className="h-9 w-9 text-amber-400" />
+            /* Empty state — leads with AI as the easy path in */
+            <div className="flex flex-col items-center py-12 text-center max-w-[460px] mx-auto">
+              <div className="w-14 h-14 rounded-2xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center mb-4">
+                <FolderKanban className="h-6 w-6 text-white/55" />
               </div>
-              <h2 className="text-lg font-bold text-white mb-2">Start your first project</h2>
-              <div className="space-y-2 mb-6">
-                <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="h-4 w-4 text-amber-400 flex-shrink-0" />
-                  <span className="text-sm text-white">
-                    Track tasks, quotes & certs in one place
-                  </span>
-                </div>
-                <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="h-4 w-4 text-amber-400 flex-shrink-0" />
-                  <span className="text-sm text-white">See progress at a glance</span>
-                </div>
-                <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="h-4 w-4 text-amber-400 flex-shrink-0" />
-                  <span className="text-sm text-white">Link customers, invoices & RAMS</span>
-                </div>
+              <h2 className="text-[18px] font-semibold text-white mb-1.5">
+                No projects yet
+              </h2>
+              <p className="text-[13.5px] text-white/55 leading-relaxed mb-6 max-w-[360px]">
+                A project bundles a job's tasks, time, quotes, certs and invoices in one place.
+                Ask Mate to set one up — or build it yourself.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-2 w-full max-w-[360px]">
+                <Button
+                  onClick={() => {
+                    setAiPrompt(
+                      "I've got a new job — walk me through setting it up as a project: customer, location, dates, value, and a sensible task list."
+                    );
+                    setAiOpen(true);
+                  }}
+                  className="flex-1 h-12 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold rounded-xl touch-manipulation active:scale-[0.98]"
+                >
+                  <Sparkles className="h-4 w-4 mr-2" />
+                  Set one up with Mate
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => setShowCreate(true)}
+                  className="flex-1 h-12 text-white border-white/[0.12] hover:bg-white/[0.06] hover:text-white rounded-xl touch-manipulation"
+                >
+                  <Plus className="h-4 w-4 mr-2" />
+                  Build manually
+                </Button>
               </div>
-              <Button
-                onClick={() => setShowCreate(true)}
-                className="w-full h-12 bg-gradient-to-r from-amber-400 to-orange-500 text-black font-bold text-base rounded-xl touch-manipulation active:scale-[0.98]"
-              >
-                <Plus className="h-5 w-5 mr-2" />
-                Create Project
-              </Button>
             </div>
           ) : (
             <motion.div
               variants={containerVariants}
               initial="hidden"
               animate="visible"
-              className="space-y-3"
+              className="grid grid-cols-1 md:grid-cols-2 gap-3"
             >
               <AnimatePresence mode="popLayout">
-                {projects.map((project) => (
-                  <motion.div
-                    key={project.id}
-                    variants={itemVariants}
-                    layout
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    onClick={() => navigate(`/electrician/projects/${project.id}`)}
-                    className="w-full text-left rounded-2xl bg-white/[0.04] border border-white/[0.08] active:bg-white/[0.08] transition-colors touch-manipulation overflow-hidden cursor-pointer"
-                  >
-                    {/* Priority accent bar */}
-                    <div className={cn('h-1 w-full', PRIORITY_COLOURS[project.priority])} />
-
-                    <div className="p-4 space-y-3">
-                      {/* Title row with actions menu */}
-                      <div className="flex items-start justify-between gap-2">
-                        <div className="flex-1 min-w-0">
-                          <h3 className="text-[15px] font-bold text-white leading-snug line-clamp-2">
-                            {project.title}
-                          </h3>
-                          {project.customerName && (
-                            <p className="text-[13px] text-white mt-0.5 flex items-center gap-1">
-                              <Users className="h-3 w-3 flex-shrink-0" />
-                              {project.customerName}
-                              {project.location && (
-                                <>
-                                  <span className="mx-1">·</span>
-                                  <MapPin className="h-3 w-3 flex-shrink-0" />
-                                  {project.location}
-                                </>
+                {projects.map((project) => {
+                  const isCompleted = project.status === 'completed';
+                  return (
+                    <motion.div
+                      key={project.id}
+                      variants={itemVariants}
+                      layout
+                      exit={{ opacity: 0, scale: 0.97 }}
+                      className="group rounded-xl bg-white/[0.06] border border-white/[0.12] hover:border-white/[0.22] hover:bg-white/[0.08] transition-colors overflow-hidden touch-manipulation shadow-sm shadow-black/20"
+                    >
+                      {/* Tappable body — opens the project detail */}
+                      <button
+                        type="button"
+                        onClick={() => navigate(`/electrician/projects/${project.id}`)}
+                        className="w-full text-left p-4 active:bg-white/[0.06] transition-colors"
+                      >
+                        {/* Title row — priority dot · title · value */}
+                        <div className="flex items-start gap-3">
+                          <span
+                            aria-hidden="true"
+                            className={cn(
+                              'w-2 h-2 rounded-full shrink-0 mt-2',
+                              PRIORITY_COLOURS[project.priority]
+                            )}
+                          />
+                          <div className="flex-1 min-w-0">
+                            <h3
+                              className={cn(
+                                'text-[15px] font-semibold text-white leading-snug line-clamp-2',
+                                isCompleted && 'text-white/60'
                               )}
-                            </p>
-                          )}
-                          {!project.customerName && project.location && (
-                            <p className="text-[13px] text-white mt-0.5 flex items-center gap-1">
-                              <MapPin className="h-3 w-3 flex-shrink-0" />
-                              {project.location}
-                            </p>
-                          )}
-                        </div>
-                        <div className="flex items-center gap-1 flex-shrink-0">
+                            >
+                              {project.title}
+                            </h3>
+                            {(project.customerName || project.location) && (
+                              <p className="mt-0.5 text-[12.5px] text-white/50 truncate leading-snug">
+                                {[project.customerName, project.location]
+                                  .filter(Boolean)
+                                  .join(' · ')}
+                              </p>
+                            )}
+                          </div>
                           {project.estimatedValue ? (
-                            <span className="text-base font-bold text-emerald-400 tabular-nums">
+                            <span
+                              className={cn(
+                                'text-[14px] font-bold tabular-nums shrink-0 pt-0.5',
+                                isCompleted ? 'text-white/50' : 'text-emerald-400'
+                              )}
+                            >
                               {formatCurrency(project.estimatedValue)}
                             </span>
                           ) : null}
-                          <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-11 w-11 text-white hover:text-white hover:bg-white/10 rounded-lg flex-shrink-0"
-                                onClick={(e) => e.stopPropagation()}
-                              >
-                                <MoreVertical className="h-4 w-4" />
-                              </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent
-                              align="end"
-                              className="bg-elec-gray border-white/10"
+                        </div>
+
+                        {/* Meta row — type · due date — subtle */}
+                        {(project.projectType || project.dueDate) && (
+                          <div className="mt-2.5 ml-5 flex items-center gap-3 text-[11px] text-white/40">
+                            {project.projectType && (
+                              <span className="capitalize">{project.projectType}</span>
+                            )}
+                            {project.dueDate && (
+                              <span className="flex items-center gap-1">
+                                <Calendar className="h-3 w-3" />
+                                Due {formatDate(project.dueDate)}
+                              </span>
+                            )}
+                          </div>
+                        )}
+
+                        {/* Progress — only render if there are tasks */}
+                        {project.totalTasks > 0 ? (
+                          <div className="mt-3 ml-5">
+                            <div className="flex items-center justify-between mb-1">
+                              <span className="text-[11px] text-white/45 tabular-nums">
+                                {project.completedTasks}/{project.totalTasks} tasks
+                              </span>
+                              <span className="text-[11px] font-semibold text-white/70 tabular-nums">
+                                {project.progress}%
+                              </span>
+                            </div>
+                            <div className="h-1 bg-white/[0.06] rounded-full overflow-hidden">
+                              <div
+                                className={cn(
+                                  'h-full rounded-full transition-all duration-500',
+                                  project.progress === 100
+                                    ? 'bg-emerald-400'
+                                    : project.progress >= 50
+                                      ? 'bg-elec-yellow'
+                                      : 'bg-white/35'
+                                )}
+                                style={{ width: `${project.progress}%` }}
+                              />
+                            </div>
+                          </div>
+                        ) : (
+                          <p className="mt-3 ml-5 text-[11px] text-white/35">No tasks yet</p>
+                        )}
+                      </button>
+
+                      {/* Action row — start timer · ask Mate · kebab */}
+                      <div className="px-3 py-2 border-t border-white/[0.10] flex items-center gap-1">
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            startTimerForProject(project);
+                          }}
+                          disabled={isCompleted}
+                          className="flex-1 flex items-center justify-center gap-1.5 h-9 rounded-lg text-[12.5px] font-medium text-white/70 hover:text-white hover:bg-white/[0.06] active:bg-white/[0.08] touch-manipulation transition-colors disabled:opacity-30 disabled:hover:bg-transparent"
+                        >
+                          <Timer className="h-3.5 w-3.5" />
+                          Start timer
+                        </button>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            openAiForProject(project);
+                          }}
+                          className="flex-1 flex items-center justify-center gap-1.5 h-9 rounded-lg text-[12.5px] font-medium text-elec-yellow hover:text-yellow-300 hover:bg-elec-yellow/[0.06] active:bg-elec-yellow/[0.10] touch-manipulation transition-colors"
+                        >
+                          <Sparkles className="h-3.5 w-3.5" />
+                          Ask Mate
+                        </button>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              aria-label="More actions"
+                              className="h-9 w-9 text-white/55 hover:text-white hover:bg-white/[0.06] rounded-lg shrink-0"
                               onClick={(e) => e.stopPropagation()}
                             >
-                              {project.status !== 'completed' && (
-                                <DropdownMenuItem
-                                  className="text-white focus:bg-white/10 focus:text-white"
-                                  onClick={() => completeProject(project.id)}
-                                >
-                                  <CheckCircle2 className="h-4 w-4 mr-2 text-emerald-400" />
-                                  Mark Complete
-                                </DropdownMenuItem>
-                              )}
+                              <MoreVertical className="h-4 w-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent
+                            align="end"
+                            className="bg-elec-gray border-white/10"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            {!isCompleted && (
                               <DropdownMenuItem
-                                className="text-red-400 focus:bg-red-500/10 focus:text-red-400"
-                                onClick={() => setDeleteTarget({ id: project.id, title: project.title })}
+                                className="text-white focus:bg-white/10 focus:text-white"
+                                onClick={() => completeProject(project.id)}
                               >
-                                <Trash2 className="h-4 w-4 mr-2" />
-                                Delete
+                                <CheckCircle2 className="h-4 w-4 mr-2 text-emerald-400" />
+                                Mark complete
                               </DropdownMenuItem>
-                            </DropdownMenuContent>
-                          </DropdownMenu>
-                        </div>
+                            )}
+                            <DropdownMenuItem
+                              className="text-red-400 focus:bg-red-500/10 focus:text-red-400"
+                              onClick={() =>
+                                setDeleteTarget({ id: project.id, title: project.title })
+                              }
+                            >
+                              <Trash2 className="h-4 w-4 mr-2" />
+                              Delete
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
                       </div>
-
-                      {/* Badges row */}
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <span
-                          className={cn(
-                            'text-[11px] font-medium px-2 py-0.5 rounded-full',
-                            STATUS_COLOURS[project.status] || 'bg-white/10 text-white'
-                          )}
-                        >
-                          {project.status}
-                        </span>
-                        {project.projectType && (
-                          <span className="text-[11px] font-medium bg-elec-yellow/15 text-elec-yellow px-2 py-0.5 rounded-full">
-                            {project.projectType}
-                          </span>
-                        )}
-                        {project.dueDate && (
-                          <span className="text-[11px] font-medium text-white flex items-center gap-1">
-                            <Calendar className="h-3 w-3" />
-                            {formatDate(project.dueDate)}
-                          </span>
-                        )}
-                      </div>
-
-                      {/* Progress bar */}
-                      <div>
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="text-[11px] text-white">
-                            {project.totalTasks > 0
-                              ? `${project.completedTasks}/${project.totalTasks} tasks`
-                              : 'No tasks yet'}
-                          </span>
-                          {project.totalTasks > 0 && (
-                            <span className="text-[11px] font-bold text-elec-yellow">
-                              {project.progress}%
-                            </span>
-                          )}
-                        </div>
-                        <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
-                          <div
-                            className="h-full bg-elec-yellow rounded-full transition-all duration-500"
-                            style={{ width: `${project.progress}%` }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
+                    </motion.div>
+                  );
+                })}
               </AnimatePresence>
             </motion.div>
           )}
         </div>
       </PullToRefresh>
+
+      {/* AI sparkle FAB — always-on entry to Mate from the projects page */}
+      <button
+        type="button"
+        onClick={() => {
+          setAiPrompt(undefined);
+          setAiOpen(true);
+        }}
+        aria-label="Open Mate"
+        className="fixed right-4 bottom-[max(env(safe-area-inset-bottom),16px)] sm:bottom-6 z-40 h-14 w-14 rounded-full bg-gradient-to-br from-elec-yellow to-amber-500 text-black shadow-xl shadow-elec-yellow/30 flex items-center justify-center active:scale-[0.96] touch-manipulation"
+      >
+        <Sparkles className="h-6 w-6" strokeWidth={2.4} />
+      </button>
+
+      {/* Mate assistant — handlers are wired so chat-proposed actions actually apply */}
+      <Assistant
+        isOpen={aiOpen}
+        onClose={() => {
+          setAiOpen(false);
+          setAiPrompt(undefined);
+        }}
+        initialPrompt={aiPrompt}
+        currentTasks={assistantTasks}
+        currentProjects={projects}
+        onSave={saveTask}
+        onUpdate={(id, input) => updateTask(id, input)}
+        onMarkDone={markDone}
+        onDelete={deleteTask}
+        onCreateProject={createProject}
+        onCompleteProject={completeProject}
+        onDeleteProject={deleteProject}
+      />
 
       {/* Delete confirmation dialog */}
       <AlertDialog open={!!deleteTarget} onOpenChange={(open) => !open && setDeleteTarget(null)}>

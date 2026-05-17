@@ -55,6 +55,7 @@ export default function AttestOJT() {
   const [error, setError] = useState<string | null>(null);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [comment, setComment] = useState('');
   const [confirm, setConfirm] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
@@ -96,6 +97,7 @@ export default function AttestOJT() {
         body: JSON.stringify({
           attester_name: name.trim(),
           attester_email: email.trim(),
+          attester_comment: comment.trim() || undefined,
         }),
       });
       const data = await res.json();
@@ -241,6 +243,21 @@ export default function AttestOJT() {
                       className="w-full h-11 px-3 rounded-lg bg-[hsl(0_0%_8%)] border border-white/[0.08] text-[14px] text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20 outline-none"
                     />
                   </label>
+                  <label className="block space-y-1.5">
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                      Comment <span className="text-white/40 normal-case font-normal">(optional)</span>
+                    </span>
+                    <textarea
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value.slice(0, 2000))}
+                      placeholder="Anything you'd like the college to know — concerns, what went well, feedback for the apprentice."
+                      rows={3}
+                      className="w-full px-3 py-2.5 rounded-lg bg-[hsl(0_0%_8%)] border border-white/[0.08] text-[14px] text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20 outline-none resize-none leading-snug"
+                    />
+                    <span className="text-[10.5px] text-white/40 tabular-nums">
+                      {comment.length}/2000
+                    </span>
+                  </label>
                   <label className="flex items-start gap-2.5 pt-1 cursor-pointer">
                     <input
                       type="checkbox"
@@ -250,8 +267,8 @@ export default function AttestOJT() {
                     />
                     <span className="text-[12.5px] text-white/85 leading-relaxed">
                       I confirm that the apprentice completed the work above and that the
-                      hours are accurate. I understand my name and email will be recorded
-                      on their training record.
+                      hours are accurate. I understand my name, email and comment will be
+                      recorded on their training record.
                     </span>
                   </label>
                 </div>

@@ -1,4 +1,4 @@
-import { useState, useCallback, lazy, Suspense } from 'react';
+import { useState, useCallback, useEffect, lazy, Suspense } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { CollegeSupabaseProvider } from '@/contexts/CollegeSupabaseContext';
 import { useAuth } from '@/contexts/AuthContext';
@@ -71,9 +71,11 @@ const ProgressTrackingSection = lazy(() =>
     default: m.ProgressTrackingSection,
   }))
 );
-const PortfolioSection = lazy(() =>
-  import('@/components/college/sections/PortfolioSection').then((m) => ({
-    default: m.PortfolioSection,
+// PortfolioSection was a 26-line passthrough to CollegePortfolioHub — deleted.
+// We render CollegePortfolioHub directly via the `portfolio` case below.
+const CollegePortfolioHub = lazy(() =>
+  import('@/components/college/portfolio/CollegePortfolioHub').then((m) => ({
+    default: m.default,
   }))
 );
 const WorkQueueSection = lazy(() =>
@@ -165,6 +167,36 @@ const AssessmentCalendarSection = lazy(() =>
     default: m.AssessmentCalendarSection,
   }))
 );
+const ResourceAnalyticsSection = lazy(() =>
+  import('@/components/college/sections/ResourceAnalyticsSection').then((m) => ({
+    default: m.ResourceAnalyticsSection,
+  }))
+);
+const MasteryQueueSection = lazy(() =>
+  import('@/components/college/sections/MasteryQueueSection').then((m) => ({
+    default: m.MasteryQueueSection,
+  }))
+);
+const IqaOtjAuditSection = lazy(() =>
+  import('@/components/college/sections/IqaOtjAuditSection').then((m) => ({
+    default: m.IqaOtjAuditSection,
+  }))
+);
+const TutorObsSection = lazy(() =>
+  import('@/components/college/sections/TutorObsSection').then((m) => ({
+    default: m.TutorObsSection,
+  }))
+);
+const AuditLogSection = lazy(() =>
+  import('@/components/college/sections/AuditLogSection').then((m) => ({
+    default: m.AuditLogSection,
+  }))
+);
+const TutorWorkloadSection = lazy(() =>
+  import('@/components/college/sections/TutorWorkloadSection').then((m) => ({
+    default: m.TutorWorkloadSection,
+  }))
+);
 
 // Lazy-loaded hubs
 const CollegePeopleHub = lazy(() =>
@@ -227,7 +259,13 @@ export type CollegeSection =
   | 'aiilpgenerator'
   | 'iqaworkflow'
   | 'batchoperations'
-  | 'assessmentcalendar';
+  | 'assessmentcalendar'
+  | 'resourceanalytics'
+  | 'masteryqueue'
+  | 'iqaotjaudit'
+  | 'tutorobs'
+  | 'auditlog'
+  | 'tutorworkload';
 
 // Section titles for the header
 const sectionTitles: Record<CollegeSection, string> = {
@@ -266,6 +304,12 @@ const sectionTitles: Record<CollegeSection, string> = {
   iqaworkflow: 'IQA Workflow',
   batchoperations: 'Batch Operations',
   assessmentcalendar: 'Assessment Calendar',
+  resourceanalytics: 'Resource Analytics',
+  masteryqueue: 'Mastery Queue',
+  iqaotjaudit: 'IQA · OTJ Audit',
+  tutorobs: 'Lesson Obs 360',
+  auditlog: 'Audit log',
+  tutorworkload: 'Tutor workload',
 };
 
 const CollegeDashboard = () => {
@@ -276,6 +320,18 @@ const CollegeDashboard = () => {
   const setActiveSection = (section: CollegeSection) =>
     setSearchParams({ section }, { replace: false });
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
+
+  // Tutor daily-driver: when a tutor / assessor / IQA lands on /college with
+  // no section param, redirect to /college/today. Admin / HoD see the
+  // editorial overview which has hub cards + compliance widget — better for
+  // their cross-cutting role.
+  useEffect(() => {
+    if (searchParams.get('section')) return;
+    if (!profile?.college_role) return;
+    if (['tutor', 'assessor', 'iqa', 'support'].includes(profile.college_role)) {
+      navigate('/college/today', { replace: true });
+    }
+  }, [profile?.college_role, searchParams, navigate]);
 
   // Keyboard shortcuts
   useKeyboardShortcuts([
@@ -524,7 +580,7 @@ const CollegeDashboard = () => {
       case 'progresstracking':
         return <ProgressTrackingSection />;
       case 'portfolio':
-        return <PortfolioSection onNavigate={handleNavigate} />;
+        return <CollegePortfolioHub />;
       case 'workqueue':
         return <WorkQueueSection onNavigate={handleNavigate} />;
 
@@ -571,6 +627,18 @@ const CollegeDashboard = () => {
         return <BatchOperationsSection onNavigate={handleNavigate} />;
       case 'assessmentcalendar':
         return <AssessmentCalendarSection onNavigate={handleNavigate} />;
+      case 'resourceanalytics':
+        return <ResourceAnalyticsSection />;
+      case 'masteryqueue':
+        return <MasteryQueueSection />;
+      case 'iqaotjaudit':
+        return <IqaOtjAuditSection />;
+      case 'tutorobs':
+        return <TutorObsSection />;
+      case 'auditlog':
+        return <AuditLogSection />;
+      case 'tutorworkload':
+        return <TutorWorkloadSection />;
 
       default:
         return <CollegeOverviewSection onNavigate={handleNavigate} />;

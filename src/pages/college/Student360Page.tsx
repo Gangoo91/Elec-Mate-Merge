@@ -38,6 +38,13 @@ import { LogGradeSheet } from '@/components/college/sheets/LogGradeSheet';
 import { CreateQuizSheet } from '@/components/college/sheets/CreateQuizSheet';
 import { UploadAssessmentDocSheet } from '@/components/college/sheets/UploadAssessmentDocSheet';
 import { CurriculumStatusBadge } from '@/components/college/ui/CurriculumStatusBadge';
+import { StudentInclusionSheet } from '@/components/college/sheets/StudentInclusionSheet';
+import { OtjForecastBadge } from '@/components/college/widgets/OtjForecastBadge';
+import { TripartiteReviewSheet } from '@/components/college/sheets/TripartiteReviewSheet';
+import { ParentContactsSheet } from '@/components/college/sheets/ParentContactsSheet';
+import { useStudentGdprExport } from '@/hooks/useStudentGdprExport';
+import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
 
 /* ==========================================================================
    Student360Page — /college/students/:id
@@ -58,6 +65,12 @@ export default function Student360Page() {
   const [gradeOpen, setGradeOpen] = useState(false);
   const [quizOpen, setQuizOpen] = useState<{ acCodes?: string[] } | null>(null);
   const [uploadDocOpen, setUploadDocOpen] = useState(false);
+  const [inclusionOpen, setInclusionOpen] = useState(false);
+  const [tripartiteOpen, setTripartiteOpen] = useState(false);
+  const [parentsOpen, setParentsOpen] = useState(false);
+  const { exportPack, exporting: gdprExporting, progress: gdprProgress } = useStudentGdprExport();
+  const { toast } = useToast();
+  const { profile } = useAuth();
 
   // Hash-scroll: when arriving at /college/students/:id#section (e.g. from
   // the unified inbox or notification bell), scroll to the named section
@@ -282,6 +295,28 @@ export default function Student360Page() {
                         safeguarding: () => openNote('safeguarding'),
                         print: () => navigate(`/college/students/${core.id}/print`),
                         evidence: () => navigate(`/college/students/${core.id}/evidence`),
+                        inclusion: () => setInclusionOpen(true),
+                        tripartite: () => setTripartiteOpen(true),
+                        parents: () => setParentsOpen(true),
+                        gdpr: async () => {
+                          try {
+                            await exportPack({
+                              collegeStudentId: core.id,
+                              studentUserId: core.user_id ?? null,
+                              studentName: core.name,
+                            });
+                            toast({
+                              title: 'GDPR pack downloaded',
+                              description: 'ZIP saved to your downloads folder.',
+                            });
+                          } catch (e) {
+                            toast({
+                              title: 'GDPR export failed',
+                              description: (e as Error).message,
+                              variant: 'destructive',
+                            });
+                          }
+                        },
                       })}
                     />
                   </div>
@@ -386,12 +421,16 @@ export default function Student360Page() {
                   studentName={core.name}
                 />
               </div>
-              <SectionApprenticeOtj
-                id="otj"
-                studentName={core.name}
-                userId={core.user_id}
-                onAdd={() => setOtjOpen(true)}
-              />
+              <div id="otj" className="space-y-4">
+                <OtjForecastBadge studentId={core.id} />
+                <SectionApprenticeOtj
+                  id="otj-list"
+                  studentName={core.name}
+                  userId={core.user_id}
+                  collegeStudentId={core.id}
+                  onAdd={() => setOtjOpen(true)}
+                />
+              </div>
               <SectionPortfolio id="portfolio" studentName={core.name} userId={core.user_id} />
               <SectionObservations
                 id="observations"
@@ -502,6 +541,27 @@ export default function Student360Page() {
             studentName={core.name}
             onSaved={() => refresh()}
           />
+          <StudentInclusionSheet
+            open={inclusionOpen}
+            onOpenChange={setInclusionOpen}
+            studentId={core.id}
+            studentName={core.name}
+          />
+          {profile?.college_id && (
+            <TripartiteReviewSheet
+              open={tripartiteOpen}
+              onOpenChange={setTripartiteOpen}
+              studentId={core.id}
+              studentName={core.name}
+              collegeId={profile.college_id}
+            />
+          )}
+          <ParentContactsSheet
+            open={parentsOpen}
+            onOpenChange={setParentsOpen}
+            studentId={core.id}
+            studentName={core.name}
+          />
         </>
       )}
     </PageFrame>
@@ -534,6 +594,10 @@ type ActionHandlers = {
   safeguarding: () => void;
   print: () => void;
   evidence: () => void;
+  inclusion: () => void;
+  tripartite: () => void;
+  parents: () => void;
+  gdpr: () => void;
 };
 
 interface ActionGroup {
@@ -562,13 +626,17 @@ function groupedActionsForRole(
     safeguarding: { label: 'Safeguarding', onClick: handlers.safeguarding, tone: 'red' },
     print: { label: 'Print', onClick: handlers.print },
     evidence: { label: 'Evidence', onClick: handlers.evidence },
+    inclusion: { label: 'Inclusion', onClick: handlers.inclusion },
+    tripartite: { label: 'Tripartite', onClick: handlers.tripartite, tone: 'emerald' },
+    parents: { label: 'Parents', onClick: handlers.parents },
+    gdpr: { label: 'GDPR pack', onClick: handlers.gdpr },
   };
 
   // Group orders flex by role; the FIRST group is what the role most often uses.
-  const recordGroup = ['observation', 'attendance', 'grade', 'quiz', 'uploadDoc'];
-  const commGroup = ['oneToOne', 'note', 'message'];
+  const recordGroup = ['observation', 'attendance', 'grade', 'quiz', 'uploadDoc', 'tripartite'];
+  const commGroup = ['oneToOne', 'note', 'message', 'parents'];
   const flagGroup = ['praise', 'flag', 'concern', 'safeguarding'];
-  const utilGroup = ['evidence', 'print'];
+  const utilGroup = ['inclusion', 'evidence', 'print', 'gdpr'];
 
   // For DSL: safeguarding pulls into its own first-position single-pill group
   if (staffRole.isDsl) {

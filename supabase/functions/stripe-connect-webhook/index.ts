@@ -251,20 +251,52 @@ serve(async (req) => {
               })
               .eq('id', depositInvoice.parent_quote_id);
 
-            // Notify sparky deposit landed
+            // Notify sparky deposit landed — write to push_notification_log
+            // (bell-icon source) + fire device push. Old code wrote to
+            // public.notifications which doesn't exist, so this was
+            // silently 404'ing.
             if (electricianUserId) {
-              await supabase.from('notifications').insert({
-                user_id: electricianUserId,
-                type: 'deposit_received',
-                title: '🎉 Deposit received — booking confirmed',
-                message: `${formatCurrency(depositInvoice.total || 0)} deposit paid for quote. Booking is now confirmed.`,
-                data: {
-                  quote_id: depositInvoice.parent_quote_id,
-                  deposit_invoice_id: invoiceId,
-                  amount: depositInvoice.total || 0,
-                },
-                read: false,
-              });
+              const depAmt = formatCurrency(depositInvoice.total || 0);
+              const depTitle = `🎉 Deposit received · ${depAmt}`;
+              const depBody = `Deposit landed for quote — booking confirmed.`;
+
+              await supabase
+                .from('push_notification_log')
+                .insert({
+                  user_id: electricianUserId,
+                  type: 'deposit_received',
+                  reference_id: depositInvoice.parent_quote_id,
+                  title: depTitle,
+                  body: depBody,
+                })
+                .then(({ error }) => {
+                  if (error) console.warn('push_notification_log (deposit) failed:', error);
+                });
+
+              // Device push via direct fetch (auth-reliable from edge fn)
+              fetch(
+                `${Deno.env.get('SUPABASE_URL')}/functions/v1/send-push-notification`,
+                {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`,
+                  },
+                  body: JSON.stringify({
+                    userId: electricianUserId,
+                    title: depTitle,
+                    body: depBody,
+                    type: 'default',
+                    data: {
+                      deep_link: `/electrician/quote-builder/${depositInvoice.parent_quote_id}`,
+                      category: 'deposit_received',
+                      quote_id: depositInvoice.parent_quote_id,
+                      deposit_invoice_id: invoiceId,
+                    },
+                    skipQuietHours: true,
+                  }),
+                }
+              ).catch((e) => console.warn('Deposit-received push threw:', e));
             }
           }
           // Skip the legacy quotes-table update (this invoice lives in the
@@ -291,45 +323,52 @@ serve(async (req) => {
 
         console.log(`✅ Invoice ${invoiceNumber} marked as paid`);
 
-        // Create notification for electrician
+        // Create notification for electrician — bell-icon log +
+        // device push. Old public.notifications insert was 404'ing
+        // (table doesn't exist), and the supabase.functions.invoke
+        // push call didn't forward auth. Both fixed.
         if (electricianUserId) {
           const paymentAmount = session.amount_total ? session.amount_total / 100 : 0;
+          const payTitle = `💰 Payment received · ${formatCurrency(paymentAmount)}`;
+          const payBody = `Invoice ${invoiceNumber} paid by card.`;
 
-          await supabase.from('notifications').insert({
-            user_id: electricianUserId,
-            type: 'payment_received',
-            title: 'Payment Received',
-            message: `Invoice ${invoiceNumber} has been paid via card payment.`,
-            data: {
-              invoice_id: invoiceId,
-              invoice_number: invoiceNumber,
-              amount: paymentAmount,
-              payment_method: 'card',
-            },
-            read: false,
-          });
+          await supabase
+            .from('push_notification_log')
+            .insert({
+              user_id: electricianUserId,
+              type: 'payment_received',
+              reference_id: invoiceId,
+              title: payTitle,
+              body: payBody,
+            })
+            .then(({ error }) => {
+              if (error) console.warn('push_notification_log (payment) failed:', error);
+            });
 
-          console.log(`🔔 Notification created for user ${electricianUserId}`);
-
-          // Send push notification
-          try {
-            await supabase.functions.invoke('send-push-notification', {
-              body: {
+          fetch(
+            `${Deno.env.get('SUPABASE_URL')}/functions/v1/send-push-notification`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`,
+              },
+              body: JSON.stringify({
                 userId: electricianUserId,
-                title: '💰 Payment Received!',
-                body: `Invoice ${invoiceNumber} paid - ${formatCurrency(paymentAmount)}`,
-                type: 'invoice',
+                title: payTitle,
+                body: payBody,
+                type: 'default',
                 data: {
-                  invoiceId: invoiceId,
-                  invoiceNumber: invoiceNumber,
+                  deep_link: `/electrician/invoices/${invoiceId}`,
+                  category: 'payment_received',
+                  invoice_id: invoiceId,
+                  invoice_number: invoiceNumber,
                   amount: paymentAmount,
                 },
-              },
-            });
-            console.log(`📱 Push notification sent for payment`);
-          } catch (pushError) {
-            console.error('Push notification error (non-critical):', pushError);
-          }
+                skipQuietHours: true,
+              }),
+            }
+          ).catch((e) => console.warn('Payment-received push threw:', e));
         }
 
         // Auto-sync to accounting software (Xero, etc.)

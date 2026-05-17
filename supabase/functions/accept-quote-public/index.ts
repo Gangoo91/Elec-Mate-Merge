@@ -208,44 +208,52 @@ const handler = async (req: Request): Promise<Response> => {
       }
     }
 
-    // ── Fire-and-forget notifications ──────────────────────────────────
-    // 1) In-app notification for the electrician
-    supabase
-      .from('ojt_notifications')
+    // ── Notifications ──────────────────────────────────────────────────
+    // 1) Bell-icon feed log. Writes to `push_notification_log` — the
+    //    table NotificationProvider reads + subscribes to. Previously
+    //    wrote to `ojt_notifications` which has check constraints
+    //    rejecting non-OJT types and silently dropped the row.
+    const pushTitle = `Quote ${quote.quote_number} accepted`;
+    const pushBody = depositRequired
+      ? `${name} accepted · awaiting £${(depositAmountPennies / 100).toFixed(2)} deposit`
+      : `${name} accepted your quote · £${(quote.total || 0).toFixed(2)}`;
+
+    await supabase
+      .from('push_notification_log')
       .insert({
         user_id: quote.user_id,
-        type: 'quote_action',
-        title: `Quote ${quote.quote_number} Accepted!`,
-        message: `${name} accepted your quote for £${(quote.total || 0).toFixed(2)}${
-          depositRequired ? ` — awaiting deposit £${(depositAmountPennies / 100).toFixed(2)}` : ''
-        }`,
-        data: {
-          quote_id: quote.id,
-          quote_number: quote.quote_number,
-          action: 'accept',
-          client_name: name,
-          total: quote.total,
-          deposit_required: depositRequired,
-        },
-        priority: 'high',
-        is_read: false,
+        type: 'quote_accepted',
+        reference_id: quote.id,
+        title: pushTitle,
+        body: pushBody,
       })
       .then(({ error }) => {
-        if (error) console.error('Notification insert failed:', error);
+        if (error) console.warn('push_notification_log insert failed:', error);
       });
 
-    // 2) Push notification
-    supabase.functions
-      .invoke('send-push-notification', {
-        body: {
-          userId: quote.user_id,
-          title: `Quote ${quote.quote_number} Accepted!`,
-          body: `${name} accepted your quote for £${(quote.total || 0).toFixed(2)}`,
-          type: 'quote',
-          data: { quoteId: quote.id, quoteNumber: quote.quote_number, action: 'accept' },
+    // 2) Device push — direct fetch with explicit service-role auth.
+    //    `supabase.functions.invoke` from inside an edge fn doesn't
+    //    forward auth reliably and was silently 401'ing.
+    fetch(`${supabaseUrl}/functions/v1/send-push-notification`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${serviceRoleKey}`,
+      },
+      body: JSON.stringify({
+        userId: quote.user_id,
+        title: pushTitle,
+        body: pushBody,
+        type: 'default',
+        data: {
+          deep_link: `/electrician/quote-builder/${quote.id}`,
+          category: 'quote_accepted',
+          quote_id: quote.id,
+          quote_number: quote.quote_number,
         },
-      })
-      .catch((e) => console.error('Push notification failed:', e));
+        skipQuietHours: true,
+      }),
+    }).catch((e) => console.warn('Push notification fetch threw:', e));
 
     // 3) Confirmation email to client (the shared template — looks like the
     //    same brand they saw on the page)
@@ -269,7 +277,13 @@ const handler = async (req: Request): Promise<Response> => {
         depositAmount: depositRequired ? depositAmountPennies / 100 : 0,
         depositPayUrl,
         depositInvoiceId,
-        bookingUrl: depositRequired ? null : `${APP_URL}/book-slot/${quote.id}`,
+        // Booking handoff goes to the existing PublicBooking page so we
+        // share one availability source. Pre-fill comes from
+        // get_public_quote_for_booking RPC; the booking links back to
+        // the quote via the quote_id query string.
+        bookingUrl: depositRequired
+          ? null
+          : `${APP_URL}/book/${quote.user_id}?quote=${quote.id}`,
       }),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );

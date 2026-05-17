@@ -8,7 +8,9 @@ import {
   renderButton,
   renderCard,
   renderSteps,
+  renderBankCard,
   type BrandedCompany,
+  type BankDetails,
 } from '../email-template.ts';
 
 export interface QuoteSendData {
@@ -32,6 +34,22 @@ export interface QuoteSendData {
   pdfAttached: boolean;
   /** Optional tracking pixel URL appended before </body> */
   trackingPixelUrl?: string | null;
+  /** Optional override of the email subject line. */
+  customSubject?: string | null;
+  /** Optional override of the email body paragraph (between greeting and hero). */
+  customMessage?: string | null;
+  /**
+   * Bank transfer details. When the electrician requires a deposit
+   * (or the client wants to pay by bank transfer instead of card),
+   * these are surfaced inline so the client doesn't have to reply
+   * asking for them. The payment reference is always the quote number.
+   */
+  bankDetails?: BankDetails | null;
+  /**
+   * Deposit percentage on the quote — if set, the inline bank-details
+   * card includes a "Pay deposit X% (£Y)" hint alongside the full total.
+   */
+  depositPercentage?: number | null;
 }
 
 export interface QuoteSendEmail {
@@ -55,12 +73,16 @@ export function buildQuoteSendEmail(data: QuoteSendData): QuoteSendEmail {
   const firstName = (data.clientName || 'there').split(' ')[0] || 'there';
   const jobLine = data.jobTitle ? data.jobTitle : 'the work we discussed';
 
-  const subject = `Your quote from ${data.company.name} — ${totalStr}`;
+  const subject =
+    data.customSubject?.trim() || `Your quote from ${data.company.name} — ${totalStr}`;
   const preheader = `Quote ${data.quoteNumber} · ${totalStr}${validUntilStr ? ` · valid until ${validUntilStr}` : ''}`;
 
-  // Body copy — warm, professional, no boilerplate.
+  // Body copy — caller-supplied custom message wins, else warm default.
   const greeting = `Hi <strong style="color:#0f172a">${firstName}</strong>,`;
-  const body = `Thanks for getting in touch about ${jobLine}. I've put together the quote below — full breakdown attached as a PDF. Have a read through and let me know if you'd like to go ahead or have any questions.`;
+  const customBody = (data.customMessage || '').trim();
+  const body = customBody
+    ? customBody.replace(/\n/g, '<br>')
+    : `Thanks for getting in touch about ${jobLine}. I've put together the quote below — full breakdown attached as a PDF. Have a read through and let me know if you'd like to go ahead or have any questions.`;
 
   // Hero — total amount with structured meta grid below (clearer than
   // jamming quote number + validity into a single sub-line).
@@ -116,7 +138,19 @@ export function buildQuoteSendEmail(data: QuoteSendData): QuoteSendEmail {
       })
     : '';
 
-  const sectionsAfterCta = `${stepsBlock}${scopeCard}`;
+  // Bank-transfer card — included whenever the electrician has set
+  // bank details, so the client never has to email asking how to pay.
+  // The "Or pay by bank transfer" label is intentional: card-via-Stripe
+  // remains the primary path; this is the fallback (and the deposit
+  // path when Stripe Connect isn't set up).
+  const depositPct = Number(data.depositPercentage || 0);
+  const depositLabel =
+    depositPct > 0 && data.total > 0
+      ? `Pay by bank transfer · ${depositPct}% deposit = ${formatGbp((data.total * depositPct) / 100)}`
+      : 'Pay by bank transfer';
+  const bankCard = renderBankCard(data.bankDetails, data.quoteNumber, depositLabel);
+
+  const sectionsAfterCta = `${stepsBlock}${scopeCard}${bankCard}`;
 
   const signoff = `<tr>
     <td style="padding:0 36px 36px;">

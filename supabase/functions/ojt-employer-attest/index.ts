@@ -118,9 +118,11 @@ serve(async (req: Request) => {
       const body = (await req.json().catch(() => ({}))) as {
         attester_name?: string;
         attester_email?: string;
+        attester_comment?: string;
       };
       const name = (body.attester_name || '').trim();
       const email = (body.attester_email || '').trim();
+      const comment = (body.attester_comment || '').trim().slice(0, 2000);
       if (!name || name.length < 2) {
         return new Response(
           JSON.stringify({ ok: false, error: 'Your name is required' }),
@@ -162,6 +164,7 @@ serve(async (req: Request) => {
           verified_at: new Date().toISOString(),
           attested_by_name: name,
           attestation_email: email,
+          attestation_comment: comment || null,
         })
         .eq('id', id);
       if (updErr) throw updErr;

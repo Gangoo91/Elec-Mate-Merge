@@ -23,13 +23,16 @@ import { ShowMePanel } from '@/components/college/compliance/ShowMePanel';
 
 const OfstedEifPage = lazy(() => import('@/pages/college/OfstedEifPage'));
 
-type Tab = 'showme' | 'vault' | 'eif' | 'pack';
+type Tab = 'showme' | 'vault' | 'eif' | 'pack' | 'sar' | 'qip' | 'rehearsal';
 
 const TABS: { key: Tab; label: string; eyebrow: string }[] = [
-  { key: 'showme', label: 'Show me', eyebrow: 'Inspector evidence search' },
+  { key: 'showme', label: 'Evidence search', eyebrow: 'Inspector-style search' },
   { key: 'vault', label: 'Vault & Policies', eyebrow: 'Records, CPD, policies' },
-  { key: 'eif', label: 'Ofsted EIF', eyebrow: 'Live RAG snapshot' },
-  { key: 'pack', label: 'Audit Pack', eyebrow: 'Print-ready inspection bundle' },
+  { key: 'eif', label: 'Ofsted readiness', eyebrow: 'Live RAG against the EIF' },
+  { key: 'sar', label: 'Self-Assessment', eyebrow: 'Annual SAR draft' },
+  { key: 'qip', label: 'Improvement Plan', eyebrow: 'Quality improvement actions' },
+  { key: 'rehearsal', label: 'Practice inspection', eyebrow: 'AI inspector rehearsal' },
+  { key: 'pack', label: 'Audit bundle', eyebrow: 'Print-ready inspector pack' },
 ];
 
 function tabFromHash(hash: string): Tab {
@@ -37,6 +40,9 @@ function tabFromHash(hash: string): Tab {
   if (stripped === 'showme') return 'showme';
   if (stripped === 'eif') return 'eif';
   if (stripped === 'pack') return 'pack';
+  if (stripped === 'sar') return 'sar';
+  if (stripped === 'qip') return 'qip';
+  if (stripped === 'rehearsal') return 'rehearsal';
   return 'vault';
 }
 
@@ -141,6 +147,64 @@ export default function ComplianceHubPage() {
           </Suspense>
         )}
         {activeTab === 'pack' && <AuditPackPanel />}
+        {activeTab === 'sar' && <ExternalRouteTeaser
+          title="Self-Assessment Report (SAR)"
+          eyebrow="Ofsted-aligned draft"
+          body="Draft your annual SAR from live college signals — attendance, achievement, EPA outcomes, IQA findings and workforce qualifications. Structured against the four EIF judgements plus the apprenticeships lens."
+          ctaLabel="Open SAR drafts"
+          target="/college/compliance/sar"
+        />}
+        {activeTab === 'qip' && <ExternalRouteTeaser
+          title="Quality Improvement Plan (QIP)"
+          eyebrow="Action tracker"
+          body="Track quality improvement actions flowing from SAR findings, inspections and IQA outcomes. Owner, target date, priority and progress per action."
+          ctaLabel="Open QIP tracker"
+          target="/college/compliance/qip"
+        />}
+        {activeTab === 'rehearsal' && <ExternalRouteTeaser
+          title="AI Inspection Rehearsal"
+          eyebrow="Mate-as-inspector"
+          body="Practise probing Ofsted questions before a real visit. Mate plays the lead inspector, grades each answer and gives you an overall verdict at the end."
+          ctaLabel="Start a rehearsal"
+          target="/college/compliance/rehearsal"
+        />}
+      </div>
+    </div>
+  );
+}
+
+function ExternalRouteTeaser({
+  title,
+  eyebrow,
+  body,
+  ctaLabel,
+  target,
+}: {
+  title: string;
+  eyebrow: string;
+  body: string;
+  ctaLabel: string;
+  target: string;
+}) {
+  const navigate = useNavigate();
+  return (
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-6 sm:p-8">
+        <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow">
+          {eyebrow}
+        </div>
+        <h2 className="mt-2 text-[20px] sm:text-[24px] font-semibold text-white tracking-tight">
+          {title}
+        </h2>
+        <p className="mt-2 text-[13px] text-white/80 leading-relaxed">{body}</p>
+        <div className="mt-5">
+          <button
+            onClick={() => navigate(target)}
+            className="inline-flex items-center h-11 px-4 rounded-xl text-[13px] font-semibold text-black bg-elec-yellow hover:bg-elec-yellow/90 transition-colors touch-manipulation"
+          >
+            {ctaLabel} →
+          </button>
+        </div>
       </div>
     </div>
   );

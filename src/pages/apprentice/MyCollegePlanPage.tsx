@@ -20,6 +20,8 @@ import { MyReflectionCard } from '@/components/apprentice-hub/MyReflectionCard';
 import { MyTutorResourcesCard } from '@/components/apprentice-hub/MyTutorResourcesCard';
 import { CollegeAiCard } from '@/components/apprentice-hub/CollegeAiCard';
 import { MyThisWeekCard } from '@/components/apprentice-hub/MyThisWeekCard';
+import { MyVoiceSurveyCard } from '@/components/apprentice-hub/MyVoiceSurveyCard';
+import { MyTodayFocusCard } from '@/components/apprentice-hub/MyTodayFocusCard';
 
 /* ==========================================================================
    MyCollegePlanPage — /apprentice/college-plan
@@ -80,7 +82,9 @@ export default function MyCollegePlanPage() {
             transition={{ duration: 0.22, delay: 0.1 }}
             className="space-y-3 sm:space-y-4"
           >
+            <MyTodayFocusCard />
             <MyThisWeekCard />
+            <MyVoiceSurveyCard />
             <CollegeAiCard />
             <MyComplianceCard />
             <MyReflectionCard />

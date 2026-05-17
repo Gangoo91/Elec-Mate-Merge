@@ -67,10 +67,23 @@ export function NotificationCenter(_props: NotificationCenterProps) {
     stats: inboxStats,
     loading: inboxLoading,
     error: inboxError,
+    markAllAsRead,
   } = useUnifiedInbox();
   const { items: marking, stats: markingStats } = useMarkingQueue();
   const [open, setOpen] = useState(false);
   const [tab, setTab] = useState<NotifTab>('all');
+  const [markingAll, setMarkingAll] = useState(false);
+
+  const handleMarkAllRead = async () => {
+    setMarkingAll(true);
+    try {
+      await markAllAsRead();
+    } catch (_e) {
+      // surface via toast if available; silent here to keep bell snappy
+    } finally {
+      setMarkingAll(false);
+    }
+  };
 
   const all: NotifItem[] = useMemo(() => {
     const out: NotifItem[] = [];
@@ -121,8 +134,10 @@ export function NotificationCenter(_props: NotificationCenterProps) {
     return all.filter((n) => n.source === 'marking');
   }, [all, tab]);
 
-  const totalUnread = inboxStats.total + markingStats.total_pending;
-  const inboxCount = inboxStats.total;
+  // inbox.unread = items the staff hasn't acknowledged; marking pending is
+  // already action-based (no "read" state). Total bell count is the sum.
+  const totalUnread = inboxStats.unread + markingStats.total_pending;
+  const inboxCount = inboxStats.unread;
   const markingCount = markingStats.total_pending;
 
   const handleClick = (n: NotifItem) => {
@@ -153,21 +168,32 @@ export function NotificationCenter(_props: NotificationCenterProps) {
           className="w-[calc(100vw-1rem)] sm:w-96 p-0 z-50 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-2xl"
           align="end"
         >
-          <div className="px-5 py-4 border-b border-white/[0.06] flex items-center justify-between">
-            <div>
+          <div className="px-5 py-4 border-b border-white/[0.06] flex items-center justify-between gap-3">
+            <div className="min-w-0">
               <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
                 Notifications
               </div>
-              <div className="mt-0.5 text-[13px] font-semibold text-white">
+              <div className="mt-0.5 text-[13px] font-semibold text-white truncate">
                 {totalUnread > 0 ? `${totalUnread} need attention` : 'All caught up'}
               </div>
             </div>
-            <button
-              onClick={() => setOpen(false)}
-              className="text-[11.5px] font-medium text-white hover:text-white transition-colors touch-manipulation"
-            >
-              Close
-            </button>
+            <div className="flex items-center gap-3 shrink-0">
+              {inboxCount > 0 && (
+                <button
+                  onClick={handleMarkAllRead}
+                  disabled={markingAll}
+                  className="text-[11.5px] font-medium text-elec-yellow hover:text-elec-yellow/80 disabled:opacity-40 transition-colors touch-manipulation"
+                >
+                  {markingAll ? 'Marking…' : 'Mark all read'}
+                </button>
+              )}
+              <button
+                onClick={() => setOpen(false)}
+                className="text-[11.5px] font-medium text-white hover:text-white transition-colors touch-manipulation"
+              >
+                Close
+              </button>
+            </div>
           </div>
 
           <Tabs value={tab} onValueChange={(v) => setTab(v as NotifTab)} className="w-full">

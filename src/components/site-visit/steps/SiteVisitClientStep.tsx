@@ -84,19 +84,32 @@ export const SiteVisitClientStep = ({
   return (
     <div className="space-y-4">
       <div>
-        <h2 className="text-lg font-bold text-white">Client Details</h2>
-        <p className="text-sm text-white mt-1">Search existing customers or create a new one</p>
+        <h2 className="text-[18px] font-semibold tracking-tight text-white sm:text-[20px]">
+          Client details
+        </h2>
+        <p className="mt-1 text-[12.5px] text-white/65">
+          Search existing customers or create a new one.
+        </p>
       </div>
 
-      {/* Selected customer display */}
+      {/* Selected customer display — editorial */}
       {selectedCustomer && !showCreate && (
-        <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
-          <div className="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center flex-shrink-0">
-            <Check className="h-5 w-5 text-white" />
+        <div className="relative flex items-center gap-3 overflow-hidden rounded-2xl border border-elec-yellow/25 bg-gradient-to-r from-elec-yellow/[0.06] to-transparent p-4">
+          <div
+            aria-hidden
+            className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/80 to-elec-yellow/0"
+          />
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-elec-yellow/30 bg-elec-yellow/[0.12]">
+            <Check className="h-4 w-4 text-elec-yellow" />
           </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-[15px] font-medium text-emerald-400">{selectedCustomer.name}</p>
-            <p className="text-[13px] text-white truncate">
+          <div className="min-w-0 flex-1">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
+              Selected
+            </div>
+            <p className="mt-0.5 truncate text-[15px] font-medium text-white">
+              {selectedCustomer.name}
+            </p>
+            <p className="truncate text-[12px] text-white/65">
               {selectedCustomer.email || selectedCustomer.phone || 'No contact details'}
             </p>
           </div>
@@ -112,7 +125,7 @@ export const SiteVisitClientStep = ({
                 customerPhone: '',
               });
             }}
-            className="text-xs text-white touch-manipulation"
+            className="rounded-full text-[12px] text-white/65 hover:text-white touch-manipulation"
           >
             Change
           </Button>
@@ -125,8 +138,8 @@ export const SiteVisitClientStep = ({
           <Input
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search by name, email or phone..."
-            className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+            placeholder="Search by name, email or phone…"
+            className="h-11 touch-manipulation rounded-xl border-white/[0.08] bg-[hsl(0_0%_10%)] text-[14px] text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-elec-yellow/20"
             autoCapitalize="off"
             autoComplete="off"
             enterKeyHint="search"
@@ -177,9 +190,9 @@ export const SiteVisitClientStep = ({
 
       {/* Inline create form */}
       {showCreate && (
-        <div className="space-y-3 p-4 rounded-xl border border-white/10 bg-white/[0.02]">
+        <div className="space-y-3 rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] p-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-semibold text-white">New Client</h3>
+            <h3 className="text-[14px] font-semibold tracking-tight text-white">New client</h3>
             <Button
               variant="ghost"
               size="sm"
@@ -200,7 +213,7 @@ export const SiteVisitClientStep = ({
               value={newName}
               onChange={(e) => setNewName(e.target.value)}
               placeholder="Client name"
-              className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+              className="h-11 touch-manipulation rounded-xl border-white/[0.08] bg-[hsl(0_0%_10%)] text-[14px] text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-elec-yellow/20"
               autoCapitalize="words"
               enterKeyHint="next"
             />
@@ -213,7 +226,7 @@ export const SiteVisitClientStep = ({
               value={newPhone}
               onChange={(e) => setNewPhone(e.target.value)}
               placeholder="07xxx xxxxxx"
-              className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+              className="h-11 touch-manipulation rounded-xl border-white/[0.08] bg-[hsl(0_0%_10%)] text-[14px] text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-elec-yellow/20"
               autoCapitalize="off"
               enterKeyHint="next"
             />
@@ -226,7 +239,7 @@ export const SiteVisitClientStep = ({
               value={newEmail}
               onChange={(e) => setNewEmail(e.target.value)}
               placeholder="client@email.com"
-              className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+              className="h-11 touch-manipulation rounded-xl border-white/[0.08] bg-[hsl(0_0%_10%)] text-[14px] text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-elec-yellow/20"
               autoCapitalize="off"
               enterKeyHint="done"
             />

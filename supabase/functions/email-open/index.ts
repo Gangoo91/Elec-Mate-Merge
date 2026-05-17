@@ -323,7 +323,10 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Mirror quote_send opens to quote_views (back-compat with the
     // existing QuoteDetailView UI that reads email_opened_at from
-    // quote_views). Best-effort — never blocks the response.
+    // quote_views — drives the timeline "Viewed" pill). If no row
+    // exists yet for this quote we create one so the mirror still
+    // updates the visible timeline. Best-effort — never blocks the
+    // response.
     if (entityType === 'quote_send' || entityType === 'quote_reminder') {
       try {
         const { data: currentView } = await supabase
@@ -331,16 +334,37 @@ const handler = async (req: Request): Promise<Response> => {
           .select('email_open_count, view_count, email_opened_at')
           .eq('quote_id', entityId)
           .maybeSingle();
+        const nowIso = new Date().toISOString();
         if (currentView) {
           await supabase
             .from('quote_views')
             .update({
-              email_opened_at: currentView.email_opened_at || new Date().toISOString(),
+              email_opened_at: currentView.email_opened_at || nowIso,
               email_open_count: (currentView.email_open_count || 0) + 1,
-              last_viewed_at: new Date().toISOString(),
+              last_viewed_at: nowIso,
               view_count: (currentView.view_count || 0) + 1,
             })
             .eq('quote_id', entityId);
+        } else {
+          // No existing quote_views row — happens for quotes sent before
+          // the row-on-send wiring existed, or via the public RPC path
+          // without explicit view tracking. Insert a fresh row so the
+          // timeline "Viewed" pill still fires on the very first open.
+          // public_token on quote_views is NOT NULL — copy it from the quote.
+          const { data: quoteForToken } = await supabase
+            .from('quotes')
+            .select('public_token')
+            .eq('id', entityId)
+            .maybeSingle();
+          await supabase.from('quote_views').insert({
+            quote_id: entityId,
+            public_token: quoteForToken?.public_token ?? crypto.randomUUID(),
+            email_opened_at: nowIso,
+            email_open_count: 1,
+            last_viewed_at: nowIso,
+            view_count: 1,
+            email_sent_at: nowIso,
+          });
         }
       } catch (e) {
         console.warn('quote_views mirror failed (non-fatal):', e);
@@ -351,22 +375,41 @@ const handler = async (req: Request): Promise<Response> => {
     if (isFirstOpen) {
       const { title, body } = composePush(entityType, ctx);
 
-      // Push notification (best effort)
-      supabase.functions
-        .invoke('send-push-notification', {
-          body: {
-            userId: ctx.ownerUserId,
-            title,
-            body,
-            type: 'email_opened',
-            data: {
-              entity_type: entityType,
-              entity_id: entityId,
-              link: ctx.appLink || null,
-            },
+      // Push notification — use direct fetch with explicit service-role
+      // Authorization header. `supabase.functions.invoke` from inside an
+      // edge fn does not reliably forward auth, so the upstream
+      // send-push-notification call would silently 401 and no device
+      // delivery happened. Matches the pattern used by public-booking.
+      const pushUrl = `${supabaseUrl}/functions/v1/send-push-notification`;
+      fetch(pushUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${serviceRoleKey}`,
+        },
+        body: JSON.stringify({
+          userId: ctx.ownerUserId,
+          title,
+          body,
+          type: 'default',
+          data: {
+            deep_link: ctx.appLink || null,
+            category: 'email_opened',
+            entity_type: entityType,
+            entity_id: entityId,
           },
+          skipQuietHours: false,
+        }),
+      })
+        .then(async (res) => {
+          if (!res.ok) {
+            const txt = await res.text().catch(() => '');
+            console.warn(`Push notification failed (${res.status}): ${txt}`);
+          } else {
+            console.log(`email-open: push delivered for ${entityType}/${entityId}`);
+          }
         })
-        .catch((e: unknown) => console.warn('Push notification failed:', e));
+        .catch((e) => console.warn('Push notification fetch threw:', e));
 
       // In-app notification — write to `push_notification_log` since
       // that's the table NotificationProvider reads (and subscribes to

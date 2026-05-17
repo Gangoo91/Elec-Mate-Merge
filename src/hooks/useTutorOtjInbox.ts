@@ -89,6 +89,8 @@ export interface TutorOtjInbox {
   setScope: (s: InboxScope) => void;
   verify: (id: string) => Promise<void>;
   reject: (id: string, rationale: string) => Promise<void>;
+  bulkVerify: (ids: string[]) => Promise<{ ok: number; failed: number }>;
+  bulkReject: (ids: string[], rationale: string) => Promise<{ ok: number; failed: number }>;
   refresh: () => Promise<void>;
 }
 
@@ -365,6 +367,45 @@ export function useTutorOtjInbox(): TutorOtjInbox {
     [fetchAll, toast]
   );
 
+  // Bulk verify — iterates sequentially so the per-row edge fn is hit one
+  // at a time. Rows drop optimistically as each succeeds. Returns counts
+  // so the caller can toast a single summary.
+  const bulkVerify = useCallback(
+    async (ids: string[]) => {
+      let ok = 0;
+      let failed = 0;
+      for (const id of ids) {
+        setRows((prev) => prev.filter((r) => r.id !== id));
+        const errMsg = await callOtjStatusEdgeFn(id, 'verify');
+        if (errMsg) failed += 1;
+        else ok += 1;
+      }
+      if (failed > 0) await fetchAll();
+      return { ok, failed };
+    },
+    [fetchAll]
+  );
+
+  // Bulk reject — same loop with a shared rationale. Empty rationale =
+  // no-op (every reject needs a reason so the apprentice knows what to fix).
+  const bulkReject = useCallback(
+    async (ids: string[], rationale: string) => {
+      const trimmed = rationale.trim();
+      if (!trimmed) return { ok: 0, failed: ids.length };
+      let ok = 0;
+      let failed = 0;
+      for (const id of ids) {
+        setRows((prev) => prev.filter((r) => r.id !== id));
+        const errMsg = await callOtjStatusEdgeFn(id, 'reject', trimmed);
+        if (errMsg) failed += 1;
+        else ok += 1;
+      }
+      if (failed > 0) await fetchAll();
+      return { ok, failed };
+    },
+    [fetchAll]
+  );
+
   return useMemo(
     () => ({
       rows,
@@ -375,8 +416,21 @@ export function useTutorOtjInbox(): TutorOtjInbox {
       setScope,
       verify,
       reject,
+      bulkVerify,
+      bulkReject,
       refresh: fetchAll,
     }),
-    [rows, loading, error, staffCollegeId, scope, verify, reject, fetchAll]
+    [
+      rows,
+      loading,
+      error,
+      staffCollegeId,
+      scope,
+      verify,
+      reject,
+      bulkVerify,
+      bulkReject,
+      fetchAll,
+    ]
   );
 }

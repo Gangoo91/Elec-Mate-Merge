@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Mic, MicOff, PenLine, Zap, Send } from 'lucide-react';
+import { Mic, MicOff, Send } from 'lucide-react';
 import { Capacitor } from '@capacitor/core';
 import { cn } from '@/lib/utils';
 
@@ -110,88 +110,73 @@ export function TaskQuickAdd({ onQuickSave, onExpandForm, onShowTemplates }: Tas
   }
 
   const hasText = title.trim().length > 0;
+  const [focused, setFocused] = useState(false);
+  const showSecondary = focused || hasText || isListening;
 
   return (
     <div
       className={cn(
-        'rounded-2xl border transition-colors',
+        'rounded-xl border transition-colors',
         isListening
           ? 'border-red-400/40 bg-red-500/[0.06]'
-          : hasText
-            ? 'border-yellow-500/30 bg-yellow-500/[0.04]'
+          : hasText || focused
+            ? 'border-elec-yellow/40 bg-white/[0.04]'
             : 'border-white/[0.08] bg-white/[0.03]'
       )}
     >
-      {/* Input row */}
-      <div className="flex items-center gap-2 p-2">
-        {/* Leading icon */}
-        <div
-          className={cn(
-            'w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors',
-            hasText ? 'bg-gradient-to-br from-yellow-400/20 to-amber-500/20' : 'bg-white/[0.06]'
-          )}
-        >
-          <PenLine
-            className={cn(
-              'h-4.5 w-4.5 transition-colors',
-              hasText ? 'text-yellow-400' : 'text-white'
-            )}
-          />
-        </div>
-
-        {/* Input */}
+      {/* Single input row — flat, minimal, h-12 so it lines up with chips above */}
+      <div className="flex items-center gap-2 pl-4 pr-2 h-12">
         <input
           ref={inputRef}
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Add a task..."
-          className="flex-1 h-10 bg-transparent text-[15px] text-white placeholder:text-white outline-none touch-manipulation"
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
+          placeholder="Add a task…"
+          className="flex-1 h-full bg-transparent text-[15px] text-white placeholder:text-white/40 outline-none touch-manipulation"
         />
 
-        {/* Right actions */}
-        <div className="flex items-center gap-1 shrink-0">
-          {/* Mic button */}
-          {speechSupported && (
-            <button
-              type="button"
-              onClick={isListening ? stopListening : startListening}
-              className={cn(
-                'w-9 h-9 flex items-center justify-center rounded-xl touch-manipulation transition-all',
-                isListening
-                  ? 'bg-red-500 text-white animate-pulse'
-                  : 'bg-white/[0.06] text-white active:bg-white/10'
-              )}
-            >
-              {isListening ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
-            </button>
-          )}
-
-          {/* Send button — appears when text entered */}
-          <AnimatePresence>
-            {hasText && (
-              <motion.button
-                type="button"
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0, opacity: 0 }}
-                transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-                onClick={handleSubmit}
-                disabled={saving}
-                className="w-10 h-10 flex items-center justify-center rounded-xl bg-gradient-to-r from-yellow-400 to-amber-500 text-black touch-manipulation active:scale-[0.95] disabled:opacity-50"
-              >
-                {saving ? (
-                  <div className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
-                ) : (
-                  <Send className="h-4 w-4" />
-                )}
-              </motion.button>
+        {speechSupported && (
+          <button
+            type="button"
+            onClick={isListening ? stopListening : startListening}
+            aria-label={isListening ? 'Stop dictation' : 'Dictate'}
+            className={cn(
+              'h-9 w-9 flex items-center justify-center rounded-lg touch-manipulation transition-colors shrink-0',
+              isListening
+                ? 'bg-red-500 text-white animate-pulse'
+                : 'text-white/55 hover:text-white hover:bg-white/[0.06] active:bg-white/10'
             )}
-          </AnimatePresence>
-        </div>
+          >
+            {isListening ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
+          </button>
+        )}
+
+        <AnimatePresence>
+          {hasText && (
+            <motion.button
+              type="button"
+              initial={{ scale: 0.6, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.6, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+              onClick={handleSubmit}
+              disabled={saving}
+              aria-label="Add task"
+              className="h-9 w-9 flex items-center justify-center rounded-lg bg-elec-yellow text-black touch-manipulation active:scale-[0.95] disabled:opacity-50 shrink-0"
+            >
+              {saving ? (
+                <div className="w-3.5 h-3.5 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+              ) : (
+                <Send className="h-4 w-4" strokeWidth={2.4} />
+              )}
+            </motion.button>
+          )}
+        </AnimatePresence>
       </div>
 
-      {/* Listening indicator bar */}
+      {/* Listening indicator — only when active */}
       {isListening && (
         <motion.div
           initial={{ opacity: 0 }}
@@ -213,29 +198,42 @@ export function TaskQuickAdd({ onQuickSave, onExpandForm, onShowTemplates }: Tas
               />
             ))}
           </div>
-          <span className="text-[12px] text-red-400 font-medium">Listening...</span>
+          <span className="text-[12px] text-red-400 font-medium">Listening…</span>
         </motion.div>
       )}
 
-      {/* Action pills — inside card */}
-      <div className="flex items-center gap-2 px-2 pb-2 pt-1.5 border-t border-white/[0.06]">
-        <button
-          type="button"
-          onClick={onExpandForm}
-          className="flex items-center gap-1.5 px-3.5 h-8 rounded-full bg-white/[0.06] border border-white/[0.08] text-[12px] font-semibold text-white touch-manipulation active:bg-white/10 transition-colors"
-        >
-          <Plus className="h-3 w-3" />
-          Full form
-        </button>
-        <button
-          type="button"
-          onClick={onShowTemplates}
-          className="flex items-center gap-1.5 px-3.5 h-8 rounded-full bg-purple-500/10 border border-purple-500/20 text-[12px] font-semibold text-purple-400 touch-manipulation active:bg-purple-500/20 transition-colors"
-        >
-          <Zap className="h-3 w-3" />
-          Templates
-        </button>
-      </div>
+      {/* Secondary actions — surface only on focus / text. Text links, not chips. */}
+      <AnimatePresence initial={false}>
+        {showSecondary && !isListening && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.15 }}
+            className="overflow-hidden"
+          >
+            <div className="flex items-center gap-4 px-4 pb-2.5 pt-0.5">
+              <button
+                type="button"
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={onExpandForm}
+                className="text-[12px] font-medium text-white/55 hover:text-white touch-manipulation"
+              >
+                Full form
+              </button>
+              <span className="text-white/15">·</span>
+              <button
+                type="button"
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={onShowTemplates}
+                className="text-[12px] font-medium text-white/55 hover:text-white touch-manipulation"
+              >
+                Templates
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

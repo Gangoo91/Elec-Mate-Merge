@@ -4,6 +4,10 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
+import {
+  useCurrentRiskForStudents,
+  useRecomputeRisk,
+} from '@/hooks/useStudentRisk';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 
 interface AtRiskPredictorProps {
@@ -29,6 +33,9 @@ interface AtRiskStudent {
   progressPercentage: number;
   lastILPReview?: string;
   recommendedActions: string[];
+  /** Where this score came from. Server scoring includes signals the local
+      calc can't see — AC velocity, portfolio staleness, grade trend. */
+  source: 'server' | 'local';
 }
 
 export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictorProps) {
@@ -36,6 +43,23 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
   const [selectedFilter, setSelectedFilter] = useState<'all' | 'critical' | 'high' | 'medium'>(
     'all'
   );
+
+  // Pull server-side risk scores for all active learners. The edge fn
+  // computes signals the local heuristic can't see (AC velocity, portfolio
+  // staleness, grade trend). When a server row exists for a student, we
+  // prefer it over the local calc.
+  const activeStudentIds = useMemo(
+    () => students.filter((s) => s.status === 'Active').map((s) => s.id),
+    [students]
+  );
+  const { byStudent: serverRisk, refresh: refreshServerRisk } =
+    useCurrentRiskForStudents(activeStudentIds);
+  const { recompute, running: recomputing } = useRecomputeRisk();
+
+  const handleRefreshAi = async () => {
+    await recompute({ student_ids: activeStudentIds });
+    await refreshServerRisk();
+  };
 
   // Calculate at-risk students with AI-style predictive scoring
   const atRiskStudents = useMemo(() => {
@@ -194,14 +218,62 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
         progressPercentage: progress,
         lastILPReview: studentILP?.lastReviewDate,
         recommendedActions,
+        source: 'local',
       };
     };
 
+    // Merge server data on top of the local calc. Server scoring carries
+    // signals the local heuristic can't see (AC velocity, portfolio
+    // staleness, grade trend) so when a server row exists we override
+    // level + factors + score with it.
     return students
-      .map((s) => calculateRiskScore(s.id))
-      .filter((s): s is AtRiskStudent => s !== null)
+      .map((s) => {
+        const local = calculateRiskScore(s.id);
+        const server = serverRisk.get(s.id);
+        if (!server) return local;
+
+        // Map server level → widget level vocabulary
+        const widgetLevel: AtRiskStudent['riskLevel'] =
+          server.level === 'critical'
+            ? 'critical'
+            : server.level === 'high'
+              ? 'high'
+              : server.level === 'medium'
+                ? 'medium'
+                : 'watch';
+
+        const serverFactors: RiskFactor[] = (server.factors ?? []).map((f) => ({
+          type:
+            f.key.startsWith('attendance')
+              ? 'attendance'
+              : f.key.startsWith('progress') || f.key.startsWith('ac_') || f.key.startsWith('grade')
+                ? 'progress'
+                : f.key.startsWith('ilp')
+                  ? 'ilp'
+                  : 'engagement',
+          label: f.label,
+          severity: f.severity >= 0.7 ? 'high' : f.severity >= 0.4 ? 'medium' : 'low',
+          description: f.detail ?? f.label,
+        }));
+
+        const cohort = cohorts.find((c) => c.id === s.cohortId);
+        return {
+          id: s.id,
+          name: s.name,
+          cohort: cohort?.name || local?.cohort || 'Unknown',
+          riskScore: Math.round(server.score),
+          riskLevel: widgetLevel,
+          riskFactors: serverFactors.length > 0 ? serverFactors : local?.riskFactors ?? [],
+          attendance: local?.attendance ?? (s.attendancePercentage ?? 0),
+          progressPercentage: local?.progressPercentage ?? (s.progressPercentage ?? 0),
+          lastILPReview: local?.lastILPReview,
+          recommendedActions: local?.recommendedActions ?? [],
+          source: 'server' as const,
+        };
+      })
+      .filter((s): s is AtRiskStudent => s !== null && s.riskFactors.length > 0)
       .sort((a, b) => b.riskScore - a.riskScore);
-  }, [students, cohorts, ilps, attendanceRecords, assessments]);
+  }, [students, cohorts, ilps, attendanceRecords, assessments, serverRisk]);
 
   const filteredStudents =
     selectedFilter === 'all'
@@ -259,6 +331,14 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
               <h3 className="mt-1.5 text-base sm:text-lg font-semibold text-white tracking-tight">
                 At-risk predictor
               </h3>
+              <button
+                type="button"
+                onClick={handleRefreshAi}
+                disabled={recomputing}
+                className="mt-1.5 text-[10.5px] font-medium text-elec-yellow/85 hover:text-elec-yellow transition-colors disabled:opacity-40 touch-manipulation"
+              >
+                {recomputing ? 'Refreshing AI signals…' : 'Refresh AI signals →'}
+              </button>
             </div>
             <div className="text-right shrink-0">
               <div className="text-3xl sm:text-4xl font-semibold tabular-nums leading-none text-orange-400">
@@ -347,6 +427,14 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
             <h3 className="mt-1.5 text-xl sm:text-2xl font-semibold text-white tracking-tight">
               At-risk predictor
             </h3>
+            <button
+              type="button"
+              onClick={handleRefreshAi}
+              disabled={recomputing}
+              className="mt-1.5 text-[11px] font-medium text-elec-yellow/85 hover:text-elec-yellow transition-colors disabled:opacity-40 touch-manipulation"
+            >
+              {recomputing ? 'Refreshing AI signals…' : 'Refresh AI signals →'}
+            </button>
           </div>
           <div className="text-right shrink-0">
             <div className="text-3xl sm:text-4xl font-semibold tabular-nums leading-none text-orange-400">

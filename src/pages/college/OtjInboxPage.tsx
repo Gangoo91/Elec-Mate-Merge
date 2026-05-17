@@ -11,6 +11,8 @@ import {
   type InboxRow,
   type InboxScope,
 } from '@/hooks/useTutorOtjInbox';
+import { SpagCheckButton } from '@/components/college/widgets/SpagCheckButton';
+import { useToast } from '@/hooks/use-toast';
 
 /* ==========================================================================
    OtjInboxPage — /college/otj/inbox
@@ -107,8 +109,22 @@ export default function OtjInboxPage() {
   });
   const navigate = useNavigate();
   const inbox = useTutorOtjInbox();
+  const { toast } = useToast();
 
   const [cohortFilter, setCohortFilter] = useState<string>('all');
+  // Multi-select for bulk verify/return — see toolbar below the filter strip.
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [bulkReturning, setBulkReturning] = useState(false);
+  const [bulkRationale, setBulkRationale] = useState('');
+  const [bulkActing, setBulkActing] = useState(false);
+
+  const toggleSelect = (id: string) =>
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
 
   const cohorts = useMemo(() => {
     const set = new Set<string>();
@@ -122,6 +138,63 @@ export default function OtjInboxPage() {
     if (cohortFilter === 'all') return inbox.rows;
     return inbox.rows.filter((r) => r.cohort_name === cohortFilter);
   }, [inbox.rows, cohortFilter]);
+
+  // Drop selected ids that are no longer in the visible inbox (e.g. another
+  // tab verified them). Keeps the bulk toolbar honest.
+  useEffect(() => {
+    setSelected((prev) => {
+      const visible = new Set(filteredRows.map((r) => r.id));
+      let changed = false;
+      const next = new Set<string>();
+      for (const id of prev) {
+        if (visible.has(id)) next.add(id);
+        else changed = true;
+      }
+      return changed ? next : prev;
+    });
+  }, [filteredRows]);
+
+  const allSelected =
+    filteredRows.length > 0 && filteredRows.every((r) => selected.has(r.id));
+
+  const toggleSelectAll = () => {
+    if (allSelected) setSelected(new Set());
+    else setSelected(new Set(filteredRows.map((r) => r.id)));
+  };
+
+  const handleBulkVerify = async () => {
+    const ids = Array.from(selected);
+    if (ids.length === 0) return;
+    setBulkActing(true);
+    try {
+      const { ok, failed } = await inbox.bulkVerify(ids);
+      setSelected(new Set());
+      toast({
+        title: failed > 0 ? `Verified ${ok}, ${failed} failed` : `Verified ${ok} submissions`,
+        variant: failed > 0 ? 'destructive' : undefined,
+      });
+    } finally {
+      setBulkActing(false);
+    }
+  };
+
+  const handleBulkReject = async () => {
+    const ids = Array.from(selected);
+    if (ids.length === 0 || !bulkRationale.trim()) return;
+    setBulkActing(true);
+    try {
+      const { ok, failed } = await inbox.bulkReject(ids, bulkRationale);
+      setSelected(new Set());
+      setBulkRationale('');
+      setBulkReturning(false);
+      toast({
+        title: failed > 0 ? `Returned ${ok}, ${failed} failed` : `Returned ${ok} submissions`,
+        variant: failed > 0 ? 'destructive' : undefined,
+      });
+    } finally {
+      setBulkActing(false);
+    }
+  };
 
   const totalMinutes = filteredRows.reduce((acc, r) => acc + (r.duration_minutes ?? 0), 0);
 
@@ -178,7 +251,96 @@ export default function OtjInboxPage() {
           </div>
         </motion.div>
 
-        <div className="mt-5">
+        {/* Bulk-action toolbar — only when something is selected */}
+        {selected.size > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mt-4 rounded-xl border border-elec-yellow/30 bg-elec-yellow/[0.08] p-3 sm:p-4 space-y-3"
+          >
+            <div className="flex items-center justify-between gap-3 flex-wrap">
+              <div className="text-[12.5px] font-semibold text-elec-yellow">
+                {selected.size} selected
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  onClick={() => setSelected(new Set())}
+                  className="h-9 px-3 rounded-md border border-white/15 bg-white/[0.04] text-[12px] font-medium text-white/90 hover:bg-white/[0.08] touch-manipulation"
+                >
+                  Clear
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setBulkReturning((v) => !v)}
+                  disabled={bulkActing}
+                  className="h-9 px-3 rounded-md border border-rose-400/30 bg-rose-500/[0.08] text-[12px] font-semibold text-rose-200 hover:bg-rose-500/15 disabled:opacity-40 touch-manipulation"
+                >
+                  Return for more info
+                </button>
+                <button
+                  type="button"
+                  onClick={handleBulkVerify}
+                  disabled={bulkActing}
+                  className="h-9 px-3 rounded-md bg-emerald-400 text-black text-[12px] font-semibold hover:bg-emerald-300 disabled:opacity-40 touch-manipulation"
+                >
+                  {bulkActing ? 'Verifying…' : `Verify ${selected.size}`}
+                </button>
+              </div>
+            </div>
+            {bulkReturning && (
+              <div className="space-y-2 border-t border-white/[0.08] pt-3">
+                <label className="text-[10.5px] uppercase tracking-wider text-white/60">
+                  Shared rationale — sent to every learner
+                </label>
+                <textarea
+                  rows={2}
+                  value={bulkRationale}
+                  onChange={(e) => setBulkRationale(e.target.value)}
+                  placeholder="e.g. Add the dates each task was carried out + how long each took."
+                  className="w-full rounded-lg bg-black/30 border border-white/20 px-3 py-2 text-[13px] text-white focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500/40 touch-manipulation"
+                />
+                <div className="flex justify-end gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setBulkReturning(false);
+                      setBulkRationale('');
+                    }}
+                    className="h-9 px-3 rounded-md text-[12px] font-medium text-white/80 hover:text-white touch-manipulation"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleBulkReject}
+                    disabled={bulkActing || !bulkRationale.trim()}
+                    className="h-9 px-3 rounded-md bg-rose-400 text-black text-[12px] font-semibold hover:bg-rose-300 disabled:opacity-40 touch-manipulation"
+                  >
+                    {bulkActing ? 'Returning…' : `Return ${selected.size}`}
+                  </button>
+                </div>
+              </div>
+            )}
+          </motion.div>
+        )}
+
+        {/* Select-all checkbox + count, only when there's anything to select */}
+        {filteredRows.length > 0 && (
+          <div className="mt-4 flex items-center gap-2 text-[12px] text-white/70">
+            <label className="inline-flex items-center gap-2 touch-manipulation cursor-pointer">
+              <input
+                type="checkbox"
+                checked={allSelected}
+                onChange={toggleSelectAll}
+                className="h-4 w-4 rounded border-white/30 bg-transparent text-elec-yellow focus:ring-elec-yellow"
+              />
+              <span>{allSelected ? 'Deselect all' : 'Select all visible'}</span>
+            </label>
+          </div>
+        )}
+
+        <div className="mt-3">
           {inbox.loading && inbox.rows.length === 0 ? (
             <Skeleton />
           ) : filteredRows.length === 0 ? (
@@ -189,6 +351,8 @@ export default function OtjInboxPage() {
                 <InboxRowCard
                   key={row.id}
                   row={row}
+                  selected={selected.has(row.id)}
+                  onToggleSelect={() => toggleSelect(row.id)}
                   onVerify={() => inbox.verify(row.id)}
                   onReject={(rationale) => inbox.reject(row.id, rationale)}
                   onOpenStudent={
@@ -264,11 +428,15 @@ function CohortFilter({
 
 function InboxRowCard({
   row,
+  selected,
+  onToggleSelect,
   onVerify,
   onReject,
   onOpenStudent,
 }: {
   row: InboxRow;
+  selected: boolean;
+  onToggleSelect: () => void;
   onVerify: () => Promise<void>;
   onReject: (rationale: string) => Promise<void>;
   /** Null when the apprentice has no college_students row yet — keeps the
@@ -336,10 +504,24 @@ function InboxRowCard({
   const photos = row.evidence_urls ?? (row.evidence_url ? [row.evidence_url] : []);
 
   return (
-    <li className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
+    <li
+      className={cn(
+        'rounded-2xl border bg-[hsl(0_0%_10%)] overflow-hidden transition-colors',
+        selected ? 'border-elec-yellow/60' : 'border-white/[0.06]'
+      )}
+    >
       <div className="px-4 sm:px-5 py-4 sm:py-5">
-        {/* Header — learner + activity meta */}
+        {/* Header — checkbox + learner + activity meta */}
         <div className="flex items-baseline justify-between gap-3 flex-wrap">
+          <label className="inline-flex items-center gap-2 -ml-1 mt-0.5 shrink-0 touch-manipulation cursor-pointer">
+            <input
+              type="checkbox"
+              checked={selected}
+              onChange={onToggleSelect}
+              aria-label="Select this submission"
+              className="h-4 w-4 rounded border-white/30 bg-transparent text-elec-yellow focus:ring-elec-yellow"
+            />
+          </label>
           {onOpenStudent ? (
             <button
               type="button"
@@ -383,6 +565,20 @@ function InboxRowCard({
           <p className="mt-2 text-[12.5px] text-white/95 leading-snug whitespace-pre-wrap">
             {row.description}
           </p>
+        )}
+
+        {/* SpaG check on apprentice's reflection */}
+        {row.description && row.description.length >= 30 && (
+          <div className="mt-2">
+            <SpagCheckButton
+              text={row.description}
+              sourceKind="otj"
+              sourceId={row.id}
+              studentId={row.college_student_row_id ?? undefined}
+              studentName={row.student_name ?? undefined}
+              variant="compact"
+            />
+          </div>
         )}
 
         {/* Unit codes */}

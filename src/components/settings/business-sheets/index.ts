@@ -8,3 +8,4 @@ export { default as InvoiceSettingsSheet } from './InvoiceSettingsSheet';
 export { default as InspectorSheet } from './InspectorSheet';
 export { default as InstrumentsSheet } from './InstrumentsSheet';
 export { default as RegionalSheet } from './RegionalSheet';
+export { default as BookingAvailabilitySheet } from './BookingAvailabilitySheet';

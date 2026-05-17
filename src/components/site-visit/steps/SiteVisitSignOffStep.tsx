@@ -213,27 +213,29 @@ export const SiteVisitSignOffStep = ({
   return (
     <div className="space-y-4">
       <div>
-        <h2 className="text-lg font-bold text-white">Client Sign-Off</h2>
-        <p className="text-sm text-white mt-1">
-          Hand the device to the client to sign the scope of works
+        <h2 className="text-[18px] font-semibold tracking-tight text-white sm:text-[20px]">
+          Client sign-off
+        </h2>
+        <p className="mt-1 text-[12.5px] text-white/65">
+          Hand the device to the client to sign the scope of works.
         </p>
       </div>
 
       {/* Locked scope summary card */}
-      <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
-        <div className="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center flex-shrink-0">
-          <Lock className="h-5 w-5 text-white" />
+      <div className="flex items-center gap-3 rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] p-4">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.12]">
+          <Lock className="h-4 w-4 text-elec-yellow" />
         </div>
-        <div className="flex-1 min-w-0">
-          <p className="text-[15px] font-medium text-white">
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-[14px] font-medium text-white">
             {visit.propertyAddress || 'Site Visit'}
           </p>
-          <p className="text-[13px] text-white">
+          <p className="text-[12px] text-white/65">
             {totalRooms} room{totalRooms !== 1 ? 's' : ''} · {totalItems} item
             {totalItems !== 1 ? 's' : ''}
           </p>
         </div>
-        <Check className="h-5 w-5 text-emerald-400 flex-shrink-0" />
+        <Check className="h-4 w-4 shrink-0 text-elec-yellow" />
       </div>
 
       {/* Download Scope PDF */}
@@ -260,12 +262,12 @@ export const SiteVisitSignOffStep = ({
         <>
           {/* Client name input */}
           <div className="space-y-1.5">
-            <label className="text-sm font-medium text-white">Client Name</label>
+            <label className="text-[11.5px] font-medium text-white/65">Client name</label>
             <Input
               value={clientName}
               onChange={(e) => setClientName(e.target.value)}
               placeholder="Enter client name"
-              className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+              className="h-11 touch-manipulation rounded-xl border-white/[0.08] bg-[hsl(0_0%_10%)] text-[14px] text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-elec-yellow/20"
             />
           </div>
 
@@ -316,14 +318,20 @@ export const SiteVisitSignOffStep = ({
         </>
       ) : (
         <>
-          {/* Signed confirmation */}
-          <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
-            <div className="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center flex-shrink-0">
-              <Check className="h-5 w-5 text-white" />
+          {/* Signed confirmation — editorial */}
+          <div className="relative flex items-center gap-3 overflow-hidden rounded-2xl border border-emerald-500/25 bg-gradient-to-r from-emerald-500/[0.06] to-transparent p-4">
+            <div
+              aria-hidden
+              className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-emerald-500/0 via-emerald-500/80 to-emerald-500/0"
+            />
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-emerald-500/25 bg-emerald-500/[0.12]">
+              <Check className="h-4 w-4 text-emerald-400" />
             </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-[15px] font-medium text-emerald-400">Scope Signed</p>
-              <p className="text-[13px] text-white">
+            <div className="min-w-0 flex-1">
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-emerald-400">
+                Scope signed
+              </div>
+              <p className="mt-0.5 text-[12.5px] text-white/65">
                 Signed by {clientName} ·{' '}
                 {signedAt
                   ? new Date(signedAt).toLocaleDateString('en-GB', {
@@ -363,31 +371,31 @@ export const SiteVisitSignOffStep = ({
             onClick={handleDownloadPDF}
             disabled={isDownloadingPDF}
             variant="outline"
-            className="w-full h-11 touch-manipulation border-emerald-500/30 text-emerald-400 hover:border-emerald-400 hover:text-emerald-300"
+            className="h-11 w-full touch-manipulation rounded-xl border-white/[0.12] bg-white/[0.04] text-white hover:bg-white/[0.08]"
           >
             {isDownloadingPDF ? (
               <>
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                Generating PDF...
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Generating PDF…
               </>
             ) : (
               <>
-                <Download className="h-4 w-4 mr-2" />
-                Download Signed PDF
+                <Download className="mr-2 h-4 w-4" />
+                Download signed PDF
               </>
             )}
           </Button>
 
           {/* Send to Quote Wizard */}
-          <div className="space-y-2 pt-4 border-t border-white/[0.06]">
+          <div className="space-y-2 border-t border-white/[0.06] pt-4">
             <Button
               onClick={onSendToQuote}
-              className="w-full h-12 text-base font-semibold touch-manipulation bg-emerald-600 hover:bg-emerald-700 text-white"
+              className="h-12 w-full touch-manipulation rounded-xl bg-elec-yellow text-[14px] font-semibold text-black hover:bg-elec-yellow/90"
             >
-              <FileText className="h-5 w-5 mr-2" />
-              Send to Quote Wizard
+              <FileText className="mr-2 h-5 w-5" />
+              Send to quote wizard →
             </Button>
-            <p className="text-xs text-white text-center">
+            <p className="text-center text-[12px] text-white/55">
               Pre-fills materials from your scope into the quote builder
             </p>
           </div>

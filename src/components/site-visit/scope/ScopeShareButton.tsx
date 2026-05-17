@@ -154,67 +154,95 @@ export const ScopeShareButton = ({ visit, assumptions }: ScopeShareButtonProps) 
 
   if (!shareUrl) {
     return (
-      <Button
-        onClick={handleCreateShare}
-        disabled={isCreating}
-        className="w-full h-12 text-base font-semibold touch-manipulation bg-blue-600 hover:bg-blue-700 text-white"
-      >
-        {isCreating ? (
-          <>
-            <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-            Creating link...
-          </>
-        ) : (
-          <>
-            <Send className="h-5 w-5 mr-2" />
-            Send to Client for Signature
-          </>
-        )}
-      </Button>
+      <div className="relative overflow-hidden rounded-2xl border border-elec-yellow/25 bg-gradient-to-r from-elec-yellow/[0.06] via-elec-yellow/[0.02] to-transparent p-5">
+        <div
+          aria-hidden
+          className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/80 to-elec-yellow/0"
+        />
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
+              Client review
+            </div>
+            <div className="mt-1 text-[15px] font-semibold text-white sm:text-[16px]">
+              Send the scope for client signature.
+            </div>
+            <p className="mt-1 text-[12.5px] text-white/65">
+              Secure share link. Client reviews the scope and signs on their own device.
+            </p>
+          </div>
+          <Button
+            onClick={handleCreateShare}
+            disabled={isCreating}
+            className="h-11 shrink-0 rounded-full bg-elec-yellow px-5 text-[13px] font-semibold text-black hover:bg-elec-yellow/90 disabled:opacity-50 touch-manipulation"
+          >
+            {isCreating ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Creating…
+              </>
+            ) : (
+              <>
+                <Send className="mr-2 h-4 w-4" />
+                Send to client →
+              </>
+            )}
+          </Button>
+        </div>
+      </div>
     );
   }
 
   return (
-    <div className="space-y-3">
-      <div className="flex items-center gap-2 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-        <Check className="h-5 w-5 text-emerald-400 flex-shrink-0" />
-        <p className="text-sm font-medium text-emerald-400">Share link created</p>
+    <div className="relative overflow-hidden rounded-2xl border border-emerald-500/25 bg-gradient-to-r from-emerald-500/[0.06] to-transparent p-5">
+      <div
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-emerald-500/0 via-emerald-500/80 to-emerald-500/0"
+      />
+      <div className="flex items-center gap-2">
+        <Check className="h-4 w-4 text-emerald-400" />
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-emerald-400">
+          Share link ready
+        </span>
       </div>
+      <p className="mt-2 text-[13px] text-white/75">
+        Share with the client — they review the scope and sign on their own device.
+      </p>
 
-      <div className="flex gap-2">
+      <div className="mt-4 flex gap-2">
         <Input
           value={shareUrl}
           readOnly
-          className="h-11 text-xs touch-manipulation border-white/30"
+          className="h-11 touch-manipulation rounded-xl border-white/[0.08] bg-[hsl(0_0%_10%)] text-[12px] text-white"
         />
         <Button
           onClick={handleCopy}
           variant="outline"
-          className="h-11 px-3 touch-manipulation border-white/20 text-white"
+          className="h-11 shrink-0 rounded-xl border-white/[0.12] bg-white/[0.04] px-3 text-white hover:bg-white/[0.08] touch-manipulation"
         >
           {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
         </Button>
       </div>
 
-      <div className="grid grid-cols-2 gap-2">
+      <div className="mt-3 grid grid-cols-2 gap-2">
         <Button
           onClick={handleWhatsApp}
-          className="h-11 touch-manipulation bg-green-600 hover:bg-green-700 text-white"
+          className="h-11 rounded-xl bg-emerald-500/15 text-emerald-400 hover:bg-emerald-500/25 touch-manipulation"
         >
-          <MessageSquare className="h-4 w-4 mr-2" />
+          <MessageSquare className="mr-2 h-4 w-4" />
           WhatsApp
         </Button>
         <Button
           onClick={handleEmail}
           disabled={isSendingEmail}
-          className="h-11 touch-manipulation bg-blue-600 hover:bg-blue-700 text-white"
+          className="h-11 rounded-xl bg-blue-500/15 text-blue-400 hover:bg-blue-500/25 disabled:opacity-50 touch-manipulation"
         >
           {isSendingEmail ? (
-            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
           ) : (
-            <Mail className="h-4 w-4 mr-2" />
+            <Mail className="mr-2 h-4 w-4" />
           )}
-          {isSendingEmail ? 'Sending...' : 'Email'}
+          {isSendingEmail ? 'Sending…' : 'Email'}
         </Button>
       </div>
     </div>

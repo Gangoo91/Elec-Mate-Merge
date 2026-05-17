@@ -8,6 +8,7 @@ import {
 } from '@/hooks/useMarkingQueue';
 import { QuizAttemptReviewSheet } from '@/components/college/sheets/QuizAttemptReviewSheet';
 import { cn } from '@/lib/utils';
+import { supabase } from '@/integrations/supabase/client';
 
 /* ==========================================================================
    MarkingQueuePage — /college/marking
@@ -30,7 +31,33 @@ const FILTER_DEFS: Array<{ key: Filter; label: string; tone: string }> = [
 
 export default function MarkingQueuePage() {
   const navigate = useNavigate();
-  const { items, stats, loading } = useMarkingQueue();
+  const { items, stats, loading, refresh } = useMarkingQueue();
+  const [bulkGrading, setBulkGrading] = useState<{ done: number; total: number } | null>(null);
+
+  // ELE-925 (H1) — bulk-grade every free-response answer that's still waiting.
+  // Iterates the currently visible queue rows and fires the per-attempt grader
+  // for any row with n_ai_pending > 0. Fire-and-await sequentially so we don't
+  // batter the model with parallel calls; surface progress to the tutor.
+  const handleBulkGrade = async () => {
+    const targets = items.filter((it) => (it.n_ai_pending ?? 0) > 0);
+    if (targets.length === 0) return;
+    setBulkGrading({ done: 0, total: targets.length });
+    try {
+      for (let i = 0; i < targets.length; i++) {
+        try {
+          await supabase.functions.invoke('ai-grade-free-response', {
+            body: { attempt_id: targets[i].attempt_id },
+          });
+        } catch {
+          // best-effort; continue to next
+        }
+        setBulkGrading({ done: i + 1, total: targets.length });
+      }
+      await refresh();
+    } finally {
+      setBulkGrading(null);
+    }
+  };
   const [filter, setFilter] = useState<Filter>('awaiting_review');
   const [search, setSearch] = useState('');
   const [openAttemptId, setOpenAttemptId] = useState<string | null>(null);
@@ -91,6 +118,19 @@ export default function MarkingQueuePage() {
               and sign off — or override.
             </p>
           </div>
+          {/* Bulk grade pending attempts — H1 ELE-925 */}
+          {(stats.awaiting_ai > 0 || bulkGrading) && (
+            <button
+              type="button"
+              onClick={handleBulkGrade}
+              disabled={!!bulkGrading}
+              className="inline-flex items-center h-10 px-4 rounded-full bg-elec-yellow text-black text-[13px] font-semibold disabled:opacity-50 touch-manipulation"
+            >
+              {bulkGrading
+                ? `Grading… ${bulkGrading.done} / ${bulkGrading.total}`
+                : `Grade all pending (${stats.awaiting_ai})`}
+            </button>
+          )}
         </div>
 
         {/* Stats strip */}

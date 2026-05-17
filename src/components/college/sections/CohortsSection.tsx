@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { NewCohortDialog } from '@/components/college/dialogs/NewCohortDialog';
 import { TakeAttendanceDialog } from '@/components/college/dialogs/TakeAttendanceDialog';
+import { CohortMessageSheet } from '@/components/college/sheets/CohortMessageSheet';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import { useToast } from '@/hooks/use-toast';
 import { formatUKDateShort } from '@/utils/collegeHelpers';
@@ -32,6 +33,8 @@ export function CohortsSection({ onNavigate }: CohortsSectionProps) {
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [newCohortOpen, setNewCohortOpen] = useState(false);
   const [takeAttendanceOpen, setTakeAttendanceOpen] = useState(false);
+  const [messageCohortId, setMessageCohortId] = useState<string | null>(null);
+  const [messageCohortName, setMessageCohortName] = useState<string | null>(null);
 
   const filteredCohorts = cohorts.filter((cohort) => {
     const matchesSearch = cohort.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -58,12 +61,24 @@ export function CohortsSection({ onNavigate }: CohortsSectionProps) {
           description={`${activeCount} active cohort${activeCount === 1 ? '' : 's'} currently enrolled.`}
           tone="emerald"
           actions={
-            <button
-              onClick={() => setNewCohortOpen(true)}
-              className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
-            >
-              New cohort →
-            </button>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => {
+                  // Empty string sentinel — sheet opens, learner picks cohort
+                  setMessageCohortId('');
+                  setMessageCohortName(null);
+                }}
+                className="text-[12.5px] font-medium text-white/80 hover:text-white transition-colors touch-manipulation whitespace-nowrap"
+              >
+                Message cohort →
+              </button>
+              <button
+                onClick={() => setNewCohortOpen(true)}
+                className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
+              >
+                New cohort →
+              </button>
+            </div>
           }
         />
       </motion.div>
@@ -204,6 +219,17 @@ export function CohortsSection({ onNavigate }: CohortsSectionProps) {
 
       <NewCohortDialog open={newCohortOpen} onOpenChange={setNewCohortOpen} />
       <TakeAttendanceDialog open={takeAttendanceOpen} onOpenChange={setTakeAttendanceOpen} />
+      <CohortMessageSheet
+        open={messageCohortId !== null || messageCohortName !== null}
+        onOpenChange={(o) => {
+          if (!o) {
+            setMessageCohortId(null);
+            setMessageCohortName(null);
+          }
+        }}
+        defaultCohortId={messageCohortId}
+        defaultCohortName={messageCohortName}
+      />
     </PageFrame>
   );
 }

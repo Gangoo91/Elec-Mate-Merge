@@ -9,6 +9,7 @@ export interface Customer {
   phone?: string;
   address?: string;
   notes?: string;
+  tags?: string[];
   createdAt: string;
   updatedAt: string;
   // CRM stats
@@ -102,6 +103,7 @@ export const useCustomers = (options?: UseCustomersOptions) => {
             phone: c.phone || undefined,
             address: c.address || undefined,
             notes: c.notes || undefined,
+            tags: (c as { tags?: string[] }).tags || [],
             createdAt: c.created_at,
             updatedAt: c.updated_at,
             certificateCount: c.certificate_count || 0,
@@ -137,6 +139,7 @@ export const useCustomers = (options?: UseCustomersOptions) => {
         phone: data.phone || undefined,
         address: data.address || undefined,
         notes: data.notes || undefined,
+        tags: (data as { tags?: string[] }).tags || [],
         createdAt: data.created_at,
         updatedAt: data.updated_at,
         certificateCount: data.certificate_count || 0,
@@ -211,6 +214,7 @@ export const useCustomers = (options?: UseCustomersOptions) => {
           phone: customer.phone,
           address: customer.address,
           notes: customer.notes,
+          tags: customer.tags || [],
         })
         .select()
         .single();
@@ -306,10 +310,15 @@ export const useCustomers = (options?: UseCustomersOptions) => {
   };
 
   // Export customers to CSV
-  const exportCustomers = useCallback(async () => {
+  const exportCustomers = useCallback(async (selectedIds?: string[]) => {
     try {
-      // Fetch all customers for export (no pagination)
-      const { data, error } = await supabase.from('customers').select('*').order('name');
+      // Fetch all customers for export (no pagination). If selectedIds passed,
+      // filter to that subset.
+      let query = supabase.from('customers').select('*').order('name');
+      if (selectedIds && selectedIds.length > 0) {
+        query = query.in('id', selectedIds);
+      }
+      const { data, error } = await query;
 
       if (error) throw error;
 
@@ -404,6 +413,28 @@ export const useCustomers = (options?: UseCustomersOptions) => {
     deleteCustomer,
     refreshCustomers: () => loadCustomers(currentPage),
     exportCustomers,
+    mergeCustomers: async (sourceId: string, targetId: string) => {
+      try {
+        const { data, error } = await supabase.rpc('merge_customers', {
+          source_id: sourceId,
+          target_id: targetId,
+        });
+        if (error) throw error;
+        toast({
+          title: 'Customers merged',
+          description: `Reassigned ${(data as { reassigned?: number })?.reassigned ?? 0} related records.`,
+        });
+        await loadCustomers(currentPage);
+        return true;
+      } catch (err) {
+        toast({
+          title: 'Merge failed',
+          description: err instanceof Error ? err.message : 'Try again.',
+          variant: 'destructive',
+        });
+        return false;
+      }
+    },
   };
 };
 

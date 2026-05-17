@@ -30,6 +30,7 @@ import {
 import { AddIqaSamplingPlanDialog } from '@/components/college/dialogs/AddIqaSamplingPlanDialog';
 import { AddIqaFindingDialog } from '@/components/college/dialogs/AddIqaFindingDialog';
 import { AddStandardisationMeetingDialog } from '@/components/college/dialogs/AddStandardisationMeetingDialog';
+import { CoverageMatrixTab } from '@/components/college/iqa/CoverageMatrixTab';
 
 /* ==========================================================================
    IqaDashboardPage — /college/iqa
@@ -71,7 +72,7 @@ function daysUntil(iso: string | null): number | null {
 export default function IqaDashboardPage() {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [activeTab, setActiveTab] = useState<'sampling' | 'findings' | 'standardisation'>(
+  const [activeTab, setActiveTab] = useState<'sampling' | 'findings' | 'standardisation' | 'coverage'>(
     'sampling'
   );
   const [search, setSearch] = useState('');
@@ -110,7 +111,7 @@ export default function IqaDashboardPage() {
   const heroAction = () => {
     if (activeTab === 'sampling') setAddPlanOpen(true);
     else if (activeTab === 'findings') setAddFindingOpen(true);
-    else setAddMeetingOpen(true);
+    else if (activeTab === 'standardisation') setAddMeetingOpen(true);
   };
 
   return (
@@ -131,16 +132,18 @@ export default function IqaDashboardPage() {
           description="Sampling plans, findings, standardisation. Audit-grade trail for EQA visits."
           tone="blue"
           actions={
-            <button
-              onClick={heroAction}
-              className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
-            >
-              {activeTab === 'sampling'
-                ? 'New plan →'
-                : activeTab === 'findings'
-                  ? 'Log finding →'
-                  : 'New meeting →'}
-            </button>
+            activeTab !== 'coverage' ? (
+              <button
+                onClick={heroAction}
+                className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
+              >
+                {activeTab === 'sampling'
+                  ? 'New plan →'
+                  : activeTab === 'findings'
+                    ? 'Log finding →'
+                    : 'New meeting →'}
+              </button>
+            ) : null
           }
         />
       </motion.div>
@@ -168,6 +171,7 @@ export default function IqaDashboardPage() {
             { value: 'sampling', label: 'Sampling', count: plans.length },
             { value: 'findings', label: 'Findings', count: findings.length },
             { value: 'standardisation', label: 'Standardisation', count: meetings.length },
+            { value: 'coverage', label: 'Coverage' },
           ]}
           activeTab={activeTab}
           onTabChange={(v) => setActiveTab(v as typeof activeTab)}
@@ -229,7 +233,7 @@ export default function IqaDashboardPage() {
               }
             }}
           />
-        ) : (
+        ) : activeTab === 'standardisation' ? (
           <StandardisationTab
             meetings={meetings}
             loading={meetingsLoading}
@@ -250,6 +254,8 @@ export default function IqaDashboardPage() {
               }
             }}
           />
+        ) : (
+          <CoverageMatrixTab />
         )}
       </motion.section>
 

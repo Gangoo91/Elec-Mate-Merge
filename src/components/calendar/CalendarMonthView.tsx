@@ -24,7 +24,8 @@ interface CalendarMonthViewProps {
   selectedDate?: Date;
 }
 
-const WEEKDAY_LABELS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+const WEEKDAY_LABELS_FULL = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+const WEEKDAY_LABELS_SHORT = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 
 const CalendarMonthView = ({
   currentDate,
@@ -64,24 +65,26 @@ const CalendarMonthView = ({
 
   return (
     <div {...swipeHandlers} className="select-none">
-      {/* Card wrapper */}
-      <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] overflow-hidden">
-        {/* Weekday headers */}
-        <div className="grid grid-cols-7 border-b border-white/[0.06]">
-          {WEEKDAY_LABELS.map((label, i) => (
+      {/* Grid — flat on mobile, subtle border on sm+. Dense rows so the agenda
+          below the grid is visible without scrolling on a phone. */}
+      <div className="rounded-xl sm:border sm:border-white/[0.06] overflow-hidden">
+        {/* Weekday headers — single letters on mobile, full on sm+ */}
+        <div className="grid grid-cols-7">
+          {WEEKDAY_LABELS_FULL.map((label, i) => (
             <div
-              key={label}
+              key={label + i}
               className={cn(
-                'text-center text-[11px] font-bold uppercase tracking-wider py-3',
-                i >= 5 ? 'text-elec-yellow' : 'text-white'
+                'text-center text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.14em] py-1.5 sm:py-2',
+                i >= 5 ? 'text-white/35' : 'text-white/45'
               )}
             >
-              {label}
+              <span className="hidden sm:inline">{label}</span>
+              <span className="sm:hidden">{WEEKDAY_LABELS_SHORT[i]}</span>
             </div>
           ))}
         </div>
 
-        {/* Day cells */}
+        {/* Day cells — tighter on mobile (~46px) so agenda fits */}
         <div className="grid grid-cols-7">
           {days.map((day, i) => {
             const key = format(day, 'yyyy-MM-dd');
@@ -97,18 +100,19 @@ const CalendarMonthView = ({
                 type="button"
                 onClick={() => onDateSelect(day)}
                 className={cn(
-                  'relative flex flex-col items-center justify-start pt-2 pb-1.5 min-h-[60px] touch-manipulation transition-all',
-                  !inMonth && 'opacity-40',
+                  'relative flex flex-col items-center justify-start pt-1.5 pb-1 min-h-[46px] sm:min-h-[56px] touch-manipulation transition-colors',
+                  !inMonth && 'opacity-35',
                   isWeekend && inMonth && 'bg-white/[0.015]',
-                  !today && !selected && 'active:bg-white/[0.06]'
+                  'hover:bg-white/[0.03] active:bg-white/[0.05]'
                 )}
               >
                 {/* Date number */}
                 <div
                   className={cn(
-                    'w-8 h-8 flex items-center justify-center rounded-full text-sm font-bold transition-all',
+                    'w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full text-[13px] sm:text-sm font-semibold transition-colors',
                     today && !selected && 'bg-elec-yellow text-black',
-                    selected && 'bg-blue-500 text-white shadow-[0_0_8px_rgba(59,130,246,0.4)]',
+                    selected && !today && 'bg-white/[0.12] text-white ring-1 ring-white/30',
+                    selected && today && 'bg-elec-yellow text-black ring-2 ring-white/50',
                     !today && !selected && 'text-white'
                   )}
                 >
@@ -117,16 +121,16 @@ const CalendarMonthView = ({
 
                 {/* Event dots (max 3 visible) */}
                 {dayEvents.length > 0 && (
-                  <div className="flex items-center gap-[3px] mt-1">
+                  <div className="flex items-center gap-[3px] mt-0.5">
                     {dayEvents.slice(0, 3).map((event) => (
                       <CalendarEventDot
                         key={event.id}
                         colour={event.colour}
-                        className="w-[5px] h-[5px]"
+                        className="w-[4px] h-[4px] sm:w-[5px] sm:h-[5px]"
                       />
                     ))}
                     {dayEvents.length > 3 && (
-                      <span className="text-[8px] text-white font-bold ml-0.5">
+                      <span className="text-[8px] text-white/60 font-semibold ml-0.5 tabular-nums">
                         +{dayEvents.length - 3}
                       </span>
                     )}

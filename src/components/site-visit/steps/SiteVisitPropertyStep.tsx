@@ -75,8 +75,12 @@ export const SiteVisitPropertyStep = ({ visit, onUpdateProperty }: SiteVisitProp
   return (
     <div className="space-y-4">
       <div>
-        <h2 className="text-lg font-bold text-white">Property Details</h2>
-        <p className="text-sm text-white mt-1">Where is the work being carried out?</p>
+        <h2 className="text-[18px] font-semibold tracking-tight text-white sm:text-[20px]">
+          Property details
+        </h2>
+        <p className="mt-1 text-[12.5px] text-white/65">
+          Where is the work being carried out?
+        </p>
       </div>
 
       <div className="space-y-3">
@@ -87,7 +91,7 @@ export const SiteVisitPropertyStep = ({ visit, onUpdateProperty }: SiteVisitProp
             onChange={(value) => onUpdateProperty({ propertyAddress: value })}
             onPlaceSelect={handlePlaceSelect}
             placeholder="Start typing an address..."
-            className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+            className="h-11 touch-manipulation rounded-xl border-white/[0.08] bg-[hsl(0_0%_10%)] text-[14px] text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-elec-yellow/20"
           />
 
           {/* Previous visits dropdown */}
@@ -127,7 +131,7 @@ export const SiteVisitPropertyStep = ({ visit, onUpdateProperty }: SiteVisitProp
             value={visit.propertyPostcode || ''}
             onChange={(e) => onUpdateProperty({ propertyPostcode: e.target.value.toUpperCase() })}
             placeholder="AB1 2CD"
-            className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 uppercase"
+            className="h-11 touch-manipulation rounded-xl border-white/[0.08] bg-[hsl(0_0%_10%)] text-[14px] uppercase text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-elec-yellow/20"
             maxLength={8}
             autoCapitalize="characters"
             autoComplete="off"
@@ -164,7 +168,7 @@ export const SiteVisitPropertyStep = ({ visit, onUpdateProperty }: SiteVisitProp
             value={visit.accessNotes || ''}
             onChange={(e) => onUpdateProperty({ accessNotes: e.target.value })}
             placeholder="Gate code, parking, key safe location..."
-            className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
+            className="min-h-[80px] touch-manipulation rounded-xl border-white/[0.08] bg-[hsl(0_0%_10%)] text-[14px] text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-elec-yellow/20"
             autoCapitalize="sentences"
             spellCheck
             enterKeyHint="done"

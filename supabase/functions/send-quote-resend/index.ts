@@ -12,6 +12,10 @@ const corsHeaders = {
 
 interface QuoteEmailRequest {
   quoteId: string;
+  /** Optional caller-supplied subject line (used by the Mate chat send_document tool). */
+  customSubject?: string;
+  /** Optional caller-supplied body copy that replaces the default paragraph. */
+  customMessage?: string;
 }
 
 // ============================================================================
@@ -150,9 +154,19 @@ const handler = async (req: Request): Promise<Response> => {
     // STEP 3: Parse and validate request
     // ========================================================================
     let quoteId: string;
+    let customSubject: string | undefined;
+    let customMessage: string | undefined;
     try {
       const body = await req.json();
       quoteId = body.quoteId;
+      customSubject =
+        typeof body.customSubject === 'string' && body.customSubject.trim()
+          ? body.customSubject.trim()
+          : undefined;
+      customMessage =
+        typeof body.customMessage === 'string' && body.customMessage.trim()
+          ? body.customMessage.trim()
+          : undefined;
     } catch (e) {
       console.error('Failed to parse request body:', e);
       throw new Error('Invalid request format.');
@@ -162,7 +176,10 @@ const handler = async (req: Request): Promise<Response> => {
       throw new Error('Quote ID is required.');
     }
 
-    console.log('Processing quote:', quoteId);
+    console.log('Processing quote:', quoteId, {
+      hasCustomSubject: !!customSubject,
+      hasCustomMessage: !!customMessage,
+    });
 
     // ========================================================================
     // STEP 4: Fetch quote from database
@@ -393,6 +410,24 @@ const handler = async (req: Request): Promise<Response> => {
       acceptUrl,
       pdfAttached: pdfAttachmentSuccess,
       trackingPixelUrl: `${supabaseUrl}/functions/v1/email-open?type=quote_send&id=${quoteId}`,
+      customSubject,
+      customMessage,
+      // Bank details + deposit % surface on the quote email so the
+      // client can pay by bank transfer or see the deposit they'll need
+      // to cover at acceptance time — useful especially when the sparky
+      // hasn't set up Stripe Connect yet.
+      bankDetails: companyProfile?.bank_details
+        ? {
+            bankName: companyProfile.bank_details.bankName || null,
+            accountName: companyProfile.bank_details.accountName || null,
+            accountNumber: companyProfile.bank_details.accountNumber || null,
+            sortCode: companyProfile.bank_details.sortCode || null,
+          }
+        : null,
+      depositPercentage:
+        Number(quote.settings?.depositPercentage) ||
+        Number(companyProfile?.deposit_percentage) ||
+        null,
     });
     const emailHtml = emailPayload.html;
 
@@ -406,7 +441,7 @@ const handler = async (req: Request): Promise<Response> => {
       companyEmail: companyProfile?.company_email,
       userEmail,
     });
-    const subject = `Quote ${quoteNumber} - ${companyName}`;
+    const subject = customSubject || `Quote ${quoteNumber} - ${companyName}`;
 
     console.log(`📧 Sending to: ${clientEmail}`);
     console.log(`📧 From: ${sender.from}`);

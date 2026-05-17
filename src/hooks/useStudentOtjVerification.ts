@@ -42,6 +42,9 @@ export interface OtjEntryRow {
   evidence_urls: string[] | null;
   unit_codes: string[] | null;
   created_at: string | null;
+  attested_by_name: string | null;
+  attestation_email: string | null;
+  attestation_comment: string | null;
 }
 
 export interface OtjVerificationStats {
@@ -160,7 +163,7 @@ export function useStudentOtjVerification(
     const { data, error: err } = await supabase
       .from('college_otj_entries')
       .select(
-        'id, activity_date, activity_type, title, description, duration_minutes, source_kind, verification_status, verification_rationale, verified_at, recorded_by_name_snapshot, evidence_url, evidence_urls, unit_codes, created_at'
+        'id, activity_date, activity_type, title, description, duration_minutes, source_kind, verification_status, verification_rationale, verified_at, recorded_by_name_snapshot, evidence_url, evidence_urls, unit_codes, created_at, attested_by_name, attestation_email, attestation_comment'
       )
       .eq('student_id', studentUserId)
       .order('activity_date', { ascending: false })

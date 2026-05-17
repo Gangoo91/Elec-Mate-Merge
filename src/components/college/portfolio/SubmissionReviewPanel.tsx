@@ -34,6 +34,7 @@ import CriteriaChecklist, {
 } from '@/components/college/portfolio/CriteriaChecklist';
 import { CriteriaLinkerSheet } from '@/components/college/sheets/CriteriaLinkerSheet';
 import { CriteriaReferenceSheet } from '@/components/college/sheets/CriteriaReferenceSheet';
+import { PresenceBadges } from '@/components/college/ui/PresenceBadges';
 import {
   useHapticFeedback,
 } from '@/components/college/ui/HapticFeedback';
@@ -484,7 +485,11 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
             </h1>
           </div>
         </div>
-        <div className="shrink-0 flex items-center gap-2">
+        <div className="shrink-0 flex items-center gap-2 flex-wrap justify-end">
+          <PresenceBadges
+            channelKey={`portfolio:submission:${submission.id}`}
+            verb="reviewing"
+          />
           {['submitted', 'under_review', 'resubmitted'].includes(submission.status) && (
             <PrimaryButton onClick={handleAIReview} disabled={isReviewing}>
               {isReviewing ? 'Reviewing…' : 'AI Review'}

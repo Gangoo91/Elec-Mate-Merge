@@ -43,6 +43,7 @@ export interface DashboardBusinessData {
   overdueInvoices: number;
   overdueValue: number;
   activeJobs: number;
+  activeProjects: number;
 }
 
 export interface DashboardCertificateData {
@@ -112,6 +113,28 @@ export function useDashboardData(): DashboardData {
     ...QUERY_PRESETS.REALTIME, // Dashboard data refreshes frequently
   });
 
+  // Active projects (user-owned spark_projects) — distinct from activeJobs
+  // which counts employer-assigned employer_jobs. Electrician Hub surfaces
+  // (HeadlineStats tile, MomentumStrip, verdict CTA) want THIS number.
+  const { data: activeProjectsCount, isLoading: projectsLoading } = useQuery({
+    queryKey: [...QUERY_KEYS.DASHBOARD, 'active-projects', user?.id],
+    queryFn: async () => {
+      if (!user?.id) return 0;
+      const { count, error } = await supabase
+        .from('spark_projects')
+        .select('id', { count: 'exact', head: true })
+        .eq('user_id', user.id)
+        .in('status', ['open', 'active']);
+      if (error) {
+        console.error('Error fetching active projects count:', error);
+        return 0;
+      }
+      return count || 0;
+    },
+    enabled: !!user?.id,
+    ...QUERY_PRESETS.REALTIME,
+  });
+
   // Aggregate loading state
   const isLoading =
     authLoading ||
@@ -119,7 +142,8 @@ export function useDashboardData(): DashboardData {
     quotesLoading ||
     invoicesLoading ||
     reportsLoading ||
-    jobsLoading;
+    jobsLoading ||
+    projectsLoading;
 
   // User data
   const userData = useMemo((): DashboardUserData => {
@@ -194,8 +218,9 @@ export function useDashboardData(): DashboardData {
       overdueInvoices: overdueInvoices.length,
       overdueValue,
       activeJobs: activeJobsData?.length || 0,
+      activeProjects: activeProjectsCount || 0,
     };
-  }, [savedQuotes, invoices, activeJobsData]);
+  }, [savedQuotes, invoices, activeJobsData, activeProjectsCount]);
 
   // Certificate data - now uses reports (EIC/EICR/Minor Works) instead of training certificates
   const certificateData = useMemo((): DashboardCertificateData => {

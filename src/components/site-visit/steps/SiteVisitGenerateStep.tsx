@@ -182,9 +182,11 @@ export const SiteVisitGenerateStep = ({
   return (
     <div className="space-y-4">
       <div>
-        <h2 className="text-lg font-bold text-white">Generate Outputs</h2>
-        <p className="text-sm text-white mt-1">
-          Save, upload photos, lock baseline and generate checklist
+        <h2 className="text-[18px] font-semibold tracking-tight text-white sm:text-[20px]">
+          Generate outputs
+        </h2>
+        <p className="mt-1 text-[12.5px] text-white/65">
+          Save, upload photos, lock baseline and generate the pre-start checklist.
         </p>
       </div>
 
@@ -252,15 +254,15 @@ export const SiteVisitGenerateStep = ({
 
       {/* Continue to Client Sign-Off */}
       {isDone && (
-        <div className="space-y-2 pt-4 border-t border-white/[0.06]">
+        <div className="space-y-2 border-t border-white/[0.06] pt-4">
           <Button
             onClick={onContinueToSignOff}
-            className="w-full h-12 text-base font-semibold touch-manipulation bg-emerald-600 hover:bg-emerald-700 text-white"
+            className="h-12 w-full touch-manipulation rounded-xl bg-elec-yellow text-[14px] font-semibold text-black hover:bg-elec-yellow/90"
           >
-            <PenTool className="h-5 w-5 mr-2" />
-            Continue to Client Sign-Off
+            <PenTool className="mr-2 h-5 w-5" />
+            Continue to client sign-off →
           </Button>
-          <p className="text-xs text-white text-center">
+          <p className="text-center text-[12px] text-white/55">
             Get the client to sign the scope of works on your device
           </p>
         </div>

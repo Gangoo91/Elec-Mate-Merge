@@ -1,9 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronRight } from 'lucide-react';
 import { Customer } from '@/hooks/inspection/useCustomers';
 import { cn } from '@/lib/utils';
 import { ReliabilityLevel } from '@/hooks/useCustomerPaymentStats';
+import { Pill, Dot, Arrow } from '@/components/college/primitives';
 
 interface CustomerListRowProps {
   customer: Customer;
@@ -12,129 +12,260 @@ interface CustomerListRowProps {
   onStartCertificate: (customer: Customer) => void;
   onQuickNote: (customer: Customer) => void;
   paymentReliability?: ReliabilityLevel | null;
+  // Selection mode
+  selectionMode?: boolean;
+  selected?: boolean;
+  onToggleSelect?: (id: string) => void;
+  onLongPress?: (id: string) => void;
+  isDuplicate?: boolean;
+  onTagClick?: (tag: string) => void;
 }
 
-const reliabilityBadgeConfig: Record<
-  Exclude<ReliabilityLevel, 'none'>,
-  { label: string; dotClass: string; badgeClass: string }
-> = {
-  good: {
-    label: 'Reliable',
-    dotClass: 'bg-emerald-400',
-    badgeClass: 'bg-emerald-500/15 text-emerald-400',
-  },
-  fair: {
-    label: 'Fair',
-    dotClass: 'bg-amber-400',
-    badgeClass: 'bg-amber-500/15 text-amber-400',
-  },
-  poor: {
-    label: 'Late',
-    dotClass: 'bg-red-400',
-    badgeClass: 'bg-red-500/15 text-red-400',
-  },
-};
+type ActivityTone = 'green' | 'amber' | 'red' | 'yellow';
 
-const getAvatarAccent = (name: string): string => {
-  const accents = [
-    'from-elec-yellow via-amber-400 to-orange-400',
-    'from-blue-500 via-blue-400 to-cyan-400',
-    'from-emerald-500 via-emerald-400 to-green-400',
-    'from-amber-500 via-amber-400 to-yellow-400',
-    'from-cyan-500 via-cyan-400 to-blue-400',
-    'from-rose-500 via-rose-400 to-pink-400',
-    'from-violet-500 via-purple-400 to-indigo-400',
-    'from-teal-500 via-teal-400 to-emerald-400',
-  ];
-  return accents[name.charCodeAt(0) % accents.length];
+const reliabilityPill: Record<
+  Exclude<ReliabilityLevel, 'none'>,
+  { label: string; tone: 'green' | 'amber' | 'red' }
+> = {
+  good: { label: 'Reliable', tone: 'green' },
+  fair: { label: 'Fair', tone: 'amber' },
+  poor: { label: 'Late', tone: 'red' },
 };
 
 const getInitials = (name: string): string =>
-  name.split(' ').map((n) => n[0]).join('').toUpperCase().slice(0, 2);
+  name
+    .split(' ')
+    .map((n) => n[0])
+    .join('')
+    .toUpperCase()
+    .slice(0, 2);
+
+const formatLastActivity = (date?: string) => {
+  if (!date) return 'No activity yet';
+  const d = new Date(date);
+  const now = new Date();
+  const diffDays = Math.floor((now.getTime() - d.getTime()) / (1000 * 60 * 60 * 24));
+  if (diffDays === 0) return 'Today';
+  if (diffDays === 1) return 'Yesterday';
+  if (diffDays < 7) return `${diffDays}d ago`;
+  if (diffDays < 30) return `${Math.floor(diffDays / 7)}w ago`;
+  if (diffDays < 365) return `${Math.floor(diffDays / 30)}mo ago`;
+  return `${Math.floor(diffDays / 365)}y ago`;
+};
+
+// Status dot on avatar: green = active <90d, amber = 90d-2y, red = >2y or never.
+const getActivityTone = (lastActivityAt?: string): ActivityTone => {
+  if (!lastActivityAt) return 'red';
+  const days = Math.floor((Date.now() - new Date(lastActivityAt).getTime()) / 86_400_000);
+  if (days < 90) return 'green';
+  if (days < 730) return 'amber';
+  return 'red';
+};
 
 export const CustomerListRow = ({
   customer,
   paymentReliability,
+  selectionMode = false,
+  selected = false,
+  onToggleSelect,
+  onLongPress,
+  isDuplicate = false,
+  onTagClick,
 }: CustomerListRowProps) => {
   const navigate = useNavigate();
+  const initials = getInitials(customer.name);
+  const activity = getActivityTone(customer.lastActivityAt);
+  const longPressTimer = React.useRef<number | null>(null);
 
-  const formatLastActivity = (date?: string) => {
-    if (!date) return 'No activity';
-    const d = new Date(date);
-    const now = new Date();
-    const diffDays = Math.floor((now.getTime() - d.getTime()) / (1000 * 60 * 60 * 24));
-    if (diffDays === 0) return 'Today';
-    if (diffDays === 1) return 'Yesterday';
-    if (diffDays < 7) return `${diffDays}d ago`;
-    if (diffDays < 30) return `${Math.floor(diffDays / 7)}w ago`;
-    if (diffDays < 365) return `${Math.floor(diffDays / 30)}mo ago`;
-    return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+  const handleCardClick = () => {
+    if (selectionMode) {
+      onToggleSelect?.(customer.id);
+    } else {
+      navigate(`/customers/${customer.id}`);
+    }
   };
 
-  const initials = getInitials(customer.name);
-  const accent = getAvatarAccent(customer.name);
+  const handleTouchStart = () => {
+    if (!onLongPress) return;
+    longPressTimer.current = window.setTimeout(() => {
+      onLongPress(customer.id);
+      longPressTimer.current = null;
+    }, 500);
+  };
+  const handleTouchEnd = () => {
+    if (longPressTimer.current) {
+      window.clearTimeout(longPressTimer.current);
+      longPressTimer.current = null;
+    }
+  };
 
-  // Build subtitle from available contact info
-  const subtitleParts: string[] = [];
-  if (customer.phone) subtitleParts.push(customer.phone);
-  if (customer.email) subtitleParts.push(customer.email);
-  if (!customer.phone && !customer.email && customer.address) subtitleParts.push(customer.address);
-  const subtitle = subtitleParts.join(' · ');
+  const stopPropagation = (e: React.MouseEvent) => e.stopPropagation();
+
+  const certCount = customer.certificateCount || 0;
 
   return (
-    <button
-      onClick={() => navigate(`/customers/${customer.id}`)}
-      className="block w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-2xl touch-manipulation"
+    <div
+      onClick={handleCardClick}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      onTouchCancel={handleTouchEnd}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleCardClick();
+        }
+      }}
+      className={cn(
+        'group relative cursor-pointer overflow-hidden rounded-2xl border p-4 text-left transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 active:scale-[0.995] touch-manipulation sm:p-5',
+        selected
+          ? 'border-elec-yellow/50 bg-elec-yellow/[0.06]'
+          : isDuplicate
+            ? 'border-amber-500/30 bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)]'
+            : 'border-white/[0.08] bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)]'
+      )}
     >
-      <div className="group relative overflow-hidden card-surface-interactive active:scale-[0.98] transition-all duration-200">
-        {/* Gradient accent line — colour varies by customer */}
-        <div className={cn('absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-30 group-hover:opacity-80 transition-opacity duration-200', accent)} />
+      {/* Hairline yellow accent */}
+      <div
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/40 to-elec-yellow/0 opacity-70"
+      />
 
-        <div className="relative z-10 p-4">
-          {/* Top row: initials + badges */}
-          <div className="flex items-center gap-3 mb-1.5">
-            {/* Compact initial badge */}
-            <div className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center shrink-0">
-              <span className="font-bold text-xs text-white">{initials}</span>
-            </div>
-
-            {/* Name */}
-            <h3 className="font-semibold text-[15px] text-white truncate group-hover:text-elec-yellow transition-colors flex-1 min-w-0">
-              {customer.name}
-            </h3>
-
-            {/* Badges */}
-            <div className="flex items-center gap-1.5 shrink-0">
-              {(customer.certificateCount || 0) > 0 && (
-                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-400">
-                  {customer.certificateCount} cert{(customer.certificateCount || 0) !== 1 ? 's' : ''}
-                </span>
-              )}
-              {paymentReliability && paymentReliability !== 'none' && (
-                <span className={cn('text-[10px] font-bold px-1.5 py-0.5 rounded flex items-center gap-1', reliabilityBadgeConfig[paymentReliability].badgeClass)}>
-                  <span className={cn('w-1.5 h-1.5 rounded-full', reliabilityBadgeConfig[paymentReliability].dotClass)} />
-                  {reliabilityBadgeConfig[paymentReliability].label}
-                </span>
-              )}
-            </div>
+      {/* Top row: avatar + name + cert pill */}
+      <div className="flex items-start gap-3">
+        {/* Selection checkbox (selection mode only) */}
+        {selectionMode && (
+          <div
+            className={cn(
+              'mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-md border-2 transition-colors',
+              selected
+                ? 'border-elec-yellow bg-elec-yellow'
+                : 'border-white/30 bg-transparent'
+            )}
+          >
+            {selected && (
+              <svg className="h-3 w-3 text-black" viewBox="0 0 16 16" fill="none">
+                <path
+                  d="M3 8.5l3 3 6-7"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            )}
           </div>
+        )}
+        {/* Avatar with status dot */}
+        <div className="relative shrink-0">
+          <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.06]">
+            <span className="text-[13px] font-semibold text-white">{initials}</span>
+          </div>
+          <span
+            aria-label={`Last activity: ${formatLastActivity(customer.lastActivityAt)}`}
+            className={cn(
+              'absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full ring-2 ring-[hsl(0_0%_12%)]',
+              activity === 'green' && 'bg-emerald-400',
+              activity === 'amber' && 'bg-amber-400',
+              activity === 'red' && 'bg-red-400'
+            )}
+          />
+        </div>
 
-          {/* Contact info — no icons */}
-          {subtitle && (
-            <p className="text-[12px] text-white truncate">{subtitle}</p>
+        {/* Name + sub */}
+        <div className="min-w-0 flex-1">
+          <h3 className="truncate text-[16px] font-semibold leading-tight text-white sm:text-[17px]">
+            {customer.name}
+          </h3>
+          <p className="mt-1 truncate text-[12.5px] text-white/65">
+            {customer.phone || customer.email || customer.address || 'No contact info'}
+          </p>
+          {customer.tags && customer.tags.length > 0 && (
+            <div className="mt-2 flex flex-wrap gap-1">
+              {customer.tags.slice(0, 3).map((tag) =>
+                onTagClick ? (
+                  <button
+                    key={tag}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onTagClick(tag);
+                    }}
+                    className="inline-flex h-5 items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-2 text-[10.5px] font-medium text-white/75 transition-colors hover:border-elec-yellow/30 hover:bg-elec-yellow/[0.04] hover:text-elec-yellow touch-manipulation"
+                  >
+                    {tag}
+                  </button>
+                ) : (
+                  <span
+                    key={tag}
+                    className="inline-flex h-5 items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-2 text-[10.5px] font-medium text-white/75"
+                  >
+                    {tag}
+                  </span>
+                )
+              )}
+              {customer.tags.length > 3 && (
+                <span className="inline-flex h-5 items-center text-[10.5px] font-medium text-white/55">
+                  +{customer.tags.length - 3}
+                </span>
+              )}
+            </div>
           )}
+        </div>
 
-          {/* Bottom row */}
-          <div className="flex items-center justify-between mt-3">
-            <span className="text-[11px] font-medium text-white">
-              {formatLastActivity(customer.lastActivityAt)}
-            </span>
-            <div className="w-6 h-6 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center group-hover:bg-elec-yellow group-hover:border-elec-yellow transition-all duration-200">
-              <ChevronRight className="w-3.5 h-3.5 text-white group-hover:text-black group-hover:translate-x-0.5 transition-all" />
-            </div>
-          </div>
+        {/* Right side pills */}
+        <div className="flex shrink-0 flex-col items-end gap-1.5">
+          {isDuplicate && (
+            <Pill tone="amber">
+              <Dot tone="amber" className="mr-1.5" />
+              Possible duplicate
+            </Pill>
+          )}
+          {certCount > 0 && (
+            <Pill tone="green">
+              {certCount} cert{certCount !== 1 ? 's' : ''}
+            </Pill>
+          )}
+          {paymentReliability && paymentReliability !== 'none' && (
+            <Pill tone={reliabilityPill[paymentReliability].tone}>
+              <Dot tone={reliabilityPill[paymentReliability].tone} className="mr-1.5" />
+              {reliabilityPill[paymentReliability].label}
+            </Pill>
+          )}
         </div>
       </div>
-    </button>
+
+      {/* Footer row: last activity + quick actions */}
+      <div className="mt-4 flex items-center justify-between gap-3 border-t border-white/[0.06] pt-3">
+        <span className="text-[11.5px] font-medium uppercase tracking-[0.06em] text-white/55">
+          {formatLastActivity(customer.lastActivityAt)}
+        </span>
+        <div className="flex items-center gap-1.5">
+          {customer.phone && (
+            <a
+              href={`tel:${customer.phone}`}
+              onClick={stopPropagation}
+              className="flex h-9 items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-3 text-[12px] font-medium text-white transition-colors hover:border-elec-yellow/40 hover:bg-elec-yellow/10 hover:text-elec-yellow touch-manipulation"
+              aria-label={`Call ${customer.name}`}
+            >
+              Call
+            </a>
+          )}
+          {customer.email && (
+            <a
+              href={`mailto:${customer.email}`}
+              onClick={stopPropagation}
+              className="flex h-9 items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-3 text-[12px] font-medium text-white transition-colors hover:border-elec-yellow/40 hover:bg-elec-yellow/10 hover:text-elec-yellow touch-manipulation"
+              aria-label={`Email ${customer.name}`}
+            >
+              Email
+            </a>
+          )}
+          <span className="ml-1 group-hover:translate-x-0.5 transition-transform">
+            <Arrow />
+          </span>
+        </div>
+      </div>
+    </div>
   );
 };

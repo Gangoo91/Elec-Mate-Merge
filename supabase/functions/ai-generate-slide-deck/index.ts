@@ -34,6 +34,22 @@ interface Body {
   tone?: 'academic' | 'practical' | 'gen_z';
   /** Depth — overview (light), standard (default), deep_dive (rich). */
   depth?: 'overview' | 'standard' | 'deep_dive';
+  /** Inclusion differentiation — adapts language + examples per learner cohort.
+   *  ELE-919 (F6). 'standard' = no adjustment.
+   *  'send_eal' = simpler sentences, plain UK English, glossary terms on first use,
+   *    explicit instructions, more visuals, no idioms.
+   *  'stretch' = stretch-and-challenge questions, deeper reg material, higher
+   *    Bloom-level prompts, an extension activity. */
+  differentiation?: 'standard' | 'send_eal' | 'stretch';
+}
+
+interface ResourceRow {
+  id: string;
+  title: string;
+  description: string | null;
+  resource_type: string | null;
+  external_url: string | null;
+  ac_codes: string[];
 }
 
 interface PlanRow {
@@ -236,7 +252,9 @@ function buildContext(
   facets: FacetRow[],
   slideCount: number,
   tone: string,
-  depth: string
+  depth: string,
+  differentiation: string,
+  resources: ResourceRow[]
 ): string {
   const acsBlock = acs.length
     ? acs.map((a) => `- ${a.ac_code}: ${a.ac_text ?? ''}`.trim()).join('\n')
@@ -285,14 +303,39 @@ function buildContext(
         ? 'Depth: DEEP DIVE — push every slide to the deeper end of the per-kind word counts. Add rich speaker notes. Include at least one stretch-and-challenge prompt in an activity slide.'
         : 'Depth: STANDARD — meet the per-kind word count guidance.';
 
+  const differentiationNote =
+    differentiation === 'send_eal'
+      ? `Differentiation: SEND / EAL — write in plain UK English. Keep sentences short (max 15 words). Define every technical term on first use in a 'key terms' line. No idioms, no metaphors, no cultural references that need British background knowledge. Every activity slide must include explicit step-by-step instructions ("Step 1… Step 2…") and a worked example. Speaker notes should include a comprehension check.`
+      : differentiation === 'stretch'
+        ? `Differentiation: STRETCH & CHALLENGE — add at least two stretch prompts per main concept. Push the regulation material deeper: cite the specific reg + the linked GN3 / OSG guidance. Include a higher Bloom-level question (analyse / evaluate / create) on every check_understanding slide. Add an extension activity at the end that links the lesson to a real-world commissioning scenario.`
+        : 'Differentiation: STANDARD — meet the per-kind word count guidance with mixed levels of challenge across the deck.';
+
+  // Build a compact resource block — gives the model concrete materials to
+  // suggest rather than inventing. Resources are MENTIONED in speaker_notes
+  // or as a "suggested resource" line on the relevant slide.
+  const resourcesBlock = resources.length
+    ? resources
+        .map((r) => {
+          const acs = r.ac_codes.length ? ` (covers ${r.ac_codes.join(', ')})` : '';
+          const kind = r.resource_type ? ` [${r.resource_type}]` : '';
+          const desc = r.description ? ` — ${r.description.slice(0, 140)}` : '';
+          return `- "${r.title}"${kind}${acs}${desc}`;
+        })
+        .join('\n')
+    : '(no tagged resources)';
+
   return `LESSON: "${plan.title}" (${plan.duration_minutes ?? 90} min)
 
 TARGET SLIDE COUNT: ${slideCount} (12–24 acceptable range)
 ${toneNote}
 ${depthNote}
+${differentiationNote}
 
 TARGET ASSESSMENT CRITERIA — populate slide_acs on each substantive slide with the AC code(s) it covers:
 ${acsBlock}
+
+EXISTING COLLEGE RESOURCES tagged to these ACs — reference these by title in speaker_notes or on the matching activity slide so the tutor can hand them out:
+${resourcesBlock}
 
 CONTEXT — cite ONLY these facets:
 ${facetsBlock}
@@ -379,37 +422,135 @@ Deno.serve(async (req: Request) => {
       });
     }
 
-    // ACs (best-effort) — table is lesson_plan_ac_mapping; ac_text isn't
-    // stored there, but the code itself is enough context for the model.
-    // Regulations cite material lives inside the plan content (rag_preview)
-    // — pulled out below.
+    // ACs — pull text from qualification_requirements so the model has the
+    // actual criterion wording, not just the code.
     const { data: acsRaw } = await supabase
       .from('lesson_plan_ac_mapping')
-      .select('ac_code')
+      .select('ac_code, qualification_code, unit_code')
       .eq('lesson_plan_id', planRow.id)
       .limit(20);
-    const acs: AcRow[] = ((acsRaw ?? []) as Array<{ ac_code: string }>).map((r) => ({
-      ac_code: r.ac_code,
-      ac_text: null,
-    }));
-    const facets: FacetRow[] = [];
-    const ragPreview = (planRow.content as { rag_preview?: unknown } | null)?.rag_preview;
-    if (Array.isArray(ragPreview)) {
-      for (const item of ragPreview.slice(0, 15)) {
-        const r = item as Record<string, unknown>;
-        facets.push({
-          reg_number: typeof r.reg_number === 'string' ? r.reg_number : null,
-          primary_topic: typeof r.primary_topic === 'string' ? r.primary_topic : null,
-          facet_summary: typeof r.facet_summary === 'string' ? r.facet_summary : null,
-          facet_content: typeof r.facet_content === 'string' ? r.facet_content : null,
-        });
+    const acRowMaps = (acsRaw ?? []) as Array<{
+      ac_code: string;
+      qualification_code?: string | null;
+      unit_code?: string | null;
+    }>;
+    const acCodes = acRowMaps.map((r) => r.ac_code).filter(Boolean);
+
+    let acs: AcRow[] = acRowMaps.map((r) => ({ ac_code: r.ac_code, ac_text: null }));
+    if (acCodes.length > 0) {
+      const { data: acTexts } = await supabase
+        .from('qualification_requirements')
+        .select('ac_code, ac_text')
+        .in('ac_code', acCodes)
+        .limit(50);
+      const textByAc = new Map<string, string>();
+      for (const t of (acTexts ?? []) as Array<{ ac_code: string; ac_text?: string | null }>) {
+        if (t.ac_text) textByAc.set(t.ac_code, t.ac_text);
       }
+      acs = acRowMaps.map((r) => ({
+        ac_code: r.ac_code,
+        ac_text: textByAc.get(r.ac_code) ?? null,
+      }));
+    }
+
+    // BS 7671 facets — LIVE query against bs7671_facets via lesson_regulation_refs.
+    // Replaces stale plan.content.rag_preview snapshot so we always cite the
+    // current edition (A4:2026 etc.). Memory rule: BS 7671 content MUST come
+    // from RAG, never invented. If a lesson has no regulation refs yet, we
+    // fall back to nothing — model will not be given facets to paraphrase.
+    let facets: FacetRow[] = [];
+    const { data: refRows } = await supabase
+      .from('lesson_regulation_refs')
+      .select('facet_id, document_type')
+      .eq('lesson_plan_id', planRow.id)
+      .limit(30);
+    const facetIds = (refRows ?? [])
+      .map((r: { facet_id?: string | null }) => r.facet_id)
+      .filter((id): id is string => !!id);
+    if (facetIds.length > 0) {
+      const { data: facetRows } = await supabase
+        .from('bs7671_facets')
+        .select('id, content, regulation_id, primary_topic')
+        .in('id', facetIds)
+        .limit(30);
+      const regIds = (facetRows ?? [])
+        .map((f: { regulation_id?: string | null }) => f.regulation_id)
+        .filter((id): id is string => !!id);
+      const regMap = new Map<string, { reg_number?: string }>();
+      if (regIds.length > 0) {
+        const { data: regs } = await supabase
+          .from('bs7671_regulations')
+          .select('id, reg_number')
+          .in('id', regIds);
+        for (const r of (regs ?? []) as Array<{ id: string; reg_number?: string }>) {
+          regMap.set(r.id, { reg_number: r.reg_number });
+        }
+      }
+      facets = (facetRows ?? []).map((f: any) => ({
+        reg_number: regMap.get(f.regulation_id)?.reg_number ?? null,
+        primary_topic: f.primary_topic ?? null,
+        facet_summary: null,
+        facet_content: f.content ?? null,
+      }));
     }
 
     const slideCount = Math.max(8, Math.min(24, body.slide_count ?? 14));
     const tone = body.tone ?? 'practical';
     const depth = body.depth ?? 'standard';
-    const userPrompt = buildContext(planRow, acs, facets, slideCount, tone, depth);
+    const differentiation = body.differentiation ?? 'standard';
+
+    // ELE-902 (B7) — pull college teaching resources tagged to any AC this
+    // lesson covers so the model can recommend specific titles rather than
+    // inventing generic materials.
+    const acCodes = acs.map((a) => a.ac_code).filter(Boolean);
+    let resources: ResourceRow[] = [];
+    if (acCodes.length > 0) {
+      const { data: mapRows } = await supabase
+        .from('resource_ac_mapping')
+        .select('resource_id, ac_code')
+        .in('ac_code', acCodes);
+      const resourceIds = Array.from(
+        new Set((mapRows ?? []).map((r: any) => r.resource_id as string).filter(Boolean))
+      );
+      if (resourceIds.length > 0) {
+        const { data: resourceRows } = await supabase
+          .from('teaching_resources')
+          .select('id, college_id, title, description, resource_type, external_url, is_student_visible')
+          .in('id', resourceIds)
+          .eq('college_id', profile.college_id)
+          .eq('is_student_visible', true)
+          .limit(20);
+        const byId = new Map<string, ResourceRow>();
+        for (const r of (resourceRows ?? []) as any[]) {
+          byId.set(r.id, {
+            id: r.id,
+            title: r.title,
+            description: r.description ?? null,
+            resource_type: r.resource_type ?? null,
+            external_url: r.external_url ?? null,
+            ac_codes: [],
+          });
+        }
+        for (const m of (mapRows ?? []) as any[]) {
+          const row = byId.get(m.resource_id);
+          if (row && m.ac_code && !row.ac_codes.includes(m.ac_code)) {
+            row.ac_codes.push(m.ac_code);
+          }
+        }
+        resources = Array.from(byId.values()).slice(0, 12);
+      }
+    }
+
+    const userPrompt = buildContext(
+      planRow,
+      acs,
+      facets,
+      slideCount,
+      tone,
+      depth,
+      differentiation,
+      resources
+    );
 
     const openaiResp = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',

@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import { Pill, type Tone } from '@/components/college/primitives';
 import { useApprenticeOtj, type OtjEntry, type OtjSource } from '@/hooks/useApprenticeOtj';
 import { OtjVerificationPanel } from '@/components/college/student360/OtjVerificationPanel';
+import { OtjTrajectoryChart } from '@/components/college/student360/OtjTrajectoryChart';
 
 /* ==========================================================================
    SectionApprenticeOtj — cross-hub Off-the-Job training panel.
@@ -55,12 +56,14 @@ export function SectionApprenticeOtj({
   id,
   studentName,
   userId,
+  collegeStudentId,
   weeklyTargetMinutes,
   onAdd,
 }: {
   id: string;
   studentName: string;
   userId: string | null;
+  collegeStudentId?: string | null;
   weeklyTargetMinutes?: number;
   onAdd: () => void;
 }) {
@@ -117,6 +120,13 @@ export function SectionApprenticeOtj({
             <ProgressCard breakdown={breakdown} loading={loading} />
             <BreakdownCard breakdown={breakdown} />
           </div>
+
+          {/* Cumulative trajectory — ESFA 20% line vs actual */}
+          {collegeStudentId && (
+            <div className="mt-4">
+              <OtjTrajectoryChart collegeStudentId={collegeStudentId} userId={userId} />
+            </div>
+          )}
 
           {/* H.3: Tri-source verification panel — pending submissions
               from the apprentice land here for one-click sign-off. */}

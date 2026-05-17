@@ -1,6 +1,8 @@
-import { Bot, CheckCircle2, AlertCircle } from 'lucide-react';
+import { useState } from 'react';
+import { Bot, CheckCircle2, AlertCircle, Users } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useEpaCalibration } from '@/hooks/useEpaCalibration';
+import { CalibrationSessionSheet } from '@/components/college/sheets/CalibrationSessionSheet';
 
 /* ==========================================================================
    EpaCalibrationCard — surfaces the AI's track record on a college's EPA
@@ -10,6 +12,7 @@ import { useEpaCalibration } from '@/hooks/useEpaCalibration';
 
 export function EpaCalibrationCard({ collegeId }: { collegeId?: string | null }) {
   const cal = useEpaCalibration({ collegeId });
+  const [sessionsOpen, setSessionsOpen] = useState(false);
 
   const insufficient = cal.total < 3;
   return (
@@ -21,10 +24,20 @@ export function EpaCalibrationCard({ collegeId }: { collegeId?: string | null })
             AI calibration
           </div>
         </div>
-        <div className="text-[10.5px] text-white/45 tabular-nums">
-          {cal.total} sealed outcome{cal.total === 1 ? '' : 's'}
+        <div className="flex items-center gap-3">
+          <div className="text-[10.5px] text-white/45 tabular-nums">
+            {cal.total} sealed outcome{cal.total === 1 ? '' : 's'}
+          </div>
+          <button
+            type="button"
+            onClick={() => setSessionsOpen(true)}
+            className="inline-flex items-center gap-1.5 h-7 px-2.5 rounded-full bg-purple-500/[0.12] border border-purple-400/40 text-purple-200 text-[11px] font-semibold hover:bg-purple-500/[0.18] touch-manipulation"
+          >
+            <Users className="h-3 w-3" /> Tutor calibration →
+          </button>
         </div>
       </div>
+      <CalibrationSessionSheet open={sessionsOpen} onOpenChange={setSessionsOpen} />
 
       {cal.loading ? (
         <div className="mt-3 h-12 animate-pulse rounded-xl bg-white/[0.04]" />

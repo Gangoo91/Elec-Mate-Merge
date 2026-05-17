@@ -43,8 +43,8 @@ export function MomentumStrip({ number = '04', label = 'MOMENTUM' }: MomentumStr
         { value: String(data.business.activeQuotes), label: 'active quotes' },
         { value: String(data.certificates.total), label: 'certificates' },
         {
-          value: String(data.business.activeJobs),
-          label: data.business.activeJobs === 1 ? 'job running' : 'jobs running',
+          value: String(data.business.activeProjects),
+          label: data.business.activeProjects === 1 ? 'project running' : 'projects running',
         },
       ];
 

@@ -638,7 +638,17 @@ const LandingPage = () => {
             </SecondaryButton>
           </div>
 
-          <p className="mt-5 text-[13px] text-white/65">
+          <p className="mt-4 text-[13px] text-white/65">
+            Already a member?{' '}
+            <Link
+              to="/auth/signin"
+              className="font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors"
+            >
+              Sign in →
+            </Link>
+          </p>
+
+          <p className="mt-2 text-[13px] text-white/65">
             From <span className="font-medium text-white">{apprenticePrice}/mo</span> · cancel anytime
             · no card for 7 days
           </p>

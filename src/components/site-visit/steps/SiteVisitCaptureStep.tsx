@@ -78,9 +78,11 @@ export const SiteVisitCaptureStep = ({
     <div className="space-y-4">
       <div className="flex items-start justify-between">
         <div>
-          <h2 className="text-lg font-bold text-white">Room-by-Room Capture</h2>
-          <p className="text-sm text-white mt-1">
-            Add rooms and capture accessories, photos and prompts
+          <h2 className="text-[18px] font-semibold tracking-tight text-white sm:text-[20px]">
+            Room-by-room capture
+          </h2>
+          <p className="mt-1 text-[12.5px] text-white/65">
+            Add rooms, capture items, photos and prompts.
           </p>
         </div>
         {onCaptureTimerTick && (

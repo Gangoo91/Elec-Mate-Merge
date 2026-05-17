@@ -14,6 +14,9 @@ export interface TimeSession {
   hourly_rate: number | null;
   invoice_id: string | null;
   invoiced_at: string | null;
+  project_id: string | null;
+  /** Joined project — populated when the row was fetched with the embed. */
+  project?: { id: string; title: string; customer_name?: string | null } | null;
   created_at: string;
   updated_at: string;
 }
@@ -120,9 +123,12 @@ export const useTimeTracker = () => {
     };
   }, [activeSession?.started_at]);
 
-  // Start session
+  // Start session — accepts optional label + project tag.
   const startMutation = useMutation({
-    mutationFn: async (label?: string): Promise<TimeSession> => {
+    mutationFn: async (args: {
+      label?: string;
+      projectId?: string | null;
+    }): Promise<TimeSession> => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
@@ -132,7 +138,8 @@ export const useTimeTracker = () => {
         .from('time_sessions')
         .insert({
           user_id: user.id,
-          label: label || null,
+          label: args.label || null,
+          project_id: args.projectId || null,
           started_at: new Date().toISOString(),
           hourly_rate: hourlyRate,
         })
@@ -210,6 +217,85 @@ export const useTimeTracker = () => {
     },
   });
 
+  // Update project tag — accepts null to untag. Refuses on invoiced sessions.
+  const updateProjectMutation = useMutation({
+    mutationFn: async ({
+      sessionId,
+      projectId,
+    }: {
+      sessionId: string;
+      projectId: string | null;
+    }) => {
+      const { data: existing } = await supabase
+        .from('time_sessions')
+        .select('invoice_id')
+        .eq('id', sessionId)
+        .single();
+      if (existing?.invoice_id) {
+        throw new Error('Cannot retag an invoiced session');
+      }
+      const { error } = await supabase
+        .from('time_sessions')
+        .update({
+          project_id: projectId,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', sessionId);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: QUERY_KEY_ACTIVE });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEY_SESSIONS });
+    },
+  });
+
+  // Update times — start and/or end. Recomputes duration_seconds server-side.
+  // Refuses to touch invoiced sessions (audit safety).
+  const updateTimesMutation = useMutation({
+    mutationFn: async ({
+      sessionId,
+      startedAt,
+      endedAt,
+    }: {
+      sessionId: string;
+      startedAt: string;
+      endedAt: string;
+    }) => {
+      const start = new Date(startedAt);
+      const end = new Date(endedAt);
+      if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+        throw new Error('Invalid date');
+      }
+      if (end <= start) {
+        throw new Error('End time must be after start time');
+      }
+      // Block edits to invoiced sessions
+      const { data: existing } = await supabase
+        .from('time_sessions')
+        .select('invoice_id')
+        .eq('id', sessionId)
+        .single();
+      if (existing?.invoice_id) {
+        throw new Error('Cannot edit an invoiced session');
+      }
+      const durationSeconds = Math.floor((end.getTime() - start.getTime()) / 1000);
+      const { error } = await supabase
+        .from('time_sessions')
+        .update({
+          started_at: start.toISOString(),
+          ended_at: end.toISOString(),
+          duration_seconds: durationSeconds,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', sessionId);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: QUERY_KEY_ACTIVE });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEY_SESSIONS });
+    },
+  });
+
   // Mark invoiced
   const markInvoicedMutation = useMutation({
     mutationFn: async ({ sessionId, invoiceId }: { sessionId: string; invoiceId: string }) => {
@@ -252,8 +338,15 @@ export const useTimeTracker = () => {
   });
 
   const startSession = useCallback(
-    (label?: string) => startMutation.mutateAsync(label),
+    (label?: string, projectId?: string | null) =>
+      startMutation.mutateAsync({ label, projectId }),
     [startMutation]
+  );
+
+  const updateProject = useCallback(
+    (sessionId: string, projectId: string | null) =>
+      updateProjectMutation.mutateAsync({ sessionId, projectId }),
+    [updateProjectMutation]
   );
 
   const stopSession = useCallback(() => stopMutation.mutateAsync(), [stopMutation]);
@@ -266,6 +359,12 @@ export const useTimeTracker = () => {
   const updateNotes = useCallback(
     (notes: string) => updateNotesMutation.mutateAsync(notes),
     [updateNotesMutation]
+  );
+
+  const updateTimes = useCallback(
+    (sessionId: string, startedAt: string, endedAt: string) =>
+      updateTimesMutation.mutateAsync({ sessionId, startedAt, endedAt }),
+    [updateTimesMutation]
   );
 
   const markInvoiced = useCallback(
@@ -288,6 +387,8 @@ export const useTimeTracker = () => {
     stopSession,
     updateLabel,
     updateNotes,
+    updateTimes,
+    updateProject,
     markInvoiced,
     deleteSession,
     isLoading: isLoadingActive || isLoadingSessions,
