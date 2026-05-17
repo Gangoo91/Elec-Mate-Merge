@@ -373,7 +373,7 @@ const sections = [
     content: (
       <>
         <p>
-          Fused connection units are covered by BS 7671:2018+A3:2024 and the relevant British
+          Fused connection units are covered by BS 7671:2018+A4:2026 and the relevant British
           Standard for the accessory itself (BS 1363-4 for FCUs to BS 1363). Key regulatory
           requirements include:
         </p>

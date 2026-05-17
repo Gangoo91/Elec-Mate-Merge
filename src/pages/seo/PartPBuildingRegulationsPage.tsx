@@ -52,7 +52,7 @@ const faqs = [
   {
     question: 'What is the relationship between Part P and BS 7671?',
     answer:
-      'Part P and BS 7671 are related but different things. Part P (Approved Document P) is a building regulation that establishes the legal requirement for electrical installations in dwellings to be designed and installed to protect people from fire and electric shock. It does not specify how to design or install the work — instead, it references BS 7671:2018+A3:2024 (the IET Wiring Regulations) as the standard that, if followed, demonstrates compliance with the functional requirements of Part P. In other words, Part P tells you that you must do electrical work safely; BS 7671 tells you how to do it safely. Compliance with BS 7671 is the recognised way to demonstrate compliance with Part P, although the building regulations technically allow alternative approaches if they can be shown to meet the functional requirements. In practice, compliance with BS 7671 is the universal expectation.',
+      'Part P and BS 7671 are related but different things. Part P (Approved Document P) is a building regulation that establishes the legal requirement for electrical installations in dwellings to be designed and installed to protect people from fire and electric shock. It does not specify how to design or install the work — instead, it references BS 7671:2018+A4:2026 (the IET Wiring Regulations) as the standard that, if followed, demonstrates compliance with the functional requirements of Part P. In other words, Part P tells you that you must do electrical work safely; BS 7671 tells you how to do it safely. Compliance with BS 7671 is the recognised way to demonstrate compliance with Part P, although the building regulations technically allow alternative approaches if they can be shown to meet the functional requirements. In practice, compliance with BS 7671 is the universal expectation.',
   },
   {
     question: 'Is replacing a socket outlet or light switch notifiable under Part P?',
@@ -66,7 +66,7 @@ const features = [
     icon: FileText,
     title: '16 Certificate Types',
     description:
-      'Generate EICs, Minor Works certificates, EICRs, and more — all built to BS 7671:2018+A3:2024. Part P compliance documentation made simple.',
+      'Generate EICs, Minor Works certificates, EICRs, and more — all built to BS 7671:2018+A4:2026. Part P compliance documentation made simple.',
   },
   {
     icon: Brain,
@@ -78,11 +78,11 @@ const features = [
     icon: Calculator,
     title: '70 Electrical Calculators',
     description:
-      'Cable sizing, voltage drop, maximum demand, Zs verification, and dozens more. All calculations comply with BS 7671:2018+A3:2024.',
+      'Cable sizing, voltage drop, maximum demand, Zs verification, and dozens more. All calculations comply with BS 7671:2018+A4:2026.',
   },
   {
     icon: ShieldCheck,
-    title: 'BS 7671:2018+A3:2024',
+    title: 'BS 7671:2018+A4:2026',
     description:
       'Built to the current 18th Edition including Amendment 3. All regulation references, test limits, and compliance checks are up to date.',
   },
@@ -176,7 +176,7 @@ export default function PartPBuildingRegulationsPage() {
         <div className="relative max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm font-medium mb-6">
             <BookOpen className="w-4 h-4" />
-            BS 7671:2018 + A3:2024
+            BS 7671:2018+A4:2026
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             Part P Building Regulations
@@ -229,7 +229,7 @@ export default function PartPBuildingRegulationsPage() {
               installations in order to protect persons operating, maintaining or altering the
               installations from fire or injury." This functional requirement does not specify the
               technical standard to be used — that is where BS 7671 comes in. Approved Document P
-              states that compliance with BS 7671:2018+A3:2024 (the 18th Edition of the IET Wiring
+              states that compliance with BS 7671:2018+A4:2026 (the 18th Edition of the IET Wiring
               Regulations, as amended) is one way of meeting the functional requirements of Part P.
             </p>
             <p>
@@ -556,21 +556,21 @@ export default function PartPBuildingRegulationsPage() {
               <Zap className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
-              How Part P Interacts with BS 7671:2018+A3:2024
+              How Part P Interacts with BS 7671:2018+A4:2026
             </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
               Approved Document P references BS 7671 as the standard that, if followed, demonstrates
               compliance with the safety requirements of Part P. The current referenced edition is
-              BS 7671:2018+A3:2024 — the 18th Edition of the IET Wiring Regulations with Amendment
+              BS 7671:2018+A4:2026 — the 18th Edition of the IET Wiring Regulations with Amendment
               3, issued in July 2024. Amendment 3 introduced Regulation 530.3.201 covering
               bidirectional and unidirectional protective devices, as well as other updates and
               clarifications.
             </p>
             <p>
               The practical implication is straightforward: if you design and install electrical
-              work to BS 7671:2018+A3:2024, and you certify the work correctly using the appropriate
+              work to BS 7671:2018+A4:2026, and you certify the work correctly using the appropriate
               IET model forms (EIC for new installations, Minor Works Certificate for minor work,
               EICR for condition reports), you have met the technical requirements of Part P. The
               certification demonstrates that the work has been designed, installed, inspected, and
@@ -612,7 +612,7 @@ export default function PartPBuildingRegulationsPage() {
           </h2>
           <p className="text-white text-center mb-10 max-w-2xl mx-auto">
             Purpose-built for UK electricians. Certificates, calculators, AI tools, and 46+ training
-            courses — all built to BS 7671:2018+A3:2024.
+            courses — all built to BS 7671:2018+A4:2026.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
         </div>
@@ -661,6 +661,26 @@ export default function PartPBuildingRegulationsPage() {
       </section>
 
       {/* CTA */}
+      
+
+      {/* Related pages — auto-injected for internal-link health (audit criterion #7).
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/guides/part-p-building-regulations-electrical">Part P Building Regulations</SEOInternalLink>
+            <SEOInternalLink href="/guides/building-regulations-electrical">Building Regulations Part P Electrical</SEOInternalLink>
+            <SEOInternalLink href="/wiring-regulations-building-regulations">Wiring Regulations vs Building Regulations — BS 7671 and Part P Explained</SEOInternalLink>
+            <SEOInternalLink href="/tools/ai-regulations-lookup">AI Regulations Lookup</SEOInternalLink>
+            <SEOInternalLink href="/guides/bathroom-electrical-regulations">Bathroom Electrical Regulations UK</SEOInternalLink>
+            <SEOInternalLink href="/building-management-system">Building Management Systems (BMS) UK</SEOInternalLink>
+            <SEOInternalLink href="/training/cdm-regulations-course">CDM Regulations Course for Electricians</SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-regulations-timeline-uk">UK Electrical Regulations Timeline</SEOInternalLink>
+          </div>
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Certify Part P Work with Confidence"
         subheading="Join 1,000+ UK electricians producing professional certificates with Elec-Mate. 7-day free trial, cancel anytime."

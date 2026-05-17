@@ -62,7 +62,7 @@ const faqs = [
   {
     question: 'Do I need a metal consumer unit?',
     answer:
-      'Yes — for all domestic consumer unit replacements and new installations, a metal enclosure has been mandatory since January 2016 under Amendment 3 to BS 7671:2008 (17th Edition). This requirement was carried forward into BS 7671:2018 (18th Edition) and remains in force under BS 7671:2018+A3:2024. The metal enclosure provides arc fault containment in the event of an internal fault. Plastic consumer units installed before 2016 do not need to be immediately replaced but cannot be used for new or replacement work.',
+      'Yes — for all domestic consumer unit replacements and new installations, a metal enclosure has been mandatory since January 2016 under Amendment 3 to BS 7671:2008 (17th Edition). This requirement was carried forward into BS 7671:2018 (18th Edition) and remains in force under BS 7671:2018+A4:2026. The metal enclosure provides arc fault containment in the event of an internal fault. Plastic consumer units installed before 2016 do not need to be immediately replaced but cannot be used for new or replacement work.',
   },
   {
     question: 'How long does a consumer unit replacement take in Wolverhampton?',
@@ -160,7 +160,7 @@ const sections = [
                 (which can indicate a person receiving an electric shock) and disconnect the supply
                 within milliseconds. Under Regulation 411.3.3 of{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                  BS 7671:2018+A3:2024
+                  BS 7671:2018+A4:2026
                 </SEOInternalLink>
                 , RCD protection with a rated residual operating current not exceeding 30 mA is
                 required on socket-outlet circuits rated up to 32 A.
@@ -254,7 +254,7 @@ const sections = [
           Regulation 421.1.201 requiring that consumer units and similar switchgear assemblies in
           domestic premises have an enclosure made of non-combustible material. In practice, this
           means a metal enclosure. This requirement was carried forward into BS 7671:2018 (18th
-          Edition) and remains in BS 7671:2018+A3:2024, the current edition.
+          Edition) and remains in BS 7671:2018+A4:2026, the current edition.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">

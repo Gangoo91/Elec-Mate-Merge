@@ -36,7 +36,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'A garage being converted to a habitable room must have its electrical installation upgraded to full domestic dwelling standard under BS 7671:2018+A3:2024 — the basic garage supply (lighting, one or two sockets) is not sufficient.',
+  'A garage being converted to a habitable room must have its electrical installation upgraded to full domestic dwelling standard under BS 7671:2018+A4:2026 — the basic garage supply (lighting, one or two sockets) is not sufficient.',
   'All electrical work in a garage conversion is notifiable under Part P of the Building Regulations 2010. An Electrical Installation Certificate (EIC) is legally required on completion.',
   'An attached garage fed from the main house consumer unit must have its circuits reviewed and upgraded — the existing garage sub-circuit is typically not rated for the demands of a habitable room.',
   'A detached garage being converted to living space will require a separate sub-board or consumer unit, either fed from the main house via SWA armoured cable or via a new DNO supply — specialist electrical design is required.',
@@ -227,7 +227,7 @@ const sections = [
       <>
         <p>
           A converted garage used as a living room, bedroom, home office, or playroom must meet the
-          same electrical standard as any other room in the house under BS 7671:2018+A3:2024. This
+          same electrical standard as any other room in the house under BS 7671:2018+A4:2026. This
           is a significant step up from a typical garage installation.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">

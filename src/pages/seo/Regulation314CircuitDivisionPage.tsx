@@ -138,7 +138,7 @@ const sections = [
         <p>
           Section 314 of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           sets out the requirements for dividing an electrical installation into circuits. This is
           the foundation of circuit design — it determines how many circuits the installation needs,

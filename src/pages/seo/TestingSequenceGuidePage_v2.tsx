@@ -50,7 +50,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Dead tests (continuity, insulation resistance, polarity, earth electrode resistance) must always be completed before live tests (loop impedance, PFC, functional testing) — this is a safety-critical requirement, not a suggestion.',
-  'The testing sequence follows IET Guidance Note 3 (GN3), 9th Edition, aligned with BS 7671:2018+A3:2024 Part 6.',
+  'The testing sequence follows IET Guidance Note 3 (GN3), 9th Edition, aligned with BS 7671:2018+A4:2026 Part 6.',
   'Each test depends on the satisfactory result of the previous test — if continuity fails, you cannot rely on insulation resistance or loop impedance results.',
   'Functional testing (test 8) is often overlooked but is required to confirm that all switching, interlocking, and control devices operate correctly.',
   'Elec-Mate auto-validates every test result against BS 7671 maximum permitted values and supports voice-to-test-result entry so you can speak values while holding probes.',

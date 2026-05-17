@@ -150,7 +150,7 @@ const sections = [
       <>
         <p>
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           Section 701 defines specific zones within a bathroom that determine what electrical
           equipment can be installed and what level of protection is required. These zones exist

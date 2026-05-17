@@ -54,7 +54,7 @@ const faqs = [
   {
     question: 'What is an AFDD and does BS 7671 require them?',
     answer:
-      'An Arc Fault Detection Device (AFDD) is a protective device that detects the electrical signatures of arc faults — abnormal electrical discharges that can occur in damaged, corroded, or deteriorating wiring and connections. Unlike RCDs (which detect earth leakage currents) and MCBs (which detect overcurrent), AFDDs detect the specific waveform characteristics of arcing faults that do not cause sufficient current to trip a standard protective device. BS 7671 (18th Edition) recommends the use of AFDDs for certain locations — specifically bedroom circuits in single-family dwellings, and in locations where a fire could have serious consequences. However, as of BS 7671:2018+A3:2024, AFDDs are recommended but not mandatory for most domestic installations in the UK. They are mandatory in some other European countries. Despite not being mandatory, AFDDs are increasingly specified for bedroom circuits as part of comprehensive fire protection.',
+      'An Arc Fault Detection Device (AFDD) is a protective device that detects the electrical signatures of arc faults — abnormal electrical discharges that can occur in damaged, corroded, or deteriorating wiring and connections. Unlike RCDs (which detect earth leakage currents) and MCBs (which detect overcurrent), AFDDs detect the specific waveform characteristics of arcing faults that do not cause sufficient current to trip a standard protective device. BS 7671 (18th Edition) recommends the use of AFDDs for certain locations — specifically bedroom circuits in single-family dwellings, and in locations where a fire could have serious consequences. However, as of BS 7671:2018+A4:2026, AFDDs are recommended but not mandatory for most domestic installations in the UK. They are mandatory in some other European countries. Despite not being mandatory, AFDDs are increasingly specified for bedroom circuits as part of comprehensive fire protection.',
   },
   {
     question: 'Why are metal consumer units required in dwellings?',
@@ -281,7 +281,7 @@ const sections = [
           <AlertTriangle className="w-6 h-6 text-yellow-400 shrink-0 mt-0.5" />
           <div>
             <p className="text-white text-sm leading-relaxed">
-              <strong>Recommended, not mandated (in most cases):</strong> As of BS 7671:2018+A3:2024,
+              <strong>Recommended, not mandated (in most cases):</strong> As of BS 7671:2018+A4:2026,
               AFDDs are recommended but not mandatory for most domestic installations in England and
               Wales. They are mandatory in some European countries. BS 7671 recommends
               that AFDDs should be considered and specified where the risk assessment

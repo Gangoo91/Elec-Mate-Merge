@@ -59,7 +59,7 @@ const faqs = [
   {
     question: 'What happens during the NICEIC initial assessment visit?',
     answer:
-      'The initial assessment visit is carried out by an NICEIC assessor at your business premises. The assessor will verify your qualifications and those of any qualified supervisors or operatives. They will check that your test instruments are calibrated and within their calibration date — typically you need a multifunction tester, a voltage indicator complying with GS38, and an RCD tester (if not integrated into the MFT). The assessor will review samples of your recent work, including completed certificates and the associated test results. They may ask to visit a recent job site to inspect the quality of your installation work. The assessor will also verify your insurance documentation, check your understanding of current regulations including BS 7671:2018+A3:2024, and confirm that you have adequate working premises (this does not mean you need an office — a home address is acceptable provided you have space for records and administration). The assessment typically takes 2 to 4 hours.',
+      'The initial assessment visit is carried out by an NICEIC assessor at your business premises. The assessor will verify your qualifications and those of any qualified supervisors or operatives. They will check that your test instruments are calibrated and within their calibration date — typically you need a multifunction tester, a voltage indicator complying with GS38, and an RCD tester (if not integrated into the MFT). The assessor will review samples of your recent work, including completed certificates and the associated test results. They may ask to visit a recent job site to inspect the quality of your installation work. The assessor will also verify your insurance documentation, check your understanding of current regulations including BS 7671:2018+A4:2026, and confirm that you have adequate working premises (this does not mean you need an office — a home address is acceptable provided you have space for records and administration). The assessment typically takes 2 to 4 hours.',
   },
   {
     question: 'Can I register with NICEIC if I work from home?',
@@ -105,7 +105,7 @@ const sections = [
           maintaining calibrated test instruments, having adequate public liability insurance, and
           producing work that complies with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           (the 18th Edition of the IET Wiring Regulations).
         </p>
@@ -501,7 +501,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Certificates that work with any scheme provider"
-          description="Elec-Mate certificates are built to BS 7671:2018+A3:2024 and work with NICEIC, NAPIT, ELECSA, and BRE Certification. Professional PDF output meets all scheme provider requirements. Upload directly to any scheme portal."
+          description="Elec-Mate certificates are built to BS 7671:2018+A4:2026 and work with NICEIC, NAPIT, ELECSA, and BRE Certification. Professional PDF output meets all scheme provider requirements. Upload directly to any scheme portal."
           icon={FileCheck2}
         />
       </>
@@ -545,7 +545,7 @@ const relatedPages = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Complete guide to BS 7671:2018+A3:2024 including Amendment 3 changes.',
+    description: 'Complete guide to BS 7671:2018+A4:2026 including Amendment 3 changes.',
     icon: GraduationCap,
     category: 'Guide',
   },

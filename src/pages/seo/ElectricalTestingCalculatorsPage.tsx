@@ -92,7 +92,7 @@ const faqData = [
   {
     question: 'Are the calculators compliant with the latest BS 7671 amendments?',
     answer:
-      'Yes. All Elec-Mate calculators are compliant with BS 7671:2018+A3:2024 (the 18th Edition IET Wiring Regulations) and incorporate values from Amendment 3:2024 where applicable. Amendment 3 (A3:2024), issued 31 July 2024, adds new Section 530 requirements covering bidirectional and unidirectional protective devices. Our maximum Zs values, disconnection times, cable ratings, and all reference tables are sourced directly from BS 7671 and the IET On-Site Guide. When amendments or corrections are published, we update all affected calculators within 30 days.',
+      'Yes. All Elec-Mate calculators are compliant with BS 7671:2018+A4:2026 (the 18th Edition IET Wiring Regulations) and incorporate values from Amendment 3:2024 where applicable. Amendment 3 (A4:2026), issued 31 July 2024, adds new Section 530 requirements covering bidirectional and unidirectional protective devices. Our maximum Zs values, disconnection times, cable ratings, and all reference tables are sourced directly from BS 7671 and the IET On-Site Guide. When amendments or corrections are published, we update all affected calculators within 30 days.',
   },
 ];
 
@@ -240,8 +240,7 @@ export default function ElectricalTestingCalculatorsPage() {
           </h1>
           <p className="text-lg text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             Every calculation you need on site, from earth loop impedance and fault current to
-            conduit fill and maximum demand. All values cross-referenced against BS
-            7671:2018+A3:2024 and Amendment 3:2024.
+            conduit fill and maximum demand. All values cross-referenced against BS 7671:2018+A4:2026 and Amendment 3:2024.
           </p>
           <Link to="/auth/signup">
             <Button className="h-14 px-10 text-base font-semibold bg-yellow-500 hover:bg-yellow-400 active:scale-[0.97] text-black touch-manipulation transition-transform">
@@ -529,6 +528,26 @@ export default function ElectricalTestingCalculatorsPage() {
       </section>
 
       {/* CTA */}
+      
+
+      {/* Related pages — auto-injected for internal-link health (audit criterion #7).
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/guides/electrical-testing-cost-uk">Electrical Testing Cost UK 2026</SEOInternalLink>
+            <SEOInternalLink href="/tools/electrical-app-with-ai">Electrical App with AI</SEOInternalLink>
+            <SEOInternalLink href="/guides/ai-for-electrical-apprentices">AI for Electrical Apprentices</SEOInternalLink>
+            <SEOInternalLink href="/cleanroom-electrical">Cleanroom Electrical Installation UK</SEOInternalLink>
+            <SEOInternalLink href="/continuity-testing-guide">Continuity Testing Guide UK</SEOInternalLink>
+            <SEOInternalLink href="/guides/continuity-testing-r1-r2">Continuity Testing R1+R2</SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-apprenticeship-guide">Electrical Apprenticeship UK 2026</SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-bim-guide">Electrical BIM Guide</SEOInternalLink>
+          </div>
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Stop flipping through tables on site"
         subheading="Join 1,000+ UK electricians using Elec-Mate calculators to speed up testing and certification. 7-day free trial, cancel anytime."

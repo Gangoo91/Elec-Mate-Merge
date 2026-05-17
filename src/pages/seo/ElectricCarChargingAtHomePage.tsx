@@ -158,7 +158,7 @@ const sections = [
           circuit from the consumer unit, correct cable sizing, appropriate protective devices, and
           an Electrical Installation Certificate (EIC). The installation must comply with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           Section 722 (Electric Vehicle Charging Installations) and the Electric Vehicles (Smart
           Charge Points) Regulations 2021.
@@ -500,7 +500,7 @@ const sections = [
     content: (
       <>
         <p>
-          The electrical installation for a home EV charger must comply with BS 7671:2018+A3:2024
+          The electrical installation for a home EV charger must comply with BS 7671:2018+A4:2026
           Section 722 (Electric Vehicle Charging Installations). The key requirements are:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">

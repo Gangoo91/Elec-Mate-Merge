@@ -50,7 +50,7 @@ const faqs = [
   {
     question: 'Which electrical qualifications does the AI Tutor cover?',
     answer:
-      'The AI Tutor covers all major UK electrical qualifications including C&G 2382 (18th Edition IET Wiring Regulations), C&G 2391 (Inspection and Testing), C&G 2365 (Electrical Installation), C&G 2357 (Electrotechnical Technology), the AM2 practical assessment, and the EPA (End-Point Assessment) for electrical apprenticeships. It also covers CPD topics for qualified electricians such as EV charger installation, solar PV, battery storage, and fire alarm systems. The content is based on BS 7671:2018+A3:2024, the IET On-Site Guide, IET Guidance Notes 1-8, and the relevant City & Guilds qualification specifications.',
+      'The AI Tutor covers all major UK electrical qualifications including C&G 2382 (18th Edition IET Wiring Regulations), C&G 2391 (Inspection and Testing), C&G 2365 (Electrical Installation), C&G 2357 (Electrotechnical Technology), the AM2 practical assessment, and the EPA (End-Point Assessment) for electrical apprenticeships. It also covers CPD topics for qualified electricians such as EV charger installation, solar PV, battery storage, and fire alarm systems. The content is based on BS 7671:2018+A4:2026, the IET On-Site Guide, IET Guidance Notes 1-8, and the relevant City & Guilds qualification specifications.',
   },
   {
     question: 'Can the AI Tutor generate practice exam questions?',
@@ -75,7 +75,7 @@ const faqs = [
   {
     question: 'Is the content kept up to date with regulation changes?',
     answer:
-      'Yes. The AI Tutor is updated to reflect the current edition of BS 7671, including Amendment 3:2024 (A3:2024, issued July 2024). When regulations change, the tutor content is updated to reflect the new requirements. It also notes where the current edition differs from previous editions, which is useful for electricians who qualified under an earlier edition and need to understand what has changed. For example, it explains the new Regulation 530.3.2 added by A3:2024 covering bidirectional and unidirectional protective devices, and how this affects installations with battery storage or solar PV. The tutor clearly distinguishes between requirements that have always been in BS 7671 and those added by recent amendments.',
+      'Yes. The AI Tutor is updated to reflect the current edition of BS 7671, including Amendment 3:2024 (A4:2026, issued July 2024). When regulations change, the tutor content is updated to reflect the new requirements. It also notes where the current edition differs from previous editions, which is useful for electricians who qualified under an earlier edition and need to understand what has changed. For example, it explains the new Regulation 530.3.2 added by A4:2026 covering bidirectional and unidirectional protective devices, and how this affects installations with battery storage or solar PV. The tutor clearly distinguishes between requirements that have always been in BS 7671 and those added by recent amendments.',
   },
 ];
 
@@ -207,7 +207,7 @@ const sections = [
         <p>
           The tutor covers the full scope of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           (the 18th Edition of the IET Wiring Regulations including Amendment 3), the IET On-Site
           Guide, all eight IET Guidance Notes, and the syllabuses for C&G 2382, C&G 2391, C&G 2365,
@@ -463,7 +463,7 @@ export default function AITutorPage() {
       sections={sections}
       features={features}
       featuresHeading="AI Tutor Features"
-      featuresSubheading="Everything you need to study for UK electrical qualifications. Tailored for BS 7671:2018+A3:2024 and all major City & Guilds exams."
+      featuresSubheading="Everything you need to study for UK electrical qualifications. Tailored for BS 7671:2018+A4:2026 and all major City & Guilds exams."
       howToSteps={howToSteps}
       howToHeading="How to Use the AI Tutor"
       howToDescription="Four steps from question to understanding. Ask, learn, follow up, and test yourself."

@@ -26,9 +26,9 @@ const faqs = [
       'Most electricians complete the BS 7671 course content in 20 to 40 hours of study, depending on prior experience. Because Elec-Mate is entirely self-paced, you can fit sessions around your working day. Our AI study assistant identifies weak areas early, so you spend less time on topics you already understand and more on the sections that need attention. Many users pass within four to six weeks of starting.',
   },
   {
-    question: 'Does this course cover Amendment 3:2024 (A3:2024)?',
+    question: 'Does this course cover Amendment 3:2024 (A4:2026)?',
     answer:
-      'Yes. Our content is fully updated for BS 7671:2018+A3:2024, which was published on 31 July 2024. Amendment 3 introduces Regulation 530.3.201 covering requirements for bidirectional and unidirectional protective devices, particularly relevant for solar PV and battery storage installations. Every quiz and practice exam in Elec-Mate reflects the latest regulation text.',
+      'Yes. Our content is fully updated for BS 7671:2018+A4:2026, which was published on 31 July 2024. Amendment 3 introduces Regulation 530.3.201 covering requirements for bidirectional and unidirectional protective devices, particularly relevant for solar PV and battery storage installations. Every quiz and practice exam in Elec-Mate reflects the latest regulation text.',
   },
   {
     question: 'Is online 18th Edition training accepted by NICEIC and NAPIT?',
@@ -43,7 +43,7 @@ const faqs = [
   {
     question: 'What is the difference between the 17th and 18th Edition wiring regulations?',
     answer:
-      'The 18th Edition (BS 7671:2018) replaced the 17th Edition (BS 7671:2008+A3:2015) on 1 January 2019. Key changes include updated requirements for arc fault detection devices (AFDDs) in Regulation 421.1.7, new surge protection requirements under Section 534, revised consumer unit metal enclosure rules, additional requirements for electric vehicle charging in Section 722, and updated special installation rules for solar PV systems. Amendment 2 (2022) and Amendment 3 (2024) have further refined these areas.',
+      'The 18th Edition (BS 7671:2018) replaced the 17th Edition (BS 7671:2008+A3:2015) on 1 January 2019. Key changes include updated requirements for arc fault detection devices (AFDDs) in Regulation 421.1.7, new surge protection requirements under Section 534, revised consumer unit metal enclosure rules, additional requirements for electric vehicle charging in Section 722, and updated special installation rules for solar PV systems. Amendment 2 (2022) and Amendment 4 (2026) have further refined these areas.',
   },
   {
     question:
@@ -88,7 +88,7 @@ const features = [
     icon: Shield,
     title: 'Amendment 3 Updated',
     description:
-      'Fully updated for BS 7671:2018+A3:2024 including the new Regulation 530.3.201 for bidirectional protective devices. Stay current with the latest requirements.',
+      'Fully updated for BS 7671:2018+A4:2026 including the new Regulation 530.3.201 for bidirectional protective devices. Stay current with the latest requirements.',
   },
 ];
 
@@ -236,8 +236,7 @@ export default function EighteenthEditionCoursePage() {
             <p>
               BS 7671 is often referred to as the "brown book" due to its distinctive cover. It
               replaced the 17th Edition (BS 7671:2008) on 1 January 2019 and has since been amended
-              three times: Amendment 1 (2020), Amendment 2 (2022), and most recently Amendment 3
-              (2024). Every practising electrician, electrical engineer, and installation designer
+              three times: Amendment 1 (2020), Amendment 2 (2022), and most recently Amendment 4 (2026). Every practising electrician, electrical engineer, and installation designer
               in the UK needs a thorough working knowledge of this standard.
             </p>
             <p>
@@ -268,9 +267,9 @@ export default function EighteenthEditionCoursePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              BS 7671:2018+A3:2024 was issued on 31 July 2024 as a free PDF supplement to the
+              BS 7671:2018+A4:2026 was issued on 31 July 2024 as a free PDF supplement to the
               existing standard. Unlike previous amendments that required purchasing a new edition,
-              A3:2024 is a focused update that adds a single but significant new regulation:
+              A4:2026 is a focused update that adds a single but significant new regulation:
               Regulation 530.3.201.
             </p>
             <p>
@@ -339,7 +338,7 @@ export default function EighteenthEditionCoursePage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The Elec-Mate 18th Edition course covers all seven parts of BS 7671:2018+A3:2024 in
+              The Elec-Mate 18th Edition course covers all seven parts of BS 7671:2018+A4:2026 in
               structured, easy-to-follow modules. Each module breaks down the regulation text into
               plain English explanations with practical examples drawn from real-world
               installations.
@@ -441,7 +440,7 @@ export default function EighteenthEditionCoursePage() {
           <div className="space-y-4 text-white leading-relaxed">
             <p>
               Elec-Mate's AI study assistant is purpose-built for BS 7671 training. Unlike generic
-              AI chatbots, it has been trained on the full text of BS 7671:2018+A3:2024, Guidance
+              AI chatbots, it has been trained on the full text of BS 7671:2018+A4:2026, Guidance
               Notes 1 through 8, the IET On-Site Guide, and thousands of exam-style questions with
               detailed explanations.
             </p>
@@ -548,6 +547,26 @@ export default function EighteenthEditionCoursePage() {
       </section>
 
       {/* CTA */}
+      
+
+      {/* Related pages — auto-injected for internal-link health (audit criterion #7).
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/training/instrumentation-course">Instrumentation Course for Electricians</SEOInternalLink>
+            <SEOInternalLink href="/training/mewp-course">MEWP Course</SEOInternalLink>
+            <SEOInternalLink href="/training/bs-7671-amendment-3-course">BS 7671 Amendment 3 Course</SEOInternalLink>
+            <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671 18th Edition Guide 2026</SEOInternalLink>
+            <SEOInternalLink href="/training/cdm-regulations-course">CDM Regulations Course for Electricians</SEOInternalLink>
+            <SEOInternalLink href="/training/workplace-safety-course">Workplace Safety Course</SEOInternalLink>
+            <SEOInternalLink href="/guides/18th-edition-exam-tips">18th Edition Exam Tips</SEOInternalLink>
+            <SEOInternalLink href="/guides/city-guilds-2396-design-course">City & Guilds 2396 Design Course</SEOInternalLink>
+          </div>
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Ready to master BS 7671?"
         subheading="Join 1,000+ UK electricians studying smarter with AI. 7-day free trial, cancel anytime."

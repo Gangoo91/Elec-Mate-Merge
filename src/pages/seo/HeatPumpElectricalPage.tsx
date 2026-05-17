@@ -66,7 +66,7 @@ const faqs = [
   {
     question: 'Do I need RCD protection for a heat pump circuit?',
     answer:
-      'Under BS 7671:2018+A3:2024, all circuits in domestic premises require 30mA RCD protection (Regulation 411.3.3). The heat pump circuit is no exception. An RCBO at the consumer unit is the preferred solution — it provides both MCB and RCD protection in a single device without affecting other circuits if it trips. Some heat pump manufacturers recommend a Type A or Type B RCD rather than a standard Type AC, because the inverter-driven compressor in modern heat pumps can produce DC fault currents that a Type AC RCD may not detect. Check the manufacturer data sheet for the recommended RCD type. If a Type B RCD is specified, be aware that these are significantly more expensive than standard RCBOs and require a deeper consumer unit enclosure. Type A RCDs are more commonly available and are sufficient for most heat pump installations.',
+      'Under BS 7671:2018+A4:2026, all circuits in domestic premises require 30mA RCD protection (Regulation 411.3.3). The heat pump circuit is no exception. An RCBO at the consumer unit is the preferred solution — it provides both MCB and RCD protection in a single device without affecting other circuits if it trips. Some heat pump manufacturers recommend a Type A or Type B RCD rather than a standard Type AC, because the inverter-driven compressor in modern heat pumps can produce DC fault currents that a Type AC RCD may not detect. Check the manufacturer data sheet for the recommended RCD type. If a Type B RCD is specified, be aware that these are significantly more expensive than standard RCBOs and require a deeper consumer unit enclosure. Type A RCDs are more commonly available and are sufficient for most heat pump installations.',
   },
   {
     question: 'What is the BUS (Boiler Upgrade Scheme) grant?',
@@ -150,7 +150,7 @@ const sections = [
           growth area — every heat pump installation requires a dedicated electrical supply, and the
           electrical work must be designed, installed, tested, and certified to{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           standards.
         </p>

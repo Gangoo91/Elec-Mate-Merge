@@ -81,7 +81,7 @@ const faqs = [
   {
     question: 'Which wiring regulations apply to solar PV installations?',
     answer:
-      'Solar PV installations in England must comply with BS 7671:2018+A3:2024, specifically Section 712 (Solar Photovoltaic Power Supply Systems). Key requirements include: appropriate DC isolation and string fuse protection, surge protection devices (SPDs) for both DC and AC sides where the risk assessment indicates their need, correct labelling at the inverter, consumer unit, and meter, and appropriate earthing of the PV array. The installation must also be notified to the local building control authority (or via a competent person scheme) as it constitutes electrical installation work.',
+      'Solar PV installations in England must comply with BS 7671:2018+A4:2026, specifically Section 712 (Solar Photovoltaic Power Supply Systems). Key requirements include: appropriate DC isolation and string fuse protection, surge protection devices (SPDs) for both DC and AC sides where the risk assessment indicates their need, correct labelling at the inverter, consumer unit, and meter, and appropriate earthing of the PV array. The installation must also be notified to the local building control authority (or via a competent person scheme) as it constitutes electrical installation work.',
   },
 ];
 

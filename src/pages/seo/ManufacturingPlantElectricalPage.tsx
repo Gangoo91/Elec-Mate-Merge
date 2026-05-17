@@ -38,7 +38,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Manufacturing plant electrical installations must comply with BS 7671:2018+A3:2024, the Electricity at Work Regulations 1989, the Provision and Use of Work Equipment Regulations 1998 (PUWER), and BS EN 60204-1 (Safety of Machinery — Electrical Equipment of Machines).',
+  'Manufacturing plant electrical installations must comply with BS 7671:2018+A4:2026, the Electricity at Work Regulations 1989, the Provision and Use of Work Equipment Regulations 1998 (PUWER), and BS EN 60204-1 (Safety of Machinery — Electrical Equipment of Machines).',
   'Variable Frequency Drives (VFDs) are now the standard solution for motor speed control in manufacturing. They can reduce motor energy consumption by 30 to 50 per cent on variable-torque loads and provide precise process control, but introduce harmonic distortion that must be managed through filter design.',
   'Emergency stop (E-stop) systems on manufacturing plant must comply with BS EN ISO 13850 (Emergency Stop Functionality — Design Principles). Category 0 (immediate removal of power) or Category 1 (controlled stop then removal of power) stops are specified depending on the hazard analysis.',
   'Safety interlock systems on guards and interlocked barriers must be designed to the required Performance Level (PL) under BS EN ISO 13849-1, based on the risk assessment of each hazard. PLC-based safety systems (Safety PLCs) are used for complex multi-axis machinery.',
@@ -155,7 +155,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulatory framework:</strong> BS 7671:2018+A3:2024, Electricity at Work
+                <strong>Regulatory framework:</strong> BS 7671:2018+A4:2026, Electricity at Work
                 Regulations 1989, PUWER 1998, Supply of Machinery (Safety) Regulations 2008, DSEAR
                 2002 (where hazardous areas exist), BS EN 60204-1, BS EN ISO 13849-1 (machinery
                 safety), BS EN ISO 13850 (emergency stop).

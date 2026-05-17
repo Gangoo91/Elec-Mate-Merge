@@ -53,7 +53,7 @@ const faqs = [
   {
     question: 'Do outdoor sockets need RCD protection?',
     answer:
-      'Yes. Under BS 7671:2018+A3:2024 Regulation 411.3.3, all outdoor socket outlets rated up to 32A must be protected by a 30mA RCD. This applies whether the socket is on a dedicated outdoor circuit or extended from an indoor ring main. If your outdoor socket is not RCD protected, it is a C2 (potentially dangerous) finding that must be rectified. An electrician can add RCD protection at the consumer unit (RCBO), at an outdoor consumer unit, or by fitting an RCD socket as the outdoor outlet.',
+      'Yes. Under BS 7671:2018+A4:2026 Regulation 411.3.3, all outdoor socket outlets rated up to 32A must be protected by a 30mA RCD. This applies whether the socket is on a dedicated outdoor circuit or extended from an indoor ring main. If your outdoor socket is not RCD protected, it is a C2 (potentially dangerous) finding that must be rectified. An electrician can add RCD protection at the consumer unit (RCBO), at an outdoor consumer unit, or by fitting an RCD socket as the outdoor outlet.',
   },
   {
     question: 'What IP rating does an outdoor socket need?',
@@ -130,7 +130,7 @@ const sections = [
     content: (
       <>
         <p>
-          Outdoor socket outlets in the UK must comply with BS 7671:2018+A3:2024 (the 18th Edition
+          Outdoor socket outlets in the UK must comply with BS 7671:2018+A4:2026 (the 18th Edition
           Wiring Regulations), which sets specific requirements for outdoor electrical installations
           that go significantly beyond those for indoor sockets. The key differences relate to
           protection against electric shock, mechanical protection of the enclosure, and resistance

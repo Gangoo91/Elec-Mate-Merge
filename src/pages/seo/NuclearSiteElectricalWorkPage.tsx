@@ -38,7 +38,7 @@ const tocItems = [
 const keyTakeaways = [
   'Nuclear licensed sites in the UK operate under Nuclear Site Licences issued by the Office for Nuclear Regulation (ONR). All contractors must comply with the site licence conditions, which place strict controls on work affecting safety-related systems.',
   'Security vetting is mandatory. Most nuclear sites require a minimum of Baseline Personnel Security Standard (BPSS). Higher-risk roles require Counter-Terrorism Check (CTC) or Security Check (SC) clearance, which can take 3 to 6 months to complete.',
-  'Electrical installation on nuclear sites must comply with IEC 60364 (the international standard) as well as BS 7671:2018+A3:2024. Nuclear-safety-classified systems have additional design, installation, and documentation requirements beyond standard BS 7671.',
+  'Electrical installation on nuclear sites must comply with IEC 60364 (the international standard) as well as BS 7671:2018+A4:2026. Nuclear-safety-classified systems have additional design, installation, and documentation requirements beyond standard BS 7671.',
   'The CCNSG Safety Passport is the minimum site safety card for most UK nuclear and construction sites. The SHEA Nuclear card (Safety, Health and Environment in the Nuclear Industry) is required for site access on most licensed nuclear sites.',
   'Pay rates range from £55 to £90+ per hour for nuclear-site electricians, reflecting the vetting requirements, specialist knowledge, and restricted working environment. Rates are substantially higher than standard commercial electrical work.',
 ];
@@ -276,7 +276,7 @@ const sections = [
     content: (
       <>
         <p>
-          Electrical installations on nuclear licensed sites must comply with BS 7671:2018+A3:2024
+          Electrical installations on nuclear licensed sites must comply with BS 7671:2018+A4:2026
           for standard installations, but nuclear-safety-classified systems (Class 1 systems that
           could affect reactor safety) must also comply with IEC 60364 and additional
           nuclear-specific standards such as IEC 60780 (nuclear power plants — electrical equipment

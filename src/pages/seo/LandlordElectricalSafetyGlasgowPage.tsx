@@ -182,7 +182,7 @@ const sections = [
                 <strong>Electrical installations</strong> — must be in a reasonable state of repair
                 and proper working order. An EICR documented in accordance with{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                  BS 7671:2018+A3:2024
+                  BS 7671:2018+A4:2026
                 </SEOInternalLink>{' '}
                 (Section 631) every five years is the standard way to demonstrate compliance.
               </span>

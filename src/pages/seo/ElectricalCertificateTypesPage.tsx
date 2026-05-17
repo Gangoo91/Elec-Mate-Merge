@@ -115,7 +115,7 @@ const sections = [
           and the legal framework that governs it. The relevant British Standards are referenced
           throughout — primarily{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           (the IET Wiring Regulations), BS 5839 (fire detection and alarm systems), BS 5266
           (emergency lighting), and the MCS standards for solar PV.
@@ -508,7 +508,7 @@ const sections = [
         <p>
           With{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            Amendment 3 (A3:2024)
+            Amendment 3 (A4:2026)
           </SEOInternalLink>{' '}
           introducing Regulation 530.3.201 on bidirectional protective devices, solar PV
           installations with battery storage now require specific consideration of whether the
@@ -654,7 +654,7 @@ const sections = [
               <div>
                 <h3 className="font-bold text-white mb-1">Auto BS 7671 Validation</h3>
                 <p className="text-white text-sm leading-relaxed">
-                  Every test result is validated against BS 7671:2018+A3:2024 maximum permitted
+                  Every test result is validated against BS 7671:2018+A4:2026 maximum permitted
                   values in real time. Enter a Zs value and the app instantly tells you if it passes
                   or fails for that protective device.
                 </p>

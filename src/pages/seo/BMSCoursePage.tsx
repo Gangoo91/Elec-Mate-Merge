@@ -30,7 +30,7 @@ const faqs = [
   {
     question: 'Do I need electrical qualifications to become a BMS engineer?',
     answer:
-      'A strong electrical background is one of the best foundations for a career in BMS engineering. Most BMS engineers have completed an electrical apprenticeship or hold a Level 3 qualification in electrical installation. Your existing knowledge of wiring, control circuits, and BS 7671:2018+A3:2024 gives you a significant advantage. The BMS-specific knowledge — protocols, programming, and system design — is what this course adds on top of your existing skills.',
+      'A strong electrical background is one of the best foundations for a career in BMS engineering. Most BMS engineers have completed an electrical apprenticeship or hold a Level 3 qualification in electrical installation. Your existing knowledge of wiring, control circuits, and BS 7671:2018+A4:2026 gives you a significant advantage. The BMS-specific knowledge — protocols, programming, and system design — is what this course adds on top of your existing skills.',
   },
   {
     question: 'What communication protocols will I learn?',
@@ -560,6 +560,25 @@ export default function BMSCoursePage() {
       </section>
 
       {/* CTA */}
+      
+
+      {/* Related pages — auto-injected for internal-link health (audit criterion #7).
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/training/instrumentation-course">Instrumentation Course for Electricians</SEOInternalLink>
+            <SEOInternalLink href="/training/mewp-course">MEWP Course</SEOInternalLink>
+            <SEOInternalLink href="/training/bs-7671-amendment-3-course">BS 7671 Amendment 3 Course</SEOInternalLink>
+            <SEOInternalLink href="/training/cdm-regulations-course">CDM Regulations Course for Electricians</SEOInternalLink>
+            <SEOInternalLink href="/training/workplace-safety-course">Workplace Safety Course</SEOInternalLink>
+            <SEOInternalLink href="/guides/building-management-systems-bms-electrical">Building Management Systems (BMS) Electrical Guide UK</SEOInternalLink>
+            <SEOInternalLink href="/guides/city-guilds-2396-design-course">City & Guilds 2396 Design Course</SEOInternalLink>
+          </div>
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Ready to move into BMS?"
         subheading="Join 1,000+ UK electricians studying smarter with AI. 7-day free trial, cancel anytime."

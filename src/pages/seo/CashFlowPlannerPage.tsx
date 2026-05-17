@@ -376,7 +376,7 @@ export default function CashFlowPlannerPage() {
             </p>
             <p>
               Over 430 UK electricians trust Elec-Mate to manage their business finances. The
-              platform complies with BS 7671:2018+A3:2024 for all technical calculations and is
+              platform complies with BS 7671:2018+A4:2026 for all technical calculations and is
               fully GDPR compliant. All financial data is encrypted and securely stored. Your
               subscription starts with a 7-day free trial — no card required, cancel anytime.
             </p>

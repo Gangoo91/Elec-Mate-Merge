@@ -39,7 +39,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'BS 7671:2018+A3:2024 (the 18th Edition with Amendment 3) is organised into seven parts, plus appendices — understanding the structure is the key to finding regulations quickly in the exam and on site.',
+  'BS 7671:2018+A4:2026 (the 18th Edition with Amendment 3) is organised into seven parts, plus appendices — understanding the structure is the key to finding regulations quickly in the exam and on site.',
   'Part 1 (Scope, Object, and Fundamental Principles) and Part 2 (Definitions) are foundation knowledge — many exam questions test whether you know what a term means or whether a particular installation falls within scope.',
   'Part 4 (Protection for Safety) is the heaviest exam topic, covering protection against electric shock (Chapter 41), thermal effects (Chapter 42), overcurrent (Chapter 43), voltage disturbances (Chapter 44), and isolation and switching (Chapter 53).',
   'Part 7 (Special Installations or Locations) contains sections that frequently appear in exams — bathrooms (Section 701), swimming pools (Section 702), construction sites (Section 704), agricultural premises (Section 705), and EV charging (Section 722).',
@@ -94,9 +94,9 @@ const sections = [
         <p>
           The current edition is the 18th Edition:{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
-          . The "+A3:2024" indicates that Amendment 3 has been incorporated. Every electrician
+          . The "+A4:2026" indicates that Amendment 3 has been incorporated. Every electrician
           working in the UK must understand BS 7671 — it is tested in the C&G 2382 exam, it governs
           every installation you design and build, and it is the standard against which your work is
           inspected and certified.
@@ -252,7 +252,7 @@ const sections = [
           <SEOInternalLink href="/training/bs-7671-amendment-3-course">
             Amendment 3 addition
           </SEOInternalLink>{' '}
-          on bidirectional devices (Section 530, A3:2024 addition) is relevant here.
+          on bidirectional devices (Section 530, A4:2026 addition) is relevant here.
         </p>
         <SEOAppBridge
           title="Practise Chapter 41 questions with AI feedback"
@@ -281,7 +281,7 @@ const sections = [
         </p>
         <p>
           <strong>Chapter 53 — Switchgear.</strong> Covers the selection of protective devices,
-          isolation devices, and switching devices. The A3:2024 addition on bidirectional devices
+          isolation devices, and switching devices. The A4:2026 addition on bidirectional devices
           sits in this chapter.
         </p>
         <p>
@@ -468,7 +468,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/bs-7671-amendment-3-course',
     title: 'Amendment 3 Course',
-    description: 'A3:2024 update training — Section 530 bidirectional device requirements.',
+    description: 'A4:2026 update training — Section 530 bidirectional device requirements.',
     icon: BookMarked,
     category: 'Training',
   },
@@ -505,7 +505,7 @@ export default function BS7671RunThroughPage() {
   return (
     <GuideTemplate
       title="BS 7671 Run-Through Study Guide | 18th Edition Part by Part"
-      description="Complete run-through of BS 7671:2018+A3:2024 for UK electricians. Part 1 to Part 7 overview, key regulations, exam focus areas, and study strategy. AI-powered study tools and unlimited mock exams."
+      description="Complete run-through of BS 7671:2018+A4:2026 for UK electricians. Part 1 to Part 7 overview, key regulations, exam focus areas, and study strategy. AI-powered study tools and unlimited mock exams."
       datePublished="2025-07-20"
       dateModified="2026-02-13"
       breadcrumbs={breadcrumbs}
@@ -517,7 +517,7 @@ export default function BS7671RunThroughPage() {
           BS 7671 Run-Through: <span className="text-yellow-400">Part by Part Study Guide</span>
         </>
       }
-      heroSubtitle="Walk through every part of BS 7671:2018+A3:2024 with this structured study guide. Key regulations highlighted, exam focus areas identified, and study strategy for the C&G 2382 exam. Use alongside your copy of the brown book."
+      heroSubtitle="Walk through every part of BS 7671:2018+A4:2026 with this structured study guide. Key regulations highlighted, exam focus areas identified, and study strategy for the C&G 2382 exam. Use alongside your copy of the brown book."
       readingTime={18}
       keyTakeaways={keyTakeaways}
       sections={sections}

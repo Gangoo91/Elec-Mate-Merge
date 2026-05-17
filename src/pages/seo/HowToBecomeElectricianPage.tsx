@@ -59,7 +59,7 @@ const faqs = [
   {
     question: 'What qualifications do I need to become an electrician?',
     answer:
-      'The core qualifications for a qualified electrician in the UK are: (1) Level 2 Diploma in Electrical Installations (C&G 2365 or equivalent), covering the fundamentals of electrical science, health and safety, and basic installation skills; (2) Level 3 Diploma in Electrical Installations (C&G 2365 or 2357, or the newer Level 3 Electrotechnical qualification), covering advanced installation, inspection, testing, fault diagnosis, and design; (3) 18th Edition IET Wiring Regulations (C&G 2382), the qualification that covers BS 7671:2018+A3:2024 — the standard all electrical work must comply with; (4) AM2 Assessment, a practical end-point assessment run by NET (National Electrotechnical Training) that tests your ability to install, inspect, and test an electrical installation to a competent standard. You may also want the C&G 2391 (Inspection and Testing) qualification if you intend to carry out periodic inspection and testing (EICRs), which is a separate but highly valuable qualification.',
+      'The core qualifications for a qualified electrician in the UK are: (1) Level 2 Diploma in Electrical Installations (C&G 2365 or equivalent), covering the fundamentals of electrical science, health and safety, and basic installation skills; (2) Level 3 Diploma in Electrical Installations (C&G 2365 or 2357, or the newer Level 3 Electrotechnical qualification), covering advanced installation, inspection, testing, fault diagnosis, and design; (3) 18th Edition IET Wiring Regulations (C&G 2382), the qualification that covers BS 7671:2018+A4:2026 — the standard all electrical work must comply with; (4) AM2 Assessment, a practical end-point assessment run by NET (National Electrotechnical Training) that tests your ability to install, inspect, and test an electrical installation to a competent standard. You may also want the C&G 2391 (Inspection and Testing) qualification if you intend to carry out periodic inspection and testing (EICRs), which is a separate but highly valuable qualification.',
   },
   {
     question:
@@ -332,7 +332,7 @@ const sections = [
               <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>18th Edition IET Wiring Regulations (C&G 2382-22):</strong> The
-                qualification covering BS 7671:2018+A3:2024, the standard that all electrical
+                qualification covering BS 7671:2018+A4:2026, the standard that all electrical
                 installation work in the UK must comply with. A 3-5 day intensive course followed by
                 an online exam. Must be kept current as amendments are issued.
               </span>

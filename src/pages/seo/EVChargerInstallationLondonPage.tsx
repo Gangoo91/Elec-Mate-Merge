@@ -287,7 +287,7 @@ const sections = [
         <p>
           All EV charger installations in London must comply with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           Section 722. The key requirements are the same across the UK, but London's housing stock
           means certain requirements are triggered more frequently:

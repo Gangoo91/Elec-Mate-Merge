@@ -434,7 +434,7 @@ export default function JobProfitabilityCalculatorPage() {
               projects.
             </p>
             <p>
-              Compliance is built in: all calculations reference BS 7671:2018+A3:2024 (the 18th
+              Compliance is built in: all calculations reference BS 7671:2018+A4:2026 (the 18th
               Edition with Amendment 3, issued July 2024) where relevant, and the platform is fully
               GDPR compliant. Your financial data is encrypted in transit and at rest, stored
               securely on UK-region servers, and never shared with third parties.
@@ -485,6 +485,26 @@ export default function JobProfitabilityCalculatorPage() {
       </section>
 
       {/* CTA */}
+      
+
+      {/* Related pages — auto-injected for internal-link health (audit criterion #7).
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/guides/on-the-job-training-guide">On-the-Job Training Guide</SEOInternalLink>
+            <SEOInternalLink href="/adiabatic-equation-calculator">Adiabatic Equation Calculator</SEOInternalLink>
+            <SEOInternalLink href="/tools/battery-backup-calculator">Battery Backup Calculator</SEOInternalLink>
+            <SEOInternalLink href="/tools/break-even-calculator">Break-Even Calculator for Electricians</SEOInternalLink>
+            <SEOInternalLink href="/tools/busbar-sizing-calculator">Busbar Sizing Calculator</SEOInternalLink>
+            <SEOInternalLink href="/tools/business-cost-calculator">Business Cost Calculator</SEOInternalLink>
+            <SEOInternalLink href="/tools/cable-derating-calculator">Cable Derating Calculator</SEOInternalLink>
+            <SEOInternalLink href="/cable-sizing-calculator">Cable Sizing Calculator BS 7671</SEOInternalLink>
+          </div>
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Make Every Job Profitable"
         subheading="Join 1,000+ UK electricians using Elec-Mate to track job profitability, calculate true margins, and price with confidence. 7-day free trial, cancel anytime."

@@ -185,8 +185,7 @@ const sections = [
     content: (
       <>
         <p>
-          Residual Current Device (RCD) protection is mandatory for all outdoor circuits under BS
-          7671:2018+A3:2024 (the 18th Edition Wiring Regulations). This requirement exists because
+          Residual Current Device (RCD) protection is mandatory for all outdoor circuits under BS 7671:2018+A4:2026 (the 18th Edition Wiring Regulations). This requirement exists because
           outdoor environments dramatically increase the risk of electric shock.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">

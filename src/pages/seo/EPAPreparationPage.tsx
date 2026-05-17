@@ -294,7 +294,7 @@ export default function EPAPreparationPage() {
                 <p>
                   The practical assessment is similar in format to the AM2 but is assessed by the
                   EPAO rather than NET/JIB. You demonstrate your ability to carry out electrical
-                  installation work safely, competently, and in accordance with BS 7671:2018+A3:2024
+                  installation work safely, competently, and in accordance with BS 7671:2018+A4:2026
                   under timed conditions.
                 </p>
                 <p>
@@ -327,7 +327,7 @@ export default function EPAPreparationPage() {
               <div className="space-y-3 text-white leading-relaxed">
                 <p>
                   The knowledge test is a written examination covering the theoretical knowledge
-                  requirements of the apprenticeship standard. Topics include BS 7671:2018+A3:2024
+                  requirements of the apprenticeship standard. Topics include BS 7671:2018+A4:2026
                   wiring regulations, electrical science and principles, installation design
                   calculations, inspection and testing procedures and documentation, health and
                   safety legislation (Health and Safety at Work Act 1974, Electricity at Work
@@ -576,6 +576,21 @@ export default function EPAPreparationPage() {
       </section>
 
       {/* CTA */}
+      
+
+      {/* Related pages — auto-injected for internal-link health (audit criterion #7).
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/guides/epa-simulator-guide">EPA Simulator</SEOInternalLink>
+            <SEOInternalLink href="/guides/am2-assessment-preparation">AM2 Assessment Preparation Guide UK</SEOInternalLink>
+            <SEOInternalLink href="/guides/epa-what-to-expect">EPA What to Expect</SEOInternalLink>
+          </div>
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Ace your End Point Assessment"
         subheading="Join 1,000+ UK electricians and apprentices preparing for assessments and qualifications. 7-day free trial, cancel anytime."

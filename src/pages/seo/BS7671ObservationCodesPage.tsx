@@ -158,7 +158,7 @@ export default function BS7671ObservationCodesPage() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
             <BookOpen className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-medium text-yellow-400">BS 7671:2018 + A3:2024</span>
+            <span className="text-sm font-medium text-yellow-400">BS 7671:2018+A4:2026</span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
             EICR <span className="text-yellow-400">Observation Codes</span> Explained
@@ -858,7 +858,7 @@ export default function BS7671ObservationCodesPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Produce Professional EICRs with Elec-Mate"
-            description="Generate compliant EICR certificates with smart observation coding guidance, AI-powered descriptions, and automatic overall assessment — all built to BS 7671:2018+A3:2024."
+            description="Generate compliant EICR certificates with smart observation coding guidance, AI-powered descriptions, and automatic overall assessment — all built to BS 7671:2018+A4:2026."
             ctaText="Start 7-day free trial"
             ctaHref="/auth/signup"
           />
@@ -889,6 +889,24 @@ export default function BS7671ObservationCodesPage() {
       </section>
 
       {/* CTA */}
+      
+
+      {/* Related pages — auto-injected for internal-link health (audit criterion #7).
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/guides/eicr-observation-codes-explained">EICR Observation Codes C1 C2 C3 FI Explained</SEOInternalLink>
+            <SEOInternalLink href="/guides/cable-colour-codes-uk">Cable Colour Codes UK</SEOInternalLink>
+            <SEOInternalLink href="/guides/ev-charger-error-codes">EV Charger Error Codes</SEOInternalLink>
+            <SEOInternalLink href="/guides/polarity-testing-guide-bs7671">Polarity Testing Guide BS 7671</SEOInternalLink>
+            <SEOInternalLink href="/guides/bathroom-electrical-zones-bs7671">Bathroom Electrical Zones BS 7671</SEOInternalLink>
+            <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">Insulation Resistance Testing BS 7671</SEOInternalLink>
+          </div>
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Write better EICR observations"
         subheading="Join 1,000+ UK electricians producing professional, consistent EICRs. 7-day free trial, cancel anytime."

@@ -158,7 +158,7 @@ const sections = [
                 Condition Report (EICR) before a new tenancy begins and at least every five years.
                 The report is produced under{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                  BS 7671:2018+A3:2024
+                  BS 7671:2018+A4:2026
                 </SEOInternalLink>{' '}
                 (Section 631 covers periodic inspection and testing requirements).
               </span>

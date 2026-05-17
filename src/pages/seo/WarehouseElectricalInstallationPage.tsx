@@ -60,7 +60,7 @@ const faqs = [
   {
     question: 'What electrical regulations apply to EV charging in warehouses?',
     answer:
-      'EV charging installations in warehouses must comply with: BS 7671:2018+A3:2024 Section 722 (Supplies for Electric Vehicles); the Electric Vehicles (Smart Charge Points) Regulations 2021 (which require smart charge point functionality for new private charge points); and PAS 1899:2022 (the British Standard for electric vehicle smart charging). Where the EV charging demand is significant (more than 50 kW total), a dynamic load management system is strongly recommended to prevent simultaneous charging from overloading the incoming supply. All EV charge points must be protected by a 30mA Type B RCD (or Type A where the charge point manufacturer confirms no DC residual current above 6mA will flow).',
+      'EV charging installations in warehouses must comply with: BS 7671:2018+A4:2026 Section 722 (Supplies for Electric Vehicles); the Electric Vehicles (Smart Charge Points) Regulations 2021 (which require smart charge point functionality for new private charge points); and PAS 1899:2022 (the British Standard for electric vehicle smart charging). Where the EV charging demand is significant (more than 50 kW total), a dynamic load management system is strongly recommended to prevent simultaneous charging from overloading the incoming supply. All EV charge points must be protected by a 30mA Type B RCD (or Type A where the charge point manufacturer confirms no DC residual current above 6mA will flow).',
   },
   {
     question:
@@ -153,7 +153,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <Layers className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Key regulations:</strong> BS 7671:2018+A3:2024, Electricity at Work
+                <strong>Key regulations:</strong> BS 7671:2018+A4:2026, Electricity at Work
                 Regulations 1989, Building Regulations Part L (energy efficiency), Part B (fire
                 safety), BS 5839-1 (fire detection and alarm systems), BS 5266-1 (emergency
                 lighting), Electric Vehicles (Smart Charge Points) Regulations 2021.

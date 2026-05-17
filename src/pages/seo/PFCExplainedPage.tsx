@@ -161,7 +161,7 @@ const sections = [
           6 kA are typical. Close to a substation, values can exceed 16 kA.
         </p>
         <p>
-          BS 7671:2018+A3:2024 requires that the prospective fault current is determined at every
+          BS 7671:2018+A4:2026 requires that the prospective fault current is determined at every
           relevant point in the installation as part of the design and verification process. This is
           covered by Regulation 434.1 (which requires adequate breaking capacity) and Regulation
           644.4 (which requires PFC measurement during initial verification).

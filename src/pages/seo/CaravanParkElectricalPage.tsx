@@ -36,7 +36,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'BS 7671:2018+A3:2024 Section 708 is the specific section governing electrical installations in caravan parks and similar locations. Every pitch supply must comply with its requirements.',
+  'BS 7671:2018+A4:2026 Section 708 is the specific section governing electrical installations in caravan parks and similar locations. Every pitch supply must comply with its requirements.',
   'Each caravan pitch must be supplied through an individual supply equipment assembly incorporating overcurrent protection, 30 mA RCD protection, and a socket outlet to IEC 60309 (CEE form).',
   'RCDs must disconnect within 40 ms at 5× the rated residual operating current. This is a life-safety requirement in the outdoor, damp environment of caravan parks.',
   'Socket outlets must be positioned so the connecting cable from the pitch supply point to the caravan does not exceed 25 m (Regulation 708.553.1.4).',
@@ -48,7 +48,7 @@ const faqs = [
   {
     question: 'Which BS 7671 section applies to caravan park electrical installations?',
     answer:
-      'Section 708 of BS 7671:2018+A3:2024 (Part 7 — Special Installations or Locations) specifically covers electrical installations in caravan parks, camping parks, and similar locations. Section 708 modifies and supplements the general requirements in Parts 1 to 6. Every electrician working on caravan park installations must be familiar with Section 708 and how it interacts with the general wiring regulations.',
+      'Section 708 of BS 7671:2018+A4:2026 (Part 7 — Special Installations or Locations) specifically covers electrical installations in caravan parks, camping parks, and similar locations. Section 708 modifies and supplements the general requirements in Parts 1 to 6. Every electrician working on caravan park installations must be familiar with Section 708 and how it interacts with the general wiring regulations.',
   },
   {
     question: 'What type of socket outlets must be used at caravan pitches?',
@@ -126,7 +126,7 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671:2018+A3:2024 Part 7 addresses special installations and locations that present
+          BS 7671:2018+A4:2026 Part 7 addresses special installations and locations that present
           particular hazards or operating conditions not fully covered by the general requirements
           in Parts 1 to 6. Section 708 — Electrical Installations in Caravan Parks, Camping Parks
           and Similar Locations — is the authoritative technical standard for all electricians and

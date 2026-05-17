@@ -41,7 +41,7 @@ const keyTakeaways = [
   'New build electrical installation costs in the UK range from £35 to £85 per square metre depending on specification level, with a typical 3-bedroom house (90m²) costing £4,500 to £8,000 for the full electrical package.',
   'First fix (carcass wiring, containment, back boxes) accounts for approximately 55% to 65% of the total electrical cost. Second fix (accessories, consumer unit, testing, certification) accounts for the remaining 35% to 45%.',
   'Specification levels range from basic (builder standard with minimum outlets) through mid-range (additional sockets, USB charging, downlights) to premium (home automation, structured wiring, underfloor heating controls, EV charger pre-wire).',
-  'NHBC Standards Chapter 8.1 sets minimum requirements for electrical installations in new build homes registered with NHBC. The installation must also comply with BS 7671:2018+A3:2024.',
+  'NHBC Standards Chapter 8.1 sets minimum requirements for electrical installations in new build homes registered with NHBC. The installation must also comply with BS 7671:2018+A4:2026.',
   'An Electrical Installation Certificate (EIC) must be issued for each dwelling, and the work must be notified under Part P of the Building Regulations.',
 ];
 
@@ -65,7 +65,7 @@ const faqs = [
   {
     question: 'What are NHBC standards for electrical installations?',
     answer:
-      'NHBC Standards Chapter 8.1 covers electrical installations in new homes. Key requirements include compliance with BS 7671:2018+A3:2024, provision of adequate socket outlets in all habitable rooms (minimum 4 doubles in living rooms, 2 doubles in bedrooms), smoke and heat detection to BS 5839-6, energy-efficient lighting (minimum 75% of fixed lighting outlets must be energy efficient), and an SPD (surge protection device) at the consumer unit. The electrical installation must be inspected and tested before the NHBC final inspection.',
+      'NHBC Standards Chapter 8.1 covers electrical installations in new homes. Key requirements include compliance with BS 7671:2018+A4:2026, provision of adequate socket outlets in all habitable rooms (minimum 4 doubles in living rooms, 2 doubles in bedrooms), smoke and heat detection to BS 5839-6, energy-efficient lighting (minimum 75% of fixed lighting outlets must be energy efficient), and an SPD (surge protection device) at the consumer unit. The electrical installation must be inspected and tested before the NHBC final inspection.',
   },
   {
     question: 'How many socket outlets are needed in a new build?',
@@ -389,7 +389,7 @@ const sections = [
         <p>
           New build electrical installations must comply with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
           , the Building Regulations (Part P in England and Wales), and NHBC Standards (if
           applicable).

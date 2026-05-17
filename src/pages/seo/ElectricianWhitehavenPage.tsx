@@ -41,7 +41,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Whitehaven is the closest town to Sellafield nuclear site — just 9 miles north along the A595. The town functions as a gateway community for Sellafield workers, with a significant portion of the local population employed directly or indirectly at the nuclear site.',
-  'Electricians working at Sellafield must hold Nuclear Site Licence condition clearance, appropriate security vetting, and work to IEC 60364 and nuclear industry codes in addition to BS 7671:2018+A3:2024.',
+  'Electricians working at Sellafield must hold Nuclear Site Licence condition clearance, appropriate security vetting, and work to IEC 60364 and nuclear industry codes in addition to BS 7671:2018+A4:2026.',
   'Whitehaven has an unusually well-preserved Georgian town centre, one of the finest examples of planned Georgian urban design in England. Listed buildings and conservation area requirements affect external electrical installations across a significant portion of the town centre.',
   'Electricity North West (ENW) is the Distribution Network Operator. Coastal and rural properties require attention to TT earthing and IP ratings for external equipment.',
   'Labour rates in Whitehaven are £35–52/hr for standard domestic and commercial work. Sellafield nuclear contractor rates (9 miles away) are £60–90+/hr — the most accessible nuclear site contract opportunity in the UK for locally based electricians.',

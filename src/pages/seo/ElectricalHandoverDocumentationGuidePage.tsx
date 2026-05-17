@@ -734,6 +734,7 @@ export default function ElectricalHandoverDocumentationGuidePage() {
           <span className="text-yellow-400">EIC, EICR, MEIWC, and Building Regulations</span>
         </>
       }
+              noindex={true}
       heroSubtitle="Complete electrical documentation — the right certificate for the right job, full test results, O&M manuals, and Building Regulations certificates — protects the homeowner, the electrician, and the integrity of the installation. This guide covers every document required at handover and why it matters."
       readingTime={13}
       keyTakeaways={keyTakeaways}

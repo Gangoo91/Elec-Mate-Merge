@@ -47,7 +47,7 @@ const faqs = [
   {
     question: 'Do I need to lock off every circuit I am working on?',
     answer:
-      'Yes. Regulation 462 of BS 7671:2018+A3:2024 and the Electricity at Work Regulations 1989 (Regulation 13) require that adequate precautions are taken to prevent equipment being inadvertently re-energised while work is being carried out on it. In practice, this means physically locking off the means of isolation (using a padlock and lock-off device on the circuit breaker or fuse carrier) and attaching a warning label ("Danger — Do Not Switch On"). The padlock should be a personal padlock with a unique key that only you hold. On multi-person jobs, each person working on the circuit should apply their own padlock (multi-lock hasp). Simply switching off a circuit breaker without locking it is not sufficient — another person could switch it back on.',
+      'Yes. Regulation 462 of BS 7671:2018+A4:2026 and the Electricity at Work Regulations 1989 (Regulation 13) require that adequate precautions are taken to prevent equipment being inadvertently re-energised while work is being carried out on it. In practice, this means physically locking off the means of isolation (using a padlock and lock-off device on the circuit breaker or fuse carrier) and attaching a warning label ("Danger — Do Not Switch On"). The padlock should be a personal padlock with a unique key that only you hold. On multi-person jobs, each person working on the circuit should apply their own padlock (multi-lock hasp). Simply switching off a circuit breaker without locking it is not sufficient — another person could switch it back on.',
   },
   {
     question: 'What tests should I carry out to confirm a circuit is dead?',
@@ -104,7 +104,7 @@ const features = [
     icon: Calculator,
     title: '70 Electrical Calculators',
     description:
-      'Zs verification, prospective fault current, voltage drop, cable sizing, and dozens more. All built to BS 7671:2018+A3:2024.',
+      'Zs verification, prospective fault current, voltage drop, cable sizing, and dozens more. All built to BS 7671:2018+A4:2026.',
   },
   {
     icon: ClipboardCheck,
@@ -126,7 +126,7 @@ const features = [
   },
   {
     icon: ShieldCheck,
-    title: 'BS 7671:2018+A3:2024',
+    title: 'BS 7671:2018+A4:2026',
     description:
       'All regulation references, Zs limits, and compliance checks built to the current 18th Edition including Amendment 3.',
   },
@@ -249,7 +249,7 @@ export default function HowToDoSafeIsolationPage() {
               The procedure is governed by the Electricity at Work Regulations 1989 (specifically
               Regulation 12, which requires suitable means for cutting off the supply and isolation,
               and Regulation 13, which requires precautions to prevent equipment being inadvertently
-              re-energised), the Health and Safety at Work Act 1974, and BS 7671:2018+A3:2024
+              re-energised), the Health and Safety at Work Act 1974, and BS 7671:2018+A4:2026
               (Regulation 462, which covers isolation and switching). HSE Guidance Note GS38 sets
               out the requirements for the test equipment used during safe isolation. After
               completing the work, you will need to carry out{' '}
@@ -563,6 +563,26 @@ export default function HowToDoSafeIsolationPage() {
       </section>
 
       {/* CTA */}
+      
+
+      {/* Related pages — auto-injected for internal-link health (audit criterion #7).
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/guides/safe-isolation-procedure">Safe Isolation Procedure</SEOInternalLink>
+            <SEOInternalLink href="/guides/safe-isolation-procedure-electricians">Safe Isolation Procedure for Electricians</SEOInternalLink>
+            <SEOInternalLink href="/guides/how-ai-helps-electricians">How AI Helps Electricians</SEOInternalLink>
+            <SEOInternalLink href="/guides/how-electricity-works">How Electricity Works</SEOInternalLink>
+            <SEOInternalLink href="/guides/how-to-become-electrician">How to Become an Electrician UK 2026</SEOInternalLink>
+            <SEOInternalLink href="/guides/how-to-find-electrician-uk">How to Find a Good Electrician UK</SEOInternalLink>
+            <SEOInternalLink href="/guides/how-to-wire-a-plug">How to Wire a Plug</SEOInternalLink>
+            <SEOInternalLink href="/guides/how-to-fill-in-minor-works">How to Fill In a Minor Works Certificate</SEOInternalLink>
+          </div>
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Work Safer with Elec-Mate"
         subheading="Join 1,000+ UK electricians using Elec-Mate for on-site procedures, testing, and certification. 7-day free trial, cancel anytime."

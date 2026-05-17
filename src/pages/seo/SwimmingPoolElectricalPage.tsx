@@ -147,7 +147,7 @@ const sections = [
         <p>
           Section 702 of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           covers the electrical requirements for swimming pools, paddling pools, and other basins
           designed for immersion or wading. It also applies to the areas immediately surrounding the

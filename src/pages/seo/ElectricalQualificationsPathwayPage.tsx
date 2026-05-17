@@ -102,7 +102,7 @@ const relatedPages = [
   {
     href: '/eighteenth-edition-course',
     title: '18th Edition Course',
-    description: 'BS 7671:2018+A3:2024 wiring regulations course with practice exams.',
+    description: 'BS 7671:2018+A4:2026 wiring regulations course with practice exams.',
     icon: BookOpen,
     category: 'Course',
   },
@@ -334,7 +334,7 @@ const sections = [
             18th Edition course
           </SEOInternalLink>{' '}
           covers the scope, objectives, and fundamental principles of BS 7671:2018 including all
-          amendments (A1:2020, A2:2022, A3:2024). Key topics include earthing arrangements (TN-S,
+          amendments (A1:2020, A2:2022, A4:2026). Key topics include earthing arrangements (TN-S,
           TN-C-S, TT, IT), circuit protection and discrimination, cable selection and sizing,
           special installations and locations, inspection and testing requirements, and the
           appendices (including the onerous calculations in Appendix 4).
@@ -347,7 +347,7 @@ const sections = [
         <p>
           <strong>Why it matters:</strong> The 18th Edition qualification is required by all major
           employers, most competent person schemes, and the JIB ECS card scheme. It is also required
-          for insurance purposes by many insurers. When BS 7671 is amended (as it was with A3:2024),
+          for insurance purposes by many insurers. When BS 7671 is amended (as it was with A4:2026),
           an updated version of the C&G 2382 is issued, and electricians should refresh their
           qualification to stay current.
         </p>

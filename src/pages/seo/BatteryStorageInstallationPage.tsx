@@ -546,6 +546,7 @@ export default function BatteryStorageInstallationPage() {
           <span className="text-yellow-400">Energy Storage Guide 2025</span>
         </>
       }
+              noindex={true}
       heroSubtitle="Everything you need to know about home battery storage installation in the UK — battery chemistry, popular systems, AC vs DC coupling, system sizing, installed costs from £3,000, G99 grid connection requirements, and MCS certification for grant eligibility."
       readingTime={12}
       keyTakeaways={keyTakeaways}

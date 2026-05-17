@@ -43,7 +43,7 @@ const keyTakeaways = [
   'Electric underfloor heating systems require a dedicated radial circuit from the consumer unit with appropriate MCB and RCD protection under BS 7671.',
   'Heating cables must not cross or overlap, and installation must follow the manufacturer spacing guidelines to prevent hot spots and cable damage.',
   'A floor-sensing thermostat with a dedicated back box is required, and the cable between the thermostat and the heating element must be correctly rated for the load.',
-  'RCD protection at 30mA is mandatory for all underfloor heating circuits under Regulation 411.3.3 of BS 7671:2018+A3:2024.',
+  'RCD protection at 30mA is mandatory for all underfloor heating circuits under Regulation 411.3.3 of BS 7671:2018+A4:2026.',
   'Elec-Mate cable sizing and circuit design calculators let you size the radial feed, check voltage drop, and produce the EIC certificate on site.',
 ];
 
@@ -130,7 +130,7 @@ const relatedPages: RelatedPage[] = [
     href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
-      'Study BS 7671:2018+A3:2024 with structured training modules on the Elec-Mate platform.',
+      'Study BS 7671:2018+A4:2026 with structured training modules on the Elec-Mate platform.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -152,7 +152,7 @@ const sections = [
           which circulates warm water through pipes, electric UFH is a purely electrical
           installation — and as such, it falls squarely within the scope of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           and the Part P Building Regulations.
         </p>
@@ -357,7 +357,7 @@ const sections = [
       <>
         <p>
           All electric underfloor heating circuits must be protected by a 30mA RCD. This is a
-          requirement of BS 7671:2018+A3:2024 under Regulation 411.3.3, which requires RCD
+          requirement of BS 7671:2018+A4:2026 under Regulation 411.3.3, which requires RCD
           protection for all circuits in domestic premises. Heating cables embedded in floors are
           particularly susceptible to mechanical damage during installation and subsequent building
           work, making RCD protection essential.

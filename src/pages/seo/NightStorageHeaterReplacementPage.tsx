@@ -415,7 +415,7 @@ const sections = [
     content: (
       <>
         <p>
-          Fixed electric heating installations must comply with BS 7671:2018+A3:2024 (the Wiring
+          Fixed electric heating installations must comply with BS 7671:2018+A4:2026 (the Wiring
           Regulations). The key requirements for storage heater and replacement heating circuits are
           covered in Part 5 (Selection and Erection of Equipment) and Chapter 43 (Protection Against
           Overcurrent).

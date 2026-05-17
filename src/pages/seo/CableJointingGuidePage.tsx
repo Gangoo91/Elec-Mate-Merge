@@ -34,7 +34,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Cable joints in LV and MV systems must be mechanically and electrically sound and provide equivalent insulation, moisture and mechanical protection to the cable itself. BS 7671:2018+A3:2024 Regulation 526.1 requires joints and terminations to be made using suitable accessories.',
+  'Cable joints in LV and MV systems must be mechanically and electrically sound and provide equivalent insulation, moisture and mechanical protection to the cable itself. BS 7671:2018+A4:2026 Regulation 526.1 requires joints and terminations to be made using suitable accessories.',
   'Heat shrink jointing systems use thermoplastic tubing applied with a hot air gun to provide insulation, semi-conductive screening (MV joints), and mechanical protection in a single system. Cold shrink systems use pre-expanded silicone rubber that contracts when a support tube is removed — no heat source required.',
   'Insulation resistance must be tested before and after jointing. A significant reduction after jointing indicates moisture ingress, damaged insulation, or contamination of the conductor connection. Minimum values depend on the voltage rating of the cable per BS 7671 Chapter 64.',
   'Scotchlok (insulation displacement) connectors and mechanical crimp connectors are acceptable for LV jointing of small conductors but are not suitable for service entry cables, meter tails, or any conductor subject to significant current load without manufacturer testing evidence.',
@@ -45,7 +45,7 @@ const faqs = [
   {
     question: 'What does BS 7671 say about cable joints?',
     answer:
-      'BS 7671:2018+A3:2024 Regulation 526.1 requires every connection between conductors or between a conductor and other equipment to provide durable electrical continuity and adequate mechanical strength. The joint must also provide insulation, protection against mechanical damage, and protection against environmental conditions (moisture, corrosion) equivalent to that of the cable itself. Regulation 526.3 states that joints and connections should be accessible for inspection and testing unless they are in a compound-filled or encapsulated enclosure, or are joints in conduit or trunking systems specifically designed for concealed installation.',
+      'BS 7671:2018+A4:2026 Regulation 526.1 requires every connection between conductors or between a conductor and other equipment to provide durable electrical continuity and adequate mechanical strength. The joint must also provide insulation, protection against mechanical damage, and protection against environmental conditions (moisture, corrosion) equivalent to that of the cable itself. Regulation 526.3 states that joints and connections should be accessible for inspection and testing unless they are in a compound-filled or encapsulated enclosure, or are joints in conduit or trunking systems specifically designed for concealed installation.',
   },
   {
     question: 'What is the difference between heat shrink and cold shrink jointing?',
@@ -65,7 +65,7 @@ const faqs = [
   {
     question: 'What insulation resistance values should I expect after jointing?',
     answer:
-      'BS 7671:2018+A3:2024 Chapter 64 requires insulation resistance to be measured at a test voltage appropriate to the circuit nominal voltage. For circuits up to 500V, the test voltage is 500V DC and the minimum acceptable reading is 1M\u03a9. For circuits between 500V and 1,000V, the test voltage is 1,000V DC and the minimum is also 1M\u03a9. In practice, well-made joints on new cable should measure hundreds or thousands of M\u03a9. A reading below 10M\u03a9 on a new joint warrants investigation. After a joint is made, allow the resin (if used) to cure fully before final testing — testing too soon may give falsely low readings.',
+      'BS 7671:2018+A4:2026 Chapter 64 requires insulation resistance to be measured at a test voltage appropriate to the circuit nominal voltage. For circuits up to 500V, the test voltage is 500V DC and the minimum acceptable reading is 1M\u03a9. For circuits between 500V and 1,000V, the test voltage is 1,000V DC and the minimum is also 1M\u03a9. In practice, well-made joints on new cable should measure hundreds or thousands of M\u03a9. A reading below 10M\u03a9 on a new joint warrants investigation. After a joint is made, allow the resin (if used) to cure fully before final testing — testing too soon may give falsely low readings.',
   },
   {
     question: 'What protection is required for buried cable joints?',
@@ -136,7 +136,7 @@ const sections = [
           distribution networks.
         </p>
         <p>
-          The fundamental requirement — from BS 7671:2018+A3:2024 Regulation 526.1 — is that a joint
+          The fundamental requirement — from BS 7671:2018+A4:2026 Regulation 526.1 — is that a joint
           must provide electrical continuity and mechanical strength equivalent to the cable itself,
           together with insulation and environmental protection commensurate with the cable type and
           installation conditions.
@@ -438,7 +438,7 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671:2018+A3:2024 sets out specific requirements for cable joints and connections in
+          BS 7671:2018+A4:2026 sets out specific requirements for cable joints and connections in
           Part 5 (Selection and Erection of Equipment) and Chapter 52 (Selection and Erection of
           Wiring Systems). Understanding these requirements is essential for compliant installation
           and EICR assessment.

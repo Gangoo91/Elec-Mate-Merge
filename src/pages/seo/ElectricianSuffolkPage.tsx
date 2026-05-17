@@ -341,7 +341,7 @@ const sections = [
     content: (
       <>
         <p>
-          All electrical installations in Suffolk must comply with BS 7671:2018+A3:2024. Key
+          All electrical installations in Suffolk must comply with BS 7671:2018+A4:2026. Key
           regulations relevant to common Suffolk work types include:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">

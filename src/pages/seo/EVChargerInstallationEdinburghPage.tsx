@@ -277,7 +277,7 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671:2018+A3:2024 Section 722 applies throughout the UK including Edinburgh. The key
+          BS 7671:2018+A4:2026 Section 722 applies throughout the UK including Edinburgh. The key
           requirements — dedicated circuit, appropriate RCD protection, and earthing on PME supplies
           — are identical to those in England and Wales.
         </p>

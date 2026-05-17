@@ -41,7 +41,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A3:2024 (Section 631). It produces a condition assessment using C1, C2, C3 and FI observation codes.",
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A4:2026 (Section 631). It produces a condition assessment using C1, C2, C3 and FI observation codes.",
   'Brighton EICR costs are above the national average due to high local demand and elevated property values. Expect to pay between £130 and £240 for a two-bedroom flat and £200 to £360 for a three-bedroom house.',
   'Landlords in England must obtain a valid EICR before a new tenancy begins and renew it every five years. Brighton & Hove City Council enforces the regulations and can fine non-compliant landlords up to £30,000 per breach.',
   'Brighton has a high proportion of Regency, Victorian, and Edwardian properties — many converted into flats. These conversions frequently have mixed-era wiring and absent RCD protection, leading to C2 observations on most EICRs.',
@@ -152,7 +152,7 @@ const sections = [
         <p>
           The report is produced in accordance with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           (Section 631), which specifies that an Electrical Installation Condition Report must be
           used for periodic inspection of existing installations. It is not a simple pass or fail —

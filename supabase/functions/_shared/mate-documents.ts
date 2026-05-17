@@ -422,9 +422,9 @@ export async function createInvoice(
     vat_amount: vatAmount,
     total,
     settings: { vatRate, vatRegistered: vatRate > 0 },
-    invoice_notes: args.notes?.trim() || '',
+    notes: args.notes?.trim() || '',
     invoice_date: today.toISOString(),
-    invoice_due_date: due.toISOString(),
+    due_date: due.toISOString(),
   };
 
   const { data, error } = await supabase.from('invoices').insert(row).select('id').single();
@@ -476,4 +476,276 @@ export async function createInvoice(
     ``,
     `To email this invoice with the real PDF, call send_document with doc_type="invoice" and doc_id="${data.id}".`,
   ].join('\n');
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// AMEND — patch fields on existing quotes & invoices
+// ═══════════════════════════════════════════════════════════════════════
+
+export interface AmendQuotePatch {
+  client_name?: string;
+  client_email?: string;
+  client_phone?: string;
+  client_address?: string;
+  client_postcode?: string;
+  job_title?: string;
+  job_description?: string;
+  line_items?: MateLineItem[];
+  vat_rate?: number;
+  expiry_days?: number;
+  notes?: string;
+  status?: 'draft' | 'sent' | 'accepted' | 'expired' | 'cancelled';
+}
+
+export interface AmendQuoteArgs {
+  id: string;
+  patch: AmendQuotePatch;
+}
+
+export async function amendQuote(
+  supabase: SupabaseClient,
+  userId: string | null,
+  args: AmendQuoteArgs
+): Promise<string> {
+  if (!userId) return 'Cannot amend quote — no user in session.';
+  if (!args.id) return 'Cannot amend quote — id is required.';
+  if (!args.patch || Object.keys(args.patch).length === 0) {
+    return 'Cannot amend quote — patch is empty.';
+  }
+
+  const { data: existing, error: fetchErr } = await supabase
+    .from('quotes')
+    .select('*')
+    .eq('id', args.id)
+    .eq('user_id', userId)
+    .single();
+  if (fetchErr || !existing) {
+    return `Cannot amend quote — not found: ${fetchErr?.message ?? 'unknown'}`;
+  }
+
+  // Lock items/totals if the quote has been accepted or already invoiced.
+  // Notes / status / client info are still fair game.
+  const isLocked =
+    existing.acceptance_status === 'accepted' || existing.invoice_raised === true;
+  if (isLocked && args.patch.line_items) {
+    return 'Cannot amend line items — this quote is accepted or already invoiced. Issue a variation quote (new quote_number) or a credit note instead.';
+  }
+
+  const update: Record<string, unknown> = {};
+
+  // ─── client_data jsonb merge ───
+  const clientPatch: Record<string, string> = {};
+  if (args.patch.client_name !== undefined) clientPatch.name = args.patch.client_name.trim();
+  if (args.patch.client_email !== undefined) clientPatch.email = args.patch.client_email.trim();
+  if (args.patch.client_phone !== undefined) clientPatch.phone = args.patch.client_phone.trim();
+  if (args.patch.client_address !== undefined) clientPatch.address = args.patch.client_address.trim();
+  if (args.patch.client_postcode !== undefined) clientPatch.postcode = args.patch.client_postcode.trim();
+  if (Object.keys(clientPatch).length > 0) {
+    update.client_data = { ...(existing.client_data || {}), ...clientPatch };
+  }
+
+  // ─── job_details jsonb merge ───
+  const jobPatch: Record<string, string> = {};
+  if (args.patch.job_title !== undefined) jobPatch.title = args.patch.job_title.trim();
+  if (args.patch.job_description !== undefined) jobPatch.description = args.patch.job_description.trim();
+  if (Object.keys(jobPatch).length > 0) {
+    update.job_details = { ...(existing.job_details || {}), ...jobPatch };
+  }
+
+  // ─── items + totals — recompute if items change ───
+  if (args.patch.line_items) {
+    const { items, subtotal } = normaliseLines(args.patch.line_items);
+    if (!items.length) {
+      return 'Cannot amend quote — all replacement line items were invalid.';
+    }
+    const existingSettings = (existing.settings as { vatRate?: number }) || {};
+    const vatRate =
+      typeof args.patch.vat_rate === 'number' ? args.patch.vat_rate : (existingSettings.vatRate ?? 20);
+    const vatAmount = Math.round(subtotal * (vatRate / 100) * 100) / 100;
+    const total = Math.round((subtotal + vatAmount) * 100) / 100;
+    update.items = items;
+    update.subtotal = subtotal;
+    update.vat_amount = vatAmount;
+    update.total = total;
+    update.settings = { ...(existing.settings || {}), vatRate, vatRegistered: vatRate > 0 };
+  } else if (typeof args.patch.vat_rate === 'number') {
+    const subtotal = Number(existing.subtotal) || 0;
+    const vatAmount = Math.round(subtotal * (args.patch.vat_rate / 100) * 100) / 100;
+    const total = Math.round((subtotal + vatAmount) * 100) / 100;
+    update.vat_amount = vatAmount;
+    update.total = total;
+    update.settings = {
+      ...(existing.settings || {}),
+      vatRate: args.patch.vat_rate,
+      vatRegistered: args.patch.vat_rate > 0,
+    };
+  }
+
+  if (typeof args.patch.expiry_days === 'number' && args.patch.expiry_days > 0) {
+    const expiry = new Date();
+    expiry.setDate(expiry.getDate() + args.patch.expiry_days);
+    update.expiry_date = expiry.toISOString();
+  }
+
+  if (args.patch.notes !== undefined) update.notes = args.patch.notes.trim();
+  if (args.patch.status) update.status = args.patch.status;
+
+  update.updated_at = new Date().toISOString();
+
+  const { error: updErr } = await supabase
+    .from('quotes')
+    .update(update)
+    .eq('id', args.id)
+    .eq('user_id', userId);
+
+  if (updErr) {
+    return `Quote amend failed: ${updErr.message || 'unknown'}`;
+  }
+
+  const changed = Object.keys(update).filter((k) => k !== 'updated_at');
+  return `✓ Quote ${existing.quote_number || args.id} amended. Changed: ${changed.join(', ')}.`;
+}
+
+export interface AmendInvoicePatch {
+  client_name?: string;
+  client_email?: string;
+  client_phone?: string;
+  client_address?: string;
+  client_postcode?: string;
+  job_title?: string;
+  job_description?: string;
+  line_items?: MateLineItem[];
+  vat_rate?: number;
+  due_days?: number;
+  notes?: string;
+  status?: 'draft' | 'sent' | 'paid' | 'overdue' | 'cancelled';
+  payment_method?: string;
+  payment_reference?: string;
+}
+
+export interface AmendInvoiceArgs {
+  id: string;
+  patch: AmendInvoicePatch;
+}
+
+export async function amendInvoice(
+  supabase: SupabaseClient,
+  userId: string | null,
+  args: AmendInvoiceArgs
+): Promise<string> {
+  if (!userId) return 'Cannot amend invoice — no user in session.';
+  if (!args.id) return 'Cannot amend invoice — id is required.';
+  if (!args.patch || Object.keys(args.patch).length === 0) {
+    return 'Cannot amend invoice — patch is empty.';
+  }
+
+  const { data: existing, error: fetchErr } = await supabase
+    .from('invoices')
+    .select('*')
+    .eq('id', args.id)
+    .eq('user_id', userId)
+    .single();
+  if (fetchErr || !existing) {
+    return `Cannot amend invoice — not found: ${fetchErr?.message ?? 'unknown'}`;
+  }
+
+  // Lock model:
+  //   paid    → only notes / payment_reference editable
+  //   sent    → no items/totals changes; status, due_date, notes, payment ok
+  //   draft   → anything goes
+  //   overdue → same as sent
+  const status = String(existing.status || 'draft');
+  const isPaid = status === 'paid';
+  const isLockedTotals = isPaid || status === 'sent' || status === 'overdue';
+
+  if (isPaid) {
+    const allowedKeys = new Set(['notes', 'payment_method', 'payment_reference']);
+    const violating = Object.keys(args.patch).filter((k) => !allowedKeys.has(k));
+    if (violating.length > 0) {
+      return `Cannot amend a paid invoice — only notes / payment_method / payment_reference can change. Refused fields: ${violating.join(', ')}. Issue a credit note for refunds.`;
+    }
+  }
+  if (isLockedTotals && (args.patch.line_items || typeof args.patch.vat_rate === 'number')) {
+    return `Cannot amend items or VAT on a ${status} invoice. Issue a credit note + replacement invoice instead.`;
+  }
+
+  const update: Record<string, unknown> = {};
+
+  // ─── client_data jsonb merge ───
+  const clientPatch: Record<string, string> = {};
+  if (args.patch.client_name !== undefined) clientPatch.name = args.patch.client_name.trim();
+  if (args.patch.client_email !== undefined) clientPatch.email = args.patch.client_email.trim();
+  if (args.patch.client_phone !== undefined) clientPatch.phone = args.patch.client_phone.trim();
+  if (args.patch.client_address !== undefined) clientPatch.address = args.patch.client_address.trim();
+  if (args.patch.client_postcode !== undefined) clientPatch.postcode = args.patch.client_postcode.trim();
+  if (Object.keys(clientPatch).length > 0) {
+    update.client_data = { ...(existing.client_data || {}), ...clientPatch };
+  }
+
+  // ─── job_details jsonb merge ───
+  const jobPatch: Record<string, string> = {};
+  if (args.patch.job_title !== undefined) jobPatch.title = args.patch.job_title.trim();
+  if (args.patch.job_description !== undefined) jobPatch.description = args.patch.job_description.trim();
+  if (Object.keys(jobPatch).length > 0) {
+    update.job_details = { ...(existing.job_details || {}), ...jobPatch };
+  }
+
+  if (args.patch.line_items) {
+    const { items, subtotal } = normaliseLines(args.patch.line_items);
+    if (!items.length) {
+      return 'Cannot amend invoice — all replacement line items were invalid.';
+    }
+    const existingSettings = (existing.settings as { vatRate?: number }) || {};
+    const vatRate =
+      typeof args.patch.vat_rate === 'number' ? args.patch.vat_rate : (existingSettings.vatRate ?? 20);
+    const vatAmount = Math.round(subtotal * (vatRate / 100) * 100) / 100;
+    const total = Math.round((subtotal + vatAmount) * 100) / 100;
+    update.items = items;
+    update.subtotal = subtotal;
+    update.vat_amount = vatAmount;
+    update.total = total;
+    update.settings = { ...(existing.settings || {}), vatRate, vatRegistered: vatRate > 0 };
+  } else if (typeof args.patch.vat_rate === 'number') {
+    const subtotal = Number(existing.subtotal) || 0;
+    const vatAmount = Math.round(subtotal * (args.patch.vat_rate / 100) * 100) / 100;
+    const total = Math.round((subtotal + vatAmount) * 100) / 100;
+    update.vat_amount = vatAmount;
+    update.total = total;
+    update.settings = {
+      ...(existing.settings || {}),
+      vatRate: args.patch.vat_rate,
+      vatRegistered: args.patch.vat_rate > 0,
+    };
+  }
+
+  if (typeof args.patch.due_days === 'number' && args.patch.due_days > 0) {
+    const due = new Date();
+    due.setDate(due.getDate() + args.patch.due_days);
+    update.due_date = due.toISOString();
+  }
+
+  if (args.patch.notes !== undefined) update.notes = args.patch.notes.trim();
+  if (args.patch.status) {
+    update.status = args.patch.status;
+    if (args.patch.status === 'paid' && !existing.paid_at) {
+      update.paid_at = new Date().toISOString();
+    }
+  }
+  if (args.patch.payment_method !== undefined) update.payment_method = args.patch.payment_method.trim();
+  if (args.patch.payment_reference !== undefined) update.payment_reference = args.patch.payment_reference.trim();
+
+  update.updated_at = new Date().toISOString();
+
+  const { error: updErr } = await supabase
+    .from('invoices')
+    .update(update)
+    .eq('id', args.id)
+    .eq('user_id', userId);
+
+  if (updErr) {
+    return `Invoice amend failed: ${updErr.message || 'unknown'}`;
+  }
+
+  const changed = Object.keys(update).filter((k) => k !== 'updated_at');
+  return `✓ Invoice ${existing.invoice_number || args.id} amended. Changed: ${changed.join(', ')}.`;
 }

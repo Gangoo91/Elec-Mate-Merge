@@ -41,7 +41,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Section 722 of BS 7671:2018+A3:2024 requires a dedicated circuit for each EV charging point, protected by an appropriate RCD.',
+  'Section 722 of BS 7671:2018+A4:2026 requires a dedicated circuit for each EV charging point, protected by an appropriate RCD.',
   'Regulation 722.411.4.1 restricts the use of PME (TN-C-S) earthing for EV charging — an earth electrode or other permitted arrangement is required where the charging point is outdoors or in a location accessible to livestock.',
   'A Type A RCD is the minimum for Mode 3 EV charging equipment with integral DC leakage protection. Where the charger does not have integral DC leakage detection, a Type B RCD is required.',
   'Load management (smart charging) is essential where the existing supply cannot support the additional EV charging demand without exceeding the supply capacity.',
@@ -144,7 +144,7 @@ const sections = [
         <p>
           Section 722 of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           sets out the particular requirements for the supply of electric vehicles. With the UK
           government mandate to phase out new petrol and diesel car sales, EV charger installation

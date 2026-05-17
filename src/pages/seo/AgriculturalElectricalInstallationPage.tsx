@@ -36,7 +36,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'BS 7671:2018+A3:2024 Section 705 — Agricultural and Horticultural Premises — covers all fixed electrical installations in farm buildings, outbuildings, livestock housing, and horticultural facilities across the UK.',
+  'BS 7671:2018+A4:2026 Section 705 — Agricultural and Horticultural Premises — covers all fixed electrical installations in farm buildings, outbuildings, livestock housing, and horticultural facilities across the UK.',
   'In locations intended for livestock, no exposed metalwork (conduit, trunking, cable management, socket outlet bodies) may be positioned where animals can reach it. All wiring in livestock buildings must be inaccessible to animals.',
   'The damp and corrosive environment of farm buildings requires IP44 as the absolute minimum for all electrical equipment. IP54 or IP65 is strongly recommended for most agricultural applications.',
   'RCD protection with a rated residual operating current not exceeding 30 mA is required for all socket outlet circuits. Section 705 imposes additional RCD requirements for fixed equipment in livestock buildings.',
@@ -48,7 +48,7 @@ const faqs = [
   {
     question: 'Which BS 7671 section covers agricultural electrical installations?',
     answer:
-      'Section 705 of BS 7671:2018+A3:2024 (Part 7 — Special Installations or Locations) covers electrical installations in agricultural and horticultural premises. It applies to farms, market gardens, equestrian facilities, poultry units, pig units, and any other premises used for agricultural or horticultural purposes. Section 705 modifies and supplements the general requirements of BS 7671 to address the specific hazards of the agricultural environment.',
+      'Section 705 of BS 7671:2018+A4:2026 (Part 7 — Special Installations or Locations) covers electrical installations in agricultural and horticultural premises. It applies to farms, market gardens, equestrian facilities, poultry units, pig units, and any other premises used for agricultural or horticultural purposes. Section 705 modifies and supplements the general requirements of BS 7671 to address the specific hazards of the agricultural environment.',
   },
   {
     question: 'Why is metalwork a problem in livestock buildings?',
@@ -126,7 +126,7 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671:2018+A3:2024 Section 705 — Agricultural and Horticultural Premises — is the
+          BS 7671:2018+A4:2026 Section 705 — Agricultural and Horticultural Premises — is the
           primary technical standard governing electrical installations on UK farms, market gardens,
           equestrian facilities, poultry units, and any other premises used for agricultural or
           horticultural purposes. It forms part of Part 7 (Special Installations or Locations) of

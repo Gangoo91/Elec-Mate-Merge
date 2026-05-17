@@ -136,7 +136,7 @@ const sections = [
           This guide explains what each device does, when to use each, the cost implications, how
           nuisance tripping is affected, and what{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           actually requires.
         </p>

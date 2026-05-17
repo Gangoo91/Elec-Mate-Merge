@@ -25,7 +25,7 @@ import { Link } from 'react-router-dom';
 
 const PAGE_TITLE = 'AI Circuit Designer | BS 7671 Compliant Design Tool | Elec-Mate';
 const PAGE_DESCRIPTION =
-  'Design electrical circuits with AI tailored and trained specifically for UK electrical work. Automatic cable sizing, protection device selection, and voltage drop verification to BS 7671:2018+A3:2024.';
+  'Design electrical circuits with AI tailored and trained specifically for UK electrical work. Automatic cable sizing, protection device selection, and voltage drop verification to BS 7671:2018+A4:2026.';
 
 const faqs = [
   {
@@ -168,7 +168,7 @@ export default function AICircuitDesignerPage() {
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             Design complete electrical circuits with AI tailored and trained specifically for UK
             electrical work. Automatic cable sizing, protection device selection, voltage drop
-            verification, and earth fault loop impedance checks — all to BS 7671:2018+A3:2024.
+            verification, and earth fault loop impedance checks — all to BS 7671:2018+A4:2026.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
@@ -189,7 +189,7 @@ export default function AICircuitDesignerPage() {
           <div className="flex flex-wrap items-center justify-center gap-4 mt-8 text-sm text-white">
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />
-              BS 7671:2018+A3:2024
+              BS 7671:2018+A4:2026
             </span>
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />
@@ -218,7 +218,7 @@ export default function AICircuitDesignerPage() {
             <p>
               The AI Circuit Designer is one of eight specialist Elec-AI agents built into the
               Elec-Mate platform. It is tailored and trained specifically for UK electrical work,
-              with deep knowledge of BS 7671:2018+A3:2024, the IET On-Site Guide, IET Guidance Notes
+              with deep knowledge of BS 7671:2018+A4:2026, the IET On-Site Guide, IET Guidance Notes
               1 through 8, and thousands of real-world installation scenarios. Unlike generic AI
               tools, this agent understands the specific requirements of UK electrical installations
               and produces designs that comply with the current edition of the Wiring Regulations.
@@ -424,19 +424,19 @@ export default function AICircuitDesignerPage() {
               <FileText className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
-              Trained on BS 7671:2018+A3:2024
+              Trained on BS 7671:2018+A4:2026
             </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
               The AI Circuit Designer is tailored and trained specifically for UK electrical work.
-              Its knowledge base covers the complete scope of BS 7671:2018+A3:2024 (the 18th Edition
+              Its knowledge base covers the complete scope of BS 7671:2018+A4:2026 (the 18th Edition
               of the IET Wiring Regulations including Amendment 3, issued July 2024), the IET
               On-Site Guide, all eight IET Guidance Notes, and a curated library of real-world
               installation case studies and worked examples.
             </p>
             <p>
-              Amendment 3:2024 (A3:2024) is particularly relevant for the Circuit Designer because
+              Amendment 3:2024 (A4:2026) is particularly relevant for the Circuit Designer because
               it adds Regulation 530.3.2, which introduces requirements for bidirectional and
               unidirectional protective devices. This is critical for modern installations
               incorporating battery energy storage systems, solar PV arrays, and other sources of
@@ -447,7 +447,7 @@ export default function AICircuitDesignerPage() {
           </div>
           <div className="mt-8 grid sm:grid-cols-2 gap-4">
             {[
-              'BS 7671:2018+A3:2024 (18th Edition)',
+              'BS 7671:2018+A4:2026 (18th Edition)',
               'Amendment 3:2024 — Regulation 530.3.2',
               'IET On-Site Guide',
               'IET Guidance Notes 1-8',
@@ -517,6 +517,26 @@ export default function AICircuitDesignerPage() {
       </section>
 
       {/* CTA */}
+      
+
+      {/* Related pages — auto-injected for internal-link health (audit criterion #7).
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/guides/cooker-circuit-guide">Cooker Circuit Guide</SEOInternalLink>
+            <SEOInternalLink href="/circuit-breaker-types">Types of Circuit Breakers UK</SEOInternalLink>
+            <SEOInternalLink href="/lighting-circuit-installation">Lighting Circuit Installation Guide — LED, Dimmers, Outdoor, Emergency</SEOInternalLink>
+            <SEOInternalLink href="/guides/overloaded-circuit-signs">Overloaded Circuit</SEOInternalLink>
+            <SEOInternalLink href="/guides/radial-circuit-explained">Radial Circuit Explained</SEOInternalLink>
+            <SEOInternalLink href="/ring-circuit-calculator">/ring-circuit-calculator</SEOInternalLink>
+            <SEOInternalLink href="/guides/what-is-a-circuit-breaker">What Is a Circuit Breaker?</SEOInternalLink>
+            <SEOInternalLink href="/tools/circuit-breaker-sizing-calculator">Circuit Breaker Sizing Calculator</SEOInternalLink>
+          </div>
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Design your first circuit in 60 seconds"
         subheading="Join 1,000+ UK electricians using AI for BS 7671 compliant circuit design. 7-day free trial, cancel anytime."

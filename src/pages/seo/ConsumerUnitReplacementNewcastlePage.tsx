@@ -154,7 +154,7 @@ const sections = [
                 offer significantly less protection and do not meet the requirements of the current
                 edition of{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                  BS 7671:2018+A3:2024
+                  BS 7671:2018+A4:2026
                 </SEOInternalLink>
                 .
               </span>
@@ -203,7 +203,7 @@ const sections = [
         <p>
           The requirement for non-combustible consumer unit enclosures in domestic premises was
           introduced by Amendment 2 to BS 7671:2008, which took effect on 1 July 2016. It is now
-          carried forward in BS 7671:2018 including Amendment 3 (2024). Regulation 421.1.201 states
+          carried forward in BS 7671:2018 including Amendment 4 (2026). Regulation 421.1.201 states
           that in domestic premises, a consumer unit or similar switchgear assembly shall be
           installed in a cabinet or enclosure constructed of non-combustible material.
         </p>
@@ -507,7 +507,7 @@ const sections = [
               <span>
                 <strong>City and Guilds 2382</strong> — the electrician should hold a current 18th
                 Edition (BS 7671:2018) qualification (City and Guilds 2382-18) and be familiar with
-                Amendment 3 (2024) requirements. The metal enclosure and RCD requirements are
+                Amendment 4 (2026) requirements. The metal enclosure and RCD requirements are
                 examined in this qualification.
               </span>
             </li>

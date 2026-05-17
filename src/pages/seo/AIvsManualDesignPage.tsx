@@ -174,8 +174,7 @@ export default function AIvsManualDesignPage() {
               <p>
                 AI eliminates the first three categories almost entirely. It does not make
                 arithmetic mistakes, it applies every required check to every circuit without
-                exception, and it references the correct tables and regulations from BS
-                7671:2018+A3:2024. Inconsistency errors are also eliminated because the AI
+                exception, and it references the correct tables and regulations from BS 7671:2018+A4:2026. Inconsistency errors are also eliminated because the AI
                 recalculates all dependent values whenever any parameter changes.
               </p>
               <p>
@@ -202,8 +201,7 @@ export default function AIvsManualDesignPage() {
                 humans find tedious.
               </p>
               <p>
-                The AI Circuit Designer checks every design against the full scope of BS
-                7671:2018+A3:2024, including:
+                The AI Circuit Designer checks every design against the full scope of BS 7671:2018+A4:2026, including:
               </p>
               <ul className="list-disc pl-6 space-y-3">
                 <li>
@@ -286,7 +284,7 @@ export default function AIvsManualDesignPage() {
               </p>
               <SEOAppBridge
                 title="AI Circuit Designer — Included in Elec-Mate"
-                description="Complete consumer unit schedules with cable sizes, protective devices, voltage drop verification, and earth fault loop impedance checks — all to BS 7671:2018+A3:2024. Part of the standard subscription alongside 70+ calculators and 8 AI agents."
+                description="Complete consumer unit schedules with cable sizes, protective devices, voltage drop verification, and earth fault loop impedance checks — all to BS 7671:2018+A4:2026. Part of the standard subscription alongside 70+ calculators and 8 AI agents."
                 icon={CircuitBoard}
               />
             </>
@@ -499,7 +497,7 @@ export default function AIvsManualDesignPage() {
           href: '/tools/ai-installation-verification',
           title: 'AI Installation Verification',
           description:
-            'Automated compliance checking of electrical installations against BS 7671:2018+A3:2024.',
+            'Automated compliance checking of electrical installations against BS 7671:2018+A4:2026.',
           icon: ShieldCheck,
           category: 'AI Tools',
         },

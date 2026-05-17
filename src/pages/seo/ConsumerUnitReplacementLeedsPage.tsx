@@ -37,9 +37,9 @@ const tocItems = [
 
 const keyTakeaways = [
   'A consumer unit replacement in Leeds typically costs between £350 and £550 for most domestic properties, which is in line with Yorkshire averages and competitive compared to other major UK cities.',
-  'Under Regulation 421.1.201 of BS 7671:2018+A3:2024, all domestic consumer units must be a type-tested coordinated assembly housed in a non-combustible (metal) enclosure.',
+  'Under Regulation 421.1.201 of BS 7671:2018+A4:2026, all domestic consumer units must be a type-tested coordinated assembly housed in a non-combustible (metal) enclosure.',
   'Consumer unit replacement is notifiable work under Part P of the Building Regulations (England and Wales). A registered electrician will self-certify through NICEIC, NAPIT, or ELECSA.',
-  'BS 7671:2018+A3:2024 requires 30 mA RCD protection for all socket-outlet circuits up to 32 A and for cables concealed in walls at a depth less than 50 mm — covering virtually every circuit in a modern domestic installation.',
+  'BS 7671:2018+A4:2026 requires 30 mA RCD protection for all socket-outlet circuits up to 32 A and for cables concealed in walls at a depth less than 50 mm — covering virtually every circuit in a modern domestic installation.',
   'Leeds has a large stock of Victorian back-to-back terraced housing in areas such as Headingley, Hyde Park, and Beeston — many still have original or early consumer units that require replacement.',
 ];
 
@@ -57,12 +57,12 @@ const faqs = [
   {
     question: 'Do I need RCD protection when replacing a consumer unit in Leeds?',
     answer:
-      'Yes. BS 7671:2018+A3:2024 requires 30 mA RCD protection for all socket-outlet circuits rated up to 32 A and for cables concealed in walls at a depth less than 50 mm. In a modern installation, individual RCBOs on every circuit are the preferred solution, providing both overcurrent and residual current protection without nuisance tripping.',
+      'Yes. BS 7671:2018+A4:2026 requires 30 mA RCD protection for all socket-outlet circuits rated up to 32 A and for cables concealed in walls at a depth less than 50 mm. In a modern installation, individual RCBOs on every circuit are the preferred solution, providing both overcurrent and residual current protection without nuisance tripping.',
   },
   {
     question: 'Why do many Leeds properties need a fuse board upgrade?',
     answer:
-      'Leeds has a large concentration of Victorian and Edwardian back-to-back terraced houses in areas such as Headingley, Hyde Park, Chapeltown, and Harehills. Many of these properties still have original rewirable fuse boards (BS 3036) or early plastic consumer units installed in the 1960s to 1980s. These provide no meaningful RCD protection and use combustible enclosures that breach Regulation 421.1.201 of BS 7671:2018+A3:2024.',
+      'Leeds has a large concentration of Victorian and Edwardian back-to-back terraced houses in areas such as Headingley, Hyde Park, Chapeltown, and Harehills. Many of these properties still have original rewirable fuse boards (BS 3036) or early plastic consumer units installed in the 1960s to 1980s. These provide no meaningful RCD protection and use combustible enclosures that breach Regulation 421.1.201 of BS 7671:2018+A4:2026.',
   },
   {
     question:
@@ -151,7 +151,7 @@ const sections = [
         <p>
           Under{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
           , Regulation 421.1.201 requires that consumer units in domestic premises be a type-tested
           coordinated assembly housed in a non-combustible (metal) enclosure. BS 7671 also requires

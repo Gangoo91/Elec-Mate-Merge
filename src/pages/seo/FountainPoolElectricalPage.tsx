@@ -37,7 +37,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'BS 7671:2018+A3:2024 Section 702 — Swimming Pools and Other Basins — applies to decorative fountains, feature pools, garden ponds with electrical equipment, and other water-containing basins in addition to swimming pools.',
+  'BS 7671:2018+A4:2026 Section 702 — Swimming Pools and Other Basins — applies to decorative fountains, feature pools, garden ponds with electrical equipment, and other water-containing basins in addition to swimming pools.',
   'Section 702 defines three zones (Zone 0 inside the water, Zone 1 immediately above/around the water, Zone 2 further out) with progressively less restrictive requirements. All electrical equipment must be rated for the zone in which it is installed.',
   'In Zone 0 (inside the water), only SELV (Separated Extra-Low Voltage) at a maximum of 12 V AC or 30 V DC is permitted. The SELV transformer must be located outside Zone 0 and Zone 1.',
   'Underwater luminaires in Zone 0 must be specifically designed and approved for underwater use. They must comply with BS EN 60598-2-18 and carry an appropriate IP rating (minimum IP68 for continuously submerged equipment).',
@@ -49,7 +49,7 @@ const faqs = [
   {
     question: 'Does BS 7671 Section 702 apply to decorative fountains?',
     answer:
-      'Yes. BS 7671:2018+A3:2024 Section 702 — Swimming Pools and Other Basins — applies to basins of swimming pools, paddling pools, fountains, garden ponds with electrical equipment, and other similar locations. The section title refers to swimming pools because that was the original scope, but the regulations explicitly extend to other water-containing basins where electrical equipment is installed. Any basin containing water in which electrical equipment is installed or near which persons may be present must comply with Section 702.',
+      'Yes. BS 7671:2018+A4:2026 Section 702 — Swimming Pools and Other Basins — applies to basins of swimming pools, paddling pools, fountains, garden ponds with electrical equipment, and other similar locations. The section title refers to swimming pools because that was the original scope, but the regulations explicitly extend to other water-containing basins where electrical equipment is installed. Any basin containing water in which electrical equipment is installed or near which persons may be present must comply with Section 702.',
   },
   {
     question: 'What is SELV and why is it required in Zone 0?',
@@ -125,7 +125,7 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671:2018+A3:2024 Section 702 — Swimming Pools and Other Basins — is the authoritative
+          BS 7671:2018+A4:2026 Section 702 — Swimming Pools and Other Basins — is the authoritative
           technical standard for electrical installations in and around all types of
           water-containing basins in the UK, including decorative fountains, ornamental pools,
           garden ponds with electrical equipment, water walls, and similar features in addition to

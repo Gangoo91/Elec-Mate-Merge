@@ -337,7 +337,7 @@ const sections = [
           BS 7671:2018 applies across the whole of the UK including Wales. All EV charger
           installations in Cardiff must comply with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           Section 722. The principal requirements are:
         </p>

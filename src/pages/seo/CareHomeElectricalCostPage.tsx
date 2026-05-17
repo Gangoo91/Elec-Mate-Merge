@@ -164,8 +164,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <Heart className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Overlapping standards</strong> — care home electrical design involves: BS
-                7671:2018+A3:2024 (wiring regulations), BS 5839-1 (fire alarms), BS 5266-1
+                <strong>Overlapping standards</strong> — care home electrical design involves: BS 7671:2018+A4:2026 (wiring regulations), BS 5839-1 (fire alarms), BS 5266-1
                 (emergency lighting), BS 8670 (nurse call), and HTM 08-03 (healthcare laundry
                 guidance where applicable). Each standard must be met independently.
               </span>

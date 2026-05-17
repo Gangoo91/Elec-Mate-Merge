@@ -42,7 +42,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A3:2024 (Regulation 712.534.101). It records the condition of wiring, consumer units, protective devices, earthing, and bonding with classified observation codes.",
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A4:2026 (Regulation 712.534.101). It records the condition of wiring, consumer units, protective devices, earthing, and bonding with classified observation codes.",
   "Edinburgh EICR costs typically range from £110 to £450 depending on property size. A two-bedroom flat costs £150 to £250, while a three-bedroom house costs £200 to £350. Edinburgh prices are higher than the Scottish average due to the city's premium labour rates and the complexity of its tenement housing stock.",
   'Scotland has different landlord rules from England and Wales. Under the Housing (Scotland) Act 2006, landlords must meet the Repairing Standard, which requires that the electrical installation is in a reasonable state of repair and proper working order. An EICR is the standard way to demonstrate compliance. Landlords must carry out an EICR before the start of a tenancy and at least every five years.',
   'Edinburgh has a vast stock of tenement flats, many dating from the Georgian and Victorian eras. These properties present unique challenges including shared electrical supplies, communal stairwell installations, stone construction that complicates cable routing, and multiple phases of wiring from different decades.',
@@ -153,7 +153,7 @@ const sections = [
         <p>
           The EICR is documented in accordance with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           (Regulation 712.534.101), which requires that an Electrical Installation Condition Report
           is used for periodic inspection and testing of existing installations — not an Electrical

@@ -178,7 +178,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          All electrical work must comply with BS 7671:2018+A3:2024. Cellar areas are subject to
+          All electrical work must comply with BS 7671:2018+A4:2026. Cellar areas are subject to
           Section 706 (restrictive conductive locations). The premises licence under the Licensing
           Act 2003 may impose specific electrical requirements as licence conditions.
         </p>

@@ -123,8 +123,7 @@ export default function ElecMateVsSimplyEICRPage() {
                 Defect Code AI, Voice Test Entry, and Remedial Cost Estimator.
               </p>
               <p>
-                Elec-Mate also provides 46+ training courses covering the 18th Edition (BS
-                7671:2018+A3:2024), City and Guilds Level 2 and Level 3 Electrical Installation, AM2
+                Elec-Mate also provides 46+ training courses covering the 18th Edition (BS 7671:2018+A4:2026), City and Guilds Level 2 and Level 3 Electrical Installation, AM2
                 assessment preparation, EPA simulator, and specialist courses for EV charging, solar
                 PV, fire alarm systems, and BMS. Pricing starts from £5.99 per month with unlimited
                 usage across all features and a 7-day free trial.
@@ -191,7 +190,7 @@ export default function ElecMateVsSimplyEICRPage() {
                 <strong>50+ BS 7671 Calculators:</strong> Cable sizing to Appendix 4, voltage drop
                 verification, maximum demand, diversity factors, conduit and trunking fill rates,
                 earth fault loop impedance checks, prospective fault current, and more. All
-                referencing BS 7671:2018+A3:2024 tables. See the full{' '}
+                referencing BS 7671:2018+A4:2026 tables. See the full{' '}
                 <SEOInternalLink href="/electrical-testing-calculators">
                   electrical calculators page
                 </SEOInternalLink>

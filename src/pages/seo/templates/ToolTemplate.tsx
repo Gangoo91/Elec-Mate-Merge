@@ -4,6 +4,7 @@ import { SEOReadingMeta } from '@/components/seo/SEOReadingMeta';
 import { SEOKeyTakeaways } from '@/components/seo/SEOKeyTakeaways';
 import { SEOFAQAccordion } from '@/components/seo/SEOFAQAccordion';
 import { SEORelatedPages, type RelatedPage } from '@/components/seo/SEORelatedPages';
+import { RecentReviews } from '@/components/seo/RecentReviews';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
@@ -80,6 +81,12 @@ export interface ToolTemplateProps {
   extraSchemas?: Array<Record<string, unknown>>;
   /** URL path for SoftwareApplication schema */
   toolPath: string;
+  /**
+   * Live calculator component rendered directly under the hero — free to
+   * use, no signup wall. Top-of-class SEO pages embed the real calc people
+   * are searching for; promotional-only pages bounce.
+   */
+  calculator?: React.ReactNode;
 }
 
 export default function ToolTemplate({
@@ -110,6 +117,7 @@ export default function ToolTemplate({
   ctaSubheading,
   extraSchemas = [],
   toolPath,
+  calculator,
 }: ToolTemplateProps) {
   const softwareSchema = SEOSchemas.softwareApplication(title, description, toolPath);
   const faqSchema = faqs.length > 0 ? SEOSchemas.faqPage(faqs) : null;
@@ -169,18 +177,33 @@ export default function ToolTemplate({
         )}
 
         <div className="flex flex-wrap gap-3 mb-6">
+          {calculator && (
+            <a
+              href="#calculator"
+              className="inline-flex items-center justify-center gap-2 w-full sm:w-auto h-14 px-8 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold rounded-xl touch-manipulation transition-colors"
+            >
+              Use Calculator (Free) <ArrowRight className="w-4 h-4" />
+            </a>
+          )}
           <a
             href="/auth/signup"
-            className="inline-flex items-center justify-center gap-2 w-full sm:w-auto h-14 px-8 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold rounded-xl touch-manipulation transition-colors"
+            className={`inline-flex items-center justify-center gap-2 w-full sm:w-auto h-14 px-8 ${
+              calculator
+                ? 'border border-white/20 hover:border-yellow-500/40 text-white'
+                : 'bg-yellow-500 hover:bg-yellow-400 text-black'
+            } font-semibold rounded-xl touch-manipulation transition-colors`}
           >
-            Start 7-Day Free Trial <ArrowRight className="w-4 h-4" />
+            {calculator ? 'Get All 70 Calculators' : 'Start 7-Day Free Trial'}{' '}
+            {!calculator && <ArrowRight className="w-4 h-4" />}
           </a>
-          <a
-            href="#features"
-            className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-yellow-500/40 text-white font-semibold rounded-xl touch-manipulation transition-colors"
-          >
-            See the Features
-          </a>
+          {!calculator && (
+            <a
+              href="#features"
+              className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-yellow-500/40 text-white font-semibold rounded-xl touch-manipulation transition-colors"
+            >
+              See the Features
+            </a>
+          )}
         </div>
 
         <SEOReadingMeta readingTime={readingTime} dateUpdated={dateModified} />
@@ -190,6 +213,14 @@ export default function ToolTemplate({
           <SEOSocialFollow />
         </div>
       </section>
+
+      {/* Live calculator — free, no signup, BS 7671:2018+A4:2026 compliant.
+          Top-of-class SEO pattern: ship the actual tool, not a screenshot. */}
+      {calculator && (
+        <section id="calculator" className="pb-10 scroll-mt-24">
+          {calculator}
+        </section>
+      )}
 
       <SEOSocialProofBar />
 
@@ -254,6 +285,10 @@ export default function ToolTemplate({
           <SEORelatedPages pages={relatedPages} />
         </section>
       )}
+
+      {/* Verified App Store reviews — required by Google's structured-data
+          policy when SoftwareApplication schema carries aggregateRating. */}
+      <RecentReviews />
 
       <SEOTestimonialStrip />
 

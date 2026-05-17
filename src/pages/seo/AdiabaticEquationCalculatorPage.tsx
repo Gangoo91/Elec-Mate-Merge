@@ -5,6 +5,9 @@ import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { RecentReviews } from '@/components/seo/RecentReviews';
+import AdiabaticCalculator from '@/components/apprentice/calculators/AdiabaticCalculator';
+import { combinedStoreRating } from '@/constants/app-ratings';
 import {
   Calculator,
   Smartphone,
@@ -116,7 +119,7 @@ const features = [
     icon: ShieldCheck,
     title: 'BS 7671 Reg 543.1',
     description:
-      'Designed around BS 7671:2018+A3:2024 Regulation 543.1 — the requirement to verify protective conductor sizing against fault energy.',
+      'Designed around BS 7671:2018+A4:2026 Regulation 543.1 — the requirement to verify protective conductor sizing against fault energy.',
   },
   {
     icon: Smartphone,
@@ -144,11 +147,16 @@ const features = [
   },
 ];
 
+// Build SoftwareApplication schema with REAL aggregate rating from the
+// combinedStoreRating() helper (App Store + Play Store). Returns null when
+// no rating data exists so the schema can OMIT aggregateRating rather than
+// fabricate one — Google's structured-data policy compliance.
+const liveRating = combinedStoreRating();
 const softwareAppSchema = {
   '@type': 'SoftwareApplication',
   name: 'Elec-Mate Adiabatic Equation Calculator',
   applicationCategory: 'BusinessApplication',
-  operatingSystem: 'iOS, Android, Web',
+  operatingSystem: liveRating ? 'iOS, Android, Web' : 'iOS, Web',
   description: PAGE_DESCRIPTION,
   url: 'https://elec-mate.com/adiabatic-equation-calculator',
   offers: {
@@ -157,13 +165,17 @@ const softwareAppSchema = {
     priceCurrency: 'GBP',
     description: '7-day free trial',
   },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.8',
-    ratingCount: '127',
-    bestRating: '5',
-    worstRating: '1',
-  },
+  ...(liveRating
+    ? {
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: String(liveRating.ratingValue),
+          ratingCount: String(liveRating.ratingCount),
+          bestRating: String(liveRating.bestRating),
+          worstRating: String(liveRating.worstRating),
+        },
+      }
+    : {}),
 };
 
 const faqSchema = {
@@ -218,7 +230,7 @@ export default function AdiabaticEquationCalculatorPage() {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
             <Ruler className="w-4 h-4 text-yellow-400" />
             <span className="text-sm font-medium text-yellow-400">
-              BS 7671:2018+A3:2024 Regulation 543.1
+              BS 7671:2018+A4:2026 Regulation 543.1
             </span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
@@ -231,17 +243,70 @@ export default function AdiabaticEquationCalculatorPage() {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
-              href="/auth/signup"
+              href="#calculator"
               className="inline-flex items-center h-14 px-8 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold rounded-xl touch-manipulation transition-colors"
             >
-              Start 7-Day Free Trial
+              Use Calculator (Free)
             </a>
             <a
-              href="#how-it-works"
+              href="/auth/signup"
               className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-yellow-500/40 text-white font-semibold rounded-xl touch-manipulation transition-colors"
             >
-              See How It Works
+              Get All 70 Calculators
             </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Live Calculator — free, no signup, BS 7671 A4:2026 compliant */}
+      <section id="calculator" className="px-5 pb-12 scroll-mt-24">
+        <div className="max-w-4xl mx-auto">
+          <div className="mb-4 flex items-center gap-2 text-sm text-white/70">
+            <CheckCircle2 className="w-4 h-4 text-green-400" />
+            <span>Free to use. No sign-up. BS 7671:2018+A4:2026 compliant.</span>
+          </div>
+          <AdiabaticCalculator />
+          <p className="mt-4 text-sm text-white/60">
+            Want this calc and 69 others built into a mobile app, with saved projects,
+            PDF export and offline use?{' '}
+            <SEOInternalLink href="/auth/signup">Start a 7-day free trial</SEOInternalLink>
+            .
+          </p>
+        </div>
+      </section>
+
+      {/* Related calculators — internal linking density */}
+      <section className="px-5 pb-12">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical calculators</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-sm">
+            <SEOInternalLink href="/tools/cable-sizing-calculator">
+              Cable Sizing Calculator (BS 7671 Appendix 4)
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/voltage-drop-calculator">
+              Voltage Drop Calculator
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/earth-loop-impedance-calculator">
+              Earth Loop Impedance (Zs) Calculator
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/prospective-fault-current-calculator">
+              Prospective Fault Current Calculator
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/max-demand-calculator">
+              Maximum Demand Calculator
+            </SEOInternalLink>
+            <SEOInternalLink href="/electrical-testing-calculators">
+              All 70 Electrical Calculators
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/bs-7671-amendment-4-2026">
+              What changed in BS 7671 Amendment 4 (2026)
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/eicr-observation-codes-explained">
+              EICR Observation Codes (C1, C2, C3, FI)
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/eicr-certificate">
+              Digital EICR Certificate Tool
+            </SEOInternalLink>
           </div>
         </div>
       </section>
@@ -538,7 +603,7 @@ export default function AdiabaticEquationCalculatorPage() {
       <section className="py-12 px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">
-            BS 7671:2018+A3:2024 Regulation 543.1
+            BS 7671:2018+A4:2026 Regulation 543.1
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
@@ -566,7 +631,7 @@ export default function AdiabaticEquationCalculatorPage() {
               to use a smaller CPC than Table 54.7 would require to reduce costs.
             </p>
             <p>
-              Amendment 3 to BS 7671 (A3:2024), issued in July 2024, did not change the fundamental
+              Amendment 3 to BS 7671 (A4:2026), issued in July 2024, did not change the fundamental
               adiabatic equation requirements but added Regulation 530.3.2 covering requirements for
               bidirectional and unidirectional switching devices. The core CPC sizing requirements
               in Regulation 543.1 remain as established in the 18th Edition.
@@ -623,6 +688,14 @@ export default function AdiabaticEquationCalculatorPage() {
               </details>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Verified App Store reviews — required by Google's structured-data
+          policy when SoftwareApplication schema carries aggregateRating. */}
+      <section className="px-5 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <RecentReviews />
         </div>
       </section>
 

@@ -41,7 +41,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Garden lighting installation costs range from £500 for a simple scheme with 4 to 6 LED lights to £5,000+ for a comprehensive landscape lighting design with multiple zones, SWA cable runs, and automated controls.',
-  'BS 7671:2018+A3:2024 Section 714 governs outdoor lighting installations including gardens, pathways, driveways, and amenity areas. Regulation 714.537.2 defines the scope and specific requirements.',
+  'BS 7671:2018+A4:2026 Section 714 governs outdoor lighting installations including gardens, pathways, driveways, and amenity areas. Regulation 714.537.2 defines the scope and specific requirements.',
   'All outdoor lighting circuits require RCD protection (30mA). Regulation 710.511.1 confirms RCD requirements for outdoor outlet circuits to provide earth-fault protection.',
   'IP ratings are critical for garden lighting — IP44 minimum for sheltered locations, IP65 for exposed installations, IP67 or IP68 for in-ground or underwater fittings.',
   'Garden lighting that involves new outdoor circuits is notifiable under Part P of the Building Regulations and requires an Electrical Installation Certificate.',
@@ -160,7 +160,7 @@ const sections = [
           This guide covers the real costs of garden lighting installation in 2026 — materials,
           labour, cable, and certification. It also explains the regulatory requirements under{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           Section 714 that apply to outdoor lighting installations.
         </p>
@@ -407,7 +407,7 @@ const sections = [
         <p>
           Section 714 of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           contains the specific requirements for outdoor lighting installations. Regulation
           714.537.2 defines the scope to include luminaires, wiring, and accessories for gardens,

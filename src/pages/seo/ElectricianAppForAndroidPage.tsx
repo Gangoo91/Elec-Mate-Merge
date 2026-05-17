@@ -181,7 +181,7 @@ export default function ElectricianAppForAndroidPage() {
               <p>
                 Elec-Mate includes <strong>50+ BS 7671 calculators</strong> — cable sizing, voltage
                 drop, maximum demand, Zs verification, disconnection times, conduit fill, and more.
-                All work offline. All reference BS 7671:2018+A3:2024.
+                All work offline. All reference BS 7671:2018+A4:2026.
               </p>
               <p>
                 The <strong>AI tools</strong> are a unique advantage on Android. The Board Scanner
@@ -248,7 +248,7 @@ export default function ElectricianAppForAndroidPage() {
           icon: Calculator,
           title: '50+ Offline Calculators',
           description:
-            'Cable sizing, voltage drop, maximum demand, Zs verification, and more. All work offline on Android. All reference BS 7671:2018+A3:2024.',
+            'Cable sizing, voltage drop, maximum demand, Zs verification, and more. All work offline on Android. All reference BS 7671:2018+A4:2026.',
         },
         {
           icon: GraduationCap,

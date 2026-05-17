@@ -1,4 +1,6 @@
 import ToolTemplate from '@/pages/seo/templates/ToolTemplate';
+import { RecentReviews } from '@/components/seo/RecentReviews';
+import CircuitBreakerSelectorCalculator from '@/components/apprentice/calculators/CircuitBreakerSelectorCalculator';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import {
   Calculator,
@@ -48,6 +50,7 @@ export default function CircuitBreakerSizingCalculatorPage() {
           Right MCB Every Time
         </>
       }
+              calculator={<CircuitBreakerSelectorCalculator />}
       heroSubtitle="Enter the design current, cable type, and installation conditions. The calculator selects the correct MCB rating, verifies the Ib ≤ In ≤ Iz coordination requirement, and confirms the cable is adequately protected to BS 7671. No more guesswork on protective device selection."
       heroFeaturePills={[
         { icon: Shield, label: 'MCB Selection' },
@@ -77,7 +80,7 @@ export default function CircuitBreakerSizingCalculatorPage() {
                 rapidly under fault conditions.
               </p>
               <p>
-                BS 7671:2018+A3:2024 sets out the requirements for overload protection in
+                BS 7671:2018+A4:2026 sets out the requirements for overload protection in
                 Regulations 432 and 433. The protective device must satisfy two fundamental
                 conditions: the nominal rating (In) must be at least equal to the design current
                 (Ib) of the circuit, and the cable's current carrying capacity (Iz) must be at least
@@ -375,7 +378,7 @@ export default function CircuitBreakerSizingCalculatorPage() {
         },
         {
           icon: BookOpen,
-          title: 'BS 7671:2018+A3:2024 Data',
+          title: 'BS 7671:2018+A4:2026 Data',
           description:
             'All standard MCB ratings, trip curves, and coordination requirements from the current edition of BS 7671 including Amendment 3.',
         },

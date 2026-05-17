@@ -401,7 +401,7 @@ const sections = [
         <p>
           Listed building rewires must comply with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           in addition to the Planning (Listed Buildings and Conservation Areas) Act 1990. There is
           no exemption from electrical safety standards for listed buildings.

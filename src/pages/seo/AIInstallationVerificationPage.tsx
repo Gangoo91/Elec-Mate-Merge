@@ -18,7 +18,7 @@ export default function AIInstallationVerificationPage() {
   return (
     <ToolTemplate
       title="AI Installation Verification | Quality Check Tool | Elec-Mate"
-      description="Automated checking of electrical installations against BS 7671:2018+A3:2024. AI-powered verification checklists, compliance reporting, observation code assignment, and certificate-ready documentation for EIC and EICR."
+      description="Automated checking of electrical installations against BS 7671:2018+A4:2026. AI-powered verification checklists, compliance reporting, observation code assignment, and certificate-ready documentation for EIC and EICR."
       datePublished="2026-01-22"
       dateModified="2026-02-13"
       toolPath="/tools/ai-installation-verification"
@@ -45,9 +45,9 @@ export default function AIInstallationVerificationPage() {
           Checks to BS 7671
         </>
       }
-      heroSubtitle="Check every aspect of an electrical installation against BS 7671:2018+A3:2024 automatically. AI-powered verification checklists, observation code assignment, compliance scoring, and certificate-ready reporting — so nothing gets missed during inspection or commissioning."
+      heroSubtitle="Check every aspect of an electrical installation against BS 7671:2018+A4:2026 automatically. AI-powered verification checklists, observation code assignment, compliance scoring, and certificate-ready reporting — so nothing gets missed during inspection or commissioning."
       heroFeaturePills={[
-        { icon: ShieldCheck, label: 'BS 7671:2018+A3:2024' },
+        { icon: ShieldCheck, label: 'BS 7671:2018+A4:2026' },
         { icon: ListChecks, label: 'Smart Checklists' },
         { icon: AlertTriangle, label: 'Defect Detection' },
         { icon: FileCheck, label: 'Compliance Reports' },
@@ -68,7 +68,7 @@ export default function AIInstallationVerificationPage() {
             <>
               <p>
                 AI Installation Verification is a tool within Elec-Mate that automatically checks
-                electrical installation data against the requirements of BS 7671:2018+A3:2024. It
+                electrical installation data against the requirements of BS 7671:2018+A4:2026. It
                 acts as an automated second pair of eyes — reviewing test results, circuit
                 specifications, protection arrangements, and installation details to identify any
                 non-compliances before you sign off the certificate.

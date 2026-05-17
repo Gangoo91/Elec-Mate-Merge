@@ -306,7 +306,7 @@ const sections = [
               <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Keeping it current:</strong> BS 7671 is updated periodically. The 18th
-                Edition Amendment 3 (2024) is the current version. You must maintain a current
+                Edition Amendment 4 (2026) is the current version. You must maintain a current
                 18th Edition qualification (C&G 2382) to keep your ECS Gold Card and competent
                 person scheme registration. When a new amendment is published, a short update
                 course is usually available.

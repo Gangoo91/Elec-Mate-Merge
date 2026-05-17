@@ -39,7 +39,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Appendix 4 of BS 7671:2018+A3:2024 contains the current-carrying capacity tables (Tables 4A1 to 4H5) used to select the correct cable size for every circuit.',
+  'Appendix 4 of BS 7671:2018+A4:2026 contains the current-carrying capacity tables (Tables 4A1 to 4H5) used to select the correct cable size for every circuit.',
   'The correct table depends on the cable type (thermoplastic or thermosetting), conductor material (copper or aluminium), and installation reference method (A to G).',
   'Correction factors for ambient temperature (Ca), grouping (Cg), thermal insulation (Ci), and conductor operating temperature must be applied to the tabulated values to find the effective current-carrying capacity (Iz).',
   'Selecting the wrong table or omitting a correction factor is one of the most common causes of incorrectly sized cables in UK installations.',
@@ -138,7 +138,7 @@ const sections = [
         <p>
           Appendix 4 of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           contains the current-carrying capacity tables that every UK electrician uses when sizing
           cables. These tables tell you the maximum current a cable can safely carry under specific

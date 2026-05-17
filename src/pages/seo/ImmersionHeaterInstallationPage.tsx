@@ -143,7 +143,7 @@ const sections = [
           radial circuit, correct thermostat setting (critical for Legionella prevention), and
           appropriate controls. All installation work must comply with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           and is notifiable under Building Regulations Part P for new circuits.
         </p>

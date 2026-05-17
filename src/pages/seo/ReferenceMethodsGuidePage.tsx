@@ -147,7 +147,7 @@ const sections = [
           Installation reference methods are standardised descriptions of how a cable is physically
           installed in a building or site. They are defined in Table 4C1 of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           and are fundamental to the cable sizing process. The reference method you select
           determines which column of the{' '}

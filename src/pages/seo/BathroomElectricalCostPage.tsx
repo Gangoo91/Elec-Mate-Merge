@@ -40,7 +40,7 @@ const tocItems = [
 const keyTakeaways = [
   'Bathroom electrical work in the UK typically costs between £300 and £1,500 depending on scope — from a simple fan or light replacement to a full bathroom rewire with underfloor heating.',
   'All electrical work in bathrooms is notifiable under Part P of the Building Regulations and must be carried out by a registered competent person or inspected by Building Control.',
-  'BS 7671:2018+A3:2024 Section 701 governs the requirements for electrical installations in bathrooms, including zone classifications, IP ratings, and RCD protection.',
+  'BS 7671:2018+A4:2026 Section 701 governs the requirements for electrical installations in bathrooms, including zone classifications, IP ratings, and RCD protection.',
   'Regulation 411.3.2 requires that all circuits serving a bathroom must be protected by a 30mA RCD for additional protection against electric shock.',
   'Every accessory and fitting installed in a bathroom must have an IP rating appropriate for the zone in which it is located — Zone 0 requires IPX7 minimum, Zone 1 requires IPX4 minimum.',
 ];
@@ -136,7 +136,7 @@ const sections = [
         <p>
           Bathrooms are classified as special locations under{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           Section 701. The combination of water, steam, and exposed skin makes them one of the
           highest-risk environments for electric shock. Every piece of electrical work in a bathroom

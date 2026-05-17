@@ -58,7 +58,7 @@ const faqs = [
   {
     question: 'What does BS 7671 Section 712 cover for PV systems?',
     answer:
-      'BS 7671:2018+A3:2024 Section 712 (Solar Photovoltaic Power Supply Systems) sets out specific requirements for PV installations including: isolation and switching arrangements, protection against overvoltage (surge protection devices on DC and AC sides), cable selection and installation (UV-resistant, double-insulated DC cabling), earthing and bonding of the PV array, protection against fire (appropriate cable management), and labelling requirements including warning labels at all points of isolation.',
+      'BS 7671:2018+A4:2026 Section 712 (Solar Photovoltaic Power Supply Systems) sets out specific requirements for PV installations including: isolation and switching arrangements, protection against overvoltage (surge protection devices on DC and AC sides), cable selection and installation (UV-resistant, double-insulated DC cabling), earthing and bonding of the PV array, protection against fire (appropriate cable management), and labelling requirements including warning labels at all points of isolation.',
   },
   {
     question: 'How many panels can I put on one string?',
@@ -301,7 +301,7 @@ const sections = [
       <>
         <p>
           DC wiring between the PV array and the inverter operates under continuous load conditions
-          and must be sized in accordance with BS 7671:2018+A3:2024 Section 712, using specialist PV
+          and must be sized in accordance with BS 7671:2018+A4:2026 Section 712, using specialist PV
           cable rated for outdoor and UV-exposed environments.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">

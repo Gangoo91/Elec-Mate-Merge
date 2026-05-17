@@ -39,7 +39,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'A full house rewire in Plymouth typically costs £2,200 to £5,500 depending on property size. Devon labour rates are among the more affordable in England.',
-  'All rewiring work must comply with BS 7671:2018+A3:2024 and be notified under Part P of the Building Regulations 2010.',
+  'All rewiring work must comply with BS 7671:2018+A4:2026 and be notified under Part P of the Building Regulations 2010.',
   'NICEIC and NAPIT registered contractors can self-certify rewiring work in Plymouth — they notify Plymouth City Council building control on your behalf.',
   "Plymouth has a significant stock of post-war housing built under Plymouth's post-Blitz reconstruction programme. Some of this housing may retain original 1950s wiring requiring a full rewire or significant remedial work.",
   'Victorian and Edwardian properties in Mutley, Lipson, and Greenbank may retain rubber-insulated wiring that is a C1 (danger present) finding under BS 7671.',
@@ -360,7 +360,7 @@ const sections = [
       <>
         <p>
           Part P of the Building Regulations 2010 applies throughout England including Plymouth. A
-          full rewire is notifiable work and must comply with BS 7671:2018+A3:2024.
+          full rewire is notifiable work and must comply with BS 7671:2018+A4:2026.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">

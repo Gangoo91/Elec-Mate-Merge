@@ -42,7 +42,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A3:2024 (Section 631). It is not an MOT-style pass/fail but a detailed condition assessment with observation codes.",
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A4:2026 (Section 631). It is not an MOT-style pass/fail but a detailed condition assessment with observation codes.",
   'London EICR costs are higher than the national average due to higher labour rates, travel time and parking costs. Expect to pay between £200 and £350 for a two-bedroom flat and £300 to £500 for a three-bedroom house.',
   'Since 1 April 2021, landlords in England must obtain an EICR before a new tenancy begins and at least every five years. Failure to comply can result in fines of up to £30,000 per breach, enforced by the local London borough.',
   'London has a high proportion of Victorian and Edwardian properties with aged wiring, lead-sheathed cables, and imperial-sized conduit. These properties frequently return C2 (potentially dangerous) observations requiring remedial work.',
@@ -153,7 +153,7 @@ const sections = [
         <p>
           The EICR is documented in accordance with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           (Section 631), which requires that an Electrical Installation Condition Report is used for
           periodic inspection and testing of existing installations — not an Electrical Installation

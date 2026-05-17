@@ -1,4 +1,6 @@
 import { Helmet } from 'react-helmet';
+import { RecentReviews } from '@/components/seo/RecentReviews';
+import VoltageDropCalculator from '@/components/apprentice/calculators/VoltageDropCalculator';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
@@ -115,7 +117,7 @@ const features = [
   },
   {
     icon: Shield,
-    title: 'BS 7671:2018+A3:2024 Compliant',
+    title: 'BS 7671:2018+A4:2026 Compliant',
     description:
       'All calculations follow the current 18th Edition wiring regulations including Amendment 3. Values verified against the published tables in Appendix 4.',
   },
@@ -133,13 +135,7 @@ const softwareAppSchema = {
     price: '0',
     priceCurrency: 'GBP',
     description: '7-day free trial, then from £12.99/month',
-  },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.8',
-    ratingCount: '1000',
-    bestRating: '5',
-  },
+  }
 };
 
 const faqSchema = {
@@ -223,6 +219,13 @@ export default function VoltageDropCalculatorPage() {
         </div>
       </section>
 
+      {/* Live calculator — free, no signup, BS 7671:2018+A4:2026 compliant */}
+      <section id="calculator" className="px-5 pb-12 scroll-mt-24">
+        <div className="max-w-4xl mx-auto">
+          <VoltageDropCalculator />
+        </div>
+      </section>
+
       {/* What Is Voltage Drop */}
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
@@ -284,7 +287,7 @@ export default function VoltageDropCalculatorPage() {
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              BS 7671:2018+A3:2024, the 18th Edition of the IET Wiring Regulations, sets out the
+              BS 7671:2018+A4:2026, the 18th Edition of the IET Wiring Regulations, sets out the
               maximum permitted voltage drop for electrical installations in the United Kingdom.
               These limits are defined in{' '}
               <strong className="text-yellow-400">Regulation 525.1</strong> and quantified in{' '}
@@ -684,7 +687,7 @@ export default function VoltageDropCalculatorPage() {
             ))}
           </div>
           <p className="text-white text-sm mt-4 leading-relaxed">
-            These values are extracted from BS 7671:2018+A3:2024, Table 4D5B (Reference Method C —
+            These values are extracted from BS 7671:2018+A4:2026, Table 4D5B (Reference Method C —
             clipped direct). Always verify against the current edition of the regulations for your
             specific installation method.
           </p>
@@ -692,6 +695,13 @@ export default function VoltageDropCalculatorPage() {
       </section>
 
       {/* CTA */}
+            {/* Verified App Store reviews — policy-safe SoftwareApplication aggregateRating */}
+      <section className="px-5 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <RecentReviews />
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Calculate Voltage Drop in Seconds"
         subheading="Join 1,000+ UK electricians using Elec-Mate for on-site calculations. 7-day free trial, cancel anytime."

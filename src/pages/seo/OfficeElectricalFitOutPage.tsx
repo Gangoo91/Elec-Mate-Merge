@@ -40,7 +40,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Office electrical fit-outs must comply with BS 7671:2018+A3:2024, Building Regulations Part L (energy efficiency) and Part B (fire safety), BS 5839-1 (fire detection and alarm), and BS 5266-1 (emergency lighting). Planning permission may be required for Category B fit-outs in leased premises.',
+  'Office electrical fit-outs must comply with BS 7671:2018+A4:2026, Building Regulations Part L (energy efficiency) and Part B (fire safety), BS 5839-1 (fire detection and alarm), and BS 5266-1 (emergency lighting). Planning permission may be required for Category B fit-outs in leased premises.',
   'UK office lighting design should target 300 to 500 lux maintained average illuminance at the working plane (0.7m above floor) in accordance with CIBSE Lighting Guide LG7 (Offices). Automatic daylight dimming and occupancy control are required by Part L of the Building Regulations.',
   'Emergency lighting in offices must comply with BS 5266-1 and provide a minimum of 1 lux on escape routes and 0.5 lux in open areas for a minimum duration of 1 hour (or 3 hours for certain high-risk areas).',
   'All new office small power socket outlets must be protected by 30mA RCDs in accordance with Regulation 411.3.3 of BS 7671. Type A RCDs are suitable for most office circuits; Type B RCDs are required where equipment with DC residual current components may be connected.',
@@ -51,7 +51,7 @@ const faqs = [
   {
     question: 'What regulations apply to an office electrical fit-out in the UK?',
     answer:
-      "An office electrical fit-out must comply with multiple overlapping regulatory requirements. BS 7671:2018+A3:2024 (the IET Wiring Regulations) provides the primary electrical installation standard. Building Regulations Part L2B (energy efficiency for existing buildings other than dwellings) applies to the lighting and electrical services installation. Part B (fire safety) applies to all fire-related systems. The Electricity at Work Regulations 1989 impose duties on the occupier to maintain electrical systems safely. Where the tenant is taking a Category B fit-out in a leased building, the landlord's fit-out guide will specify additional requirements for the electrical installation that must be met alongside the statutory standards.",
+      "An office electrical fit-out must comply with multiple overlapping regulatory requirements. BS 7671:2018+A4:2026 (the IET Wiring Regulations) provides the primary electrical installation standard. Building Regulations Part L2B (energy efficiency for existing buildings other than dwellings) applies to the lighting and electrical services installation. Part B (fire safety) applies to all fire-related systems. The Electricity at Work Regulations 1989 impose duties on the occupier to maintain electrical systems safely. Where the tenant is taking a Category B fit-out in a leased building, the landlord's fit-out guide will specify additional requirements for the electrical installation that must be met alongside the statutory standards.",
   },
   {
     question: 'How many power outlets are needed in an office electrical fit-out?',
@@ -153,7 +153,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Key regulations:</strong> BS 7671:2018+A3:2024, Electricity at Work
+                <strong>Key regulations:</strong> BS 7671:2018+A4:2026, Electricity at Work
                 Regulations 1989, Building Regulations Parts B, L, and S, BS 5839-1 (fire
                 detection), BS 5266-1 (emergency lighting), CIBSE LG7 (office lighting), Electric
                 Vehicles (Smart Charge Points) Regulations 2021.

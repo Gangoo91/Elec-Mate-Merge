@@ -36,7 +36,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'A multifunction tester (MFT) is a single instrument that performs all the electrical tests required to complete an Electrical Installation Certificate (EIC) or Electrical Installation Condition Report (EICR) to BS 7671:2018+A3:2024.',
+  'A multifunction tester (MFT) is a single instrument that performs all the electrical tests required to complete an Electrical Installation Certificate (EIC) or Electrical Installation Condition Report (EICR) to BS 7671:2018+A4:2026.',
   'The five core MFT functions are: earth fault loop impedance (Zs and Ze), RCD test (trip time at 100%, 150%, and 500% of rated current), insulation resistance (250V, 500V, and 1000V DC), continuity (low-resistance ohmmeter), and prospective fault current (PFC).',
   'For distribution board testing, CAT IV 300V is the minimum safe rating. The measurement environment at a consumer unit includes CAT IV transients — using a CAT III instrument at the origin of the installation is unsafe.',
   'The Megger MFT1741, Fluke 1664 FC, Kewtech KT64 DL, and Metrel MI3102H are the leading MFTs for UK electricians in 2026, covering a range of budgets and capability levels.',
@@ -138,7 +138,7 @@ const sections = [
       <>
         <p>
           A multifunction tester (MFT) is the primary instrument for electrical installation testing
-          in the UK. It combines all the measurement functions required by BS 7671:2018+A3:2024 into
+          in the UK. It combines all the measurement functions required by BS 7671:2018+A4:2026 into
           a single instrument: earth fault loop impedance, RCD testing, insulation resistance,
           continuity, and prospective fault current. Without an MFT, completing an Electrical
           Installation Certificate (EIC) or Electrical Installation Condition Report (EICR) to the

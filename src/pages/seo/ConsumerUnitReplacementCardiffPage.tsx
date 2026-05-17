@@ -158,7 +158,7 @@ const sections = [
                 <strong>Same BS 7671 standard</strong> — consumer unit replacement in Cardiff must
                 comply with{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                  BS 7671:2018+A3:2024
+                  BS 7671:2018+A4:2026
                 </SEOInternalLink>
                 , the IET Wiring Regulations. These apply identically across England and Wales. The
                 metal enclosure requirement (Regulation 421.1.201) and RCD protection requirements
@@ -197,7 +197,7 @@ const sections = [
           Regulation 421.1.201 of BS 7671 requires consumer units in domestic premises to be
           installed in enclosures made of non-combustible material. This requirement has applied
           since 1 July 2016 (Amendment 2 to BS 7671:2008) and is carried forward in the current
-          standard BS 7671:2018+A3:2024. It applies throughout Wales, including Cardiff.
+          standard BS 7671:2018+A4:2026. It applies throughout Wales, including Cardiff.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">

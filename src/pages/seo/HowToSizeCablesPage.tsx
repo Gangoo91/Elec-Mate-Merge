@@ -88,7 +88,7 @@ const appPreviewFeatures = [
   },
   {
     icon: ShieldCheck,
-    title: 'BS 7671:2018+A3:2024',
+    title: 'BS 7671:2018+A4:2026',
     description:
       'Every calculator, every AI agent, every course \u2014 updated to the latest Amendment 3 (issued July 2024). No outdated references.',
   },
@@ -135,7 +135,7 @@ export default function HowToSizeCablesPage() {
   useSEO({
     title: 'How to Size Cables to BS 7671 | Complete Guide | Elec-Mate',
     description:
-      'Complete guide to cable sizing using BS 7671:2018+A3:2024 Appendix 4 tables. Current carrying capacity, derating factors, voltage drop, and fault current verification with worked examples.',
+      'Complete guide to cable sizing using BS 7671:2018+A4:2026 Appendix 4 tables. Current carrying capacity, derating factors, voltage drop, and fault current verification with worked examples.',
     canonical: 'https://elec-mate.com/guides/how-to-size-cables-bs-7671',
   });
 
@@ -148,7 +148,7 @@ export default function HowToSizeCablesPage() {
             '@type': 'HowTo',
             name: 'How to Size Cables to BS 7671',
             description:
-              'Step-by-step cable sizing process using BS 7671:2018+A3:2024 Appendix 4 tables with correction factors, voltage drop, and fault current verification.',
+              'Step-by-step cable sizing process using BS 7671:2018+A4:2026 Appendix 4 tables with correction factors, voltage drop, and fault current verification.',
             step: [
               {
                 '@type': 'HowToStep',
@@ -188,7 +188,7 @@ export default function HowToSizeCablesPage() {
               },
             ],
             tool: [
-              { '@type': 'HowToTool', name: 'BS 7671:2018+A3:2024 (IET Wiring Regulations)' },
+              { '@type': 'HowToTool', name: 'BS 7671:2018+A4:2026 (IET Wiring Regulations)' },
               { '@type': 'HowToTool', name: 'Elec-Mate Cable Sizing Calculator' },
               { '@type': 'HowToTool', name: 'Scientific calculator' },
             ],
@@ -213,7 +213,7 @@ export default function HowToSizeCablesPage() {
           <div className="flex flex-wrap justify-center gap-3 mb-6">
             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-sm font-medium text-yellow-400">
               <ShieldCheck className="w-3.5 h-3.5" />
-              BS 7671:2018+A3:2024
+              BS 7671:2018+A4:2026
             </span>
             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-sm font-medium text-blue-400">
               <Calculator className="w-3.5 h-3.5" />
@@ -225,7 +225,7 @@ export default function HowToSizeCablesPage() {
             How to Size Cables to <span className="text-yellow-400">BS 7671</span>
           </h1>
           <p className="text-lg text-white max-w-3xl mx-auto leading-relaxed mb-8">
-            The complete step-by-step guide to cable sizing using BS 7671:2018+A3:2024 Appendix 4
+            The complete step-by-step guide to cable sizing using BS 7671:2018+A4:2026 Appendix 4
             tables. Current carrying capacity, correction factors, voltage drop verification, and
             fault current withstand — with worked examples.
           </p>
@@ -630,9 +630,29 @@ export default function HowToSizeCablesPage() {
       </section>
 
       {/* CTA */}
+      
+
+      {/* Related pages — auto-injected for internal-link health (audit criterion #7).
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/guides/how-ai-helps-electricians">How AI Helps Electricians</SEOInternalLink>
+            <SEOInternalLink href="/guides/how-electricity-works">How Electricity Works</SEOInternalLink>
+            <SEOInternalLink href="/guides/how-to-become-electrician">How to Become an Electrician UK 2026</SEOInternalLink>
+            <SEOInternalLink href="/guides/how-to-find-electrician-uk">How to Find a Good Electrician UK</SEOInternalLink>
+            <SEOInternalLink href="/guides/how-to-wire-a-plug">How to Wire a Plug</SEOInternalLink>
+            <SEOInternalLink href="/guides/how-to-fill-in-minor-works">How to Fill In a Minor Works Certificate</SEOInternalLink>
+            <SEOInternalLink href="/guides/how-to-price-electrical-jobs">How to Price Electrical Jobs UK 2026</SEOInternalLink>
+            <SEOInternalLink href="/guides/how-to-read-electrical-drawings">How to Read Electrical Drawings</SEOInternalLink>
+          </div>
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Size Cables in Seconds, Not Minutes"
-        subheading="Join 1,000+ UK electricians using Elec-Mate. 70+ calculators, 16 certificate types, 8 Elec-AI agents, and 46+ training courses — all BS 7671:2018+A3:2024 compliant."
+        subheading="Join 1,000+ UK electricians using Elec-Mate. 70+ calculators, 16 certificate types, 8 Elec-AI agents, and 46+ training courses — all BS 7671:2018+A4:2026 compliant."
       />
     </PublicPageLayout>
   );

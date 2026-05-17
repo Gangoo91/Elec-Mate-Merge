@@ -43,7 +43,7 @@ const keyTakeaways = [
   'Newcastle and the wider North East have substantial Victorian and Edwardian terraced and semi-detached housing in areas such as Jesmond, Heaton, Fenham, and the West End. Solid stone or brick construction with lath-and-plaster adds time to rewires in these areas.',
   'A full rewire is notifiable under Part P of the Building Regulations (England). Use a NICEIC, NAPIT, or ELECSA-registered electrician to self-certify and avoid building control inspection fees from Newcastle City Council.',
   'A typical rewire takes 3–5 days for a 2-bed property and 5–7 days for a 3-bed. Expect wall chasing, replastering, and periods without power during the first fix phase.',
-  'An Electrical Installation Certificate (EIC) is mandatory on completion of every rewire, confirming compliance with BS 7671:2018+A3:2024.',
+  'An Electrical Installation Certificate (EIC) is mandatory on completion of every rewire, confirming compliance with BS 7671:2018+A4:2026.',
 ];
 
 const faqs = [
@@ -432,7 +432,7 @@ const sections = [
           <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>{' '}
-          confirming compliance with BS 7671:2018+A3:2024.
+          confirming compliance with BS 7671:2018+A4:2026.
         </p>
       </>
     ),

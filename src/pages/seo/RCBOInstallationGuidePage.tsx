@@ -533,8 +533,7 @@ const sections = [
     content: (
       <>
         <p>
-          The selection and installation of RCDs and RCBOs is governed by Section 531 of BS
-          7671:2018+A3:2024 (the 18th Edition Wiring Regulations). Key requirements relevant to RCBO
+          The selection and installation of RCDs and RCBOs is governed by Section 531 of BS 7671:2018+A4:2026 (the 18th Edition Wiring Regulations). Key requirements relevant to RCBO
           selection and installation include:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">

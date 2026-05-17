@@ -418,7 +418,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Supplementary bonding</strong> — under BS 7671:2018+A3:2024, supplementary
+                <strong>Supplementary bonding</strong> — under BS 7671:2018+A4:2026, supplementary
                 bonding in bathrooms can be omitted if the installation meets certain conditions:
                 all circuits in the bathroom are RCD-protected, the main protective bonding is
                 confirmed, and all extraneous-conductive-parts are effectively bonded through the

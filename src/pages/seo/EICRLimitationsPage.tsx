@@ -151,7 +151,7 @@ const sections = [
         </p>
         <p>
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           Appendix 6 and Guidance Note 3 (GN3) require the inspector to record both the extent (what
           was inspected and tested) and the limitations (what was not inspected or tested, and why).

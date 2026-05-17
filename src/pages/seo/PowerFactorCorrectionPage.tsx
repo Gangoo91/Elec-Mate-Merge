@@ -1,4 +1,6 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
+import { RecentReviews } from '@/components/seo/RecentReviews';
+import PowerFactorCorrectionCalculator from '@/components/apprentice/calculators/PowerFactorCorrectionCalculator';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
@@ -671,6 +673,7 @@ export default function PowerFactorCorrectionPage() {
           <span className="text-yellow-400">PFC Installation Guide for Businesses</span>
         </>
       }
+              embeddedTool={<PowerFactorCorrectionCalculator />}
       heroSubtitle="Complete guide to power factor correction for UK businesses — what power factor is (kVA vs kW), how DNOs charge for reactive power, automatic and fixed capacitor banks, why standard capacitors fail with VFDs, detuned harmonic-rated banks, savings calculation, and typical 2–4 year payback for industrial users."
       readingTime={15}
       keyTakeaways={keyTakeaways}

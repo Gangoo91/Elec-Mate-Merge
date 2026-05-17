@@ -99,7 +99,7 @@ const features = [
     icon: GraduationCap,
     title: 'AI Tutor',
     description:
-      'Ask any question about BS 7671, inspection and testing, or installation practice. The AI answers with specific regulation references from BS 7671:2018+A3:2024.',
+      'Ask any question about BS 7671, inspection and testing, or installation practice. The AI answers with specific regulation references from BS 7671:2018+A4:2026.',
   },
   {
     icon: MessageSquare,
@@ -113,7 +113,7 @@ const faqs = [
   {
     question: 'How is the AI in Elec-Mate different from ChatGPT?',
     answer:
-      'ChatGPT is a general-purpose AI trained on a broad internet dataset. It can answer general electrical questions but frequently confuses BS 7671 with the US National Electrical Code, cites regulation numbers that do not exist, and has no access to current UK trade pricing. Elec-Mate is purpose-built for UK electricians — the AI is trained on the full text of BS 7671:2018+A3:2024, real UK trade pricing databases, and installation scenario libraries, retrieving the exact information before generating a response. This means it cites the correct regulation numbers, uses current material prices, and understands UK installation practices. The AI is also embedded directly into the app workflows — board scanning flows into your EICR form, defect coding populates your observations, cost estimates become professional quotes — rather than existing as a separate chat window.',
+      'ChatGPT is a general-purpose AI trained on a broad internet dataset. It can answer general electrical questions but frequently confuses BS 7671 with the US National Electrical Code, cites regulation numbers that do not exist, and has no access to current UK trade pricing. Elec-Mate is purpose-built for UK electricians — the AI is trained on the full text of BS 7671:2018+A4:2026, real UK trade pricing databases, and installation scenario libraries, retrieving the exact information before generating a response. This means it cites the correct regulation numbers, uses current material prices, and understands UK installation practices. The AI is also embedded directly into the app workflows — board scanning flows into your EICR form, defect coding populates your observations, cost estimates become professional quotes — rather than existing as a separate chat window.',
   },
   {
     question: 'Does the AI work offline?',
@@ -312,14 +312,13 @@ const sections = [
             "No RCD protection on socket circuit in the kitchen"
           </p>
           <p className="text-white text-sm leading-relaxed mt-3">
-            <strong>AI response:</strong> C2 — Potentially Dangerous. Regulation 411.3.3 (BS
-            7671:2018+A3:2024). Additional protection by an RCD with a rated residual operating
+            <strong>AI response:</strong> C2 — Potentially Dangerous. Regulation 411.3.3 (BS 7671:2018+A4:2026). Additional protection by an RCD with a rated residual operating
             current not exceeding 30 mA shall be provided for socket-outlets with a rated current
             not exceeding 32 A.
           </p>
         </div>
         <p>
-          The AI is trained on BS 7671:2018+A3:2024 and thousands of real-world EICR observations.
+          The AI is trained on BS 7671:2018+A4:2026 and thousands of real-world EICR observations.
           It handles nuanced situations — for example, distinguishing between a C2 (no RCD
           protection on a kitchen socket circuit in a property wired under the 18th Edition) and a
           C3 (no RCD protection on a kitchen socket circuit in a property wired under the 16th
@@ -464,7 +463,7 @@ const sections = [
             "What are the disconnection times for a TN-S system in BS 7671?"
           </p>
           <p className="text-white text-sm leading-relaxed mt-3">
-            <strong>AI response:</strong> Table 41.1 of BS 7671:2018+A3:2024 specifies the maximum
+            <strong>AI response:</strong> Table 41.1 of BS 7671:2018+A4:2026 specifies the maximum
             disconnection times for TN systems. For final circuits not exceeding 32 A: 0.4 seconds
             (230V). For distribution circuits and circuits exceeding 32 A: 5 seconds. These times
             apply where the protective measure is automatic disconnection of supply in accordance
@@ -473,7 +472,7 @@ const sections = [
           </p>
         </div>
         <p>
-          The AI answers with specific regulation references from BS 7671:2018+A3:2024, IET Guidance
+          The AI answers with specific regulation references from BS 7671:2018+A4:2026, IET Guidance
           Notes, and exam-relevant content. Elec-Mate also includes structured{' '}
           <SEOInternalLink href="/study-centre">training courses</SEOInternalLink> for
           Level 2, Level 3, and CPD topics that complement the AI Tutor with sequential learning

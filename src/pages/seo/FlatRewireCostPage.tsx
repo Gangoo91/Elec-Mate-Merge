@@ -133,7 +133,7 @@ const sections = [
           A flat rewire replaces all of the electrical wiring, accessories, and the consumer unit in
           a flat with a completely new installation compliant with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
           . It is typically necessary when the existing wiring is more than 25 to 30 years old, when
           an <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> has identified

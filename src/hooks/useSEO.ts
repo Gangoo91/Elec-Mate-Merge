@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { combinedStoreRating } from '@/constants/app-ratings';
 
 const BASE_URL = 'https://elec-mate.com';
 const DEFAULT_TITLE = 'Elec-Mate | UK Electrical Certification & Apprentice Training Platform';
@@ -262,29 +263,39 @@ export const SEOSchemas = {
     name: string,
     description: string,
     url: string,
-    ratingValue = '4.8',
-    ratingCount = '127'
-  ) => ({
-    '@type': 'SoftwareApplication',
-    name,
-    applicationCategory: 'BusinessApplication',
-    operatingSystem: 'iOS, Android, Web',
-    description,
-    url: `${BASE_URL}${url}`,
-    offers: {
-      '@type': 'Offer',
-      price: '0',
-      priceCurrency: 'GBP',
-      description: '7-day free trial',
-    },
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue,
-      ratingCount,
-      bestRating: '5',
-      worstRating: '1',
-    },
-  }),
+  ) => {
+    // Real aggregate from combinedStoreRating(). Returns null if no store
+    // data is available — in which case we OMIT aggregateRating rather than
+    // fabricate it (Google policy: review snippets must be verifiable).
+    const rating = combinedStoreRating();
+
+    const base: Record<string, unknown> = {
+      '@type': 'SoftwareApplication',
+      name,
+      applicationCategory: 'BusinessApplication',
+      operatingSystem: rating?.ratingCount ? 'iOS, Android, Web' : 'iOS, Web',
+      description,
+      url: `${BASE_URL}${url}`,
+      offers: {
+        '@type': 'Offer',
+        price: '0',
+        priceCurrency: 'GBP',
+        description: '7-day free trial',
+      },
+    };
+
+    if (rating) {
+      base.aggregateRating = {
+        '@type': 'AggregateRating',
+        ratingValue: String(rating.ratingValue),
+        ratingCount: String(rating.ratingCount),
+        bestRating: String(rating.bestRating),
+        worstRating: String(rating.worstRating),
+      };
+    }
+
+    return base;
+  },
 };
 
 export default useSEO;

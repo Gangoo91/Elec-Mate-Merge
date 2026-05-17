@@ -180,7 +180,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          BS 7671:2018+A3:2024 Section 522.3 requires that the selection and erection of electrical
+          BS 7671:2018+A4:2026 Section 522.3 requires that the selection and erection of electrical
           equipment takes into account the environmental conditions, including moisture. The
           designer's risk assessment for the basement must justify the IP ratings selected for each
           zone of the installation.

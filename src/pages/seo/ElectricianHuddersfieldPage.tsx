@@ -339,7 +339,7 @@ const sections = [
       <>
         <p>
           All domestic electrical work in Huddersfield must comply with Part P of the Building
-          Regulations and BS 7671:2018+A3:2024. The local authority is Kirklees Metropolitan Borough
+          Regulations and BS 7671:2018+A4:2026. The local authority is Kirklees Metropolitan Borough
           Council:
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
@@ -363,8 +363,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 7671 compliance</strong> — all work must comply with BS
-                7671:2018+A3:2024. RCD protection is required for all socket outlet circuits up to
+                <strong>BS 7671 compliance</strong> — all work must comply with BS 7671:2018+A4:2026. RCD protection is required for all socket outlet circuits up to
                 32A under Regulation 411.3.3, and for circuits in kitchens, bathrooms, and outdoors.
               </span>
             </li>

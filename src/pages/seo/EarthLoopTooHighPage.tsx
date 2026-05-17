@@ -174,7 +174,7 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671:2018+A3:2024 sets maximum Zs values for each type and rating of protective device.
+          BS 7671:2018+A4:2026 sets maximum Zs values for each type and rating of protective device.
           These values ensure that in the event of an earth fault, the protective device will
           disconnect the supply within the required time — 0.4 seconds for circuits supplying socket
           outlets and portable equipment, and 5 seconds for circuits supplying fixed equipment.

@@ -48,7 +48,7 @@ const faqs = [
   {
     question: 'Does Part P apply in Inverness?',
     answer:
-      'No. Part P of the Building Regulations applies only in England and Wales. Inverness is in Scotland, where electrical work is governed by Scottish Building Standards under the Building (Scotland) Act 2003. The relevant section is Technical Handbook Section 4 (Safety). Electrical installations must comply with BS 7671:2018+A3:2024, and a building warrant is typically required for notifiable work (new installations, rewires, consumer unit replacements). The warrant is obtained from Highland Council Building Standards before work starts. An Electrical Installation Certificate (EIC) is required as evidence of BS 7671 compliance.',
+      'No. Part P of the Building Regulations applies only in England and Wales. Inverness is in Scotland, where electrical work is governed by Scottish Building Standards under the Building (Scotland) Act 2003. The relevant section is Technical Handbook Section 4 (Safety). Electrical installations must comply with BS 7671:2018+A4:2026, and a building warrant is typically required for notifiable work (new installations, rewires, consumer unit replacements). The warrant is obtained from Highland Council Building Standards before work starts. An Electrical Installation Certificate (EIC) is required as evidence of BS 7671 compliance.',
   },
   {
     question: 'Who is the DNO for Inverness?',
@@ -63,7 +63,7 @@ const faqs = [
   {
     question: 'What qualifications should an Inverness electrician have?',
     answer:
-      "The core qualifications are City & Guilds 2365 Level 2 and 3 (or NVQ Level 3 in Electrical Installation) and the 18th Edition (BS 7671:2018+A3:2024) wiring regulations certificate. In Scotland, SELECT registration is highly valued — SELECT is the Electrical Contractors' Association of Scotland and operates a certification scheme that works with Highland Council's building warrant process. NICEIC and NAPIT also operate in Scotland and can certify work for building warrant purposes. SELECT registration gives access to the SELECT Certification Services scheme, which is well-understood by Highland Council Building Standards.",
+      "The core qualifications are City & Guilds 2365 Level 2 and 3 (or NVQ Level 3 in Electrical Installation) and the 18th Edition (BS 7671:2018+A4:2026) wiring regulations certificate. In Scotland, SELECT registration is highly valued — SELECT is the Electrical Contractors' Association of Scotland and operates a certification scheme that works with Highland Council's building warrant process. NICEIC and NAPIT also operate in Scotland and can certify work for building warrant purposes. SELECT registration gives access to the SELECT Certification Services scheme, which is well-understood by Highland Council Building Standards.",
   },
   {
     question: 'How much does an electrician charge in Inverness?',

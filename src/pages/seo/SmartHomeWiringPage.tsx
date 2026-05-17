@@ -166,7 +166,7 @@ const sections = [
           future-proofing that ensures the installation remains useful for years to come. The
           electrical work must comply with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           for power circuits and BS 5733 for cable management and segregation.
         </p>

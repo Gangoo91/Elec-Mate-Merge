@@ -90,7 +90,7 @@ const sections = [
           during a periodic inspection of an electrical installation. The schedule follows the model
           form published in Appendix 6 of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
           .
         </p>
@@ -656,7 +656,7 @@ const relatedPages = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Complete guide to BS 7671:2018+A3:2024 and the Appendix 6 model forms.',
+    description: 'Complete guide to BS 7671:2018+A4:2026 and the Appendix 6 model forms.',
     icon: ShieldCheck,
     category: 'Guide',
   },

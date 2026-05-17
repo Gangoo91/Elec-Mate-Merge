@@ -72,7 +72,7 @@ const features = [
     icon: Calculator,
     title: '70 Electrical Calculators',
     description:
-      'Zs verification, prospective fault current checks, voltage drop, cable sizing, and dozens more. All built to BS 7671:2018+A3:2024.',
+      'Zs verification, prospective fault current checks, voltage drop, cable sizing, and dozens more. All built to BS 7671:2018+A4:2026.',
   },
   {
     icon: ClipboardCheck,
@@ -94,7 +94,7 @@ const features = [
   },
   {
     icon: ShieldCheck,
-    title: 'BS 7671:2018+A3:2024',
+    title: 'BS 7671:2018+A4:2026',
     description:
       'All test limits, Zs values, and compliance checks are built to the current 18th Edition including Amendment 3. Always up to date.',
   },
@@ -154,6 +154,7 @@ export default function TestingSequenceGuidePage() {
   useSEO({
     title: 'Electrical Testing Sequence | GN3 Order Explained',
     description: PAGE_DESCRIPTION,
+    noindex: true,
   });
 
   return (

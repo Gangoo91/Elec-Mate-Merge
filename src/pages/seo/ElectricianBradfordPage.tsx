@@ -67,7 +67,7 @@ const faqs = [
   {
     question: 'What qualifications should a Bradford electrician have?',
     answer:
-      'A qualified Bradford electrician should hold City & Guilds 2365 Level 2 and 3 (or NVQ Level 3 in Electrical Installation) as their core qualification, plus the current 18th Edition (BS 7671:2018+A3:2024) certificate. For inspection and testing work, C&G 2391 or equivalent is the standard. For self-certification of notifiable work under Part P, membership of NICEIC or NAPIT is required. Bradford College and Leeds City College both offer electrical training and apprenticeship programmes accessible to Bradford students.',
+      'A qualified Bradford electrician should hold City & Guilds 2365 Level 2 and 3 (or NVQ Level 3 in Electrical Installation) as their core qualification, plus the current 18th Edition (BS 7671:2018+A4:2026) certificate. For inspection and testing work, C&G 2391 or equivalent is the standard. For self-certification of notifiable work under Part P, membership of NICEIC or NAPIT is required. Bradford College and Leeds City College both offer electrical training and apprenticeship programmes accessible to Bradford students.',
   },
   {
     question: 'What electrical work is legally classed as DIY in Bradford?',
@@ -375,7 +375,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 7671:2018+A3:2024 compliance</strong> — all electrical work must comply
+                <strong>BS 7671:2018+A4:2026 compliance</strong> — all electrical work must comply
                 with the current edition of the IET Wiring Regulations. RCD protection is required
                 for all socket outlet circuits up to 32A under Regulation 411.3.3.
               </span>

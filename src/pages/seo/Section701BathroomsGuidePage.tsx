@@ -42,7 +42,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Section 701 of BS 7671:2018+A3:2024 defines four zones in bathrooms (Zone 0, Zone 1, Zone 2, and outside zones) with specific equipment and IP rating requirements for each.',
+  'Section 701 of BS 7671:2018+A4:2026 defines four zones in bathrooms (Zone 0, Zone 1, Zone 2, and outside zones) with specific equipment and IP rating requirements for each.',
   'Supplementary bonding may be omitted under Regulation 701.415.2 if all circuits in the bathroom are RCD-protected (not exceeding 30mA) and the main protective bonding complies with Section 411.',
   'All circuits in a bathroom must be protected by a 30mA RCD per Regulation 701.411.3.3, regardless of earthing system.',
   'Only SELV at a nominal voltage not exceeding 12V AC rms or 30V ripple-free DC is permitted in Zone 0, with the safety source installed outside Zones 0, 1, and 2.',
@@ -146,7 +146,7 @@ const sections = [
         <p>
           Section 701 of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           covers the particular requirements for locations containing a bath or shower. It is one of
           the most frequently examined and most commonly encountered special locations in domestic

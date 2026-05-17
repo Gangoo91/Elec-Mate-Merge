@@ -640,6 +640,7 @@ export default function ElectricianVanSetupGuidePage() {
           <span className="text-yellow-400">Racking, Tools, Security, and Branding</span>
         </>
       }
+              noindex={true}
       heroSubtitle="Your van is your mobile workshop. This guide covers racking systems, tool organisation, cable storage, test instrument protection, security against theft, electrical setup (inverters and charging), branding, and insurance — everything you need to set up a van that works as hard as you do."
       readingTime={13}
       keyTakeaways={keyTakeaways}

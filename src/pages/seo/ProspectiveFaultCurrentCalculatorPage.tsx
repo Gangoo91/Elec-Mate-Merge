@@ -1,4 +1,6 @@
 import { Helmet } from 'react-helmet';
+import { RecentReviews } from '@/components/seo/RecentReviews';
+import PFCCalculator from '@/components/apprentice/calculators/PFCCalculator';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
@@ -115,7 +117,7 @@ const features = [
     icon: ShieldCheck,
     title: 'BS 7671 Reg 434.5.1',
     description:
-      'Designed around the BS 7671:2018+A3:2024 requirement to verify that protective device breaking capacity meets or exceeds the prospective fault current.',
+      'Designed around the BS 7671:2018+A4:2026 requirement to verify that protective device breaking capacity meets or exceeds the prospective fault current.',
   },
   {
     icon: Smartphone,
@@ -155,14 +157,7 @@ const softwareAppSchema = {
     price: '0',
     priceCurrency: 'GBP',
     description: '7-day free trial',
-  },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.8',
-    ratingCount: '127',
-    bestRating: '5',
-    worstRating: '1',
-  },
+  }
 };
 
 const faqSchema = {
@@ -217,7 +212,7 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
             <Zap className="w-4 h-4 text-yellow-400" />
             <span className="text-sm font-medium text-yellow-400">
-              BS 7671:2018+A3:2024 Regulation 434.5.1
+              BS 7671:2018+A4:2026 Regulation 434.5.1
             </span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
@@ -243,6 +238,13 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
               See How It Works
             </a>
           </div>
+        </div>
+      </section>
+
+      {/* Live calculator — free, no signup, BS 7671:2018+A4:2026 compliant */}
+      <section id="calculator" className="px-5 pb-12 scroll-mt-24">
+        <div className="max-w-4xl mx-auto">
+          <PFCCalculator />
         </div>
       </section>
 
@@ -605,6 +607,13 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
       </section>
 
       {/* CTA */}
+            {/* Verified App Store reviews — policy-safe SoftwareApplication aggregateRating */}
+      <section className="px-5 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <RecentReviews />
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Calculate fault current in seconds, not minutes"
         subheading="Join 1,000+ UK electricians using 70 professional calculators on their phone. 7-day free trial, cancel anytime."

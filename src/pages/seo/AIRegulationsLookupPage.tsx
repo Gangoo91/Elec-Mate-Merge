@@ -40,7 +40,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Ask any question in plain English and get the specific BS 7671 regulation number, full text, and a practical explanation of what it means for your work.',
-  'Covers the complete BS 7671:2018+A3:2024 including Amendment 3 (July 2024), the IET On-Site Guide, and all eight IET Guidance Notes.',
+  'Covers the complete BS 7671:2018+A4:2026 including Amendment 3 (July 2024), the IET On-Site Guide, and all eight IET Guidance Notes.',
   'The AI distinguishes between mandatory requirements ("shall"), recommendations ("should"), and permitted alternatives ("may") — so you know what is required versus what is best practice.',
   'Works offline on site, so you can look up regulations in basements, plant rooms, and new-build sites with no signal.',
   'Cross-references related regulations automatically — when one regulation depends on or modifies another, the AI shows you the complete picture.',
@@ -50,7 +50,7 @@ const faqs = [
   {
     question: 'What does the AI Regulations Lookup cover?',
     answer:
-      'The AI Regulations Lookup covers the complete text of BS 7671:2018+A3:2024 (the 18th Edition of the IET Wiring Regulations including all three amendments), the IET On-Site Guide (8th Edition), and all eight IET Guidance Notes: GN1 (Selection and Erection of Equipment), GN2 (Isolation and Switching), GN3 (Inspection and Testing, 9th Edition), GN4 (Protection Against Fire), GN5 (Protection Against Electric Shock), GN6 (Protection Against Overcurrent), GN7 (Special Locations), and GN8 (Earthing and Bonding). It also covers relevant British Standards referenced by BS 7671, such as BS EN 60898 (MCBs), BS EN 61008 (RCDs), and BS EN 61009 (RCBOs), and key legislation including the Electricity at Work Regulations 1989 and Part P of the Building Regulations.',
+      'The AI Regulations Lookup covers the complete text of BS 7671:2018+A4:2026 (the 18th Edition of the IET Wiring Regulations including all three amendments), the IET On-Site Guide (8th Edition), and all eight IET Guidance Notes: GN1 (Selection and Erection of Equipment), GN2 (Isolation and Switching), GN3 (Inspection and Testing, 9th Edition), GN4 (Protection Against Fire), GN5 (Protection Against Electric Shock), GN6 (Protection Against Overcurrent), GN7 (Special Locations), and GN8 (Earthing and Bonding). It also covers relevant British Standards referenced by BS 7671, such as BS EN 60898 (MCBs), BS EN 61008 (RCDs), and BS EN 61009 (RCBOs), and key legislation including the Electricity at Work Regulations 1989 and Part P of the Building Regulations.',
   },
   {
     question: 'How is this different from using the BS 7671 book index?',
@@ -70,7 +70,7 @@ const faqs = [
   {
     question: 'Does it cover Amendment 3:2024?',
     answer:
-      'Yes. The AI includes the complete content of BS 7671:2018+A3:2024, which is Amendment 3 issued on 31 July 2024. The key addition in A3:2024 is Regulation 530.3.2, which introduces requirements for bidirectional and unidirectional protective devices. This is particularly relevant for installations incorporating battery energy storage systems (BESS), solar PV arrays with battery storage, and other installations where power can flow in both directions through protective devices. The AI explains what this new regulation requires, when it applies, and what it means in practice for the selection and installation of protective devices in modern installations with distributed generation and energy storage.',
+      'Yes. The AI includes the complete content of BS 7671:2018+A4:2026, which is Amendment 3 issued on 31 July 2024. The key addition in A4:2026 is Regulation 530.3.2, which introduces requirements for bidirectional and unidirectional protective devices. This is particularly relevant for installations incorporating battery energy storage systems (BESS), solar PV arrays with battery storage, and other installations where power can flow in both directions through protective devices. The AI explains what this new regulation requires, when it applies, and what it means in practice for the selection and installation of protective devices in modern installations with distributed generation and energy storage.',
   },
   {
     question: 'How quickly does the AI return an answer?',
@@ -141,7 +141,7 @@ const features = [
     icon: BookOpen,
     title: 'Full Regulation Text',
     description:
-      'Every answer includes the complete regulation text from BS 7671:2018+A3:2024, so you have the authoritative source alongside the practical explanation.',
+      'Every answer includes the complete regulation text from BS 7671:2018+A4:2026, so you have the authoritative source alongside the practical explanation.',
   },
   {
     icon: Lightbulb,
@@ -202,7 +202,7 @@ const sections = [
           The AI Regulations Lookup is one of eight specialist Elec-AI agents in the Elec-Mate
           platform. It gives you instant access to the complete content of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           through a plain-English search interface. Instead of flipping through the book or
           searching an index, you ask a question and get the specific regulation, its full text, and
@@ -331,7 +331,7 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671:2018+A3:2024 is the current edition of the IET Wiring Regulations. Amendment 3 was
+          BS 7671:2018+A4:2026 is the current edition of the IET Wiring Regulations. Amendment 3 was
           issued on 31 July 2024 and is a free PDF supplement to the existing 18th Edition book. The
           AI Regulations Lookup includes the complete content of Amendment 3, so you always get
           answers based on the current requirements.
@@ -436,7 +436,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Your portable BS 7671 reference"
-          description="The AI Regulations Lookup puts the entire content of BS 7671:2018+A3:2024, the On-Site Guide, and all Guidance Notes in your pocket. Works offline. Search by question, not by index."
+          description="The AI Regulations Lookup puts the entire content of BS 7671:2018+A4:2026, the On-Site Guide, and all Guidance Notes in your pocket. Works offline. Search by question, not by index."
           icon={BookOpen}
         />
       </>
@@ -452,7 +452,7 @@ export default function AIRegulationsLookupPage() {
   return (
     <ToolTemplate
       title="AI Regulations Lookup | BS 7671 Search Tool"
-      description="Search BS 7671:2018+A3:2024 in plain English. Ask any question and get the specific regulation number, full text, and practical guidance. Covers the complete 18th Edition with Amendment 3, IET On-Site Guide, and all Guidance Notes."
+      description="Search BS 7671:2018+A4:2026 in plain English. Ask any question and get the specific regulation number, full text, and practical guidance. Covers the complete 18th Edition with Amendment 3, IET On-Site Guide, and all Guidance Notes."
       datePublished="2025-06-15"
       dateModified="2026-02-13"
       breadcrumbs={breadcrumbs}
@@ -470,7 +470,7 @@ export default function AIRegulationsLookupPage() {
         { icon: Search, label: 'Plain-English Search' },
         { icon: BookOpen, label: 'Full Regulation Text' },
         { icon: Lightbulb, label: 'Practical Guidance' },
-        { icon: ShieldCheck, label: 'A3:2024 Included' },
+        { icon: ShieldCheck, label: 'A4:2026 Included' },
       ]}
       readingTime={9}
       keyTakeaways={keyTakeaways}

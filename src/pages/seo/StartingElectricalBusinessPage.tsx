@@ -86,10 +86,10 @@ export default function StartingElectricalBusinessPage() {
                 </li>
                 <li>
                   <span className="font-semibold text-white">
-                    18th Edition Wiring Regulations (BS 7671:2018+A3:2024)
+                    18th Edition Wiring Regulations (BS 7671:2018+A4:2026)
                   </span>{' '}
                   — City and Guilds 2382. This is the qualification that confirms you understand the
-                  current edition of BS 7671, including Amendment 3 (2024). You must hold a current
+                  current edition of BS 7671, including Amendment 4 (2026). You must hold a current
                   edition certificate — older editions (17th Edition, 16th Edition) are not accepted
                   for scheme registration.
                 </li>

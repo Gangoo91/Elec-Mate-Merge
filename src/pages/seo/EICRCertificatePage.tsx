@@ -249,7 +249,7 @@ const features = [
   },
   {
     icon: ShieldCheck,
-    title: 'BS 7671:2018 + A3:2024',
+    title: 'BS 7671:2018+A4:2026',
     description:
       'Form structure, observation codes, test value limits, and regulation references all track the current 18th Edition including Amendment 3.',
   },
@@ -350,7 +350,7 @@ export default function EICRCertificatePage() {
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-5">
           <FileCheck2 className="w-4 h-4 text-yellow-400" />
           <span className="text-sm font-medium text-yellow-400">
-            BS 7671:2018 + A3:2024 Compliant
+            BS 7671:2018+A4:2026 Compliant
           </span>
         </div>
 

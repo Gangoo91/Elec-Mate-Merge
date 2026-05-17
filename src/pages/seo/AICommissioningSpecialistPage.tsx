@@ -42,7 +42,7 @@ const keyTakeaways = [
   'Generate complete commissioning checklists tailored to specific installation types — domestic consumer unit upgrades, commercial distribution boards, EV charger installations, and more.',
   'Get step-by-step functional test guidance for every circuit type, with expected readings, pass/fail criteria, and BS 7671 regulation references.',
   'Produce professional commissioning documentation that feeds directly into your EIC, EICR, or minor works certificate.',
-  'The AI understands BS 7671:2018+A3:2024 test sequences and follows the correct order of initial verification as specified in GN3.',
+  'The AI understands BS 7671:2018+A4:2026 test sequences and follows the correct order of initial verification as specified in GN3.',
   'Built specifically for UK electrical installations — covers TN-S, TN-C-S, and TT earthing systems with the correct commissioning procedures for each.',
 ];
 
@@ -253,7 +253,7 @@ const sections = [
         <p>
           The checklist follows the initial verification test sequence specified in{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           Chapter 64 and IET Guidance Note 3. This means tests are listed in the correct order:
           continuity of protective conductors first, then ring final circuit continuity, insulation
@@ -367,7 +367,7 @@ const sections = [
         <p>
           Every aspect of the AI Commissioning Specialist is aligned with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           and IET Guidance Note 3 (Inspection and Testing, 9th Edition). The AI references specific
           regulations throughout the commissioning process so you can verify every recommendation
@@ -410,7 +410,7 @@ export default function AICommissioningSpecialistPage() {
   return (
     <ToolTemplate
       title="AI Commissioning Specialist | Electrical Guidance"
-      description="Commission electrical installations with AI tailored for UK work. Generates tailored commissioning checklists, functional test guidance, and documentation to BS 7671:2018+A3:2024. Part of 8 specialist Elec-AI agents."
+      description="Commission electrical installations with AI tailored for UK work. Generates tailored commissioning checklists, functional test guidance, and documentation to BS 7671:2018+A4:2026. Part of 8 specialist Elec-AI agents."
       datePublished="2025-08-01"
       dateModified="2026-02-13"
       breadcrumbs={breadcrumbs}
@@ -423,7 +423,7 @@ export default function AICommissioningSpecialistPage() {
           <span className="text-yellow-400">Systematic Commissioning, Every Time</span>
         </>
       }
-      heroSubtitle="Generate tailored commissioning checklists, follow step-by-step functional test guidance, and produce professional commissioning documentation — all aligned with BS 7671:2018+A3:2024 and GN3 test sequences."
+      heroSubtitle="Generate tailored commissioning checklists, follow step-by-step functional test guidance, and produce professional commissioning documentation — all aligned with BS 7671:2018+A4:2026 and GN3 test sequences."
       heroFeaturePills={[
         { icon: ClipboardCheck, label: 'Tailored Checklists' },
         { icon: Gauge, label: 'Functional Testing' },

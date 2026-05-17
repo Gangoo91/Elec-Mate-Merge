@@ -42,7 +42,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Loft conversions involving new circuits are notifiable work under Part P of the Building Regulations (Approved Document P) and require either a competent person scheme notification or a building control application.',
-  'New circuits must be supplied from the existing consumer unit or a new sub-distribution board, protected by RCDs to BS 7671:2018+A3:2024 requirements.',
+  'New circuits must be supplied from the existing consumer unit or a new sub-distribution board, protected by RCDs to BS 7671:2018+A4:2026 requirements.',
   'Interlinked smoke alarms and heat detectors are mandatory under Part B (Approved Document B) and must comply with BS 5839-6:2019 for domestic fire detection.',
   'Cable sizing must account for thermal insulation — cables enclosed in insulation require derating factors applied per BS 7671 Table 52.2.',
   'An Electrical Installation Certificate (EIC) must be issued on completion, and the work must be signed off by building control or a competent person scheme.',
@@ -166,7 +166,7 @@ const sections = [
         <p>
           The electrical design must comply with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           (the IET Wiring Regulations, 18th Edition with Amendment 3). Cable sizing, circuit
           protection, earthing, bonding, and RCD selection must all be calculated and specified

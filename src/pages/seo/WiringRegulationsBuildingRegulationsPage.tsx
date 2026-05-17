@@ -37,7 +37,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'BS 7671:2018+A3:2024 (the IET Wiring Regulations) is a British Standard setting the technical requirements for electrical installations. It is not legislation but is referenced in law. Part P of the Building Regulations is legislation — it creates a legal obligation to notify and have certain electrical work inspected in domestic dwellings in England.',
+  'BS 7671:2018+A4:2026 (the IET Wiring Regulations) is a British Standard setting the technical requirements for electrical installations. It is not legislation but is referenced in law. Part P of the Building Regulations is legislation — it creates a legal obligation to notify and have certain electrical work inspected in domestic dwellings in England.',
   'Part P only applies to electrical installation work in dwellings (houses, flats, caravans) in England. It does not apply to commercial premises, Scotland, Wales, or Northern Ireland (each of which has its own building regulations).',
   'Notifiable work under Part P includes: installing a new circuit, replacing a consumer unit, and all work in kitchens, bathrooms, and outdoors in a dwelling. Non-notifiable work includes minor additions and alterations to existing circuits outside special locations.',
   'Registered electricians belonging to a competent person scheme (NICEIC, NAPIT, ELECSA) can self-certify notifiable work and notify building control on behalf of the client automatically. This avoids the need for a building notice or full plans application.',
@@ -48,7 +48,7 @@ const faqs = [
   {
     question: 'Is BS 7671 a legal document?',
     answer:
-      'BS 7671:2018+A3:2024 (the IET Wiring Regulations) is a British Standard, not legislation. It is not a legal document in itself. However, it is referenced in legislation — notably the Electricity at Work Regulations 1989 (which creates a general duty to ensure electrical systems are safe) and Part P of the Building Regulations (which references BS 7671 as the standard with which domestic electrical installations must comply). In practice, compliance with BS 7671 is the accepted way of demonstrating compliance with the legal obligations. Departing from BS 7671 is not illegal per se, but the installer must demonstrate an alternative method providing equivalent safety — a very high bar in practice.',
+      'BS 7671:2018+A4:2026 (the IET Wiring Regulations) is a British Standard, not legislation. It is not a legal document in itself. However, it is referenced in legislation — notably the Electricity at Work Regulations 1989 (which creates a general duty to ensure electrical systems are safe) and Part P of the Building Regulations (which references BS 7671 as the standard with which domestic electrical installations must comply). In practice, compliance with BS 7671 is the accepted way of demonstrating compliance with the legal obligations. Departing from BS 7671 is not illegal per se, but the installer must demonstrate an alternative method providing equivalent safety — a very high bar in practice.',
   },
   {
     question: 'What electrical work is notifiable under Part P?',
@@ -140,7 +140,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="text-lg font-semibold text-white mb-4">
-            BS 7671:2018+A3:2024 (the Wiring Regulations)
+            BS 7671:2018+A4:2026 (the Wiring Regulations)
           </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
@@ -162,7 +162,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                Updated periodically. The current edition is BS 7671:2018+A3:2024 (Amendment 3,
+                Updated periodically. The current edition is BS 7671:2018+A4:2026 (Amendment 3,
                 published 2024). Previous editions (16th and 17th editions) remain relevant for
                 understanding existing installations but new work must comply with the current
                 edition.
@@ -520,7 +520,7 @@ export default function WiringRegulationsBuildingRegulationsPage() {
   return (
     <GuideTemplate
       title="Wiring Regulations vs Building Regulations — BS 7671 and Part P Explained"
-      description="How BS 7671:2018+A3:2024 relates to Part P Building Regulations: notifiable vs non-notifiable work, competent person schemes (NICEIC, NAPIT, ELECSA), building control route, and common misconceptions about Part P."
+      description="How BS 7671:2018+A4:2026 relates to Part P Building Regulations: notifiable vs non-notifiable work, competent person schemes (NICEIC, NAPIT, ELECSA), building control route, and common misconceptions about Part P."
       datePublished="2024-06-01"
       dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}
@@ -533,7 +533,7 @@ export default function WiringRegulationsBuildingRegulationsPage() {
           <span className="text-yellow-400">— BS 7671 and Part P Explained</span>
         </>
       }
-      heroSubtitle="How BS 7671:2018+A3:2024 relates to Part P Building Regulations, notifiable vs non-notifiable work, competent person schemes, building control route, and common misconceptions."
+      heroSubtitle="How BS 7671:2018+A4:2026 relates to Part P Building Regulations, notifiable vs non-notifiable work, competent person schemes, building control route, and common misconceptions."
       readingTime={11}
       keyTakeaways={keyTakeaways}
       sections={sections}

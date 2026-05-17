@@ -133,7 +133,7 @@ const sections = [
           bonding, sockets, switches, light fittings, and all fixed electrical equipment against the
           requirements of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           (the 18th Edition IET Wiring Regulations). BS 7671 is the national standard adopted across
           the United Kingdom, including Wales.

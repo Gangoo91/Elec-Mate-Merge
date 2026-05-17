@@ -42,7 +42,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A3:2024 (Section 631). It records the condition of wiring, protective devices, earthing and bonding using observation codes.",
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A4:2026 (Section 631). It records the condition of wiring, protective devices, earthing and bonding using observation codes.",
   'Leicester EICR costs are broadly in line with Midlands averages. Expect to pay between £150 and £280 for a two-bedroom flat and £250 to £400 for a three-bedroom house in 2026.',
   'Since 1 April 2021, landlords in England must obtain an EICR before a new tenancy begins and at least every five years. Failure to comply can result in fines of up to £30,000 per breach, enforced by Leicester City Council.',
   'Leicester has a large private rented sector, particularly around the university area (Clarendon Park, Evington, Highfields). Leicester City Council actively enforces electrical safety standards and operates an HMO licensing scheme.',
@@ -153,7 +153,7 @@ const sections = [
         <p>
           The EICR is documented in accordance with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           (Section 631), which requires that an Electrical Installation Condition Report is used for
           periodic inspection and testing of existing installations — not an Electrical Installation

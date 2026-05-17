@@ -161,7 +161,7 @@ const sections = [
                 circuit breakers (MCBs). It also houses the RCD or RCBO devices that provide shock
                 protection. The installation must comply with{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                  BS 7671:2018+A3:2024
+                  BS 7671:2018+A4:2026
                 </SEOInternalLink>
                 .
               </span>
@@ -196,7 +196,7 @@ const sections = [
         <p>
           The requirement for non-combustible consumer unit enclosures in domestic premises was
           introduced by Amendment 2 to BS 7671:2008, effective 1 July 2016. It is now incorporated
-          into BS 7671:2018+A3:2024 and applies to all consumer unit replacements across England,
+          into BS 7671:2018+A4:2026 and applies to all consumer unit replacements across England,
           including Southampton.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">

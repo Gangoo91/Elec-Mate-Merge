@@ -187,8 +187,7 @@ const sections = [
                     C&G 2382
                   </SEOInternalLink>
                 </strong>{' '}
-                — 18th Edition Wiring Regulations (current version: 2382-22, covering BS
-                7671:2018+A3:2024).
+                — 18th Edition Wiring Regulations (current version: 2382-22, covering BS 7671:2018+A4:2026).
               </span>
             </li>
             <li className="flex items-start gap-3">

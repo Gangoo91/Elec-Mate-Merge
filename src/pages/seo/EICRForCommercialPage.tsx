@@ -162,7 +162,7 @@ const sections = [
         <p>
           The EICR follows the same model forms set out in Appendix 6 of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           that are used for domestic inspections, but the scale and complexity are significantly
           greater. A commercial EICR may cover multiple distribution boards across several floors,

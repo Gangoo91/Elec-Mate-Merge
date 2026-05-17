@@ -43,7 +43,7 @@ const keyTakeaways = [
   'Scotland operates its own Building Standards system. Glasgow rewires are notified to Glasgow City Council Building Standards, not under Part P as in England. The completion certificate process differs from the English competent person scheme approach.',
   "Glasgow's tenement stock — particularly in the West End, Southside, and the Victorian suburbs — presents rewire challenges similar to Edinburgh, with solid sandstone construction, high ceilings, and shared stairwells.",
   'A typical rewire takes 3–5 days for a 2-bed tenement flat and 5–8 days for a 3-bed villa. Wall chasing in sandstone generates significant debris and replastering is a separate cost.',
-  'On completion of any Glasgow rewire, the electrician must issue an Electrical Installation Certificate confirming compliance with BS 7671:2018+A3:2024 and submit a completion certificate to Building Standards.',
+  'On completion of any Glasgow rewire, the electrician must issue an Electrical Installation Certificate confirming compliance with BS 7671:2018+A4:2026 and submit a completion certificate to Building Standards.',
 ];
 
 const faqs = [
@@ -228,7 +228,7 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7671 compliance still required</strong> — the technical standard for
-                electrical installations in Scotland is the same: BS 7671:2018+A3:2024 (the IET
+                electrical installations in Scotland is the same: BS 7671:2018+A4:2026 (the IET
                 Wiring Regulations). An EIC is issued on completion in the same format.
               </span>
             </li>

@@ -82,7 +82,7 @@ const faqs = [
   {
     question: 'Which wiring regulations apply to solar PV in Bristol?',
     answer:
-      'All solar PV installations in Bristol (and across the UK) must comply with BS 7671:2018+A3:2024, specifically Section 712 (Solar Photovoltaic Power Supply Systems). Key requirements include DC isolation and string protection, surge protection devices where required by risk assessment, correct labelling at inverter, consumer unit and meter positions, and appropriate earthing of the PV array. The installer must issue an Electrical Installation Certificate for the installation wiring and notify the work to building control (typically via a competent person scheme).',
+      'All solar PV installations in Bristol (and across the UK) must comply with BS 7671:2018+A4:2026, specifically Section 712 (Solar Photovoltaic Power Supply Systems). Key requirements include DC isolation and string protection, surge protection devices where required by risk assessment, correct labelling at inverter, consumer unit and meter positions, and appropriate earthing of the PV array. The installer must issue an Electrical Installation Certificate for the installation wiring and notify the work to building control (typically via a competent person scheme).',
   },
 ];
 

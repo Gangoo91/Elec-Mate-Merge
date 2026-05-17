@@ -21,7 +21,7 @@ import {
 
 const PAGE_TITLE = 'BS 7671 18th Edition Guide 2026 | Wiring Regulations UK';
 const PAGE_DESCRIPTION =
-  'Complete guide to BS 7671:2018 — the 18th Edition IET Wiring Regulations. All 7 parts explained, key changes from 17th Edition, Amendment 2 (2022), Amendment 3 (2024) on bidirectional devices, and expected Amendment 4. For UK electricians.';
+  'Complete guide to BS 7671:2018 — the 18th Edition IET Wiring Regulations. All 7 parts explained, key changes from 17th Edition, Amendment 2 (2022), Amendment 4 (2026) on bidirectional devices, and expected Amendment 4. For UK electricians.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -33,7 +33,7 @@ const tocItems = [
   { id: 'seven-parts', label: 'The 7 Parts' },
   { id: 'changes-from-17th', label: 'Changes from 17th Edition' },
   { id: 'amendment-2', label: 'Amendment 2 (2022)' },
-  { id: 'amendment-3', label: 'Amendment 3 (2024)' },
+  { id: 'amendment-3', label: 'Amendment 4 (2026)' },
   { id: 'amendment-4', label: 'Amendment 4 (2026)' },
   { id: 'daily-practice', label: 'BS 7671 in Daily Practice' },
   { id: 'faq', label: 'FAQ' },
@@ -42,7 +42,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'BS 7671:2018+A2:2022 is the current base standard (the "brown book") — all new electrical work in the UK must comply.',
-  'Amendment 3 (A3:2024), issued 31 July 2024, adds a new regulation within Section 530 covering bidirectional and unidirectional protective devices for battery storage and V2G installations.',
+  'Amendment 3 (A4:2026), issued 31 July 2024, adds a new regulation within Section 530 covering bidirectional and unidirectional protective devices for battery storage and V2G installations.',
   'The 18th Edition introduced major changes including AFDDs (Regulation 421.1.1 and Section 421), surge protection (Section 534), metal consumer unit requirements, and EV charging provisions (Section 722).',
   'Amendment 4 is expected in 2026 and will likely address evolving requirements for energy storage, smart grid integration, and prosumer installations.',
   'Elec-Mate has every BS 7671 regulation built into the app — tap any certificate field to see the relevant clause, with 70+ calculators based on BS 7671 tables.',
@@ -67,7 +67,7 @@ const faqs = [
   {
     question: 'Do I need to buy a new copy of BS 7671 for each amendment?',
     answer:
-      'Not necessarily. Amendment 1 (2020) and Amendment 2 (2022) were incorporated into reprints of the main publication, so the current standard book sold by the IET is BS 7671:2018+A2:2022 and includes both amendments. Amendment 3 (A3:2024) was issued as a free PDF supplement on 31 July 2024 and is not printed as a separate book — you download it from the IET website and use it alongside your existing copy. The IET may issue an updated consolidated reprint in due course. Elec-Mate includes all current regulation text within the app, including Amendment 3, so you always have the current version in your pocket without needing to carry the physical book on site.',
+      'Not necessarily. Amendment 1 (2020) and Amendment 2 (2022) were incorporated into reprints of the main publication, so the current standard book sold by the IET is BS 7671:2018+A2:2022 and includes both amendments. Amendment 3 (A4:2026) was issued as a free PDF supplement on 31 July 2024 and is not printed as a separate book — you download it from the IET website and use it alongside your existing copy. The IET may issue an updated consolidated reprint in due course. Elec-Mate includes all current regulation text within the app, including Amendment 3, so you always have the current version in your pocket without needing to carry the physical book on site.',
   },
   {
     question: 'What qualifications do I need to work to BS 7671?',
@@ -77,12 +77,12 @@ const faqs = [
   {
     question: 'How often is BS 7671 updated?',
     answer:
-      'Major new editions of BS 7671 are published approximately every 10 years. The 16th Edition was published in 2001, the 17th Edition in 2008, and the 18th Edition in 2018. Between editions, amendments are issued to address urgent changes, new technologies, or corrections. The 18th Edition has had three amendments so far: Amendment 1 (2020), Amendment 2 (2022), and Amendment 3 (2024). Amendment 4 is expected in 2026. The next full new edition (the 19th Edition) would typically be expected around 2028, but the IET has not confirmed a date. Each amendment requires electricians to update their knowledge and potentially their qualifications.',
+      'Major new editions of BS 7671 are published approximately every 10 years. The 16th Edition was published in 2001, the 17th Edition in 2008, and the 18th Edition in 2018. Between editions, amendments are issued to address urgent changes, new technologies, or corrections. The 18th Edition has had three amendments so far: Amendment 1 (2020), Amendment 2 (2022), and Amendment 4 (2026). Amendment 4 is expected in 2026. The next full new edition (the 19th Edition) would typically be expected around 2028, but the IET has not confirmed a date. Each amendment requires electricians to update their knowledge and potentially their qualifications.',
   },
   {
     question: 'What did Amendment 3 introduce for bidirectional devices?',
     answer:
-      'Amendment 3 (A3:2024), issued on 31 July 2024, added new requirements within Section 530 of BS 7671 for bidirectional and unidirectional protective devices in installations where the supply can operate in both directions — specifically, installations with battery energy storage systems (BESS), solar PV with battery backup, or vehicle-to-grid (V2G) EV chargers that can export energy back to the grid. Standard MCBs and RCDs are typically designed for unidirectional fault current flow. When energy can flow in reverse (from the battery or EV back through the consumer unit to the grid), fault current can also flow in reverse. The Amendment 3 requirement is that protective devices installed are suitable for the direction(s) of fault current that can occur. This may require bidirectional MCBs, bidirectional RCDs, or specific arrangements to ensure that unidirectional devices are not subjected to reverse fault currents they cannot safely interrupt.',
+      'Amendment 3 (A4:2026), issued on 31 July 2024, added new requirements within Section 530 of BS 7671 for bidirectional and unidirectional protective devices in installations where the supply can operate in both directions — specifically, installations with battery energy storage systems (BESS), solar PV with battery backup, or vehicle-to-grid (V2G) EV chargers that can export energy back to the grid. Standard MCBs and RCDs are typically designed for unidirectional fault current flow. When energy can flow in reverse (from the battery or EV back through the consumer unit to the grid), fault current can also flow in reverse. The Amendment 3 requirement is that protective devices installed are suitable for the direction(s) of fault current that can occur. This may require bidirectional MCBs, bidirectional RCDs, or specific arrangements to ensure that unidirectional devices are not subjected to reverse fault currents they cannot safely interrupt.',
   },
 ];
 
@@ -380,11 +380,11 @@ const sections = [
   },
   {
     id: 'amendment-3',
-    heading: 'Amendment 3 (2024) — Bidirectional Device Requirements',
+    heading: 'Amendment 4 (2026) — Bidirectional Device Requirements',
     content: (
       <>
         <p>
-          Amendment 3 to BS 7671:2018 (A3:2024) was issued on 31 July 2024 as a free PDF supplement.
+          Amendment 3 to BS 7671:2018 (A4:2026) was issued on 31 July 2024 as a free PDF supplement.
           It is not a new book — it is a concise document that electricians download from the IET
           website and use alongside their existing copy of BS 7671:2018+A2:2022.
         </p>
@@ -442,7 +442,7 @@ const sections = [
           addressed in the earlier amendments.
         </p>
         <SEOAppBridge
-          title="70+ calculators built to BS 7671:2018+A3:2024"
+          title="70+ calculators built to BS 7671:2018+A4:2026"
           description="Cable sizing, voltage drop, Zs verification, maximum demand, adiabatic equation, prospective fault current — all based on the current BS 7671 tables including Amendment 3 changes. Always up to date."
           icon={Calculator}
         />
@@ -494,7 +494,7 @@ const sections = [
           </div>
         </div>
         <p className="mt-6">
-          Until Amendment 4 is published, all new work must comply with BS 7671:2018+A3:2024.
+          Until Amendment 4 is published, all new work must comply with BS 7671:2018+A4:2026.
           Elec-Mate will be updated promptly when Amendment 4 is released to ensure all calculators,
           regulation references, and certificate forms reflect the latest requirements.
         </p>
@@ -599,7 +599,7 @@ const sections = [
 const relatedPages = [
   {
     href: '/guides/amendment-3-changes',
-    title: 'Amendment 3 Changes (A3:2024)',
+    title: 'Amendment 3 Changes (A4:2026)',
     description:
       'Detailed breakdown of every change in Amendment 3, including the new bidirectional device requirements in Section 530.',
     icon: ShieldCheck,
@@ -663,14 +663,14 @@ export default function BS7671EighteenthEditionGuidePage() {
           BS 7671: 18th Edition <span className="text-yellow-400">Wiring Regulations Guide</span>
         </>
       }
-      heroSubtitle="The complete guide to BS 7671:2018 — the 18th Edition of the IET Wiring Regulations. All 7 parts explained, key changes from the 17th Edition, Amendment 2 (2022), Amendment 3 (2024) covering bidirectional device requirements, and what to expect from Amendment 4 in 2026."
+      heroSubtitle="The complete guide to BS 7671:2018 — the 18th Edition of the IET Wiring Regulations. All 7 parts explained, key changes from the 17th Edition, Amendment 2 (2022), Amendment 4 (2026) covering bidirectional device requirements, and what to expect from Amendment 4 in 2026."
       readingTime={18}
       keyTakeaways={keyTakeaways}
       sections={sections}
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Every BS 7671 regulation, always in your pocket"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site regulation references, 70+ calculators, and 16 certificate types — all built to BS 7671:2018+A3:2024. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site regulation references, 70+ calculators, and 16 certificate types — all built to BS 7671:2018+A4:2026. 7-day free trial, cancel anytime."
     />
   );
 }

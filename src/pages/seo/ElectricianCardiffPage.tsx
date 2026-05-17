@@ -179,7 +179,7 @@ const sections = [
                 Safety — Dwellings) applies in Wales. The technical requirements are the same as in
                 England — all electrical installations must comply with{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                  BS 7671:2018+A3:2024
+                  BS 7671:2018+A4:2026
                 </SEOInternalLink>
                 , and notifiable work must be either self-certified through a competent person
                 scheme or approved by building control.

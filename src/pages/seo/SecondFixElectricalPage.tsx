@@ -231,7 +231,7 @@ const sections = [
         <p>
           Under{' '}
           <SEOInternalLink href="/guides/consumer-unit-regulations">
-            BS 7671 and Amendment 3 (A3:2024)
+            BS 7671 and Amendment 3 (A4:2026)
           </SEOInternalLink>
           , consumer units in domestic premises must be constructed of non-combustible material
           (typically steel). The choice between a split-load board with RCDs and a board populated

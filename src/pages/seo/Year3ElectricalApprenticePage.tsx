@@ -67,7 +67,7 @@ const faqs = [
   {
     question: 'What is the 18th Edition exam and when should I take it?',
     answer:
-      'The 18th Edition exam is the City & Guilds 2382 qualification — Requirements for Electrical Installations (BS 7671:2018+A3:2024). It is a closed-book, multiple-choice exam lasting 2 hours with 60 questions. You need 60% to pass. The exam tests your knowledge of the Wiring Regulations: earthing arrangements, circuit design, inspection and testing requirements, special locations, and appendix tables. Most apprentices sit this during year 3 of their apprenticeship. You can study using your college notes, a dedicated 18th Edition course, or self-study with the IET On-Site Guide and BS 7671 book. Passing the 18th Edition is essential for your career — it is a prerequisite for most inspection and testing qualifications and employer registration schemes.',
+      'The 18th Edition exam is the City & Guilds 2382 qualification — Requirements for Electrical Installations (BS 7671:2018+A4:2026). It is a closed-book, multiple-choice exam lasting 2 hours with 60 questions. You need 60% to pass. The exam tests your knowledge of the Wiring Regulations: earthing arrangements, circuit design, inspection and testing requirements, special locations, and appendix tables. Most apprentices sit this during year 3 of their apprenticeship. You can study using your college notes, a dedicated 18th Edition course, or self-study with the IET On-Site Guide and BS 7671 book. Passing the 18th Edition is essential for your career — it is a prerequisite for most inspection and testing qualifications and employer registration schemes.',
   },
   {
     question: 'What kind of work should I be doing on site in year 3?',
@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/bs-7671-18th-edition-guide',
     title: '18th Edition Guide',
     description:
-      'Comprehensive guide to BS 7671:2018+A3:2024 — the Wiring Regulations you need to know.',
+      'Comprehensive guide to BS 7671:2018+A4:2026 — the Wiring Regulations you need to know.',
     icon: FileCheck2,
     category: 'Guide',
   },

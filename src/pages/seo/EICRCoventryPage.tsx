@@ -40,7 +40,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, carried out in accordance with BS 7671:2018+A3:2024 (Section 631). It produces a condition assessment using C1, C2, C3 and FI observation codes.",
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, carried out in accordance with BS 7671:2018+A4:2026 (Section 631). It produces a condition assessment using C1, C2, C3 and FI observation codes.",
   'Coventry EICR costs are broadly in line with the Midlands average. Expect to pay between £100 and £200 for a two-bedroom flat and £160 to £280 for a three-bedroom house.',
   'Landlords in England must obtain a valid EICR before a new tenancy begins and renew it every five years. Coventry City Council enforces these requirements and can fine non-compliant landlords up to £30,000 per breach.',
   'Coventry has a high proportion of post-war rebuilt housing following extensive wartime bombing, alongside 1960s and 1970s social housing and Victorian terraced properties that survived the Blitz. Post-war and mid-century housing commonly returns C2 EICR findings for ageing wiring and absent RCD protection.',
@@ -151,7 +151,7 @@ const sections = [
         <p>
           The report is produced in accordance with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           (Section 631). It is a detailed condition assessment using standardised C1, C2, C3, and FI
           observation codes. The overall assessment is either Satisfactory or Unsatisfactory.

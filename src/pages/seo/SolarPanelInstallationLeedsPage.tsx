@@ -441,7 +441,7 @@ const sections = [
               <span>
                 <strong>BS 7671 compliance</strong> — all electrical work must comply with{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                  BS 7671:2018+A3:2024
+                  BS 7671:2018+A4:2026
                 </SEOInternalLink>{' '}
                 (the IET Wiring Regulations). The connection of the solar inverter to the consumer
                 unit is notifiable work under Building Regulations Part P and must be carried out by

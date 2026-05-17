@@ -150,7 +150,7 @@ const sections = [
           The legal framework for commercial EICRs draws from the Electricity at Work Regulations
           1989, the Health and Safety at Work Act 1974, and the specific requirements of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
           . Unlike the domestic private rented sector, there is no single piece of legislation that
           mandates a 5-year inspection interval for commercial premises — the interval is

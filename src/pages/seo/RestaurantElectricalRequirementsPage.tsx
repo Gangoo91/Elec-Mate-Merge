@@ -59,7 +59,7 @@ const faqs = [
   {
     question: 'How often does a restaurant need an EICR?',
     answer:
-      'BS 7671:2018+A3:2024 recommends periodic inspection intervals of no more than 5 years for commercial premises. However, many local authorities, insurers, and premises licence conditions specify 3-year intervals for restaurants and food establishments due to the harsh operating environment — heat, steam, grease, and frequent cleaning all accelerate deterioration of electrical installations. The Environmental Health team or Fire and Rescue Service may request a copy of the EICR as part of their inspection regime. Under the Health and Safety at Work Act 1974 and the Electricity at Work Regulations 1989, the duty holder (usually the restaurant owner or operator) is responsible for ensuring the electrical installation is maintained in a safe condition. Failure to provide a current EICR can affect your premises licence, insurance validity, and compliance status.',
+      'BS 7671:2018+A4:2026 recommends periodic inspection intervals of no more than 5 years for commercial premises. However, many local authorities, insurers, and premises licence conditions specify 3-year intervals for restaurants and food establishments due to the harsh operating environment — heat, steam, grease, and frequent cleaning all accelerate deterioration of electrical installations. The Environmental Health team or Fire and Rescue Service may request a copy of the EICR as part of their inspection regime. Under the Health and Safety at Work Act 1974 and the Electricity at Work Regulations 1989, the duty holder (usually the restaurant owner or operator) is responsible for ensuring the electrical installation is maintained in a safe condition. Failure to provide a current EICR can affect your premises licence, insurance validity, and compliance status.',
   },
   {
     question: 'What are the emergency lighting requirements for a restaurant?',
@@ -160,7 +160,7 @@ const sections = [
           The regulatory framework is equally complex. Restaurant electrical installations must
           comply with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           (the IET Wiring Regulations), the Electricity at Work Regulations 1989, the Health and
           Safety at Work Act 1974,{' '}
@@ -521,7 +521,7 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671:2018+A3:2024 Table 3A (Guidance Note 3, 9th Edition) recommends a maximum periodic
+          BS 7671:2018+A4:2026 Table 3A (Guidance Note 3, 9th Edition) recommends a maximum periodic
           inspection interval of 5 years for commercial premises. However, the harsh environment of
           a commercial kitchen — heat, steam, grease, water, aggressive cleaning chemicals, and
           heavy daily use — means that deterioration occurs faster than in a typical office or

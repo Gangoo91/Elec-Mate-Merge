@@ -40,7 +40,7 @@ const tocItems = [
 const keyTakeaways = [
   'A 7kW home EV charger installation in Oxford typically costs £800 to £1,200 all-in for a single-phase supply, including the OZEV-approved charger unit and all wiring back to the consumer unit.',
   'The OZEV EV Chargepoint Grant provides up to £350 towards the cost of a home charger for eligible applicants — the grant is applied by your installer and deducted from your invoice.',
-  'All EV charger installations must comply with BS 7671:2018+A3:2024 Section 722 (Electric Vehicle Charging Installations), which specifies requirements for protective devices, earthing, and load management.',
+  'All EV charger installations must comply with BS 7671:2018+A4:2026 Section 722 (Electric Vehicle Charging Installations), which specifies requirements for protective devices, earthing, and load management.',
   'Oxford City Council and the surrounding Oxfordshire area have seen rapid EV adoption, driven by the Ultra Low Emission Zone (ULEZ) and local Net Zero commitments — demand for home charger installations has grown significantly.',
   'Only OZEV-approved installers can apply the grant on your behalf. NICEIC and NAPIT registration also provides assurance of competence and appropriate insurance cover.',
 ];
@@ -59,7 +59,7 @@ const faqs = [
   {
     question: 'What regulations apply to EV charger installations in Oxford?',
     answer:
-      'All EV charger installations in Oxford must comply with BS 7671:2018+A3:2024 (the IET Wiring Regulations), specifically Section 722 — Electric Vehicle Charging Installations. Key requirements include a dedicated circuit for the EV charger, RCD protection (Regulation 722.531.2), earthing arrangements including a PME earthing risk assessment (Regulation 722.411.4), and appropriate load management where multiple chargers are installed. The installation must also comply with the Building Regulations Part P (England), requiring notification to the local authority or self-certification by a registered competent person.',
+      'All EV charger installations in Oxford must comply with BS 7671:2018+A4:2026 (the IET Wiring Regulations), specifically Section 722 — Electric Vehicle Charging Installations. Key requirements include a dedicated circuit for the EV charger, RCD protection (Regulation 722.531.2), earthing arrangements including a PME earthing risk assessment (Regulation 722.411.4), and appropriate load management where multiple chargers are installed. The installation must also comply with the Building Regulations Part P (England), requiring notification to the local authority or self-certification by a registered competent person.',
   },
   {
     question: 'How long does EV charger installation take in Oxford?',
@@ -440,7 +440,7 @@ const sections = [
         <p>
           All EV charger installations in Oxford must comply with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           (the IET Wiring Regulations). Section 722 specifically covers Electric Vehicle Charging
           Installations and contains a number of requirements that differ from standard domestic

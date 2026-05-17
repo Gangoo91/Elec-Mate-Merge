@@ -249,7 +249,7 @@ const sections = [
           qualification exam because it draws on knowledge from across your entire apprenticeship.
         </p>
         <p>
-          <strong>Topics covered include:</strong> BS 7671:2018+A2:2022 (and A3:2024) wiring
+          <strong>Topics covered include:</strong> BS 7671:2018+A2:2022 (and A4:2026) wiring
           regulations — including Part 1 scope and fundamental principles, Part 4 protection for
           safety, Part 5 selection and erection, and Part 7 special installations. Electrical
           science — Ohm's law, power calculations, impedance, reactance, and power factor.

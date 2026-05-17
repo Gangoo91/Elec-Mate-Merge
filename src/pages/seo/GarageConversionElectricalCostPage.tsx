@@ -157,7 +157,7 @@ const sections = [
           consumer unit check and possible upgrade; smoke detector installation; and Part P
           notification. Testing and certification under{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           is required for all new circuits.
         </p>

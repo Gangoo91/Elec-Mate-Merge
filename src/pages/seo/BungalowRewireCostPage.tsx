@@ -128,7 +128,7 @@ const sections = [
           A bungalow rewire replaces all electrical wiring, accessories, and the consumer unit with
           a modern installation compliant with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
           . Many bungalows in the UK were built in the post-war period and have original wiring that
           is now 50 to 70 years old — well beyond its serviceable life.
@@ -401,7 +401,7 @@ const sections = [
         <p>
           Key requirements under{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           include: Regulation 411.3.3 requiring 30mA RCD protection on socket circuits up to 32A,
           bathroom circuits, and outdoor circuits; Regulation 421.1.201 requiring a non-combustible

@@ -4,6 +4,7 @@ import { SEOReadingMeta } from '@/components/seo/SEOReadingMeta';
 import { SEOKeyTakeaways } from '@/components/seo/SEOKeyTakeaways';
 import { SEOFAQAccordion } from '@/components/seo/SEOFAQAccordion';
 import { SEORelatedPages, type RelatedPage } from '@/components/seo/SEORelatedPages';
+import { RecentReviews } from '@/components/seo/RecentReviews';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
@@ -242,6 +243,10 @@ export default function BusinessTemplate({
           <SEORelatedPages pages={relatedPages} />
         </section>
       )}
+
+      {/* Verified App Store reviews — required by Google's structured-data
+          policy when SoftwareApplication schema carries aggregateRating. */}
+      <RecentReviews />
 
       <SEOTestimonialStrip />
 

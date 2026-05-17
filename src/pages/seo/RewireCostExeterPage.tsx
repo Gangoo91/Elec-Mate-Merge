@@ -39,7 +39,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'A full house rewire in Exeter typically costs £2,300 to £5,800 depending on property size. Devon labour rates make Exeter one of the more affordable cities in England for rewiring work.',
-  'All rewiring work must comply with BS 7671:2018+A3:2024 and be notified under Part P of the Building Regulations 2010.',
+  'All rewiring work must comply with BS 7671:2018+A4:2026 and be notified under Part P of the Building Regulations 2010.',
   'NICEIC and NAPIT registered contractors can self-certify rewiring work in Exeter — they notify Exeter City Council building control on your behalf.',
   "Exeter has significant Georgian, Victorian, and Edwardian housing stock in areas such as St Leonards, St David's, and Heavitree that may retain rubber-insulated wiring requiring a full rewire.",
   'Student rental properties near the University of Exeter in Heavitree, St James, and Polsloe should have current EICRs and may have wiring issues from heavy multi-occupancy use.',
@@ -363,7 +363,7 @@ const sections = [
       <>
         <p>
           Part P of the Building Regulations 2010 applies across England including Exeter. A full
-          rewire is notifiable work and must comply with BS 7671:2018+A3:2024.
+          rewire is notifiable work and must comply with BS 7671:2018+A4:2026.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">

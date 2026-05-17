@@ -27,7 +27,7 @@ import { Link } from 'react-router-dom';
 
 const PAGE_TITLE = 'Consumer Unit Regulations 2024 | Amendment 3 Guide | Elec-Mate';
 const PAGE_DESCRIPTION =
-  'Complete guide to consumer unit regulations under BS 7671:2018+A3:2024. Metal CU requirements, RCD protection, RCBO vs split-load, Amendment 3 bidirectional device requirements (Section 530), SPD requirements.';
+  'Complete guide to consumer unit regulations under BS 7671:2018+A4:2026. Metal CU requirements, RCD protection, RCBO vs split-load, Amendment 3 bidirectional device requirements (Section 530), SPD requirements.';
 
 const faqs = [
   {
@@ -36,7 +36,7 @@ const faqs = [
       'BS 7671 Regulation 421.1.201 requires that consumer units and similar switchgear assemblies in domestic premises shall comply with BS EN 61439-3 and shall have their enclosure manufactured from non-combustible material. In practice, this means metal (steel) consumer units. This regulation was introduced in Amendment 3 to the 17th Edition (which carried forward into the 18th Edition) following concerns about the fire risk associated with plastic consumer units. The requirement applies to new installations and to consumer unit replacements in existing installations. It does not require the retrospective replacement of existing plastic consumer units that were compliant when installed — but if the consumer unit is being replaced for any reason, the new unit must be metal. Some manufacturers produce consumer units with a metal enclosure and a non-combustible plastic interior, which also comply with the regulation.',
   },
   {
-    question: 'What did Amendment 3 (A3:2024) change for consumer units?',
+    question: 'What did Amendment 3 (A4:2026) change for consumer units?',
     answer:
       'Amendment 3 to BS 7671:2018, issued in July 2024, introduced several changes relevant to consumer units. The most significant addition is a new requirement in Section 530 addressing bidirectional and unidirectional protective devices. This requires that where a supply can operate in both directions — for example, in installations with battery storage or solar PV with battery backup that can export energy — the protective devices in the consumer unit must be suitable for bidirectional fault current flow. Standard MCBs and RCDs are typically unidirectional (designed to clear faults with current flowing in one direction only). With the growth of domestic battery storage and vehicle-to-grid (V2G) charging, this is an increasingly important consideration for consumer unit design. Amendment 3 also includes various corrections, clarifications, and editorial updates to the standard.',
   },
@@ -67,7 +67,7 @@ const features = [
     icon: Calculator,
     title: '70 Electrical Calculators',
     description:
-      'Maximum demand calculation, cable sizing for mains tails, Zs verification for every circuit, and dozens more. All built to BS 7671:2018+A3:2024.',
+      'Maximum demand calculation, cable sizing for mains tails, Zs verification for every circuit, and dozens more. All built to BS 7671:2018+A4:2026.',
   },
   {
     icon: Brain,
@@ -83,7 +83,7 @@ const features = [
   },
   {
     icon: ShieldCheck,
-    title: 'BS 7671:2018+A3:2024',
+    title: 'BS 7671:2018+A4:2026',
     description:
       'Built to the current 18th Edition including Amendment 3. Bidirectional device requirements (Section 530), SPD requirements, and all RCD protection rules fully up to date.',
   },
@@ -177,14 +177,14 @@ export default function ConsumerUnitRegulationsPage() {
         <div className="relative max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm font-medium mb-6">
             <BookOpen className="w-4 h-4" />
-            BS 7671:2018 + A3:2024
+            BS 7671:2018+A4:2026
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             Consumer Unit Regulations
             <span className="block text-yellow-400 mt-1">Amendment 3 Guide (2024)</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
-            The definitive guide to consumer unit regulations under BS 7671:2018+A3:2024. Metal
+            The definitive guide to consumer unit regulations under BS 7671:2018+A4:2026. Metal
             enclosures, RCD protection, RCBO design, SPD requirements, and the new Regulation
             Section 530 (Amendment 3).
           </p>
@@ -228,8 +228,7 @@ export default function ConsumerUnitRegulationsPage() {
               increasing complexity of domestic electrical installations.
             </p>
             <p>
-              The current standard for consumer units in domestic premises is set by BS
-              7671:2018+A3:2024 — the 18th Edition of the IET Wiring Regulations with Amendment 3,
+              The current standard for consumer units in domestic premises is set by BS 7671:2018+A4:2026 — the 18th Edition of the IET Wiring Regulations with Amendment 3,
               issued in July 2024. This standard, together with the product standard BS EN 61439-3
               (which specifies construction and performance requirements for distribution boards),
               defines what a consumer unit must be made of, what protection it must contain, and how
@@ -483,19 +482,19 @@ export default function ConsumerUnitRegulationsPage() {
               <BookOpen className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
-              Amendment 3 (A3:2024) — Key Changes
+              Amendment 3 (A4:2026) — Key Changes
             </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              BS 7671:2018+A3:2024 was issued on 31 July 2024 as a free PDF supplement to the main
+              BS 7671:2018+A4:2026 was issued on 31 July 2024 as a free PDF supplement to the main
               standard. It is not a new book — it is an amendment document that modifies and adds to
               the existing 18th Edition. The most significant change for consumer unit design is the
               introduction of new bidirectional device requirements in Section 530.
             </p>
             <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-6 my-6">
               <h3 className="font-bold text-yellow-400 text-lg mb-3">
-                BS 7671:2018+A3:2024, Section 530 — Bidirectional and Unidirectional Devices
+                BS 7671:2018+A4:2026, Section 530 — Bidirectional and Unidirectional Devices
               </h3>
               <div className="space-y-3 text-white text-sm leading-relaxed">
                 <p>
@@ -647,7 +646,7 @@ export default function ConsumerUnitRegulationsPage() {
           </h2>
           <p className="text-white text-center mb-10 max-w-2xl mx-auto">
             Purpose-built for UK electricians. 70+ calculators, 8 AI agents, 16 certificate types,
-            and 46+ training courses — all built to BS 7671:2018+A3:2024.
+            and 46+ training courses — all built to BS 7671:2018+A4:2026.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
         </div>
@@ -658,7 +657,7 @@ export default function ConsumerUnitRegulationsPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Certify Consumer Unit Work Digitally with Elec-Mate"
-            description="Generate compliant Electrical Installation Certificates for consumer unit replacements — with test result validation, digital signatures, and professional PDF output. Built to BS 7671:2018+A3:2024."
+            description="Generate compliant Electrical Installation Certificates for consumer unit replacements — with test result validation, digital signatures, and professional PDF output. Built to BS 7671:2018+A4:2026."
             ctaText="Try Elec-Mate free"
             ctaHref="/auth/signup"
           />
@@ -696,6 +695,26 @@ export default function ConsumerUnitRegulationsPage() {
       </section>
 
       {/* CTA */}
+      
+
+      {/* Related pages — auto-injected for internal-link health (audit criterion #7).
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/guides/consumer-unit-change">Consumer Unit Change UK 2026</SEOInternalLink>
+            <SEOInternalLink href="/guides/consumer-unit-upgrade">Consumer Unit Upgrade</SEOInternalLink>
+            <SEOInternalLink href="/guides/consumer-unit-types">Consumer Unit Types</SEOInternalLink>
+            <SEOInternalLink href="/guides/consumer-unit-replacement-birmingham">Consumer Unit Replacement Birmingham</SEOInternalLink>
+            <SEOInternalLink href="/consumer-unit-replacement-brighton">Consumer Unit Replacement Brighton</SEOInternalLink>
+            <SEOInternalLink href="/guides/consumer-unit-replacement-bristol">Consumer Unit Replacement Bristol</SEOInternalLink>
+            <SEOInternalLink href="/consumer-unit-replacement-cardiff">Consumer Unit Replacement Cardiff</SEOInternalLink>
+            <SEOInternalLink href="/guides/consumer-unit-replacement-cost">Consumer Unit Replacement Cost 2026</SEOInternalLink>
+          </div>
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Certify Consumer Unit Work Digitally"
         subheading="Join 1,000+ UK electricians producing professional EICs with Elec-Mate. 7-day free trial, cancel anytime."

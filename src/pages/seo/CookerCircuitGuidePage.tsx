@@ -72,7 +72,7 @@ const faqs = [
   {
     question: 'Do cooker circuits need RCD protection?',
     answer:
-      'Under BS 7671:2018+A3:2024, a dedicated cooker circuit supplying a fixed cooker via a cooker control unit does not automatically require 30 mA RCD protection in all cases. However, BS 7671 Section 411 requires RCD protection for cables concealed in walls at a depth less than 50 mm that do not have earthed metallic covering or are not enclosed in earthed conduit or trunking. In practice, most domestic cooker circuit cables are concealed in walls, so 30 mA RCD protection is usually required. If the cooker control unit includes a 13 A socket outlet, that socket is a socket outlet rated up to 32 A and also requires 30 mA RCD protection. In a modern RCBO consumer unit, every circuit gets individual RCD protection by default, so this is not usually a separate design consideration.',
+      'Under BS 7671:2018+A4:2026, a dedicated cooker circuit supplying a fixed cooker via a cooker control unit does not automatically require 30 mA RCD protection in all cases. However, BS 7671 Section 411 requires RCD protection for cables concealed in walls at a depth less than 50 mm that do not have earthed metallic covering or are not enclosed in earthed conduit or trunking. In practice, most domestic cooker circuit cables are concealed in walls, so 30 mA RCD protection is usually required. If the cooker control unit includes a 13 A socket outlet, that socket is a socket outlet rated up to 32 A and also requires 30 mA RCD protection. In a modern RCBO consumer unit, every circuit gets individual RCD protection by default, so this is not usually a separate design consideration.',
   },
   {
     question: 'What MCB type should I use for a cooker circuit?',

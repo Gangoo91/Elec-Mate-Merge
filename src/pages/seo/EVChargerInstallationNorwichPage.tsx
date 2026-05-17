@@ -40,7 +40,7 @@ const keyTakeaways = [
   "A 7kW home EV charger installation in Norwich typically costs £800 to £1,100 all-in — slightly below the South East average, reflecting Norfolk's lower labour rate — with OZEV grants of up to £350 available for eligible properties.",
   "Norfolk is one of the UK's least densely charged public charging areas, making home EV charging particularly important for Norwich and Norfolk residents who rely on their vehicle for longer journeys.",
   'Rural Norfolk properties on TT (Terra Terra) earthing systems require a different earthing approach for EV charger installation under BS 7671 Regulation 722.411.4 than urban Norwich properties on PME supplies.',
-  'All EV charger installations must comply with BS 7671:2018+A3:2024 Section 722, including dedicated circuit, RCD protection (Regulation 722.531.2), and a PME or TT earthing assessment.',
+  'All EV charger installations must comply with BS 7671:2018+A4:2026 Section 722, including dedicated circuit, RCD protection (Regulation 722.531.2), and a PME or TT earthing assessment.',
   'NICEIC and NAPIT registered OZEV-approved installers can self-certify the installation under Building Regulations Part P, avoiding the need to notify Norfolk County Council or Norwich City Council building control.',
 ];
 
@@ -427,7 +427,7 @@ const sections = [
         <p>
           All EV charger installations in Norwich and Norfolk must comply with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           Section 722. Key requirements include:
         </p>

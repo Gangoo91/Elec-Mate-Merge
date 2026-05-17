@@ -64,7 +64,7 @@ export default function BestElectricalTrainingAppPage() {
             <>
               <p>
                 The electrical industry requires continuous learning. BS 7671 is amended regularly —
-                Amendment 3 (A3:2024) was issued in July 2024 — and new technologies like EV
+                Amendment 3 (A4:2026) was issued in July 2024 — and new technologies like EV
                 chargers, battery storage, and solar PV installations require electricians to
                 constantly update their knowledge.
               </p>
@@ -157,7 +157,7 @@ export default function BestElectricalTrainingAppPage() {
                 <strong>Courses available include:</strong>
               </p>
               <ul className="list-disc pl-6 space-y-2">
-                <li>18th Edition (BS 7671:2018+A3:2024) — complete regulation coverage</li>
+                <li>18th Edition (BS 7671:2018+A4:2026) — complete regulation coverage</li>
                 <li>City and Guilds Level 2 Electrical Installation</li>
                 <li>City and Guilds Level 3 Electrical Installation</li>
                 <li>AM2 assessment preparation with practical scenario simulation</li>
@@ -467,12 +467,12 @@ export default function BestElectricalTrainingAppPage() {
         {
           question: 'What is the best training app for electrical apprentices in the UK?',
           answer:
-            'Elec-Mate is the most comprehensive training app for UK electrical apprentices in 2026. It includes 46+ courses covering Level 2 and Level 3 Electrical Installation, 18th Edition (BS 7671:2018+A3:2024), AM2 assessment preparation, and EPA simulator. The platform offers 2,000+ practice questions with detailed explanations, flashcards with spaced repetition for maximum retention, mock exams under timed conditions, and an AI study assistant that can explain any topic with BS 7671 regulation references. All training is included in the standard subscription from £5.99/month — there are no per-course charges. Apprentices also get access to professional tools (16 certificate types, 70+ calculators, AI tools, business management) that they will use throughout their career.',
+            'Elec-Mate is the most comprehensive training app for UK electrical apprentices in 2026. It includes 46+ courses covering Level 2 and Level 3 Electrical Installation, 18th Edition (BS 7671:2018+A4:2026), AM2 assessment preparation, and EPA simulator. The platform offers 2,000+ practice questions with detailed explanations, flashcards with spaced repetition for maximum retention, mock exams under timed conditions, and an AI study assistant that can explain any topic with BS 7671 regulation references. All training is included in the standard subscription from £5.99/month — there are no per-course charges. Apprentices also get access to professional tools (16 certificate types, 70+ calculators, AI tools, business management) that they will use throughout their career.',
         },
         {
           question: 'Is there an app for 18th Edition revision?',
           answer:
-            'Yes. Elec-Mate includes a complete 18th Edition course covering BS 7671:2018+A3:2024, including the changes introduced by Amendment 3 (A3:2024) such as Regulation 530.3.2 for bidirectional and unidirectional devices. The course includes structured learning content, practice questions, and flashcards covering all parts of BS 7671 — from fundamental principles and general characteristics through to inspection and testing. You can also use the AI study assistant to ask questions about specific regulations and receive detailed explanations. The IET also offers digital versions of the On-Site Guide and Guidance Notes, which are valuable reference tools but do not include practice questions or exam simulation.',
+            'Yes. Elec-Mate includes a complete 18th Edition course covering BS 7671:2018+A4:2026, including the changes introduced by Amendment 3 (A4:2026) such as Regulation 530.3.2 for bidirectional and unidirectional devices. The course includes structured learning content, practice questions, and flashcards covering all parts of BS 7671 — from fundamental principles and general characteristics through to inspection and testing. You can also use the AI study assistant to ask questions about specific regulations and receive detailed explanations. The IET also offers digital versions of the On-Site Guide and Guidance Notes, which are valuable reference tools but do not include practice questions or exam simulation.',
         },
         {
           question: 'How can I prepare for the AM2 assessment?',
@@ -505,7 +505,7 @@ export default function BestElectricalTrainingAppPage() {
           href: '/eighteenth-edition-course',
           title: '18th Edition Course',
           description:
-            'Complete BS 7671:2018+A3:2024 course with practice questions, flashcards, and AI study assistant.',
+            'Complete BS 7671:2018+A4:2026 course with practice questions, flashcards, and AI study assistant.',
           icon: BookOpen,
           category: 'Training',
         },

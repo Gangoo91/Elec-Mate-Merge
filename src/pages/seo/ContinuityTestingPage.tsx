@@ -71,7 +71,7 @@ const faqs = [
   {
     question: 'What does Regulation 643.2 require for continuity testing?',
     answer:
-      'BS 7671:2018+A3:2024 Regulation 643.2 requires continuity testing to be carried out on all ring final circuits to verify that the ring is complete and has not been incorrectly wired as a spurious ring (a figure-of-eight configuration that would result in incorrect R1+R2 values and potentially overloaded conductors). The regulation also requires that all protective conductors, including main protective bonding conductors, supplementary bonding conductors, and circuit protective conductors, are tested for continuity. Main protective bonding continuity is tested between the main earthing terminal and the bonded service (gas pipe, water pipe, structural metalwork). The maximum acceptable resistance for main bonding conductors is typically less than 0.05Ω.',
+      'BS 7671:2018+A4:2026 Regulation 643.2 requires continuity testing to be carried out on all ring final circuits to verify that the ring is complete and has not been incorrectly wired as a spurious ring (a figure-of-eight configuration that would result in incorrect R1+R2 values and potentially overloaded conductors). The regulation also requires that all protective conductors, including main protective bonding conductors, supplementary bonding conductors, and circuit protective conductors, are tested for continuity. Main protective bonding continuity is tested between the main earthing terminal and the bonded service (gas pipe, water pipe, structural metalwork). The maximum acceptable resistance for main bonding conductors is typically less than 0.05Ω.',
   },
   {
     question: 'How do I detect a spurious ring in a ring final circuit?',
@@ -144,7 +144,7 @@ const sections = [
           creating a shock hazard that may not be obvious during visual inspection.
         </p>
         <p>
-          BS 7671:2018+A3:2024 Regulation 643.2 requires continuity testing of all ring final
+          BS 7671:2018+A4:2026 Regulation 643.2 requires continuity testing of all ring final
           circuit conductors (to verify the ring is complete and correctly wired) and all protective
           conductors (to verify the CPC is continuous from the main earthing terminal to the
           furthest point of every circuit). The results of continuity testing are recorded on the
@@ -367,7 +367,7 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671:2018+A3:2024 Regulation 643.2 sets out the requirements for continuity testing.
+          BS 7671:2018+A4:2026 Regulation 643.2 sets out the requirements for continuity testing.
           The regulation requires:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">

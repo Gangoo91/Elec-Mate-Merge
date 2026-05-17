@@ -37,7 +37,7 @@ const keyTakeaways = [
   "System size in kilowatt-peak (kWp) is determined by the available roof area, the household's annual electricity consumption, and the orientation and tilt of the roof surface. A typical UK 3-bed home uses 3,100 kWh per year and is well served by a 3.5kWp to 4kWp system.",
   'MCS (Microgeneration Certification Scheme) accreditation is required for solar PV installations where customers wish to access the Smart Export Guarantee (SEG) or claim compliance with MCS standards. Without MCS, the installation cannot be formally certified to the scheme.',
   'Systems up to 3.68kW single-phase (16A per phase) can be notified to the DNO under the simplified G98 procedure after installation. Larger systems require a G99 application with prior DNO approval — which must be obtained before installation begins.',
-  'BS 7671:2018+A3:2024 Section 712 covers photovoltaic power supply systems and applies to all solar PV electrical installations. Key requirements include DC isolators at the array and inverter, protection against reverse current, and appropriate labelling throughout the installation.',
+  'BS 7671:2018+A4:2026 Section 712 covers photovoltaic power supply systems and applies to all solar PV electrical installations. Key requirements include DC isolators at the array and inverter, protection against reverse current, and appropriate labelling throughout the installation.',
   'SAP (Standard Assessment Procedure) calculations are used for new-build solar PV sizing under Building Regulations Part L. For retrofit installations, energy monitoring data or EPC assessments provide the consumption baseline for sizing calculations.',
   'Battery storage integration requires careful consideration of protection coordination, particularly where export limiting is applied. The combined inverter-battery system must be assessed under BS 7671 Section 712 and the relevant product standards.',
 ];
@@ -56,7 +56,7 @@ const faqs = [
   {
     question: 'What does BS 7671 Section 712 require for solar PV installations?',
     answer:
-      'BS 7671:2018+A3:2024 Section 712 (Photovoltaic Power Supply Systems) sets out the specific requirements for solar PV electrical installations. Key requirements include: a DC isolator must be installed at the array and at the inverter (Regulation 712.537.2); protection against reverse current where required by the array design (Regulation 712.443); suitable protection against overvoltage on both the DC and AC sides; the installation must include appropriate labelling at every point where live parts could be accessed, warning of the dual-supply nature of PV systems (Regulation 712.514); and all cables used on the DC side must be rated for DC use and for the maximum open-circuit voltage of the array (Regulation 712.522). The protective earth continuity of the mounting structure must also be verified.',
+      'BS 7671:2018+A4:2026 Section 712 (Photovoltaic Power Supply Systems) sets out the specific requirements for solar PV electrical installations. Key requirements include: a DC isolator must be installed at the array and at the inverter (Regulation 712.537.2); protection against reverse current where required by the array design (Regulation 712.443); suitable protection against overvoltage on both the DC and AC sides; the installation must include appropriate labelling at every point where live parts could be accessed, warning of the dual-supply nature of PV systems (Regulation 712.514); and all cables used on the DC side must be rated for DC use and for the maximum open-circuit voltage of the array (Regulation 712.522). The protective earth continuity of the mounting structure must also be verified.',
   },
   {
     question: 'How does battery storage affect the electrical installation requirements?',
@@ -365,7 +365,7 @@ const sections = [
     content: (
       <>
         <p>
-          Section 712 of BS 7671:2018+A3:2024 sets out the specific additional requirements for
+          Section 712 of BS 7671:2018+A4:2026 sets out the specific additional requirements for
           photovoltaic power supply systems. These requirements supplement the general requirements
           of BS 7671 and apply to all solar PV electrical installations, regardless of system size.
         </p>

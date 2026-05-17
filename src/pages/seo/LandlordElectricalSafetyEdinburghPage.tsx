@@ -159,7 +159,7 @@ const sections = [
                 Condition Report (EICR) carried out by a qualified person, documented in accordance
                 with{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                  BS 7671:2018+A3:2024
+                  BS 7671:2018+A4:2026
                 </SEOInternalLink>{' '}
                 (Section 631 covers periodic inspection and testing), is the recognised means of
                 demonstrating compliance with the Repairing Standard for electrical installations.

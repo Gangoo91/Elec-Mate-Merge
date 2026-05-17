@@ -119,7 +119,7 @@ const sections = [
           The 2020 Regulations apply to all private rented properties in Leeds. Landlords must
           obtain an EICR documented in accordance with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           (Section 631) before a new tenancy begins and at least every five years.
         </p>

@@ -170,7 +170,7 @@ const sections = [
         <p>
           SWA cable must be installed in accordance with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           (the IET Wiring Regulations). Cable sizing, burial depth, and termination requirements are
           all specified in BS 7671 and the associated IET Guidance Notes.

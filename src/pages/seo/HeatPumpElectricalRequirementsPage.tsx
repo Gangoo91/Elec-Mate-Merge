@@ -153,7 +153,7 @@ const sections = [
           water cylinder, the controls wiring for UFH zone valves and room thermostats, and the
           testing and certification of all electrical work under{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
           .
         </p>

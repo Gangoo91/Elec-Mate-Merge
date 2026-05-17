@@ -39,7 +39,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'A full house rewire in Cardiff typically costs £2,800 to £6,500 depending on property size. Wales uses the same BS 7671:2018+A3:2024 wiring regulations as England.',
+  'A full house rewire in Cardiff typically costs £2,800 to £6,500 depending on property size. Wales uses the same BS 7671:2018+A4:2026 wiring regulations as England.',
   'Electrical installation work in dwellings in Wales is notifiable under Part P of the Building Regulations 2010, which applies in Wales as well as England.',
   'NICEIC and NAPIT registered contractors can self-certify rewiring work in Cardiff — they notify Building Control Wales on your behalf.',
   'Cardiff has a significant stock of Victorian and Edwardian terraces in areas such as Roath, Cathays, and Canton that may retain original or interwar wiring requiring a full rewire.',
@@ -56,7 +56,7 @@ const faqs = [
   {
     question: 'Do Welsh homes use the same wiring regulations as England?',
     answer:
-      'Yes. BS 7671:2018+A3:2024 (the IET Wiring Regulations, 18th Edition) applies across the United Kingdom including Wales. All fixed electrical installation work in Cardiff and across Wales must comply with BS 7671. Building Regulations in Wales also require electrical installation work in dwellings to be carried out by a competent person or notified to Building Control Wales.',
+      'Yes. BS 7671:2018+A4:2026 (the IET Wiring Regulations, 18th Edition) applies across the United Kingdom including Wales. All fixed electrical installation work in Cardiff and across Wales must comply with BS 7671. Building Regulations in Wales also require electrical installation work in dwellings to be carried out by a competent person or notified to Building Control Wales.',
   },
   {
     question: 'Does Part P apply to rewiring work in Cardiff?',
@@ -199,7 +199,7 @@ const sections = [
     content: (
       <>
         <p>
-          Wales uses the same electrical safety technical standards as England. BS 7671:2018+A3:2024
+          Wales uses the same electrical safety technical standards as England. BS 7671:2018+A4:2026
           (the IET Wiring Regulations, 18th Edition) applies across all of the United Kingdom.
           Building Regulations for dwellings in Wales are approved by the Welsh Government under the
           Building Regulations 2010.
@@ -209,7 +209,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 7671:2018+A3:2024</strong> — the current edition of the Wiring
+                <strong>BS 7671:2018+A4:2026</strong> — the current edition of the Wiring
                 Regulations applies in Wales. All rewiring work in Cardiff must comply with its
                 requirements including RCD protection (Regulation 411.3.3), consumer unit standards,
                 earthing and bonding, and circuit protective devices.

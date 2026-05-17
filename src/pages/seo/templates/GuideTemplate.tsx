@@ -4,6 +4,7 @@ import { SEOReadingMeta } from '@/components/seo/SEOReadingMeta';
 import { SEOKeyTakeaways } from '@/components/seo/SEOKeyTakeaways';
 import { SEOFAQAccordion } from '@/components/seo/SEOFAQAccordion';
 import { SEORelatedPages, type RelatedPage } from '@/components/seo/SEORelatedPages';
+import { RecentReviews } from '@/components/seo/RecentReviews';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOSocialShare } from '@/components/seo/SEOSocialShare';
 import { SEOSocialFollow } from '@/components/seo/SEOSocialFollow';
@@ -62,6 +63,20 @@ export interface GuideTemplateProps {
   ctaSubheading?: string;
   /** Extra schemas beyond Article + FAQ + Breadcrumb */
   extraSchemas?: Array<Record<string, unknown>>;
+  /**
+   * Optional embedded tool / calculator rendered directly under the hero.
+   * Guides that explain a calculation should ship the actual calc — users
+   * search for "voltage drop calculator", they should land on a working tool,
+   * not a wall of text.
+   */
+  embeddedTool?: React.ReactNode;
+  /**
+   * If true, emits <meta name="robots" content="noindex, nofollow">.
+   * Use for cannibalisation losers + thin pages awaiting deletion. The
+   * 301 redirect in public/_redirects handles user traffic; noindex tells
+   * Google to drop the URL from the index faster.
+   */
+  noindex?: boolean;
 }
 
 export default function GuideTemplate({
@@ -87,6 +102,8 @@ export default function GuideTemplate({
   ctaHeading,
   ctaSubheading,
   extraSchemas = [],
+  embeddedTool,
+  noindex = false,
 }: GuideTemplateProps) {
   const pageUrl = breadcrumbs.length > 0 ? breadcrumbs[breadcrumbs.length - 1].href : '/';
 
@@ -152,6 +169,7 @@ export default function GuideTemplate({
     datePublished,
     dateModified,
     author: 'Elec-Mate Technical Team',
+    noindex,
   });
 
   return (
@@ -185,6 +203,14 @@ export default function GuideTemplate({
           <SEOSocialFollow />
         </div>
       </section>
+
+      {/* Live embedded tool — free, no signup, BS 7671:2018+A4:2026 compliant.
+          Guides about a calculation ship the working calc, not a screenshot. */}
+      {embeddedTool && (
+        <section id="calculator" className="pb-10 scroll-mt-24">
+          {embeddedTool}
+        </section>
+      )}
 
       {/* Social Proof Bar */}
       <SEOSocialProofBar />
@@ -236,6 +262,9 @@ export default function GuideTemplate({
           <SEORelatedPages pages={relatedPages} />
         </section>
       )}
+
+      {/* Verified App Store reviews — schema-policy compliance + conversion */}
+      <RecentReviews />
 
       {/* Testimonials — social proof before the final CTA */}
       <SEOTestimonialStrip />

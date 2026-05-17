@@ -673,6 +673,7 @@ export default function ApprenticeSalaryUKPage() {
           <span className="text-yellow-400">What You Will Actually Earn in 2026</span>
         </>
       }
+              noindex={true}
       heroSubtitle="From the legal minimum wage to JIB rates, Year 1 to Year 4 progression, regional variations, and overtime — this is the complete guide to apprentice electrician pay in the UK. Know your worth from day one."
       readingTime={12}
       keyTakeaways={keyTakeaways}

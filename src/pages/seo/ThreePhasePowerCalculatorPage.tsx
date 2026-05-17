@@ -1,4 +1,6 @@
 import { Helmet } from 'react-helmet';
+import { RecentReviews } from '@/components/seo/RecentReviews';
+import ThreePhasePowerCalculator from '@/components/apprentice/calculators/ThreePhasePowerCalculator';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
@@ -88,7 +90,7 @@ const features = [
   },
   {
     icon: Shield,
-    title: 'BS 7671:2018+A3:2024 Compliant',
+    title: 'BS 7671:2018+A4:2026 Compliant',
     description:
       'All calculations follow the current 18th Edition wiring regulations including Amendment 3. Three-phase voltage drop uses the correct three-phase mV/A/m values from Appendix 4.',
   },
@@ -106,13 +108,7 @@ const softwareAppSchema = {
     price: '0',
     priceCurrency: 'GBP',
     description: '7-day free trial, then from £12.99/month',
-  },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.8',
-    ratingCount: '1000',
-    bestRating: '5',
-  },
+  }
 };
 
 const faqSchema = {
@@ -177,6 +173,13 @@ export default function ThreePhasePowerCalculatorPage() {
               <ArrowDown className="w-4 h-4 ml-1" />
             </a>
           </div>
+        </div>
+      </section>
+
+      {/* Live calculator — free, no signup, BS 7671:2018+A4:2026 compliant */}
+      <section id="calculator" className="px-5 pb-12 scroll-mt-24">
+        <div className="max-w-4xl mx-auto">
+          <ThreePhasePowerCalculator />
         </div>
       </section>
 
@@ -512,6 +515,13 @@ export default function ThreePhasePowerCalculatorPage() {
       </section>
 
       {/* CTA */}
+            {/* Verified App Store reviews — policy-safe SoftwareApplication aggregateRating */}
+      <section className="px-5 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <RecentReviews />
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Calculate Three-Phase Power in Seconds"
         subheading="Join 1,000+ UK electricians using Elec-Mate for on-site calculations. 7-day free trial, cancel anytime."

@@ -39,7 +39,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'A full house rewire in Nottingham typically costs £2,500 to £6,500 depending on property size, with East Midlands labour rates sitting slightly below the national average.',
-  'All rewiring work must comply with BS 7671:2018+A3:2024 (the 18th Edition Wiring Regulations) and be notified to the local authority under Part P of the Building Regulations.',
+  'All rewiring work must comply with BS 7671:2018+A4:2026 (the 18th Edition Wiring Regulations) and be notified to the local authority under Part P of the Building Regulations.',
   'NICEIC and NAPIT registered contractors can self-certify rewiring work, meaning they notify Part P on your behalf — you do not need to apply for building control separately.',
   'Signs that a Nottingham property needs rewiring include rubber-insulated wiring (pre-1960s), a fuse box with rewirable fuses, single-core aluminium cables, lack of RCD protection, or a periodic inspection report with C1 or C2 observations.',
   'A typical rewire of a three-bedroom semi-detached house in Nottingham takes three to five days. Older Victorian and Edwardian properties in areas such as The Meadows, Lenton, and Mapperley may take longer.',
@@ -389,7 +389,7 @@ const sections = [
         <p>
           Part P of the Building Regulations 2010 applies to all fixed electrical installation work
           in dwellings in England. A full rewire is notifiable work under Part P and must comply
-          with BS 7671:2018+A3:2024.
+          with BS 7671:2018+A4:2026.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">

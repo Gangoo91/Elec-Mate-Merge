@@ -612,6 +612,26 @@ export default function FireAlarmCertificatePage() {
       </section>
 
       {/* CTA */}
+      
+
+      {/* Related pages — auto-injected for internal-link health (audit criterion #7).
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/guides/fire-alarm-certificate-requirements">Fire Alarm Certificate Requirements</SEOInternalLink>
+            <SEOInternalLink href="/training/fire-alarm-systems">Fire Alarm Systems Course</SEOInternalLink>
+            <SEOInternalLink href="/guides/bs-5839-fire-alarm-standard">BS 5839 Fire Alarm Standard</SEOInternalLink>
+            <SEOInternalLink href="/fire-alarm-fault-finding">Fire Alarm Fault Finding</SEOInternalLink>
+            <SEOInternalLink href="/guides/fire-alarm-installation-cost">Fire Alarm Installation Cost UK 2026</SEOInternalLink>
+            <SEOInternalLink href="/guides/networked-fire-alarm-system">Networked Fire Alarm System</SEOInternalLink>
+            <SEOInternalLink href="/tools/eicr-certificate">EICR Certificate Guide 2026</SEOInternalLink>
+            <SEOInternalLink href="/training/fire-safety">Fire Safety Course</SEOInternalLink>
+          </div>
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Stop writing fire alarm certificates by hand"
         subheading="Join 1,000+ UK electricians creating professional digital certificates. 7-day free trial, cancel anytime."

@@ -41,7 +41,7 @@ const keyTakeaways = [
   'Knob-and-tube wiring (common in Victorian properties built before 1920) has no earth conductor. Without an earth, RCD protection cannot operate correctly and the risk of electric shock is significantly higher.',
   'Cast iron consumer units (fuse boards) cannot accept modern RCD or RCBO protection. They pose a serious fire risk if the rewirable fuses are incorrectly rated or replaced with wire of the wrong gauge.',
   'A full rewire of a Victorian terraced house typically costs £3,000 to £8,000 depending on size, number of circuits, and the difficulty of routing cables through solid masonry walls. Larger Victorian townhouses can exceed £10,000.',
-  'An EICR on an unmodernised Victorian property will almost always return a C1 or C2 outcome, making the installation Unsatisfactory under BS 7671:2018+A3:2024.',
+  'An EICR on an unmodernised Victorian property will almost always return a C1 or C2 outcome, making the installation Unsatisfactory under BS 7671:2018+A4:2026.',
 ];
 
 const faqs = [
@@ -167,7 +167,7 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>No earth conductor</strong> — wiring installed before the mid-1960s often
-                has only a live and a neutral conductor, with no earth. Under BS 7671:2018+A3:2024,
+                has only a live and a neutral conductor, with no earth. Under BS 7671:2018+A4:2026,
                 a missing protective earth conductor is classified as a C1 or C2 observation
                 depending on the context. Without an earth, fault protection relies entirely on
                 overcurrent devices (fuses), which may not operate quickly enough to prevent injury

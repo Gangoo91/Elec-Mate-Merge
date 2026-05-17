@@ -47,7 +47,7 @@ const faqs = [
   {
     question: 'Does Part P apply to electrical work in Aberdeen?',
     answer:
-      'No. Part P of the Building Regulations applies only to England and Wales. Aberdeen is in Scotland, where electrical work in dwellings is regulated under Scottish Building Standards — specifically Section 4 (Safety) of the Technical Handbook — Domestic. A building warrant is required from Aberdeen City Council Building Standards before starting notifiable work such as a rewire, consumer unit replacement, or new installation. An Electrical Installation Certificate (EIC) is required as evidence of compliance with BS 7671:2018+A3:2024 on completion.',
+      'No. Part P of the Building Regulations applies only to England and Wales. Aberdeen is in Scotland, where electrical work in dwellings is regulated under Scottish Building Standards — specifically Section 4 (Safety) of the Technical Handbook — Domestic. A building warrant is required from Aberdeen City Council Building Standards before starting notifiable work such as a rewire, consumer unit replacement, or new installation. An Electrical Installation Certificate (EIC) is required as evidence of compliance with BS 7671:2018+A4:2026 on completion.',
   },
   {
     question: 'Who is the DNO for Aberdeen?',
@@ -180,8 +180,7 @@ const sections = [
               <span>
                 <strong>Technical Handbook Section 4 (Safety)</strong> — the Scottish equivalent of
                 Part P. Requires electrical installations to comply with BS 7671 and to be designed,
-                installed, inspected, and tested by a competent person. The electrical standard (BS
-                7671:2018+A3:2024) is identical — only the compliance route differs.
+                installed, inspected, and tested by a competent person. The electrical standard (BS 7671:2018+A4:2026) is identical — only the compliance route differs.
               </span>
             </li>
             <li className="flex items-start gap-3">

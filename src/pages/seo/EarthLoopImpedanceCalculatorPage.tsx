@@ -1,4 +1,6 @@
 import { Helmet } from 'react-helmet';
+import { RecentReviews } from '@/components/seo/RecentReviews';
+import EarthFaultLoopCalculator from '@/components/apprentice/calculators/EarthFaultLoopCalculator';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
@@ -99,7 +101,7 @@ const features = [
   },
   {
     icon: BookOpen,
-    title: 'BS 7671:2018+A3:2024 Compliant',
+    title: 'BS 7671:2018+A4:2026 Compliant',
     description:
       'All maximum Zs values verified against the current 18th Edition wiring regulations including Amendment 3. Updated tables for all protective device types.',
   },
@@ -124,13 +126,7 @@ const softwareAppSchema = {
     price: '0',
     priceCurrency: 'GBP',
     description: '7-day free trial, then from £12.99/month',
-  },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.8',
-    ratingCount: '1000',
-    bestRating: '5',
-  },
+  }
 };
 
 const faqSchema = {
@@ -212,6 +208,13 @@ export default function EarthLoopImpedanceCalculatorPage() {
               <ArrowDown className="w-4 h-4 ml-1" />
             </a>
           </div>
+        </div>
+      </section>
+
+      {/* Live calculator — free, no signup, BS 7671:2018+A4:2026 compliant */}
+      <section id="calculator" className="px-5 pb-12 scroll-mt-24">
+        <div className="max-w-4xl mx-auto">
+          <EarthFaultLoopCalculator />
         </div>
       </section>
 
@@ -671,7 +674,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
           </div>
 
           <p className="text-white text-sm leading-relaxed">
-            These values are from BS 7671:2018+A3:2024 and represent the maximum Zs at conductor
+            These values are from BS 7671:2018+A4:2026 and represent the maximum Zs at conductor
             operating temperature. When comparing against site measurements taken at ambient
             temperature, use the 80% rule or apply the appropriate correction factor as described
             above.
@@ -877,6 +880,13 @@ export default function EarthLoopImpedanceCalculatorPage() {
       </section>
 
       {/* CTA */}
+            {/* Verified App Store reviews — policy-safe SoftwareApplication aggregateRating */}
+      <section className="px-5 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <RecentReviews />
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Calculate Zs in Seconds on Site"
         subheading="Join 1,000+ UK electricians using Elec-Mate for on-site calculations. 7-day free trial, cancel anytime."

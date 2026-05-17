@@ -43,7 +43,7 @@ const keyTakeaways = [
   "Sheffield has one of the most topographically varied housing stocks in England. The city's hilly terrain means properties in areas such as Broomhill, Crookes, Walkley, and Hillsborough often have split-level layouts that add complexity to cable routing.",
   'A full rewire is notifiable under Part P of the Building Regulations (England). Use a NICEIC, NAPIT, or ELECSA-registered electrician to self-certify and avoid Sheffield City Council building control inspection fees.',
   'A typical rewire takes 3–5 days for a 2-bed property and 5–8 days for a 3-bed. Wall chasing, replastering, and periods without power during first fix are all part of the process.',
-  'An Electrical Installation Certificate (EIC) is mandatory on completion of every rewire, confirming compliance with BS 7671:2018+A3:2024.',
+  'An Electrical Installation Certificate (EIC) is mandatory on completion of every rewire, confirming compliance with BS 7671:2018+A4:2026.',
 ];
 
 const faqs = [
@@ -433,7 +433,7 @@ const sections = [
           <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>{' '}
-          confirming compliance with BS 7671:2018+A3:2024.
+          confirming compliance with BS 7671:2018+A4:2026.
         </p>
       </>
     ),

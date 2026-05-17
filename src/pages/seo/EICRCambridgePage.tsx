@@ -40,7 +40,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, carried out in accordance with BS 7671:2018+A3:2024 (Section 631). It produces a condition assessment using C1, C2, C3 and FI observation codes.",
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, carried out in accordance with BS 7671:2018+A4:2026 (Section 631). It produces a condition assessment using C1, C2, C3 and FI observation codes.",
   'Cambridge EICR costs are above the national average, driven by high property values, strong demand, and elevated local labour rates. Expect to pay between £140 and £250 for a two-bedroom flat and £200 to £360 for a three-bedroom house.',
   'Landlords in England must obtain a valid EICR before a new tenancy and renew it every five years. South Cambridgeshire District Council and Cambridge City Council enforce these requirements with fines of up to £30,000 for non-compliance.',
   'Cambridge has a very large private rented sector driven by the University of Cambridge, Anglia Ruskin University, and the booming technology sector. HMO density is among the highest in England outside London.',
@@ -151,7 +151,7 @@ const sections = [
         <p>
           The report is produced in accordance with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           (Section 631), which specifies that an Electrical Installation Condition Report must be
           used for periodic inspection of existing installations. It is a detailed condition

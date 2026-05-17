@@ -19,7 +19,7 @@ export default function WhenIsEICRequiredPage() {
   return (
     <GuideTemplate
       title="When Is an EIC Required? BS 7671 Guide | Elec-Mate"
-      description="Complete guide to when an Electrical Installation Certificate (EIC) is required under BS 7671:2018+A3:2024. New circuits, rewires, consumer unit changes, extensions, loft conversions, and all Part P notifiable work explained."
+      description="Complete guide to when an Electrical Installation Certificate (EIC) is required under BS 7671:2018+A4:2026. New circuits, rewires, consumer unit changes, extensions, loft conversions, and all Part P notifiable work explained."
       datePublished="2025-06-10"
       dateModified="2026-02-14"
       breadcrumbs={[
@@ -64,8 +64,7 @@ export default function WhenIsEICRequiredPage() {
               <p>
                 An Electrical Installation Certificate (EIC) is the formal document issued upon
                 completion of new electrical installation work. It certifies that the design,
-                construction, and inspection and testing of the new work comply with BS
-                7671:2018+A3:2024 — the 18th Edition of the IET Wiring Regulations with Amendment 3.
+                construction, and inspection and testing of the new work comply with BS 7671:2018+A4:2026 — the 18th Edition of the IET Wiring Regulations with Amendment 3.
               </p>
               <p>
                 The EIC is defined in Appendix 6 of BS 7671 and follows the model forms published in
@@ -293,7 +292,7 @@ export default function WhenIsEICRequiredPage() {
                       <strong className="text-yellow-400">
                         18th Edition IET Wiring Regulations (C&G 2382)
                       </strong>{' '}
-                      — The current edition qualification covering BS 7671:2018+A3:2024. This is the
+                      — The current edition qualification covering BS 7671:2018+A4:2026. This is the
                       foundation qualification that demonstrates knowledge of the standard.
                     </span>
                   </li>

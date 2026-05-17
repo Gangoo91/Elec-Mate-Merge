@@ -152,7 +152,7 @@ const sections = [
           Every electrical installation — from a single additional socket to a full house rewire —
           requires a design. The design process is set out in{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           (the IET Wiring Regulations, 18th Edition with Amendment 3) and follows a structured
           sequence that ensures the completed installation is safe, functional, and compliant.

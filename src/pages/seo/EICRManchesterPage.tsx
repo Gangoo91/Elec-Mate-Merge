@@ -42,7 +42,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed wiring, documented in accordance with BS 7671:2018+A3:2024 (Section 631). It assesses whether the installation is safe and identifies any defects using observation codes (C1, C2, C3, FI).",
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed wiring, documented in accordance with BS 7671:2018+A4:2026 (Section 631). It assesses whether the installation is safe and identifies any defects using observation codes (C1, C2, C3, FI).",
   'Manchester EICR costs are competitive compared to London. Expect £120 to £200 for a two-bedroom flat, £180 to £300 for a three-bedroom terraced house, and £250 to £400 for a four-bedroom detached house.',
   'Since 1 April 2021, landlords in England must have a valid EICR for every private rented property, renewed at least every five years. Manchester City Council enforces this through its Private Rented Sector team with fines of up to £30,000.',
   'Selective licensing schemes in Manchester (including parts of Moss Side, Rusholme, Fallowfield, and Old Moat) require landlords to hold a property licence with a valid EICR as a condition.',
@@ -147,7 +147,7 @@ const sections = [
         <p>
           The report is documented in accordance with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           (Section 631), which specifies that an Electrical Installation Condition Report must be
           used for periodic inspection and testing of existing installations. Each defect is

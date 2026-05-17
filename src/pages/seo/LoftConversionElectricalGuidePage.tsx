@@ -181,7 +181,7 @@ const sections = [
           All socket-outlet circuits in the loft conversion must have RCD protection with a rated
           residual operating current not exceeding 30mA, in accordance with Regulation 411.3.3 of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
           .
         </p>

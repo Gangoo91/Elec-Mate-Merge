@@ -161,7 +161,7 @@ const sections = [
         <p>
           All five instruments tested here comply with BS EN 61557 and are suitable for testing to{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
           . They all perform the core tests: continuity, insulation resistance, loop impedance (Zs
           and Ze), RCD operation (trip time and trip current), and earth electrode resistance where

@@ -41,7 +41,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, carried out in accordance with BS 7671:2018+A3:2024 (Section 631). It produces a detailed condition assessment using C1, C2, C3 and FI observation codes.",
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, carried out in accordance with BS 7671:2018+A4:2026 (Section 631). It produces a detailed condition assessment using C1, C2, C3 and FI observation codes.",
   'Southampton EICR costs are broadly in line with the South of England average. Expect to pay between £120 and £220 for a two-bedroom flat and £180 to £320 for a three-bedroom house.',
   'Landlords in England must obtain a valid EICR before a new tenancy begins and renew it at least every five years. Southampton City Council enforces these requirements and can issue fines of up to £30,000 for non-compliance.',
   'Southampton has a significant proportion of inter-war and post-war housing rebuilt after extensive wartime bomb damage. Many properties also include 1960s and 1970s wiring that is approaching the end of its safe service life and commonly returns C2 observations.',
@@ -152,7 +152,7 @@ const sections = [
         <p>
           The report is produced in accordance with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           (Section 631), which specifies that an Electrical Installation Condition Report must be
           used for periodic inspection and testing of existing installations. It is not a pass or

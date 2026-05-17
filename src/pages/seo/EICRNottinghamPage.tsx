@@ -38,7 +38,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A3:2024 (Section 631). It records the condition of wiring, consumer units, earthing, bonding and protective devices using observation codes (C1, C2, C3, FI).",
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A4:2026 (Section 631). It records the condition of wiring, consumer units, earthing, bonding and protective devices using observation codes (C1, C2, C3, FI).",
   'Nottingham EICR costs are close to the national average. Expect to pay between £150 and £280 for a two-bedroom terraced house and £250 to £400 for a three-bedroom semi-detached property.',
   'Since 1 April 2021, landlords in England must obtain an EICR before a new tenancy begins and at least every five years. Nottingham City Council enforces the regulations and can impose fines of up to £30,000 per breach.',
   'Nottingham operates one of the most extensive selective licensing schemes in England, covering large parts of the city. A valid EICR is a condition of the property licence, and the council actively enforces compliance.',
@@ -140,7 +140,7 @@ const sections = [
         <p>
           The EICR is documented in accordance with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           (Section 631), which requires that an Electrical Installation Condition Report is used for
           periodic inspection and testing of existing installations — not an Electrical Installation

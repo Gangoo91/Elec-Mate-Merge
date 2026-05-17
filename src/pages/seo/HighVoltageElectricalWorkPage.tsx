@@ -36,7 +36,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'High voltage (HV) in the UK electrical industry context means voltages above 1kV AC (or 1.5kV DC). This is the boundary defined by BS 7671:2018+A3:2024 and IEC 60038. Standard distribution voltages above LV include 11kV, 33kV, 66kV, 132kV, and 275kV/400kV transmission.',
+  'High voltage (HV) in the UK electrical industry context means voltages above 1kV AC (or 1.5kV DC). This is the boundary defined by BS 7671:2018+A4:2026 and IEC 60038. Standard distribution voltages above LV include 11kV, 33kV, 66kV, 132kV, and 275kV/400kV transmission.',
   'HV systems are operated through formal Authorisation systems. Key roles are: Authorised Person (AP) — responsible for establishing and maintaining safe working conditions; Competent Person (CP) — can carry out HV work under the control of an AP; Senior Authorised Person (SAP) — issues sanctions for testing and manages complex switching operations.',
   'ENA Engineering Recommendation G74 covers the protection of HV consumer installations. ENA Engineering Recommendation G82 covers safety management of HV electrical plant. These are the key industry standards for HV work on distribution networks.',
   'Electricity at Work Regulations 1989 Regulation 14 prohibits live working on HV systems in virtually all circumstances. Regulation 14 states that no person shall work on live conductors unless it is unreasonable in all the circumstances for it to be dead. For HV, "unreasonable" almost never applies — all HV work is carried out dead.',
@@ -47,7 +47,7 @@ const faqs = [
   {
     question: 'What counts as high voltage in UK electrical work?',
     answer:
-      'The voltage band definitions in BS 7671:2018+A3:2024 (based on IEC 60038) are: Extra Low Voltage (ELV) — not exceeding 50V AC or 120V ripple-free DC; Low Voltage (LV) — exceeding ELV but not exceeding 1kV AC or 1.5kV DC; High Voltage (HV) — exceeding 1kV AC or 1.5kV DC. In the UK distribution network context, HV usually refers to the 11kV distribution network (medium voltage in IEC terminology) and above, including 33kV, 66kV, and 132kV sub-transmission. The 11kV distribution network feeds most large commercial and industrial sites via transformers down to 400V/230V LV. HV in the transmission network (National Grid) refers to the 275kV and 400kV Super Grid. For practical purposes: if you are working on anything above 1kV AC, it is HV work and requires appropriate authorisation.',
+      'The voltage band definitions in BS 7671:2018+A4:2026 (based on IEC 60038) are: Extra Low Voltage (ELV) — not exceeding 50V AC or 120V ripple-free DC; Low Voltage (LV) — exceeding ELV but not exceeding 1kV AC or 1.5kV DC; High Voltage (HV) — exceeding 1kV AC or 1.5kV DC. In the UK distribution network context, HV usually refers to the 11kV distribution network (medium voltage in IEC terminology) and above, including 33kV, 66kV, and 132kV sub-transmission. The 11kV distribution network feeds most large commercial and industrial sites via transformers down to 400V/230V LV. HV in the transmission network (National Grid) refers to the 275kV and 400kV Super Grid. For practical purposes: if you are working on anything above 1kV AC, it is HV work and requires appropriate authorisation.',
   },
   {
     question: 'What is an HV Authorised Person and how do I become one?',
@@ -158,7 +158,7 @@ const sections = [
         <p>
           For standard LV electrical work, see the guide to{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
           . HV work sits above and beyond BS 7671, which formally limits its scope to installations
           up to 1kV AC.

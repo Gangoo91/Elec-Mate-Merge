@@ -52,7 +52,7 @@ export default function BestCableSizingAppPage() {
       readingTime={11}
       comparisonColumns={['Feature', 'Elec-Mate', 'Cable Calc', 'Voltimum', 'Hager Specs']}
       comparisonRows={[
-        { feature: 'BS 7671:2018+A3:2024 Tables', values: [true, true, 'Partial', true] },
+        { feature: 'BS 7671:2018+A4:2026 Tables', values: [true, true, 'Partial', true] },
         {
           feature: 'All Correction Factors (Ca, Cg, Ci, Cf)',
           values: [true, true, true, 'Partial'],
@@ -74,7 +74,7 @@ export default function BestCableSizingAppPage() {
         'Elec-Mate is the only cable sizing app that integrates calculations directly into your certificates, so cable sizing results flow straight into your EIC or Minor Works form.',
         'All four apps perform BS 7671 cable sizing, but only Elec-Mate includes the full suite of 50+ electrical calculators — maximum demand, Zs verification, disconnection times, conduit fill, and more.',
         'Cable Calc, Voltimum, and Hager Specs are free single-purpose tools. Elec-Mate is a paid all-in-one platform, but at £5.99 per month you get calculators plus certificates, AI tools, training, and business management.',
-        'Elec-Mate references BS 7671:2018+A3:2024 tables including the latest Amendment 3 changes. Verify that free tools have been updated to reflect A3:2024 before relying on them.',
+        'Elec-Mate references BS 7671:2018+A4:2026 tables including the latest Amendment 3 changes. Verify that free tools have been updated to reflect A4:2026 before relying on them.',
         'The AI Board Scanner in Elec-Mate can photograph a consumer unit and identify existing cables and circuit configurations, giving you a starting point for cable sizing calculations on existing installations.',
       ]}
       sections={[
@@ -115,7 +115,7 @@ export default function BestCableSizingAppPage() {
               <p>
                 <strong>Elec-Mate</strong> — All-in-one platform with 70+ calculators including
                 cable sizing, plus certificates, AI tools, training, and business management.
-                References BS 7671:2018+A3:2024. From £5.99/month.
+                References BS 7671:2018+A4:2026. From £5.99/month.
               </p>
               <p>
                 <strong>Cable Calc</strong> — Free standalone cable sizing calculator. Performs BS
@@ -134,7 +134,7 @@ export default function BestCableSizingAppPage() {
               </p>
               <SEOAppBridge
                 title="50+ Calculators — Not Just Cable Sizing"
-                description="Elec-Mate includes cable sizing plus maximum demand, voltage drop, Zs verification, disconnection times, conduit fill, trunking fill, diversity, and dozens more. All referencing BS 7671:2018+A3:2024."
+                description="Elec-Mate includes cable sizing plus maximum demand, voltage drop, Zs verification, disconnection times, conduit fill, trunking fill, diversity, and dozens more. All referencing BS 7671:2018+A4:2026."
                 icon={Calculator}
               />
             </>
@@ -147,8 +147,8 @@ export default function BestCableSizingAppPage() {
             <>
               <p>
                 All four apps claim BS 7671 compliance for cable sizing, but the depth varies
-                significantly. Elec-Mate references BS 7671:2018+A3:2024 — the latest version
-                including Amendment 3 issued in July 2024. This matters because A3:2024 introduced
+                significantly. Elec-Mate references BS 7671:2018+A4:2026 — the latest version
+                including Amendment 3 issued in July 2024. This matters because A4:2026 introduced
                 changes relevant to certain installation types.
               </p>
               <p>
@@ -251,7 +251,7 @@ export default function BestCableSizingAppPage() {
         },
         {
           icon: BookOpen,
-          title: 'BS 7671:2018+A3:2024',
+          title: 'BS 7671:2018+A4:2026',
           description:
             'All calculators reference the latest edition including Amendment 3. Table references displayed so you can verify compliance.',
         },
@@ -273,12 +273,12 @@ export default function BestCableSizingAppPage() {
         {
           question: 'What is the best cable sizing app for UK electricians?',
           answer:
-            'Elec-Mate is the best overall cable sizing app for UK electricians in 2026 because it combines BS 7671:2018+A3:2024-compliant cable sizing with 50+ other electrical calculators, 16 certificate types, AI tools, 46+ training courses, and business management — all in a single app from £5.99 per month. If you only need a free standalone cable sizing calculator, Cable Calc is a good alternative.',
+            'Elec-Mate is the best overall cable sizing app for UK electricians in 2026 because it combines BS 7671:2018+A4:2026-compliant cable sizing with 50+ other electrical calculators, 16 certificate types, AI tools, 46+ training courses, and business management — all in a single app from £5.99 per month. If you only need a free standalone cable sizing calculator, Cable Calc is a good alternative.',
         },
         {
           question: 'Are free cable sizing apps accurate?',
           answer:
-            'Free cable sizing apps like Cable Calc, Voltimum, and Hager Specs can be accurate for basic cable sizing calculations. However, accuracy depends on whether the app has been updated to reflect the latest BS 7671 amendments. Always verify which edition the app references. Elec-Mate clearly displays BS 7671:2018+A3:2024 table references within each calculator so you can confirm compliance.',
+            'Free cable sizing apps like Cable Calc, Voltimum, and Hager Specs can be accurate for basic cable sizing calculations. However, accuracy depends on whether the app has been updated to reflect the latest BS 7671 amendments. Always verify which edition the app references. Elec-Mate clearly displays BS 7671:2018+A4:2026 table references within each calculator so you can confirm compliance.',
         },
         {
           question: 'Do I need a cable sizing app or can I use the BS 7671 tables directly?',

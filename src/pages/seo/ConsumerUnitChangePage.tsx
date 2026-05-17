@@ -158,7 +158,7 @@ export default function ConsumerUnitChangePage() {
           content: (
             <>
               <p>
-                A consumer unit change in 2026 must comply with BS 7671:2018+A3:2024 — the 18th
+                A consumer unit change in 2026 must comply with BS 7671:2018+A4:2026 — the 18th
                 Edition of the IET Wiring Regulations with Amendment 3. The key regulatory
                 requirements are:
               </p>
@@ -208,9 +208,9 @@ export default function ConsumerUnitChangePage() {
                     <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                     <span>
                       <strong className="text-yellow-400">
-                        Bidirectional devices (BS 7671:2018+A3:2024, Section 530)
+                        Bidirectional devices (BS 7671:2018+A4:2026, Section 530)
                       </strong>{' '}
-                      — Introduced by Amendment 3 (A3:2024). Where the installation includes battery
+                      — Introduced by Amendment 3 (A4:2026). Where the installation includes battery
                       storage, solar PV with battery backup, or V2G EV chargers, protective devices
                       must be suitable for bidirectional fault current flow.
                     </span>
@@ -236,7 +236,7 @@ export default function ConsumerUnitChangePage() {
               </p>
               <SEOAppBridge
                 title="BS 7671 Compliance Built Into Every Certificate"
-                description="Elec-Mate's EIC form is structured around BS 7671:2018+A3:2024 requirements. Every test result is validated against the correct limits, and the design section covers RCD selection, SPD provision, and all mandatory checklist items."
+                description="Elec-Mate's EIC form is structured around BS 7671:2018+A4:2026 requirements. Every test result is validated against the correct limits, and the design section covers RCD selection, SPD provision, and all mandatory checklist items."
                 icon={ShieldCheck}
               />
             </>

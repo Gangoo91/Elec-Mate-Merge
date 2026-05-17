@@ -40,7 +40,7 @@ const keyTakeaways = [
   'A full house rewire in Manchester costs between £2,500 and £10,000+ in 2026, broadly in line with the national average — significantly cheaper than London but reflecting the North West market rate.',
   'Manchester has a huge stock of Victorian and Edwardian terraced housing, particularly in Levenshulme, Chorlton, Didsbury, Fallowfield, and Longsight, many with original or outdated wiring.',
   'Rewires are notifiable under Part P of the Building Regulations. Your electrician must be registered with NICEIC, NAPIT, or ELECSA to self-certify the work.',
-  'An Electrical Installation Certificate (EIC) must be issued on completion, confirming compliance with BS 7671:2018+A3:2024.',
+  'An Electrical Installation Certificate (EIC) must be issued on completion, confirming compliance with BS 7671:2018+A4:2026.',
   'Electrician day rates in Greater Manchester range from £250 to £370 in 2026.',
 ];
 
@@ -330,7 +330,7 @@ const sections = [
           for Greater Manchester areas).
         </p>
         <p>
-          Under BS 7671:2018+A3:2024, Regulation 411.3.3 requires RCD protection with a rated
+          Under BS 7671:2018+A4:2026, Regulation 411.3.3 requires RCD protection with a rated
           residual operating current not exceeding 30 mA for socket outlets with a rated current not
           exceeding 32 A. All new rewires must comply with this requirement. The electrician must
           issue an{' '}

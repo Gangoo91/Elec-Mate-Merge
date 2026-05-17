@@ -8,6 +8,8 @@ import {
   sendDocument,
   createQuote,
   createInvoice,
+  amendQuote,
+  amendInvoice,
 } from '../_shared/mate-documents.ts';
 import {
   getBusinessSnapshot,
@@ -565,6 +567,102 @@ const TOOLS: any[] = [
   {
     type: 'function',
     function: {
+      name: 'amend_quote',
+      description:
+        "Patch fields on an existing quote. Use for: fixing client details, changing line items, adjusting VAT, extending expiry, editing notes, or changing status (draft / sent / accepted / expired / cancelled). Items + totals are auto-recomputed if line_items is supplied. REFUSED on quotes that are already accepted or have an invoice raised — issue a variation or credit instead.",
+      parameters: {
+        type: 'object',
+        properties: {
+          id: { type: 'string', description: 'Quote id (uuid). Get from find_documents or summarise_customer — never invent.' },
+          patch: {
+            type: 'object',
+            properties: {
+              client_name: { type: 'string' },
+              client_email: { type: 'string' },
+              client_phone: { type: 'string' },
+              client_address: { type: 'string' },
+              client_postcode: { type: 'string' },
+              job_title: { type: 'string' },
+              job_description: { type: 'string' },
+              line_items: {
+                type: 'array',
+                items: {
+                  type: 'object',
+                  properties: {
+                    description: { type: 'string' },
+                    quantity: { type: 'number' },
+                    unitPrice: { type: 'number' },
+                  },
+                  required: ['description', 'quantity', 'unitPrice'],
+                },
+                description: 'Full replacement set of line items. Subtotal/VAT/total auto-recomputed.',
+              },
+              vat_rate: { type: 'number', description: 'Percent. 20 = standard.' },
+              expiry_days: { type: 'number', description: 'New expiry as days from today.' },
+              notes: { type: 'string' },
+              status: {
+                type: 'string',
+                enum: ['draft', 'sent', 'accepted', 'expired', 'cancelled'],
+              },
+            },
+          },
+        },
+        required: ['id', 'patch'],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'amend_invoice',
+      description:
+        "Patch fields on an existing invoice. Editable on draft. On sent/overdue invoices: status / due_date / notes / payment_method / payment_reference / client info only — NOT items or totals (issue a credit note + replacement invoice instead). Paid invoices accept ONLY notes / payment_method / payment_reference. Marking status='paid' auto-stamps paid_at.",
+      parameters: {
+        type: 'object',
+        properties: {
+          id: { type: 'string', description: 'Invoice id (uuid). Get from find_documents or summarise_customer — never invent.' },
+          patch: {
+            type: 'object',
+            properties: {
+              client_name: { type: 'string' },
+              client_email: { type: 'string' },
+              client_phone: { type: 'string' },
+              client_address: { type: 'string' },
+              client_postcode: { type: 'string' },
+              job_title: { type: 'string' },
+              job_description: { type: 'string' },
+              line_items: {
+                type: 'array',
+                items: {
+                  type: 'object',
+                  properties: {
+                    description: { type: 'string' },
+                    quantity: { type: 'number' },
+                    unitPrice: { type: 'number' },
+                  },
+                  required: ['description', 'quantity', 'unitPrice'],
+                },
+                description: 'Full replacement set. Draft only.',
+              },
+              vat_rate: { type: 'number', description: 'Percent. Draft only.' },
+              due_days: { type: 'number', description: 'New due date as days from today.' },
+              notes: { type: 'string' },
+              status: {
+                type: 'string',
+                enum: ['draft', 'sent', 'paid', 'overdue', 'cancelled'],
+              },
+              payment_method: { type: 'string', description: 'e.g. bank_transfer, card, cash, stripe.' },
+              payment_reference: { type: 'string' },
+            },
+          },
+        },
+        required: ['id', 'patch'],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
       name: 'query_outstanding_invoices',
       description:
         "Pull the user's unpaid invoices. Use when the user asks about money owed, overdue, chases, cash flow, who hasn't paid. Returns invoice id, number, customer, total, due_date, days_overdue.",
@@ -940,6 +1038,8 @@ ${snapshotBlock}`;
       'send_document',
       'create_quote',
       'create_invoice',
+      'amend_quote',
+      'amend_invoice',
       'query_outstanding_invoices',
       'query_pipeline_quotes',
       'summarise_customer',
@@ -1076,6 +1176,10 @@ ${snapshotBlock}`;
                 toolOutput = await createQuote(supabase, userId, args);
               } else if (call.name === 'create_invoice') {
                 toolOutput = await createInvoice(supabase, userId, args, authHeader);
+              } else if (call.name === 'amend_quote') {
+                toolOutput = await amendQuote(supabase, userId, args);
+              } else if (call.name === 'amend_invoice') {
+                toolOutput = await amendInvoice(supabase, userId, args);
               } else if (call.name === 'find_past_pricing') {
                 toolOutput = await findPastPricing(supabase, userId, {
                   job_type: args.job_type || '',
@@ -1208,7 +1312,7 @@ async function callOpenAIStreaming({
     messages: conversation,
     tools,
     stream: true,
-    max_completion_tokens: 16000,
+    max_completion_tokens: 24000,
   };
 
   const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -1507,6 +1611,10 @@ async function runToolLoopBuffered({
         toolOutput = await createQuote(supabase, userId, args);
       } else if (toolName === 'create_invoice') {
         toolOutput = await createInvoice(supabase, userId, args, authHeader);
+      } else if (toolName === 'amend_quote') {
+        toolOutput = await amendQuote(supabase, userId, args);
+      } else if (toolName === 'amend_invoice') {
+        toolOutput = await amendInvoice(supabase, userId, args);
       } else if (toolName === 'find_past_pricing') {
         toolOutput = await findPastPricing(supabase, userId, {
           job_type: args.job_type || '',

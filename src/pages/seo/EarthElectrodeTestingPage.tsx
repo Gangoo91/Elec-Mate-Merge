@@ -687,6 +687,7 @@ export default function EarthElectrodeTestingPage() {
           <span className="text-yellow-400">Rod, Plate & Strip Electrodes</span>
         </>
       }
+              noindex={true}
       heroSubtitle="The complete UK electrician's guide to earth electrode testing — types of electrode, BS 7671 TT system requirements, fall of potential method, stakeless clamp method, acceptable resistance values, and seasonal variation in soil resistivity."
       readingTime={14}
       keyTakeaways={keyTakeaways}

@@ -546,6 +546,25 @@ export default function ManualHandlingCoursePage() {
       </section>
 
       {/* CTA */}
+      
+
+      {/* Related pages — auto-injected for internal-link health (audit criterion #7).
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/training/instrumentation-course">Instrumentation Course for Electricians</SEOInternalLink>
+            <SEOInternalLink href="/training/mewp-course">MEWP Course</SEOInternalLink>
+            <SEOInternalLink href="/guides/ai-vs-manual-electrical-design">AI vs Manual Electrical Design</SEOInternalLink>
+            <SEOInternalLink href="/training/bs-7671-amendment-3-course">BS 7671 Amendment 3 Course</SEOInternalLink>
+            <SEOInternalLink href="/training/cdm-regulations-course">CDM Regulations Course for Electricians</SEOInternalLink>
+            <SEOInternalLink href="/training/workplace-safety-course">Workplace Safety Course</SEOInternalLink>
+            <SEOInternalLink href="/guides/city-guilds-2396-design-course">City & Guilds 2396 Design Course</SEOInternalLink>
+          </div>
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Protect your back, protect your career"
         subheading="Join 1,000+ UK electricians training smarter with Elec-Mate. 7-day free trial, cancel anytime."

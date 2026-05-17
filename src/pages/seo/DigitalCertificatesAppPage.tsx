@@ -24,7 +24,7 @@ export default function DigitalCertificatesAppPage() {
   return (
     <ToolTemplate
       title="Digital Electrical Certificates App | EICR EIC MW"
-      description="Elec-Mate's digital electrical certificates app for UK electricians. 16 certificate types — EICR, EIC, Minor Works, EV Charger, Solar PV, Fire Alarm, Emergency Lighting, and PAT. AI board scanner, voice test entry, defect code AI, digital signatures, professional PDF export, WhatsApp and email delivery, offline support, and BS 7671:2018+A3:2024 compliant."
+      description="Elec-Mate's digital electrical certificates app for UK electricians. 16 certificate types — EICR, EIC, Minor Works, EV Charger, Solar PV, Fire Alarm, Emergency Lighting, and PAT. AI board scanner, voice test entry, defect code AI, digital signatures, professional PDF export, WhatsApp and email delivery, offline support, and BS 7671:2018+A4:2026 compliant."
       datePublished="2026-01-10"
       dateModified="2026-02-13"
       breadcrumbs={[
@@ -52,7 +52,7 @@ export default function DigitalCertificatesAppPage() {
           Minor Works, and 5 More
         </>
       }
-      heroSubtitle="16 certificate types. AI board scanner. Voice test entry. Defect code AI. Digital signatures. Professional PDF output. Email and WhatsApp delivery. Full offline support. Everything you need to complete, sign, and send electrical certificates from your phone — compliant with BS 7671:2018+A3:2024."
+      heroSubtitle="16 certificate types. AI board scanner. Voice test entry. Defect code AI. Digital signatures. Professional PDF output. Email and WhatsApp delivery. Full offline support. Everything you need to complete, sign, and send electrical certificates from your phone — compliant with BS 7671:2018+A4:2026."
       heroFeaturePills={[
         { icon: FileCheck2, label: '16 Certificate Types' },
         { icon: Camera, label: 'AI Board Scanner' },
@@ -81,7 +81,7 @@ export default function DigitalCertificatesAppPage() {
                 final PDF delivery.
               </p>
               <p>
-                Every certificate type follows the model forms in BS 7671:2018+A3:2024 Appendix 6.
+                Every certificate type follows the model forms in BS 7671:2018+A4:2026 Appendix 6.
                 Test results are validated against maximum permitted values automatically.
                 Observation codes are suggested by AI with the correct BS 7671 regulation reference.
                 And the completed certificate is a professional PDF that meets scheme provider
@@ -313,11 +313,11 @@ export default function DigitalCertificatesAppPage() {
         },
         {
           id: 'bs7671-compliance',
-          heading: 'BS 7671:2018+A3:2024 Compliance',
+          heading: 'BS 7671:2018+A4:2026 Compliance',
           content: (
             <>
               <p>
-                Elec-Mate automatically validates test results against BS 7671:2018+A3:2024
+                Elec-Mate automatically validates test results against BS 7671:2018+A4:2026
                 requirements. When you enter an earth fault loop impedance reading, the app checks
                 it against the maximum permitted Zs value for the specific protective device type
                 and rating on that circuit.
@@ -427,7 +427,7 @@ export default function DigitalCertificatesAppPage() {
         {
           question: 'Are certificates compliant with BS 7671?',
           answer:
-            'Yes. All certificate forms follow the model forms in BS 7671:2018+A3:2024 Appendix 6. Test results are automatically validated against maximum permitted values from the relevant BS 7671 tables. Observation codes (C1, C2, C3, FI) follow the standard classification system. The output PDF is formatted to meet scheme provider requirements.',
+            'Yes. All certificate forms follow the model forms in BS 7671:2018+A4:2026 Appendix 6. Test results are automatically validated against maximum permitted values from the relevant BS 7671 tables. Observation codes (C1, C2, C3, FI) follow the standard classification system. The output PDF is formatted to meet scheme provider requirements.',
         },
         {
           question: 'Can I send certificates via WhatsApp?',
@@ -447,7 +447,7 @@ export default function DigitalCertificatesAppPage() {
         {
           question: 'How does the Defect Code AI work?',
           answer:
-            'Describe any defect in plain English — for example, "no RCD protection on socket outlet circuits" — and the AI returns the correct classification (C1/C2/C3/FI), the specific BS 7671 regulation reference, and a professionally worded observation for your certificate. The AI is trained on BS 7671:2018+A3:2024 and thousands of real-world EICR observations.',
+            'Describe any defect in plain English — for example, "no RCD protection on socket outlet circuits" — and the AI returns the correct classification (C1/C2/C3/FI), the specific BS 7671 regulation reference, and a professionally worded observation for your certificate. The AI is trained on BS 7671:2018+A4:2026 and thousands of real-world EICR observations.',
         },
         {
           question: 'How much does Elec-Mate cost for certificates?',

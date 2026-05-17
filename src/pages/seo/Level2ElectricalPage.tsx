@@ -302,7 +302,7 @@ export default function Level2ElectricalPage() {
                 step: '4',
                 title: 'Earthing and Bonding',
                 description:
-                  'Covers the purpose of earthing, types of earthing systems (TN-S, TN-C-S, TT), main protective bonding conductors, supplementary bonding, the earth fault loop path, the role of the circuit protective conductor (CPC), and the relationship between earthing and automatic disconnection of supply. This unit is fundamental to understanding electrical safety — without effective earthing, protective devices cannot operate correctly under fault conditions. You will learn why Regulation 411.3 of BS 7671:2018+A3:2024 requires automatic disconnection of supply as the primary protective measure.',
+                  'Covers the purpose of earthing, types of earthing systems (TN-S, TN-C-S, TT), main protective bonding conductors, supplementary bonding, the earth fault loop path, the role of the circuit protective conductor (CPC), and the relationship between earthing and automatic disconnection of supply. This unit is fundamental to understanding electrical safety — without effective earthing, protective devices cannot operate correctly under fault conditions. You will learn why Regulation 411.3 of BS 7671:2018+A4:2026 requires automatic disconnection of supply as the primary protective measure.',
               },
               {
                 step: '5',
@@ -467,7 +467,7 @@ export default function Level2ElectricalPage() {
                 step: '3',
                 title: '18th Edition (C&G 2382)',
                 description:
-                  'The BS 7671:2018+A3:2024 wiring regulations qualification. Required for all practising electricians and updated with each new amendment.',
+                  'The BS 7671:2018+A4:2026 wiring regulations qualification. Required for all practising electricians and updated with each new amendment.',
               },
               {
                 step: '4',
@@ -573,6 +573,26 @@ export default function Level2ElectricalPage() {
       </section>
 
       {/* CTA */}
+      
+
+      {/* Related pages — auto-injected for internal-link health (audit criterion #7).
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/tools/electrical-app-with-ai">Electrical App with AI</SEOInternalLink>
+            <SEOInternalLink href="/guides/ai-for-electrical-apprentices">AI for Electrical Apprentices</SEOInternalLink>
+            <SEOInternalLink href="/cleanroom-electrical">Cleanroom Electrical Installation UK</SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-apprenticeship-guide">Electrical Apprenticeship UK 2026</SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-bim-guide">Electrical BIM Guide</SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-conduit-guide">Electrical Conduit Guide</SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-design-guide">Electrical Design Guide</SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-estimating-guide">Electrical Estimating Guide UK 2026</SEOInternalLink>
+          </div>
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Start your electrical career today"
         subheading="Join 1,000+ UK electricians and apprentices learning smarter. 7-day free trial, cancel anytime."

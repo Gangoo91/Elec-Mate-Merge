@@ -67,7 +67,7 @@ const faqs = [
   {
     question: 'What qualifications do Hull electricians need?',
     answer:
-      'The same qualifications as elsewhere in England: City & Guilds 2365 (or NVQ Level 3 in Electrical Installation), the 18th Edition (BS 7671:2018+A3:2024) certificate, and registration with a competent person scheme (NICEIC, NAPIT, or ELECSA) to self-certify Part P work. The City & Guilds 2391 Inspection and Testing qualification is required to issue EICRs. Electricians working in the offshore wind sector will also need GWO (Global Wind Organisation) basic safety training.',
+      'The same qualifications as elsewhere in England: City & Guilds 2365 (or NVQ Level 3 in Electrical Installation), the 18th Edition (BS 7671:2018+A4:2026) certificate, and registration with a competent person scheme (NICEIC, NAPIT, or ELECSA) to self-certify Part P work. The City & Guilds 2391 Inspection and Testing qualification is required to issue EICRs. Electricians working in the offshore wind sector will also need GWO (Global Wind Organisation) basic safety training.',
   },
   {
     question: "Are there any specific electrical challenges in Hull's Victorian terraces?",
@@ -186,8 +186,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 7671 compliance</strong> — all work must comply with BS
-                7671:2018+A3:2024. RCD protection under Regulation 411.3.3 is mandatory for socket
+                <strong>BS 7671 compliance</strong> — all work must comply with BS 7671:2018+A4:2026. RCD protection under Regulation 411.3.3 is mandatory for socket
                 outlets up to 32A in dwellings and for circuits in locations of increased shock risk
                 (bathrooms, kitchens, outdoors).
               </span>

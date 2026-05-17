@@ -42,7 +42,7 @@ const keyTakeaways = [
   'Earth fault loop impedance (Zs) is the total impedance of the earth fault current path: the supply transformer winding, the line conductor from transformer to fault, and the protective conductor from fault back to the transformer.',
   'Ze is the external earth fault loop impedance — the part of the loop external to the installation (measured at the origin). Zs is the total loop impedance at any given point in the circuit.',
   'Zs = Ze + (R1 + R2), where R1 is the line conductor resistance and R2 is the CPC resistance from origin to the point of measurement.',
-  'Accepted maximum Zs values are given in BS 7671:2018+A3:2024 Appendix 3 Tables. These values ensure that the protective device operates within its required disconnection time under fault conditions.',
+  'Accepted maximum Zs values are given in BS 7671:2018+A4:2026 Appendix 3 Tables. These values ensure that the protective device operates within its required disconnection time under fault conditions.',
   'When measuring Zs with a loop tester, apply a correction factor for conductor temperature — tabulated values assume conductors at 20°C, but a warm installation may read higher than the table maximum even if the installation is compliant.',
 ];
 
@@ -55,7 +55,7 @@ const faqs = [
   {
     question: 'What Zs values are acceptable under BS 7671?',
     answer:
-      'Maximum permissible Zs values are given in BS 7671:2018+A3:2024 Appendix 3 Tables. The values depend on the type and rating of the protective device. For example, for a 32A Type B MCB, the maximum Zs is 1.44Ω (for a 0.4s disconnection time on a final circuit). For a 16A Type B MCB the maximum Zs is 2.87Ω. For a 6A Type B MCB the maximum Zs is 7.67Ω. BS 7671 requires that the measured Zs does not exceed the tabulated maximum at the conductor temperature assumed in the tables (typically 70°C for thermoplastic insulated cables). In practice, test instruments measure at ambient temperature, so a correction factor is applied — divide the tabulated maximum by 1.24 for copper conductors with thermoplastic insulation to get the maximum acceptable measured value at ambient temperature.',
+      'Maximum permissible Zs values are given in BS 7671:2018+A4:2026 Appendix 3 Tables. The values depend on the type and rating of the protective device. For example, for a 32A Type B MCB, the maximum Zs is 1.44Ω (for a 0.4s disconnection time on a final circuit). For a 16A Type B MCB the maximum Zs is 2.87Ω. For a 6A Type B MCB the maximum Zs is 7.67Ω. BS 7671 requires that the measured Zs does not exceed the tabulated maximum at the conductor temperature assumed in the tables (typically 70°C for thermoplastic insulated cables). In practice, test instruments measure at ambient temperature, so a correction factor is applied — divide the tabulated maximum by 1.24 for copper conductors with thermoplastic insulation to get the maximum acceptable measured value at ambient temperature.',
   },
   {
     question: 'How do I measure Zs on a live circuit?',
@@ -156,7 +156,7 @@ const sections = [
           fault current and the faster the protective device operates.
         </p>
         <p>
-          BS 7671:2018+A3:2024 requires that the earth fault loop impedance Zs must not exceed the
+          BS 7671:2018+A4:2026 requires that the earth fault loop impedance Zs must not exceed the
           value corresponding to the required disconnection time for the circuit concerned. The
           required disconnection times are 0.4 seconds for final circuits up to 32A supplying socket
           outlets or equipment accessible to the public, and 5 seconds for distribution circuits and
@@ -292,7 +292,7 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671:2018+A3:2024 Appendix 3 contains tables of maximum earth fault loop impedance
+          BS 7671:2018+A4:2026 Appendix 3 contains tables of maximum earth fault loop impedance
           values for different protective devices and disconnection times. The key tables are:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">

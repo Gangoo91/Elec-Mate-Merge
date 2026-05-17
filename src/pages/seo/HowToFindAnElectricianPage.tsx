@@ -237,7 +237,7 @@ const sections = [
                 <strong>C&G 2382 — 18th Edition IET Wiring Regulations.</strong> This confirms the
                 electrician has up-to-date knowledge of{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                  BS 7671:2018+A3:2024
+                  BS 7671:2018+A4:2026
                 </SEOInternalLink>
                 . It is the foundational qualification that all other electrical qualifications
                 build on.

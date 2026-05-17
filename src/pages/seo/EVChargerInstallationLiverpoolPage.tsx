@@ -304,7 +304,7 @@ const sections = [
     content: (
       <>
         <p>
-          All EV charger installations in Liverpool must comply with BS 7671:2018+A3:2024 Section
+          All EV charger installations in Liverpool must comply with BS 7671:2018+A4:2026 Section
           722. Liverpool is in England, so Part P of the Building Regulations applies. The
           installing electrician must be registered with NICEIC, NAPIT, or ELECSA to self-certify
           and submit the Part P notification.

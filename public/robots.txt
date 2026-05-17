@@ -264,3 +264,9 @@ Crawl-delay: 1
 # ==========================================================
 
 Sitemap: https://elec-mate.com/sitemap.xml
+Sitemap: https://elec-mate.com/sitemap-guides.xml
+Sitemap: https://elec-mate.com/sitemap-seo.xml
+Sitemap: https://elec-mate.com/sitemap-tools.xml
+Sitemap: https://elec-mate.com/sitemap-training.xml
+Sitemap: https://elec-mate.com/sitemap-pages.xml
+Sitemap: https://elec-mate.com/sitemap-compare.xml

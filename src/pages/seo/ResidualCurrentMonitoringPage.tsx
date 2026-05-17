@@ -47,7 +47,7 @@ const keyTakeaways = [
   'Residual current monitoring (RCM) continuously monitors earth leakage current in a circuit without automatically disconnecting the supply. It alerts the operator when residual current exceeds a set threshold, allowing planned maintenance rather than unplanned shutdowns.',
   'RCM differs from an RCD: an RCD disconnects the supply when a fault is detected; an RCM monitors and alerts but does not trip. RCM is used where automatic disconnection would cause unacceptable consequences (data centres, hospitals, process lines).',
   'EV chargers commonly use an integrated residual current monitoring device (RCMU) to detect DC fault currents above 6 mA, allowing a standard Type A RCD upstream instead of an expensive Type B RCD.',
-  'BS 7671:2018+A3:2024 and the IET Code of Practice for EV Charging specify when RCM is required or acceptable as an alternative to automatic disconnection.',
+  'BS 7671:2018+A4:2026 and the IET Code of Practice for EV Charging specify when RCM is required or acceptable as an alternative to automatic disconnection.',
   'Elec-Mate documents RCM device details on electrical certificates, including the device type, threshold setting, and alarm configuration — meeting the documentation requirements for inspection and testing.',
 ];
 
@@ -60,7 +60,7 @@ const faqs = [
   {
     question: 'Where is residual current monitoring required by BS 7671?',
     answer:
-      'BS 7671:2018+A3:2024 recognises residual current monitoring in several contexts. Regulation 411.6 addresses IT earthing systems (unearthed systems) where an insulation monitoring device (IMD) is used — this is a form of continuous monitoring. Regulation 531.3 covers residual current devices including monitoring types. The IET Guidance Note 3 (Inspection and Testing) and the IET Code of Practice for EV Charging provide specific guidance on when RCM is appropriate. For EV charging, the IET CoP allows an integrated RCMU (residual current monitoring unit) within the charger to detect DC fault currents as an alternative to an external Type B RCD. This is the most common application of RCM that UK electricians encounter in practice.',
+      'BS 7671:2018+A4:2026 recognises residual current monitoring in several contexts. Regulation 411.6 addresses IT earthing systems (unearthed systems) where an insulation monitoring device (IMD) is used — this is a form of continuous monitoring. Regulation 531.3 covers residual current devices including monitoring types. The IET Guidance Note 3 (Inspection and Testing) and the IET Code of Practice for EV Charging provide specific guidance on when RCM is appropriate. For EV charging, the IET CoP allows an integrated RCMU (residual current monitoring unit) within the charger to detect DC fault currents as an alternative to an external Type B RCD. This is the most common application of RCM that UK electricians encounter in practice.',
   },
   {
     question: 'What is an RCMU in an EV charger?',
@@ -371,7 +371,7 @@ const sections = [
       <>
         <p>
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           addresses residual current monitoring in several regulations:
         </p>

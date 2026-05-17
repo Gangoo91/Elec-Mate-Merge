@@ -39,7 +39,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Consumer unit replacement in Brighton typically costs £450 to £800, reflecting South East labour rates. Costs include the metal consumer unit, all labour, testing to BS 7671, and the Electrical Installation Certificate.',
-  'Metal consumer unit enclosures are mandatory for all domestic replacements since January 2016 under BS 7671 Regulation 421.1.201 (Amendment 3), unchanged in BS 7671:2018+A3:2024.',
+  'Metal consumer unit enclosures are mandatory for all domestic replacements since January 2016 under BS 7671 Regulation 421.1.201 (Amendment 3), unchanged in BS 7671:2018+A4:2026.',
   'Brighton has extensive Victorian and Edwardian terraced and converted flat housing — particularly in Hanover, Kemptown, Preston Park, and Seven Dials — where rewireable fuse boards and pre-RCD wiring are common EICR findings.',
   'Consumer unit replacement is Part P notifiable work in England. Brighton homeowners must use a registered competent person (NICEIC/NAPIT/ELECSA) or notify Brighton &amp; Hove City Council Building Control.',
   'The Brighton &amp; Hove private rented sector is one of the largest in Sussex — landlords are required to obtain EICRs every five years, and consumer unit deficiencies are among the most common C2 observations.',
@@ -59,7 +59,7 @@ const faqs = [
   {
     question: 'Do I need a metal consumer unit in Brighton?',
     answer:
-      'Yes. Since 1 January 2016, Amendment 3 to BS 7671:2008 introduced Regulation 421.1.201 requiring all domestic consumer unit replacements to use a non-combustible (metal) enclosure. The requirement is carried forward in BS 7671:2018+A3:2024 (the current wiring regulations). A qualified Brighton electrician will only supply and install a compliant metal consumer unit. Plastic consumer units are not permitted for new or replacement domestic installations.',
+      'Yes. Since 1 January 2016, Amendment 3 to BS 7671:2008 introduced Regulation 421.1.201 requiring all domestic consumer unit replacements to use a non-combustible (metal) enclosure. The requirement is carried forward in BS 7671:2018+A4:2026 (the current wiring regulations). A qualified Brighton electrician will only supply and install a compliant metal consumer unit. Plastic consumer units are not permitted for new or replacement domestic installations.',
   },
   {
     question: 'My Brighton flat is in a converted Victorian house — what are the typical issues?',
@@ -162,7 +162,7 @@ const sections = [
                 <strong>RCDs and RCBOs</strong> — detect earth fault current and disconnect within
                 milliseconds. Under Regulation 411.3.3 of{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                  BS 7671:2018+A3:2024
+                  BS 7671:2018+A4:2026
                 </SEOInternalLink>
                 , 30 mA RCD protection is mandatory on socket-outlet circuits rated up to 32 A in
                 domestic premises. An RCBO consumer unit provides individual RCD protection for each
@@ -291,8 +291,7 @@ const sections = [
         <p>
           Regulation 421.1.201, introduced by Amendment 3 to BS 7671:2008 and effective from 1
           January 2016, requires all consumer units and similar switchgear in domestic premises to
-          have a non-combustible (metal) enclosure. This requirement is unchanged in BS
-          7671:2018+A3:2024 — the current edition of the wiring regulations. Every consumer unit
+          have a non-combustible (metal) enclosure. This requirement is unchanged in BS 7671:2018+A4:2026 — the current edition of the wiring regulations. Every consumer unit
           replacement in Brighton must comply.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">

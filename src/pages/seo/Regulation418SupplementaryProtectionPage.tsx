@@ -138,7 +138,7 @@ const sections = [
         <p>
           Supplementary protection — formally called "additional protection" in{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           — is a second layer of defence against electric shock. It does not replace fault
           protection (ADS via MCBs and earthing); it supplements it.

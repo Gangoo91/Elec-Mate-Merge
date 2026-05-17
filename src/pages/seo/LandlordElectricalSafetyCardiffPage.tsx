@@ -160,7 +160,7 @@ const sections = [
                 law are more extensive than the English equivalent. Landlords must ensure properties
                 are fit for habitation throughout the tenancy, and an EICR to{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                  BS 7671:2018+A3:2024
+                  BS 7671:2018+A4:2026
                 </SEOInternalLink>{' '}
                 is the accepted standard for demonstrating electrical fitness.
               </span>

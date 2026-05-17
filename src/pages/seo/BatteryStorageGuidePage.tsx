@@ -1,4 +1,6 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
+import { RecentReviews } from '@/components/seo/RecentReviews';
+import BatteryStorageCalculator from '@/components/apprentice/calculators/BatteryStorageCalculator';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
@@ -43,7 +45,7 @@ const tocItems = [
 const keyTakeaways = [
   'Home battery storage systems are either AC-coupled (connected to the AC side of the existing installation, works with any existing solar PV) or DC-coupled (integrated with solar PV via a hybrid inverter, more efficient but requires compatible equipment).',
   'Battery sizing depends on daily energy consumption, solar PV generation, electricity tariff structure, and whether backup power during grid outages is required.',
-  'Safety requirements include ventilation, fire-rated enclosures where applicable, overcurrent protection, isolation switching, and compliance with BS 7671:2018+A3:2024 and the relevant battery storage standards.',
+  'Safety requirements include ventilation, fire-rated enclosures where applicable, overcurrent protection, isolation switching, and compliance with BS 7671:2018+A4:2026 and the relevant battery storage standards.',
   'MCS (Microgeneration Certification Scheme) certification is required for the installer if the homeowner wants to access the Smart Export Guarantee (SEG) payments for exported electricity.',
   'An Electrical Installation Certificate (EIC) or Minor Works Certificate must be issued for the electrical connections, and the system must be notified to the DNO (Distribution Network Operator) under G98 or G99.',
 ];
@@ -67,7 +69,7 @@ const faqs = [
   {
     question: 'What safety requirements apply to home battery storage?',
     answer:
-      'Home battery systems must comply with the battery manufacturer installation manual, BS 7671:2018+A3:2024 for the electrical connections, and the relevant product safety standards (typically IEC 62619 for lithium-ion batteries and IEC 62040 for UPS systems). Key safety requirements include: adequate ventilation (lithium-ion batteries generate heat during charging and discharging), fire safety (batteries must be installed in a location that minimises fire risk — not in escape routes, not adjacent to combustible materials without a fire-rated barrier), overcurrent protection (DC and AC sides), isolation switching (both DC and AC isolation for safe maintenance), and labelling (warning labels on the consumer unit, meter position, and battery enclosure indicating the presence of a battery storage system). The installer must also notify the DNO under G98 or G99 before energising the system.',
+      'Home battery systems must comply with the battery manufacturer installation manual, BS 7671:2018+A4:2026 for the electrical connections, and the relevant product safety standards (typically IEC 62619 for lithium-ion batteries and IEC 62040 for UPS systems). Key safety requirements include: adequate ventilation (lithium-ion batteries generate heat during charging and discharging), fire safety (batteries must be installed in a location that minimises fire risk — not in escape routes, not adjacent to combustible materials without a fire-rated barrier), overcurrent protection (DC and AC sides), isolation switching (both DC and AC isolation for safe maintenance), and labelling (warning labels on the consumer unit, meter position, and battery enclosure indicating the presence of a battery storage system). The installer must also notify the DNO under G98 or G99 before energising the system.',
   },
   {
     question: 'Do I need to notify the DNO when installing battery storage?',
@@ -160,7 +162,7 @@ const sections = [
         <p>
           The electrical installation must comply with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
           , the manufacturer installation manual, and the relevant product safety standards. The
           installer must notify the DNO (Distribution Network Operator) under G98 or G99 before the
@@ -663,6 +665,7 @@ export default function BatteryStorageGuidePage() {
           <span className="text-yellow-400">Home Battery Guide for UK Electricians</span>
         </>
       }
+      embeddedTool={<BatteryStorageCalculator />}
       heroSubtitle="Home battery storage is booming. This guide covers AC-coupled vs DC-coupled systems, battery sizing, inverters, safety requirements, MCS certification, DNO notification, and the electrical installation and certification process."
       readingTime={15}
       keyTakeaways={keyTakeaways}

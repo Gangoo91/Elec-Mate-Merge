@@ -39,7 +39,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Consumer unit replacement (fuse box upgrade) in Plymouth typically costs £400 to £750, with South West Devon labour rates. Costs include the metal consumer unit, all labour, testing, and the Electrical Installation Certificate.',
-  'All consumer unit replacements in domestic properties must use a metal enclosure — mandatory since January 2016 under BS 7671 Regulation 421.1.201 (Amendment 3) and unchanged in BS 7671:2018+A3:2024.',
+  'All consumer unit replacements in domestic properties must use a metal enclosure — mandatory since January 2016 under BS 7671 Regulation 421.1.201 (Amendment 3) and unchanged in BS 7671:2018+A4:2026.',
   'Plymouth has significant post-war housing stock, with many 1950s and 1960s properties across Devonport, Ernesettle, and Whitleigh that may retain original wiring and fuse boards without RCD protection.',
   'Consumer unit replacement is Part P notifiable work. Plymouth homeowners must use a registered competent person (NICEIC/NAPIT/ELECSA) or notify Plymouth City Council Building Control.',
   'RCD protection not exceeding 30 mA on all socket-outlet circuits rated up to 32 A is mandatory under BS 7671 Regulation 411.3.3. This is one of the most common C2 EICR findings in Plymouth properties.',
@@ -59,7 +59,7 @@ const faqs = [
   {
     question: 'Is a metal consumer unit required in Plymouth?',
     answer:
-      'Yes. Since 1 January 2016, Regulation 421.1.201 of BS 7671 (introduced by Amendment 3 to BS 7671:2008) requires all domestic consumer unit replacements to use a non-combustible (metal) enclosure. This requirement is unchanged in BS 7671:2018+A3:2024. Any qualified Plymouth electrician will supply and install a compliant metal consumer unit. If a quote proposes a plastic unit, do not proceed.',
+      'Yes. Since 1 January 2016, Regulation 421.1.201 of BS 7671 (introduced by Amendment 3 to BS 7671:2008) requires all domestic consumer unit replacements to use a non-combustible (metal) enclosure. This requirement is unchanged in BS 7671:2018+A4:2026. Any qualified Plymouth electrician will supply and install a compliant metal consumer unit. If a quote proposes a plastic unit, do not proceed.',
   },
   {
     question: 'My Plymouth property was rebuilt after WW2 — is the wiring likely to be original?',
@@ -154,7 +154,7 @@ const sections = [
                 <strong>RCDs</strong> — detect earth leakage current and disconnect within
                 milliseconds to protect against electric shock. Under Regulation 411.3.3 of{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                  BS 7671:2018+A3:2024
+                  BS 7671:2018+A4:2026
                 </SEOInternalLink>
                 , 30 mA RCD protection is mandatory on all socket-outlet circuits rated up to 32 A.
               </span>
@@ -272,7 +272,7 @@ const sections = [
           Regulation 421.1.201, introduced by Amendment 3 to BS 7671:2008 and effective from 1
           January 2016, requires that consumer units and similar switchgear in domestic premises
           have a non-combustible (metal) enclosure. The requirement is unchanged in the current
-          edition of the wiring regulations, BS 7671:2018+A3:2024.
+          edition of the wiring regulations, BS 7671:2018+A4:2026.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">

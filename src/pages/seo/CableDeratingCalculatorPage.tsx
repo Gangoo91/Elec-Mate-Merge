@@ -1,4 +1,6 @@
 import ToolTemplate from '@/pages/seo/templates/ToolTemplate';
+import { RecentReviews } from '@/components/seo/RecentReviews';
+import CableDeratingCalculator from '@/components/apprentice/calculators/CableDeratingCalculator';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import {
   Calculator,
@@ -46,6 +48,7 @@ export default function CableDeratingCalculatorPage() {
           Made Simple
         </>
       }
+              calculator={<CableDeratingCalculator />}
       heroSubtitle="Apply all four BS 7671 correction factors in seconds. Enter the ambient temperature, number of grouped circuits, insulation conditions, and protective device type. The calculator determines the required tabulated current carrying capacity (It) so you select the correct cable size every time."
       heroFeaturePills={[
         { icon: Thermometer, label: 'Ca Factor' },

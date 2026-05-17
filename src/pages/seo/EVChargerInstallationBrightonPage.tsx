@@ -41,7 +41,7 @@ const keyTakeaways = [
   'A 7kW home EV charger installation in Brighton & Hove typically costs £800 to £1,200 all-in, including the charger unit, dedicated circuit, RCD protection, and all certification.',
   'The OZEV EV Chargepoint Grant provides up to £350 towards home charger installation for eligible residents — primarily those in flats and rented accommodation.',
   "Brighton & Hove has one of the highest concentrations of EVs per capita in the South East, driven by the city's sustainability commitments and significant student and professional populations.",
-  'All EV charger installations must comply with BS 7671:2018+A3:2024 Section 722, which requires a dedicated circuit, appropriate RCD protection (Regulation 722.531.2), and a PME earthing risk assessment (Regulation 722.411.4).',
+  'All EV charger installations must comply with BS 7671:2018+A4:2026 Section 722, which requires a dedicated circuit, appropriate RCD protection (Regulation 722.531.2), and a PME earthing risk assessment (Regulation 722.411.4).',
   'Many Brighton properties are Victorian terraced houses without driveways — options include communal chargers for residential blocks and lamppost chargers managed by Brighton & Hove City Council.',
 ];
 
@@ -64,7 +64,7 @@ const faqs = [
   {
     question: 'What are the BS 7671 requirements for EV charger installation in Brighton?',
     answer:
-      'EV charger installations in Brighton must comply with BS 7671:2018+A3:2024, specifically Section 722 (Electric Vehicle Charging Installations). Key requirements include: Regulation 722.411.4 (PME earthing risk assessment — most Brighton properties are on PME supplies from the DNO), Regulation 722.531.2 (RCD protection — typically a Type A or Type B RCD or RCBO), a dedicated final circuit for the charger, and compliance with Building Regulations Part P (requiring either self-certification by a registered competent person or notification to Brighton & Hove City Council building control).',
+      'EV charger installations in Brighton must comply with BS 7671:2018+A4:2026, specifically Section 722 (Electric Vehicle Charging Installations). Key requirements include: Regulation 722.411.4 (PME earthing risk assessment — most Brighton properties are on PME supplies from the DNO), Regulation 722.531.2 (RCD protection — typically a Type A or Type B RCD or RCBO), a dedicated final circuit for the charger, and compliance with Building Regulations Part P (requiring either self-certification by a registered competent person or notification to Brighton & Hove City Council building control).',
   },
   {
     question: 'How long does EV charger installation take in Brighton?',
@@ -423,7 +423,7 @@ const sections = [
         <p>
           Every EV charger installation in Brighton must comply with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           Section 722. A competent NICEIC or NAPIT registered installer will ensure full compliance,
           but it is useful to understand the key requirements.

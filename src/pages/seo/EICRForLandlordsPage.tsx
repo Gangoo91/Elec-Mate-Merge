@@ -159,7 +159,7 @@ const sections = [
           The EICR replaced the older Periodic Inspection Report (PIR) and follows the model forms
           set out in Appendix 6 of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           (the IET Wiring Regulations, 18th Edition with Amendment 3). It involves both dead testing
           (with the supply isolated) and live testing, covering continuity of protective conductors,

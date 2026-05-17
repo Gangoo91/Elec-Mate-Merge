@@ -1,4 +1,6 @@
 import { Helmet } from 'react-helmet';
+import { RecentReviews } from '@/components/seo/RecentReviews';
+import CableSizingCalculator from '@/components/apprentice/calculators/CableSizingCalculator';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
@@ -157,14 +159,7 @@ const softwareAppSchema = {
     price: '0',
     priceCurrency: 'GBP',
     description: '7-day free trial',
-  },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.7',
-    ratingCount: '89',
-    bestRating: '5',
-    worstRating: '1',
-  },
+  }
 };
 
 const faqSchema = {
@@ -219,7 +214,7 @@ export default function CableSizingCalculatorPage() {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
             <Cable className="w-4 h-4 text-yellow-400" />
             <span className="text-sm font-medium text-yellow-400">
-              BS 7671:2018 + A3:2024 Compliant
+              BS 7671:2018+A4:2026 Compliant
             </span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
@@ -244,6 +239,13 @@ export default function CableSizingCalculatorPage() {
               See How It Works
             </a>
           </div>
+        </div>
+      </section>
+
+      {/* Live calculator — free, no signup, BS 7671:2018+A4:2026 compliant */}
+      <section id="calculator" className="px-5 pb-12 scroll-mt-24">
+        <div className="max-w-4xl mx-auto">
+          <CableSizingCalculator />
         </div>
       </section>
 
@@ -674,6 +676,13 @@ export default function CableSizingCalculatorPage() {
       </section>
 
       {/* CTA */}
+            {/* Verified App Store reviews — policy-safe SoftwareApplication aggregateRating */}
+      <section className="px-5 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <RecentReviews />
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Stop flipping through cable sizing tables"
         subheading="Join 1,000+ UK electricians using Elec-Mate to size cables in seconds. 7-day free trial, cancel anytime."

@@ -437,7 +437,7 @@ const sections = [
                 <strong>BS 7671 — IET Wiring Regulations.</strong> The national standard for
                 electrical installation in the UK. Current edition is{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                  BS 7671:2018+A3:2024
+                  BS 7671:2018+A4:2026
                 </SEOInternalLink>{' '}
                 (18th Edition with Amendment 3). Covers design, installation, inspection, and
                 testing.

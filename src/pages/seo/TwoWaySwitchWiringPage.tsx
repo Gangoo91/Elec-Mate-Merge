@@ -435,7 +435,7 @@ const sections = [
     content: (
       <>
         <p>
-          Regulation 514.4.2 of BS 7671:2018+A3:2024 requires that every conductor in a switching
+          Regulation 514.4.2 of BS 7671:2018+A4:2026 requires that every conductor in a switching
           circuit is identified so that there can be no confusion about which conductors carry line
           voltage at any given time.
         </p>

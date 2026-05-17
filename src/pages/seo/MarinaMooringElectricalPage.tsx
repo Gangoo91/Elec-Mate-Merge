@@ -37,7 +37,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'BS 7671:2018+A3:2024 Section 709 governs electrical installations in marinas and similar locations including boat harbours and yacht clubs. It applies from the origin of the shore supply to the socket outlets on the pontoons.',
+  'BS 7671:2018+A4:2026 Section 709 governs electrical installations in marinas and similar locations including boat harbours and yacht clubs. It applies from the origin of the shore supply to the socket outlets on the pontoons.',
   'Shore power socket outlets must comply with IEC 60309 (BS EN 60309) — the blue 16 A or 32 A CEE connectors are the standard for marina hookups throughout the UK and Europe.',
   'Galvanic corrosion is a critical hazard in marina installations. Stray DC currents through the water caused by mixed-metal hulls and poor bonding can destroy underwater metalwork over months. Galvanic isolators or isolation transformers are strongly recommended.',
   'Earth leakage monitoring (ELM) systems are required by Section 709 to detect fault currents before they reach dangerous levels. Each socket outlet supply must be monitored individually.',
@@ -49,7 +49,7 @@ const faqs = [
   {
     question: 'Which BS 7671 section applies to marina electrical installations?',
     answer:
-      'Section 709 of BS 7671:2018+A3:2024 (Part 7 — Special Installations or Locations) covers electrical installations in marinas and similar locations. It applies to shore power supplies for boats and other craft moored at pontoons, berths, and jetties. Section 709 modifies and supplements the general requirements in Parts 1 to 6 of BS 7671.',
+      'Section 709 of BS 7671:2018+A4:2026 (Part 7 — Special Installations or Locations) covers electrical installations in marinas and similar locations. It applies to shore power supplies for boats and other craft moored at pontoons, berths, and jetties. Section 709 modifies and supplements the general requirements in Parts 1 to 6 of BS 7671.',
   },
   {
     question: 'What causes galvanic corrosion in marina electrical systems?',
@@ -127,7 +127,7 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671:2018+A3:2024 Section 709 — Marinas and Similar Locations — is the authoritative
+          BS 7671:2018+A4:2026 Section 709 — Marinas and Similar Locations — is the authoritative
           technical standard for shore power electrical installations at UK marinas, boat harbours,
           inland waterway moorings, and yacht clubs. It applies to the fixed installation from the
           origin of the shore supply to (and including) the socket outlets mounted on pontoons and

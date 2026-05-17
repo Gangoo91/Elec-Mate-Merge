@@ -172,7 +172,7 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671:2018+A3:2024 does not mandate thermal imaging as part of a standard EICR
+          BS 7671:2018+A4:2026 does not mandate thermal imaging as part of a standard EICR
           inspection, but the IET Guidance Note 3 (Inspection and Testing) acknowledges it as a
           valid supplementary inspection technique. In practice, thermal imaging is increasingly
           offered as an added-value service during EICR inspection of commercial and industrial

@@ -340,7 +340,7 @@ export default function EarthRodResistanceCalculatorPage() {
           icon: BookOpen,
           title: 'BS 7671 Compliant',
           description:
-            'All calculations follow BS 7671:2018+A3:2024 requirements for TT earthing systems. Verified against the IET Guidance Note 3 earthing section.',
+            'All calculations follow BS 7671:2018+A4:2026 requirements for TT earthing systems. Verified against the IET Guidance Note 3 earthing section.',
         },
         {
           icon: BarChart3,

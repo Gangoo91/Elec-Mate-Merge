@@ -293,7 +293,7 @@ const sections = [
     content: (
       <>
         <p>
-          All EV charger installations in Bristol must comply with BS 7671:2018+A3:2024 Section 722.
+          All EV charger installations in Bristol must comply with BS 7671:2018+A4:2026 Section 722.
           Bristol is in England, so Part P of the Building Regulations applies — a full rewire or
           new circuit installation is notifiable work, and the installer must be registered with a
           competent person scheme (NICEIC, NAPIT, or ELECSA) to self-certify.

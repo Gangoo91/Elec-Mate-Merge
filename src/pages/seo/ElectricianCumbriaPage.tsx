@@ -40,7 +40,7 @@ const tocItems = [
 
 const keyTakeaways = [
   "Cumbria has one of the UK's most unusual electrical labour markets, shaped by Sellafield — one of the largest nuclear sites in Europe — which employs thousands of workers and attracts electricians with specialist nuclear site clearances and skills.",
-  'Electricians working on nuclear licensed sites in Cumbria must meet Nuclear Site Licence conditions, hold appropriate security vetting, and work to IEC 60364 and nuclear industry codes alongside BS 7671:2018+A3:2024.',
+  'Electricians working on nuclear licensed sites in Cumbria must meet Nuclear Site Licence conditions, hold appropriate security vetting, and work to IEC 60364 and nuclear industry codes alongside BS 7671:2018+A4:2026.',
   'Electricity North West (ENW) is the Distribution Network Operator for Cumbria. All DNO notifications for generation, EV chargers, and battery storage go through ENW.',
   'Labour rates in Cumbria are typically £35–55/hr for standard domestic and commercial work — lower than major cities. Nuclear and specialist industrial rates are significantly higher, commonly £60–90+/hr.',
   "Barrow-in-Furness has a distinct industrial character centred on BAE Systems's submarine facility. Carlisle is the county's commercial hub and has strong cross-border trade links with Dumfries and south-west Scotland.",
@@ -269,7 +269,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 7671:2018+A3:2024 (18th Edition)</strong> — the baseline standard for all
+                <strong>BS 7671:2018+A4:2026 (18th Edition)</strong> — the baseline standard for all
                 electrical installations in England. All domestic and commercial work must comply,
                 with an Electrical Installation Certificate (EIC) required for new installations and
                 a Periodic Inspection Report (EICR) for assessments of existing installations per

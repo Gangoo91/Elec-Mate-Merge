@@ -37,7 +37,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Swindon electricians are regulated by Part P of the Building Regulations and must comply with BS 7671:2018+A3:2024. NICEIC and NAPIT registered electricians in Swindon can self-certify notifiable domestic work.',
+  'Swindon electricians are regulated by Part P of the Building Regulations and must comply with BS 7671:2018+A4:2026. NICEIC and NAPIT registered electricians in Swindon can self-certify notifiable domestic work.',
   'Western Power Distribution (now National Grid Electricity Distribution, NGED) is the Distribution Network Operator for Swindon. All DNO notifications for solar PV, battery storage, and EV chargers go through NGED.',
   'Swindon has a large stock of modern housing — including extensive post-millennium new-build estates — as well as the Great Western Designer Outlet and a significant commercial and industrial sector.',
   "Labour rates in Swindon are mid-range for the South West, typically £45 to £60 per hour, reflecting the town's mix of commuter population and local industry.",
@@ -318,7 +318,7 @@ const sections = [
       <>
         <p>
           All domestic electrical work in Swindon must comply with Part P of the Building
-          Regulations and BS 7671:2018+A3:2024. The key requirements:
+          Regulations and BS 7671:2018+A4:2026. The key requirements:
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">

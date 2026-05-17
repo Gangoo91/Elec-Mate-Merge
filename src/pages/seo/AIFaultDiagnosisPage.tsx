@@ -55,7 +55,7 @@ const faqs = [
   {
     question: 'Is the AI trained on UK electrical installations specifically?',
     answer:
-      'Yes. The Fault Diagnosis AI is trained specifically on UK electrical installations, UK cable types (6242Y, 6243Y, SWA, MICC, FP200), UK earthing systems (TN-S, TN-C-S, TT), UK protective device types (BS EN 60898 MCBs, BS EN 61009 RCBOs, BS EN 61008 RCDs), and UK wiring practices. It understands the specific fault patterns that occur in UK domestic, commercial, and industrial installations, including common issues with PME earthing, the particular failure modes of rewireable fuses, and the characteristic problems of older wiring systems such as lead-sheathed cables and rubber-insulated conductors. All regulation references are to BS 7671:2018+A3:2024.',
+      'Yes. The Fault Diagnosis AI is trained specifically on UK electrical installations, UK cable types (6242Y, 6243Y, SWA, MICC, FP200), UK earthing systems (TN-S, TN-C-S, TT), UK protective device types (BS EN 60898 MCBs, BS EN 61009 RCBOs, BS EN 61008 RCDs), and UK wiring practices. It understands the specific fault patterns that occur in UK domestic, commercial, and industrial installations, including common issues with PME earthing, the particular failure modes of rewireable fuses, and the characteristic problems of older wiring systems such as lead-sheathed cables and rubber-insulated conductors. All regulation references are to BS 7671:2018+A4:2026.',
   },
   {
     question: 'Can the AI diagnose intermittent faults?',
@@ -141,7 +141,7 @@ const features = [
     icon: ShieldCheck,
     title: 'BS 7671 Regulation References',
     description:
-      'Every diagnosis includes specific regulation references from BS 7671:2018+A3:2024 so you can verify the reasoning and cite the correct standard on your report.',
+      'Every diagnosis includes specific regulation references from BS 7671:2018+A4:2026 so you can verify the reasoning and cite the correct standard on your report.',
   },
   {
     icon: ListChecks,
@@ -330,7 +330,7 @@ const sections = [
         <p>
           Every diagnosis from the AI Fault Diagnosis tool includes specific references to{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
           . This is not decorative — it serves three practical purposes.
         </p>
@@ -370,7 +370,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          The AI references the complete BS 7671:2018+A3:2024 including Amendment 3 (issued July
+          The AI references the complete BS 7671:2018+A4:2026 including Amendment 3 (issued July
           2024), which adds Regulation 530.3.2 for bidirectional and unidirectional protective
           devices. It also references GN3 (Guidance Note 3: Inspection and Testing, 9th Edition) for
           test procedures and the IET On-Site Guide for practical installation guidance.

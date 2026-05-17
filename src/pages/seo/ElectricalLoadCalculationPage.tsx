@@ -34,7 +34,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Electrical load calculation determines the maximum demand on a circuit, distribution board, or supply in order to select correctly rated protective devices, cables, and supply capacity. Under-sizing any of these elements creates a fire and shock risk.',
-  'BS 7671:2018+A3:2024 Appendix 1 provides diversity factors for domestic and commercial installations, allowing the calculated maximum demand to be reduced below the simple sum of all connected loads to reflect the realistic simultaneous usage pattern.',
+  'BS 7671:2018+A4:2026 Appendix 1 provides diversity factors for domestic and commercial installations, allowing the calculated maximum demand to be reduced below the simple sum of all connected loads to reflect the realistic simultaneous usage pattern.',
   'The IET On-Site Guide (OSG) provides tabulated diversity factors and simplified methods for domestic load calculations. For commercial and industrial premises, full calculations using first principles are required.',
   'Cable current-carrying capacity (CCC) must be derated for grouping, ambient temperature, and installation method using the correction factors in BS 7671 Appendix 4. The corrected CCC must not be less than the design current of the circuit.',
   'For three-phase supplies, phase balance should be considered during load allocation. Unbalanced loading increases neutral current, which must be accounted for in neutral conductor sizing under BS 7671 Regulation 523.6.',
@@ -72,7 +72,7 @@ const faqs = [
   {
     question: 'What is the IET On-Site Guide and where does it cover load calculations?',
     answer:
-      'The IET On-Site Guide (OSG) is a practical companion to BS 7671, produced by the Institution of Engineering and Technology. It provides simplified tables and methods for standard domestic and small commercial installations. Load calculation and diversity factor guidance is found in Section 1.2 (maximum demand) and Appendix B (diversity factors). The OSG is updated to reflect each amendment to BS 7671 — ensure you are using the edition corresponding to BS 7671:2018+A3:2024 (the 2024 edition of the OSG). The OSG is available from the IET Shop and is a standard reference for the AM2, City and Guilds 2382, and NVQ Level 3 exams.',
+      'The IET On-Site Guide (OSG) is a practical companion to BS 7671, produced by the Institution of Engineering and Technology. It provides simplified tables and methods for standard domestic and small commercial installations. Load calculation and diversity factor guidance is found in Section 1.2 (maximum demand) and Appendix B (diversity factors). The OSG is updated to reflect each amendment to BS 7671 — ensure you are using the edition corresponding to BS 7671:2018+A4:2026 (the 2024 edition of the OSG). The OSG is available from the IET Shop and is a standard reference for the AM2, City and Guilds 2382, and NVQ Level 3 exams.',
   },
   {
     question: 'How do I balance a three-phase supply across phases for a commercial installation?',
@@ -176,7 +176,7 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671:2018+A3:2024 Appendix 1 provides guidance on diversity factors for assessing the
+          BS 7671:2018+A4:2026 Appendix 1 provides guidance on diversity factors for assessing the
           maximum demand of domestic and commercial installations. Diversity factors reduce the
           calculated maximum demand to reflect realistic simultaneous usage, rather than the
           theoretical worst-case where all loads run simultaneously.

@@ -292,7 +292,7 @@ const sections = [
               shock, overcurrent protection, isolation and switching, earthing arrangements, and
               special installations. Aligned with{' '}
               <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                BS 7671:2018+A3:2024
+                BS 7671:2018+A4:2026
               </SEOInternalLink>
               .
             </p>

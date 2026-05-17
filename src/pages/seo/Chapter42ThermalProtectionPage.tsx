@@ -135,7 +135,7 @@ const sections = [
         <p>
           Chapter 42 of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           deals with protection against the thermal effects of electrical installations. The core
           principle is that electrical equipment must not cause a fire or burn risk to people,

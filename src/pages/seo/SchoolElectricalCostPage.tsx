@@ -183,7 +183,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          All school electrical installations must comply with BS 7671:2018+A3:2024 and the
+          All school electrical installations must comply with BS 7671:2018+A4:2026 and the
           Department for Education's output specification for school buildings. Scotland, Wales, and
           Northern Ireland have separate education authority guidance.
         </p>

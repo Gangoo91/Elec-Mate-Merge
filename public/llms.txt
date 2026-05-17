@@ -1,175 +1,195 @@
 # Elec-Mate
 
-> The complete digital platform for UK electricians. Training, AI tools, certificates, calculators, and business management — all in one app.
+> The complete digital platform for UK electricians, apprentices, employers and college tutors. BS 7671:2018+A4:2026 compliant. 70+ calculators, 16 certificate types, 8 AI specialist agents, 46+ training courses, full business management — all in one mobile-first app.
 
 ## What is Elec-Mate?
 
-Elec-Mate is a mobile-first web application built for UK electrical professionals. It covers every aspect of an electrician's work: creating BS 7671-compliant certificates, performing complex calculations, studying for qualifications, managing apprentices, and running a business.
+Elec-Mate is a UK-built mobile-first web application for electrical professionals. Every tool, certificate and calculation is aligned to BS 7671:2018 Amendment 4 (2026), IET Guidance Note 3 (Inspection & Testing), and the IET On-Site Guide — the current canonical UK electrical standards.
 
-## Key Features
+## Compliance and standards
 
-- **8 Certificate Types**: EICR, EIC, Minor Works, Emergency Lighting, Fire Alarm, PAT Testing, EV Charger, Solar PV — BS 7671 compliant, digital signatures, offline-capable, professional PDF export
-- **70 Electrical & Business Calculators**: Cable sizing, voltage drop, earth loop impedance (Zs), fault current (PSCC/PEFC), RCD testing, conduit fill, maximum demand, power factor, plus 14 business calculators
-- **Elec-AI — Like ChatGPT for Electricians**: 8 specialist AI agents + 12 AI tools trained on BS 7671 + UK trade knowledge. Circuit Designer, Cost Engineer, RAMS Generator (30-page docs in 2 mins), Installation Specialist, Maintenance, Regulations Lookup, Study Coach, Voice Quotes, Fault Diagnosis, Board Scanner, and more
-- **One-Click Workflows**: AI Circuit Designer → EIC Certificate in one click. EICR Observations → Remedial Quote with cost estimator. Cost Engineer → Professional quote in minutes
-- **AM2 Simulator**: Full AM2 practical assessment simulation with timed exercises and AI grading — the only app that offers this
-- **AI Portfolio Builder**: Captures evidence and AI auto-maps to assessment criteria
-- **EPA Readiness Checker**: Reads your entire portfolio and shows exactly how ready you are
-- **30-Page RAMS in 2 Minutes**: AI generates complete CDM 2015 compliant Risk Assessment and Method Statements
-- **36+ Training Courses**: 18th Edition, Level 2 & 3, AM2 prep, EPA simulator, HNC, plus 24 CPD courses
-- **Business Tools**: AI-powered quoting, invoicing, Stripe payments, Xero & QuickBooks
-- **Board Scanner**: Photo a consumer unit → AI identifies every device → imports into certificates
-- **ElecID**: Verified digital professional identity card, shareable via QR code
-- **Job Vacancies**: Integrated UK electrical job board
-- **Employer Dashboard**: Team management, apprentice tracking, compliance monitoring
-- **Mental Health Hub**: Confidential wellbeing resources for the construction trade
-- **Fully Offline**: Every tool works without internet — auto-saves, syncs when online
+All tools, certificates, training content and calculators on Elec-Mate are aligned to:
 
-## Who is it for?
+- **BS 7671:2018+A4:2026** (IET Wiring Regulations, Amendment 4, January 2026)
+- **IET Guidance Note 3** — Inspection & Testing (9th Edition, A4-aligned)
+- **IET On-Site Guide** (9th Edition, A4-aligned)
+- **Part P** (Building Regulations, England & Wales)
+- **Electricity at Work Regulations 1989**
+- **Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020**
 
-- Qualified electricians (domestic and commercial)
-- Electrical apprentices (Level 2, Level 3, AM2)
-- Electrical employers and contractors
+## Audience
+
+- Qualified UK electricians (domestic, commercial, industrial)
+- Electrical apprentices (City & Guilds 2365 Level 2 / Level 3, EAL, T Levels, 5357, 8202, AM2, AM2E)
+- Electrical contractors and employers
 - College tutors managing electrical students
+- Self-employed electricians running a business
 
-## Compliance
+## Key product surfaces (most-searched topics)
 
-All tools and certificates comply with:
-- BS 7671:2018 + Amendment 2:2022 + Amendment 3:2024 (IET Wiring Regulations, 18th Edition)
-- Part P Building Regulations (England & Wales)
-- Electricity at Work Regulations 1989
-- The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020
+### Electrical calculators (free to use, no signup)
+
+- [Adiabatic Equation Calculator](https://elec-mate.com/adiabatic-equation-calculator) — Adiabatic Equation Calculator
+- [Battery Backup Calculator](https://elec-mate.com/tools/battery-backup-calculator) — Battery Backup Calculator
+- [Cable Derating Calculator](https://elec-mate.com/tools/cable-derating-calculator) — Cable Derating Calculator
+- [Circuit Breaker Sizing Calculator](https://elec-mate.com/tools/circuit-breaker-sizing-calculator) — Circuit Breaker Sizing Calculator
+- [Ev Charger Load Calculator](https://elec-mate.com/tools/ev-charger-load-calculator) — EV Charger Load Calculator
+- [Motor Starting Current Calculator](https://elec-mate.com/tools/motor-starting-current-calculator) — Motor Starting Current Calculator
+- [Transformer Sizing Calculator](https://elec-mate.com/tools/transformer-sizing-calculator) — Transformer Sizing Calculator
+- [Cable Sizing Calculator](https://elec-mate.com/cable-sizing-calculator) — Cable Sizing Calculator BS 7671
+- [Conduit Fill Calculator](https://elec-mate.com/conduit-fill-calculator)
+- [Diversity Factor Calculator](https://elec-mate.com/diversity-factor-calculator)
+- [Earth Loop Impedance Calculator](https://elec-mate.com/earth-loop-impedance-calculator)
+- [Max Demand Calculator](https://elec-mate.com/max-demand-calculator)
+- [Power Factor Calculator](https://elec-mate.com/power-factor-calculator)
+- [Prospective Fault Current Calculator](https://elec-mate.com/prospective-fault-current-calculator) — Prospective Fault Current Calculator
+- [Ring Circuit Calculator](https://elec-mate.com/ring-circuit-calculator)
+- [Three Phase Power Calculator](https://elec-mate.com/three-phase-power-calculator)
+- [Trunking Fill Calculator](https://elec-mate.com/trunking-fill-calculator)
+- [Voltage Drop Calculator](https://elec-mate.com/voltage-drop-calculator)
+- [Break Even Calculator](https://elec-mate.com/tools/break-even-calculator) — Break-Even Calculator for Electricians
+- [Busbar Sizing Calculator](https://elec-mate.com/tools/busbar-sizing-calculator) — Busbar Sizing Calculator
+- [Cable Tray Sizing Calculator](https://elec-mate.com/tools/cable-tray-sizing-calculator) — Cable Tray Sizing Calculator
+- [Capacity Planning Calculator](https://elec-mate.com/tools/capacity-planning-calculator) — Capacity Planning Calculator for Electricians
+- [Disconnection Time Calculator](https://elec-mate.com/tools/disconnection-time-calculator) — Disconnection Time Calculator
+- [Earth Rod Resistance Calculator](https://elec-mate.com/tools/earth-rod-resistance-calculator) — Earth Rod Resistance Calculator
+- [Equipment Roi Calculator](https://elec-mate.com/tools/equipment-roi-calculator) — Equipment ROI Calculator
+- [Job Profitability Calculator](https://elec-mate.com/job-profitability-calculator)
+- [Lighting Lux Calculator](https://elec-mate.com/tools/lighting-lux-calculator) — Lighting Lux Level Calculator
+- [Minimum Charge Calculator](https://elec-mate.com/tools/minimum-charge-calculator) — Minimum Charge Calculator for Electricians
+- [Power Consumption Calculator](https://elec-mate.com/tools/power-consumption-calculator) — Power Consumption Calculator
+- [Solar Panel Sizing Calculator](https://elec-mate.com/tools/solar-panel-sizing-calculator) — Solar Panel Sizing Calculator UK
+
+### BS 7671 guides and explainers
+
+- [Bs 7671 A4 2026 Afdd Changes](https://elec-mate.com/guides/bs-7671-a4-2026-afdd-changes)
+- [Bs 7671 A4 2026 Eic Model Form](https://elec-mate.com/guides/bs-7671-a4-2026-eic-model-form)
+- [Bs 7671 A4 2026 Luminaire Rcd Protection](https://elec-mate.com/guides/bs-7671-a4-2026-luminaire-rcd-protection)
+- [Bs 7671 A4 2026 Meiwc Model Form](https://elec-mate.com/guides/bs-7671-a4-2026-meiwc-model-form)
+- [Bs 7671 A4 2026 Summary](https://elec-mate.com/guides/bs-7671-a4-2026-summary)
+- [Bs 7671 A4 2026 Schedule Of Tests](https://elec-mate.com/guides/bs-7671-a4-2026-schedule-of-tests)
+- [Bs 7671 A4 2026 Tn Cs Pnb Earthing](https://elec-mate.com/guides/bs-7671-a4-2026-tn-cs-pnb-earthing)
+- [Appendix 4 Tables Bs 7671](https://elec-mate.com/guides/appendix-4-tables-bs-7671) — BS 7671 Appendix 4 Tables
+- [Bs 7671 Amendment 3 Changes](https://elec-mate.com/guides/bs-7671-amendment-3-changes) — BS 7671 Amendment 3 (A3:2024)
+- [Bs 7671 Amendment 4 2026](https://elec-mate.com/guides/bs-7671-amendment-4-2026) — BS 7671 Amendment 4 2026
+- [Bs 7671 18th Edition Guide](https://elec-mate.com/guides/bs-7671-18th-edition-guide) — BS 7671 18th Edition Guide 2026
+- [Bs 7671 Run Through](https://elec-mate.com/guides/bs-7671-run-through) — BS 7671 Run-Through Study Guide
+- [Bs 7671 Section 710 Medical Locations](https://elec-mate.com/guides/bs-7671-section-710-medical-locations)
+- [Bs 7671 Section 714 Outdoor Lighting](https://elec-mate.com/guides/bs-7671-section-714-outdoor-lighting)
+- [Bathroom Electrical Regulations](https://elec-mate.com/guides/bathroom-electrical-regulations) — Bathroom Electrical Regulations UK
+- [Bathroom Electrical Zones Bs7671](https://elec-mate.com/guides/bathroom-electrical-zones-bs7671) — Bathroom Electrical Zones BS 7671
+- [Building Regulations Electrical](https://elec-mate.com/guides/building-regulations-electrical) — Building Regulations Part P Electrical
+- [Cable Sizing Guide Bs 7671](https://elec-mate.com/guides/cable-sizing-guide-bs-7671) — Cable Sizing Guide BS 7671
+- [Correction Factors Bs 7671](https://elec-mate.com/guides/correction-factors-bs-7671) — BS 7671 Correction Factors
+- [Electrical Regulations Timeline Uk](https://elec-mate.com/guides/electrical-regulations-timeline-uk) — UK Electrical Regulations Timeline
+- [Electrical Wiring Regulations History](https://elec-mate.com/guides/electrical-wiring-regulations-history) — History of UK Wiring Regulations
+- [Electricity At Work Regulations](https://elec-mate.com/guides/electricity-at-work-regulations) — Electricity at Work Regulations 1989
+- [Garden Electrical Wiring Regulations](https://elec-mate.com/guides/garden-electrical-wiring-regulations) — Garden Electrical Wiring Regulations UK
+- [Garden Lighting Regulations](https://elec-mate.com/guides/garden-lighting-regulations) — Garden Lighting Regulations
+- [Insulation Resistance Testing Bs7671](https://elec-mate.com/guides/insulation-resistance-testing-bs7671) — Insulation Resistance Testing BS 7671
+
+### Inspection, testing and certificates
+
+- [Digital Certificates App](https://elec-mate.com/tools/digital-certificates-app) — Digital Electrical Certificates App
+- [Eic Certificate](https://elec-mate.com/eic-certificate)
+- [Eicr Certificate](https://elec-mate.com/tools/eicr-certificate) — EICR Certificate Guide 2026
+- [Ev Charger Certificate](https://elec-mate.com/ev-charger-certificate) — EV Charger Installation Certificate App
+- [Emergency Lighting Certificate](https://elec-mate.com/emergency-lighting-certificate) — Emergency Lighting Certificate App
+- [Fire Alarm Certificate](https://elec-mate.com/fire-alarm-certificate) — Fire Alarm Certificate App
+- [Minor Works Certificate](https://elec-mate.com/minor-works-certificate)
+- [Solar Pv Certificate](https://elec-mate.com/solar-pv-certificate) — Solar PV Installation Certificate App
+- [Bs 7671 A4 2026 Eic Model Form](https://elec-mate.com/guides/bs-7671-a4-2026-eic-model-form)
+- [Best Eicr Software Uk](https://elec-mate.com/guides/best-eicr-software-uk) — Best EICR Software UK 2026
+- [Commercial Eicr Guide](https://elec-mate.com/guides/commercial-eicr-guide) — Commercial EICR Guide
+- [Continuity Testing Guide](https://elec-mate.com/continuity-testing-guide) — Continuity Testing Guide UK
+- [Continuity Testing Electricians Guide](https://elec-mate.com/guides/continuity-testing-electricians-guide) — Continuity Testing Guide for Electricians
+- [Continuity Testing R1 R2](https://elec-mate.com/guides/continuity-testing-r1-r2) — Continuity Testing R1+R2
+- [Dead Vs Live Testing](https://elec-mate.com/guides/dead-vs-live-testing) — Dead Testing vs Live Testing
+- [Digital Vs Paper Certificates](https://elec-mate.com/guides/digital-vs-paper-certificates) — Digital vs Paper Electrical Certificates
+- [Eicr Aberdeen](https://elec-mate.com/eicr-aberdeen) — EICR Aberdeen
+- [Eicr Bath](https://elec-mate.com/guides/eicr-bath) — EICR Bath
+- [Eicr Belfast](https://elec-mate.com/guides/eicr-belfast) — EICR Belfast
+- [Eicr Birmingham](https://elec-mate.com/guides/eicr-birmingham) — EICR Birmingham
+- [Eicr Bradford](https://elec-mate.com/eicr-bradford) — EICR Bradford
+- [Eicr Brighton](https://elec-mate.com/guides/eicr-brighton) — EICR Brighton
+- [Eicr Bristol](https://elec-mate.com/guides/eicr-bristol) — EICR Bristol
+- [Eicr Cambridge](https://elec-mate.com/guides/eicr-cambridge) — EICR Cambridge
+- [Eicr Cardiff](https://elec-mate.com/guides/eicr-cardiff) — EICR Cardiff
+- [Eicr Cheltenham](https://elec-mate.com/eicr-cheltenham) — EICR Cheltenham
+- [Eicr Client Handover Guide](https://elec-mate.com/guides/eicr-client-handover-guide)
+- [Eicr Code C1 Danger Present](https://elec-mate.com/guides/eicr-code-c1-danger-present)
+
+### Apprentice & training
+
+- [Apprentice Training App](https://elec-mate.com/tools/apprentice-training-app) — Apprentice Training App
+- [Apprentice Training](https://elec-mate.com/apprentice-training)
+- [Asbestos Awareness](https://elec-mate.com/training/asbestos-awareness) — Asbestos Awareness Course
+- [Bms Course](https://elec-mate.com/bms-course)
+- [Bs 7671 Amendment 3 Course](https://elec-mate.com/training/bs-7671-amendment-3-course) — BS 7671 Amendment 3 Course
+- [Cdm Regulations Course](https://elec-mate.com/training/cdm-regulations-course) — CDM Regulations Course for Electricians
+- [Coshh](https://elec-mate.com/training/coshh) — COSHH Course
+- [Cscs Card](https://elec-mate.com/training/cscs-card) — CSCS Card Course
+- [Confined Spaces](https://elec-mate.com/training/confined-spaces) — Confined Spaces Course
+- [Data Cabling](https://elec-mate.com/training/data-cabling) — Data Cabling Course
+- [Domestic Installer](https://elec-mate.com/training/domestic-installer) — Domestic Installer Course
+- [Eighteenth Edition Course](https://elec-mate.com/eighteenth-edition-course)
+- [Electrical Science Fundamentals](https://elec-mate.com/training/electrical-science-fundamentals) — Electrical Science Fundamentals
+- [Energy Efficiency](https://elec-mate.com/training/energy-efficiency) — Energy Efficiency Course
+- [Environmental Sustainability](https://elec-mate.com/training/environmental-sustainability) — Environmental Sustainability Course
+- [Fire Alarm Systems](https://elec-mate.com/training/fire-alarm-systems) — Fire Alarm Systems Course
+- [Fire Safety](https://elec-mate.com/training/fire-safety) — Fire Safety Course
+- [First Aid Electrical](https://elec-mate.com/training/first-aid-electrical) — First Aid Course for Electricians
+- [Hnc Electrical](https://elec-mate.com/training/hnc-electrical) — HNC Electrical Course
+- [Ipaf Training](https://elec-mate.com/ipaf-training) — IPAF Training Course Online
+- [Ai For Electrical Apprentices](https://elec-mate.com/guides/ai-for-electrical-apprentices) — AI for Electrical Apprentices
+- [Am2 Assessment Preparation](https://elec-mate.com/guides/am2-assessment-preparation) — AM2 Assessment Preparation Guide UK
+- [Am2 Exam Tips](https://elec-mate.com/guides/am2-exam-tips) — AM2 Exam Tips 2026
+- [Am2 Simulator Guide](https://elec-mate.com/guides/am2-simulator-guide) — AM2 Simulator
+- [Apprentice Assessment Guide](https://elec-mate.com/guides/apprentice-assessment-guide) — Apprentice Assessment Guide
+- [Apprentice Endpoint Assessment](https://elec-mate.com/apprentice-endpoint-assessment) — Electrical Apprentice End-Point Assessment (EPA) Guide UK
+- [Apprentice First Year Revision](https://elec-mate.com/apprentice-first-year-revision) — Electrical Apprentice Year 1 Revision
+- [Apprentice Flashcards Tool](https://elec-mate.com/guides/apprentice-flashcards-tool) — Apprentice Flashcards Tool
+- [Apprentice Mental Health](https://elec-mate.com/guides/apprentice-mental-health) — Mental Health for Electrical Apprentices
+- [Apprentice Portfolio Building Tips](https://elec-mate.com/guides/apprentice-portfolio-building-tips) — Electrical Apprentice Portfolio Building Tips UK
+- [Apprentice Portfolio Guide](https://elec-mate.com/apprentice-portfolio-guide) — Electrical Apprentice Portfolio Guide
+- [Apprentice Progression Guide](https://elec-mate.com/apprentice-progression-guide) — Electrical Apprentice Career Progression
+- [Apprentice Rights Pay Uk](https://elec-mate.com/guides/apprentice-rights-pay-uk) — Apprentice Rights & Pay UK 2026
+- [Apprentice Safety Cases](https://elec-mate.com/guides/apprentice-safety-cases) — Safety Cases for Electrical Apprentices
+- [Apprentice Electrician Salary](https://elec-mate.com/guides/apprentice-electrician-salary) — Apprentice Electrician Salary UK 2026
+- [Apprentice Toolbox Guide](https://elec-mate.com/guides/apprentice-toolbox-guide) — Apprentice Toolbox Guide
+- [Apprentice Workplace Culture](https://elec-mate.com/guides/apprentice-workplace-culture) — Workplace Culture for Electrical Apprentices
+- [Calculations For Apprentices](https://elec-mate.com/guides/calculations-for-apprentices) — Electrical Calculations for Apprentices
+- [City Guilds 2365 Electrical](https://elec-mate.com/guides/city-guilds-2365-electrical) — City & Guilds 2365
+- [City Guilds 2365 Unit 201](https://elec-mate.com/guides/city-guilds-2365-unit-201) — City & Guilds 2365 Unit 201 — Health and Safety
+
+### Comparison and "best of" content
+
+- [Best Ai Tool Electricians](https://elec-mate.com/compare/best-ai-tool-electricians) — Best AI Tool for Electricians 2026
+- [Best Apprentice App](https://elec-mate.com/compare/best-apprentice-app) — Best Apprentice App 2026
+- [Best Cable Sizing App](https://elec-mate.com/compare/best-cable-sizing-app) — Best Cable Sizing App 2026
+- [Best Invoice App Electricians](https://elec-mate.com/compare/best-invoice-app-electricians) — Best Invoice App for Electricians 2026
+- [Best Quoting App Electricians](https://elec-mate.com/compare/best-quoting-app-electricians) — Best Quoting App for Electricians 2026
+- [Checkatrade Vs Mybuilder Vs Bark](https://elec-mate.com/compare/checkatrade-vs-mybuilder-vs-bark) — Checkatrade vs MyBuilder vs Bark 2026
+- [Elec Mate Vs Easy Eicr](https://elec-mate.com/compare/elec-mate-vs-easy-eicr) — Elec-Mate vs Easy EICR 2026
+- [Elec Mate Vs Electrical Om](https://elec-mate.com/compare/elec-mate-vs-electrical-om) — Elec-Mate vs Electrical OM
+- [Elec Mate Vs Simply Eicr](https://elec-mate.com/compare/elec-mate-vs-simply-eicr) — Elec-Mate vs SimplyEICR
+- [Electrician App Android](https://elec-mate.com/compare/electrician-app-android) — Best Electrician App for Android 2026
+- [Niceic Vs Napit Comparison](https://elec-mate.com/niceic-vs-napit-comparison) — NICEIC vs NAPIT
+- [Solar Pv System Design](https://elec-mate.com/solar-pv-system-design) — Solar PV System Design UK
+- [Solar Pv System Sizing](https://elec-mate.com/solar-pv-system-sizing) — Solar PV System Sizing — UK Guide 2024
+- [Compare](https://elec-mate.com/compare) — Compare Electrician Apps
+
+
 
 ## Pricing
 
 - 7-day free trial (no charge during trial)
 - From GBP 4.99/month
-- All features included in every plan
+- All features included
 
-## Platform
+## Platform availability
 
-- Works on iPhone, Android, tablet, and desktop
-- Progressive Web App (PWA) — install from browser, works offline
-- Also available as native iOS and Android app via Capacitor
-
-## Standards Compliance
-
-- BS 7671:2018+A2:2022 (18th Edition IET Wiring Regulations — the "brown book")
-- BS 7671:2018+A3:2024 (Amendment 3 — adds Regulation 530.3.201, bidirectional/unidirectional devices)
-- BS 5839 (Fire detection and fire alarm systems)
-- BS 5266 (Emergency lighting)
-- IET Code of Practice for Electric Vehicle Charging Equipment Installation
-- MCS Standards (Microgeneration Certification Scheme — Solar PV)
-- GN3: Guidance Note 3 — Inspection & Testing (9th Edition / 18th Edition)
-
-## Key Links
-
-- Website: https://elec-mate.com
-- Pricing: https://elec-mate.com/pricing
-- EICR Certificate: https://elec-mate.com/tools/eicr-certificate
-- EIC Certificate: https://elec-mate.com/tools/eic-certificate
-- Minor Works Certificate: https://elec-mate.com/tools/minor-works-certificate
-- Cable Sizing Calculator: https://elec-mate.com/tools/cable-sizing-calculator
-- Voltage Drop Calculator: https://elec-mate.com/tools/voltage-drop-calculator
-- Electrical Testing Calculators: https://elec-mate.com/tools/electrical-testing-calculators
-- AI Electrician Tools: https://elec-mate.com/tools/ai-electrician
-- 18th Edition Course: https://elec-mate.com/training/18th-edition-course
-- Apprentice Training: https://elec-mate.com/training/electrical-apprentice
-- How to Become an Electrician: https://elec-mate.com/guides/how-to-become-electrician
-- BS 7671 18th Edition Guide: https://elec-mate.com/guides/bs-7671-18th-edition-guide
-- Testing Sequence Guide: https://elec-mate.com/guides/testing-sequence-guide
-- Electrician Salary UK: https://elec-mate.com/guides/electrician-salary-uk
-- Safe Isolation Procedure: https://elec-mate.com/guides/safe-isolation-procedure
-- EICR for Landlords: https://elec-mate.com/guides/eicr-for-landlords
-
-## 400+ Free Guides & Resources
-
-Elec-Mate publishes over 400 free guides, calculators, and training resources:
-
-### Certificates & Compliance
-- EICR guides (landlords, commercial, observation codes, schedule of inspections, limitations, unsatisfactory results)
-- EIC guides (when required, how to fill in, vs minor works)
-- Minor works, EV charger, fire alarm, emergency lighting, solar PV, PAT testing guides
-- Digital vs paper certificates, certificate retention, NICEIC/NAPIT requirements
-
-### Calculators & Technical Tools
-- Cable sizing, voltage drop, earth loop impedance, max demand, PFC, adiabatic equation
-- Conduit fill, trunking fill, cable tray, busbar, ring circuit, three phase, power factor
-- Disconnection time, cable derating, motor starting current, earth rod resistance
-- Lighting lux, transformer sizing, battery backup, solar panel sizing, EV charger load
-- IP rating guide, load schedule, power consumption
-
-### Testing & Inspection
-- Testing sequence, safe isolation, insulation resistance, continuity R1+R2, polarity
-- RCD testing, earth electrode, loop impedance, functional testing, dead vs live testing
-- Test instruments guide, Fluke vs Megger, Ze values, maximum Zs values
-- Periodic inspection, initial verification, commissioning, three phase testing
-
-### Regulations & Standards
-- BS 7671 18th Edition complete guide, Amendment 3 changes
-- Part P, building regulations, Electricity at Work Regulations
-- Wiring colours UK, special locations Part 7, bathroom/kitchen/outdoor regs
-- AFDDs, SPDs, residual current monitoring, protective earthing & bonding
-- Notifiable vs non-notifiable work, competent person schemes
-
-### Career & Business
-- Electrician salary UK, apprentice salary, day rates, career progression
-- How to become an electrician, CV guide, interview questions
-- Starting a business, tax guide, CIS, insurance, going self-employed
-- Pricing jobs, hourly rates, van setup, tool lists
-
-### Training & Apprentice
-- 18th Edition exam tips, AM2 preparation, 2391 exam tips
-- Apprentice rights & pay, off-job training, EPA preparation, portfolio building
-- Study tips, flashcards, mock exams, site diary guide
-- Fire alarm, EV charging, renewable energy, smart home courses
-
-### Troubleshooting
-- RCD keeps tripping, earth fault loop too high, low insulation resistance
-- Circuit breaker tripping, power going off, flickering lights, burning smell
-- Voltage too high/low, overloaded circuit, borrowed neutral, ring circuit faults
-
-## Social Media
-
-- Facebook: https://www.facebook.com/elecmate
-- Instagram: https://www.instagram.com/elec_mate
-- TikTok: https://www.tiktok.com/@elecmate
-- LinkedIn: https://www.linkedin.com/company/elec-mate
-- Telegram: https://t.me/Elec_MateOfficialGroup
-
-## Full documentation
-
-For detailed feature descriptions, see [llms-full.txt](https://elec-mate.com/llms-full.txt)
-
-## SEO Content Library (1,000+ Pages)
-
-Elec-Mate hosts over 1,000 in-depth pages covering UK electrical topics. All content is written by the Elec-Mate Technical Team and verified against BS 7671:2018+A3:2024. Key categories:
-
-### UK City & Regional Guides
-Electrician guides for every major UK city and region: London (all boroughs), Birmingham, Manchester, Leeds, Glasgow, Edinburgh, Bristol, Cardiff, Sheffield, Liverpool, Newcastle, Nottingham, Leicester, Coventry, Bradford, Southampton, Portsmouth, Brighton, Plymouth, Derby, Stoke-on-Trent, Wolverhampton, Middlesbrough, Sunderland, Hull, York, Chester, and 30+ more. Each guide covers local DNO, common property types, local regulations context, and typical costs.
-
-### EICR & Landlord Guides
-Landlord electrical safety obligations in every UK city and region. EICR requirements, 5-year cycles, HMO licensing, Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020, Renting Homes (Wales) Act 2022, Scottish HMO regulations.
-
-### EV Charger Installation
-EV charger installation guides, grants (WCS, EV Infrastructure Grant), brand comparisons (Ohme, Zappi, Hypervolt, Pod Point, Andersen), OZEV installer requirements, BS 7671 Section 722.
-
-### Solar PV & Renewables
-Solar PV installation, G98/G99 notification, MCS standards, BS 7671 Section 712, battery storage, DNO connection requirements.
-
-### Electrical Qualifications & Training
-BS 7671 18th Edition, City & Guilds 2365 Level 2 & 3, AM2 assessment, City & Guilds 2391 inspection & testing, NVQ Level 3, EPA preparation, electrical engineering degree routes, apprenticeship applications.
-
-### Technical Guides
-Safe isolation, cable sizing (BS 7671 Appendix 4), voltage drop, bonding conductors, earthing arrangements (TN-S, TN-C-S PME, TT), consumer unit types and regulations, RCD/RCBO selection, wiring diagrams, two-way switching, ring circuits, radial circuits, lighting circuits.
-
-### Specialist Electrical
-Industrial HV/LV, petrochemical CompEx, data centres (Tier I–IV), healthcare (HTM 06-01), food production, agriculture (BS 7671 Section 705), marinas (BS 7671 Section 709), swimming pools (BS 7671 Section 702), solar PV, wind, EV charging infrastructure.
-
-### Business & Compliance
-Electrical contractor insurance, VAT for electricians, CIS scheme, Part P Building Regulations, NICEIC vs NAPIT vs ELECSA vs STROMA comparison, electrical maintenance contracts.
-
-## Sitemap
-
-Full sitemap: https://elec-mate.com/sitemap.xml
-SEO pages sitemap: https://elec-mate.com/sitemap-seo.xml
+- iOS (App Store: https://apps.apple.com/gb/app/elec-mate/id6758948665)
+- Android (Google Play coming soon — pre-launch as of May 2026)
+- Web (responsive, mobile-first)
+- Offline-capable PWA — every tool works without internet

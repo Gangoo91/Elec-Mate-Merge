@@ -65,7 +65,7 @@ export default function HowToFillInMinorWorksPage() {
             <>
               <p>
                 A Minor Works Certificate is one of the three standard electrical certificates
-                defined in BS 7671:2018+A3:2024 Appendix 6. It is the simplest of the three and is
+                defined in BS 7671:2018+A4:2026 Appendix 6. It is the simplest of the three and is
                 used to certify minor electrical work — work that does not involve the installation
                 of a new circuit at the distribution board.
               </p>
@@ -403,7 +403,7 @@ export default function HowToFillInMinorWorksPage() {
               <p>
                 Part 4 is the declaration. By signing, you are certifying that the minor work
                 described in Part 1 has been designed, constructed, inspected, and tested in
-                accordance with BS 7671:2018+A3:2024, and that the work complies with the standard
+                accordance with BS 7671:2018+A4:2026, and that the work complies with the standard
                 to the best of your knowledge and belief.
               </p>
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -574,7 +574,7 @@ export default function HowToFillInMinorWorksPage() {
         },
         {
           name: 'Complete the declaration and sign',
-          text: 'Enter your full name, company name, scheme registration number (NICEIC, NAPIT, ELECSA, etc.), and the date. Sign the declaration — by signing, you certify that the work has been designed, constructed, inspected, and tested in accordance with BS 7671:2018+A3:2024.',
+          text: 'Enter your full name, company name, scheme registration number (NICEIC, NAPIT, ELECSA, etc.), and the date. Sign the declaration — by signing, you certify that the work has been designed, constructed, inspected, and tested in accordance with BS 7671:2018+A4:2026.',
         },
         {
           name: 'Issue the certificate to the client',

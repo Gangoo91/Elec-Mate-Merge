@@ -1,0 +1,210 @@
+{
+  "generatedAt": "2026-05-17T18:00:20.666Z",
+  "totals": {
+    "seoFiles": 1084,
+    "calculatorComponents": 68,
+    "highConfidence": 10,
+    "mediumConfidence": 12,
+    "unmatched": 1062
+  },
+  "mappings": [
+    {
+      "sourceFile": "src/pages/seo/AdiabaticEquationCalculatorPage.tsx",
+      "slug": "/adiabatic-equation-calculator",
+      "pageFile": "AdiabaticEquationCalculatorPage.tsx",
+      "componentName": "AdiabaticCalculator",
+      "componentImportPath": "@/src/components/apprentice/calculators/AdiabaticCalculator",
+      "confidence": "medium",
+      "alreadyImported": true
+    },
+    {
+      "sourceFile": "src/pages/seo/BatteryBackupCalculatorPage.tsx",
+      "slug": "/tools/battery-backup-calculator",
+      "pageFile": "BatteryBackupCalculatorPage.tsx",
+      "componentName": "BatteryBackupCalculator",
+      "componentImportPath": "@/src/components/apprentice/calculators/BatteryBackupCalculator",
+      "confidence": "high",
+      "alreadyImported": true
+    },
+    {
+      "sourceFile": "src/pages/seo/BatteryStorageGuidePage.tsx",
+      "slug": "/guides/battery-storage-installation",
+      "pageFile": "BatteryStorageGuidePage.tsx",
+      "componentName": "BatteryStorageCalculator",
+      "componentImportPath": "@/src/components/apprentice/calculators/BatteryStorageCalculator",
+      "confidence": "medium",
+      "alreadyImported": false
+    },
+    {
+      "sourceFile": "src/pages/seo/CableDeratingCalculatorPage.tsx",
+      "slug": "/tools/cable-derating-calculator",
+      "pageFile": "CableDeratingCalculatorPage.tsx",
+      "componentName": "CableDeratingCalculator",
+      "componentImportPath": "@/src/components/apprentice/calculators/CableDeratingCalculator",
+      "confidence": "high",
+      "alreadyImported": true
+    },
+    {
+      "sourceFile": "src/pages/seo/CableSizingCalculatorPage.tsx",
+      "slug": "/cable-sizing-calculator",
+      "pageFile": "CableSizingCalculatorPage.tsx",
+      "componentName": "CableSizingCalculator",
+      "componentImportPath": "@/src/components/apprentice/calculators/CableSizingCalculator",
+      "confidence": "high",
+      "alreadyImported": true
+    },
+    {
+      "sourceFile": "src/pages/seo/CircuitBreakerSizingCalculatorPage.tsx",
+      "slug": "/tools/circuit-breaker-sizing-calculator",
+      "pageFile": "CircuitBreakerSizingCalculatorPage.tsx",
+      "componentName": "CircuitBreakerSelectorCalculator",
+      "componentImportPath": "@/src/components/apprentice/calculators/CircuitBreakerSelectorCalculator",
+      "confidence": "medium",
+      "alreadyImported": false
+    },
+    {
+      "sourceFile": "src/pages/seo/ConduitFillCalculatorPage.tsx",
+      "slug": "/conduit-fill-calculator",
+      "pageFile": "ConduitFillCalculatorPage.tsx",
+      "componentName": "ConduitFillCalculator",
+      "componentImportPath": "@/src/components/apprentice/calculators/ConduitFillCalculator",
+      "confidence": "high",
+      "alreadyImported": true
+    },
+    {
+      "sourceFile": "src/pages/seo/DiversityFactorCalculatorPage.tsx",
+      "slug": "/diversity-factor-calculator",
+      "pageFile": "DiversityFactorCalculatorPage.tsx",
+      "componentName": "DiversityFactorCalculator",
+      "componentImportPath": "@/src/components/apprentice/calculators/DiversityFactorCalculator",
+      "confidence": "high",
+      "alreadyImported": true
+    },
+    {
+      "sourceFile": "src/pages/seo/EVChargerLoadCalculatorPage.tsx",
+      "slug": "/tools/ev-charger-load-calculator",
+      "pageFile": "EVChargerLoadCalculatorPage.tsx",
+      "componentName": "EVSELoadCalculator",
+      "componentImportPath": "@/src/components/apprentice/calculators/EVSELoadCalculator",
+      "confidence": "medium",
+      "alreadyImported": false
+    },
+    {
+      "sourceFile": "src/pages/seo/EarthLoopImpedanceCalculatorPage.tsx",
+      "slug": "/earth-loop-impedance-calculator",
+      "pageFile": "EarthLoopImpedanceCalculatorPage.tsx",
+      "componentName": "EarthFaultLoopCalculator",
+      "componentImportPath": "@/src/components/apprentice/calculators/EarthFaultLoopCalculator",
+      "confidence": "medium",
+      "alreadyImported": false
+    },
+    {
+      "sourceFile": "src/pages/seo/IPRatingGuidePage.tsx",
+      "slug": "/tools/ip-rating-guide",
+      "pageFile": "IPRatingGuidePage.tsx",
+      "componentName": "IPRatingCalculator",
+      "componentImportPath": "@/src/components/apprentice/calculators/IPRatingCalculator",
+      "confidence": "medium",
+      "alreadyImported": true
+    },
+    {
+      "sourceFile": "src/pages/seo/LightningProtectionGuidePage.tsx",
+      "slug": "/guides/lightning-protection-guide",
+      "pageFile": "LightningProtectionGuidePage.tsx",
+      "componentName": "LightningProtectionCalculator",
+      "componentImportPath": "@/src/components/apprentice/calculators/LightningProtectionCalculator",
+      "confidence": "medium",
+      "alreadyImported": false
+    },
+    {
+      "sourceFile": "src/pages/seo/MaxDemandCalculatorPage.tsx",
+      "slug": "/max-demand-calculator",
+      "pageFile": "MaxDemandCalculatorPage.tsx",
+      "componentName": "MaximumDemandCalculator",
+      "componentImportPath": "@/src/components/apprentice/calculators/MaximumDemandCalculator",
+      "confidence": "medium",
+      "alreadyImported": false
+    },
+    {
+      "sourceFile": "src/pages/seo/MotorStartingCurrentCalculatorPage.tsx",
+      "slug": "/tools/motor-starting-current-calculator",
+      "pageFile": "MotorStartingCurrentCalculatorPage.tsx",
+      "componentName": "MotorStartingCurrentCalculator",
+      "componentImportPath": "@/src/components/apprentice/calculators/MotorStartingCurrentCalculator",
+      "confidence": "high",
+      "alreadyImported": true
+    },
+    {
+      "sourceFile": "src/pages/seo/PowerFactorCalculatorPage.tsx",
+      "slug": "/power-factor-calculator",
+      "pageFile": "PowerFactorCalculatorPage.tsx",
+      "componentName": "PowerFactorCalculator",
+      "componentImportPath": "@/src/components/apprentice/calculators/PowerFactorCalculator",
+      "confidence": "high",
+      "alreadyImported": true
+    },
+    {
+      "sourceFile": "src/pages/seo/PowerFactorCorrectionPage.tsx",
+      "slug": "/power-factor-correction",
+      "pageFile": "PowerFactorCorrectionPage.tsx",
+      "componentName": "PowerFactorCorrectionCalculator",
+      "componentImportPath": "@/src/components/apprentice/calculators/PowerFactorCorrectionCalculator",
+      "confidence": "medium",
+      "alreadyImported": false
+    },
+    {
+      "sourceFile": "src/pages/seo/ProspectiveFaultCurrentCalculatorPage.tsx",
+      "slug": "/prospective-fault-current-calculator",
+      "pageFile": "ProspectiveFaultCurrentCalculatorPage.tsx",
+      "componentName": "PFCCalculator",
+      "componentImportPath": "@/src/components/apprentice/calculators/PFCCalculator",
+      "confidence": "medium",
+      "alreadyImported": false
+    },
+    {
+      "sourceFile": "src/pages/seo/RingCircuitCalculatorPage.tsx",
+      "slug": "/ring-circuit-calculator",
+      "pageFile": "RingCircuitCalculatorPage.tsx",
+      "componentName": "RingCircuitCalculator",
+      "componentImportPath": "@/src/components/apprentice/calculators/RingCircuitCalculator",
+      "confidence": "high",
+      "alreadyImported": true
+    },
+    {
+      "sourceFile": "src/pages/seo/ThreePhasePowerCalculatorPage.tsx",
+      "slug": "/three-phase-power-calculator",
+      "pageFile": "ThreePhasePowerCalculatorPage.tsx",
+      "componentName": "ThreePhasePowerCalculator",
+      "componentImportPath": "@/src/components/apprentice/calculators/ThreePhasePowerCalculator",
+      "confidence": "high",
+      "alreadyImported": true
+    },
+    {
+      "sourceFile": "src/pages/seo/TransformerSizingCalculatorPage.tsx",
+      "slug": "/tools/transformer-sizing-calculator",
+      "pageFile": "TransformerSizingCalculatorPage.tsx",
+      "componentName": "TransformerCalculator",
+      "componentImportPath": "@/src/components/apprentice/calculators/TransformerCalculator",
+      "confidence": "medium",
+      "alreadyImported": false
+    },
+    {
+      "sourceFile": "src/pages/seo/TrunkingFillCalculatorPage.tsx",
+      "slug": "/trunking-fill-calculator",
+      "pageFile": "TrunkingFillCalculatorPage.tsx",
+      "componentName": "TrunkingSizeCalculator",
+      "componentImportPath": "@/src/components/apprentice/calculators/TrunkingSizeCalculator",
+      "confidence": "medium",
+      "alreadyImported": false
+    },
+    {
+      "sourceFile": "src/pages/seo/VoltageDropCalculatorPage.tsx",
+      "slug": "/voltage-drop-calculator",
+      "pageFile": "VoltageDropCalculatorPage.tsx",
+      "componentName": "VoltageDropCalculator",
+      "componentImportPath": "@/src/components/apprentice/calculators/VoltageDropCalculator",
+      "confidence": "high",
+      "alreadyImported": true
+    }
+  ]
+}

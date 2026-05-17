@@ -40,7 +40,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, carried out in accordance with BS 7671:2018+A3:2024 (Section 631). It produces a detailed condition assessment using C1, C2, C3 and FI observation codes.",
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, carried out in accordance with BS 7671:2018+A4:2026 (Section 631). It produces a detailed condition assessment using C1, C2, C3 and FI observation codes.",
   'Oxford EICR costs are among the highest outside London, driven by extremely high property values, strong demand, and elevated local labour rates. Expect to pay between £150 and £270 for a two-bedroom flat and £220 to £380 for a three-bedroom house.',
   'Landlords in England must obtain a valid EICR before a new tenancy begins and renew it every five years. Oxford City Council enforces these requirements with fines of up to £30,000 for non-compliance.',
   'Oxford has one of the highest proportions of Victorian and Edwardian terraced housing in England, much of it converted into student HMOs. The city also contains a significant number of listed buildings in and around the city centre.',
@@ -151,7 +151,7 @@ const sections = [
         <p>
           The report is produced in accordance with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           (Section 631). It is a detailed condition assessment using standardised C1, C2, C3, and FI
           observation codes — not a simple pass or fail. The overall outcome is either Satisfactory

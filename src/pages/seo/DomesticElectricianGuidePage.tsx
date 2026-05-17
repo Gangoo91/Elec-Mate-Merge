@@ -442,7 +442,7 @@ const sections = [
                 <strong>18th Edition IET Wiring Regulations</strong> (C&G 2382-22) — confirms your
                 knowledge of the current edition of{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                  BS 7671:2018+A3:2024
+                  BS 7671:2018+A4:2026
                 </SEOInternalLink>
                 . Required by all competent person schemes and most employers. Must be renewed when
                 a new edition is published.

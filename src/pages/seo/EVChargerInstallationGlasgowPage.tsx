@@ -290,7 +290,7 @@ const sections = [
     content: (
       <>
         <p>
-          EV charger installations in Glasgow must comply with BS 7671:2018+A3:2024 Section 722 —
+          EV charger installations in Glasgow must comply with BS 7671:2018+A4:2026 Section 722 —
           the same wiring regulations as the rest of the UK. Scotland applies BS 7671 as the
           technical standard for electrical installations.
         </p>

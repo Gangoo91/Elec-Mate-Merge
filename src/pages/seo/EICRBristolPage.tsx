@@ -42,7 +42,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A3:2024 (Section 631). It records the condition of wiring, consumer units, protective devices, earthing, and bonding with classified observation codes.",
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A4:2026 (Section 631). It records the condition of wiring, consumer units, protective devices, earthing, and bonding with classified observation codes.",
   'Bristol EICR costs typically range from £120 to £450 depending on property size. A two-bedroom flat costs £150 to £250, while a three-bedroom house costs £200 to £350. Prices are lower than London but slightly above the national average due to strong demand in the private rented sector.',
   'Since 1 April 2021, landlords in England must obtain an EICR before a new tenancy begins and at least every five years. Failure to comply can result in fines of up to £30,000 per breach, enforced by Bristol City Council.',
   'Bristol has a large stock of Georgian and Victorian properties, particularly in Clifton, Redland, and Cotham. These properties frequently present aged wiring, inadequate earthing, and lead-sheathed cables that return C2 observations requiring remedial work.',
@@ -153,7 +153,7 @@ const sections = [
         <p>
           The EICR is documented in accordance with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           (Section 631), which requires that an Electrical Installation Condition Report is used for
           periodic inspection and testing of existing installations — not an Electrical Installation

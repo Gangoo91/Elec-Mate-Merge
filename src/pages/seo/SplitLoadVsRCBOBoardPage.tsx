@@ -38,9 +38,9 @@ const tocItems = [
 const keyTakeaways = [
   'A split load consumer unit has two or more RCDs protecting groups of circuits. All circuits in each group share a single RCD — if a fault occurs on any circuit in the group, the RCD trips and all circuits in the group lose power.',
   'An RCBO (Residual Current Breaker with Overcurrent) consumer unit uses individual RCBOs for every circuit. Each circuit has its own combined overcurrent and residual current protection — a fault on one circuit trips only that circuit.',
-  'BS 7671:2018+A3:2024 Regulation 314.1 requires that the consumer unit is divided into circuits to avoid danger and inconvenience in the event of a fault. The RCBO approach provides superior circuit independence and fault discrimination.',
+  'BS 7671:2018+A4:2026 Regulation 314.1 requires that the consumer unit is divided into circuits to avoid danger and inconvenience in the event of a fault. The RCBO approach provides superior circuit independence and fault discrimination.',
   'Nuisance tripping — where an RCD trips due to accumulated earth leakage current from multiple healthy circuits — is a significant problem with split load consumer units. RCBO boards eliminate this problem by isolating fault current to a single circuit.',
-  'RCBO consumer units cost more in materials but provide better protection, easier fault finding, and greater resilience. They are the preferred choice for new domestic installations and replacements under BS 7671:2018+A3:2024.',
+  'RCBO consumer units cost more in materials but provide better protection, easier fault finding, and greater resilience. They are the preferred choice for new domestic installations and replacements under BS 7671:2018+A4:2026.',
 ];
 
 const faqs = [
@@ -52,7 +52,7 @@ const faqs = [
   {
     question: 'What does BS 7671 Regulation 314.1 require about consumer unit circuit division?',
     answer:
-      'BS 7671:2018+A3:2024 Regulation 314.1 states that every installation shall be divided into circuits as necessary to: (a) avoid danger and minimise inconvenience in the event of a fault; (b) facilitate safe inspection, testing, and maintenance; (c) take account of danger that may arise from the failure of a single circuit (such as a lighting circuit supplying a stairway). The RCBO approach — providing individual protection per circuit — better satisfies requirement (a): avoiding inconvenience in the event of a fault. A split load board where a fault on the kitchen circuit also kills the hallway lighting satisfies the regulation technically but not in the spirit of best practice.',
+      'BS 7671:2018+A4:2026 Regulation 314.1 states that every installation shall be divided into circuits as necessary to: (a) avoid danger and minimise inconvenience in the event of a fault; (b) facilitate safe inspection, testing, and maintenance; (c) take account of danger that may arise from the failure of a single circuit (such as a lighting circuit supplying a stairway). The RCBO approach — providing individual protection per circuit — better satisfies requirement (a): avoiding inconvenience in the event of a fault. A split load board where a fault on the kitchen circuit also kills the hallway lighting satisfies the regulation technically but not in the spirit of best practice.',
   },
   {
     question: 'What causes nuisance tripping on a split load consumer unit?',
@@ -62,7 +62,7 @@ const faqs = [
   {
     question: 'Is a split load consumer unit still acceptable under BS 7671?',
     answer:
-      'Yes, a split load consumer unit remains compliant with BS 7671:2018+A3:2024. The regulations do not mandate RCBO protection for every circuit — they require appropriate RCD protection for the circuits that need it (Regulation 411.3.3 and 411.3.4). A split load board with the circuits allocated correctly across the RCD groups (critical circuits such as freezer and security alarm on separate RCD groups from general circuits) meets the requirements. However, BS 7671 Appendix 15 and the guidance in the On-Site Guide note that RCBO protection per circuit is the preferred approach for new installations due to the improved selectivity (discrimination) and fault isolation.',
+      'Yes, a split load consumer unit remains compliant with BS 7671:2018+A4:2026. The regulations do not mandate RCBO protection for every circuit — they require appropriate RCD protection for the circuits that need it (Regulation 411.3.3 and 411.3.4). A split load board with the circuits allocated correctly across the RCD groups (critical circuits such as freezer and security alarm on separate RCD groups from general circuits) meets the requirements. However, BS 7671 Appendix 15 and the guidance in the On-Site Guide note that RCBO protection per circuit is the preferred approach for new installations due to the improved selectivity (discrimination) and fault isolation.',
   },
   {
     question: 'How many ways should circuits be split in a split load consumer unit?',
@@ -99,7 +99,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Full guide to BS 7671:2018+A3:2024 including consumer unit requirements.',
+    description: 'Full guide to BS 7671:2018+A4:2026 including consumer unit requirements.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -132,7 +132,7 @@ const sections = [
         <p>
           Both types meet the requirements of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
           , but the industry trend is firmly towards RCBO boards for all new domestic consumer
           unit installations. This guide explains why — and when a split load board may still

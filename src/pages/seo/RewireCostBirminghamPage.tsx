@@ -44,7 +44,7 @@ const keyTakeaways = [
   "Birmingham's housing stock includes large numbers of 1930s and 1950s semi-detached houses — particularly across Bournville, Stirchley, Kings Heath, and Erdington — where original VIR wiring is still encountered.",
   'Victorian back-to-back terraces in the inner ring — Handsworth, Saltley, Sparkbrook, and Digbeth — present the same challenges as any Victorian property: lath-and-plaster walls, limited void access, and ad-hoc wiring additions over the decades.',
   'Birmingham rewires are notifiable under Part P of the Building Regulations. Use a registered electrician (NICEIC, NAPIT, or ELECSA) to self-certify and avoid costly building control inspection fees.',
-  'An Electrical Installation Certificate (EIC) is mandatory on completion, documenting design, construction, inspection, and testing to BS 7671:2018+A3:2024.',
+  'An Electrical Installation Certificate (EIC) is mandatory on completion, documenting design, construction, inspection, and testing to BS 7671:2018+A4:2026.',
 ];
 
 const faqs = [
@@ -371,7 +371,7 @@ const sections = [
           building control inspection (£200–£350 in Birmingham) and cause delays to the project.
         </p>
         <p>
-          Under BS 7671:2018+A3:2024, Regulation 411.3.3 requires RCD protection for all socket
+          Under BS 7671:2018+A4:2026, Regulation 411.3.3 requires RCD protection for all socket
           outlets rated up to 32A. The electrician must issue an{' '}
           <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate (EIC)

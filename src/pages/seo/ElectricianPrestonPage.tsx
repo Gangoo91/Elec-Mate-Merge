@@ -72,7 +72,7 @@ const faqs = [
   {
     question: 'What qualifications do I need to work as an electrician in Preston?',
     answer:
-      "The requirements are standard for England. You need City & Guilds 2365 Level 2 and 3 (or NVQ Level 3 in Electrical Installation), plus the 18th Edition (BS 7671:2018+A3:2024) certificate. For self-certification under Part P without notifying Building Control on every job, you must be registered with NICEIC, NAPIT, or ELECSA. Electricians working in Preston's HMO and student rental market should also consider qualifications in fire alarm systems (BS 5839) and emergency lighting (BS 5266).",
+      "The requirements are standard for England. You need City & Guilds 2365 Level 2 and 3 (or NVQ Level 3 in Electrical Installation), plus the 18th Edition (BS 7671:2018+A4:2026) certificate. For self-certification under Part P without notifying Building Control on every job, you must be registered with NICEIC, NAPIT, or ELECSA. Electricians working in Preston's HMO and student rental market should also consider qualifications in fire alarm systems (BS 5839) and emergency lighting (BS 5266).",
   },
   {
     question: 'Is there good demand for electricians in Preston?',
@@ -194,8 +194,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 7671 compliance</strong> — all electrical work must comply with BS
-                7671:2018+A3:2024. RCD protection is required for socket outlet circuits under
+                <strong>BS 7671 compliance</strong> — all electrical work must comply with BS 7671:2018+A4:2026. RCD protection is required for socket outlet circuits under
                 regulation 411.3.3 and for circuits in kitchens, bathrooms, and outdoors.
               </span>
             </li>

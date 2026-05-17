@@ -355,7 +355,7 @@ const sections = [
       <>
         <p>
           All domestic electrical work in Grimsby must comply with Part P of the Building
-          Regulations and BS 7671:2018+A3:2024. The local authority is North East Lincolnshire
+          Regulations and BS 7671:2018+A4:2026. The local authority is North East Lincolnshire
           Council:
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
@@ -381,7 +381,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 7671:2018+A3:2024 compliance</strong> — all electrical installations must
+                <strong>BS 7671:2018+A4:2026 compliance</strong> — all electrical installations must
                 comply with the current edition. RCD protection is required under Regulation 411.3.3
                 for all socket outlet circuits up to 32A and for circuits in kitchens, bathrooms,
                 and outdoors.

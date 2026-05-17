@@ -43,7 +43,7 @@ const keyTakeaways = [
   'A consumer unit replacement in the UK typically costs between £450 and £2,500 including materials, labour, Part P notification, and an Electrical Installation Certificate (EIC).',
   'Material costs range from around £90 for a basic 6-way enclosure to over £930 for a high-integrity 14-way unit with SPD and Type A RCBOs (trade prices from Wylex, BG Electrical, and Crabtree).',
   'Consumer unit replacement is notifiable work under Part P of the Building Regulations and must be carried out by a registered competent person or inspected by Building Control.',
-  'BS 7671:2018+A3:2024 (Regulation 421.1.201) requires that consumer units in domestic premises as a type-tested coordinated assembly. Since January 2016, all new consumer units in domestic premises must be metal (non-combustible) enclosures.',
+  'BS 7671:2018+A4:2026 (Regulation 421.1.201) requires that consumer units in domestic premises as a type-tested coordinated assembly. Since January 2016, all new consumer units in domestic premises must be metal (non-combustible) enclosures.',
   'An Electrical Installation Certificate (EIC) must be issued after every consumer unit replacement, as confirmed by Regulation 421.1.201.',
 ];
 
@@ -166,7 +166,7 @@ const sections = [
         <p>
           Under{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
           , Regulation 421.1.201 requires that consumer units in domestic premises be as a
           type-tested coordinated assembly designed for use by ordinary persons, providing manual

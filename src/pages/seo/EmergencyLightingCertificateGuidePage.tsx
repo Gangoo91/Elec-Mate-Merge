@@ -641,6 +641,7 @@ export default function EmergencyLightingCertificateGuidePage() {
           Emergency Lighting Certificate Guide: <span className="text-yellow-400">BS 5266 UK</span>
         </>
       }
+              noindex={true}
       heroSubtitle="BS 5266-1 requires completion certificates, monthly functional test records, and annual full-duration discharge test records for every emergency lighting installation. This guide explains what each document must contain, who is responsible, and how to keep compliant records."
       readingTime={11}
       keyTakeaways={keyTakeaways}

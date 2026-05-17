@@ -43,7 +43,7 @@ const keyTakeaways = [
   'A 7kW home EV charger installation in Wolverhampton typically costs £750 to £1,050 all-in — among the most affordable in England, reflecting West Midlands trade labour rates — with OZEV grants of up to £350 available for eligible properties.',
   'The West Midlands Clean Air Zone (CAZ) charges non-compliant diesel and petrol vehicles to drive in the zone — home EV charging significantly reduces the ongoing cost of EV ownership for Wolverhampton commuters.',
   "Wolverhampton's housing stock includes a large proportion of post-war and 1960s–1980s semis and terraces with garages and driveways, making home EV charger installation particularly straightforward.",
-  'All EV charger installations must comply with BS 7671:2018+A3:2024 Section 722, including a dedicated circuit, RCD protection under Regulation 722.531.2, and a PME earthing assessment under Regulation 722.411.4.',
+  'All EV charger installations must comply with BS 7671:2018+A4:2026 Section 722, including a dedicated circuit, RCD protection under Regulation 722.531.2, and a PME earthing assessment under Regulation 722.411.4.',
   'NICEIC and NAPIT registered, OZEV-approved electricians in Wolverhampton can self-certify the installation under Building Regulations Part P without the need to notify the City of Wolverhampton Council building control.',
 ];
 
@@ -432,7 +432,7 @@ const sections = [
         <p>
           All EV charger installations in Wolverhampton must comply with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           Section 722. Key requirements include:
         </p>

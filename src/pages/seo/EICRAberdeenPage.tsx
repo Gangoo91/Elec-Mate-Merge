@@ -173,7 +173,7 @@ const sections = [
               <span>
                 <strong>Standards basis</strong> — EICRs are carried out in accordance with{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                  BS 7671:2018+A3:2024
+                  BS 7671:2018+A4:2026
                 </SEOInternalLink>{' '}
                 (the IET Wiring Regulations, 18th Edition). The inspection form and coding system
                 are defined in the guidance notes accompanying BS 7671.

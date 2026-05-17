@@ -681,6 +681,7 @@ export default function ElectricianToolInsurancePage() {
           <span className="text-yellow-400">Cover Your Kit, Protect Your Income</span>
         </>
       }
+              noindex={true}
       heroSubtitle="Most electricians carry £5,000 to £15,000 of tools and test equipment. Standard van insurance does NOT cover them. This guide explains the types of cover, compares providers, details van security discounts, and shows you how to document your kit for a successful claim."
       readingTime={10}
       keyTakeaways={keyTakeaways}

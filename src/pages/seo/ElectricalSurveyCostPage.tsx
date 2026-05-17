@@ -157,7 +157,7 @@ const sections = [
         <p>
           The inspection follows the procedures set out in{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           and Guidance Note 3 (GN3) from the IET. It includes both dead testing (with the supply
           isolated) and live testing, covering continuity of protective conductors, insulation

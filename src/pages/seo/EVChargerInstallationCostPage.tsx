@@ -41,7 +41,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'A domestic 7kW EV charger installation in the UK typically costs between £800 and £1,500 total, including the charger unit, installation labour, testing, and certification.',
-  'BS 7671:2018+A3:2024 Section 722 governs the electrical requirements for EV charging equipment, including dedicated circuit protection, RCD type selection, and earthing arrangements.',
+  'BS 7671:2018+A4:2026 Section 722 governs the electrical requirements for EV charging equipment, including dedicated circuit protection, RCD type selection, and earthing arrangements.',
   'Regulation 722.411.4.1 requires careful attention to earthing arrangements for EV chargepoints, including earth electrode resistance, earth fault loop impedance limits, and PME supply restrictions where a vehicle may be connected outdoors.',
   'Regulation 722.531.101 mandates appropriate RCD protection for EV chargepoints, requiring Type A RCDs with DC fault detection capability or Type B RCDs where the charger can produce DC residual currents above 6mA.',
   'DNO notification under G98/G99 is required for all EV charger installations. The OZEV (formerly OLEV) grant scheme has been replaced by local authority schemes in most areas.',
@@ -155,7 +155,7 @@ const sections = [
         <p>
           But EV charger installation is not a simple plug-and-play job. It requires compliance with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           Section 722 (which specifically governs EV charging equipment), correct RCD type
           selection, appropriate earthing arrangements, DNO notification, and proper testing and
@@ -349,7 +349,7 @@ const sections = [
     content: (
       <>
         <p>
-          Section 722 of BS 7671:2018+A3:2024 contains the specific requirements for the electrical
+          Section 722 of BS 7671:2018+A4:2026 contains the specific requirements for the electrical
           installation of electric vehicle charging equipment (EVSE). These requirements apply in
           addition to the general requirements of BS 7671. Here are the key points every electrician
           and informed homeowner should understand:

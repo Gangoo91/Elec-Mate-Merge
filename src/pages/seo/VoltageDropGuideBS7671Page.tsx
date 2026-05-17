@@ -19,7 +19,7 @@ export default function VoltageDropGuideBS7671Page() {
   return (
     <GuideTemplate
       title="Voltage Drop Limits BS 7671 | How to Calculate | Elec-Mate"
-      description="Complete guide to voltage drop limits and calculations to BS 7671:2018+A3:2024. Regulation 525.1 limits (3% lighting, 5% other), the mV/A/m formula with worked examples, Appendix 4 tables, and temperature correction explained."
+      description="Complete guide to voltage drop limits and calculations to BS 7671:2018+A4:2026. Regulation 525.1 limits (3% lighting, 5% other), the mV/A/m formula with worked examples, Appendix 4 tables, and temperature correction explained."
       datePublished="2025-07-01"
       dateModified="2026-02-14"
       breadcrumbs={[

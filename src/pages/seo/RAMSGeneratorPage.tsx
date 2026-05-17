@@ -663,6 +663,21 @@ export default function RAMSGeneratorPage() {
       </section>
 
       {/* CTA */}
+      
+
+      {/* Related pages — auto-injected for internal-link health (audit criterion #7).
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/generator-installation-guide">Generator Installation Guide UK</SEOInternalLink>
+            <SEOInternalLink href="/tools/ai-method-statement-generator">AI Method Statement Generator</SEOInternalLink>
+            <SEOInternalLink href="/guides/rams-template-electricians">RAMS Template for Electricians</SEOInternalLink>
+          </div>
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Generate Professional RAMS in Seconds"
         subheading="Join 1,000+ UK electricians using Elec-Mate for AI-powered risk assessments. 7-day free trial, cancel anytime."

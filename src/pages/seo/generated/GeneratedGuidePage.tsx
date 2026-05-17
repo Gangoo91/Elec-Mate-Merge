@@ -113,6 +113,11 @@ export interface GeneratedGuideConfig {
   relatedPages: GeneratedGuideRelatedPage[];
   ctaHeading?: string;
   ctaSubheading?: string;
+  /**
+   * Mark as noindex — cannibalisation losers + thin wrappers awaiting
+   * deletion. 301 redirects in public/_redirects handle user traffic.
+   */
+  noindex?: boolean;
 }
 
 function renderRichText(text: string): ReactNode[] {
@@ -307,6 +312,7 @@ export default function GeneratedGuidePage({ config }: { config: GeneratedGuideC
       }))}
       ctaHeading={config.ctaHeading}
       ctaSubheading={config.ctaSubheading}
+      noindex={config.noindex}
     />
   );
 }

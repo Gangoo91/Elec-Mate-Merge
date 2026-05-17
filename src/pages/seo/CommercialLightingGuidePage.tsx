@@ -81,7 +81,7 @@ const faqs = [
   {
     question: 'What regulations apply to commercial lighting installations?',
     answer:
-      'Commercial lighting installations must comply with multiple regulatory frameworks: (1) BS 7671:2018+A3:2024 (IET Wiring Regulations) for all electrical aspects of the installation; (2) BS 5266-1 for emergency lighting design, installation, and testing; (3) The Building Regulations Part L (Conservation of Fuel and Power) for energy efficiency — new and refurbished commercial buildings must meet minimum lighting efficacy standards (typically 60-95 luminaire lumens per circuit watt depending on the space type); (4) The Regulatory Reform (Fire Safety) Order 2005 for emergency lighting as part of fire safety; (5) CIBSE Lighting Guides (particularly LG7 for offices) for lighting design standards; (6) The Workplace (Health, Safety and Welfare) Regulations 1992 for minimum lighting levels in workplaces. An Electrical Installation Certificate (EIC) is required for new circuits, and an EICR is required for periodic inspection of existing installations.',
+      'Commercial lighting installations must comply with multiple regulatory frameworks: (1) BS 7671:2018+A4:2026 (IET Wiring Regulations) for all electrical aspects of the installation; (2) BS 5266-1 for emergency lighting design, installation, and testing; (3) The Building Regulations Part L (Conservation of Fuel and Power) for energy efficiency — new and refurbished commercial buildings must meet minimum lighting efficacy standards (typically 60-95 luminaire lumens per circuit watt depending on the space type); (4) The Regulatory Reform (Fire Safety) Order 2005 for emergency lighting as part of fire safety; (5) CIBSE Lighting Guides (particularly LG7 for offices) for lighting design standards; (6) The Workplace (Health, Safety and Welfare) Regulations 1992 for minimum lighting levels in workplaces. An Electrical Installation Certificate (EIC) is required for new circuits, and an EICR is required for periodic inspection of existing installations.',
   },
 ];
 
@@ -128,7 +128,7 @@ const relatedPages: RelatedPage[] = [
     href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
-      'Study BS 7671:2018+A3:2024 with structured training modules on the Elec-Mate platform.',
+      'Study BS 7671:2018+A4:2026 with structured training modules on the Elec-Mate platform.',
     icon: GraduationCap,
     category: 'Training',
   },

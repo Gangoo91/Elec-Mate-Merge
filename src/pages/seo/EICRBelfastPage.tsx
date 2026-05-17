@@ -41,7 +41,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, carried out in accordance with BS 7671:2018+A3:2024 (Section 631). Belfast electricians use the same technical standard as the rest of the UK.",
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, carried out in accordance with BS 7671:2018+A4:2026 (Section 631). Belfast electricians use the same technical standard as the rest of the UK.",
   'Belfast EICR costs are among the most affordable in the UK. Expect to pay between £90 and £180 for a two-bedroom flat and £140 to £260 for a three-bedroom house.',
   'Northern Ireland has its own legislative framework. EICR requirements for private landlords in Northern Ireland are enforced under the Housing (Amendment) Act (Northern Ireland) 2022, which introduced mandatory electrical safety checks similar to those in England.',
   'Belfast has a significant proportion of Victorian and inter-war terraced housing, as well as 1960s and 1970s social housing that has been privatised or transferred to housing associations. Both housing types commonly produce C2 EICR findings.',
@@ -152,7 +152,7 @@ const sections = [
         <p>
           The report is produced in accordance with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           (Section 631), which applies across the entire United Kingdom including Northern Ireland.
           The technical standard, test methods, and observation codes are identical whether the

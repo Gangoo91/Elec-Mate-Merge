@@ -100,7 +100,7 @@ export default function BestEICRSoftwareUKPage() {
                 </li>
                 <li>
                   <span className="font-semibold text-white">BS 7671 compliance</span> — forms must
-                  follow the model forms in Appendix 6 of BS 7671:2018+A3:2024 and validate test
+                  follow the model forms in Appendix 6 of BS 7671:2018+A4:2026 and validate test
                   results against maximum permitted values.
                 </li>
               </ul>

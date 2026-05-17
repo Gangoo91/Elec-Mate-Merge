@@ -1,4 +1,6 @@
 import ToolTemplate from '@/pages/seo/templates/ToolTemplate';
+import { RecentReviews } from '@/components/seo/RecentReviews';
+import EVSELoadCalculator from '@/components/apprentice/calculators/EVSELoadCalculator';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import {
   Calculator,
@@ -46,6 +48,7 @@ export default function EVChargerLoadCalculatorPage() {
           for Electric Vehicle Installations
         </>
       }
+              calculator={<EVSELoadCalculator />}
       heroSubtitle="Calculate the electrical load for EV charger installations. Single-phase 7kW, three-phase 22kW, or multiple charger sites with diversity. Check supply capacity, PME earthing requirements, and cable sizing in one integrated calculation."
       heroFeaturePills={[
         { icon: Car, label: 'EV Installations' },

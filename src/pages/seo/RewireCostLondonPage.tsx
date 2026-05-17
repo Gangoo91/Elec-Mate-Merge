@@ -44,7 +44,7 @@ const keyTakeaways = [
   'A full house rewire in London costs between £3,500 and £15,000+, roughly 20-30% more than the national average due to higher labour rates, congestion charges, parking costs, and property complexity.',
   'Victorian and Edwardian terraced houses — the most common property type across inner London boroughs — often have lath-and-plaster walls and limited access, adding significant time and cost to a rewire.',
   'London rewires are notifiable under Part P of the Building Regulations. The electrician must be registered with a competent person scheme or the work must be inspected by your borough council building control team.',
-  'An Electrical Installation Certificate (EIC) is mandatory on completion, confirming the new installation complies with BS 7671:2018+A3:2024.',
+  'An Electrical Installation Certificate (EIC) is mandatory on completion, confirming the new installation complies with BS 7671:2018+A4:2026.',
   'Electrician day rates in London range from £350 to £500+ in 2026, compared with £250-£350 in most other UK regions.',
 ];
 
@@ -381,7 +381,7 @@ const sections = [
           process takes longer.
         </p>
         <p>
-          Under BS 7671:2018+A3:2024, Regulation 411.3.3 requires RCD protection with a rated
+          Under BS 7671:2018+A4:2026, Regulation 411.3.3 requires RCD protection with a rated
           residual operating current not exceeding 30 mA for socket outlets with a rated current not
           exceeding 32 A. This is a fundamental safety requirement for all new rewires. The
           electrician must issue an{' '}

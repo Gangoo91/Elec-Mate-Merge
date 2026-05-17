@@ -204,7 +204,7 @@ const sections = [
           simple accessory changes to complete rewires and complex commercial installations. Every
           instruction includes the relevant{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           regulation reference, so you can verify compliance at each step.
         </p>

@@ -59,7 +59,7 @@ const faqs = [
   {
     question: 'What electrical standards apply to commercial kitchens?',
     answer:
-      'Commercial kitchen electrical installations must comply with BS 7671:2018+A3:2024 (the IET Wiring Regulations), with particular attention to Section 706 (restrictive conductive locations — relevant to wet kitchen environments). Fire suppression interlock wiring must follow the requirements of the suppression system manufacturer and BS EN 15251. Emergency lighting is governed by BS 5266-1. Gas interlock systems follow IGEM/UP/19.',
+      'Commercial kitchen electrical installations must comply with BS 7671:2018+A4:2026 (the IET Wiring Regulations), with particular attention to Section 706 (restrictive conductive locations — relevant to wet kitchen environments). Fire suppression interlock wiring must follow the requirements of the suppression system manufacturer and BS EN 15251. Emergency lighting is governed by BS 5266-1. Gas interlock systems follow IGEM/UP/19.',
   },
   {
     question: 'What is a gas interlock system and does it need an electrician?',
@@ -180,8 +180,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          All of the above must be designed, installed, inspected, and tested in accordance with BS
-          7671:2018+A3:2024 (the IET Wiring Regulations). For wet kitchen areas, Section 706 applies
+          All of the above must be designed, installed, inspected, and tested in accordance with BS 7671:2018+A4:2026 (the IET Wiring Regulations). For wet kitchen areas, Section 706 applies
           special requirements for protective measures in restrictive conductive locations.
         </p>
       </>

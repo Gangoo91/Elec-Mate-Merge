@@ -311,7 +311,7 @@ const sections = [
         <p>
           The inspection is carried out in accordance with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           and documented using the Schedule of Inspections and Schedule of Test Results. The
           inspector records all observations using the C1, C2, C3, and FI classification system.

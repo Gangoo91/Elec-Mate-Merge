@@ -47,7 +47,7 @@ const faqs = [
   {
     question: 'What is the maximum floor area a ring final circuit can serve?',
     answer:
-      'Under BS 7671:2018+A3:2024 Appendix 15, a 32A ring final circuit in 2.5mm² twin and earth cable (Method C, clipped direct) has no prescribed maximum floor area, provided the connected load does not exceed 7,200VA and the circuit design is appropriate. The historical IEE guidance of 100m² per ring was a rule of thumb, not a BS 7671 regulation. In practice, the current in each leg of the ring must not exceed the cable current-carrying capacity at any point. For large open-plan floors with high-power loads, the ring may need to be divided into two separate circuits.',
+      'Under BS 7671:2018+A4:2026 Appendix 15, a 32A ring final circuit in 2.5mm² twin and earth cable (Method C, clipped direct) has no prescribed maximum floor area, provided the connected load does not exceed 7,200VA and the circuit design is appropriate. The historical IEE guidance of 100m² per ring was a rule of thumb, not a BS 7671 regulation. In practice, the current in each leg of the ring must not exceed the cable current-carrying capacity at any point. For large open-plan floors with high-power loads, the ring may need to be divided into two separate circuits.',
   },
   {
     question: 'Can I add spurs to a ring final circuit?',
@@ -132,7 +132,7 @@ const sections = [
         <p>
           The regulatory requirements for ring final circuits are set out in{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           Section 433 (protection against overcurrent), Regulation 433.1.204 (socket outlets on
           ring circuits), and Appendix 15 (guidance on ring and radial circuits for socket

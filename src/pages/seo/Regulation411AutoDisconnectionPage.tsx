@@ -137,7 +137,7 @@ const sections = [
           Automatic Disconnection of Supply (ADS) is the protective measure described in Section 411
           of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
           . It is the most commonly applied protection against electric shock in UK electrical
           installations — virtually every circuit in a domestic or commercial installation relies on

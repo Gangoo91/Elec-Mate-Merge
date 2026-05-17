@@ -72,7 +72,7 @@ const faqs = [
   {
     question: 'Do I need to install an SPD in the consumer unit?',
     answer:
-      'BS 7671:2018+A3:2024 requires a risk assessment for surge protection (Regulation 443) on all new installations and alterations. If the consequence of a transient overvoltage would be serious — for example, in installations where loss of life, loss of public services, loss of IT equipment, or loss of high-value equipment would result — a surge protective device (SPD) must be installed. In most domestic installations, the risk assessment will conclude that an SPD is required, because modern homes contain sensitive electronic equipment (computers, smart home devices, AV systems) that can be damaged by transient overvoltages. A Type 2 SPD is installed at the consumer unit on the supply side of the protective devices. Some consumer unit manufacturers now offer boards with integrated SPD mounting positions. The SPD must be installed with appropriate overcurrent protection (a dedicated MCB or fuse) and a disconnector to indicate SPD failure.',
+      'BS 7671:2018+A4:2026 requires a risk assessment for surge protection (Regulation 443) on all new installations and alterations. If the consequence of a transient overvoltage would be serious — for example, in installations where loss of life, loss of public services, loss of IT equipment, or loss of high-value equipment would result — a surge protective device (SPD) must be installed. In most domestic installations, the risk assessment will conclude that an SPD is required, because modern homes contain sensitive electronic equipment (computers, smart home devices, AV systems) that can be damaged by transient overvoltages. A Type 2 SPD is installed at the consumer unit on the supply side of the protective devices. Some consumer unit manufacturers now offer boards with integrated SPD mounting positions. The SPD must be installed with appropriate overcurrent protection (a dedicated MCB or fuse) and a disconnector to indicate SPD failure.',
   },
   {
     question: 'Can I mix MCBs and RCBOs in the same consumer unit?',
@@ -163,7 +163,7 @@ const sections = [
         <p>
           Under{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
           , domestic consumer units must be constructed from non-combustible material (metal), must
           be type-tested assemblies complying with BS EN 61439-3, and must be installed by a
@@ -476,7 +476,7 @@ const sections = [
           <SEOInternalLink href="/guides/spd-surge-protection">
             Surge protective devices (SPDs)
           </SEOInternalLink>{' '}
-          are now required in most new domestic installations under BS 7671:2018+A3:2024 (Regulation
+          are now required in most new domestic installations under BS 7671:2018+A4:2026 (Regulation
           443). The SPD is installed at the distribution board to protect against transient
           overvoltages caused by lightning strikes, switching surges, and other disturbances on the
           supply network.

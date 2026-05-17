@@ -168,7 +168,7 @@ const sections = [
           2015 (CDM 2015), the Electricity at Work Regulations 1989, the Health and Safety at Work
           Act 1974, and{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           Section 704 (Construction and Demolition Site Installations). Together, these require that
           construction site electrical installations are designed, installed, inspected, and

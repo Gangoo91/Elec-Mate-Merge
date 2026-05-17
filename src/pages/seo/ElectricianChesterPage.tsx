@@ -73,7 +73,7 @@ const faqs = [
   {
     question: 'What qualifications do I need to work as an electrician in Chester?',
     answer:
-      'The requirements are the same as elsewhere in England. You need City & Guilds 2365 Level 2 and 3 (or equivalent NVQ Level 3 in Electrical Installation) as your core qualification, plus the 18th Edition (BS 7671:2018+A3:2024) wiring regulations certificate. To self-certify notifiable work under Part P, you must be registered with a competent person scheme: NICEIC, NAPIT, or ELECSA are the main schemes for domestic electrical work. Registration requires an assessment of your technical competence, business systems, and ability to produce correct documentation.',
+      'The requirements are the same as elsewhere in England. You need City & Guilds 2365 Level 2 and 3 (or equivalent NVQ Level 3 in Electrical Installation) as your core qualification, plus the 18th Edition (BS 7671:2018+A4:2026) wiring regulations certificate. To self-certify notifiable work under Part P, you must be registered with a competent person scheme: NICEIC, NAPIT, or ELECSA are the main schemes for domestic electrical work. Registration requires an assessment of your technical competence, business systems, and ability to produce correct documentation.',
   },
   {
     question: 'What is the typical cost of a full house rewire in Chester?',
@@ -207,7 +207,7 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7671 compliance</strong> — all electrical work in Chester must comply
-                with BS 7671:2018+A3:2024 (the 18th Edition Wiring Regulations). This is mandatory
+                with BS 7671:2018+A4:2026 (the 18th Edition Wiring Regulations). This is mandatory
                 regardless of whether the work is notifiable. RCD protection is required for most
                 socket outlet circuits and for circuits in certain locations.
               </span>

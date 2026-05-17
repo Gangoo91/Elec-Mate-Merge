@@ -35,7 +35,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Conduit is selected by material (steel or PVC), type (rigid or flexible), and installation environment. BS EN 61386 governs the performance classification of conduit systems using a four-digit code covering mechanical, thermal, electromagnetic and electrical properties.',
-  'Fill calculations for conduit and trunking must comply with BS 7671:2018+A3:2024 Appendix 5 and the associated cable factor tables. Overfilling conduit creates heat build-up and makes future cable changes impractical.',
+  'Fill calculations for conduit and trunking must comply with BS 7671:2018+A4:2026 Appendix 5 and the associated cable factor tables. Overfilling conduit creates heat build-up and makes future cable changes impractical.',
   'Steel conduit used as a circuit protective conductor (CPC) must be continuous throughout, with screwed fittings only — no push-fit joints are permissible. Cross-sectional area must be verified against BS 7671 Table 54.7.',
   'Outdoor and underground conduit installations require appropriate IP-rated fittings and boxes. Buried conduit must meet BS 7671 Regulation 522.8.10 regarding depth and mechanical protection.',
   'Fire stopping around conduit penetrations through fire-resisting structures is a legal requirement under Building Regulations Approved Document B and must be carried out with intumescent materials rated to match the element being penetrated.',
@@ -381,7 +381,7 @@ const sections = [
       <>
         <p>
           Steel conduit can be used as the circuit protective conductor (CPC) for circuits it
-          contains, provided specific requirements under BS 7671:2018+A3:2024 Regulation 543 are
+          contains, provided specific requirements under BS 7671:2018+A4:2026 Regulation 543 are
           met. This is a legitimate and widely used practice in industrial and commercial
           installations, but requires careful attention to jointing and continuity.
         </p>

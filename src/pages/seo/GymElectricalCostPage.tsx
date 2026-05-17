@@ -404,7 +404,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 7671:2018+A3:2024</strong> — Full compliance required. Section 701 for
+                <strong>BS 7671:2018+A4:2026</strong> — Full compliance required. Section 701 for
                 shower areas. RCD protection per Regulation 411.3.3 on all socket outlets and wet
                 area circuits. SPD protection per Regulation 443.4.
               </span>

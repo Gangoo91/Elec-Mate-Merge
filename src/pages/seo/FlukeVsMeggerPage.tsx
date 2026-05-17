@@ -128,7 +128,7 @@ export default function FlukeVsMeggerPage() {
                 <SEOInternalLink href="/guides/periodic-inspection">
                   periodic inspection
                 </SEOInternalLink>{' '}
-                under BS 7671:2018+A3:2024. We also reference the Megger MFT1741 (Megger's mid-range
+                under BS 7671:2018+A4:2026. We also reference the Megger MFT1741 (Megger's mid-range
                 model) where relevant, as it remains popular with many electricians.
               </p>
             </>

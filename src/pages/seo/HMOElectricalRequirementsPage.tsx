@@ -74,7 +74,7 @@ const faqs = [
   {
     question: 'What RCD protection is required in an HMO under BS 7671?',
     answer:
-      'Regulation 411.3.3 of BS 7671:2018+A3:2024 requires 30mA RCD protection on all socket-outlet circuits rated up to 32A. In an HMO, every circuit serving bedrooms, kitchens, and communal areas must have RCD protection. Best practice is an RCBO (residual current circuit-breaker with overcurrent protection) on each circuit, providing individual fault discrimination so one circuit tripping does not affect all tenants. A single split-load RCD consumer unit is inadequate for most HMOs.',
+      'Regulation 411.3.3 of BS 7671:2018+A4:2026 requires 30mA RCD protection on all socket-outlet circuits rated up to 32A. In an HMO, every circuit serving bedrooms, kitchens, and communal areas must have RCD protection. Best practice is an RCBO (residual current circuit-breaker with overcurrent protection) on each circuit, providing individual fault discrimination so one circuit tripping does not affect all tenants. A single split-load RCD consumer unit is inadequate for most HMOs.',
   },
   {
     question: 'What are the penalties for running an HMO without a valid EICR?',
@@ -421,7 +421,7 @@ const sections = [
       <>
         <p>
           RCD protection is one of the most critical — and most frequently deficient — electrical
-          safety measures in HMOs. Regulation 411.3.3 of BS 7671:2018+A3:2024 sets out the
+          safety measures in HMOs. Regulation 411.3.3 of BS 7671:2018+A4:2026 sets out the
           requirement that applies without exception to all new and existing HMO installations.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">

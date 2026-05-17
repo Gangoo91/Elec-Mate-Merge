@@ -128,8 +128,7 @@ export default function ElecMateVsEasyEICRPage() {
                 Defect Code AI, Voice Test Entry, and Remedial Cost Estimator.
               </p>
               <p>
-                Elec-Mate also includes 46+ training courses covering the 18th Edition (BS
-                7671:2018+A3:2024), City and Guilds Level 2 and Level 3 Electrical Installation, AM2
+                Elec-Mate also includes 46+ training courses covering the 18th Edition (BS 7671:2018+A4:2026), City and Guilds Level 2 and Level 3 Electrical Installation, AM2
                 assessment preparation, EPA simulator, and specialist courses for EV charging, solar
                 PV, fire alarm systems, and BMS. Business management features include job
                 scheduling, quoting, invoicing, Stripe payment collection, and Xero accounting
@@ -211,7 +210,7 @@ export default function ElecMateVsEasyEICRPage() {
                 <strong>70+ BS 7671 Calculators:</strong> Cable sizing to Appendix 4, voltage drop
                 verification, maximum demand, diversity factors, conduit and trunking fill rates,
                 earth fault loop impedance checks, prospective fault current, disconnection time
-                verification, and many more. All referencing BS 7671:2018+A3:2024 tables. See our
+                verification, and many more. All referencing BS 7671:2018+A4:2026 tables. See our
                 full{' '}
                 <SEOInternalLink href="/electrical-testing-calculators">
                   electrical calculators page

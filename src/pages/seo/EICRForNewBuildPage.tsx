@@ -133,7 +133,7 @@ const sections = [
         <p>
           When a new build property is completed, the electrical installation is certified by the
           installing contractor using an Electrical Installation Certificate (EIC). This is a
-          mandatory document under BS 7671:2018+A3:2024 (the IET Wiring Regulations) and Part P of
+          mandatory document under BS 7671:2018+A4:2026 (the IET Wiring Regulations) and Part P of
           the Building Regulations. The EIC confirms that the installation was designed, built, and
           tested in accordance with the applicable standards at the time of completion.
         </p>

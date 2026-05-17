@@ -360,7 +360,7 @@ const sections = [
                 <strong>18th Edition IET Wiring Regulations</strong> (C&G 2382-22) — essential
                 knowledge of{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                  BS 7671:2018+A3:2024
+                  BS 7671:2018+A4:2026
                 </SEOInternalLink>
                 . The same qualification as domestic, but commercial electricians need a deeper
                 understanding of Part 3 (assessment of general characteristics), Part 5 (selection

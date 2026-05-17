@@ -1,4 +1,6 @@
 import { Helmet } from 'react-helmet';
+import { RecentReviews } from '@/components/seo/RecentReviews';
+import DiversityFactorCalculator from '@/components/apprentice/calculators/DiversityFactorCalculator';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
@@ -87,7 +89,7 @@ const features = [
   },
   {
     icon: Shield,
-    title: 'BS 7671:2018+A3:2024 Compliant',
+    title: 'BS 7671:2018+A4:2026 Compliant',
     description:
       'All diversity calculations follow the current 18th Edition wiring regulations including Amendment 3. Values verified against the IET On-Site Guide published tables.',
   },
@@ -105,13 +107,7 @@ const softwareAppSchema = {
     price: '0',
     priceCurrency: 'GBP',
     description: '7-day free trial, then from £12.99/month',
-  },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.8',
-    ratingCount: '1000',
-    bestRating: '5',
-  },
+  }
 };
 
 const faqSchema = {
@@ -130,7 +126,7 @@ export default function DiversityFactorCalculatorPage() {
   useSEO({
     title: 'Diversity Factor Calculator | Maximum Demand BS 7671',
     description:
-      'Calculate diversity factors for electrical installations to BS 7671:2018+A3:2024. Reduce maximum demand calculations with IET-approved diversity allowances for domestic and commercial loads.',
+      'Calculate diversity factors for electrical installations to BS 7671:2018+A4:2026. Reduce maximum demand calculations with IET-approved diversity allowances for domestic and commercial loads.',
   });
 
   return (
@@ -177,6 +173,13 @@ export default function DiversityFactorCalculatorPage() {
               <ArrowDown className="w-4 h-4 ml-1" />
             </a>
           </div>
+        </div>
+      </section>
+
+      {/* Live calculator — free, no signup, BS 7671:2018+A4:2026 compliant */}
+      <section id="calculator" className="px-5 pb-12 scroll-mt-24">
+        <div className="max-w-4xl mx-auto">
+          <DiversityFactorCalculator />
         </div>
       </section>
 
@@ -242,7 +245,7 @@ export default function DiversityFactorCalculatorPage() {
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              The IET On-Site Guide, which accompanies BS 7671:2018+A3:2024, contains Table 1A
+              The IET On-Site Guide, which accompanies BS 7671:2018+A4:2026, contains Table 1A
               setting out the recommended diversity allowances for individual domestic and similar
               installations. These are the values that every UK electrician should use when
               assessing maximum demand:
@@ -535,6 +538,13 @@ export default function DiversityFactorCalculatorPage() {
       </section>
 
       {/* CTA */}
+            {/* Verified App Store reviews — policy-safe SoftwareApplication aggregateRating */}
+      <section className="px-5 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <RecentReviews />
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Calculate Diversity Factors in Seconds"
         subheading="Join 1,000+ UK electricians using Elec-Mate for on-site maximum demand calculations. 7-day free trial, cancel anytime."

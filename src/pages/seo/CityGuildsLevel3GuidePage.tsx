@@ -74,7 +74,7 @@ const faqs = [
   {
     question: 'Is City & Guilds 2365 the same as the 18th Edition?',
     answer:
-      "No — they are different qualifications. City & Guilds 2365 is the main electrical installation qualification covering the full breadth of installation work across all three years of the apprenticeship. The City & Guilds 2382 (Requirements for Electrical Installations — BS 7671) is the separate qualification that specifically tests your knowledge of the 18th Edition of the Wiring Regulations (BS 7671:2018+A3:2024). The C&G 2382 is sometimes called the '18th Edition' and is a standalone qualification required for the JIB ECS Gold Card and competent person scheme registration. You will typically study the 2382 alongside the later years of your 2365.",
+      "No — they are different qualifications. City & Guilds 2365 is the main electrical installation qualification covering the full breadth of installation work across all three years of the apprenticeship. The City & Guilds 2382 (Requirements for Electrical Installations — BS 7671) is the separate qualification that specifically tests your knowledge of the 18th Edition of the Wiring Regulations (BS 7671:2018+A4:2026). The C&G 2382 is sometimes called the '18th Edition' and is a standalone qualification required for the JIB ECS Gold Card and competent person scheme registration. You will typically study the 2382 alongside the later years of your 2365.",
   },
   {
     question: 'What comes after City & Guilds 2365 Level 3?',

@@ -50,7 +50,7 @@ const faqs = [
   {
     question: 'What section of BS 7671 covers marina installations?',
     answer:
-      'Section 709 of BS 7671:2018+A3:2024 covers marinas and similar locations. It applies to circuits intended to supply pleasure craft or houseboats in marinas, boatyards, and similar locations. The section sets out additional requirements beyond the general rules in Parts 1-6, covering earthing, protective devices, cable management, socket outlets, and environmental protection. Section 709 works alongside the general requirements — it does not replace them. So a marina installation must comply with all the general requirements of BS 7671 plus the additional requirements in Section 709. The section also references BS EN 60309-2 for the type of socket outlets to be used (industrial blue CEE sockets, not domestic 13A sockets) and IEC 60364-7-709 (the international standard from which Section 709 is derived).',
+      'Section 709 of BS 7671:2018+A4:2026 covers marinas and similar locations. It applies to circuits intended to supply pleasure craft or houseboats in marinas, boatyards, and similar locations. The section sets out additional requirements beyond the general rules in Parts 1-6, covering earthing, protective devices, cable management, socket outlets, and environmental protection. Section 709 works alongside the general requirements — it does not replace them. So a marina installation must comply with all the general requirements of BS 7671 plus the additional requirements in Section 709. The section also references BS EN 60309-2 for the type of socket outlets to be used (industrial blue CEE sockets, not domestic 13A sockets) and IEC 60364-7-709 (the international standard from which Section 709 is derived).',
   },
   {
     question: 'Why can you not use PME earthing at a marina?',
@@ -204,7 +204,7 @@ const sections = [
         <p>
           Section 709 of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           applies to installations in marinas and similar locations for the supply to pleasure craft
           and houseboats. The key regulations are:
@@ -366,7 +366,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Design marina distribution with Elec-Mate calculators"
-          description="Cable sizing, voltage drop, maximum demand, and prospective fault current — all the calculations you need for marina distribution design, on your phone. Follows BS 7671:2018+A3:2024."
+          description="Cable sizing, voltage drop, maximum demand, and prospective fault current — all the calculations you need for marina distribution design, on your phone. Follows BS 7671:2018+A4:2026."
           icon={Calculator}
         />
       </>

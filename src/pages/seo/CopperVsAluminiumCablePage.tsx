@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Full guide to BS 7671:2018+A3:2024 including cable selection requirements.',
+    description: 'Full guide to BS 7671:2018+A4:2026 including cable selection requirements.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -140,7 +140,7 @@ const sections = [
           requires anti-oxidant compound and care with torque), and the suitability of the cable
           for the application. Both conductor types are covered in{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           — copper in Appendix 4 Tables 4D, aluminium in Tables 4E.
         </p>
@@ -195,7 +195,7 @@ const sections = [
               </tr>
             </tbody>
           </table>
-          <p className="text-white text-xs mt-3">Source: BS 7671:2018+A3:2024 Appendix 4, Tables 4D1A and 4E1A. Always apply derating factors for grouping, ambient temperature, and installation method.</p>
+          <p className="text-white text-xs mt-3">Source: BS 7671:2018+A4:2026 Appendix 4, Tables 4D1A and 4E1A. Always apply derating factors for grouping, ambient temperature, and installation method.</p>
         </div>
         <p>
           Use the{' '}

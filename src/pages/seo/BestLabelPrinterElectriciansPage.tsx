@@ -174,7 +174,7 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671:2018+A3:2024 specifies several labelling requirements that apply to virtually
+          BS 7671:2018+A4:2026 specifies several labelling requirements that apply to virtually
           every electrical installation. These are the labels you need to produce on site.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">

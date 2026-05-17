@@ -577,6 +577,26 @@ export default function ElectricalQuotingAppPage() {
       </section>
 
       {/* CTA */}
+      
+
+      {/* Related pages — auto-injected for internal-link health (audit criterion #7).
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/tools/electrical-app-with-ai">Electrical App with AI</SEOInternalLink>
+            <SEOInternalLink href="/guides/ai-for-electrical-apprentices">AI for Electrical Apprentices</SEOInternalLink>
+            <SEOInternalLink href="/cleanroom-electrical">Cleanroom Electrical Installation UK</SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-apprenticeship-guide">Electrical Apprenticeship UK 2026</SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-bim-guide">Electrical BIM Guide</SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-conduit-guide">Electrical Conduit Guide</SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-design-guide">Electrical Design Guide</SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-estimating-guide">Electrical Estimating Guide UK 2026</SEOInternalLink>
+          </div>
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Quote Faster, Win More Work"
         subheading="Join 1,000+ UK electricians using Elec-Mate for professional quotes and invoices. 7-day free trial, cancel anytime."

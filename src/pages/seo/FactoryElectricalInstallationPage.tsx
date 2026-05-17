@@ -38,7 +38,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Factory electrical installations in the UK must comply with BS 7671:2018+A3:2024, the Electricity at Work Regulations 1989, and where applicable, the Dangerous Substances and Explosive Atmospheres Regulations 2002 (DSEAR) for ATEX hazardous area classification.',
+  'Factory electrical installations in the UK must comply with BS 7671:2018+A4:2026, the Electricity at Work Regulations 1989, and where applicable, the Dangerous Substances and Explosive Atmospheres Regulations 2002 (DSEAR) for ATEX hazardous area classification.',
   'Three-phase 400V TN-S or TN-C-S supplies are standard for factory installations. Large motor loads may require a dedicated high-fault-level supply with appropriate switchgear rated for the available prospective short-circuit current.',
   'Motor control centres (MCCs) consolidate motor starters, variable frequency drives, protective relays, and power factor correction equipment into a structured, maintainable enclosure. MCCs in factories are designed and built to BS EN 61439.',
   'HRC (High Rupturing Capacity) fuses to BS 88 are specified in factory environments where high fault levels demand fast, reliable protection that current limiting MCBs may not provide.',
@@ -49,7 +49,7 @@ const faqs = [
   {
     question: 'What electrical standards apply to factory installations in the UK?',
     answer:
-      'Factory electrical installations must comply with BS 7671:2018+A3:2024 (the IET Wiring Regulations) as the primary electrical installation standard, and the Electricity at Work Regulations 1989 as the primary statutory instrument. Where hazardous areas exist, DSEAR 2002 (implementing the ATEX Directive) applies to zone classification and the selection of equipment for use in those zones. The Health and Safety at Work etc. Act 1974 also places general duties on employers for the safe management of electrical systems. For specific types of factory equipment, additional product standards such as BS EN 60204-1 (Safety of Machinery — Electrical Equipment of Machines) apply.',
+      'Factory electrical installations must comply with BS 7671:2018+A4:2026 (the IET Wiring Regulations) as the primary electrical installation standard, and the Electricity at Work Regulations 1989 as the primary statutory instrument. Where hazardous areas exist, DSEAR 2002 (implementing the ATEX Directive) applies to zone classification and the selection of equipment for use in those zones. The Health and Safety at Work etc. Act 1974 also places general duties on employers for the safe management of electrical systems. For specific types of factory equipment, additional product standards such as BS EN 60204-1 (Safety of Machinery — Electrical Equipment of Machines) apply.',
   },
   {
     question: 'What is a Motor Control Centre (MCC) and when is one required?',
@@ -152,7 +152,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Key standards:</strong> BS 7671:2018+A3:2024, Electricity at Work
+                <strong>Key standards:</strong> BS 7671:2018+A4:2026, Electricity at Work
                 Regulations 1989, DSEAR 2002 (ATEX), BS EN 61439 (switchgear assemblies), BS EN
                 60204-1 (machine electrical equipment), BS EN 60529 (IP ratings).
               </span>

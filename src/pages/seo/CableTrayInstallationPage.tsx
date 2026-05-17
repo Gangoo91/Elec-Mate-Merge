@@ -175,7 +175,7 @@ const sections = [
         <p>
           Cable tray installation must comply with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           and the relevant sections of the IET Wiring Regulations covering cable support, grouping
           factors, and protection against mechanical damage.

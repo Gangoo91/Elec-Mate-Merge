@@ -140,7 +140,7 @@ const sections = [
         <p>
           This guide explains what each type detects, when it is required under{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
           , the cost differences, and practical guidance for specification.
         </p>

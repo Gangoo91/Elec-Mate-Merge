@@ -156,7 +156,7 @@ const sections = [
                 <strong>Current standard</strong> — new and replacement consumer units must comply
                 with both{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                  BS 7671:2018+A3:2024
+                  BS 7671:2018+A4:2026
                 </SEOInternalLink>{' '}
                 (the IET Wiring Regulations) and BS EN 61439-3 (the product standard for
                 distribution boards). Regulation 421.1.201 requires a metal (non-combustible)
@@ -193,7 +193,7 @@ const sections = [
         <p>
           The requirement for non-combustible consumer unit enclosures in domestic premises was
           introduced by Amendment 2 to BS 7671:2008, effective 1 July 2016. It is carried forward
-          unchanged in BS 7671:2018+A3:2024, which is the current edition applicable to all work in
+          unchanged in BS 7671:2018+A4:2026, which is the current edition applicable to all work in
           Liverpool and across England.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">

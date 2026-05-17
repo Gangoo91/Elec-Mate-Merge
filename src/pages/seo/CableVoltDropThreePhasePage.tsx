@@ -69,7 +69,7 @@ const faqs = [
   {
     question: 'What three-phase mV/A/m values should I use for SWA cable?',
     answer:
-      'Steel wire armoured (SWA) cable mV/A/m values are found in the BS 7671 Appendix 4 tables for armoured cables: Table 4E2B for multicore thermoplastic (PVC) insulated SWA, and Table 4E4B for multicore thermosetting (XLPE) insulated SWA. Use the three-phase column (labelled "3-core or 4-core cable, three-phase a.c."). For example, 25 mm² 4-core copper XLPE SWA has a three-phase mV/A/m of approximately 1.50. For 16 mm² 4-core copper PVC SWA, the value is approximately 2.4. Always verify the exact value from the current edition of BS 7671 (2018+A3:2024) as values vary by cable construction, conductor material, and installation method.',
+      'Steel wire armoured (SWA) cable mV/A/m values are found in the BS 7671 Appendix 4 tables for armoured cables: Table 4E2B for multicore thermoplastic (PVC) insulated SWA, and Table 4E4B for multicore thermosetting (XLPE) insulated SWA. Use the three-phase column (labelled "3-core or 4-core cable, three-phase a.c."). For example, 25 mm² 4-core copper XLPE SWA has a three-phase mV/A/m of approximately 1.50. For 16 mm² 4-core copper PVC SWA, the value is approximately 2.4. Always verify the exact value from the current edition of BS 7671 (2018+A4:2026) as values vary by cable construction, conductor material, and installation method.',
   },
   {
     question: 'Does voltage drop on a sub-main count towards the final circuit limit?',
@@ -172,7 +172,7 @@ const features = [
   },
   {
     icon: Shield,
-    title: 'BS 7671:2018+A3:2024 Compliant',
+    title: 'BS 7671:2018+A4:2026 Compliant',
     description:
       'All calculations follow the current 18th Edition wiring regulations including Amendment 3. Values verified against the published Appendix 4 tables.',
   },
@@ -236,7 +236,7 @@ const sections = [
           motor circuits, three-phase EV chargers, and large power supplies all require accurate
           voltage drop calculations to ensure compliance with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
           .
         </p>
@@ -420,7 +420,7 @@ const sections = [
       <>
         <p>
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           Regulation 525.1 and Table 4Ab define the maximum permitted voltage drop for all
           installations. The limits for three-phase circuits on a public LV supply are:
@@ -600,7 +600,7 @@ const sections = [
           ))}
         </div>
         <p className="text-white text-sm leading-relaxed">
-          Values extracted from BS 7671:2018+A3:2024, Tables 4D2B and 4E4B. Three-phase column
+          Values extracted from BS 7671:2018+A4:2026, Tables 4D2B and 4E4B. Three-phase column
           (3-core or 4-core cable, three-phase a.c.). Copper conductors. Always verify against the
           current edition for your specific installation method.
         </p>
@@ -637,7 +637,7 @@ export default function CableVoltDropThreePhasePage() {
       heroFeaturePills={[
         { icon: Activity, label: 'Three-Phase' },
         { icon: Cable, label: 'All Cable Types' },
-        { icon: Shield, label: 'BS 7671:2018+A3:2024' },
+        { icon: Shield, label: 'BS 7671:2018+A4:2026' },
       ]}
       readingTime={10}
       keyTakeaways={keyTakeaways}

@@ -67,7 +67,7 @@ const faqs = [
   {
     question: 'What qualifications do electricians in Sunderland need?',
     answer:
-      'The required qualifications are the same across England: City & Guilds 2365 (or equivalent NVQ Level 3 in Electrical Installation) as the core qualification, plus the 18th Edition Wiring Regulations (BS 7671:2018+A3:2024) certificate. To self-certify work under Part P, registration with a competent person scheme such as NICEIC, NAPIT, or ELECSA is required. Many Sunderland electricians also hold the City & Guilds 2391 Inspection and Testing qualification, which is needed to issue EICRs.',
+      'The required qualifications are the same across England: City & Guilds 2365 (or equivalent NVQ Level 3 in Electrical Installation) as the core qualification, plus the 18th Edition Wiring Regulations (BS 7671:2018+A4:2026) certificate. To self-certify work under Part P, registration with a competent person scheme such as NICEIC, NAPIT, or ELECSA is required. Many Sunderland electricians also hold the City & Guilds 2391 Inspection and Testing qualification, which is needed to issue EICRs.',
   },
   {
     question: 'How often do rental properties in Sunderland need an EICR?',
@@ -187,7 +187,7 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7671 compliance</strong> — all electrical installations must comply with
-                BS 7671:2018+A3:2024 (the 18th Edition Wiring Regulations). RCD protection under
+                BS 7671:2018+A4:2026 (the 18th Edition Wiring Regulations). RCD protection under
                 Regulation 411.3.3 is required for all socket outlets up to 32A in dwellings, and
                 for circuits in locations of increased shock risk.
               </span>

@@ -151,7 +151,7 @@ const sections = [
           steadily over the past few years due to increased material costs (copper cable prices have
           risen significantly since 2022), higher certification requirements under{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
           , and growing demand for EV charger installations and smart home systems.
         </p>

@@ -42,7 +42,7 @@ const keyTakeaways = [
   'Three-phase distribution is standard in commercial premises. A new 3-phase distribution board with MCCB panel costs £2,000 to £6,000 depending on the number of ways and rating.',
   'Containment (cable tray, trunking, conduit) often accounts for 25% to 40% of the total rewire cost in commercial buildings — significantly more than domestic work.',
   'Fire alarm systems to BS 5839-1 and emergency lighting to BS 5266-1 are typically included in the scope and must be designed, installed, and commissioned by competent persons.',
-  'An Electrical Installation Certificate (EIC) must be issued on completion, covering the full installation to BS 7671:2018+A3:2024.',
+  'An Electrical Installation Certificate (EIC) must be issued on completion, covering the full installation to BS 7671:2018+A4:2026.',
 ];
 
 const faqs = [
@@ -69,7 +69,7 @@ const faqs = [
   {
     question: 'What certification is required for a commercial rewire?',
     answer:
-      'An Electrical Installation Certificate (EIC) must be issued on completion of a commercial rewire, covering the full installation to BS 7671:2018+A3:2024. The EIC must be signed by the designer, installer, and inspector/tester. For commercial work, Part P notification is not required (Part P applies to domestic dwellings only), but the installation must still comply with the Building Regulations and the Electricity at Work Regulations 1989. Separate commissioning certificates are required for fire alarm (BS 5839-1) and emergency lighting (BS 5266-1) systems.',
+      'An Electrical Installation Certificate (EIC) must be issued on completion of a commercial rewire, covering the full installation to BS 7671:2018+A4:2026. The EIC must be signed by the designer, installer, and inspector/tester. For commercial work, Part P notification is not required (Part P applies to domestic dwellings only), but the installation must still comply with the Building Regulations and the Electricity at Work Regulations 1989. Separate commissioning certificates are required for fire alarm (BS 5839-1) and emergency lighting (BS 5266-1) systems.',
   },
   {
     question: 'How long does a commercial rewire take?',
@@ -243,7 +243,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>SPD protection</strong> — Required under BS 7671:2018+A3:2024 Regulation
+                <strong>SPD protection</strong> — Required under BS 7671:2018+A4:2026 Regulation
                 443.4. Type 1+2 SPDs at the main board cost £300 to £600 installed. Type 2 SPDs at
                 sub-distribution boards cost £150 to £300 each.
               </span>
@@ -410,7 +410,7 @@ const sections = [
         <p>
           Commercial electrical installations must comply with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           and the Electricity at Work Regulations 1989. Unlike domestic work, Part P of the Building
           Regulations does not apply to commercial premises — but the installation must still comply

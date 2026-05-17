@@ -1,4 +1,6 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
+import { RecentReviews } from '@/components/seo/RecentReviews';
+import LightningProtectionCalculator from '@/components/apprentice/calculators/LightningProtectionCalculator';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
@@ -527,6 +529,7 @@ export default function LightningProtectionGuidePage() {
           <span className="text-yellow-400">BS EN 62305, SPDs, and Earth Termination</span>
         </>
       }
+              embeddedTool={<LightningProtectionCalculator />}
       heroSubtitle="A practical guide to lightning protection for UK electricians. Covers BS EN 62305, risk assessment methodology, surge protection devices under BS 7671 Chapter 44, earth termination systems, and when lightning protection is required."
       readingTime={12}
       keyTakeaways={keyTakeaways}

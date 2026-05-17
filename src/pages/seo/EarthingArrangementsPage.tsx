@@ -62,7 +62,7 @@ const features = [
     icon: Calculator,
     title: '70 Electrical Calculators',
     description:
-      'Earth fault loop impedance verification, Zs calculation, electrode resistance checks, and dozens more. All built to BS 7671:2018+A3:2024.',
+      'Earth fault loop impedance verification, Zs calculation, electrode resistance checks, and dozens more. All built to BS 7671:2018+A4:2026.',
   },
   {
     icon: Brain,
@@ -78,7 +78,7 @@ const features = [
   },
   {
     icon: ShieldCheck,
-    title: 'BS 7671:2018+A3:2024',
+    title: 'BS 7671:2018+A4:2026',
     description:
       'Built to the current 18th Edition including Amendment 3. All earthing references, Ze values, and compliance checks are fully up to date.',
   },
@@ -172,7 +172,7 @@ export default function EarthingArrangementsPage() {
         <div className="relative max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm font-medium mb-6">
             <BookOpen className="w-4 h-4" />
-            BS 7671:2018 + A3:2024
+            BS 7671:2018+A4:2026
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             Earthing Arrangements
@@ -638,7 +638,7 @@ export default function EarthingArrangementsPage() {
           </h2>
           <p className="text-white text-center mb-10 max-w-2xl mx-auto">
             Purpose-built for UK electricians. 70+ calculators, 8 AI agents, digital certificates,
-            and 46+ training courses — all built to BS 7671:2018+A3:2024.
+            and 46+ training courses — all built to BS 7671:2018+A4:2026.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
         </div>
@@ -687,6 +687,26 @@ export default function EarthingArrangementsPage() {
       </section>
 
       {/* CTA */}
+      
+
+      {/* Related pages — auto-injected for internal-link health (audit criterion #7).
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/guides/ac-vs-dc-earthing-solar-ev">AC vs DC Earthing for Solar PV and EV Charging</SEOInternalLink>
+            <SEOInternalLink href="/earthing-systems-guide">UK Earthing Systems Guide</SEOInternalLink>
+            <SEOInternalLink href="/guides/what-is-earthing">What Is Earthing?</SEOInternalLink>
+            <SEOInternalLink href="/guides/earthing-fault-diagnosis">Earthing Fault Diagnosis</SEOInternalLink>
+            <SEOInternalLink href="/industrial-earthing-systems">Industrial Earthing Systems UK</SEOInternalLink>
+            <SEOInternalLink href="/guides/protective-earthing-bonding">Protective Earthing & Bonding</SEOInternalLink>
+            <SEOInternalLink href="/guides/earthing-system-fault-finding">Earthing System Fault Finding</SEOInternalLink>
+            <SEOInternalLink href="/guides/earthing-systems-tns-tncs-tt-explained">Earthing Systems Explained: TN-S, TN-C-S and TT</SEOInternalLink>
+          </div>
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Record Earthing Data Digitally"
         subheading="Join 1,000+ UK electricians using Elec-Mate for on-site testing and certification. 7-day free trial, cancel anytime."

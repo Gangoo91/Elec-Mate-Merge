@@ -124,7 +124,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description:
-      'Comprehensive guide to BS 7671:2018+A3:2024. Key regulations, amendments, and practical application.',
+      'Comprehensive guide to BS 7671:2018+A4:2026. Key regulations, amendments, and practical application.',
     icon: FileCheck2,
     category: 'Guide',
   },

@@ -40,7 +40,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, carried out in accordance with BS 7671:2018+A3:2024 (Section 631). It produces a detailed condition assessment using C1, C2, C3 and FI observation codes.",
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, carried out in accordance with BS 7671:2018+A4:2026 (Section 631). It produces a detailed condition assessment using C1, C2, C3 and FI observation codes.",
   'York EICR costs are broadly in line with the Yorkshire average. Expect to pay between £110 and £210 for a two-bedroom flat and £170 to £300 for a three-bedroom house.',
   'Landlords in England must obtain a valid EICR before a new tenancy begins and renew it every five years. City of York Council enforces these requirements and can fine non-compliant landlords up to £30,000 per breach.',
   'York has a uniquely high proportion of historic properties, including Medieval, Georgian, and Victorian buildings. Many are listed and require special consideration for both the EICR and any subsequent remedial work.',
@@ -151,7 +151,7 @@ const sections = [
         <p>
           The report is produced in accordance with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           (Section 631), which requires that an Electrical Installation Condition Report is used for
           periodic inspection of existing installations. It is not a simple pass or fail — it is a

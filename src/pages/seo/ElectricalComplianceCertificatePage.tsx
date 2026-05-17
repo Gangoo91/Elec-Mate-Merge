@@ -51,7 +51,7 @@ const faqs = [
   {
     question: 'What is the difference between an EIC and an EICR?',
     answer:
-      'An Electrical Installation Certificate (EIC) is issued for new electrical work — new installations, additions, or alterations to an existing installation. It certifies that the work complies with BS 7671 at the time of completion. An Electrical Installation Condition Report (EICR) is issued for existing electrical installations — it reports on the condition of the installation at the time of inspection. The EIC looks forward (certifying new work is safe), while the EICR looks back (assessing whether existing work is still safe). Both follow the model forms in Appendix 6 of BS 7671:2018+A3:2024.',
+      'An Electrical Installation Certificate (EIC) is issued for new electrical work — new installations, additions, or alterations to an existing installation. It certifies that the work complies with BS 7671 at the time of completion. An Electrical Installation Condition Report (EICR) is issued for existing electrical installations — it reports on the condition of the installation at the time of inspection. The EIC looks forward (certifying new work is safe), while the EICR looks back (assessing whether existing work is still safe). Both follow the model forms in Appendix 6 of BS 7671:2018+A4:2026.',
   },
   {
     question: 'Do I need a compliance certificate for every electrical job?',
@@ -147,7 +147,7 @@ const sections = [
           An electrical compliance certificate is a formal document that confirms electrical work
           has been carried out in accordance with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           (the IET Wiring Regulations) and, where applicable, the Building Regulations. It provides
           evidence that the installation has been designed, installed, inspected, and tested to the

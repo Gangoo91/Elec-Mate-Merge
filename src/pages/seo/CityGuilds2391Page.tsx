@@ -33,7 +33,7 @@ const faqs = [
   {
     question: 'What are the prerequisites for enrolling on the C&G 2391-52 course?',
     answer:
-      'To enrol on the 2391-52, you should hold the C&G 2382 (18th Edition IET Wiring Regulations) or equivalent, and ideally have practical experience of electrical installation work. Most training providers also recommend a Level 3 qualification in Electrical Installation (such as the C&G 2365-03 or 2357) or equivalent experience. A solid understanding of BS 7671:2018+A3:2024 is essential, as the 2391-52 builds directly on the regulations covered in the 18th Edition course. Some providers may accept significant industry experience in lieu of formal Level 3 qualifications, but this varies. The written examination and practical assessment both assume familiarity with installation design, cable selection, and protective device coordination.',
+      'To enrol on the 2391-52, you should hold the C&G 2382 (18th Edition IET Wiring Regulations) or equivalent, and ideally have practical experience of electrical installation work. Most training providers also recommend a Level 3 qualification in Electrical Installation (such as the C&G 2365-03 or 2357) or equivalent experience. A solid understanding of BS 7671:2018+A4:2026 is essential, as the 2391-52 builds directly on the regulations covered in the 18th Edition course. Some providers may accept significant industry experience in lieu of formal Level 3 qualifications, but this varies. The written examination and practical assessment both assume familiarity with installation design, cable selection, and protective device coordination.',
   },
   {
     question: 'How is the 2391-52 exam structured?',
@@ -92,7 +92,7 @@ const features = [
     icon: BookOpen,
     title: 'BS 7671 Regulation Lookup',
     description:
-      'Instant access to BS 7671:2018+A3:2024 regulation references. Search by number, topic, or keyword. The AI explains regulations in plain language with practical examples.',
+      'Instant access to BS 7671:2018+A4:2026 regulation references. Search by number, topic, or keyword. The AI explains regulations in plain language with practical examples.',
   },
 ];
 
@@ -234,8 +234,7 @@ export default function CityGuilds2391Page() {
               inspection and testing of new installations or alterations before they are energised
               and handed over to the client. The second is periodic inspection and testing — the
               assessment of existing installations that are already in service, to identify
-              deterioration, damage, defects, and departures from the current edition of BS
-              7671:2018+A3:2024.
+              deterioration, damage, defects, and departures from the current edition of BS 7671:2018+A4:2026.
             </p>
             <p>
               The qualification is essential for any electrician who wants to work independently and
@@ -340,7 +339,7 @@ export default function CityGuilds2391Page() {
               includes a mixture of multiple-choice questions and short-answer questions. Topics
               covered include safe isolation procedures and their regulatory basis (HSE Guidance
               Note GS 38 and the Electricity at Work Regulations 1989), the full GN3 testing
-              sequence with rationale for the test order, BS 7671:2018+A3:2024 regulation references
+              sequence with rationale for the test order, BS 7671:2018+A4:2026 regulation references
               relevant to inspection and testing (particularly Chapter 61 for initial verification
               and Chapter 62 for periodic inspection), testing instrument selection, operation, and
               calibration requirements, documentation requirements for EICs, EICRs, Minor Electrical
@@ -385,7 +384,7 @@ export default function CityGuilds2391Page() {
               <strong>Initial verification</strong> is carried out on new installations or
               alterations before they are energised and handed over to the client. It confirms that
               the installation has been designed, constructed, inspected, and tested in accordance
-              with BS 7671:2018+A3:2024. The process includes a detailed visual inspection against
+              with BS 7671:2018+A4:2026. The process includes a detailed visual inspection against
               the design documentation (checking cable types, containment, accessory ratings,
               protective device coordination, and general workmanship), followed by the full GN3
               testing sequence. The documentation produced is an Electrical Installation Certificate
@@ -640,6 +639,24 @@ export default function CityGuilds2391Page() {
       </section>
 
       {/* CTA */}
+      
+
+      {/* Related pages — auto-injected for internal-link health (audit criterion #7).
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/city-guilds-level3-guide">City & Guilds Level 3 Electrical Installation Guide</SEOInternalLink>
+            <SEOInternalLink href="/guides/city-guilds-2365-electrical">City & Guilds 2365</SEOInternalLink>
+            <SEOInternalLink href="/guides/city-guilds-2382-exam-guide">City & Guilds 2382 Exam Guide</SEOInternalLink>
+            <SEOInternalLink href="/guides/city-guilds-2365-unit-201">City & Guilds 2365 Unit 201 — Health and Safety</SEOInternalLink>
+            <SEOInternalLink href="/guides/city-guilds-2365-unit-202">City & Guilds 2365 Unit 202 — Electrical Principles</SEOInternalLink>
+            <SEOInternalLink href="/guides/city-guilds-2396-design-course">City & Guilds 2396 Design Course</SEOInternalLink>
+          </div>
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Pass the 2391-52 with confidence"
         subheading="Join 1,000+ UK electricians studying for qualifications and growing their careers. 7-day free trial, cancel anytime."

@@ -330,7 +330,7 @@ const sections = [
               <span>
                 <strong>Market outlook:</strong> UK solar installations hit record levels in 2025,
                 driven by rising energy costs and improving battery storage technology. The trend is
-                expected to continue strongly through 2026 and beyond. BS 7671:2018+A3:2024
+                expected to continue strongly through 2026 and beyond. BS 7671:2018+A4:2026
                 introduced Regulation 530.3.201 covering bidirectional devices, reflecting the
                 growing importance of solar and battery systems.
               </span>

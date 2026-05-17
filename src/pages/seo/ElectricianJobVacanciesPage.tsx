@@ -59,7 +59,7 @@ const faqs = [
   {
     question: 'What qualifications do employers look for in electricians?',
     answer:
-      'The minimum qualifications most employers require are the 18th Edition (BS 7671:2018+A3:2024, C&G 2382) and a relevant Level 3 qualification (NVQ Level 3 in Electrotechnical Services or equivalent). Many employers also require the AM2 assessment pass and an ECS/JIB card as proof of qualification. Beyond the basics, additional qualifications that significantly improve your employability include C&G 2391 (Inspection and Testing), EV charger installation, solar PV installation, fire alarm systems (BS 5839), and emergency lighting (BS 5266). The more qualifications you hold, the more valuable you are to employers and the wider range of work you can take on. Keeping your certifications current signals professionalism and commitment to the trade.',
+      'The minimum qualifications most employers require are the 18th Edition (BS 7671:2018+A4:2026, C&G 2382) and a relevant Level 3 qualification (NVQ Level 3 in Electrotechnical Services or equivalent). Many employers also require the AM2 assessment pass and an ECS/JIB card as proof of qualification. Beyond the basics, additional qualifications that significantly improve your employability include C&G 2391 (Inspection and Testing), EV charger installation, solar PV installation, fire alarm systems (BS 5839), and emergency lighting (BS 5266). The more qualifications you hold, the more valuable you are to employers and the wider range of work you can take on. Keeping your certifications current signals professionalism and commitment to the trade.',
   },
   {
     question: 'How much should I expect to earn from electrician job vacancies in 2026?',

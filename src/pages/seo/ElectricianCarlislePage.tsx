@@ -191,7 +191,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 7671:2018+A3:2024</strong> — the 18th Edition Wiring Regulations apply to
+                <strong>BS 7671:2018+A4:2026</strong> — the 18th Edition Wiring Regulations apply to
                 all installations. RCD protection requirements under regulation 411.3.3 apply to
                 circuits in domestic premises. All new work requires an Electrical Installation
                 Certificate (EIC), and periodic inspections require an EICR under Section 631.

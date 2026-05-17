@@ -57,7 +57,7 @@ const faqs = [
   {
     question: 'Does the AI explain the regulations behind each wiring instruction?',
     answer:
-      'Yes. Every wiring instruction includes specific references to BS 7671:2018+A3:2024 regulations. For example, when the AI instructs you to run cables within the permitted safe zones in a wall, it cites Regulation 522.6.101 which defines those zones. When it specifies the cable size for a shower circuit, it references the relevant tables in Appendix 4 and the correction factors from Section 523. When it requires RCD protection for a socket outlet circuit, it cites Regulation 411.3.2. This is not just regulatory decoration — it allows you to verify every instruction against the published standard and ensures the guidance is always traceable to its source.',
+      'Yes. Every wiring instruction includes specific references to BS 7671:2018+A4:2026 regulations. For example, when the AI instructs you to run cables within the permitted safe zones in a wall, it cites Regulation 522.6.101 which defines those zones. When it specifies the cable size for a shower circuit, it references the relevant tables in Appendix 4 and the correction factors from Section 523. When it requires RCD protection for a socket outlet circuit, it cites Regulation 411.3.2. This is not just regulatory decoration — it allows you to verify every instruction against the published standard and ensures the guidance is always traceable to its source.',
   },
   {
     question: 'Can the AI help with two-way and intermediate switching wiring?',
@@ -149,7 +149,7 @@ const features = [
     icon: ShieldCheck,
     title: 'BS 7671 References',
     description:
-      'Every instruction references the specific BS 7671:2018+A3:2024 regulation that applies. Verify the guidance and cite the correct standard.',
+      'Every instruction references the specific BS 7671:2018+A4:2026 regulation that applies. Verify the guidance and cite the correct standard.',
   },
   {
     icon: ListChecks,
@@ -234,7 +234,7 @@ const sections = [
           6243Y, SWA, FP200, MICC), UK accessories (British Standard face plates and back boxes),
           and UK wiring practices as specified in{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
           . This is not generic international content — it is tailored and trained specifically for
           UK work.
@@ -373,7 +373,7 @@ const sections = [
         <p>
           Every wiring instruction in the AI tool is supported by specific references to{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
           . This is a fundamental design principle of the tool — it does not just tell you how to
           wire a circuit, it tells you why each step is done that way by citing the regulation that

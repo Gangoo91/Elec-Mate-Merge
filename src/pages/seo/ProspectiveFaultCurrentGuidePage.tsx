@@ -82,7 +82,7 @@ const faqs = [
   {
     question: 'How does Elec-Mate help with PFC verification?',
     answer:
-      'Elec-Mate provides several tools for PFC verification. The PFC calculator allows you to calculate the prospective fault current from the supply impedance or from the Ze and conductor impedance values. The adiabatic equation calculator verifies that the cable can withstand the fault current for the duration of the disconnection time (k squared S squared must be greater than or equal to I squared t). The schedule of test results in the EICR and EIC forms includes fields for PFC at the origin and validates the measured value against the breaking capacity of the installed protective devices. If the PFC exceeds the device rating, the app highlights this as a potential observation code. All calculations are based on BS 7671:2018+A3:2024 and work offline on site.',
+      'Elec-Mate provides several tools for PFC verification. The PFC calculator allows you to calculate the prospective fault current from the supply impedance or from the Ze and conductor impedance values. The adiabatic equation calculator verifies that the cable can withstand the fault current for the duration of the disconnection time (k squared S squared must be greater than or equal to I squared t). The schedule of test results in the EICR and EIC forms includes fields for PFC at the origin and validates the measured value against the breaking capacity of the installed protective devices. If the PFC exceeds the device rating, the app highlights this as a potential observation code. All calculations are based on BS 7671:2018+A4:2026 and work offline on site.',
   },
 ];
 

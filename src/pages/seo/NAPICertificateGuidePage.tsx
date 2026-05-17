@@ -49,7 +49,7 @@ const faqs = [
   {
     question: 'Is a NAPIT certificate the same as an NICEIC certificate?',
     answer:
-      'Yes, in terms of legal standing. Both NAPIT and NICEIC are Government-authorised competent person schemes approved under Part P of the Building Regulations. A Building Regulations Compliance Certificate issued through NAPIT has exactly the same legal validity as one issued through NICEIC. The underlying electrical certificates — EIC, Minor Works Certificate, and EICR — are BS 7671 documents that follow the same model forms regardless of which scheme you are registered with. The scheme provider does not determine the certificate format; BS 7671:2018+A3:2024 does. The differences between NAPIT and NICEIC are in brand recognition, annual fees, assessment processes, and additional member benefits — not in the legal weight or technical requirements of the certificates themselves.',
+      'Yes, in terms of legal standing. Both NAPIT and NICEIC are Government-authorised competent person schemes approved under Part P of the Building Regulations. A Building Regulations Compliance Certificate issued through NAPIT has exactly the same legal validity as one issued through NICEIC. The underlying electrical certificates — EIC, Minor Works Certificate, and EICR — are BS 7671 documents that follow the same model forms regardless of which scheme you are registered with. The scheme provider does not determine the certificate format; BS 7671:2018+A4:2026 does. The differences between NAPIT and NICEIC are in brand recognition, annual fees, assessment processes, and additional member benefits — not in the legal weight or technical requirements of the certificates themselves.',
   },
   {
     question: 'How much does NAPIT registration cost?',
@@ -59,7 +59,7 @@ const faqs = [
   {
     question: 'What qualifications do I need for NAPIT electrical registration?',
     answer:
-      'The qualification requirements for NAPIT electrical registration are the same as for other competent person schemes. You need: the 18th Edition of the IET Wiring Regulations (City & Guilds 2382 or equivalent), an Inspection and Testing qualification (City & Guilds 2391 or the older 2394/2395 equivalents), and NVQ Level 3 in Electrical Installation or equivalent (such as City & Guilds 2357 or 2365 with AM2). You must also hold current public liability insurance with a minimum cover typically of 2 million pounds, and your test instruments must be calibrated and within their calibration date. NAPIT may consider applicants with older qualifications on a case-by-case basis, provided you can demonstrate current competence and knowledge of BS 7671:2018+A3:2024.',
+      'The qualification requirements for NAPIT electrical registration are the same as for other competent person schemes. You need: the 18th Edition of the IET Wiring Regulations (City & Guilds 2382 or equivalent), an Inspection and Testing qualification (City & Guilds 2391 or the older 2394/2395 equivalents), and NVQ Level 3 in Electrical Installation or equivalent (such as City & Guilds 2357 or 2365 with AM2). You must also hold current public liability insurance with a minimum cover typically of 2 million pounds, and your test instruments must be calibrated and within their calibration date. NAPIT may consider applicants with older qualifications on a case-by-case basis, provided you can demonstrate current competence and knowledge of BS 7671:2018+A4:2026.',
   },
   {
     question: 'Can I switch from NICEIC to NAPIT?',
@@ -79,7 +79,7 @@ const faqs = [
   {
     question: 'What happens at a NAPIT annual assessment?',
     answer:
-      'The NAPIT annual assessment is carried out by a NAPIT assessor, typically at your business premises or a job site. The assessor reviews your qualifications, insurance, and test instrument calibration to confirm they are all current. They review a sample of certificates you have issued since the last assessment, checking for correct completion, accurate test results, and compliance with BS 7671:2018+A3:2024. The assessor may ask technical questions about current regulations and testing procedures. They may also request to visit a recent or current job site to inspect the standard of your installation work. If any issues are identified, you are given a corrective action plan with a deadline. Persistent or serious non-compliance can result in suspension or withdrawal of registration. The assessment is thorough but fair — it is designed to maintain standards, not to catch you out.',
+      'The NAPIT annual assessment is carried out by a NAPIT assessor, typically at your business premises or a job site. The assessor reviews your qualifications, insurance, and test instrument calibration to confirm they are all current. They review a sample of certificates you have issued since the last assessment, checking for correct completion, accurate test results, and compliance with BS 7671:2018+A4:2026. The assessor may ask technical questions about current regulations and testing procedures. They may also request to visit a recent or current job site to inspect the standard of your installation work. If any issues are identified, you are given a corrective action plan with a deadline. Persistent or serious non-compliance can result in suspension or withdrawal of registration. The assessment is thorough but fair — it is designed to maintain standards, not to catch you out.',
   },
 ];
 
@@ -175,7 +175,7 @@ const sections = [
               <GraduationCap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>18th Edition:</strong> City & Guilds 2382 (or equivalent) — the current
-                edition of the IET Wiring Regulations, BS 7671:2018+A3:2024
+                edition of the IET Wiring Regulations, BS 7671:2018+A4:2026
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -471,7 +471,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Works with NAPIT, NICEIC, ELECSA, and BRE"
-          description="Elec-Mate certificates are scheme-agnostic. Built to BS 7671:2018+A3:2024, the professional PDF output meets the requirements of all competent person scheme providers. Switch schemes without changing your certificate workflow."
+          description="Elec-Mate certificates are scheme-agnostic. Built to BS 7671:2018+A4:2026, the professional PDF output meets the requirements of all competent person scheme providers. Switch schemes without changing your certificate workflow."
           icon={FileCheck2}
         />
       </>
@@ -515,7 +515,7 @@ const relatedPages = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Complete guide to BS 7671:2018+A3:2024 including Amendment 3 changes.',
+    description: 'Complete guide to BS 7671:2018+A4:2026 including Amendment 3 changes.',
     icon: GraduationCap,
     category: 'Guide',
   },

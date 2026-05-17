@@ -43,7 +43,7 @@ const keyTakeaways = [
   'Bristol has extensive Victorian and Edwardian terraced housing in Clifton, Redland, Totterdown, Montpelier, and Bedminster. Lath-and-plaster walls take longer to chase than modern plasterboard, adding time and cost.',
   'A full rewire is notifiable under Part P of the Building Regulations (England). Use a NICEIC, NAPIT, or ELECSA-registered electrician to self-certify and avoid building control inspection fees.',
   'A typical rewire takes 3–5 days for a 2-bed house and 5–8 days for a 3-bed property. Expect wall chasing, replastering, and temporary loss of power during first fix.',
-  'An Electrical Installation Certificate (EIC) is mandatory on completion of every rewire, confirming compliance with BS 7671:2018+A3:2024.',
+  'An Electrical Installation Certificate (EIC) is mandatory on completion of every rewire, confirming compliance with BS 7671:2018+A4:2026.',
 ];
 
 const faqs = [
@@ -439,7 +439,7 @@ const sections = [
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>{' '}
           documenting the design, construction, inspection, and testing of the entire new
-          installation, confirming compliance with BS 7671:2018+A3:2024.
+          installation, confirming compliance with BS 7671:2018+A4:2026.
         </p>
       </>
     ),

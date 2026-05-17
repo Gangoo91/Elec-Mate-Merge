@@ -28,7 +28,7 @@ const faqs = [
   {
     question: 'What is the City & Guilds 2365-03 Level 3 qualification?',
     answer:
-      'The City & Guilds 2365-03 is the Level 3 Diploma in Electrical Installation, also referred to as the Advanced Diploma. It builds on the Level 2 foundation and covers the advanced knowledge and skills required to work as a competent electrician. Key areas include circuit design and calculation (applying correction factors, cable sizing using the adiabatic equation, protective device selection), inspection and testing of electrical installations, fault diagnosis and rectification, and the detailed application of BS 7671:2018+A3:2024 including Part 7 special installations and locations. The Level 3 Diploma is a core component of the Installation Electrician apprenticeship standard (ST0215) and is required alongside the AM2 for the JIB Gold Card.',
+      'The City & Guilds 2365-03 is the Level 3 Diploma in Electrical Installation, also referred to as the Advanced Diploma. It builds on the Level 2 foundation and covers the advanced knowledge and skills required to work as a competent electrician. Key areas include circuit design and calculation (applying correction factors, cable sizing using the adiabatic equation, protective device selection), inspection and testing of electrical installations, fault diagnosis and rectification, and the detailed application of BS 7671:2018+A4:2026 including Part 7 special installations and locations. The Level 3 Diploma is a core component of the Installation Electrician apprenticeship standard (ST0215) and is required alongside the AM2 for the JIB Gold Card.',
   },
   {
     question: 'What are the prerequisites for the Level 3 Electrical course?',
@@ -38,7 +38,7 @@ const faqs = [
   {
     question: 'What special installations does Level 3 cover?',
     answer:
-      'Level 3 introduces Part 7 of BS 7671:2018+A3:2024, which covers special installations and locations that require additional protective measures beyond the general requirements. Key sections include: Section 701 (Locations containing a bath or shower — covering IP ratings, zones, supplementary bonding requirements, and restrictions on equipment within zones), Section 702 (Swimming pools and fountains), Section 704 (Construction and demolition site installations), Section 705 (Agricultural and horticultural premises), Section 708 (Caravan and camping parks), Section 711 (Exhibitions, shows, and stands), Section 712 (Solar photovoltaic power supply systems), and Section 722 (Electric vehicle charging installations). Each section specifies additional requirements that must be applied on top of the general regulations.',
+      'Level 3 introduces Part 7 of BS 7671:2018+A4:2026, which covers special installations and locations that require additional protective measures beyond the general requirements. Key sections include: Section 701 (Locations containing a bath or shower — covering IP ratings, zones, supplementary bonding requirements, and restrictions on equipment within zones), Section 702 (Swimming pools and fountains), Section 704 (Construction and demolition site installations), Section 705 (Agricultural and horticultural premises), Section 708 (Caravan and camping parks), Section 711 (Exhibitions, shows, and stands), Section 712 (Solar photovoltaic power supply systems), and Section 722 (Electric vehicle charging installations). Each section specifies additional requirements that must be applied on top of the general regulations.',
   },
   {
     question: 'How does Level 3 prepare me for the AM2?',
@@ -53,7 +53,7 @@ const faqs = [
   {
     question: 'What is the difference between Level 3 and the 18th Edition course?',
     answer:
-      'The Level 3 Diploma (C&G 2365-03) is a comprehensive qualification covering the full range of skills and knowledge needed by an electrician, including installation design, practical skills, fault diagnosis, and inspection and testing. It typically takes one to two years to complete. The 18th Edition course (C&G 2382) is specifically focused on BS 7671:2018+A3:2024 wiring regulations. It is a shorter course (typically 3-5 days classroom or 4-8 weeks online) that ensures you understand the current regulations and can apply them in practice. Level 3 includes substantial BS 7671 content, but the 2382 is the dedicated regulations qualification. Most electricians hold both, as the 2382 must be renewed whenever a new edition of BS 7671 is published.',
+      'The Level 3 Diploma (C&G 2365-03) is a comprehensive qualification covering the full range of skills and knowledge needed by an electrician, including installation design, practical skills, fault diagnosis, and inspection and testing. It typically takes one to two years to complete. The 18th Edition course (C&G 2382) is specifically focused on BS 7671:2018+A4:2026 wiring regulations. It is a shorter course (typically 3-5 days classroom or 4-8 weeks online) that ensures you understand the current regulations and can apply them in practice. Level 3 includes substantial BS 7671 content, but the 2382 is the dedicated regulations qualification. Most electricians hold both, as the 2382 must be renewed whenever a new edition of BS 7671 is published.',
   },
 ];
 
@@ -233,7 +233,7 @@ export default function Level3ElectricalPage() {
               electrician. Where Level 2 introduces the fundamental principles, Level 3 develops the
               depth of knowledge and practical skill needed to design circuits, inspect and test
               installations independently, diagnose and rectify faults systematically, and apply the
-              full scope of BS 7671:2018+A3:2024 including Part 7 special installations and
+              full scope of BS 7671:2018+A4:2026 including Part 7 special installations and
               locations.
             </p>
             <p>
@@ -277,7 +277,7 @@ export default function Level3ElectricalPage() {
             <p>
               Circuit design is one of the most technically demanding areas of the Level 3
               qualification and one of the most important skills you will develop. A properly
-              designed circuit is safe, efficient, and compliant with BS 7671:2018+A3:2024. A poorly
+              designed circuit is safe, efficient, and compliant with BS 7671:2018+A4:2026. A poorly
               designed circuit can be dangerous, wasteful, and non-compliant — potentially leading
               to overheating, fire, or failure of protective devices under fault conditions.
             </p>
@@ -325,8 +325,7 @@ export default function Level3ElectricalPage() {
           <div className="space-y-4 text-white leading-relaxed">
             <p>
               Level 3 introduces the full inspection and testing procedures specified in Chapter 61
-              (initial verification) and Chapter 62 (periodic inspection and testing) of BS
-              7671:2018+A3:2024, and detailed in Guidance Note 3: Inspection & Testing (GN3, 9th
+              (initial verification) and Chapter 62 (periodic inspection and testing) of BS 7671:2018+A4:2026, and detailed in Guidance Note 3: Inspection & Testing (GN3, 9th
               Edition).
             </p>
             <p>
@@ -409,7 +408,7 @@ export default function Level3ElectricalPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed mb-6">
             <p>
-              Part 7 of BS 7671:2018+A3:2024 specifies additional requirements for installations in
+              Part 7 of BS 7671:2018+A4:2026 specifies additional requirements for installations in
               locations where the risk of electric shock is increased due to environmental
               conditions, the presence of water, reduced body resistance, or other factors. These
               requirements are applied on top of the general regulations — they do not replace them.
@@ -433,7 +432,7 @@ export default function Level3ElectricalPage() {
                 step: '712',
                 title: 'Solar Photovoltaic (PV) Power Supply Systems',
                 description:
-                  'Covers the installation of solar PV systems including DC circuit protection, string isolation, inverter requirements, earthing of PV arrays, and labelling requirements. Amendment 3 (A3:2024) adds new Section 530 requirements covering bidirectional and unidirectional protective devices.',
+                  'Covers the installation of solar PV systems including DC circuit protection, string isolation, inverter requirements, earthing of PV arrays, and labelling requirements. Amendment 3 (A4:2026) adds new Section 530 requirements covering bidirectional and unidirectional protective devices.',
               },
               {
                 step: '722',
@@ -567,6 +566,26 @@ export default function Level3ElectricalPage() {
       </section>
 
       {/* CTA */}
+      
+
+      {/* Related pages — auto-injected for internal-link health (audit criterion #7).
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/tools/electrical-app-with-ai">Electrical App with AI</SEOInternalLink>
+            <SEOInternalLink href="/guides/ai-for-electrical-apprentices">AI for Electrical Apprentices</SEOInternalLink>
+            <SEOInternalLink href="/cleanroom-electrical">Cleanroom Electrical Installation UK</SEOInternalLink>
+            <SEOInternalLink href="/eal-level3-guide">EAL Level 3 Electrical Installation</SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-apprenticeship-guide">Electrical Apprenticeship UK 2026</SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-bim-guide">Electrical BIM Guide</SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-conduit-guide">Electrical Conduit Guide</SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-design-guide">Electrical Design Guide</SEOInternalLink>
+          </div>
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Advance your electrical career"
         subheading="Join 1,000+ UK electricians studying for qualifications and building their futures. 7-day free trial, cancel anytime."

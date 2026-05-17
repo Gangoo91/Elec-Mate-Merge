@@ -27,7 +27,7 @@ import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
 const PAGE_TITLE = 'How to Fill In an EICR Form | Step-by-Step Guide | Elec-Mate';
 const PAGE_DESCRIPTION =
-  'Complete step-by-step guide to filling in an EICR (Electrical Installation Condition Report) form. Observation codes C1, C2, C3, FI explained. BS 7671:2018+A3:2024 compliant.';
+  'Complete step-by-step guide to filling in an EICR (Electrical Installation Condition Report) form. Observation codes C1, C2, C3, FI explained. BS 7671:2018+A4:2026 compliant.';
 
 const faqs = [
   {
@@ -117,7 +117,7 @@ const features = [
   },
   {
     icon: ShieldCheck,
-    title: 'BS 7671:2018+A3:2024',
+    title: 'BS 7671:2018+A4:2026',
     description:
       'Built to the current 18th Edition including Amendment 3. Observation coding, Zs limits, and form structure all follow the standard.',
   },
@@ -224,7 +224,7 @@ export default function HowToFillInEICRPage() {
         <div className="relative max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm font-medium mb-6">
             <BookOpen className="w-4 h-4" />
-            BS 7671:2018+A3:2024 Compliant
+            BS 7671:2018+A4:2026 Compliant
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             How to Fill In an
@@ -269,7 +269,7 @@ export default function HowToFillInEICRPage() {
             <p>
               An Electrical Installation Condition Report (EICR) is the formal document produced
               following a periodic inspection and testing of a fixed electrical installation. It is
-              defined by BS 7671:2018+A3:2024 (the IET Wiring Regulations, 18th Edition with
+              defined by BS 7671:2018+A4:2026 (the IET Wiring Regulations, 18th Edition with
               Amendment 3) and follows the model forms published in Appendix 6 of the standard. The
               EICR replaced the older Periodic Inspection Report (PIR) and is the standard report
               format used across the UK electrical industry.
@@ -621,6 +621,26 @@ export default function HowToFillInEICRPage() {
       </section>
 
       {/* CTA */}
+      
+
+      {/* Related pages — auto-injected for internal-link health (audit criterion #7).
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/guides/how-to-fill-in-minor-works">How to Fill In a Minor Works Certificate</SEOInternalLink>
+            <SEOInternalLink href="/guides/commercial-eicr-guide">Commercial EICR Guide</SEOInternalLink>
+            <SEOInternalLink href="/eicr-aberdeen">EICR Aberdeen</SEOInternalLink>
+            <SEOInternalLink href="/guides/eicr-bath">EICR Bath</SEOInternalLink>
+            <SEOInternalLink href="/guides/eicr-belfast">EICR Belfast</SEOInternalLink>
+            <SEOInternalLink href="/guides/eicr-birmingham">EICR Birmingham</SEOInternalLink>
+            <SEOInternalLink href="/eicr-bradford">EICR Bradford</SEOInternalLink>
+            <SEOInternalLink href="/guides/eicr-brighton">EICR Brighton</SEOInternalLink>
+          </div>
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Fill In EICR Forms Digitally"
         subheading="Join 1,000+ UK electricians creating professional EICR certificates on their phones. 7-day free trial, cancel anytime."

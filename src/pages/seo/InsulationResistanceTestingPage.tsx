@@ -51,7 +51,7 @@ const faqs = [
   {
     question: 'What is the minimum acceptable insulation resistance value?',
     answer:
-      'Under BS 7671:2018+A3:2024 Regulation 643.3, the minimum acceptable insulation resistance is 1 MΩ for circuits up to 500V (tested at 500V DC). However, 1 MΩ is a pass-fail threshold, not a target. A healthy new installation should produce readings well above 200 MΩ — readings close to 1 MΩ on a new installation warrant further investigation even though they technically pass. On an EICR of an older installation, a reading between 1 MΩ and 2 MΩ may be a C3 (improvement recommended), particularly if there is a downward trend from previous inspection results. A reading below 1 MΩ is a clear failure and must be coded as C2 or C1 depending on the risk.',
+      'Under BS 7671:2018+A4:2026 Regulation 643.3, the minimum acceptable insulation resistance is 1 MΩ for circuits up to 500V (tested at 500V DC). However, 1 MΩ is a pass-fail threshold, not a target. A healthy new installation should produce readings well above 200 MΩ — readings close to 1 MΩ on a new installation warrant further investigation even though they technically pass. On an EICR of an older installation, a reading between 1 MΩ and 2 MΩ may be a C3 (improvement recommended), particularly if there is a downward trend from previous inspection results. A reading below 1 MΩ is a clear failure and must be coded as C2 or C1 depending on the risk.',
   },
   {
     question: 'How do I carry out an insulation resistance test on a new circuit?',
@@ -76,7 +76,7 @@ const faqs = [
   {
     question: 'What does Regulation 643.3 require?',
     answer:
-      'BS 7671:2018+A3:2024 Regulation 643.3 requires that insulation resistance testing is carried out on all new electrical installations and on existing installations during periodic inspection and testing. The regulation sets out the test voltages and minimum acceptable values tabulated in Table 64.1. The test must be carried out with all equipment connected (or representative of the installed conditions) except for equipment that would be damaged by the test voltage — which must be disconnected. Where electronic equipment cannot be disconnected, only a low-voltage continuity check may be possible. Regulation 643.3 also requires that where results approach (but do not fall below) the minimum value, further investigation is recommended to identify the cause of the relatively low reading.',
+      'BS 7671:2018+A4:2026 Regulation 643.3 requires that insulation resistance testing is carried out on all new electrical installations and on existing installations during periodic inspection and testing. The regulation sets out the test voltages and minimum acceptable values tabulated in Table 64.1. The test must be carried out with all equipment connected (or representative of the installed conditions) except for equipment that would be damaged by the test voltage — which must be disconnected. Where electronic equipment cannot be disconnected, only a low-voltage continuity check may be possible. Regulation 643.3 also requires that where results approach (but do not fall below) the minimum value, further investigation is recommended to identify the cause of the relatively low reading.',
   },
 ];
 
@@ -137,7 +137,7 @@ const sections = [
       <>
         <p>
           Insulation resistance (IR) testing is one of the fundamental verification tests required
-          by BS 7671:2018+A3:2024 as part of both the initial inspection and testing of a new
+          by BS 7671:2018+A4:2026 as part of both the initial inspection and testing of a new
           installation and the periodic inspection and testing of an existing installation (EICR).
           The purpose of the test is to verify that the insulation surrounding the conductors is in
           good condition and is providing adequate electrical separation between live conductors and
@@ -378,7 +378,7 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671:2018+A3:2024 Regulation 643.3 is the primary regulation governing insulation
+          BS 7671:2018+A4:2026 Regulation 643.3 is the primary regulation governing insulation
           resistance testing. It requires that insulation resistance tests are carried out on all
           new installations before they are energised and on existing installations during periodic
           inspection and testing.
@@ -425,7 +425,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Always Check for SPDs Before Testing</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Surge protective devices (SPDs) are now mandatory on most new installations under
-                  BS 7671:2018+A3:2024 Amendment 3. They are easily missed during inspection. Before
+                  BS 7671:2018+A4:2026 Amendment 3. They are easily missed during inspection. Before
                   applying any IR test voltage, check the consumer unit, distribution board, and
                   sub-boards for SPDs and disconnect them from the circuit. An SPD in circuit gives
                   a reading of virtually zero ohms — which can falsely condemn a sound installation.

@@ -484,7 +484,7 @@ const sections = [
               <span>
                 <strong>18th Edition (C&G 2382-22)</strong> — knowledge of{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                  BS 7671:2018+A3:2024
+                  BS 7671:2018+A4:2026
                 </SEOInternalLink>{' '}
                 is essential. Industrial electricians need deeper knowledge of Part 5 (selection and
                 erection), Part 4 (protection for safety, particularly motor circuit protection),

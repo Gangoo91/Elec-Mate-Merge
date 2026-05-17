@@ -142,7 +142,7 @@ const sections = [
           In the UK, all external lighting work on new circuits must be carried out by a registered
           competent person and notified under Building Regulations Part P. The technical standard is{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           (the IET Wiring Regulations). Key requirements for outdoor installations include
           appropriate IP ratings, mandatory RCD protection, and suitable cable types and

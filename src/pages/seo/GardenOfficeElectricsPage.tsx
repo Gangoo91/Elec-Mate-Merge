@@ -153,7 +153,7 @@ const sections = [
         <p>
           The electrical installation must comply with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           and be notified under{' '}
           <SEOInternalLink href="/guides/part-p-building-regulations">

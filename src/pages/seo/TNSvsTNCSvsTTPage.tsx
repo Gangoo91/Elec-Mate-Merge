@@ -98,7 +98,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Full guide to BS 7671:2018+A3:2024 including earthing and bonding requirements.',
+    description: 'Full guide to BS 7671:2018+A4:2026 including earthing and bonding requirements.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -131,7 +131,7 @@ const sections = [
           Identifying the earthing system before commencing any electrical work is a fundamental
           requirement.{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           Chapter 41 sets out the disconnection time requirements for each system, and the choice
           of earthing system directly affects whether those requirements can be met. The statutory

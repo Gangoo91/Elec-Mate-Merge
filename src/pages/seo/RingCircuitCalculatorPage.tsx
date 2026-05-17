@@ -1,4 +1,6 @@
 import { Helmet } from 'react-helmet';
+import { RecentReviews } from '@/components/seo/RecentReviews';
+import RingCircuitCalculator from '@/components/apprentice/calculators/RingCircuitCalculator';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
@@ -110,9 +112,9 @@ const features = [
   },
   {
     icon: BookOpen,
-    title: 'GN3 and BS 7671:2018+A3:2024 Compliant',
+    title: 'GN3 and BS 7671:2018+A4:2026 Compliant',
     description:
-      'Testing procedures and pass/fail criteria verified against GN3 (Guidance Note 3: Inspection and Testing, 9th Edition) and BS 7671:2018+A3:2024. Part of 70+ calculators in Elec-Mate.',
+      'Testing procedures and pass/fail criteria verified against GN3 (Guidance Note 3: Inspection and Testing, 9th Edition) and BS 7671:2018+A4:2026. Part of 70+ calculators in Elec-Mate.',
   },
 ];
 
@@ -122,20 +124,14 @@ const softwareAppSchema = {
   applicationCategory: 'UtilitiesApplication',
   operatingSystem: 'Web, iOS, Android',
   description:
-    'Validate ring final circuit continuity test results. Check r1, rn, r2 readings, cross-connection results, identify spurs and faults. Built to GN3 and BS 7671:2018+A3:2024.',
+    'Validate ring final circuit continuity test results. Check r1, rn, r2 readings, cross-connection results, identify spurs and faults. Built to GN3 and BS 7671:2018+A4:2026.',
   url: 'https://elec-mate.com/tools/ring-circuit-calculator',
   offers: {
     '@type': 'Offer',
     price: '0',
     priceCurrency: 'GBP',
     description: '7-day free trial, then from £12.99/month',
-  },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.8',
-    ratingCount: '1000',
-    bestRating: '5',
-  },
+  }
 };
 
 const faqSchema = {
@@ -220,6 +216,13 @@ export default function RingCircuitCalculatorPage() {
         </div>
       </section>
 
+      {/* Live calculator — free, no signup, BS 7671:2018+A4:2026 compliant */}
+      <section id="calculator" className="px-5 pb-12 scroll-mt-24">
+        <div className="max-w-4xl mx-auto">
+          <RingCircuitCalculator />
+        </div>
+      </section>
+
       {/* What Is a Ring Final Circuit */}
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
@@ -262,7 +265,7 @@ export default function RingCircuitCalculatorPage() {
               ring must be verified to confirm that the cable forms a complete loop and that no
               interconnections have been made incorrectly. This is where the cross-connection method
               comes in — the standard testing procedure described in GN3 (Guidance Note 3:
-              Inspection and Testing) and BS 7671:2018+A3:2024. Use the{' '}
+              Inspection and Testing) and BS 7671:2018+A4:2026. Use the{' '}
               <SEOInternalLink href="/cable-sizing-calculator">
                 cable sizing calculator
               </SEOInternalLink>{' '}
@@ -613,6 +616,13 @@ export default function RingCircuitCalculatorPage() {
       </section>
 
       {/* CTA */}
+            {/* Verified App Store reviews — policy-safe SoftwareApplication aggregateRating */}
+      <section className="px-5 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <RecentReviews />
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Validate Ring Circuit Tests on Site"
         subheading="Join 1,000+ UK electricians using Elec-Mate for on-site testing calculations. 7-day free trial, cancel anytime."

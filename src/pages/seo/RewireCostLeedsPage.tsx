@@ -44,7 +44,7 @@ const keyTakeaways = [
   'Leeds has a large stock of Victorian and Edwardian back-to-back terraces and through-terraces in inner-city areas including Headingley, Hyde Park, Beeston, and Holbeck — these present the most complex rewire jobs in terms of access and timescales.',
   'New-build and inter-war semis dominate the outer suburbs of Leeds (Roundhay, Horsforth, Morley, Garforth) and represent the most straightforward rewire jobs.',
   'Leeds rewires are notifiable under Part P of the Building Regulations. Use a NICEIC, NAPIT, or ELECSA-registered electrician to self-certify and avoid costly building control inspection fees.',
-  'An Electrical Installation Certificate (EIC) is mandatory on completion of every rewire, confirming the installation complies with BS 7671:2018+A3:2024.',
+  'An Electrical Installation Certificate (EIC) is mandatory on completion of every rewire, confirming the installation complies with BS 7671:2018+A4:2026.',
 ];
 
 const faqs = [

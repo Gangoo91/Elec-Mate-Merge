@@ -43,7 +43,7 @@ const keyTakeaways = [
   'Liverpool has extensive Victorian and Edwardian terraced housing across areas such as Toxteth, Wavertree, Kensington, Anfield, and the Georgian Quarter. These properties have lath-and-plaster walls and are more time-consuming to rewire than modern plasterboard construction.',
   'A full rewire is notifiable under Part P of the Building Regulations (England). Use a NICEIC, NAPIT, or ELECSA-registered electrician to self-certify and avoid building control inspection fees.',
   'A typical rewire takes 3–5 days for a 2-bed terraced house and 5–8 days for a 3-bed property. Wall chasing, replastering, and temporary power loss are all part of the process.',
-  'An Electrical Installation Certificate (EIC) is mandatory on completion of every rewire, confirming compliance with BS 7671:2018+A3:2024.',
+  'An Electrical Installation Certificate (EIC) is mandatory on completion of every rewire, confirming compliance with BS 7671:2018+A4:2026.',
 ];
 
 const faqs = [
@@ -435,7 +435,7 @@ const sections = [
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>{' '}
           documenting the design, construction, inspection, and testing of the new installation,
-          confirming compliance with BS 7671:2018+A3:2024.
+          confirming compliance with BS 7671:2018+A4:2026.
         </p>
       </>
     ),

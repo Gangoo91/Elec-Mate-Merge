@@ -40,7 +40,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Socket outlets must not be installed within 300mm of the inner edge of a sink, including sinks set into worktops. This is specified in BS 7671:2018+A3:2024 Section 703 (Rooms Containing a Bath or Shower) as adapted for kitchen installations and is widely recognised in industry practice for areas containing a sink.',
+  'Socket outlets must not be installed within 300mm of the inner edge of a sink, including sinks set into worktops. This is specified in BS 7671:2018+A4:2026 Section 703 (Rooms Containing a Bath or Shower) as adapted for kitchen installations and is widely recognised in industry practice for areas containing a sink.',
   'A cooker circuit for a full-size electric range (7.2kW to 13kW) typically requires 6mm² twin and earth cable on a 32A or 40A circuit breaker, with a dedicated cooker control unit and isolator switch.',
   'All kitchen socket circuits must be protected by a 30mA RCD under Regulation 411.3.3 of BS 7671. This is one of the most commonly missed requirements in kitchen installations and one of the most common C2 findings on domestic EICRs.',
   'Kitchen electrical work that involves adding new circuits, replacing a consumer unit, or fitting a new cooker circuit constitutes notifiable work under Part P of the Building Regulations. Always use a registered competent person or notify building control.',
@@ -137,7 +137,7 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671:2018+A3:2024 (the Wiring Regulations) does not define kitchen zones in the same
+          BS 7671:2018+A4:2026 (the Wiring Regulations) does not define kitchen zones in the same
           way it defines bathroom zones under Section 701. However, specific requirements apply to
           kitchen installations, particularly in relation to socket positions near sinks and RCD
           protection on all circuits. Kitchen electrical work must also comply with Part P of the

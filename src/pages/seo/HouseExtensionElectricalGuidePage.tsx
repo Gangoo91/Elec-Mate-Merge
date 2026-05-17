@@ -35,7 +35,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'All new electrical work in a house extension must comply with BS 7671:2018+A3:2024 (18th Edition Wiring Regulations) and is notifiable under Part P of the Building Regulations unless a competent person scheme member carries out the work.',
+  'All new electrical work in a house extension must comply with BS 7671:2018+A4:2026 (18th Edition Wiring Regulations) and is notifiable under Part P of the Building Regulations unless a competent person scheme member carries out the work.',
   'Before starting any extension electrical work, an electrician must assess the existing consumer unit for spare ways and sufficient main fuse capacity — adding rooms without checking load is a common and dangerous oversight.',
   'Extending a ring final circuit is permissible under BS 7671 but introduces additional impedance. If the ring already serves a large area, a new dedicated circuit from the consumer unit is the safer and more compliant approach.',
   'An Electrical Installation Certificate (EIC) must be issued for all new circuit installations in an extension. This is a legal requirement under Part P and required for building regulations sign-off.',

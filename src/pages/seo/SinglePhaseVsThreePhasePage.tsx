@@ -134,7 +134,7 @@ const sections = [
           industrial premises routinely use three phase 400V supplies to power larger loads more
           efficiently.{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           covers both supply types, and the designer must confirm the available supply
           characteristics with the DNO before commencing the installation design.

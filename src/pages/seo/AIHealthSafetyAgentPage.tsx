@@ -56,7 +56,7 @@ const faqs = [
   {
     question: 'What legislation does the Health and Safety Agent reference?',
     answer:
-      'The Health and Safety Agent references all UK health and safety legislation relevant to electrical installation work. The primary references include: the Health and Safety at Work etc. Act 1974 (HSWA), the Management of Health and Safety at Work Regulations 1999 (MHSW), the Construction (Design and Management) Regulations 2015 (CDM 2015), the Electricity at Work Regulations 1989 (EWR), the Work at Height Regulations 2005, the Manual Handling Operations Regulations 1992, the Control of Substances Hazardous to Health Regulations 2002 (COSHH), the Personal Protective Equipment at Work Regulations 2022, the Provision and Use of Work Equipment Regulations 1998 (PUWER), the Control of Noise at Work Regulations 2005, and the Control of Asbestos Regulations 2012. For electrical-specific requirements, it also references BS 7671:2018+A3:2024, HSE Guidance Note GS38 (electrical test equipment for use by electricians), and the IET Code of Practice for In-Service Inspection and Testing of Electrical Equipment. All references include the specific regulation numbers, making the documents easy to verify.',
+      'The Health and Safety Agent references all UK health and safety legislation relevant to electrical installation work. The primary references include: the Health and Safety at Work etc. Act 1974 (HSWA), the Management of Health and Safety at Work Regulations 1999 (MHSW), the Construction (Design and Management) Regulations 2015 (CDM 2015), the Electricity at Work Regulations 1989 (EWR), the Work at Height Regulations 2005, the Manual Handling Operations Regulations 1992, the Control of Substances Hazardous to Health Regulations 2002 (COSHH), the Personal Protective Equipment at Work Regulations 2022, the Provision and Use of Work Equipment Regulations 1998 (PUWER), the Control of Noise at Work Regulations 2005, and the Control of Asbestos Regulations 2012. For electrical-specific requirements, it also references BS 7671:2018+A4:2026, HSE Guidance Note GS38 (electrical test equipment for use by electricians), and the IET Code of Practice for In-Service Inspection and Testing of Electrical Equipment. All references include the specific regulation numbers, making the documents easy to verify.',
   },
   {
     question: 'Does it include emergency procedures and PPE requirements?',
@@ -414,6 +414,26 @@ export default function AIHealthSafetyAgentPage() {
       </section>
 
       {/* CTA */}
+      
+
+      {/* Related pages — auto-injected for internal-link health (audit criterion #7).
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/health-safety-audit-electrician">Health & Safety Audit for Electrical Contractors</SEOInternalLink>
+            <SEOInternalLink href="/guides/health-safety-policy-electrician">Health and Safety Policy for Electricians UK 2026</SEOInternalLink>
+            <SEOInternalLink href="/training/fire-safety">Fire Safety Course</SEOInternalLink>
+            <SEOInternalLink href="/airbnb-electrical-safety">Airbnb Electrical Safety UK</SEOInternalLink>
+            <SEOInternalLink href="/guides/apprentice-mental-health">Mental Health for Electrical Apprentices</SEOInternalLink>
+            <SEOInternalLink href="/guides/apprentice-safety-cases">Safety Cases for Electrical Apprentices</SEOInternalLink>
+            <SEOInternalLink href="/guides/christmas-lighting-safety">Christmas Lighting Safety</SEOInternalLink>
+            <SEOInternalLink href="/guides/construction-site-safety">Construction Site Safety for Electricians</SEOInternalLink>
+          </div>
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Generate professional RAMS in minutes"
         subheading="Join 1,000+ UK electricians using AI for CDM 2015 compliant health and safety documentation. 7-day free trial, cancel anytime."

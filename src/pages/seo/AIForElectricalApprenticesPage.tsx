@@ -87,7 +87,7 @@ export default function AIForElectricalApprenticesPage() {
                 <SEOInternalLink href="/guides/ai-tools-for-electricians">
                   AI tools built specifically for UK electrical work
                 </SEOInternalLink>
-                , trained on BS 7671:2018+A3:2024, IET Guidance Notes, and the specific curriculum
+                , trained on BS 7671:2018+A4:2026, IET Guidance Notes, and the specific curriculum
                 content of UK electrical apprenticeships. This means they give accurate, relevant
                 answers rather than the generic or US-centric responses you would get from a
                 general-purpose AI.
@@ -182,7 +182,7 @@ export default function AIForElectricalApprenticesPage() {
                 trying to interpret the legal language.
               </p>
               <p>
-                The lookup tool covers the full scope of BS 7671:2018+A3:2024, including Amendment
+                The lookup tool covers the full scope of BS 7671:2018+A4:2026, including Amendment
                 3:2024 which added Regulation 530.3.2 for bidirectional protective devices. It also
                 covers the IET On-Site Guide and all eight IET Guidance Notes, which are essential
                 study materials for{' '}
@@ -463,7 +463,7 @@ export default function AIForElectricalApprenticesPage() {
         {
           question: 'Is AI tutoring accurate enough for BS 7671 revision?',
           answer:
-            "Trade-specific AI tools are highly accurate for BS 7671 content because they retrieve the exact regulation text from a current copy of the standard before generating their response. This is fundamentally different from general-purpose AI tools like ChatGPT, which rely on what they memorised during training and frequently confuse BS 7671 with the American NEC code. Elec-Mate's AI Tutor is trained on BS 7671:2018+A3:2024 and retrieves the specific regulation text when answering questions, which means it cites correct regulation numbers, quotes accurate requirements, and provides explanations that align with the current edition. However, as with any study tool, you should always verify critical regulation references against the published standard, especially for exam preparation.",
+            "Trade-specific AI tools are highly accurate for BS 7671 content because they retrieve the exact regulation text from a current copy of the standard before generating their response. This is fundamentally different from general-purpose AI tools like ChatGPT, which rely on what they memorised during training and frequently confuse BS 7671 with the American NEC code. Elec-Mate's AI Tutor is trained on BS 7671:2018+A4:2026 and retrieves the specific regulation text when answering questions, which means it cites correct regulation numbers, quotes accurate requirements, and provides explanations that align with the current edition. However, as with any study tool, you should always verify critical regulation references against the published standard, especially for exam preparation.",
         },
         {
           question: 'Can AI replace my college lecturers or supervisor?',
@@ -473,7 +473,7 @@ export default function AIForElectricalApprenticesPage() {
         {
           question: 'What electrical qualifications does the AI cover?',
           answer:
-            'The AI Tutor and practice question generator cover the full range of UK electrical qualifications: City and Guilds 2365 (Electrical Installation), NVQ Level 2 and Level 3 in Electrotechnical Technology, the ECS/JIB grading card requirements, the AM2 practical assessment, City and Guilds 2391 (Inspection and Testing), the 18th Edition (BS 7671:2018+A3:2024) update course, and the End-Point Assessment (EPA) for the Installation Electrician/Maintenance Electrician apprenticeship standards. The content is aligned to the current qualification specifications and is updated when specifications change.',
+            'The AI Tutor and practice question generator cover the full range of UK electrical qualifications: City and Guilds 2365 (Electrical Installation), NVQ Level 2 and Level 3 in Electrotechnical Technology, the ECS/JIB grading card requirements, the AM2 practical assessment, City and Guilds 2391 (Inspection and Testing), the 18th Edition (BS 7671:2018+A4:2026) update course, and the End-Point Assessment (EPA) for the Installation Electrician/Maintenance Electrician apprenticeship standards. The content is aligned to the current qualification specifications and is updated when specifications change.',
         },
         {
           question: 'How many practice questions can I generate?',

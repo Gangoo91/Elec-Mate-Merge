@@ -37,9 +37,9 @@ const tocItems = [
 
 const keyTakeaways = [
   "A consumer unit replacement in Bristol typically costs between £380 and £650 for most domestic properties — towards the higher end of English regional cities, reflecting Bristol's elevated labour rates and strong economic activity.",
-  'Under Regulation 421.1.201 of BS 7671:2018+A3:2024, all domestic consumer units must be a type-tested coordinated assembly housed in a non-combustible (metal) enclosure.',
+  'Under Regulation 421.1.201 of BS 7671:2018+A4:2026, all domestic consumer units must be a type-tested coordinated assembly housed in a non-combustible (metal) enclosure.',
   'Consumer unit replacement is notifiable work under Part P of the Building Regulations (England and Wales). A registered electrician will self-certify through NICEIC, NAPIT, or ELECSA.',
-  'BS 7671:2018+A3:2024 requires 30 mA RCD protection for all socket-outlet circuits up to 32 A and for cables concealed in walls at a depth less than 50 mm — covering virtually every circuit in a modern domestic installation.',
+  'BS 7671:2018+A4:2026 requires 30 mA RCD protection for all socket-outlet circuits up to 32 A and for cables concealed in walls at a depth less than 50 mm — covering virtually every circuit in a modern domestic installation.',
   'Bristol has a significant stock of Victorian and Edwardian terraced housing in areas such as Easton, Totterdown, Bishopston, and Bedminster — many of which still have outdated consumer units or rewirable fuse boards.',
 ];
 
@@ -57,7 +57,7 @@ const faqs = [
   {
     question: 'Do I need RCD protection when replacing a consumer unit in Bristol?',
     answer:
-      'Yes. BS 7671:2018+A3:2024 requires 30 mA RCD protection for socket-outlet circuits rated up to 32 A and for cables concealed in walls at a depth less than 50 mm. Individual RCBOs on each circuit are the preferred modern solution, providing overcurrent and residual current protection per circuit.',
+      'Yes. BS 7671:2018+A4:2026 requires 30 mA RCD protection for socket-outlet circuits rated up to 32 A and for cables concealed in walls at a depth less than 50 mm. Individual RCBOs on each circuit are the preferred modern solution, providing overcurrent and residual current protection per circuit.',
   },
   {
     question: 'Why are consumer unit replacement costs higher in Bristol than some other cities?',
@@ -150,7 +150,7 @@ const sections = [
         <p>
           Under{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
           , Regulation 421.1.201 requires that consumer units in domestic premises be a type-tested
           coordinated assembly housed in a non-combustible (metal) enclosure. BS 7671 also requires

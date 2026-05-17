@@ -38,7 +38,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Dental surgery electrical installation costs £8,000 to £25,000 in 2026 depending on the number of surgeries, X-ray equipment, compressor and suction requirements, and whether Section 710 medical location provisions apply.',
-  'Section 710 of BS 7671:2018+A3:2024 applies to dental surgeries. Group 1 medical locations (which includes dental treatment rooms) require additional protective measures including supplementary equipotential bonding and RCD protection.',
+  'Section 710 of BS 7671:2018+A4:2026 applies to dental surgeries. Group 1 medical locations (which includes dental treatment rooms) require additional protective measures including supplementary equipotential bonding and RCD protection.',
   'Each dental chair requires a dedicated electrical supply — typically 2 to 4 socket outlets plus a hardwired connection for the chair unit itself, which may draw 1 to 3kW depending on specification.',
   'X-ray equipment (OPG, intraoral, and CBCT) has specific electrical requirements including dedicated circuits, stable voltage supply, and radiation shielding considerations that affect cable routing.',
   'Dental compressors (1.5 to 5kW) and suction units (1 to 3kW) require dedicated circuits, vibration mounting, and are typically located in a plant room with appropriate ventilation.',
@@ -53,7 +53,7 @@ const faqs = [
   {
     question: 'What is Section 710 and how does it apply to dental surgeries?',
     answer:
-      'Section 710 of BS 7671:2018+A3:2024 covers electrical installations in medical locations. Dental treatment rooms are classified as Group 1 medical locations — areas where contact of applied parts (dental instruments) with the patient is intended, but where discontinuity of supply does not cause immediate danger to life. Group 1 requirements include supplementary equipotential bonding connecting all extraneous-conductive-parts and protective conductors within the treatment area, 30mA RCD protection on all circuits, and specific requirements for socket outlet types and markings.',
+      'Section 710 of BS 7671:2018+A4:2026 covers electrical installations in medical locations. Dental treatment rooms are classified as Group 1 medical locations — areas where contact of applied parts (dental instruments) with the patient is intended, but where discontinuity of supply does not cause immediate danger to life. Group 1 requirements include supplementary equipotential bonding connecting all extraneous-conductive-parts and protective conductors within the treatment area, 30mA RCD protection on all circuits, and specific requirements for socket outlet types and markings.',
   },
   {
     question: 'What electrical supply does a dental chair need?',
@@ -154,7 +154,7 @@ const sections = [
         <p>
           Section 710 of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           sets additional requirements for electrical installations in medical locations. Dental
           treatment rooms are classified as Group 1 medical locations.
@@ -379,7 +379,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 7671:2018+A3:2024 Section 710</strong> — Medical locations. Group 1
+                <strong>BS 7671:2018+A4:2026 Section 710</strong> — Medical locations. Group 1
                 classification for dental treatment rooms. Supplementary bonding, RCD protection per
                 BS 7671 Section 411, socket identification, and protective conductor monitoring.
               </span>

@@ -74,7 +74,7 @@ export default function DisconnectionTimeCalculatorPage() {
                 this current quickly enough to prevent a person receiving a lethal electric shock.
               </p>
               <p>
-                BS 7671:2018+A3:2024 sets specific disconnection time limits based on the type of
+                BS 7671:2018+A4:2026 sets specific disconnection time limits based on the type of
                 circuit and the{' '}
                 <SEOInternalLink href="/earthing-arrangements">
                   earthing system
@@ -370,9 +370,9 @@ export default function DisconnectionTimeCalculatorPage() {
         },
         {
           icon: BookOpen,
-          title: 'BS 7671:2018+A3:2024 Data',
+          title: 'BS 7671:2018+A4:2026 Data',
           description:
-            'All tabulated values are from the current edition of BS 7671 including Amendment 3 (2024). Verified against published regulation tables.',
+            'All tabulated values are from the current edition of BS 7671 including Amendment 4 (2026). Verified against published regulation tables.',
         },
         {
           icon: Gauge,

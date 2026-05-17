@@ -136,7 +136,7 @@ const sections = [
           conductor to the other with no open circuits or high-resistance joints. It is a mandatory
           test under{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           Chapter 61 and must be carried out on all circuits during initial verification of a new
           installation (EIC) and during every periodic inspection (EICR).

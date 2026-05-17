@@ -56,7 +56,7 @@ const faqs = [
   {
     question: 'Which edition of BS 7671 should I buy?',
     answer:
-      'Buy BS 7671:2018+A2:2022, which is the 18th Edition including Amendment 1 and Amendment 2. This is the current printed book available from the IET. Amendment 3 (A3:2024) is published as a free PDF supplement — download it from the IET website and keep it with your book. Do not buy a second-hand copy of an older edition (16th or 17th Edition) unless you specifically need it for reference — all current work must be to the 18th Edition. When searching online, look for ISBN 978-1-78561-170-4 to ensure you get the correct current edition.',
+      'Buy BS 7671:2018+A2:2022, which is the 18th Edition including Amendment 1 and Amendment 2. This is the current printed book available from the IET. Amendment 3 (A4:2026) is published as a free PDF supplement — download it from the IET website and keep it with your book. Do not buy a second-hand copy of an older edition (16th or 17th Edition) unless you specifically need it for reference — all current work must be to the 18th Edition. When searching online, look for ISBN 978-1-78561-170-4 to ensure you get the correct current edition.',
   },
   {
     question: 'What is Guidance Note 3 and do I need it?',
@@ -90,7 +90,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description:
-      'Complete guide to BS 7671:2018+A3:2024 — structure, key regulations, and amendment changes.',
+      'Complete guide to BS 7671:2018+A4:2026 — structure, key regulations, and amendment changes.',
     icon: BookOpen,
     category: 'Guide',
   },
@@ -216,7 +216,7 @@ const sections = [
         </p>
         <p>
           The current printed edition is BS 7671:2018+A2:2022 (incorporating Amendments 1 and 2).
-          Amendment 3 (A3:2024) is a free PDF supplement available from the IET website — download
+          Amendment 3 (A4:2026) is a free PDF supplement available from the IET website — download
           it and keep it with your Brown Book. Amendment 3 adds Regulation 530.3.2 covering
           bidirectional and unidirectional devices.
         </p>

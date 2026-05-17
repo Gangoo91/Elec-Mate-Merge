@@ -40,7 +40,7 @@ const keyTakeaways = [
   'Metal consumer unit enclosures have been mandatory for all domestic replacements since January 2016 under Amendment 3 to BS 7671 — plastic consumer units cannot be used in new or replacement domestic installations.',
   'Hull has significant pre-1960s terraced housing in areas such as Hessle Road, Beverley Road, and Holderness Road where rewireable fuse boards and absent RCD protection are common EICR findings.',
   'Consumer unit replacement is Part P notifiable electrical work requiring either a registered competent person (NICEIC/NAPIT/ELECSA) or prior notification to Hull City Council Building Control.',
-  'RCD protection on all socket-outlet circuits rated up to 32 A is mandatory under Regulation 411.3.3 of BS 7671:2018+A3:2024. Absence of this protection is a C2 EICR finding requiring remedial action within 28 days.',
+  'RCD protection on all socket-outlet circuits rated up to 32 A is mandatory under Regulation 411.3.3 of BS 7671:2018+A4:2026. Absence of this protection is a C2 EICR finding requiring remedial action within 28 days.',
 ];
 
 const faqs = [
@@ -58,7 +58,7 @@ const faqs = [
   {
     question: 'Is a metal consumer unit required for my Hull property?',
     answer:
-      'Yes. Since January 2016, Regulation 421.1.201 of BS 7671 (introduced by Amendment 3) requires that consumer units and similar switchgear in domestic premises have a non-combustible (metal) enclosure. This requirement was carried forward into BS 7671:2018 (18th Edition) and remains current in BS 7671:2018+A3:2024. Any replacement in Hull must use a metal consumer unit. If your electrician proposes fitting a plastic unit, do not proceed.',
+      'Yes. Since January 2016, Regulation 421.1.201 of BS 7671 (introduced by Amendment 3) requires that consumer units and similar switchgear in domestic premises have a non-combustible (metal) enclosure. This requirement was carried forward into BS 7671:2018 (18th Edition) and remains current in BS 7671:2018+A4:2026. Any replacement in Hull must use a metal consumer unit. If your electrician proposes fitting a plastic unit, do not proceed.',
   },
   {
     question: 'My Hull terrace still has rewireable fuses — what does this mean?',
@@ -152,7 +152,7 @@ const sections = [
                 <strong>RCDs</strong> — residual current devices detect earth fault current and
                 disconnect within milliseconds. Under Regulation 411.3.3 of{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                  BS 7671:2018+A3:2024
+                  BS 7671:2018+A4:2026
                 </SEOInternalLink>
                 , 30 mA RCD protection is required on all socket-outlet circuits rated up to 32 A.
               </span>
@@ -275,7 +275,7 @@ const sections = [
           Amendment 3 to BS 7671:2008, effective from 1 January 2016, added Regulation 421.1.201
           requiring that all consumer units and similar switchgear assemblies in domestic premises
           have an enclosure of non-combustible material. A metal enclosure is the standard compliant
-          solution. This requirement is unchanged in BS 7671:2018+A3:2024.
+          solution. This requirement is unchanged in BS 7671:2018+A4:2026.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">

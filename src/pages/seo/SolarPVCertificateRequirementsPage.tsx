@@ -66,7 +66,7 @@ const faqs = [
   {
     question: 'What must the EIC cover for a solar PV installation?',
     answer:
-      'The Electrical Installation Certificate for a solar PV system must cover all the electrical work associated with the installation. This includes the DC wiring from the solar panels to the inverter (string cables, DC isolator, MC4 connectors), the inverter itself, the AC wiring from the inverter to the consumer unit, the AC isolator, the dedicated MCB or RCBO in the consumer unit, the earthing arrangements (including any equipotential bonding of the mounting frame), and any generation meter. The EIC should be completed in accordance with BS 7671:2018+A3:2024 and should reference the relevant sections of the IET Code of Practice for Grid Connected Solar PV Systems.',
+      'The Electrical Installation Certificate for a solar PV system must cover all the electrical work associated with the installation. This includes the DC wiring from the solar panels to the inverter (string cables, DC isolator, MC4 connectors), the inverter itself, the AC wiring from the inverter to the consumer unit, the AC isolator, the dedicated MCB or RCBO in the consumer unit, the earthing arrangements (including any equipotential bonding of the mounting frame), and any generation meter. The EIC should be completed in accordance with BS 7671:2018+A4:2026 and should reference the relevant sections of the IET Code of Practice for Grid Connected Solar PV Systems.',
   },
   {
     question: 'What happens if solar PV certificates are not provided?',
@@ -209,8 +209,7 @@ const sections = [
     content: (
       <>
         <p>
-          Every solar PV installation requires an Electrical Installation Certificate (EIC) to BS
-          7671:2018+A3:2024. The EIC covers all the electrical work associated with the installation
+          Every solar PV installation requires an Electrical Installation Certificate (EIC) to BS 7671:2018+A4:2026. The EIC covers all the electrical work associated with the installation
           — both the DC side (panels, string cables, DC isolator) and the AC side (inverter output,
           AC isolator, consumer unit connection).
         </p>

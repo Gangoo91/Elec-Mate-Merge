@@ -74,7 +74,7 @@ const faqs = [
   {
     question: 'What qualifications should a Bournemouth electrician have?',
     answer:
-      'A qualified electrician should hold City & Guilds 2365 or 2357 (or NVQ Level 3 in Electrical Installation) as their core qualification, plus current BS 7671:2018+A3:2024 certification. For notifiable work under Part P, registration with a competent person scheme (NICEIC, NAPIT, ELECSA) is required. A gold ECS card confirms qualification level. Always verify the registration number online before work begins.',
+      'A qualified electrician should hold City & Guilds 2365 or 2357 (or NVQ Level 3 in Electrical Installation) as their core qualification, plus current BS 7671:2018+A4:2026 certification. For notifiable work under Part P, registration with a competent person scheme (NICEIC, NAPIT, ELECSA) is required. A gold ECS card confirms qualification level. Always verify the registration number online before work begins.',
   },
 ];
 

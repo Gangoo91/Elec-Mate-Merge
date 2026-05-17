@@ -434,7 +434,7 @@ const sections = [
               <span>
                 <strong>BS 7671 and Part P</strong> — all electrical work must comply with{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                  BS 7671:2018+A3:2024
+                  BS 7671:2018+A4:2026
                 </SEOInternalLink>
                 . The inverter connection to the consumer unit is notifiable under Building
                 Regulations Part P. Your MCS-certified installer should be registered with NICEIC,

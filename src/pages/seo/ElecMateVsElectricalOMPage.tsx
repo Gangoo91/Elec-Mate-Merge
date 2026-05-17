@@ -251,7 +251,7 @@ export default function ElecMateVsElectricalOMPage() {
         {
           question: 'Does Elec-Mate include training courses?',
           answer:
-            'Yes. Elec-Mate includes a full training platform with 18th Edition (BS 7671:2018+A3:2024), Level 2 and Level 3 Electrical Installation, AM2 preparation, and EPA simulator courses. Electrical OM does not include training content. For apprentices or electricians studying for qualifications, Elec-Mate provides training in the same app as your professional tools.',
+            'Yes. Elec-Mate includes a full training platform with 18th Edition (BS 7671:2018+A4:2026), Level 2 and Level 3 Electrical Installation, AM2 preparation, and EPA simulator courses. Electrical OM does not include training content. For apprentices or electricians studying for qualifications, Elec-Mate provides training in the same app as your professional tools.',
         },
         {
           question: 'How much does Elec-Mate cost compared to Electrical OM?',

@@ -389,7 +389,7 @@ export default function ElectricalBoardTypesPage() {
               </p>
               <SEOAppBridge
                 title="Design Consumer Units with AI Assistance"
-                description="Elec-Mate's AI circuit designer helps you specify the right consumer unit type, select appropriate RCBOs for each circuit, and generate a complete circuit schedule with cable sizes, protection devices, and Zs values — all compliant with BS 7671:2018+A3:2024."
+                description="Elec-Mate's AI circuit designer helps you specify the right consumer unit type, select appropriate RCBOs for each circuit, and generate a complete circuit schedule with cable sizes, protection devices, and Zs values — all compliant with BS 7671:2018+A4:2026."
                 icon={Brain}
               />
             </>
@@ -513,7 +513,7 @@ export default function ElectricalBoardTypesPage() {
               </div>
               <SEOAppBridge
                 title="Generate Circuit Schedules for Any Board Type"
-                description="Elec-Mate generates complete circuit schedules with cable sizes, protection devices, Zs values, and voltage drop for all consumer unit types. Export directly to your EIC or EICR certificate. All BS 7671:2018+A3:2024 compliant."
+                description="Elec-Mate generates complete circuit schedules with cable sizes, protection devices, Zs values, and voltage drop for all consumer unit types. Export directly to your EIC or EICR certificate. All BS 7671:2018+A4:2026 compliant."
                 icon={ClipboardCheck}
               />
             </>

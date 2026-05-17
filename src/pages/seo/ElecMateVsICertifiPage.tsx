@@ -346,8 +346,7 @@ export default function ElecMateVsICertifiPage() {
             <div className="space-y-4 text-white leading-relaxed">
               <p>
                 This is an area of significant difference between the two platforms. Elec-Mate
-                includes over 70 specialist electrical calculators that reference BS
-                7671:2018+A3:2024 tables directly. These cover cable sizing (Appendix 4 method),
+                includes over 70 specialist electrical calculators that reference BS 7671:2018+A4:2026 tables directly. These cover cable sizing (Appendix 4 method),
                 voltage drop verification, maximum demand calculations, diversity factors, conduit
                 and trunking fill rates, earth fault loop impedance (Zs) checks, prospective fault
                 current, disconnection time verification, cable derating for grouping and ambient
@@ -445,7 +444,7 @@ export default function ElecMateVsICertifiPage() {
               </p>
               <p>
                 Elec-Mate, by contrast, includes a full training platform with courses covering the
-                18th Edition (BS 7671:2018+A3:2024), City & Guilds Level 2 and Level 3 Electrical
+                18th Edition (BS 7671:2018+A4:2026), City & Guilds Level 2 and Level 3 Electrical
                 Installation, AM2 assessment preparation, and an End Point Assessment (EPA)
                 simulator. These courses are built into the app and accessible on any device.
               </p>
@@ -700,6 +699,21 @@ export default function ElecMateVsICertifiPage() {
       </section>
 
       {/* CTA */}
+      
+
+      {/* Related pages — auto-injected for internal-link health (audit criterion #7).
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/compare/elec-mate-vs-electrical-om">Elec-Mate vs Electrical OM</SEOInternalLink>
+            <SEOInternalLink href="/compare/elec-mate-vs-easy-eicr">Elec-Mate vs Easy EICR 2026</SEOInternalLink>
+            <SEOInternalLink href="/compare/elec-mate-vs-simply-eicr">Elec-Mate vs SimplyEICR</SEOInternalLink>
+          </div>
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Ready to compare for yourself?"
         subheading="Try Elec-Mate free for 7 days. All features included — certificates, calculators, AI tools, training, and business management. Cancel anytime."

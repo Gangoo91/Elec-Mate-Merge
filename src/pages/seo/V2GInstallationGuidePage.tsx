@@ -44,7 +44,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Vehicle to Grid (V2G) allows electric vehicles to export stored energy back to the home or grid via a bidirectional charger, turning the EV battery into a mobile energy storage asset.',
-  'Bidirectional chargers must comply with BS 7671:2018+A3:2024 including Regulation 825.1 (EEMS control of bi-directional energy flows), Regulation 826.5 (earthing and bonding for V2G operation), and Regulation 826.1.4 (protective devices for bidirectional current flows).',
+  'Bidirectional chargers must comply with BS 7671:2018+A4:2026 including Regulation 825.1 (EEMS control of bi-directional energy flows), Regulation 826.5 (earthing and bonding for V2G operation), and Regulation 826.1.4 (protective devices for bidirectional current flows).',
   'A G99 application to the DNO is required before connecting any V2G charger, as the system is capable of exporting power to the grid. G98 is not sufficient for bidirectional installations.',
   'Grid services revenue (frequency response, demand-side response, peak shaving) can earn EV owners between £300 and £800 per year, making V2G financially attractive alongside smart tariff arbitrage.',
   'The installation requires a dedicated circuit from the consumer unit, CT clamp monitoring, anti-islanding protection, and clear dual-supply labelling at the meter position and consumer unit.',
@@ -223,7 +223,7 @@ const sections = [
         <p>
           V2G installations must comply with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           including several regulations specifically relevant to bidirectional energy flows and
           energy management systems:

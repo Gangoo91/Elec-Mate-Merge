@@ -74,7 +74,7 @@ const faqs = [
   {
     question: 'What qualifications should an Ipswich electrician have?',
     answer:
-      'A qualified electrician should hold City & Guilds 2365 or 2357 (or NVQ Level 3 in Electrical Installation) as their core qualification, plus current BS 7671:2018+A3:2024 (18th Edition Wiring Regulations) certification. For notifiable work under Part P, they must be registered with a competent person scheme such as NICEIC, NAPIT, or ELECSA. Ask for their registration number and verify it online.',
+      'A qualified electrician should hold City & Guilds 2365 or 2357 (or NVQ Level 3 in Electrical Installation) as their core qualification, plus current BS 7671:2018+A4:2026 (18th Edition Wiring Regulations) certification. For notifiable work under Part P, they must be registered with a competent person scheme such as NICEIC, NAPIT, or ELECSA. Ask for their registration number and verify it online.',
   },
 ];
 

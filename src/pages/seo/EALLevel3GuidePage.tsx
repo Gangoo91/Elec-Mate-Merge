@@ -304,7 +304,7 @@ const sections = [
               <span>
                 <strong>Electrical installation technology:</strong> Advanced electrical theory
                 including three-phase systems, transformers, motors, power factor, and the
-                requirements of BS 7671:2018+A3:2024. Includes calculations for three-phase
+                requirements of BS 7671:2018+A4:2026. Includes calculations for three-phase
                 power and current.
               </span>
             </li>

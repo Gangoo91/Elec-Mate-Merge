@@ -651,6 +651,26 @@ export default function EmergencyLightingCertificatePage() {
       </section>
 
       {/* CTA */}
+      
+
+      {/* Related pages — auto-injected for internal-link health (audit criterion #7).
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/emergency-lighting-installation">Emergency Lighting Installation UK</SEOInternalLink>
+            <SEOInternalLink href="/guides/emergency-lighting-testing">Emergency Lighting Testing Guide UK</SEOInternalLink>
+            <SEOInternalLink href="/guides/bs-5266-emergency-lighting-standard">BS 5266 Emergency Lighting Standard</SEOInternalLink>
+            <SEOInternalLink href="/guides/emergency-lighting-installation-cost">Emergency Lighting Installation Cost 2026</SEOInternalLink>
+            <SEOInternalLink href="/tools/eicr-certificate">EICR Certificate Guide 2026</SEOInternalLink>
+            <SEOInternalLink href="/guides/led-lighting-guide">LED Lighting Guide</SEOInternalLink>
+            <SEOInternalLink href="/guides/napit-certificate-guide">NAPIT Certificate Guide</SEOInternalLink>
+            <SEOInternalLink href="/guides/christmas-lighting-safety">Christmas Lighting Safety</SEOInternalLink>
+          </div>
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Stop writing emergency lighting certificates by hand"
         subheading="Join 1,000+ UK electricians creating professional digital certificates. 7-day free trial, cancel anytime."

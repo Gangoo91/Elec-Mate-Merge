@@ -78,7 +78,7 @@ export default function AIToolsForElectriciansPage() {
               </p>
               <p>
                 Trade-specific AI tools are different. They are built on top of large language
-                models but augmented with specialist data — the full text of BS 7671:2018+A3:2024,
+                models but augmented with specialist data — the full text of BS 7671:2018+A4:2026,
                 IET Guidance Notes, real trade pricing databases, and installation scenario
                 libraries. This means the AI retrieves the exact regulation text or pricing data
                 before generating its response, rather than relying on what it memorised during
@@ -216,7 +216,7 @@ export default function AIToolsForElectriciansPage() {
                 and a properly worded observation for the certificate.
               </p>
               <p>
-                Elec-Mate's Defect Code AI is trained on BS 7671:2018+A3:2024 and thousands of
+                Elec-Mate's Defect Code AI is trained on BS 7671:2018+A4:2026 and thousands of
                 real-world EICR observations. It handles everything from simple non-compliances ("no
                 earth on lighting circuit" = C2, Reg 411.3.1.1) to nuanced situations ("original
                 wiring in good condition but no RCD protection" = C3, Reg 411.3.2 — because it was
@@ -312,7 +312,7 @@ export default function AIToolsForElectriciansPage() {
               </p>
               <SEOAppBridge
                 title="AI Circuit Designer — Full CU Schedules to BS 7671"
-                description="Describe the installation and the AI produces a complete consumer unit schedule with cable sizes, protective devices, diversity calculations, and RCD/SPD recommendations. All to BS 7671:2018+A3:2024."
+                description="Describe the installation and the AI produces a complete consumer unit schedule with cable sizes, protective devices, diversity calculations, and RCD/SPD recommendations. All to BS 7671:2018+A4:2026."
                 icon={CircuitBoard}
               />
             </>
@@ -439,7 +439,7 @@ export default function AIToolsForElectriciansPage() {
               <p>
                 Elec-Mate was built from the ground up as an AI-native platform for UK electricians.
                 Every AI feature — from the 5 specialist agents to the 12 AI-powered tools — is
-                trained on BS 7671:2018+A3:2024, uses real UK trade data, and integrates directly
+                trained on BS 7671:2018+A4:2026, uses real UK trade data, and integrates directly
                 with the certification, quoting, and documentation tools in the app.
               </p>
             </>
@@ -550,7 +550,7 @@ export default function AIToolsForElectriciansPage() {
         {
           question: 'How accurate is AI for BS 7671 regulation lookups?',
           answer:
-            "Accuracy depends entirely on how the AI tool is built. General-purpose AI models like ChatGPT have been trained on a broad dataset that includes some electrical regulation content, but they frequently confuse BS 7671 with NEC (the US National Electrical Code), cite regulation numbers that do not exist, or give answers based on older editions. Trade-specific AI tools built for electricians are far more accurate because they retrieve the exact regulation text from a current copy of BS 7671:2018+A3:2024 before generating a response. Elec-Mate's AI Regulations Lookup uses this approach, achieving high accuracy on regulation references. However, no AI tool should be used as the sole reference for compliance decisions — always verify critical regulation references against the published standard.",
+            "Accuracy depends entirely on how the AI tool is built. General-purpose AI models like ChatGPT have been trained on a broad dataset that includes some electrical regulation content, but they frequently confuse BS 7671 with NEC (the US National Electrical Code), cite regulation numbers that do not exist, or give answers based on older editions. Trade-specific AI tools built for electricians are far more accurate because they retrieve the exact regulation text from a current copy of BS 7671:2018+A4:2026 before generating a response. Elec-Mate's AI Regulations Lookup uses this approach, achieving high accuracy on regulation references. However, no AI tool should be used as the sole reference for compliance decisions — always verify critical regulation references against the published standard.",
         },
         {
           question: "What does Elec-Mate's AI actually include?",

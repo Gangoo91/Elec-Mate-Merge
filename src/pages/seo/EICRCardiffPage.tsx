@@ -42,7 +42,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A3:2024 (Regulation 712.534.101). It records the condition of wiring, consumer units, protective devices, earthing, and bonding with classified observation codes.",
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A4:2026 (Regulation 712.534.101). It records the condition of wiring, consumer units, protective devices, earthing, and bonding with classified observation codes.",
   'Cardiff EICR costs typically range from £100 to £400 depending on property size. A two-bedroom flat costs £130 to £220, while a three-bedroom house costs £180 to £300. Prices are close to the national average for England and Wales.',
   'Wales has its own landlord registration and licensing scheme through Rent Smart Wales. All landlords in Wales must be registered, and those who self-manage must also be licensed. While the Electrical Safety Standards Regulations 2020 apply to England only, Welsh landlords have obligations under the Renting Homes (Wales) Act 2016 and the Fitness for Human Habitation standard, which include electrical safety.',
   'Cardiff has a large stock of Victorian terraces, particularly in Cathays, Roath, and Splott, alongside student HMOs near Cardiff University and the University of South Wales. These properties frequently present aged wiring and earthing deficiencies.',
@@ -153,7 +153,7 @@ const sections = [
         <p>
           The EICR is documented in accordance with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           (Regulation 712.534.101), which requires that an Electrical Installation Condition Report
           is used for periodic inspection and testing of existing installations — not an Electrical

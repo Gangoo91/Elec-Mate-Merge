@@ -67,7 +67,7 @@ const faqs = [
   {
     question: 'Is the 18th Edition update course CPD?',
     answer:
-      'Yes, completing the 18th Edition update course (C&G 2382) counts as formal CPD. When amendments to BS 7671 are issued — such as Amendment 2 (2022) or Amendment 3 (2024) — attending the update course is one of the most valuable CPD activities you can do, because it directly affects your daily work. The course typically takes 1 to 3 days depending on the provider, and the resulting qualification is valid evidence of CPD. However, do not treat the 18th Edition course as your only CPD activity for the year — competent person schemes expect a broader range of learning activities across the full CPD period.',
+      'Yes, completing the 18th Edition update course (C&G 2382) counts as formal CPD. When amendments to BS 7671 are issued — such as Amendment 2 (2022) or Amendment 4 (2026) — attending the update course is one of the most valuable CPD activities you can do, because it directly affects your daily work. The course typically takes 1 to 3 days depending on the provider, and the resulting qualification is valid evidence of CPD. However, do not treat the 18th Edition course as your only CPD activity for the year — competent person schemes expect a broader range of learning activities across the full CPD period.',
   },
   {
     question: 'Can online courses count as CPD?',

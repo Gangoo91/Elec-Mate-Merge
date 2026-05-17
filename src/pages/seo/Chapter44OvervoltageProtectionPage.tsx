@@ -133,7 +133,7 @@ const sections = [
         <p>
           Chapter 44 of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           covers protection of electrical installations against overvoltage — specifically transient
           overvoltages of atmospheric origin (lightning) and switching overvoltages from the supply

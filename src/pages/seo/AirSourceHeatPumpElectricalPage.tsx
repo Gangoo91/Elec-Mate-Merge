@@ -481,7 +481,7 @@ const sections = [
         <p>
           The electrical installation for an air source heat pump must comply with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           and the manufacturer installation manual. Key regulations from the RAG intelligence
           include:

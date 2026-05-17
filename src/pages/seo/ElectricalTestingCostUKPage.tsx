@@ -546,7 +546,7 @@ const sections = [
                   <SEOInternalLink href="/guides/insulation-resistance-testing">
                     insulation resistance
                   </SEOInternalLink>
-                  , and dozens more. All built to BS 7671:2018+A3:2024.
+                  , and dozens more. All built to BS 7671:2018+A4:2026.
                 </p>
               </div>
             </div>

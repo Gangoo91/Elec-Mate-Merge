@@ -58,7 +58,7 @@ export default function AIComponentIdentificationPage() {
         'The component database covers MCBs, RCBOs, RCDs, contactors, relays, isolators, SPDs, timers, and hundreds of other devices from all major UK manufacturers.',
         'Compatible replacement suggestions include current-production equivalents when the original component is obsolete or discontinued.',
         'Trade pricing from UK wholesalers is shown alongside each replacement, so you can quote remedial work on the spot.',
-        'All identified components include BS 7671:2018+A3:2024 compliance information, including breaking capacity, disconnection characteristics, and applicable regulations.',
+        'All identified components include BS 7671:2018+A4:2026 compliance information, including breaking capacity, disconnection characteristics, and applicable regulations.',
       ]}
       sections={[
         {
@@ -368,7 +368,7 @@ export default function AIComponentIdentificationPage() {
           icon: ShieldCheck,
           title: 'BS 7671 Compliance Data',
           description:
-            'Every identified component includes BS 7671:2018+A3:2024 compliance information — applicable regulations, required characteristics, and any restrictions on use.',
+            'Every identified component includes BS 7671:2018+A4:2026 compliance information — applicable regulations, required characteristics, and any restrictions on use.',
         },
       ]}
       featuresHeading="Component Identifier Features"

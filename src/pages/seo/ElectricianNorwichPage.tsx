@@ -66,7 +66,7 @@ const faqs = [
   {
     question: 'What qualifications should a Norwich electrician have?',
     answer:
-      'A qualified electrician should hold City & Guilds 2365 or 2357 (or NVQ Level 3 in Electrical Installation) as their core qualification, plus current BS 7671:2018+A3:2024 (18th Edition Wiring Regulations) certification. For notifiable work under Part P of the Building Regulations, they must be registered with a competent person scheme such as NICEIC, NAPIT, or ELECSA. A gold ECS (Electrotechnical Certification Scheme) card confirms their qualification level. Ask for their registration number and verify it online before any work begins.',
+      'A qualified electrician should hold City & Guilds 2365 or 2357 (or NVQ Level 3 in Electrical Installation) as their core qualification, plus current BS 7671:2018+A4:2026 (18th Edition Wiring Regulations) certification. For notifiable work under Part P of the Building Regulations, they must be registered with a competent person scheme such as NICEIC, NAPIT, or ELECSA. A gold ECS (Electrotechnical Certification Scheme) card confirms their qualification level. Ask for their registration number and verify it online before any work begins.',
   },
   {
     question: 'How long does a full rewire take in a Norwich period property?',

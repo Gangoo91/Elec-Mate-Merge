@@ -44,7 +44,7 @@ const tocItems = [
 const keyTakeaways = [
   'Appendix 4 contains the current-carrying capacity tables for every cable type and installation method in BS 7671 — it is the core reference for all cable sizing calculations.',
   'Tables are numbered systematically: the letter indicates cable type (D for multicore thermoplastic, E for multicore thermosetting), and the column indicates the reference method (A, B, C, etc.).',
-  'Voltage drop values (mV/A/m) are now in Appendix 12 following Amendment 3 (A3:2024) — previously they were in Appendix 4. The values themselves are unchanged.',
+  'Voltage drop values (mV/A/m) are now in Appendix 12 following Amendment 3 (A4:2026) — previously they were in Appendix 4. The values themselves are unchanged.',
   'You must use the correct table for your cable type AND the correct column for your reference method — getting either wrong gives the wrong current-carrying capacity.',
   'Elec-Mate has every Appendix 4 table built into the cable sizing calculator. Select cable type and reference method, and the app looks up the correct value instantly — no more flicking through the brown book.',
 ];
@@ -53,7 +53,7 @@ const faqs = [
   {
     question: 'What does Appendix 4 of BS 7671 contain?',
     answer:
-      'Appendix 4 of BS 7671 contains the current-carrying capacity tables for all standard cable types used in UK electrical installations. These tables give the maximum current (in amperes) that a cable of a given size can carry continuously under specific reference conditions — a defined installation method, an ambient temperature of 30 degrees Celsius, no grouping with other circuits, and no thermal insulation. The tables cover thermoplastic (PVC) insulated cables, thermosetting (XLPE and LSF) insulated cables, mineral insulated (MICC) cables, and flexible cables, in sizes from 1mm squared up to 630mm squared or more. Appendix 4 also contains the correction factor tables (Table 4B1 for ambient temperature, Tables 4C1 to 4C5 for grouping) and, prior to Amendment 3, the voltage drop tables (mV/A/m values). After Amendment 3 (A3:2024), the voltage drop tables have been moved to Appendix 12, though the values remain the same.',
+      'Appendix 4 of BS 7671 contains the current-carrying capacity tables for all standard cable types used in UK electrical installations. These tables give the maximum current (in amperes) that a cable of a given size can carry continuously under specific reference conditions — a defined installation method, an ambient temperature of 30 degrees Celsius, no grouping with other circuits, and no thermal insulation. The tables cover thermoplastic (PVC) insulated cables, thermosetting (XLPE and LSF) insulated cables, mineral insulated (MICC) cables, and flexible cables, in sizes from 1mm squared up to 630mm squared or more. Appendix 4 also contains the correction factor tables (Table 4B1 for ambient temperature, Tables 4C1 to 4C5 for grouping) and, prior to Amendment 3, the voltage drop tables (mV/A/m values). After Amendment 3 (A4:2026), the voltage drop tables have been moved to Appendix 12, though the values remain the same.',
   },
   {
     question: 'How do I read the Appendix 4 current-carrying capacity tables?',
@@ -68,7 +68,7 @@ const faqs = [
   {
     question: 'What are mV/A/m voltage drop values and how do I use them?',
     answer:
-      'The mV/A/m (millivolts per ampere per metre) values are used to calculate the voltage drop across a cable run. The voltage drop formula is: VD = mV/A/m x Ib x L / 1000, where VD is the voltage drop in volts, Ib is the design current in amperes, and L is the cable length in metres. The mV/A/m values were previously in Appendix 4 of BS 7671 but have been moved to Appendix 12 following Amendment 3 (A3:2024). The values themselves have not changed. Each cable type and size has a specific mV/A/m value that depends on the conductor resistance and, for AC circuits, the conductor reactance. For single-phase circuits, you use the two-core or single-phase mV/A/m values. For three-phase circuits, the tables provide separate three-phase mV/A/m values that account for the different voltage relationship in a balanced three-phase system. BS 7671 limits voltage drop to 3 percent for lighting circuits and 5 percent for all other circuits, measured from the origin of the installation.',
+      'The mV/A/m (millivolts per ampere per metre) values are used to calculate the voltage drop across a cable run. The voltage drop formula is: VD = mV/A/m x Ib x L / 1000, where VD is the voltage drop in volts, Ib is the design current in amperes, and L is the cable length in metres. The mV/A/m values were previously in Appendix 4 of BS 7671 but have been moved to Appendix 12 following Amendment 3 (A4:2026). The values themselves have not changed. Each cable type and size has a specific mV/A/m value that depends on the conductor resistance and, for AC circuits, the conductor reactance. For single-phase circuits, you use the two-core or single-phase mV/A/m values. For three-phase circuits, the tables provide separate three-phase mV/A/m values that account for the different voltage relationship in a balanced three-phase system. BS 7671 limits voltage drop to 3 percent for lighting circuits and 5 percent for all other circuits, measured from the origin of the installation.',
   },
   {
     question: 'Where can I find the tables for SWA cable?',
@@ -76,14 +76,14 @@ const faqs = [
       'Steel wire armoured (SWA) cable current-carrying capacity tables are in the Appendix 4 series covering armoured cables. For multicore thermoplastic (PVC) armoured cable, use Table 4D4A (and associated columns). For multicore thermosetting (XLPE) armoured cable, use Table 4E4A. The SWA tables include columns for different installation methods, but the most commonly used methods for SWA are Method C (clipped direct to a surface), Method D (buried underground in a duct or directly buried), and Methods E/F (on a cable tray). SWA cable is the standard choice for underground runs to outbuildings, submain feeds, and external installations. When sizing SWA for underground use (Method D), remember to use the specific underground tables and apply the ground temperature and soil thermal resistivity corrections.',
   },
   {
-    question: 'Have the Appendix 4 tables changed in Amendment 3 (A3:2024)?',
+    question: 'Have the Appendix 4 tables changed in Amendment 3 (A4:2026)?',
     answer:
       'The main change in Amendment 3 affecting Appendix 4 is the relocation of the voltage drop tables. The mV/A/m (millivolts per ampere per metre) tables, which were previously located within Appendix 4, have been moved to a new Appendix 12. This is an organisational change — the voltage drop values themselves have not changed. The current-carrying capacity tables remain in Appendix 4 and their values are unchanged by Amendment 3. The reason for the relocation is to improve the structure of the standard and separate the current-carrying capacity data (which is about thermal performance) from the voltage drop data (which is about electrical performance). In practice, this means that when you are sizing cables, you still use Appendix 4 for current-carrying capacity and now use Appendix 12 for voltage drop — but the actual numbers you use are the same as before.',
   },
   {
     question: 'Does Elec-Mate include all the Appendix 4 tables?',
     answer:
-      'Yes. Elec-Mate includes every current-carrying capacity table from BS 7671 Appendix 4 and every voltage drop table from Appendix 12 (previously Appendix 4). When you use the cable sizing calculator, you select the cable type (twin and earth, singles in conduit, SWA, MICC, flexible, etc.) and the reference method (A through G), and the calculator automatically looks up the correct value from the appropriate table. It also applies all correction factors (Ca, Cg, Ci, Cf) and checks voltage drop against the BS 7671 limits. The entire Appendix 4 dataset is stored locally on your device, so the calculator works offline on site without any mobile signal. This is one of 70 electrical calculators included in Elec-Mate, all built to BS 7671:2018+A3:2024.',
+      'Yes. Elec-Mate includes every current-carrying capacity table from BS 7671 Appendix 4 and every voltage drop table from Appendix 12 (previously Appendix 4). When you use the cable sizing calculator, you select the cable type (twin and earth, singles in conduit, SWA, MICC, flexible, etc.) and the reference method (A through G), and the calculator automatically looks up the correct value from the appropriate table. It also applies all correction factors (Ca, Cg, Ci, Cf) and checks voltage drop against the BS 7671 limits. The entire Appendix 4 dataset is stored locally on your device, so the calculator works offline on site without any mobile signal. This is one of 70 electrical calculators included in Elec-Mate, all built to BS 7671:2018+A4:2026.',
   },
 ];
 
@@ -364,7 +364,7 @@ const sections = [
             <div>
               <h3 className="font-bold text-white mb-1">Amendment 3 change: Appendix 12</h3>
               <p className="text-white text-sm leading-relaxed">
-                Following Amendment 3 (A3:2024), the voltage drop tables have been moved from
+                Following Amendment 3 (A4:2026), the voltage drop tables have been moved from
                 Appendix 4 to a new Appendix 12. The values themselves have not changed — this is an
                 organisational restructure to separate current-carrying capacity data from voltage
                 drop data. If you are using BS 7671:2018+A2:2022 (the physical brown book), the
@@ -711,7 +711,7 @@ export default function AppendixFourTablesPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Every Appendix 4 table, always in your pocket"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for instant cable sizing with every BS 7671 table built in. 70+ calculators, 16 certificate types — all BS 7671:2018+A3:2024. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for instant cable sizing with every BS 7671 table built in. 70+ calculators, 16 certificate types — all BS 7671:2018+A4:2026. 7-day free trial, cancel anytime."
     />
   );
 }

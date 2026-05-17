@@ -200,7 +200,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
-                <strong>18th Edition (BS 7671:2018+A3:2024):</strong> The current Wiring Regulations
+                <strong>18th Edition (BS 7671:2018+A4:2026):</strong> The current Wiring Regulations
                 qualification required for all electrical work in the UK.
               </span>
             </li>
@@ -271,7 +271,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
-                <strong>C&G 2382 (18th Edition):</strong> Understanding of BS 7671:2018+A3:2024
+                <strong>C&G 2382 (18th Edition):</strong> Understanding of BS 7671:2018+A4:2026
                 Wiring Regulations — the foundation of all electrical work in the UK.
               </span>
             </li>

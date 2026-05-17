@@ -1,4 +1,6 @@
 import ToolTemplate from '@/pages/seo/templates/ToolTemplate';
+import { RecentReviews } from '@/components/seo/RecentReviews';
+import IPRatingCalculator from '@/components/apprentice/calculators/IPRatingCalculator';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import {
   Shield,
@@ -45,6 +47,7 @@ export default function IPRatingGuidePage() {
           for UK Electricians
         </>
       }
+              calculator={<IPRatingCalculator />}
       heroSubtitle="Understand every IP rating from IP00 to IP69K. This guide explains the first digit (solid object protection), the second digit (liquid protection), and what ratings like IP20, IP44, IP55, IP65, and IP68 mean in practice. Essential knowledge for selecting equipment to BS EN 60529."
       heroFeaturePills={[
         { icon: Shield, label: 'BS EN 60529' },

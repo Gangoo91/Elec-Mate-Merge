@@ -73,7 +73,7 @@ const faqs = [
   {
     question: 'Is the 2365 harder than the old 2330?',
     answer:
-      'The 2365 covers broadly the same content as the 2330 but is structured differently. The 2365 is aligned with the current apprenticeship standards and BS 7671:2018+A3:2024, so the content is more up to date. Some students find the 2365 more demanding because it includes more emphasis on design and inspection and testing at Level 3. The practical assessments are also more rigorous. However, if you engage with the material and put in the study time, the 2365 is very achievable. Pass rates are high for students who attend regularly and revise consistently.',
+      'The 2365 covers broadly the same content as the 2330 but is structured differently. The 2365 is aligned with the current apprenticeship standards and BS 7671:2018+A4:2026, so the content is more up to date. Some students find the 2365 more demanding because it includes more emphasis on design and inspection and testing at Level 3. The practical assessments are also more rigorous. However, if you engage with the material and put in the study time, the 2365 is very achievable. Pass rates are high for students who attend regularly and revise consistently.',
   },
   {
     question: 'Do I need the 2365 to become an electrician?',

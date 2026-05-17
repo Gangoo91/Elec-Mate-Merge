@@ -36,7 +36,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'MOD (Ministry of Defence) sites operate under strict security controls. All contractors must undergo security vetting as a minimum at BPSS (Baseline Personnel Security Standard) level. Many roles require SC (Security Check) clearance; the most sensitive sites and roles require DV (Developed Vetting).',
-  'Electrical installations on MOD sites must comply with Def Stan 61-12 (Design Requirements for Electrical Installations in Defence Establishments) in addition to BS 7671:2018+A3:2024. Def Stan 61-12 provides additional requirements for resilience, EMC, and specific military applications.',
+  'Electrical installations on MOD sites must comply with Def Stan 61-12 (Design Requirements for Electrical Installations in Defence Establishments) in addition to BS 7671:2018+A4:2026. Def Stan 61-12 provides additional requirements for resilience, EMC, and specific military applications.',
   'SQEP (Suitably Qualified and Experienced Person) is the MOD\'s framework for defining the competency required for various types of technical work on defence estates. Electricians working on MOD sites must be able to demonstrate they meet the SQEP criteria for their specific scope of work.',
   'Work on MOD estates is procured primarily through DIO (Defence Infrastructure Organisation) frameworks, pre-qualification questionnaires (PQQs), and through the major Tier 1 contractors who hold MOD estate maintenance and construction contracts.',
   'Pay rates for electrical work on MOD estates range from £45 to £80 per hour depending on the clearance level required, the nature of the work, and the site. AWE (Aldermaston and Burghfield) and other nuclear-adjacent MOD sites command rates comparable to nuclear sites.',

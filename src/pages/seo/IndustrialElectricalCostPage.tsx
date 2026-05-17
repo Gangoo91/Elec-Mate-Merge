@@ -69,7 +69,7 @@ const faqs = [
   {
     question: 'What electrical standards apply to industrial installations?',
     answer:
-      'Industrial electrical installations must comply with BS 7671:2018+A3:2024 (the IET Wiring Regulations). Additional standards apply by sector: BS EN 60204-1 (Safety of machinery — electrical equipment of machines) governs machine wiring; BS EN 61439 (Low-voltage switchgear and controlgear assemblies) covers MCCs and distribution boards; ATEX/UKCA Directive (2014/34/EU, retained as UK law) applies where flammable atmospheres exist; BS EN IEC 60079 series covers explosion-protected electrical apparatus. All new industrial installations require an Electrical Installation Certificate (EIC) under the Building Regulations.',
+      'Industrial electrical installations must comply with BS 7671:2018+A4:2026 (the IET Wiring Regulations). Additional standards apply by sector: BS EN 60204-1 (Safety of machinery — electrical equipment of machines) governs machine wiring; BS EN 61439 (Low-voltage switchgear and controlgear assemblies) covers MCCs and distribution boards; ATEX/UKCA Directive (2014/34/EU, retained as UK law) applies where flammable atmospheres exist; BS EN IEC 60079 series covers explosion-protected electrical apparatus. All new industrial installations require an Electrical Installation Certificate (EIC) under the Building Regulations.',
   },
   {
     question: 'How often does a factory or industrial unit need an EICR?',

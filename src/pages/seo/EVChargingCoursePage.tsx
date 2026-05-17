@@ -522,6 +522,7 @@ export default function EVChargingCoursePage() {
           <span className="text-yellow-400">IET Code of Practice</span>
         </>
       }
+              noindex={true}
       heroSubtitle="Master EV charger installation with comprehensive IET Code of Practice training. Charging modes 1-4, earthing and PME restrictions, load management, smart charging regulations, and BS 7671 compliance. 7 modules with video content, interactive quizzes, and AI-powered study tools."
       readingTime={14}
       courseDuration="10 hours"

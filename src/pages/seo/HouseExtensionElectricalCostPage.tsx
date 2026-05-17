@@ -155,7 +155,7 @@ const sections = [
                 <strong>Consumer unit upgrade (if required)</strong> — £400 to £700 extra. Often
                 needed when the existing board is full or does not meet current{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                  BS 7671:2018+A3:2024
+                  BS 7671:2018+A4:2026
                 </SEOInternalLink>{' '}
                 requirements.
               </span>
@@ -505,6 +505,7 @@ export default function HouseExtensionElectricalCostPage() {
           <span className="text-yellow-400">Extension Wiring Prices</span>
         </>
       }
+              noindex={true}
       heroSubtitle="Detailed breakdown of house extension electrical installation costs in the UK for 2025 — single-storey from £800, double-storey from £1,500, consumer unit upgrades, Part P compliance, and all the factors that affect your final price."
       readingTime={10}
       keyTakeaways={keyTakeaways}

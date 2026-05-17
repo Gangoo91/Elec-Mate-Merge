@@ -366,7 +366,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          Amendment 3 (A3:2024) added new requirements in Section 530 dealing with bidirectional and
+          Amendment 3 (A4:2026) added new requirements in Section 530 dealing with bidirectional and
           unidirectional devices, which has implications for SPD installations in properties with
           solar PV or battery storage where current can flow in both directions.
         </p>
@@ -655,6 +655,7 @@ export default function SPDGuidePage() {
           <span className="text-yellow-400">BS 7671 Requirements and Installation Guide</span>
         </>
       }
+              noindex={true}
       heroSubtitle="Surge Protective Devices are required in almost every new domestic installation under BS 7671. This guide covers Type 1, 2, and 3 SPDs, the Regulation 443.4 risk assessment, installation methods, coordination, and the common mistakes that catch electricians out."
       readingTime={10}
       keyTakeaways={keyTakeaways}

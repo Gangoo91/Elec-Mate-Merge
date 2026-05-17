@@ -1,4 +1,6 @@
 import { Helmet } from 'react-helmet';
+import { RecentReviews } from '@/components/seo/RecentReviews';
+import PowerFactorCalculator from '@/components/apprentice/calculators/PowerFactorCalculator';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
@@ -110,9 +112,9 @@ const features = [
   },
   {
     icon: BookOpen,
-    title: 'BS 7671:2018+A3:2024 Compliant',
+    title: 'BS 7671:2018+A4:2026 Compliant',
     description:
-      'All calculations align with BS 7671:2018+A3:2024 and the IET Code of Practice for energy efficiency. Part of 70 electrical calculators built for UK electricians.',
+      'All calculations align with BS 7671:2018+A4:2026 and the IET Code of Practice for energy efficiency. Part of 70 electrical calculators built for UK electricians.',
   },
 ];
 
@@ -122,20 +124,14 @@ const softwareAppSchema = {
   applicationCategory: 'UtilitiesApplication',
   operatingSystem: 'Web, iOS, Android',
   description:
-    'Calculate power factor, convert between kW kVA and kVAr, size capacitor banks for PF correction. Built for UK electricians to BS 7671:2018+A3:2024.',
+    'Calculate power factor, convert between kW kVA and kVAr, size capacitor banks for PF correction. Built for UK electricians to BS 7671:2018+A4:2026.',
   url: 'https://elec-mate.com/tools/power-factor-calculator',
   offers: {
     '@type': 'Offer',
     price: '0',
     priceCurrency: 'GBP',
     description: '7-day free trial, then from £12.99/month',
-  },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.8',
-    ratingCount: '1000',
-    bestRating: '5',
-  },
+  }
 };
 
 const faqSchema = {
@@ -217,6 +213,13 @@ export default function PowerFactorCalculatorPage() {
               <ArrowDown className="w-4 h-4 ml-1" />
             </a>
           </div>
+        </div>
+      </section>
+
+      {/* Live calculator — free, no signup, BS 7671:2018+A4:2026 compliant */}
+      <section id="calculator" className="px-5 pb-12 scroll-mt-24">
+        <div className="max-w-4xl mx-auto">
+          <PowerFactorCalculator />
         </div>
       </section>
 
@@ -667,6 +670,13 @@ export default function PowerFactorCalculatorPage() {
       </section>
 
       {/* CTA */}
+            {/* Verified App Store reviews — policy-safe SoftwareApplication aggregateRating */}
+      <section className="px-5 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <RecentReviews />
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Calculate Power Factor in Seconds"
         subheading="Join 1,000+ UK electricians using Elec-Mate for on-site calculations. 7-day free trial, cancel anytime."

@@ -597,6 +597,26 @@ export default function ElectricianInvoiceAppPage() {
       </section>
 
       {/* CTA */}
+      
+
+      {/* Related pages — auto-injected for internal-link health (audit criterion #7).
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/guides/electrician-cv-guide">Electrician CV Guide 2026</SEOInternalLink>
+            <SEOInternalLink href="/cis-guide-electrician">Construction Industry Scheme (CIS) Guide for Electricians UK</SEOInternalLink>
+            <SEOInternalLink href="/tools/cv-builder-electrician">CV Builder for Electricians</SEOInternalLink>
+            <SEOInternalLink href="/guides/commercial-electrician-guide">Commercial Electrician Guide</SEOInternalLink>
+            <SEOInternalLink href="/guides/domestic-electrician-guide">Domestic Electrician Guide UK 2026</SEOInternalLink>
+            <SEOInternalLink href="/compare/electrician-app-android">Best Electrician App for Android 2026</SEOInternalLink>
+            <SEOInternalLink href="/tools/electrician-app-iphone">Best Electrician App for iPhone 2026</SEOInternalLink>
+            <SEOInternalLink href="/guides/electrician-bath">Electrician in Bath</SEOInternalLink>
+          </div>
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Get Paid Faster, Chase Less"
         subheading="Join 1,000+ UK electricians using Elec-Mate for professional invoicing and payments. 7-day free trial, cancel anytime."

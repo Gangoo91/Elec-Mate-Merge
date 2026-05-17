@@ -154,7 +154,7 @@ const sections = [
           be at full capacity at the same moment.
         </p>
         <p>
-          BS 7671:2018+A3:2024 requires the designer of an electrical installation to assess the
+          BS 7671:2018+A4:2026 requires the designer of an electrical installation to assess the
           maximum demand as part of the general characteristics assessment under Part 3,
           specifically Regulation 311.1 and the guidance in Appendix A. This assessment directly
           affects the sizing of the incoming supply cable, the main protective device, the

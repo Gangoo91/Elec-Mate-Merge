@@ -152,7 +152,7 @@ const sections = [
           The IET Code of Practice for Electric Vehicle Charging Equipment Installation is a
           technical guidance document that supplements{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           with specific requirements for the design, installation, verification, and maintenance of
           EV charging equipment. The current edition is the 5th Edition, published in 2023.

@@ -1277,6 +1277,119 @@ const SaunaElectricalInstallationPage = lazy(
 );
 const SchoolElectricalCostPage = lazy(() => import('@/pages/seo/SchoolElectricalCostPage'));
 const Section701BathroomsGuidePage = lazy(() => import('@/pages/seo/Section701BathroomsGuidePage'));
+const BS7671Section710MedicalLocationsPage = lazy(
+  () => import('@/pages/seo/BS7671Section710MedicalLocationsPage')
+);
+const BS7671Section714OutdoorLightingPage = lazy(
+  () => import('@/pages/seo/BS7671Section714OutdoorLightingPage')
+);
+const EICRCodeC1Page = lazy(() => import('@/pages/seo/EICRCodeC1Page'));
+const EICRCodeC2Page = lazy(() => import('@/pages/seo/EICRCodeC2Page'));
+const EICRCodeC3Page = lazy(() => import('@/pages/seo/EICRCodeC3Page'));
+const EICRCodeFIPage = lazy(() => import('@/pages/seo/EICRCodeFIPage'));
+const A4LuminaireRCDProtectionPage = lazy(() => import('@/pages/seo/A4LuminaireRCDProtectionPage'));
+const A4AFDDChangesPage = lazy(() => import('@/pages/seo/A4AFDDChangesPage'));
+const A4ScheduleOfTestsPage = lazy(() => import('@/pages/seo/A4ScheduleOfTestsPage'));
+const A4TnCsPnbEarthingPage = lazy(() => import('@/pages/seo/A4TnCsPnbEarthingPage'));
+const A4OverviewHubPage = lazy(() => import('@/pages/seo/A4OverviewHubPage'));
+const A4EICModelFormPage = lazy(() => import('@/pages/seo/A4EICModelFormPage'));
+const A4MEIWCModelFormPage = lazy(() => import('@/pages/seo/A4MEIWCModelFormPage'));
+const CableSizeForEVChargerPage = lazy(() => import('@/pages/seo/CableSizeForEVChargerPage'));
+const EICRNoMainBondingPage = lazy(() => import('@/pages/seo/EICRNoMainBondingPage'));
+const EICRPlasticConsumerUnitHMOPage = lazy(() => import('@/pages/seo/EICRPlasticConsumerUnitHMOPage'));
+const CableSizeForElectricShowerPage = lazy(() => import('@/pages/seo/CableSizeForElectricShowerPage'));
+const CableSizeForCookerCircuitPage = lazy(() => import('@/pages/seo/CableSizeForCookerCircuitPage'));
+const ProsumerLVInstallationPage = lazy(() => import('@/pages/seo/ProsumerLVInstallationPage'));
+const ElectricalRamsTemplatePage = lazy(() => import('@/pages/seo/ElectricalRamsTemplatePage'));
+const RAMSForEICRInspectionPage = lazy(() => import('@/pages/seo/RAMSForEICRInspectionPage'));
+const RAMSForConsumerUnitReplacementPage = lazy(
+  () => import('@/pages/seo/RAMSForConsumerUnitReplacementPage')
+);
+const RAMSForEVChargerInstallationPage = lazy(
+  () => import('@/pages/seo/RAMSForEVChargerInstallationPage')
+);
+const RAMSForFullRewirePage = lazy(() => import('@/pages/seo/RAMSForFullRewirePage'));
+const RAMSForSolarPVInstallationPage = lazy(
+  () => import('@/pages/seo/RAMSForSolarPVInstallationPage')
+);
+const HowToWriteElectricalMethodStatementPage = lazy(
+  () => import('@/pages/seo/HowToWriteElectricalMethodStatementPage')
+);
+const ElectricalMethodStatementTemplatePage = lazy(
+  () => import('@/pages/seo/ElectricalMethodStatementTemplatePage')
+);
+const MethodStatementSafeIsolationPage = lazy(
+  () => import('@/pages/seo/MethodStatementSafeIsolationPage')
+);
+const MethodStatementLiveWorkingPage = lazy(
+  () => import('@/pages/seo/MethodStatementLiveWorkingPage')
+);
+const MethodStatementFaultFindingPage = lazy(
+  () => import('@/pages/seo/MethodStatementFaultFindingPage')
+);
+const CDM2015ForElectriciansPage = lazy(() => import('@/pages/seo/CDM2015ForElectriciansPage'));
+const PermitToWorkElectricalIsolationPage = lazy(
+  () => import('@/pages/seo/PermitToWorkElectricalIsolationPage')
+);
+const LockoutTagoutForElectriciansPage = lazy(
+  () => import('@/pages/seo/LockoutTagoutForElectriciansPage')
+);
+const SiteInductionElectricalContractorsPage = lazy(
+  () => import('@/pages/seo/SiteInductionElectricalContractorsPage')
+);
+const NearMissReportingElectriciansPage = lazy(
+  () => import('@/pages/seo/NearMissReportingElectriciansPage')
+);
+const WorkingNearLiveMainsPage = lazy(() => import('@/pages/seo/WorkingNearLiveMainsPage'));
+const LoneWorkingElectriciansPage = lazy(() => import('@/pages/seo/LoneWorkingElectriciansPage'));
+const ConfinedSpaceElectricalWorkPage = lazy(
+  () => import('@/pages/seo/ConfinedSpaceElectricalWorkPage')
+);
+const WorkingAtHeightElectriciansPage = lazy(
+  () => import('@/pages/seo/WorkingAtHeightElectriciansPage')
+);
+const AFDDMandatoryHMOCareHomeA4Page = lazy(
+  () => import('@/pages/seo/AFDDMandatoryHMOCareHomeA4Page')
+);
+const Section722EVChargingA4Page = lazy(() => import('@/pages/seo/Section722EVChargingA4Page'));
+const SPDChapter443A4Page = lazy(() => import('@/pages/seo/SPDChapter443A4Page'));
+const TNCBannedNewInstallsA4Page = lazy(() => import('@/pages/seo/TNCBannedNewInstallsA4Page'));
+const CableReactionToFireCcaA4Page = lazy(
+  () => import('@/pages/seo/CableReactionToFireCcaA4Page')
+);
+const Section712ProsumerA4Page = lazy(() => import('@/pages/seo/Section712ProsumerA4Page'));
+const Section715ELVLightingA4Page = lazy(() => import('@/pages/seo/Section715ELVLightingA4Page'));
+const ReducedLowVoltage110vCTEPage = lazy(() => import('@/pages/seo/ReducedLowVoltage110vCTEPage'));
+const PoEPlusPlusType4Page = lazy(() => import('@/pages/seo/PoEPlusPlusType4Page'));
+const Cat6Cat6aCurrentRatingPoEPage = lazy(
+  () => import('@/pages/seo/Cat6Cat6aCurrentRatingPoEPage')
+);
+const IPCameraPoEInstallationPage = lazy(() => import('@/pages/seo/IPCameraPoEInstallationPage'));
+const StructuredCablingBSEN50173Page = lazy(
+  () => import('@/pages/seo/StructuredCablingBSEN50173Page')
+);
+const BSEN50174DataCableInstallPage = lazy(
+  () => import('@/pages/seo/BSEN50174DataCableInstallPage')
+);
+const PoELightingVsTraditionalLEDPage = lazy(
+  () => import('@/pages/seo/PoELightingVsTraditionalLEDPage')
+);
+const DALILightingControlWiringPage = lazy(
+  () => import('@/pages/seo/DALILightingControlWiringPage')
+);
+const KNXWiringInstallationPage = lazy(() => import('@/pages/seo/KNXWiringInstallationPage'));
+const V2HBidirectionalEVChargingPage = lazy(
+  () => import('@/pages/seo/V2HBidirectionalEVChargingPage')
+);
+const LVDCMicrogridDistributionPage = lazy(
+  () => import('@/pages/seo/LVDCMicrogridDistributionPage')
+);
+const SmartDistributionBoardIoTPage = lazy(
+  () => import('@/pages/seo/SmartDistributionBoardIoTPage')
+);
+const Section537IsolationSwitchingA4Page = lazy(
+  () => import('@/pages/seo/Section537IsolationSwitchingA4Page')
+);
 const Section722EVChargingGuidePage = lazy(
   () => import('@/pages/seo/Section722EVChargingGuidePage')
 );
@@ -8148,6 +8261,158 @@ export function getSEORoutes() {
         }
       />
       <Route
+        path="/guides/bs-7671-section-710-medical-locations"
+        element={
+          <LazyRoute>
+            <BS7671Section710MedicalLocationsPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/bs-7671-section-714-outdoor-lighting"
+        element={
+          <LazyRoute>
+            <BS7671Section714OutdoorLightingPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-code-c1-danger-present"
+        element={
+          <LazyRoute>
+            <EICRCodeC1Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-code-c2-potentially-dangerous"
+        element={
+          <LazyRoute>
+            <EICRCodeC2Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-code-c3-improvement-recommended"
+        element={
+          <LazyRoute>
+            <EICRCodeC3Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-code-fi-further-investigation"
+        element={
+          <LazyRoute>
+            <EICRCodeFIPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/bs-7671-a4-2026-luminaire-rcd-protection"
+        element={
+          <LazyRoute>
+            <A4LuminaireRCDProtectionPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/bs-7671-a4-2026-afdd-changes"
+        element={
+          <LazyRoute>
+            <A4AFDDChangesPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/bs-7671-a4-2026-schedule-of-tests"
+        element={
+          <LazyRoute>
+            <A4ScheduleOfTestsPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/bs-7671-a4-2026-tn-cs-pnb-earthing"
+        element={
+          <LazyRoute>
+            <A4TnCsPnbEarthingPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/bs-7671-a4-2026-summary"
+        element={
+          <LazyRoute>
+            <A4OverviewHubPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/bs-7671-a4-2026-eic-model-form"
+        element={
+          <LazyRoute>
+            <A4EICModelFormPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/bs-7671-a4-2026-meiwc-model-form"
+        element={
+          <LazyRoute>
+            <A4MEIWCModelFormPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/cable-size-for-ev-charger"
+        element={
+          <LazyRoute>
+            <CableSizeForEVChargerPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-no-main-protective-bonding"
+        element={
+          <LazyRoute>
+            <EICRNoMainBondingPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-plastic-consumer-unit-hmo"
+        element={
+          <LazyRoute>
+            <EICRPlasticConsumerUnitHMOPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/cable-size-for-electric-shower"
+        element={
+          <LazyRoute>
+            <CableSizeForElectricShowerPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/cable-size-for-cooker-circuit"
+        element={
+          <LazyRoute>
+            <CableSizeForCookerCircuitPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/prosumer-low-voltage-electrical-installation"
+        element={
+          <LazyRoute>
+            <ProsumerLVInstallationPage />
+          </LazyRoute>
+        }
+      />
+      <Route
         path="/guides/section-722-ev-charging-complete-guide"
         element={
           <LazyRoute>
@@ -10432,6 +10697,326 @@ export function getSEORoutes() {
         element={
           <LazyRoute>
             <WiringRegulationsBuildingRegulationsPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrical-rams-template-uk"
+        element={
+          <LazyRoute>
+            <ElectricalRamsTemplatePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/rams-for-eicr-inspection"
+        element={
+          <LazyRoute>
+            <RAMSForEICRInspectionPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/rams-for-consumer-unit-replacement"
+        element={
+          <LazyRoute>
+            <RAMSForConsumerUnitReplacementPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/rams-for-ev-charger-installation"
+        element={
+          <LazyRoute>
+            <RAMSForEVChargerInstallationPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/rams-for-full-rewire"
+        element={
+          <LazyRoute>
+            <RAMSForFullRewirePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/rams-for-solar-pv-installation"
+        element={
+          <LazyRoute>
+            <RAMSForSolarPVInstallationPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/how-to-write-electrical-method-statement"
+        element={
+          <LazyRoute>
+            <HowToWriteElectricalMethodStatementPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrical-method-statement-template"
+        element={
+          <LazyRoute>
+            <ElectricalMethodStatementTemplatePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/method-statement-safe-isolation"
+        element={
+          <LazyRoute>
+            <MethodStatementSafeIsolationPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/method-statement-live-working"
+        element={
+          <LazyRoute>
+            <MethodStatementLiveWorkingPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/method-statement-fault-finding"
+        element={
+          <LazyRoute>
+            <MethodStatementFaultFindingPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/cdm-2015-for-electricians"
+        element={
+          <LazyRoute>
+            <CDM2015ForElectriciansPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/permit-to-work-electrical-isolation"
+        element={
+          <LazyRoute>
+            <PermitToWorkElectricalIsolationPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/lockout-tagout-loto-electricians"
+        element={
+          <LazyRoute>
+            <LockoutTagoutForElectriciansPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/site-induction-electrical-contractors"
+        element={
+          <LazyRoute>
+            <SiteInductionElectricalContractorsPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/near-miss-reporting-electricians"
+        element={
+          <LazyRoute>
+            <NearMissReportingElectriciansPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/working-near-live-mains-hazard-control"
+        element={
+          <LazyRoute>
+            <WorkingNearLiveMainsPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/lone-working-electricians"
+        element={
+          <LazyRoute>
+            <LoneWorkingElectriciansPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/confined-space-electrical-work"
+        element={
+          <LazyRoute>
+            <ConfinedSpaceElectricalWorkPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/working-at-height-electricians"
+        element={
+          <LazyRoute>
+            <WorkingAtHeightElectriciansPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/afdd-mandatory-hmo-care-home-a4-2026"
+        element={
+          <LazyRoute>
+            <AFDDMandatoryHMOCareHomeA4Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/section-722-ev-charging-a4-2026-changes"
+        element={
+          <LazyRoute>
+            <Section722EVChargingA4Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/spd-chapter-443-a4-2026"
+        element={
+          <LazyRoute>
+            <SPDChapter443A4Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/tn-c-banned-new-installations-a4-2026"
+        element={
+          <LazyRoute>
+            <TNCBannedNewInstallsA4Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/cable-reaction-to-fire-cca-a4-2026"
+        element={
+          <LazyRoute>
+            <CableReactionToFireCcaA4Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/section-712-prosumer-a4-2026"
+        element={
+          <LazyRoute>
+            <Section712ProsumerA4Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/section-715-elv-lighting-a4-2026"
+        element={
+          <LazyRoute>
+            <Section715ELVLightingA4Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/reduced-low-voltage-110v-cte-site-supplies"
+        element={
+          <LazyRoute>
+            <ReducedLowVoltage110vCTEPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/poe-plus-plus-type-4-90w-installation"
+        element={
+          <LazyRoute>
+            <PoEPlusPlusType4Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/cat6-cat6a-current-rating-poe"
+        element={
+          <LazyRoute>
+            <Cat6Cat6aCurrentRatingPoEPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/ip-camera-poe-installation-uk"
+        element={
+          <LazyRoute>
+            <IPCameraPoEInstallationPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/structured-cabling-bs-en-50173-electricians"
+        element={
+          <LazyRoute>
+            <StructuredCablingBSEN50173Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/bs-en-50174-data-cable-installation"
+        element={
+          <LazyRoute>
+            <BSEN50174DataCableInstallPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/poe-lighting-vs-traditional-led-wiring"
+        element={
+          <LazyRoute>
+            <PoELightingVsTraditionalLEDPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/dali-lighting-control-wiring-bs-en-62386"
+        element={
+          <LazyRoute>
+            <DALILightingControlWiringPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/knx-wiring-installation-guide-uk"
+        element={
+          <LazyRoute>
+            <KNXWiringInstallationPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/v2h-bidirectional-ev-charging"
+        element={
+          <LazyRoute>
+            <V2HBidirectionalEVChargingPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/lvdc-dc-microgrid-distribution"
+        element={
+          <LazyRoute>
+            <LVDCMicrogridDistributionPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/smart-distribution-board-iot-consumer-unit"
+        element={
+          <LazyRoute>
+            <SmartDistributionBoardIoTPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/section-537-isolation-switching-a4-2026"
+        element={
+          <LazyRoute>
+            <Section537IsolationSwitchingA4Page />
           </LazyRoute>
         }
       />

@@ -1,0 +1,728 @@
+{
+  "generatedAt": "2026-05-17T18:39:39.283Z",
+  "totalRoutedPages": 1074,
+  "topicCoverage": [
+    {
+      "id": "property-types",
+      "label": "Specific property types",
+      "commercialValue": "med",
+      "pageCount": 77,
+      "samples": [
+        "/airbnb-electrical-safety",
+        "/guides/annex-electrical-installation",
+        "/guides/barn-conversion-electrics",
+        "/basement-conversion-electrical",
+        "/guides/bathroom-electrical-cost"
+      ]
+    },
+    {
+      "id": "eicr",
+      "label": "EICR",
+      "commercialValue": "high",
+      "pageCount": 69,
+      "samples": [
+        "/guides/best-eicr-software-uk",
+        "/guides/commercial-eicr-guide",
+        "/eicr-aberdeen",
+        "/guides/eicr-bath",
+        "/guides/eicr-belfast"
+      ]
+    },
+    {
+      "id": "location-pages",
+      "label": "Location-specific pages",
+      "commercialValue": "med",
+      "pageCount": 50,
+      "samples": [
+        "/consumer-unit-replacement-cardiff",
+        "/guides/consumer-unit-replacement-edinburgh",
+        "/consumer-unit-replacement-liverpool",
+        "/consumer-unit-replacement-newcastle",
+        "/eicr-aberdeen"
+      ]
+    },
+    {
+      "id": "specialist-installs",
+      "label": "Specialist installations",
+      "commercialValue": "med",
+      "pageCount": 46,
+      "samples": [
+        "/access-control-installation",
+        "/bms-course",
+        "/guides/bs-5266-emergency-lighting-standard",
+        "/building-management-system",
+        "/guides/building-management-systems-bms-electrical"
+      ]
+    },
+    {
+      "id": "health-safety",
+      "label": "Health & safety / compliance",
+      "commercialValue": "med",
+      "pageCount": 38,
+      "samples": [
+        "/ai-health-safety-agent",
+        "/tools/ai-method-statement-generator",
+        "/guides/apprentice-mental-health",
+        "/guides/arc-flash-protection",
+        "/training/asbestos-awareness"
+      ]
+    },
+    {
+      "id": "apprentice-general",
+      "label": "Apprentice general",
+      "commercialValue": "med",
+      "pageCount": 35,
+      "samples": [
+        "/guides/ai-for-electrical-apprentices",
+        "/guides/apprentice-assessment-guide",
+        "/apprentice-endpoint-assessment",
+        "/apprentice-first-year-revision",
+        "/guides/apprentice-flashcards-tool"
+      ]
+    },
+    {
+      "id": "rewire-cost",
+      "label": "Rewire costs",
+      "commercialValue": "high",
+      "pageCount": 32,
+      "samples": [
+        "/guides/bungalow-rewire-cost",
+        "/guides/commercial-rewire-cost",
+        "/edwardian-house-electrical",
+        "/guides/flat-rewire-cost",
+        "/guides/full-rewire-cost-guide"
+      ]
+    },
+    {
+      "id": "consumer-unit",
+      "label": "Consumer unit",
+      "commercialValue": "high",
+      "pageCount": 32,
+      "samples": [
+        "/guides/consumer-unit-change",
+        "/consumer-unit-regulations",
+        "/guides/consumer-unit-replacement-birmingham",
+        "/consumer-unit-replacement-brighton",
+        "/guides/consumer-unit-replacement-bristol"
+      ]
+    },
+    {
+      "id": "fault-finding",
+      "label": "Fault finding / diagnostics",
+      "commercialValue": "med",
+      "pageCount": 32,
+      "samples": [
+        "/guides/ai-electrical-fault-finding",
+        "/tools/ai-fault-diagnosis",
+        "/guides/borrowed-neutral-explained",
+        "/guides/burning-smell-from-socket",
+        "/guides/earthing-fault-diagnosis"
+      ]
+    },
+    {
+      "id": "business-admin",
+      "label": "Business admin (invoicing, quotes)",
+      "commercialValue": "high",
+      "pageCount": 32,
+      "samples": [
+        "/bs7671-observation-codes",
+        "/compare/best-invoice-app-electricians",
+        "/compare/best-quoting-app-electricians",
+        "/tools/business-analytics-electrician",
+        "/tools/business-cost-calculator"
+      ]
+    },
+    {
+      "id": "ev-charger",
+      "label": "EV charger",
+      "commercialValue": "high",
+      "pageCount": 31,
+      "samples": [
+        "/ev-charger-brand-comparison",
+        "/ev-charger-certificate",
+        "/guides/ev-charger-certificate-requirements",
+        "/guides/ev-charger-error-codes",
+        "/ev-charger-grants"
+      ]
+    },
+    {
+      "id": "ai-agents",
+      "label": "AI agents / tools (Elec-Mate)",
+      "commercialValue": "med",
+      "pageCount": 27,
+      "samples": [
+        "/ai-circuit-designer",
+        "/tools/ai-client-explainer",
+        "/tools/ai-commissioning-specialist",
+        "/tools/ai-component-identification",
+        "/ai-cost-engineer"
+      ]
+    },
+    {
+      "id": "career-salary",
+      "label": "Careers / salary",
+      "commercialValue": "med",
+      "pageCount": 27,
+      "samples": [
+        "/apprentice-first-year-revision",
+        "/guides/apprentice-electrician-salary",
+        "/guides/apprentice-electrician-salary-uk",
+        "/guides/become-electrician-no-experience",
+        "/guides/dividend-vs-salary-electrician"
+      ]
+    },
+    {
+      "id": "chapter-4-protection",
+      "label": "BS 7671 Part 4 Protection",
+      "commercialValue": "high",
+      "pageCount": 21,
+      "samples": [
+        "/guides/afdd-arc-fault-detection",
+        "/guides/chapter-44-overvoltage-protection",
+        "/guides/mcb-vs-rcbo",
+        "/rcbo-installation-guide",
+        "/guides/rcbo-keeps-tripping-causes-and-fixes"
+      ]
+    },
+    {
+      "id": "solar-pv",
+      "label": "Solar PV",
+      "commercialValue": "high",
+      "pageCount": 21,
+      "samples": [
+        "/solar-pv-certificate",
+        "/guides/solar-pv-certificate-requirements",
+        "/solar-pv-grants",
+        "/solar-pv-maintenance",
+        "/solar-pv-system-design"
+      ]
+    },
+    {
+      "id": "business-calcs",
+      "label": "Business calculators (rates, costs)",
+      "commercialValue": "high",
+      "pageCount": 17,
+      "samples": [
+        "/bs7671-observation-codes",
+        "/tools/break-even-calculator",
+        "/tools/business-cost-calculator",
+        "/guides/cash-flow-management-electricians",
+        "/cash-flow-planner"
+      ]
+    },
+    {
+      "id": "inspection-testing",
+      "label": "Inspection & testing",
+      "commercialValue": "high",
+      "pageCount": 16,
+      "samples": [
+        "/continuity-testing-guide",
+        "/guides/continuity-testing-electricians-guide",
+        "/guides/continuity-testing-r1-r2",
+        "/guides/earth-electrode-testing",
+        "/earth-electrode-testing"
+      ]
+    },
+    {
+      "id": "part-7-special",
+      "label": "BS 7671 Part 7 Special Locations",
+      "commercialValue": "high",
+      "pageCount": 15,
+      "samples": [
+        "/agricultural-electrical-installation",
+        "/guides/agricultural-electrical-installations",
+        "/guides/bs-7671-section-710-medical-locations",
+        "/guides/bs-7671-section-714-outdoor-lighting",
+        "/guides/bathroom-electrical-zones-bs7671"
+      ]
+    },
+    {
+      "id": "cert-other",
+      "label": "Other certificates",
+      "commercialValue": "med",
+      "pageCount": 12,
+      "samples": [
+        "/ev-charger-certificate",
+        "/guides/ev-charger-certificate-requirements",
+        "/guides/emergency-lighting-certificate-guide",
+        "/emergency-lighting-certificate",
+        "/fire-alarm-certificate"
+      ]
+    },
+    {
+      "id": "software-comparison",
+      "label": "Software comparisons",
+      "commercialValue": "high",
+      "pageCount": 11,
+      "samples": [
+        "/compare/best-ai-tool-electricians",
+        "/compare/best-apprentice-app",
+        "/compare/best-cable-sizing-app",
+        "/guides/best-eicr-software-uk",
+        "/compare/best-invoice-app-electricians"
+      ]
+    },
+    {
+      "id": "level2-3-2365",
+      "label": "Level 2/3 / 2365",
+      "commercialValue": "med",
+      "pageCount": 9,
+      "samples": [
+        "/guides/city-guilds-2365-electrical",
+        "/guides/city-guilds-2365-unit-201",
+        "/guides/city-guilds-2365-unit-202",
+        "/city-guilds-level3-guide",
+        "/eal-level3-guide"
+      ]
+    },
+    {
+      "id": "electricians-tools",
+      "label": "Electrician's tools (best of, lists)",
+      "commercialValue": "low",
+      "pageCount": 9,
+      "samples": [
+        "/guides/best-cable-detector-2026",
+        "/guides/best-label-printer-electricians",
+        "/guides/best-multifunction-tester-2026",
+        "/guides/best-thermal-imaging-camera-electricians",
+        "/guides/best-van-racking-electricians"
+      ]
+    },
+    {
+      "id": "zs-earth-loop",
+      "label": "Earth loop impedance / Zs",
+      "commercialValue": "high",
+      "pageCount": 8,
+      "samples": [
+        "/guides/earth-fault-loop-impedance-explained",
+        "/guides/earth-fault-loop-impedance-calculation",
+        "/guides/earth-fault-loop-impedance-testing",
+        "/guides/earth-fault-loop-impedance-too-high",
+        "/earth-loop-impedance-calculator"
+      ]
+    },
+    {
+      "id": "ohms-power-basic",
+      "label": "Ohms / power / basic AC",
+      "commercialValue": "med",
+      "pageCount": 8,
+      "samples": [
+        "/tools/cable-volt-drop-three-phase",
+        "/power-factor-correction",
+        "/guides/single-phase-vs-three-phase",
+        "/guides/testing-three-phase-installation",
+        "/guides/three-phase-calculations"
+      ]
+    },
+    {
+      "id": "testing-equipment",
+      "label": "Test equipment",
+      "commercialValue": "med",
+      "pageCount": 8,
+      "samples": [
+        "/guides/best-cable-detector-2026",
+        "/guides/best-multifunction-tester-2026",
+        "/guides/best-thermal-imaging-camera-electricians",
+        "/guides/cable-detector-buying-guide",
+        "/guides/multifunction-tester-buying-guide"
+      ]
+    },
+    {
+      "id": "city-guilds",
+      "label": "City & Guilds qualifications",
+      "commercialValue": "med",
+      "pageCount": 8,
+      "samples": [
+        "/guides/city-guilds-2365-electrical",
+        "/guides/city-guilds-2365-unit-201",
+        "/guides/city-guilds-2365-unit-202",
+        "/guides/city-guilds-2382-exam-guide",
+        "/guides/2391-exam-tips"
+      ]
+    },
+    {
+      "id": "eic",
+      "label": "EIC",
+      "commercialValue": "high",
+      "pageCount": 7,
+      "samples": [
+        "/eic-certificate",
+        "/guides/eic-client-handover-guide",
+        "/guides/eic-common-mistakes",
+        "/guides/eic-digital-vs-paper",
+        "/guides/eicr-vs-eic-difference"
+      ]
+    },
+    {
+      "id": "minor-works",
+      "label": "Minor Works",
+      "commercialValue": "high",
+      "pageCount": 6,
+      "samples": [
+        "/guides/how-to-fill-in-minor-works",
+        "/guides/minor-works-certificate-common-mistakes",
+        "/guides/minor-works-certificate-how-to-fill-in",
+        "/minor-works-certificate",
+        "/guides/minor-works-certificate-what-to-include"
+      ]
+    },
+    {
+      "id": "cable-sizing",
+      "label": "Cable sizing",
+      "commercialValue": "high",
+      "pageCount": 5,
+      "samples": [
+        "/guides/appendix-4-tables-bs-7671",
+        "/compare/best-cable-sizing-app",
+        "/tools/cable-derating-calculator",
+        "/cable-sizing-calculator",
+        "/guides/cable-sizing-guide-bs-7671"
+      ]
+    },
+    {
+      "id": "rcd-testing",
+      "label": "RCD testing / discrimination",
+      "commercialValue": "med",
+      "pageCount": 5,
+      "samples": [
+        "/rcd-testing-guide",
+        "/guides/rcd-testing-procedure",
+        "/guides/rcd-types-a-b-f-explained",
+        "/guides/rcd-types-explained",
+        "/rcd-types-guide"
+      ]
+    },
+    {
+      "id": "bs7671-18th-edition",
+      "label": "BS 7671 18th Edition",
+      "commercialValue": "high",
+      "pageCount": 4,
+      "samples": [
+        "/guides/bs-7671-18th-edition-guide",
+        "/guides/bs-7671-run-through",
+        "/eighteenth-edition-course",
+        "/guides/18th-edition-exam-tips"
+      ]
+    },
+    {
+      "id": "am2",
+      "label": "AM2 / AM2E",
+      "commercialValue": "high",
+      "pageCount": 4,
+      "samples": [
+        "/guides/am2-assessment-preparation",
+        "/am2-exam-preparation",
+        "/guides/am2-exam-tips",
+        "/guides/am2-simulator-guide"
+      ]
+    },
+    {
+      "id": "epa-end-point",
+      "label": "EPA / End-point assessment",
+      "commercialValue": "high",
+      "pageCount": 4,
+      "samples": [
+        "/apprentice-endpoint-assessment",
+        "/epa-preparation",
+        "/guides/epa-simulator-guide",
+        "/guides/epa-what-to-expect"
+      ]
+    },
+    {
+      "id": "heat-pump",
+      "label": "Heat pumps",
+      "commercialValue": "high",
+      "pageCount": 4,
+      "samples": [
+        "/guides/air-source-heat-pump-electrical",
+        "/guides/ground-source-heat-pump-electrical",
+        "/heat-pump-electrical-fault",
+        "/guides/heat-pump-electrical-requirements"
+      ]
+    },
+    {
+      "id": "bs7671-amendments",
+      "label": "BS 7671 Amendments (A1/A2/A3/A4)",
+      "commercialValue": "high",
+      "pageCount": 3,
+      "samples": [
+        "/training/bs-7671-amendment-3-course",
+        "/guides/bs-7671-amendment-3-changes",
+        "/guides/bs-7671-amendment-4-2026"
+      ]
+    },
+    {
+      "id": "voltage-drop",
+      "label": "Voltage drop",
+      "commercialValue": "high",
+      "pageCount": 3,
+      "samples": [
+        "/tools/cable-volt-drop-three-phase",
+        "/voltage-drop-calculator",
+        "/guides/voltage-drop-limits-bs-7671"
+      ]
+    },
+    {
+      "id": "battery-storage",
+      "label": "Battery storage",
+      "commercialValue": "high",
+      "pageCount": 3,
+      "samples": [
+        "/tools/battery-backup-calculator",
+        "/guides/battery-storage-installation",
+        "/solar-battery-storage-installation"
+      ]
+    },
+    {
+      "id": "fault-current",
+      "label": "Fault current (PSCC/PEFC)",
+      "commercialValue": "high",
+      "pageCount": 2,
+      "samples": [
+        "/prospective-fault-current-calculator",
+        "/guides/prospective-fault-current-explained"
+      ]
+    },
+    {
+      "id": "observation-codes",
+      "label": "EICR observation codes (C1/C2/C3/FI)",
+      "commercialValue": "high",
+      "pageCount": 2,
+      "samples": [
+        "/bs7671-observation-codes",
+        "/guides/eicr-observation-codes-explained"
+      ]
+    },
+    {
+      "id": "adiabatic-cpc",
+      "label": "Adiabatic / CPC sizing",
+      "commercialValue": "high",
+      "pageCount": 1,
+      "samples": [
+        "/adiabatic-equation-calculator"
+      ]
+    }
+  ],
+  "uncategorisedCount": 441,
+  "uncategorisedSample": [
+    "/guides/ac-vs-dc-earthing-solar-ev",
+    "/guides/ai-tools-for-electricians",
+    "/guides/ai-vs-manual-electrical-design",
+    "/guides/atex-hazardous-area-electrical-installations",
+    "/armoured-cable-installation",
+    "/guides/bs-5839-fire-alarm-standard",
+    "/guides/best-electrical-books",
+    "/guides/best-electrical-training-app",
+    "/best-electrician-app",
+    "/tools/board-scanner",
+    "/bonding-conductors-guide",
+    "/guides/bonding-in-bathroom",
+    "/guides/building-regulations-electrical",
+    "/buying-house-electrical-guide",
+    "/training/coshh",
+    "/guides/cpd-for-electricians",
+    "/training/cscs-card",
+    "/guides/cscs-vs-ecs-card-comparison",
+    "/cable-basket-installation",
+    "/guides/cable-colour-codes-uk",
+    "/cable-jointing-guide",
+    "/cable-management-systems",
+    "/cable-selection-guide",
+    "/guides/car-park-lighting-cost",
+    "/care-home-electrical-cost",
+    "/compare/checkatrade-vs-mybuilder-vs-bark",
+    "/guides/christmas-lighting-safety",
+    "/tools/circuit-breaker-sizing-calculator",
+    "/guides/circuit-breaker-keeps-tripping",
+    "/circuit-breaker-types"
+  ],
+  "priorityGaps": [
+    {
+      "topic": "Section 706 (conducting locations with restricted movement)",
+      "slug": "/guides/bs-7671-section-706-conducting-locations",
+      "minWords": 1800,
+      "exists": false
+    },
+    {
+      "topic": "Section 715 (extra-low voltage lighting)",
+      "slug": "/guides/bs-7671-section-715-extra-low-voltage-lighting",
+      "minWords": 1800,
+      "exists": false
+    },
+    {
+      "topic": "Section 717 (mobile / transportable units)",
+      "slug": "/guides/bs-7671-section-717-mobile-transportable-units",
+      "minWords": 1800,
+      "exists": false
+    },
+    {
+      "topic": "Section 729 (operating and maintenance gangways)",
+      "slug": "/guides/bs-7671-section-729-operating-gangways",
+      "minWords": 1600,
+      "exists": false
+    },
+    {
+      "topic": "Section 730 (onshore power supply for inland waterways)",
+      "slug": "/guides/bs-7671-section-730-onshore-power",
+      "minWords": 1800,
+      "exists": false
+    },
+    {
+      "topic": "Section 753 (floor and ceiling heating)",
+      "slug": "/guides/bs-7671-section-753-floor-ceiling-heating",
+      "minWords": 1800,
+      "exists": false
+    },
+    {
+      "topic": "AFDD Type detection requirements (A4:2026)",
+      "slug": "/guides/afdd-type-detection-a4-2026",
+      "minWords": 1800,
+      "exists": false
+    },
+    {
+      "topic": "TN-C-S / PNB earthing in A4:2026",
+      "slug": "/guides/tn-cs-pnb-earthing-a4-2026",
+      "minWords": 1800,
+      "exists": false
+    },
+    {
+      "topic": "New schedule of test results columns (A4:2026)",
+      "slug": "/guides/eicr-schedule-of-tests-a4-2026",
+      "minWords": 1500,
+      "exists": false
+    },
+    {
+      "topic": "A4:2026 model form changes (EIC, EICR, MWC)",
+      "slug": "/guides/a4-2026-model-form-changes",
+      "minWords": 1500,
+      "exists": false
+    },
+    {
+      "topic": "EICR code C1 (danger present — immediate action)",
+      "slug": "/guides/eicr-code-c1-danger-present",
+      "minWords": 1500,
+      "exists": false
+    },
+    {
+      "topic": "EICR code C2 (potentially dangerous — urgent remedial)",
+      "slug": "/guides/eicr-code-c2-potentially-dangerous",
+      "minWords": 1500,
+      "exists": false
+    },
+    {
+      "topic": "EICR code C3 (improvement recommended)",
+      "slug": "/guides/eicr-code-c3-improvement-recommended",
+      "minWords": 1500,
+      "exists": false
+    },
+    {
+      "topic": "EICR code FI (further investigation required)",
+      "slug": "/guides/eicr-code-fi-further-investigation",
+      "minWords": 1500,
+      "exists": false
+    },
+    {
+      "topic": "EICR: No main protective bonding (common C2)",
+      "slug": "/guides/eicr-no-main-protective-bonding",
+      "minWords": 1500,
+      "exists": false
+    },
+    {
+      "topic": "EICR: Missing RCD on socket-outlet circuit",
+      "slug": "/guides/eicr-missing-rcd-socket-outlet",
+      "minWords": 1500,
+      "exists": false
+    },
+    {
+      "topic": "EICR: Insulation resistance below 1 MΩ",
+      "slug": "/guides/eicr-insulation-resistance-below-1-megohm",
+      "minWords": 1500,
+      "exists": false
+    },
+    {
+      "topic": "EICR: High Zs above maximum permitted",
+      "slug": "/guides/eicr-high-zs-above-maximum",
+      "minWords": 1500,
+      "exists": false
+    },
+    {
+      "topic": "EICR: Borrowed neutral observation",
+      "slug": "/guides/eicr-borrowed-neutral-observation",
+      "minWords": 1500,
+      "exists": false
+    },
+    {
+      "topic": "EICR: Plastic consumer unit in HMO",
+      "slug": "/guides/eicr-plastic-consumer-unit-hmo",
+      "minWords": 1500,
+      "exists": false
+    },
+    {
+      "topic": "What current does 2.5 mm² cable carry?",
+      "slug": "/guides/2-5mm-cable-current-rating",
+      "minWords": 1500,
+      "exists": false
+    },
+    {
+      "topic": "What current does 4 mm² cable carry?",
+      "slug": "/guides/4mm-cable-current-rating",
+      "minWords": 1500,
+      "exists": false
+    },
+    {
+      "topic": "What current does 6 mm² cable carry?",
+      "slug": "/guides/6mm-cable-current-rating",
+      "minWords": 1500,
+      "exists": false
+    },
+    {
+      "topic": "What current does 10 mm² cable carry?",
+      "slug": "/guides/10mm-cable-current-rating",
+      "minWords": 1500,
+      "exists": false
+    },
+    {
+      "topic": "Cable size for an EV charger (7 kW / 22 kW)",
+      "slug": "/guides/cable-size-for-ev-charger",
+      "minWords": 1500,
+      "exists": false
+    },
+    {
+      "topic": "Cable size for an electric shower (8.5/9.5/10.5 kW)",
+      "slug": "/guides/cable-size-for-electric-shower",
+      "minWords": 1500,
+      "exists": false
+    },
+    {
+      "topic": "Cable size for a cooker circuit",
+      "slug": "/guides/cable-size-for-cooker-circuit",
+      "minWords": 1500,
+      "exists": false
+    },
+    {
+      "topic": "Listed building electrical requirements",
+      "slug": "/guides/listed-building-electrical-requirements",
+      "minWords": 1800,
+      "exists": false
+    },
+    {
+      "topic": "HMO electrical safety (landlord)",
+      "slug": "/guides/hmo-electrical-safety-landlord",
+      "minWords": 1800,
+      "exists": false
+    },
+    {
+      "topic": "EICR for letting agency (England 2020 regs)",
+      "slug": "/guides/eicr-for-letting-agency-england-2020",
+      "minWords": 1800,
+      "exists": false
+    },
+    {
+      "topic": "Selling a house with no EICR",
+      "slug": "/guides/selling-house-no-eicr",
+      "minWords": 1500,
+      "exists": false
+    }
+  ],
+  "gapsToFill": 31
+}

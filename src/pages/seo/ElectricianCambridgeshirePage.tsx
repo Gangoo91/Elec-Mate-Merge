@@ -32,7 +32,7 @@ const keyTakeaways = [
   'Cambridgeshire is served by two DNOs: UK Power Networks covers Cambridge, Ely, St Ives, March, and Huntingdon; National Grid Electricity Distribution covers Peterborough and the north of the county.',
   'The Silicon Fen tech corridor around Cambridge creates high demand for reliable commercial electrical installations, three-phase supplies, and data centre power infrastructure.',
   'Fenland areas including Wisbech and March often require special consideration for rural longline connections, where voltage regulation and cable sizing calculations must account for extended supply distances.',
-  'New residential developments across Cambridgeshire are subject to Part P Building Regulations and must meet BS 7671:2018+A3:2024 requirements for EV charging provisions under Approved Document S.',
+  'New residential developments across Cambridgeshire are subject to Part P Building Regulations and must meet BS 7671:2018+A4:2026 requirements for EV charging provisions under Approved Document S.',
   'University and college buildings in Cambridge carry significant heritage and Grade-listing considerations, requiring sympathetic wiring methods and prior consent for surface-mounted installations.',
   'All electrical work on new circuits must be certified under the Part P notification scheme or self-certified by a registered competent person (NICEIC, ELECSA, NAPIT).',
 ];
@@ -309,7 +309,7 @@ const sections = [
     content: (
       <>
         <p>
-          All electrical installations in Cambridgeshire must comply with BS 7671:2018+A3:2024 (the
+          All electrical installations in Cambridgeshire must comply with BS 7671:2018+A4:2026 (the
           18th Edition Wiring Regulations). Key requirements relevant to Cambridgeshire
           installations include:
         </p>

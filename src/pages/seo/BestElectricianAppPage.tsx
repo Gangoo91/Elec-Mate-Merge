@@ -263,8 +263,8 @@ export default function BestElectricianAppPage() {
             </p>
             <p>
               <strong>BS 7671 Compliance:</strong> The app should be built around the current
-              edition of the Wiring Regulations — BS 7671:2018+A3:2024 — with an understanding that
-              Amendment 3 (A3:2024) added Regulation 530.3.2 covering bidirectional and
+              edition of the Wiring Regulations — BS 7671:2018+A4:2026 — with an understanding that
+              Amendment 3 (A4:2026) added Regulation 530.3.2 covering bidirectional and
               unidirectional devices. Any certificate forms should follow the model forms in
               Appendix 6, and calculations should reference the correct tables. An app that is not
               kept up to date with regulation changes is a liability.
@@ -514,7 +514,7 @@ export default function BestElectricianAppPage() {
             </p>
             <p>
               The training platform is another area where Elec-Mate stands alone. Full courses
-              covering the 18th Edition (BS 7671:2018+A3:2024), City & Guilds Level 2 and Level 3
+              covering the 18th Edition (BS 7671:2018+A4:2026), City & Guilds Level 2 and Level 3
               Electrical Installation, AM2 assessment preparation, and an End Point Assessment
               simulator are built into the app. Whether you are an apprentice studying for your
               qualifications or a qualified electrician revising for a regulation update, the
@@ -767,6 +767,26 @@ export default function BestElectricianAppPage() {
       </section>
 
       {/* CTA */}
+      
+
+      {/* Related pages — auto-injected for internal-link health (audit criterion #7).
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/guides/electrician-cv-guide">Electrician CV Guide 2026</SEOInternalLink>
+            <SEOInternalLink href="/compare/best-ai-tool-electricians">Best AI Tool for Electricians 2026</SEOInternalLink>
+            <SEOInternalLink href="/compare/best-apprentice-app">Best Apprentice App 2026</SEOInternalLink>
+            <SEOInternalLink href="/cis-guide-electrician">Construction Industry Scheme (CIS) Guide for Electricians UK</SEOInternalLink>
+            <SEOInternalLink href="/tools/cv-builder-electrician">CV Builder for Electricians</SEOInternalLink>
+            <SEOInternalLink href="/guides/commercial-electrician-guide">Commercial Electrician Guide</SEOInternalLink>
+            <SEOInternalLink href="/guides/domestic-electrician-guide">Domestic Electrician Guide UK 2026</SEOInternalLink>
+            <SEOInternalLink href="/compare/electrician-app-android">Best Electrician App for Android 2026</SEOInternalLink>
+          </div>
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Try the most complete electrician app in the UK"
         subheading="8 certificates, 70+ calculators, 8 Elec-AI tools, full training courses, and business management. 7-day free trial, cancel anytime."

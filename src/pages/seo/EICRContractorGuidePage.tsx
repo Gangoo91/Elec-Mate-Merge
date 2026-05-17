@@ -165,8 +165,7 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Current BS 7671 knowledge</strong> — the inspector must have a current
-                knowledge of BS 7671 (the IET Wiring Regulations). The current edition is BS
-                7671:2018+A3:2024 (18th Edition). The City and Guilds 2382 (18th Edition) or
+                knowledge of BS 7671 (the IET Wiring Regulations). The current edition is BS 7671:2018+A4:2026 (18th Edition). The City and Guilds 2382 (18th Edition) or
                 equivalent confirms this. Previous editions of BS 7671 are regularly updated, and
                 inspectors must be familiar with the current requirements.
               </span>

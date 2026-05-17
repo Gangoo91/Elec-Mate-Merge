@@ -40,7 +40,7 @@ const keyTakeaways = [
   'Metal consumer unit enclosures have been mandatory for all domestic replacements since January 2016 under BS 7671 Regulation 421.1.201, introduced by Amendment 3 to BS 7671:2008.',
   'Exeter has significant Victorian and Edwardian terraced housing — particularly in St Thomas, Heavitree, and St James — where rewireable fuse boards and pre-RCD wiring remain common EICR findings.',
   'Consumer unit replacement is Part P notifiable work. Exeter homeowners must use a registered competent person (NICEIC/NAPIT/ELECSA) or notify Devon Building Control Partnership before work begins.',
-  'Under Regulation 411.3.3 of BS 7671:2018+A3:2024, RCD protection not exceeding 30 mA is mandatory on socket-outlet circuits rated up to 32 A. Absence is a C2 EICR observation requiring remedial action within 28 days.',
+  'Under Regulation 411.3.3 of BS 7671:2018+A4:2026, RCD protection not exceeding 30 mA is mandatory on socket-outlet circuits rated up to 32 A. Absence is a C2 EICR observation requiring remedial action within 28 days.',
 ];
 
 const faqs = [
@@ -161,7 +161,7 @@ const sections = [
                 <strong>RCDs and RCBOs</strong> — protect against electric shock by detecting earth
                 leakage current. Under Regulation 411.3.3 of{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                  BS 7671:2018+A3:2024
+                  BS 7671:2018+A4:2026
                 </SEOInternalLink>
                 , 30 mA RCD protection is mandatory on all socket-outlet circuits rated up to 32 A
                 in domestic premises.
@@ -272,8 +272,7 @@ const sections = [
         <p>
           Amendment 3 to BS 7671:2008, in force from 1 January 2016, added Regulation 421.1.201
           requiring that consumer units and similar switchgear assemblies in domestic premises have
-          a non-combustible (metal) enclosure. This requirement is unchanged in BS
-          7671:2018+A3:2024. Every consumer unit replacement in Exeter must comply.
+          a non-combustible (metal) enclosure. This requirement is unchanged in BS 7671:2018+A4:2026. Every consumer unit replacement in Exeter must comply.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">

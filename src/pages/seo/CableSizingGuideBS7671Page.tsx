@@ -19,7 +19,7 @@ export default function CableSizingGuideBS7671Page() {
   return (
     <GuideTemplate
       title="Cable Sizing Guide BS 7671 | How to Size Cables | Elec-Mate"
-      description="Complete cable sizing guide using BS 7671:2018+A3:2024. The 5-step process: design current, protective device, correction factors (Ca, Cg, Ci, Cf), tabulated current, and voltage drop check. Reference methods, worked examples, and adiabatic verification."
+      description="Complete cable sizing guide using BS 7671:2018+A4:2026. The 5-step process: design current, protective device, correction factors (Ca, Cg, Ci, Cf), tabulated current, and voltage drop check. Reference methods, worked examples, and adiabatic verification."
       datePublished="2025-06-20"
       dateModified="2026-02-14"
       breadcrumbs={[
@@ -66,7 +66,7 @@ export default function CableSizingGuideBS7671Page() {
                 Correct cable sizing is one of the most fundamental design tasks in electrical
                 installation. A cable that is too small will overheat under load, potentially
                 causing a fire or damaging the insulation. A cable that is too large wastes material
-                and money. BS 7671:2018+A3:2024 provides a systematic process for selecting the
+                and money. BS 7671:2018+A4:2026 provides a systematic process for selecting the
                 correct cable size based on the load, the installation conditions, and the
                 protective device.
               </p>
@@ -645,7 +645,7 @@ export default function CableSizingGuideBS7671Page() {
               </p>
               <SEOAppBridge
                 title="70+ Calculators — All BS 7671 Based"
-                description="Elec-Mate has 70+ electrical calculators including cable sizing, voltage drop, adiabatic equation, conduit fill, trunking fill, Zs lookup, diversity, max demand, prospective fault current, and more. All based on BS 7671:2018+A3:2024. All work offline."
+                description="Elec-Mate has 70+ electrical calculators including cable sizing, voltage drop, adiabatic equation, conduit fill, trunking fill, Zs lookup, diversity, max demand, prospective fault current, and more. All based on BS 7671:2018+A4:2026. All work offline."
                 icon={Calculator}
               />
             </>
@@ -715,7 +715,7 @@ export default function CableSizingGuideBS7671Page() {
         },
       ]}
       howToHeading="How to Size a Cable — Step-by-Step"
-      howToDescription="Follow this process to size any cable to BS 7671:2018+A3:2024 using the Appendix 4 tables and correction factors."
+      howToDescription="Follow this process to size any cable to BS 7671:2018+A4:2026 using the Appendix 4 tables and correction factors."
       howToSteps={[
         {
           name: 'Calculate the design current',

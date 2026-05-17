@@ -151,7 +151,7 @@ const sections = [
                 MCBs without accompanying RCD protection leave occupants exposed to electric shock
                 risk that modern{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                  BS 7671:2018+A3:2024
+                  BS 7671:2018+A4:2026
                 </SEOInternalLink>{' '}
                 requirements are designed to eliminate.
               </span>
@@ -196,7 +196,7 @@ const sections = [
           Amendment 2 to BS 7671:2008, effective 1 July 2016, introduced Regulation 421.1.201: in
           domestic premises, consumer units and similar switchgear assemblies shall be installed in
           a cabinet or enclosure constructed of non-combustible material. This requirement is
-          retained in the current edition, BS 7671:2018+A3:2024.
+          retained in the current edition, BS 7671:2018+A4:2026.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">

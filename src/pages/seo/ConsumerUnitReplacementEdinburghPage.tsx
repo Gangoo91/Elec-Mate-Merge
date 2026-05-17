@@ -37,9 +37,9 @@ const tocItems = [
 
 const keyTakeaways = [
   'A consumer unit replacement in Edinburgh typically costs between £350 and £600 for most domestic properties — slightly higher than Glasgow due to elevated labour rates in the Scottish capital.',
-  'Under Regulation 421.1.201 of BS 7671:2018+A3:2024, all domestic consumer units must be a type-tested coordinated assembly housed in a non-combustible (metal) enclosure — this applies equally in Scotland.',
+  'Under Regulation 421.1.201 of BS 7671:2018+A4:2026, all domestic consumer units must be a type-tested coordinated assembly housed in a non-combustible (metal) enclosure — this applies equally in Scotland.',
   'In Scotland, consumer unit replacement is notifiable work under the Building (Scotland) Regulations 2004. It must be certified by a registered certifier or notified to City of Edinburgh Council as the local authority verifier.',
-  'BS 7671:2018+A3:2024 requires 30 mA RCD protection for all socket-outlet circuits up to 32 A and for cables concealed in walls at a depth less than 50 mm — covering virtually every circuit in a modern domestic installation.',
+  'BS 7671:2018+A4:2026 requires 30 mA RCD protection for all socket-outlet circuits up to 32 A and for cables concealed in walls at a depth less than 50 mm — covering virtually every circuit in a modern domestic installation.',
   'Edinburgh has a significant stock of Georgian and Victorian tenement properties in areas such as Leith, Morningside, and Marchmont — many of which have electrical installations that predate current standards.',
 ];
 
@@ -57,7 +57,7 @@ const faqs = [
   {
     question: 'Do I need RCD protection when replacing a consumer unit in Edinburgh?',
     answer:
-      'Yes. BS 7671:2018+A3:2024 requires 30 mA RCD protection for socket-outlet circuits rated up to 32 A and for cables concealed in walls. BS 7671 is the national standard and applies equally in Edinburgh. Individual RCBOs on each circuit is the preferred modern approach.',
+      'Yes. BS 7671:2018+A4:2026 requires 30 mA RCD protection for socket-outlet circuits rated up to 32 A and for cables concealed in walls. BS 7671 is the national standard and applies equally in Edinburgh. Individual RCBOs on each circuit is the preferred modern approach.',
   },
   {
     question: 'Do I need an SPD when replacing a consumer unit in Edinburgh?',
@@ -150,7 +150,7 @@ const sections = [
         <p>
           Under{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
           , Regulation 421.1.201 requires that consumer units in domestic premises be a type-tested
           coordinated assembly housed in a non-combustible (metal) enclosure. BS 7671 also requires
@@ -311,7 +311,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 7671 applies in Scotland</strong> — BS 7671:2018+A3:2024 is the national
+                <strong>BS 7671 applies in Scotland</strong> — BS 7671:2018+A4:2026 is the national
                 standard for electrical installations and applies in Edinburgh as it does across the
                 UK. Requirements for non-combustible enclosures (Regulation 421.1.201) and RCD
                 protection requirements are not relaxed north of the border.

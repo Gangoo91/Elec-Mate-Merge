@@ -51,7 +51,7 @@ const faqs = [
   {
     question: 'Do I need Part P certification for electrical work in Edinburgh?',
     answer:
-      'No. Part P of the Building Regulations applies only to England and Wales. In Scotland, electrical installations are governed by Scottish Building Standards, specifically Section 4 (Safety) of the Technical Handbook — Domestic. The electrical installation must comply with BS 7671:2018+A3:2024, and a building warrant may be required for certain types of work (new installations, rewires, consumer unit replacements). The building warrant is obtained from the City of Edinburgh Council Building Standards department before work begins. An Electrical Installation Certificate (EIC) is still required as evidence of compliance with BS 7671.',
+      'No. Part P of the Building Regulations applies only to England and Wales. In Scotland, electrical installations are governed by Scottish Building Standards, specifically Section 4 (Safety) of the Technical Handbook — Domestic. The electrical installation must comply with BS 7671:2018+A4:2026, and a building warrant may be required for certain types of work (new installations, rewires, consumer unit replacements). The building warrant is obtained from the City of Edinburgh Council Building Standards department before work begins. An Electrical Installation Certificate (EIC) is still required as evidence of compliance with BS 7671.',
   },
   {
     question: 'Who is the DNO for Edinburgh?',

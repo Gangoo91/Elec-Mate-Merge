@@ -238,7 +238,7 @@ export default function ElecMateVsCertsAppPage() {
                 EV Charger Installation
               </SEOInternalLink>
               , Solar PV, Fire Alarm Commissioning, Emergency Lighting, and PAT Testing), over 70
-              specialist electrical calculators referencing BS 7671:2018+A3:2024, 8 Elec-AI tools
+              specialist electrical calculators referencing BS 7671:2018+A4:2026, 8 Elec-AI tools
               (Circuit Designer, Cost Engineer, Installation Guide, Commissioning Specialist,
               Maintenance Agent, Health & Safety, Fault Finder, and Regulation Lookup), full
               training courses (18th Edition, Level 2/3 Electrical Installation, AM2 preparation,
@@ -461,7 +461,7 @@ export default function ElecMateVsCertsAppPage() {
                 <li className="flex items-start gap-3">
                   <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
                   <span>
-                    <strong>18th Edition (BS 7671:2018+A3:2024):</strong> Complete course content
+                    <strong>18th Edition (BS 7671:2018+A4:2026):</strong> Complete course content
                     covering the current Wiring Regulations, structured for both initial learning
                     and revision.
                   </span>
@@ -770,6 +770,21 @@ export default function ElecMateVsCertsAppPage() {
       </section>
 
       {/* CTA */}
+      
+
+      {/* Related pages — auto-injected for internal-link health (audit criterion #7).
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/compare/elec-mate-vs-electrical-om">Elec-Mate vs Electrical OM</SEOInternalLink>
+            <SEOInternalLink href="/compare/elec-mate-vs-easy-eicr">Elec-Mate vs Easy EICR 2026</SEOInternalLink>
+            <SEOInternalLink href="/compare/elec-mate-vs-simply-eicr">Elec-Mate vs SimplyEICR</SEOInternalLink>
+          </div>
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Ready to compare for yourself?"
         subheading="Try Elec-Mate free for 7 days. All features included — certificates, calculators, AI tools, training, and business management. Cancel anytime."

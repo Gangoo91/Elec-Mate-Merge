@@ -146,7 +146,7 @@ const sections = [
         <p>
           The certificate standards are based on the model forms in Appendix 6 of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           (the IET Wiring Regulations, 18th Edition with Amendment 3). NICEIC does not impose
           additional form layouts beyond what BS 7671 requires — but they do expect every required

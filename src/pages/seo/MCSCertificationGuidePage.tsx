@@ -437,8 +437,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Relationship with BS 7671:</strong> MCS 001 references and builds on BS
-                7671:2018+A3:2024 Section 712. Compliance with BS 7671 is a prerequisite for MCS 001
+                <strong>Relationship with BS 7671:</strong> MCS 001 references and builds on BS 7671:2018+A4:2026 Section 712. Compliance with BS 7671 is a prerequisite for MCS 001
                 compliance — MCS does not replace the wiring regulations, it supplements them with
                 microgeneration-specific requirements.
               </span>

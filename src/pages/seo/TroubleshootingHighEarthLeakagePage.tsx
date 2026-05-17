@@ -79,7 +79,7 @@ const faqs = [
   {
     question: 'When should I replace an RCD rather than finding the source of leakage?',
     answer:
-      'An RCD should be replaced (not relocated) if: the RCD itself is faulty — RCDs can develop internal leakage or sensitivity drift over time; the installation design is such that too many circuits with inherently high leakage (VSDs, DALI, commercial kitchen equipment) are sharing a single main RCD; or the RCD type is mismatched to the loads it protects (e.g., a Type AC RCD protecting circuits with DC-pulsating components requires upgrading to Type A or Type F per BS 7671:2018+A3:2024 Amendment 3). In most cases, however, replacing the RCD without addressing the source of the leakage will not solve the problem — the nuisance tripping will recur. The correct approach is to identify and reduce the leakage, then verify the RCD is functioning correctly.',
+      'An RCD should be replaced (not relocated) if: the RCD itself is faulty — RCDs can develop internal leakage or sensitivity drift over time; the installation design is such that too many circuits with inherently high leakage (VSDs, DALI, commercial kitchen equipment) are sharing a single main RCD; or the RCD type is mismatched to the loads it protects (e.g., a Type AC RCD protecting circuits with DC-pulsating components requires upgrading to Type A or Type F per BS 7671:2018+A4:2026 Amendment 3). In most cases, however, replacing the RCD without addressing the source of the leakage will not solve the problem — the nuisance tripping will recur. The correct approach is to identify and reduce the leakage, then verify the RCD is functioning correctly.',
   },
 ];
 
@@ -465,7 +465,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Upgrade RCD Type for VSD Circuits</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Variable speed drives produce DC-pulsating leakage that can blind a Type AC RCD.
-                  BS 7671:2018+A3:2024 Amendment 3 now requires Type A or Type F RCDs to protect
+                  BS 7671:2018+A4:2026 Amendment 3 now requires Type A or Type F RCDs to protect
                   circuits supplying VSDs and EV chargers. Upgrading from Type AC to Type A reduces
                   nuisance tripping and ensures correct detection of DC fault currents.
                 </p>

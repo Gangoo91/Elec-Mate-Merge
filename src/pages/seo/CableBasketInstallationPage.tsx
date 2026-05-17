@@ -174,7 +174,7 @@ const sections = [
         <p>
           Cable basket must be installed in compliance with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           requirements for cable support, grouping, and earthing of extraneous conductive parts.
         </p>

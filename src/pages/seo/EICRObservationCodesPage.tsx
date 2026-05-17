@@ -85,7 +85,7 @@ const faqs = [
   {
     question: 'How does Elec-Mate Defect Code AI help with observation codes?',
     answer:
-      'Elec-Mate includes a Defect Code AI tool built specifically for EICR classification. You describe the defect in plain English — for example, "missing earth connection on metal light fitting in kitchen" or "no RCD protection on socket circuit supplying outdoor equipment" — and the AI analyses the description against BS 7671 regulations. It returns the recommended classification code (C1, C2, C3, or FI), the relevant BS 7671 regulation reference, and a clear explanation of why that code applies. The AI draws on the full text of BS 7671:2018+A3:2024, IET Guidance Note 3, and common classification precedents. It does not replace your professional judgement — you can override the suggestion — but it provides a consistent, regulation-backed starting point that eliminates second-guessing on site. This is particularly valuable for less common defects where the correct classification is genuinely ambiguous.',
+      'Elec-Mate includes a Defect Code AI tool built specifically for EICR classification. You describe the defect in plain English — for example, "missing earth connection on metal light fitting in kitchen" or "no RCD protection on socket circuit supplying outdoor equipment" — and the AI analyses the description against BS 7671 regulations. It returns the recommended classification code (C1, C2, C3, or FI), the relevant BS 7671 regulation reference, and a clear explanation of why that code applies. The AI draws on the full text of BS 7671:2018+A4:2026, IET Guidance Note 3, and common classification precedents. It does not replace your professional judgement — you can override the suggestion — but it provides a consistent, regulation-backed starting point that eliminates second-guessing on site. This is particularly valuable for less common defects where the correct classification is genuinely ambiguous.',
   },
 ];
 
@@ -157,7 +157,7 @@ const sections = [
           and assigned one of four classification codes.
         </p>
         <p>
-          The codes are defined in BS 7671:2018+A3:2024 and are explained in detail in IET Guidance
+          The codes are defined in BS 7671:2018+A4:2026 and are explained in detail in IET Guidance
           Note 3: Inspection and Testing (9th Edition, aligned with the 18th Edition of BS 7671).
           They serve a critical purpose: they communicate the severity of each defect to the person
           responsible for the installation (the client, landlord, or building owner) and determine
@@ -645,7 +645,7 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">AI returns the classification</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  The AI analyses your description against BS 7671:2018+A3:2024 and IET Guidance
+                  The AI analyses your description against BS 7671:2018+A4:2026 and IET Guidance
                   Note 3. It returns the recommended code (C1, C2, C3, or FI), the specific BS 7671
                   regulation reference, and an explanation of why that code applies.
                 </p>

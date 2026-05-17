@@ -39,7 +39,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Hundreds of flashcards covering BS 7671:2018+A3:2024, science principles, and installation practice — with spaced repetition to lock in knowledge.',
+  'Hundreds of flashcards covering BS 7671:2018+A4:2026, science principles, and installation practice — with spaced repetition to lock in knowledge.',
   'Full mock exams for Level 2, Level 3, 2382 (18th Edition), and 2391 (Inspection and Testing) with timed conditions and detailed mark schemes.',
   'EPA simulator that mirrors the real end-point assessment format, including synoptic projects, practical observations, and professional discussions.',
   'Site diary and on-the-job training (OJT) tracker to log hours, tasks, and evidence directly from your phone — even offline on site.',
@@ -216,7 +216,7 @@ const sections = [
           <SEOInternalLink href="/apprentice-training">electrical apprenticeship</SEOInternalLink>{' '}
           standard, including all knowledge, skills, and behaviours (KSBs). Content is aligned with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
           , the IET On-Site Guide, and the relevant City & Guilds qualification specifications.
         </p>
@@ -409,7 +409,7 @@ export default function ApprenticeTrainingAppPage() {
       sections={sections}
       features={features}
       featuresHeading="Apprentice Training Features"
-      featuresSubheading="Everything an electrical apprentice needs to study, track progress, and build an evidence portfolio. Aligned with BS 7671:2018+A3:2024 and current apprenticeship standards."
+      featuresSubheading="Everything an electrical apprentice needs to study, track progress, and build an evidence portfolio. Aligned with BS 7671:2018+A4:2026 and current apprenticeship standards."
       howToSteps={howToSteps}
       howToHeading="How to Use the Apprentice Training App"
       howToDescription="Four steps from study to submission-ready portfolio. Study, track, evidence, and qualify."

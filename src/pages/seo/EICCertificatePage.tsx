@@ -847,6 +847,26 @@ export default function EICCertificatePage() {
       </section>
 
       {/* CTA */}
+      
+
+      {/* Related pages — auto-injected for internal-link health (audit criterion #7).
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/tools/eicr-certificate">EICR Certificate Guide 2026</SEOInternalLink>
+            <SEOInternalLink href="/guides/napit-certificate-guide">NAPIT Certificate Guide</SEOInternalLink>
+            <SEOInternalLink href="/guides/eicr-vs-eic-difference">EICR vs EIC</SEOInternalLink>
+            <SEOInternalLink href="/guides/ev-charger-certificate-requirements">EV Charger Certificate Requirements UK</SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-certificate-retention">How Long to Keep Electrical Certificates UK</SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-certificate-types-uk">Electrical Certificate Types UK</SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-compliance-certificate">Electrical Compliance Certificate</SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-test-certificate">Electrical Test Certificate</SEOInternalLink>
+          </div>
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Create Professional EIC Certificates in Minutes"
         subheading="Join 1,000+ UK electricians using Elec-Mate for on-site certification. 7-day free trial, cancel anytime."

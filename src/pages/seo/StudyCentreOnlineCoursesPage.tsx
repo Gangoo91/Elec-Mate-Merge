@@ -177,7 +177,7 @@ export default function StudyCentreOnlineCoursesPage() {
               </p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>
-                  BS 7671:2018+A3:2024 — what changed in Amendment 3, including new Section 530
+                  BS 7671:2018+A4:2026 — what changed in Amendment 3, including new Section 530
                   requirements for bidirectional and unidirectional devices
                 </li>
                 <li>

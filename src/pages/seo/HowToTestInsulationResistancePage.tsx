@@ -103,9 +103,9 @@ const features = [
   },
   {
     icon: ShieldCheck,
-    title: 'BS 7671:2018+A3:2024 Compliant',
+    title: 'BS 7671:2018+A4:2026 Compliant',
     description:
-      'Built to the current 18th Edition standard including Amendment 3. All test limits, observation codes, and certificate structures follow BS 7671:2018+A3:2024.',
+      'Built to the current 18th Edition standard including Amendment 3. All test limits, observation codes, and certificate structures follow BS 7671:2018+A4:2026.',
   },
   {
     icon: Calculator,
@@ -131,7 +131,7 @@ const howToSchema = {
   '@type': 'HowTo',
   name: 'How to Test Insulation Resistance — Step-by-Step Procedure',
   description:
-    'Step-by-step guide to testing insulation resistance on electrical circuits using a 500 V DC insulation resistance tester, in compliance with BS 7671:2018+A3:2024.',
+    'Step-by-step guide to testing insulation resistance on electrical circuits using a 500 V DC insulation resistance tester, in compliance with BS 7671:2018+A4:2026.',
   step: howToSteps.map((step, index) => ({
     '@type': 'HowToStep',
     position: index + 1,
@@ -156,7 +156,7 @@ export default function HowToTestInsulationResistancePage() {
   useSEO({
     title: 'How to Test Insulation Resistance | BS 7671 Guide',
     description:
-      'Step-by-step guide to insulation resistance testing. Test voltages, minimum values, conductor combinations, and common faults. BS 7671:2018+A3:2024 compliant procedure.',
+      'Step-by-step guide to insulation resistance testing. Test voltages, minimum values, conductor combinations, and common faults. BS 7671:2018+A4:2026 compliant procedure.',
   });
 
   return (
@@ -176,7 +176,7 @@ export default function HowToTestInsulationResistancePage() {
         <div className="relative max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm font-medium mb-6">
             <ShieldCheck className="w-4 h-4" />
-            BS 7671:2018+A3:2024 Compliant
+            BS 7671:2018+A4:2026 Compliant
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
             How to Test Insulation Resistance
@@ -600,6 +600,26 @@ export default function HowToTestInsulationResistancePage() {
       </section>
 
       {/* CTA */}
+      
+
+      {/* Related pages — auto-injected for internal-link health (audit criterion #7).
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/guides/insulation-resistance-testing">Insulation Resistance Testing</SEOInternalLink>
+            <SEOInternalLink href="/guides/low-insulation-resistance">Low Insulation Resistance</SEOInternalLink>
+            <SEOInternalLink href="/guides/insulation-resistance-minimum-values">Insulation Resistance Minimum Values</SEOInternalLink>
+            <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">Insulation Resistance Testing BS 7671</SEOInternalLink>
+            <SEOInternalLink href="/polarity-test-guide">Polarity Testing Guide UK</SEOInternalLink>
+            <SEOInternalLink href="/guides/test-instruments-guide">Electrical Test Instruments Guide</SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-test-certificate">Electrical Test Certificate</SEOInternalLink>
+            <SEOInternalLink href="/electrical-test-equipment-guide">Electrical Test Equipment Guide — MFT, Clamp Meter, CAT Ratings, Calibration</SEOInternalLink>
+          </div>
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Record Insulation Resistance Results Digitally"
         subheading="Join 1,000+ UK electricians using Elec-Mate for on-site testing and certification. 7-day free trial, cancel anytime."

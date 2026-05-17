@@ -56,7 +56,7 @@ const faqs = [
   {
     question: 'Is supplementary bonding still required in bathrooms?',
     answer:
-      'Not always. BS 7671:2018+A3:2024 Regulation 701.415.2 states that supplementary bonding can be omitted in a bathroom if ALL of the following conditions are met: (1) All circuits serving the bathroom are protected by a 30mA RCD; (2) All circuits meet the maximum disconnection times specified in Regulation 411.3.2 (0.4 seconds for 230V circuits); (3) Main protective bonding is in place to the incoming gas, water, and oil supply pipes in accordance with Regulation 411.3.1.2. If any of these conditions cannot be confirmed, supplementary bonding is still required. In practice, most modern domestic installations with a compliant consumer unit and main bonding in place can omit supplementary bonding — but the electrician must verify all three conditions during the inspection.',
+      'Not always. BS 7671:2018+A4:2026 Regulation 701.415.2 states that supplementary bonding can be omitted in a bathroom if ALL of the following conditions are met: (1) All circuits serving the bathroom are protected by a 30mA RCD; (2) All circuits meet the maximum disconnection times specified in Regulation 411.3.2 (0.4 seconds for 230V circuits); (3) Main protective bonding is in place to the incoming gas, water, and oil supply pipes in accordance with Regulation 411.3.1.2. If any of these conditions cannot be confirmed, supplementary bonding is still required. In practice, most modern domestic installations with a compliant consumer unit and main bonding in place can omit supplementary bonding — but the electrician must verify all three conditions during the inspection.',
   },
   {
     question: 'What size conductor is used for bathroom bonding?',
@@ -129,7 +129,7 @@ const relatedPages: RelatedPage[] = [
     href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
-      'Study BS 7671:2018+A3:2024 including Section 701 (bathrooms) on the Elec-Mate platform.',
+      'Study BS 7671:2018+A4:2026 including Section 701 (bathrooms) on the Elec-Mate platform.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -162,7 +162,7 @@ const sections = [
         </p>
         <p>
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           addresses this in Section 701, which covers the particular requirements for electrical
           installations in locations containing a bath or shower. The key regulation for bonding is
@@ -273,7 +273,7 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671:2018+A3:2024 Regulation 701.415.2 permits supplementary bonding to be omitted in a
+          BS 7671:2018+A4:2026 Regulation 701.415.2 permits supplementary bonding to be omitted in a
           bathroom if ALL three of the following conditions are satisfied:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">

@@ -67,7 +67,7 @@ const faqs = [
   {
     question: 'Do radial circuits need RCD protection?',
     answer:
-      'Under BS 7671:2018+A3:2024, socket outlet circuits rated up to 32A in domestic premises require 30mA RCD protection (Regulation 411.3.3). This applies to radial circuits serving socket outlets just as it does to ring circuits. Lighting circuits in domestic premises also require 30mA RCD protection where the circuit serves a zone where the risk of electric shock is increased (such as bathrooms) or where the cables are concealed in walls at a depth less than 50mm and do not have earthed metallic covering. In practice, most modern domestic installations provide 30mA RCD protection on all circuits using either a split-load consumer unit with RCDs or an RCBO board.',
+      'Under BS 7671:2018+A4:2026, socket outlet circuits rated up to 32A in domestic premises require 30mA RCD protection (Regulation 411.3.3). This applies to radial circuits serving socket outlets just as it does to ring circuits. Lighting circuits in domestic premises also require 30mA RCD protection where the circuit serves a zone where the risk of electric shock is increased (such as bathrooms) or where the cables are concealed in walls at a depth less than 50mm and do not have earthed metallic covering. In practice, most modern domestic installations provide 30mA RCD protection on all circuits using either a split-load consumer unit with RCDs or an RCBO board.',
   },
   {
     question: 'How do I test a radial circuit?',
@@ -467,7 +467,7 @@ const sections = [
                     Surge protection (SPD)
                   </SEOInternalLink>
                 </strong>{' '}
-                — BS 7671:2018+A3:2024 requires a risk assessment for surge protection on all new
+                — BS 7671:2018+A4:2026 requires a risk assessment for surge protection on all new
                 installations and alterations. Where the consequence of an overvoltage would be
                 serious, a Type 2 SPD must be installed at the origin.
               </span>

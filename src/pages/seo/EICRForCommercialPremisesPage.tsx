@@ -161,7 +161,7 @@ const sections = [
         <p>
           The EICR follows the same model forms as domestic inspections (set out in Appendix 6 of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
           ), but commercial inspections are significantly more complex. They typically involve
           three-phase distribution systems, multiple distribution boards, sub-distribution boards,

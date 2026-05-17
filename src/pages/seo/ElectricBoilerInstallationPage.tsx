@@ -266,7 +266,7 @@ const sections = [
         <p>
           Electric boiler installation is one of the more demanding domestic electrical jobs in
           terms of current-carrying requirements. The dedicated radial circuit must be sized
-          correctly and installed in accordance with BS 7671:2018+A3:2024.
+          correctly and installed in accordance with BS 7671:2018+A4:2026.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="text-lg font-semibold text-white mb-3">

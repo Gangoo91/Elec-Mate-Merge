@@ -41,7 +41,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Elec-Mate includes 8 specialist AI agents purpose-built for UK electricians — each one trained on BS 7671:2018+A3:2024 and real-world electrical practice.',
+  'Elec-Mate includes 8 specialist AI agents purpose-built for UK electricians — each one trained on BS 7671:2018+A4:2026 and real-world electrical practice.',
   'AI fault diagnosis cuts troubleshooting time by up to 60% by analysing symptoms against thousands of documented UK fault patterns and suggesting targeted test sequences.',
   'The AI Circuit Designer produces fully compliant circuit designs in under 30 seconds — cable sizes, protection devices, voltage drop, and Zs verification all calculated automatically.',
   'AI does not replace your professional judgement — it acts as a force multiplier, handling calculations and cross-referencing while you focus on practical decisions.',
@@ -57,7 +57,7 @@ const faqs = [
   {
     question: 'Is the AI accurate enough to trust for compliance decisions?',
     answer:
-      "The AI is trained specifically on BS 7671:2018+A3:2024, the IET On-Site Guide, GN3, and real-world UK electrical practice. Every response includes the specific regulation references so you can verify the AI's reasoning against the actual standard. The AI is a tool to support your professional judgement — it does the cross-referencing and calculation work, but you make the final decision. Think of it as having the brown book, On-Site Guide, and every Guidance Note instantly searchable and cross-referenced.",
+      "The AI is trained specifically on BS 7671:2018+A4:2026, the IET On-Site Guide, GN3, and real-world UK electrical practice. Every response includes the specific regulation references so you can verify the AI's reasoning against the actual standard. The AI is a tool to support your professional judgement — it does the cross-referencing and calculation work, but you make the final decision. Think of it as having the brown book, On-Site Guide, and every Guidance Note instantly searchable and cross-referenced.",
   },
   {
     question: 'Can the AI agents work offline on site?',
@@ -159,7 +159,7 @@ const sections = [
           Elec-Mate has built 8 specialist AI agents specifically for UK electricians. Each agent is
           trained on{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
           , the IET On-Site Guide, Guidance Notes, and real-world UK electrical practice. They are
           not generic chatbots — they are purpose-built tools that understand the difference between
@@ -296,7 +296,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Try all 8 AI agents free for 7 days"
-          description="Open Elec-Mate and explore the full suite of AI tools built specifically for UK electricians. Every agent is trained on BS 7671:2018+A3:2024."
+          description="Open Elec-Mate and explore the full suite of AI tools built specifically for UK electricians. Every agent is trained on BS 7671:2018+A4:2026."
           icon={Brain}
         />
       </>
@@ -587,7 +587,7 @@ export default function HowAIHelpsElectriciansPage() {
           <span className="text-yellow-400">Real World Uses in 2026</span>
         </>
       }
-      heroSubtitle="AI is not replacing electricians — it is making them faster, more accurate, and more profitable. Elec-Mate includes 8 specialist AI agents trained on BS 7671:2018+A3:2024, each designed to eliminate the time-consuming parts of the job: calculations, documentation, regulation lookups, fault diagnosis, and cost estimation."
+      heroSubtitle="AI is not replacing electricians — it is making them faster, more accurate, and more profitable. Elec-Mate includes 8 specialist AI agents trained on BS 7671:2018+A4:2026, each designed to eliminate the time-consuming parts of the job: calculations, documentation, regulation lookups, fault diagnosis, and cost estimation."
       readingTime={12}
       keyTakeaways={keyTakeaways}
       sections={sections}

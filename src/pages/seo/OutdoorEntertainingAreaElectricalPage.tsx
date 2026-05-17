@@ -156,7 +156,7 @@ const sections = [
         <p>
           Outdoor electrical installations must comply with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           Section 714 (outdoor lighting) and the general requirements for protection against
           electric shock in outdoor environments, including Regulation 411.3.3 (mandatory RCD

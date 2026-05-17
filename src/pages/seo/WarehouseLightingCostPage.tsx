@@ -397,7 +397,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 7671:2018+A3:2024</strong> — The wiring regulations covering the
+                <strong>BS 7671:2018+A4:2026</strong> — The wiring regulations covering the
                 electrical installation. RCD protection is required for lighting circuits in certain
                 circumstances per Regulation 411.3.3.
               </span>

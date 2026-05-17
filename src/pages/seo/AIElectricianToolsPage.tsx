@@ -53,7 +53,7 @@ const faqData = [
   {
     question: 'How is the AI trained on BS 7671 regulations?',
     answer:
-      'Each of the eight Elec-AI specialists is built on a large language model trained on the full text of BS 7671:2018+A3:2024, Amendment 3:2024, the IET On-Site Guide, IET Guidance Notes 1 through 8, and a curated library of real-world installation scenarios. The AI retrieves the exact regulation text before generating an answer, so responses cite specific regulation numbers (for example, Regulation 411.3.2 for disconnection time requirements). The knowledge base is updated whenever new amendments or guidance notes are published, and all responses include regulation references so you can verify them independently.',
+      'Each of the eight Elec-AI specialists is built on a large language model trained on the full text of BS 7671:2018+A4:2026, Amendment 3:2024, the IET On-Site Guide, IET Guidance Notes 1 through 8, and a curated library of real-world installation scenarios. The AI retrieves the exact regulation text before generating an answer, so responses cite specific regulation numbers (for example, Regulation 411.3.2 for disconnection time requirements). The knowledge base is updated whenever new amendments or guidance notes are published, and all responses include regulation references so you can verify them independently.',
   },
   {
     question: 'Can the AI Circuit Designer produce a complete consumer unit schedule?',
@@ -232,7 +232,7 @@ export default function AIElectricianToolsPage() {
             AI Tools Built for <span className="text-yellow-400">UK Electricians</span>
           </h1>
           <p className="text-lg text-white max-w-2xl mx-auto mb-8 leading-relaxed">
-            Eight purpose-built Elec-AI specialists trained on BS 7671:2018+A3:2024 (Amendment
+            Eight purpose-built Elec-AI specialists trained on BS 7671:2018+A4:2026 (Amendment
             3:2024), plus 12 AI-powered tools. Design circuits, quote jobs, get installation
             guidance, commission installations, plan maintenance, generate health and safety
             documents, diagnose faults, and look up regulations — all with regulation references you
@@ -521,9 +521,9 @@ export default function AIElectricianToolsPage() {
               the full scope of the IET Wiring Regulations and supporting guidance documents.
             </p>
             <p>
-              The core training data includes BS 7671:2018+A3:2024, which is the current 18th
+              The core training data includes BS 7671:2018+A4:2026, which is the current 18th
               Edition of the IET Wiring Regulations — the standard that governs every electrical
-              installation in the United Kingdom. It also includes Amendment 3:2024 (A3:2024),
+              installation in the United Kingdom. It also includes Amendment 3:2024 (A4:2026),
               issued on 31 July 2024, which adds Regulation 530.3.2 covering the requirements for
               bidirectional and unidirectional protective devices. This amendment is particularly
               relevant for installations with battery storage systems, solar PV, and other sources
@@ -542,8 +542,8 @@ export default function AIElectricianToolsPage() {
           </div>
           <div className="mt-8 grid sm:grid-cols-2 gap-4">
             {[
-              'BS 7671:2018+A3:2024 (18th Edition)',
-              'Amendment 3:2024 (A3:2024)',
+              'BS 7671:2018+A4:2026 (18th Edition)',
+              'Amendment 3:2024 (A4:2026)',
               'IET On-Site Guide',
               'IET Guidance Notes 1-8',
               'GN3: Inspection & Testing (9th Edition)',
@@ -594,6 +594,26 @@ export default function AIElectricianToolsPage() {
       </section>
 
       {/* CTA */}
+      
+
+      {/* Related pages — auto-injected for internal-link health (audit criterion #7).
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/guides/electrician-cv-guide">Electrician CV Guide 2026</SEOInternalLink>
+            <SEOInternalLink href="/guides/ai-tools-for-electricians">AI Tools for Electricians 2026</SEOInternalLink>
+            <SEOInternalLink href="/cis-guide-electrician">Construction Industry Scheme (CIS) Guide for Electricians UK</SEOInternalLink>
+            <SEOInternalLink href="/tools/cv-builder-electrician">CV Builder for Electricians</SEOInternalLink>
+            <SEOInternalLink href="/guides/commercial-electrician-guide">Commercial Electrician Guide</SEOInternalLink>
+            <SEOInternalLink href="/guides/domestic-electrician-guide">Domestic Electrician Guide UK 2026</SEOInternalLink>
+            <SEOInternalLink href="/compare/electrician-app-android">Best Electrician App for Android 2026</SEOInternalLink>
+            <SEOInternalLink href="/tools/electrician-app-iphone">Best Electrician App for iPhone 2026</SEOInternalLink>
+          </div>
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Ask your first question in 30 seconds"
         subheading="Join 1,000+ UK electricians using AI to save hours on design, quoting, and documentation. 7-day free trial, cancel anytime."

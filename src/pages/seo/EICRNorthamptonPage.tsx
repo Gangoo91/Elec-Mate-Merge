@@ -163,7 +163,7 @@ const sections = [
               <span>
                 <strong>Standards basis</strong> — EICRs are carried out in accordance with{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                  BS 7671:2018+A3:2024 (the IET Wiring Regulations, 18th Edition)
+                  BS 7671:2018+A4:2026 (the IET Wiring Regulations, 18th Edition)
                 </SEOInternalLink>
                 . The inspection scope, testing methodology, and observation coding system are
                 defined within BS 7671 and its associated guidance notes.

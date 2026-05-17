@@ -40,7 +40,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'The City & Guilds 2382 is the 18th Edition Wiring Regulations exam (BS 7671:2018+A3:2024). It is a requirement for most electricians working in the UK and is needed to join a competent person scheme such as NICEIC, NAPIT, or ELECSA.',
+  'The City & Guilds 2382 is the 18th Edition Wiring Regulations exam (BS 7671:2018+A4:2026). It is a requirement for most electricians working in the UK and is needed to join a competent person scheme such as NICEIC, NAPIT, or ELECSA.',
   'The exam is multiple choice, open book. You can take your copy of BS 7671 and the IET On-Site Guide into the exam. Tabbing and highlighting are permitted, but no loose notes or post-its.',
   'Common fail areas include Appendix 4 cable sizing questions, earth fault loop impedance calculations, discrimination between protective devices, and regulation cross-referencing under time pressure.',
   'Most candidates who fail do so because they run out of time — practise navigating BS 7671 quickly, not just reading it cover to cover.',
@@ -56,7 +56,7 @@ const faqs = [
   {
     question: 'Is the 2382 exam open book?',
     answer:
-      'Yes. You can bring your personal copy of BS 7671:2018+A3:2024 (the 18th Edition Wiring Regulations) and the IET On-Site Guide into the exam. You are allowed to highlight text, use coloured tabs, and write notes directly on the pages of the book. However, you cannot bring loose notes, post-it notes sticking out of the book, separate reference sheets, or any electronic devices. Some training centres provide copies if you do not have your own, but using your own tabbed and highlighted copy gives you a significant advantage.',
+      'Yes. You can bring your personal copy of BS 7671:2018+A4:2026 (the 18th Edition Wiring Regulations) and the IET On-Site Guide into the exam. You are allowed to highlight text, use coloured tabs, and write notes directly on the pages of the book. However, you cannot bring loose notes, post-it notes sticking out of the book, separate reference sheets, or any electronic devices. Some training centres provide copies if you do not have your own, but using your own tabbed and highlighted copy gives you a significant advantage.',
   },
   {
     question: 'How long should I study for the 2382 exam?',
@@ -76,7 +76,7 @@ const faqs = [
   {
     question: 'What is the difference between the 2382-22 and the old 2382-18?',
     answer:
-      'The 2382-18 covered BS 7671:2018 (the original 18th Edition). The 2382-22 covers BS 7671:2018+A3:2024, which includes all three amendments to the 18th Edition. Amendment 3 introduced significant changes including updated requirements for AFDDs (arc fault detection devices), solar PV and battery storage installations, prosumer installations, and updated Appendix 4 tables. If you passed the 2382-18, you do not need to resit the 2382-22 unless your competent person scheme requires it, but the C&G 2382-22 is the current version and is what training providers now deliver.',
+      'The 2382-18 covered BS 7671:2018 (the original 18th Edition). The 2382-22 covers BS 7671:2018+A4:2026, which includes all three amendments to the 18th Edition. Amendment 3 introduced significant changes including updated requirements for AFDDs (arc fault detection devices), solar PV and battery storage installations, prosumer installations, and updated Appendix 4 tables. If you passed the 2382-18, you do not need to resit the 2382-22 unless your competent person scheme requires it, but the C&G 2382-22 is the current version and is what training providers now deliver.',
   },
   {
     question: 'Can I take the 2382 exam online?',
@@ -151,7 +151,7 @@ const sections = [
         <p>
           The City & Guilds 2382 is the industry-standard exam on{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024 — the 18th Edition Wiring Regulations
+            BS 7671:2018+A4:2026 — the 18th Edition Wiring Regulations
           </SEOInternalLink>
           . It is the qualification that proves you understand the regulations governing electrical
           installations in the UK.
@@ -238,7 +238,7 @@ const sections = [
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">What You CAN Bring</h3>
             <ul className="space-y-2 text-white text-sm">
-              <li>BS 7671:2018+A3:2024 (your own copy)</li>
+              <li>BS 7671:2018+A4:2026 (your own copy)</li>
               <li>IET On-Site Guide (your own copy)</li>
               <li>Highlighting and underlining in the books</li>
               <li>Coloured tabs attached to pages</li>
@@ -572,7 +572,7 @@ export default function CityGuilds2382ExamGuidePage() {
   return (
     <GuideTemplate
       title="City & Guilds 2382 Exam Guide | 18th Edition Exam Tips UK"
-      description="Complete guide to the City & Guilds 2382 18th Edition exam. Exam format, open book rules, study tips, common fail areas, preparation timeline, and what to do after passing. Updated for BS 7671:2018+A3:2024."
+      description="Complete guide to the City & Guilds 2382 18th Edition exam. Exam format, open book rules, study tips, common fail areas, preparation timeline, and what to do after passing. Updated for BS 7671:2018+A4:2026."
       datePublished="2026-03-27"
       dateModified="2026-03-27"
       breadcrumbs={breadcrumbs}

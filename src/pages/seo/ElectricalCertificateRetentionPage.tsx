@@ -95,7 +95,7 @@ const sections = [
           installation work has been designed, installed, inspected, and tested to the standard
           required by{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           and, for domestic work, that it complies with{' '}
           <SEOInternalLink href="/guides/part-p-building-regulations">
@@ -482,7 +482,7 @@ const relatedPages = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Complete guide to BS 7671:2018+A3:2024 including certificate model forms.',
+    description: 'Complete guide to BS 7671:2018+A4:2026 including certificate model forms.',
     icon: ClipboardCheck,
     category: 'Guide',
   },

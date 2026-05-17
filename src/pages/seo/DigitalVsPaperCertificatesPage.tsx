@@ -54,7 +54,7 @@ const faqs = [
   {
     question: 'Are digital electrical certificates legally valid in the UK?',
     answer:
-      'Yes. There is no legal requirement for electrical certificates to be handwritten or printed on specific paper. BS 7671:2018+A3:2024 sets out model forms in Appendix 6, and any certificate that contains all the required information in the correct format is valid regardless of whether it was produced on paper or digitally. The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020 require landlords to provide tenants with a copy of the EICR — a PDF sent by email satisfies this requirement. NICEIC, NAPIT, and ELECSA all accept digital certificates submitted through their portals or produced by approved software. Building control bodies accept PDF certificates for Part P notification. The key requirement is content, not medium.',
+      'Yes. There is no legal requirement for electrical certificates to be handwritten or printed on specific paper. BS 7671:2018+A4:2026 sets out model forms in Appendix 6, and any certificate that contains all the required information in the correct format is valid regardless of whether it was produced on paper or digitally. The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020 require landlords to provide tenants with a copy of the EICR — a PDF sent by email satisfies this requirement. NICEIC, NAPIT, and ELECSA all accept digital certificates submitted through their portals or produced by approved software. Building control bodies accept PDF certificates for Part P notification. The key requirement is content, not medium.',
   },
   {
     question: 'Will NICEIC or NAPIT reject a digitally produced certificate?',
@@ -240,7 +240,7 @@ const sections = [
           certificates are legally valid. The answer is straightforward: yes, they are.
         </p>
         <p>
-          BS 7671:2018+A3:2024 sets out model forms in Appendix 6 for the{' '}
+          BS 7671:2018+A4:2026 sets out model forms in Appendix 6 for the{' '}
           <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>

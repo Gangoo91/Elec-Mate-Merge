@@ -38,9 +38,9 @@ const tocItems = [
 
 const keyTakeaways = [
   'A consumer unit replacement in Manchester typically costs between £450 and £2,300, generally 5% to 10% below London prices but in line with the national average for major cities.',
-  'Under Regulation 421.1.201 of BS 7671:2018+A3:2024, all domestic consumer units must be a type-tested coordinated assembly housed in a non-combustible (metal) enclosure.',
+  'Under Regulation 421.1.201 of BS 7671:2018+A4:2026, all domestic consumer units must be a type-tested coordinated assembly housed in a non-combustible (metal) enclosure.',
   'Consumer unit replacement is notifiable work under Part P of the Building Regulations. A registered electrician will self-certify through NICEIC, NAPIT, or ELECSA.',
-  'BS 7671:2018+A3:2024 requires 30 mA RCD protection for all socket-outlet circuits up to 32 A and for cables concealed in walls — covering virtually every circuit in a modern domestic installation.',
+  'BS 7671:2018+A4:2026 requires 30 mA RCD protection for all socket-outlet circuits up to 32 A and for cables concealed in walls — covering virtually every circuit in a modern domestic installation.',
   'Greater Manchester has a mix of Victorian terraces, inter-war semis, and post-war estates — each presenting different challenges for fuse board replacement.',
 ];
 
@@ -58,7 +58,7 @@ const faqs = [
   {
     question: 'Do I need RCD protection when replacing a consumer unit in Manchester?',
     answer:
-      'Yes. BS 7671:2018+A3:2024 requires 30 mA RCD protection for socket-outlet circuits rated up to 32 A and for cables concealed in walls at a depth less than 50 mm. Fitting individual RCBOs on every circuit is the preferred approach.',
+      'Yes. BS 7671:2018+A4:2026 requires 30 mA RCD protection for socket-outlet circuits rated up to 32 A and for cables concealed in walls at a depth less than 50 mm. Fitting individual RCBOs on every circuit is the preferred approach.',
   },
   {
     question: 'How long does a fuse board replacement take in Manchester?',
@@ -153,7 +153,7 @@ const sections = [
         <p>
           Under{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
           , Regulation 421.1.201 requires that consumer units in domestic premises be a type-tested
           coordinated assembly housed in a non-combustible (metal) enclosure. BS 7671 also requires

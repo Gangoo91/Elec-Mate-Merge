@@ -1,4 +1,6 @@
 import ToolTemplate from '@/pages/seo/templates/ToolTemplate';
+import { RecentReviews } from '@/components/seo/RecentReviews';
+import BatteryBackupCalculator from '@/components/apprentice/calculators/BatteryBackupCalculator';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import {
   Battery,
@@ -45,6 +47,7 @@ export default function BatteryBackupCalculatorPage() {
           Battery Bank Correctly
         </>
       }
+              calculator={<BatteryBackupCalculator />}
       heroSubtitle="Calculate the UPS rating and battery capacity needed to keep critical loads running during a power outage. Enter the load in watts or VA, choose the required runtime, and get an instant recommendation for UPS size and battery Ah. Part of Elec-Mate's 70+ calculators for UK electricians."
       heroFeaturePills={[
         { icon: Battery, label: 'Battery Sizing' },

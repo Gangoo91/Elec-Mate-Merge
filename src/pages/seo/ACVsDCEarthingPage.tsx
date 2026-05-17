@@ -140,7 +140,7 @@ const sections = [
           The critical distinction is the type of residual current that a fault can produce.
           Standard Type AC and Type A RCDs are designed for AC and pulsating DC fault currents.
           They cannot detect smooth DC fault currents — which can occur in three phase EV
-          chargers, solar PV inverters, and DC-coupled battery storage systems. BS 7671:2018+A3:2024
+          chargers, solar PV inverters, and DC-coupled battery storage systems. BS 7671:2018+A4:2026
           Regulation 411.3.3 and{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             Table 7.3(ii)

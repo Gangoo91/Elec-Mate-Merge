@@ -181,7 +181,7 @@ const sections = [
       <>
         <p>
           The C&G 2382 exam tests your knowledge of{' '}
-          <SEOInternalLink href="/guides/bs-7671-run-through">BS 7671:2018+A3:2024</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/bs-7671-run-through">BS 7671:2018+A4:2026</SEOInternalLink>{' '}
           — the regulations themselves, their application, and the principles behind them. Good mock
           exams should cover the full syllabus with appropriate weighting towards the high-frequency
           topics.
@@ -493,7 +493,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/bs-7671-run-through',
     title: 'BS 7671 Run-Through',
     description:
-      'Part-by-part study guide for BS 7671:2018+A3:2024. Key regulations and exam focus areas.',
+      'Part-by-part study guide for BS 7671:2018+A4:2026. Key regulations and exam focus areas.',
     icon: BookOpen,
     category: 'Guide',
   },

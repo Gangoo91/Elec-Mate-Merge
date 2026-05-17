@@ -40,7 +40,7 @@ const tocItems = [
 
 const keyTakeaways = [
   "A full house rewire in Brighton typically costs £3,000 to £7,000 depending on property size. Brighton and Hove labour rates are among the higher in the South of England, reflecting the city's proximity to London and strong local property market.",
-  'All rewiring work must comply with BS 7671:2018+A3:2024 and be notified under Part P of the Building Regulations 2010.',
+  'All rewiring work must comply with BS 7671:2018+A4:2026 and be notified under Part P of the Building Regulations 2010.',
   'NICEIC and NAPIT registered contractors can self-certify rewiring work in Brighton — they notify Brighton and Hove City Council building control on your behalf.',
   'Brighton has an exceptionally high proportion of Regency, Victorian, and Edwardian properties. The characteristic Brighton terrace with solid brick party walls and narrow rooms presents specific challenges for cable routing.',
   'The HMO and student rental market in Brighton and Hove is large. Landlords must hold a current EICR every five years under the 2020 Electrical Safety Standards Regulations.',
@@ -424,7 +424,7 @@ const sections = [
       <>
         <p>
           Part P of the Building Regulations 2010 applies across England including Brighton and
-          Hove. A full rewire is notifiable work and must comply with BS 7671:2018+A3:2024.
+          Hove. A full rewire is notifiable work and must comply with BS 7671:2018+A4:2026.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">

@@ -98,7 +98,7 @@ const features = [
     icon: Award,
     title: 'Part of 36+ Training Courses',
     description:
-      "PASMA training sits within Elec-Mate's library of 46+ courses, including IPAF, asbestos awareness, working at height, and BS 7671:2018+A3:2024.",
+      "PASMA training sits within Elec-Mate's library of 46+ courses, including IPAF, asbestos awareness, working at height, and BS 7671:2018+A4:2026.",
   },
 ];
 
@@ -452,6 +452,23 @@ export default function PASMATrainingPage() {
       </section>
 
       {/* CTA */}
+      
+
+      {/* Related pages — auto-injected for internal-link health (audit criterion #7).
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/tools/apprentice-training-app">Apprentice Training App</SEOInternalLink>
+            <SEOInternalLink href="/guides/on-the-job-training-guide">On-the-Job Training Guide</SEOInternalLink>
+            <SEOInternalLink href="/guides/best-electrical-training-app">Best Electrical Training App UK 2026</SEOInternalLink>
+            <SEOInternalLink href="/guides/off-job-training-hours">Off-the-Job Training Hours</SEOInternalLink>
+            <SEOInternalLink href="/guides/off-the-job-training-hours">Off-the-Job Training Hours</SEOInternalLink>
+          </div>
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Start Your PASMA Study Today"
         subheading="Join 1,000+ UK electricians using Elec-Mate for training and professional development. 7-day free trial, cancel anytime."

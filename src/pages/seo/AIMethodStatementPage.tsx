@@ -253,7 +253,7 @@ const sections = [
           sequence of work that accounts for the specific hazards identified in the risk assessment,
           following the principles set out in{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           and the Electricity at Work Regulations 1989.
         </p>

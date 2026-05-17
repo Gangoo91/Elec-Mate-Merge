@@ -47,7 +47,7 @@ const faqs = [
   {
     question: 'What qualifications do I need to join NAPIT?',
     answer:
-      'To join NAPIT as a domestic electrical installer, you need the 18th Edition (BS 7671:2018+A3:2024, C&G 2382), an inspection and testing qualification (C&G 2391 or C&G 2394/2395), and evidence of practical competence. This can come from a Level 3 NVQ in Electrotechnical Services with AM2 assessment, or from demonstrable experience as a qualified electrician. If you have been working as a qualified electrician for some years but do not hold a formal NVQ, NAPIT may accept a portfolio of evidence demonstrating your competence — though this route is assessed on a case-by-case basis. For the commercial and specialist schemes, additional qualifications may be required depending on the specific discipline.',
+      'To join NAPIT as a domestic electrical installer, you need the 18th Edition (BS 7671:2018+A4:2026, C&G 2382), an inspection and testing qualification (C&G 2391 or C&G 2394/2395), and evidence of practical competence. This can come from a Level 3 NVQ in Electrotechnical Services with AM2 assessment, or from demonstrable experience as a qualified electrician. If you have been working as a qualified electrician for some years but do not hold a formal NVQ, NAPIT may accept a portfolio of evidence demonstrating your competence — though this route is assessed on a case-by-case basis. For the commercial and specialist schemes, additional qualifications may be required depending on the specific discipline.',
   },
   {
     question: 'How long does NAPIT registration take?',

@@ -455,7 +455,7 @@ const sections = [
         </div>
         <p>
           The HSE publication HSG250 "Guidance on Permit-to-Work Systems" provides detailed guidance
-          on implementing effective permit systems. BS 7671:2018+A3:2024 Regulation 462 specifies
+          on implementing effective permit systems. BS 7671:2018+A4:2026 Regulation 462 specifies
           requirements for isolation and switching that directly feed into the electrical
           permit-to-work process.
         </p>

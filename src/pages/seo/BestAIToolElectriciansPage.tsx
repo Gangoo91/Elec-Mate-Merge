@@ -54,7 +54,7 @@ export default function BestAIToolElectriciansPage() {
       comparisonColumns={['Feature', 'Elec-Mate AI', 'ChatGPT', 'Google Gemini']}
       comparisonRows={[
         {
-          feature: 'BS 7671:2018+A3:2024 Knowledge',
+          feature: 'BS 7671:2018+A4:2026 Knowledge',
           values: ['Trained on full standard', 'General awareness only', 'General awareness only'],
         },
         { feature: 'Circuit Design Agent', values: [true, false, false] },
@@ -110,7 +110,7 @@ export default function BestAIToolElectriciansPage() {
             <>
               <p>
                 <strong>Elec-Mate AI</strong> — 8 specialist AI agents and 12 AI-powered tools built
-                exclusively for UK electricians. Trained on BS 7671:2018+A3:2024, GN3, On-Site
+                exclusively for UK electricians. Trained on BS 7671:2018+A4:2026, GN3, On-Site
                 Guide, and real UK trade pricing data. Integrated with certificates, calculators,
                 and business tools. From £5.99/month.
               </p>
@@ -148,14 +148,14 @@ export default function BestAIToolElectriciansPage() {
               <p>
                 ChatGPT and Gemini have general awareness of electrical concepts from their web
                 training data, but they frequently produce regulation numbers that do not exist,
-                confuse different editions of BS 7671, and lack knowledge of Amendment 3 (A3:2024)
+                confuse different editions of BS 7671, and lack knowledge of Amendment 3 (A4:2026)
                 which added Regulation 530.3.2 for bidirectional devices. When asked specific
                 questions about Zs limits, cable grouping factors, or disconnection times, they
                 often hallucinate values that are close but incorrect — the most dangerous kind of
                 error.
               </p>
               <p>
-                Elec-Mate AI is trained on the complete BS 7671:2018+A3:2024 standard, GN3 (Guidance
+                Elec-Mate AI is trained on the complete BS 7671:2018+A4:2026 standard, GN3 (Guidance
                 Note 3: Inspection and Testing), and the On-Site Guide. Its responses reference
                 specific regulation numbers, table values, and appendix data that have been verified
                 against the source material. It also integrates with over 70 BS 7671 calculators, so
@@ -233,7 +233,7 @@ export default function BestAIToolElectriciansPage() {
         {
           question: 'What is the best AI tool for electricians in 2026?',
           answer:
-            'Elec-Mate AI is the best AI tool specifically for electricians. It includes 8 specialist agents trained on BS 7671:2018+A3:2024, real UK trade pricing data, and electrical industry knowledge. Unlike ChatGPT and Google Gemini, Elec-Mate AI integrates with electrical certificates, calculators, and business tools, making it a practical daily tool rather than just a chatbot.',
+            'Elec-Mate AI is the best AI tool specifically for electricians. It includes 8 specialist agents trained on BS 7671:2018+A4:2026, real UK trade pricing data, and electrical industry knowledge. Unlike ChatGPT and Google Gemini, Elec-Mate AI integrates with electrical certificates, calculators, and business tools, making it a practical daily tool rather than just a chatbot.',
         },
         {
           question: 'Can I use ChatGPT for electrical work?',
@@ -243,7 +243,7 @@ export default function BestAIToolElectriciansPage() {
         {
           question: 'Does Elec-Mate AI know about BS 7671 Amendment 3?',
           answer:
-            'Yes. Elec-Mate AI is trained on BS 7671:2018+A3:2024, including the latest amendment which added Regulation 530.3.2 for bidirectional and unidirectional devices. ChatGPT and Gemini have limited or no knowledge of Amendment 3, as their training data may not include this recent update issued in July 2024.',
+            'Yes. Elec-Mate AI is trained on BS 7671:2018+A4:2026, including the latest amendment which added Regulation 530.3.2 for bidirectional and unidirectional devices. ChatGPT and Gemini have limited or no knowledge of Amendment 3, as their training data may not include this recent update issued in July 2024.',
         },
         {
           question: 'How does the AI Cost Engineer work?',

@@ -1,4 +1,6 @@
 import ToolTemplate from '@/pages/seo/templates/ToolTemplate';
+import { RecentReviews } from '@/components/seo/RecentReviews';
+import TransformerCalculator from '@/components/apprentice/calculators/TransformerCalculator';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import {
   Calculator,
@@ -46,6 +48,7 @@ export default function TransformerSizingCalculatorPage() {
           Rating Every Time
         </>
       }
+              calculator={<TransformerCalculator />}
       heroSubtitle="Enter the connected load, power factor, and diversity. The calculator determines the correct transformer kVA rating for single-phase or three-phase installations, applies standard oversize factors, and selects from standard transformer ratings. No more undersized or oversized transformers."
       heroFeaturePills={[
         { icon: Zap, label: 'kVA Rating' },

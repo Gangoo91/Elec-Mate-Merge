@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Full guide to BS 7671:2018+A3:2024 including cable selection requirements.',
+    description: 'Full guide to BS 7671:2018+A4:2026 including cable selection requirements.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -136,7 +136,7 @@ const sections = [
           and LSOH (Low Smoke Zero Halogen). Each has distinct properties that affect where and
           how it can be used under{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           and the Construction Products Regulation (CPR).
         </p>

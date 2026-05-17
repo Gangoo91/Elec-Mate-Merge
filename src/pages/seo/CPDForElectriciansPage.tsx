@@ -37,7 +37,7 @@ const tocItems = [
 const keyTakeaways = [
   'CPD (Continuing Professional Development) is a requirement for all electricians registered with competent person schemes. NICEIC requires a minimum of 30 hours per year. NAPIT and other schemes have similar requirements.',
   'CPD covers much more than formal courses — it includes self-study, on-the-job learning, manufacturer training, trade events, mentoring, and online platforms like Elec-Mate. All count towards your annual hours.',
-  'The most valuable CPD topics for 2026 include BS 7671:2018+A3:2024 updates, EV charging installation, solar PV systems, fire alarm design, battery storage, and energy efficiency regulations.',
+  'The most valuable CPD topics for 2026 include BS 7671:2018+A4:2026 updates, EV charging installation, solar PV systems, fire alarm design, battery storage, and energy efficiency regulations.',
   'Recording CPD is essential. You need evidence of what you studied, when, how long, and what you learned. Elec-Mate tracks study hours automatically and generates CPD records you can show at your scheme assessment.',
   'Elec-Mate has 46+ courses across apprentice, professional upskilling, general upskilling, and personal development categories. Study on your phone between jobs — every minute counts towards your CPD hours.',
 ];
@@ -79,7 +79,7 @@ const relatedPages = [
   {
     href: '/eighteenth-edition-course',
     title: '18th Edition Course',
-    description: 'BS 7671:2018+A3:2024 wiring regulations course with practice exams.',
+    description: 'BS 7671:2018+A4:2026 wiring regulations course with practice exams.',
     icon: BookOpen,
     category: 'Course',
   },
@@ -166,7 +166,7 @@ const sections = [
           <strong>Regulatory changes:</strong>{' '}
           <SEOInternalLink href="/eighteenth-edition-course">BS 7671</SEOInternalLink> is
           amended regularly. Amendment 3 was issued in July 2024, adding requirements for
-          bidirectional and unidirectional devices (Section 530, A3:2024 addition). Amendment 4 is
+          bidirectional and unidirectional devices (Section 530, A4:2026 addition). Amendment 4 is
           expected in 2026. Each amendment changes how installations must be designed, installed,
           and tested. If you are not aware of the changes, you risk non-compliant work — which can
           fail scheme inspections, invalidate certificates, and create liability issues.
@@ -307,7 +307,7 @@ const sections = [
           have the biggest impact on your career.
         </p>
         <p>
-          <strong>BS 7671:2018+A3:2024 Update:</strong> If you qualified before Amendment 3 was
+          <strong>BS 7671:2018+A4:2026 Update:</strong> If you qualified before Amendment 3 was
           issued in July 2024, you need to understand the changes — including the new requirements
           for bidirectional and unidirectional devices. The{' '}
           <SEOInternalLink href="/eighteenth-edition-course">
@@ -458,7 +458,7 @@ const sections = [
           apprentices or refreshing their own foundational knowledge.
         </p>
         <p>
-          <strong>Professional upskilling:</strong> BS 7671 18th Edition (including A3:2024),
+          <strong>Professional upskilling:</strong> BS 7671 18th Edition (including A4:2026),
           Inspection and Testing, EV Charging installation, Solar PV systems, Fire Alarm design (BS
           5839), Emergency Lighting (BS 5266), and BMS fundamentals. These are the specialist
           courses that expand your service offering and increase your earning potential.

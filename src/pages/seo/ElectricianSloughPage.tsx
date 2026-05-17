@@ -324,7 +324,7 @@ const sections = [
       <>
         <p>
           All domestic electrical work in Slough must comply with Part P of the Building Regulations
-          and BS 7671:2018+A3:2024. Key points:
+          and BS 7671:2018+A4:2026. Key points:
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">

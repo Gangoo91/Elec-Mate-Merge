@@ -34,7 +34,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Electric underfloor heating (UFH) falls under BS 7671:2018+A3:2024 Section 753 (Heating Cables and Embedded Heating Systems), which imposes additional requirements beyond those for standard fixed heating circuits, including temperature limiting thermostats and specific installation depths.',
+  'Electric underfloor heating (UFH) falls under BS 7671:2018+A4:2026 Section 753 (Heating Cables and Embedded Heating Systems), which imposes additional requirements beyond those for standard fixed heating circuits, including temperature limiting thermostats and specific installation depths.',
   'Mat systems (pre-spaced heating cable on a fibreglass mesh) are faster to install in regular-shaped rooms; loose wire systems are better suited to irregular spaces and provide greater control over watt density. Both types must be installed in accordance with the manufacturer instructions.',
   'A temperature limiting thermostat (floor sensor) is mandatory under BS 7671 Regulation 753.424 to prevent overheating of the floor construction and cable sheath. Standard air-sensing thermostats are insufficient on their own for floors containing UFH cable.',
   'Every electric UFH circuit must be protected by a 30mA RCD (typically an RCBO at the consumer unit) per BS 7671 Regulation 411.3.3. A separate dedicated circuit from the consumer unit is strongly recommended for UFH rather than connecting to an existing ring main.',
@@ -45,7 +45,7 @@ const faqs = [
   {
     question: 'What is BS 7671 Regulation 753 and why does it apply to underfloor heating?',
     answer:
-      'BS 7671:2018+A3:2024 Section 753 covers heating cables, heating units, and embedded heating systems — a category that includes electric underfloor heating mats and loose wire systems. The section imposes requirements specifically for this type of installation because heating elements embedded in or beneath floor constructions present risks of overheating the floor, adjacent combustible materials, and the cable sheath itself. Key requirements include the use of temperature limiting devices (Regulation 753.424), minimum installation depths for different floor types, and that the system cannot be covered by fixed thermal insulation on the floor above the element. Regulation 753.2 also requires that the manufacturer instructions are followed, as these form part of the compliance evidence.',
+      'BS 7671:2018+A4:2026 Section 753 covers heating cables, heating units, and embedded heating systems — a category that includes electric underfloor heating mats and loose wire systems. The section imposes requirements specifically for this type of installation because heating elements embedded in or beneath floor constructions present risks of overheating the floor, adjacent combustible materials, and the cable sheath itself. Key requirements include the use of temperature limiting devices (Regulation 753.424), minimum installation depths for different floor types, and that the system cannot be covered by fixed thermal insulation on the floor above the element. Regulation 753.2 also requires that the manufacturer instructions are followed, as these form part of the compliance evidence.',
   },
   {
     question: 'What is the difference between a mat system and a loose wire UFH system?',
@@ -361,7 +361,7 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671:2018+A3:2024 Section 701 sets out special requirements for locations containing a
+          BS 7671:2018+A4:2026 Section 701 sets out special requirements for locations containing a
           bath or shower. Electric UFH in bathrooms is permitted but subject to specific zone
           restrictions.
         </p>
@@ -415,7 +415,7 @@ const sections = [
     content: (
       <>
         <p>
-          Section 753 of BS 7671:2018+A3:2024 is the primary standard for electric underfloor
+          Section 753 of BS 7671:2018+A4:2026 is the primary standard for electric underfloor
           heating installations. It supplements the general requirements of the Wiring Regulations
           with specific provisions for embedded heating systems.
         </p>

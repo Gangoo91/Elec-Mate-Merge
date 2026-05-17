@@ -34,7 +34,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Commercial office fit-outs are governed by BS 7671:2018+A3:2024 for electrical installation, BS 5266-1:2016 for emergency lighting, and the Workplace (Health, Safety and Welfare) Regulations 1992 for general workplace standards. Building Regulations Part L applies for lighting energy efficiency.',
+  'Commercial office fit-outs are governed by BS 7671:2018+A4:2026 for electrical installation, BS 5266-1:2016 for emergency lighting, and the Workplace (Health, Safety and Welfare) Regulations 1992 for general workplace standards. Building Regulations Part L applies for lighting energy efficiency.',
   'Open plan offices require careful power distribution planning: floor boxes, dado trunking, and overhead trunking serve different desk layouts and flexibility requirements. Floor box positioning should be agreed with the space planner before installation.',
   'PAT testing (portable appliance testing) is not a legal requirement in itself, but employers have a duty under the Electricity at Work Regulations 1989 to maintain electrical equipment in safe condition. PAT testing is the recognised method for demonstrating compliance with this duty.',
   'Emergency lighting must be provided in all escape routes, open plan areas exceeding 60m\u00b2, and toilet facilities for disabled persons per BS 5266-1:2016. Self-contained emergency luminaires must be tested monthly (flick test) and annually (full duration discharge test).',
@@ -45,7 +45,7 @@ const faqs = [
   {
     question: 'What electrical standards apply to office fit-out projects?',
     answer:
-      'Office electrical fit-outs must comply with BS 7671:2018+A3:2024 (the Wiring Regulations) for all fixed electrical installation work. In England, Building Regulations Part P applies to electrical work in domestic dwellings, but commercial offices are governed instead by the Electricity at Work Regulations 1989, which requires all electrical systems to be constructed, maintained, and operated safely. Building Regulations Part B (fire safety), Part L (energy efficiency of fixed building services), and Part M (access) also apply. Emergency lighting must meet BS 5266-1:2016. Structured cabling for data networks follows BS EN 50174 and the TIA/EIA 568 standards.',
+      'Office electrical fit-outs must comply with BS 7671:2018+A4:2026 (the Wiring Regulations) for all fixed electrical installation work. In England, Building Regulations Part P applies to electrical work in domestic dwellings, but commercial offices are governed instead by the Electricity at Work Regulations 1989, which requires all electrical systems to be constructed, maintained, and operated safely. Building Regulations Part B (fire safety), Part L (energy efficiency of fixed building services), and Part M (access) also apply. Emergency lighting must meet BS 5266-1:2016. Structured cabling for data networks follows BS EN 50174 and the TIA/EIA 568 standards.',
   },
   {
     question: 'How many power outlets does an office workstation need?',
@@ -169,7 +169,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          All distribution schemes must comply with BS 7671:2018+A3:2024. Circuits feeding office
+          All distribution schemes must comply with BS 7671:2018+A4:2026. Circuits feeding office
           socket outlets are typically 32A ring mains or 20A radials, each protecting a defined
           floor area. The circuit schedule should be documented on an{' '}
           <SEOInternalLink

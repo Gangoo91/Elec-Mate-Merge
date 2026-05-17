@@ -160,7 +160,7 @@ const sections = [
           dedicated radial circuit from the consumer unit with appropriate cable sizing, RCD
           protection compliant with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
           , and a lockable isolator within sight of the tub. The installation must be notified under
           Part P of the Building Regulations as it involves a special location.

@@ -162,7 +162,7 @@ const sections = [
           competent person scheme, or inspected and approved by building control. The technical
           standard that the work must comply with is{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           (the IET Wiring Regulations, 18th Edition with Amendment 3).
         </p>

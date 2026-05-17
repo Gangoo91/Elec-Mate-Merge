@@ -89,7 +89,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Complete guide to BS 7671:2018+A3:2024 — the 18th Edition wiring regulations.',
+    description: 'Complete guide to BS 7671:2018+A4:2026 — the 18th Edition wiring regulations.',
     icon: BookOpen,
     category: 'Guide',
   },

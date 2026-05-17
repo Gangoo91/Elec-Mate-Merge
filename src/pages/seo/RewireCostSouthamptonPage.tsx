@@ -39,7 +39,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'A full house rewire in Southampton typically costs £2,800 to £6,500 depending on property size. Hampshire labour rates are broadly in line with the South of England average.',
-  'All rewiring work must comply with BS 7671:2018+A3:2024 and be notified under Part P of the Building Regulations 2010.',
+  'All rewiring work must comply with BS 7671:2018+A4:2026 and be notified under Part P of the Building Regulations 2010.',
   'NICEIC and NAPIT registered contractors can self-certify rewiring work in Southampton — they notify Southampton City Council building control on your behalf.',
   'Southampton has a large stock of interwar and post-war housing in areas such as Shirley, Bitterne, and Woolston that may retain wiring from the 1940s to 1970s requiring assessment or rewiring.',
   "The port city's maritime and industrial heritage means some older commercial-to-residential conversions in the waterfront areas may have complex or non-standard wiring requiring specialist assessment.",
@@ -352,8 +352,7 @@ const sections = [
       <>
         <p>
           Part P of the Building Regulations 2010 applies to all fixed electrical installation work
-          in dwellings in England. A full rewire is notifiable work and must comply with BS
-          7671:2018+A3:2024.
+          in dwellings in England. A full rewire is notifiable work and must comply with BS 7671:2018+A4:2026.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">

@@ -400,7 +400,7 @@ export default function AIMaintenanceSpecialistPage() {
   return (
     <ToolTemplate
       title="AI Maintenance Specialist | Electrical Systems"
-      description="Plan and execute electrical maintenance programmes with AI tailored for UK installations. Intelligent scheduling, fault prediction, condition monitoring, and compliance tracking to BS 7671:2018+A3:2024."
+      description="Plan and execute electrical maintenance programmes with AI tailored for UK installations. Intelligent scheduling, fault prediction, condition monitoring, and compliance tracking to BS 7671:2018+A4:2026."
       datePublished="2025-08-01"
       dateModified="2026-02-13"
       breadcrumbs={breadcrumbs}
@@ -413,7 +413,7 @@ export default function AIMaintenanceSpecialistPage() {
           <span className="text-yellow-400">Predict Faults Before They Happen</span>
         </>
       }
-      heroSubtitle="Generate tailored maintenance schedules, predict developing faults through trend analysis, and track compliance across all your installations — all aligned with BS 7671:2018+A3:2024 and UK statutory testing requirements."
+      heroSubtitle="Generate tailored maintenance schedules, predict developing faults through trend analysis, and track compliance across all your installations — all aligned with BS 7671:2018+A4:2026 and UK statutory testing requirements."
       heroFeaturePills={[
         { icon: Calendar, label: 'Smart Scheduling' },
         { icon: TrendingUp, label: 'Fault Prediction' },

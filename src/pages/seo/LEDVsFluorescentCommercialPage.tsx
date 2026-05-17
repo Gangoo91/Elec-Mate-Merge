@@ -99,7 +99,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Full guide to BS 7671:2018+A3:2024 including lighting circuit requirements.',
+    description: 'Full guide to BS 7671:2018+A4:2026 including lighting circuit requirements.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -136,7 +136,7 @@ const sections = [
           lamps. This guide covers everything needed to design, install, and certify a commercial
           LED upgrade under{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
           .
         </p>
@@ -356,7 +356,7 @@ const sections = [
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>BS 7671:2018+A3:2024</strong> — governs the electrical installation. Lighting circuits must comply with all relevant sections including overcurrent protection, RCD requirements, and inspection and testing requirements.</span>
+              <span><strong>BS 7671:2018+A4:2026</strong> — governs the electrical installation. Lighting circuits must comply with all relevant sections including overcurrent protection, RCD requirements, and inspection and testing requirements.</span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />

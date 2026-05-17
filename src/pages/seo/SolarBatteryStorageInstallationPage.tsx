@@ -78,7 +78,7 @@ const faqs = [
   {
     question: 'What electrical regulations apply to battery storage installations?',
     answer:
-      "Battery storage installations must comply with BS 7671:2018+A3:2024, including Section 712 (for DC-coupled systems connected to a PV array) and relevant sections covering energy storage systems. The installation must be notified under the building regulations (Part P in England) via a competent person scheme such as NICEIC or NAPIT. Batteries must be installed in accordance with the manufacturer's requirements — including ventilation, temperature ranges, and separation distances. Large battery systems in commercial settings may require a fire risk assessment under BS EN 62619.",
+      "Battery storage installations must comply with BS 7671:2018+A4:2026, including Section 712 (for DC-coupled systems connected to a PV array) and relevant sections covering energy storage systems. The installation must be notified under the building regulations (Part P in England) via a competent person scheme such as NICEIC or NAPIT. Batteries must be installed in accordance with the manufacturer's requirements — including ventilation, temperature ranges, and separation distances. Large battery systems in commercial settings may require a fire risk assessment under BS EN 62619.",
   },
 ];
 

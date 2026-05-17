@@ -59,7 +59,7 @@ const faqs = [
   {
     question: 'What is a special location under BS 7671?',
     answer:
-      'A special location is any installation or location where the risk of electric shock is increased compared with a standard domestic or commercial environment. Part 7 of BS 7671:2018+A3:2024 identifies these locations and provides supplementary or amended regulations that apply in addition to the general requirements of Parts 1 to 6. The increased risk may be due to the presence of water (bathrooms, swimming pools), reduced body resistance (saunas), restricted movement (confined spaces), environmental conditions (construction sites, agricultural premises), or the temporary nature of the installation (exhibitions, shows). The electrician must apply the general requirements of BS 7671 first, then apply the additional Part 7 requirements on top. Where a Part 7 regulation contradicts a general regulation, the Part 7 regulation takes precedence for that location.',
+      'A special location is any installation or location where the risk of electric shock is increased compared with a standard domestic or commercial environment. Part 7 of BS 7671:2018+A4:2026 identifies these locations and provides supplementary or amended regulations that apply in addition to the general requirements of Parts 1 to 6. The increased risk may be due to the presence of water (bathrooms, swimming pools), reduced body resistance (saunas), restricted movement (confined spaces), environmental conditions (construction sites, agricultural premises), or the temporary nature of the installation (exhibitions, shows). The electrician must apply the general requirements of BS 7671 first, then apply the additional Part 7 requirements on top. Where a Part 7 regulation contradicts a general regulation, the Part 7 regulation takes precedence for that location.',
   },
   {
     question: 'Do bathroom regulations apply to a downstairs cloakroom with just a basin?',
@@ -82,9 +82,9 @@ const faqs = [
       'Section 712 covers safety requirements for the electrical installation of solar photovoltaic (PV) power supply systems. Key requirements include: DC isolator switches must be installed between the PV array and the inverter, accessible and clearly labelled. String overcurrent protection must be provided where multiple strings are connected in parallel. The installation must include warning labels at the consumer unit, meter position, and inverter location indicating the presence of a dual supply. All DC cables must be adequately protected against mechanical damage and be of the double-insulated type. Fire safety considerations require that PV cables on or within a building use cables with reduced fire propagation. Earthing and bonding of the PV array frame must comply with the general requirements and any manufacturer instructions. The inverter must disconnect automatically if the mains supply fails (G98/G99 compliance).',
   },
   {
-    question: 'How does Amendment 3 (A3:2024) affect special locations?',
+    question: 'How does Amendment 3 (A4:2026) affect special locations?',
     answer:
-      'Amendment 3 to BS 7671:2018 (published 31 July 2024) primarily introduces new requirements in Section 530 addressing bidirectional and unidirectional protective devices. While A3:2024 does not make sweeping changes to Part 7 itself, it affects special locations indirectly. For solar PV installations (712), the clarification around bidirectional devices is particularly relevant because PV systems export power back through the consumer unit. Electricians working on special locations should ensure they have access to the full text of BS 7671:2018+A2:2022+A3:2024 and are aware of the new A3:2024 requirements. Elec-Mate AI regulations lookup always references the latest edition including all amendments.',
+      'Amendment 3 to BS 7671:2018 (published 31 July 2024) primarily introduces new requirements in Section 530 addressing bidirectional and unidirectional protective devices. While A4:2026 does not make sweeping changes to Part 7 itself, it affects special locations indirectly. For solar PV installations (712), the clarification around bidirectional devices is particularly relevant because PV systems export power back through the consumer unit. Electricians working on special locations should ensure they have access to the full text of BS 7671:2018+A2:2022+A4:2026 and are aware of the new A4:2026 requirements. Elec-Mate AI regulations lookup always references the latest edition including all amendments.',
   },
 ];
 
@@ -152,7 +152,7 @@ const sections = [
         <p>
           Part 7 of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           contains supplementary regulations for special installations and locations. These are
           environments where the general rules of Parts 1 to 6 are not sufficient on their own
@@ -712,10 +712,10 @@ const sections = [
           </ul>
         </div>
         <p>
-          Amendment 3 (A3:2024) introduces new requirements in Section 530 regarding bidirectional protective
+          Amendment 3 (A4:2026) introduces new requirements in Section 530 regarding bidirectional protective
           devices, which is directly relevant to PV installations where power flows both into and
           out of the consumer unit. Electricians installing or inspecting PV systems must be aware
-          of this A3:2024 addition.
+          of this A4:2026 addition.
         </p>
         <SEOAppBridge
           title="Look up any PV regulation instantly"
@@ -822,7 +822,7 @@ export default function SpecialLocationsPart7Page() {
           <span className="text-yellow-400">Every Section Explained for UK Electricians</span>
         </>
       }
-      heroSubtitle="Part 7 of BS 7671:2018+A3:2024 contains supplementary regulations for locations where the risk of electric shock is increased. Bathrooms, swimming pools, saunas, construction sites, agricultural premises, caravan parks, marinas, exhibitions, and solar PV installations all have specific requirements. This guide covers every section."
+      heroSubtitle="Part 7 of BS 7671:2018+A4:2026 contains supplementary regulations for locations where the risk of electric shock is increased. Bathrooms, swimming pools, saunas, construction sites, agricultural premises, caravan parks, marinas, exhibitions, and solar PV installations all have specific requirements. This guide covers every section."
       readingTime={12}
       keyTakeaways={keyTakeaways}
       sections={sections}

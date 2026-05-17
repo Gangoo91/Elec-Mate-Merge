@@ -50,7 +50,7 @@ const faqs = [
   {
     question: 'What does Regulation 643.5 require?',
     answer:
-      'BS 7671:2018+A3:2024 Regulation 643.5 requires that the polarity of the installation is verified by inspection and testing. Specifically: all fuses and single-pole control devices must be connected in the line conductor only; the centre contact of Edison screw lamp holders must be connected to the line conductor; and the correct polarity of socket outlets must be verified. The test must confirm that the line conductor is at line potential and the neutral conductor is at neutral potential at every accessible test point. On an initial inspection, this must be verified throughout the installation before the certificate is issued. On an EICR, polarity is verified at a representative sample of accessories.',
+      'BS 7671:2018+A4:2026 Regulation 643.5 requires that the polarity of the installation is verified by inspection and testing. Specifically: all fuses and single-pole control devices must be connected in the line conductor only; the centre contact of Edison screw lamp holders must be connected to the line conductor; and the correct polarity of socket outlets must be verified. The test must confirm that the line conductor is at line potential and the neutral conductor is at neutral potential at every accessible test point. On an initial inspection, this must be verified throughout the installation before the certificate is issued. On an EICR, polarity is verified at a representative sample of accessories.',
   },
   {
     question: 'How do I carry out a live polarity test?',
@@ -150,7 +150,7 @@ const sections = [
           when replacing a light bulb in a lamp holder — is at risk of electric shock.
         </p>
         <p>
-          BS 7671:2018+A3:2024 Regulation 643.5 requires that polarity is verified on all circuits
+          BS 7671:2018+A4:2026 Regulation 643.5 requires that polarity is verified on all circuits
           as part of the initial verification of a new installation and as part of periodic
           inspection and testing (EICR). The test is carried out in two stages: visual inspection
           before energising, and live electrical testing after energising.
@@ -322,7 +322,7 @@ const sections = [
     heading: 'Regulation 643.5 — What It Requires',
     content: (
       <>
-        <p>BS 7671:2018+A3:2024 Regulation 643.5 states that verification shall be made that:</p>
+        <p>BS 7671:2018+A4:2026 Regulation 643.5 states that verification shall be made that:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">

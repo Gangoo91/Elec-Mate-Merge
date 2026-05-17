@@ -658,6 +658,24 @@ export default function AM2ExamPreparationPage() {
       </section>
 
       {/* CTA */}
+      
+
+      {/* Related pages — auto-injected for internal-link health (audit criterion #7).
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/guides/am2-assessment-preparation">AM2 Assessment Preparation Guide UK</SEOInternalLink>
+            <SEOInternalLink href="/guides/am2-exam-tips">AM2 Exam Tips 2026</SEOInternalLink>
+            <SEOInternalLink href="/guides/am2-simulator-guide">AM2 Simulator</SEOInternalLink>
+            <SEOInternalLink href="/guides/2391-exam-tips">2391 Exam Tips</SEOInternalLink>
+            <SEOInternalLink href="/guides/city-guilds-2382-exam-guide">City & Guilds 2382 Exam Guide</SEOInternalLink>
+            <SEOInternalLink href="/guides/18th-edition-exam-tips">18th Edition Exam Tips</SEOInternalLink>
+          </div>
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Pass the AM2 first time"
         subheading="Join 1,000+ UK electricians preparing for assessments and qualifications. 7-day free trial, cancel anytime."

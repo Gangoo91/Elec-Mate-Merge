@@ -38,7 +38,7 @@ const keyTakeaways = [
   'Smart switches replace the existing wall switch and control the light fitting via the mains wiring — the fitting itself can use any lamp type. Smart switches require a neutral wire at the switch position, which is not present in most UK single-gang switch wiring (which uses a switch-drop cable with no neutral).',
   'Smart bulbs replace the lamp in an existing fitting and contain the wireless radio and control circuitry within the bulb itself. The wall switch must remain permanently on — operating the wall switch cuts power and disconnects the smart bulb from the network.',
   'The absence of a neutral wire at the switch is the fundamental constraint that determines whether a smart switch can be installed without additional wiring. Many UK switches are wired with a two-core cable (switch-drop method) leaving only a switched live and an unswitched live at the switch — no neutral.',
-  'BS 7671:2018+A3:2024 requires that all replacement wiring accessories comply with applicable standards. Smart switches must be CE or UKCA marked and installed in accordance with the manufacturer installation instructions.',
+  'BS 7671:2018+A4:2026 requires that all replacement wiring accessories comply with applicable standards. Smart switches must be CE or UKCA marked and installed in accordance with the manufacturer installation instructions.',
   'For professional smart home installations, wiring new build and renovation projects with four-core cable to all switch positions (providing L, N, switched L, and CPC) is best practice — it enables any smart switch technology to be used without rewiring later.',
 ];
 
@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Full guide to BS 7671:2018+A3:2024 for all installation types.',
+    description: 'Full guide to BS 7671:2018+A4:2026 for all installation types.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -139,7 +139,7 @@ const sections = [
           Understanding the technical constraints of each approach — and the wiring requirements
           under{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           — enables electricians to advise customers correctly and deliver reliable
           smart lighting installations. This guide covers the technical differences, the

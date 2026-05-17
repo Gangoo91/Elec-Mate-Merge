@@ -198,7 +198,7 @@ const sections = [
         <p>
           The City & Guilds 2382 exam tests your knowledge and understanding of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           — the IET Wiring Regulations, 18th Edition with Amendment 3. It is a 2-hour, 60-question
           multiple-choice exam. The pass mark is typically 60% (36 out of 60 correct answers).

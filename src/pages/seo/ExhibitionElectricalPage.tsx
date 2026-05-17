@@ -172,7 +172,7 @@ const sections = [
         <p>
           Electricians working on temporary event installations should be familiar with BS 7909,{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
           , and the Electricity at Work Regulations 1989. The IET has published guidance notes
           specific to entertainment installations.

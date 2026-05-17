@@ -40,7 +40,7 @@ const keyTakeaways = [
   'A 7kW home EV charger installation in York typically costs £800 to £1,150 all-in — competitive North of England pricing — with OZEV grants of up to £350 available for eligible properties.',
   'City of York Council has set an ambitious net zero target and has been expanding public EV charging infrastructure, but home charging remains far cheaper — overnight EV tariff rates can reduce fuel costs by 75% versus public rapid chargers.',
   'York has extensive conservation areas and a high density of listed buildings — properties in conservation areas or listed buildings may require planning consent before EV charger installation.',
-  'All EV charger installations must comply with BS 7671:2018+A3:2024 Section 722, including a dedicated circuit, RCD protection under Regulation 722.531.2, and a PME earthing assessment under Regulation 722.411.4.',
+  'All EV charger installations must comply with BS 7671:2018+A4:2026 Section 722, including a dedicated circuit, RCD protection under Regulation 722.531.2, and a PME earthing assessment under Regulation 722.411.4.',
   'NICEIC and NAPIT registered, OZEV-approved electricians can self-certify the installation under Building Regulations Part P, avoiding the need to notify City of York Council building control separately.',
 ];
 
@@ -422,7 +422,7 @@ const sections = [
         <p>
           All EV charger installations in York must comply with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           Section 722. Key requirements include:
         </p>

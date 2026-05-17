@@ -601,7 +601,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="All BS 7671 calculators in your pocket"
-          description="Elec-Mate gives you voltage drop, cable sizing, prospective fault current, and earth loop impedance calculators — all on your phone, all following BS 7671:2018+A3:2024. 7-day free trial."
+          description="Elec-Mate gives you voltage drop, cable sizing, prospective fault current, and earth loop impedance calculators — all on your phone, all following BS 7671:2018+A4:2026. 7-day free trial."
           icon={Calculator}
         />
       </>

@@ -40,9 +40,9 @@ const tocItems = [
 
 const keyTakeaways = [
   'A consumer unit replacement in Birmingham typically costs between £350 and £600 for most domestic properties, which is broadly in line with the Midlands average and below the London premium.',
-  'Under Regulation 421.1.201 of BS 7671:2018+A3:2024, all domestic consumer units must be a type-tested coordinated assembly housed in a non-combustible (metal) enclosure.',
+  'Under Regulation 421.1.201 of BS 7671:2018+A4:2026, all domestic consumer units must be a type-tested coordinated assembly housed in a non-combustible (metal) enclosure.',
   'Consumer unit replacement is notifiable work under Part P of the Building Regulations (England and Wales). A registered electrician will self-certify through NICEIC, NAPIT, or ELECSA.',
-  'BS 7671:2018+A3:2024 requires 30 mA RCD protection for all socket-outlet circuits up to 32 A and for cables concealed in walls at a depth less than 50 mm — covering virtually every circuit in a modern domestic installation.',
+  'BS 7671:2018+A4:2026 requires 30 mA RCD protection for all socket-outlet circuits up to 32 A and for cables concealed in walls at a depth less than 50 mm — covering virtually every circuit in a modern domestic installation.',
   'Birmingham has a large stock of inter-war and post-war terraced housing — many still have original rewirable fuse boards or plastic consumer units that must be replaced to meet current standards.',
 ];
 
@@ -60,12 +60,12 @@ const faqs = [
   {
     question: 'Do I need RCD protection when replacing a consumer unit in Birmingham?',
     answer:
-      'Yes. BS 7671:2018+A3:2024 requires 30 mA RCD protection for socket-outlet circuits rated up to 32 A and for cables concealed in walls at a depth less than 50 mm. In practice, fitting individual RCBOs on every circuit is the preferred approach, as it provides both overcurrent and residual current protection per circuit without the nuisance tripping associated with split-load boards.',
+      'Yes. BS 7671:2018+A4:2026 requires 30 mA RCD protection for socket-outlet circuits rated up to 32 A and for cables concealed in walls at a depth less than 50 mm. In practice, fitting individual RCBOs on every circuit is the preferred approach, as it provides both overcurrent and residual current protection per circuit without the nuisance tripping associated with split-load boards.',
   },
   {
     question: 'Why do many Birmingham properties need a consumer unit upgrade?',
     answer:
-      'Birmingham has a substantial stock of inter-war terraced housing in areas such as Handsworth, Balsall Heath, Sparkbrook, and Erdington. Many of these properties still have original rewirable fuse boards (BS 3036) or early plastic consumer units installed in the 1970s and 1980s. These provide no RCD protection and use combustible plastic enclosures that no longer comply with Regulation 421.1.201 of BS 7671:2018+A3:2024.',
+      'Birmingham has a substantial stock of inter-war terraced housing in areas such as Handsworth, Balsall Heath, Sparkbrook, and Erdington. Many of these properties still have original rewirable fuse boards (BS 3036) or early plastic consumer units installed in the 1970s and 1980s. These provide no RCD protection and use combustible plastic enclosures that no longer comply with Regulation 421.1.201 of BS 7671:2018+A4:2026.',
   },
   {
     question: 'Do I need an SPD fitted during a consumer unit replacement in Birmingham?',
@@ -153,7 +153,7 @@ const sections = [
         <p>
           Under{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
           , Regulation 421.1.201 requires that consumer units in domestic premises be a type-tested
           coordinated assembly housed in a non-combustible (metal) enclosure. BS 7671 also requires

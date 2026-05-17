@@ -146,7 +146,7 @@ export default function BestApprenticeAppPage() {
               <p>
                 <strong>Core qualification courses:</strong> City and Guilds Level 2 Electrical
                 Installation (all units), City and Guilds Level 3 Electrical Installation (all
-                units), 18th Edition BS 7671:2018+A3:2024 (including Amendment 3 changes).
+                units), 18th Edition BS 7671:2018+A4:2026 (including Amendment 3 changes).
               </p>
               <p>
                 <strong>Assessment preparation:</strong> AM2 practical assessment preparation with

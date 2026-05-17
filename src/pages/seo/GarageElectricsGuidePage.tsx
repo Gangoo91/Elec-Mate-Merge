@@ -72,7 +72,7 @@ const faqs = [
   {
     question: 'Can I install an EV charger in my garage?',
     answer:
-      'Yes, a garage is one of the most common locations for a domestic EV charger. The charger typically requires a dedicated circuit (usually 32A for a 7.4kW unit) from the consumer unit or garage sub-distribution board. The cable must be appropriately sized for the load and cable run length. Under BS 7671:2018+A3:2024, the EV charger circuit must be RCD-protected (30mA Type A minimum, or Type B if the charger manufacturer requires it). The charger unit itself must be installed by a qualified electrician and comply with BS 7671 and the IET Code of Practice for Electric Vehicle Charging Equipment Installation. If the charger is installed outside the garage (on the external wall), it must be at least IP65 rated. Planning the cable route and spare way in the sub-distribution board during the initial garage electrical installation avoids costly retrofitting later.',
+      'Yes, a garage is one of the most common locations for a domestic EV charger. The charger typically requires a dedicated circuit (usually 32A for a 7.4kW unit) from the consumer unit or garage sub-distribution board. The cable must be appropriately sized for the load and cable run length. Under BS 7671:2018+A4:2026, the EV charger circuit must be RCD-protected (30mA Type A minimum, or Type B if the charger manufacturer requires it). The charger unit itself must be installed by a qualified electrician and comply with BS 7671 and the IET Code of Practice for Electric Vehicle Charging Equipment Installation. If the charger is installed outside the garage (on the external wall), it must be at least IP65 rated. Planning the cable route and spare way in the sub-distribution board during the initial garage electrical installation avoids costly retrofitting later.',
   },
   {
     question: 'Does a garage need its own earth rod?',
@@ -152,7 +152,7 @@ const sections = [
           utility space, or a double garage with an EV charger, the electrical installation must be
           designed, installed, and certified to comply with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           and notified under{' '}
           <SEOInternalLink href="/guides/part-p-building-regulations">

@@ -487,6 +487,7 @@ export default function ElectricianWorkingAbroadPage() {
           <span className="text-yellow-400">UAE, Australia & Canada Guide</span>
         </>
       }
+              noindex={true}
       heroSubtitle="UK-trained electricians are in demand globally. This guide covers the most popular destinations — UAE, Qatar, Saudi Arabia, Australia, and Canada — with salary expectations, qualification equivalency, visa routes, and practical advice."
       readingTime={14}
       keyTakeaways={keyTakeaways}

@@ -40,7 +40,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Data centres are classified into Tier I through Tier IV by the Uptime Institute. Tier IV requires fully fault-tolerant infrastructure with N+1 or 2N redundancy on all electrical systems including UPS, generators, and distribution paths.',
-  'BS 7671:2018+A3:2024 requires data centre installations to follow a TN-S earthing system (separate neutral and protective earth conductors) to minimise earth loop impedance and prevent conducted noise on sensitive IT equipment.',
+  'BS 7671:2018+A4:2026 requires data centre installations to follow a TN-S earthing system (separate neutral and protective earth conductors) to minimise earth loop impedance and prevent conducted noise on sensitive IT equipment.',
   'Uninterruptible Power Supply (UPS) systems must be sized to cover the full critical load plus an additional 25 per cent capacity margin, with battery autonomy matched to the on-site generator start and transfer time.',
   'The Electricity at Work Regulations 1989 place a duty on duty holders to ensure electrical systems are maintained so as to prevent danger — this includes formal periodic inspection and testing of all HV and LV systems in data centres.',
   'Power Usage Effectiveness (PUE) is the primary efficiency metric for data centres. UK modern facilities target a PUE of 1.2 to 1.4; legacy sites can exceed 2.0. Electrical design directly determines PUE performance.',
@@ -51,7 +51,7 @@ const faqs = [
     question:
       'What earthing system is recommended for data centre electrical installations in the UK?',
     answer:
-      'BS 7671:2018+A3:2024 recommends TN-S (Terra Neutral Separated) earthing for data centre environments. In a TN-S system the neutral and protective earth conductors are kept entirely separate throughout the installation, which minimises earth loop impedance and prevents conducted noise from returning via the neutral to IT equipment. A single earth reference point (star point) is established at the main LV switchboard, with separate PE conductors run to all distribution boards and IT equipment frames. Mixed TN-C-S systems should be avoided in critical environments.',
+      'BS 7671:2018+A4:2026 recommends TN-S (Terra Neutral Separated) earthing for data centre environments. In a TN-S system the neutral and protective earth conductors are kept entirely separate throughout the installation, which minimises earth loop impedance and prevents conducted noise from returning via the neutral to IT equipment. A single earth reference point (star point) is established at the main LV switchboard, with separate PE conductors run to all distribution boards and IT equipment frames. Mixed TN-C-S systems should be avoided in critical environments.',
   },
   {
     question: 'What is N+1 redundancy in data centre power systems?',
@@ -159,7 +159,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <Server className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Primary standards:</strong> BS 7671:2018+A3:2024 (IET Wiring Regulations),
+                <strong>Primary standards:</strong> BS 7671:2018+A4:2026 (IET Wiring Regulations),
                 Electricity at Work Regulations 1989, EN 50600 (European data centre standard), and
                 Uptime Institute Tier Classification.
               </span>
@@ -362,7 +362,7 @@ const sections = [
       <>
         <p>
           Correct earthing is critical in data centre environments. IT equipment is highly sensitive
-          to earth potential differences and conducted electrical noise. BS 7671:2018+A3:2024 and
+          to earth potential differences and conducted electrical noise. BS 7671:2018+A4:2026 and
           the IET Code of Practice for Earthing recommend TN-S earthing for IT-sensitive
           installations.
         </p>
@@ -646,6 +646,7 @@ export default function DataCentreElectricalPage() {
           <span className="text-yellow-400">Critical Power Systems Guide</span>
         </>
       }
+              noindex={true}
       heroSubtitle="The complete technical guide to data centre electrical installation in the UK — covering UPS systems, N+1 and 2N redundancy, Tier classifications, TN-S earthing to BS 7671, dual power feeds, PDUs, busbar systems, generator backup, and critical power calculations."
       readingTime={16}
       keyTakeaways={keyTakeaways}

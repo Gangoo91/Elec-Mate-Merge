@@ -47,7 +47,7 @@ const faqs = [
   {
     question: 'Does Part P apply to electrical work in Dundee?',
     answer:
-      'No. Part P of the Building Regulations applies only to England and Wales. Dundee is in Scotland, where electrical work in dwellings is regulated under Scottish Building Standards — specifically Section 4 (Safety) of the Technical Handbook — Domestic, administered under the Building (Scotland) Act 2003. A building warrant is required from Dundee City Council Building Standards before starting notifiable electrical work. The electrical installation must comply with BS 7671:2018+A3:2024, and an Electrical Installation Certificate (EIC) is required on completion as evidence of compliance.',
+      'No. Part P of the Building Regulations applies only to England and Wales. Dundee is in Scotland, where electrical work in dwellings is regulated under Scottish Building Standards — specifically Section 4 (Safety) of the Technical Handbook — Domestic, administered under the Building (Scotland) Act 2003. A building warrant is required from Dundee City Council Building Standards before starting notifiable electrical work. The electrical installation must comply with BS 7671:2018+A4:2026, and an Electrical Installation Certificate (EIC) is required on completion as evidence of compliance.',
   },
   {
     question: 'Who is the DNO for Dundee?',
@@ -178,8 +178,7 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>No Part P in Scotland</strong> — the Scottish Technical Handbook Section 4
-                (Safety) sets the regulatory requirement. The electrical standard is the same (BS
-                7671:2018+A3:2024), but the certification and compliance route is through building
+                (Safety) sets the regulatory requirement. The electrical standard is the same (BS 7671:2018+A4:2026), but the certification and compliance route is through building
                 warrants, not the Part P competent person scheme self-certification model.
               </span>
             </li>

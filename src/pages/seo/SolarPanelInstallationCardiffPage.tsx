@@ -42,7 +42,7 @@ const keyTakeaways = [
   'A typical 4kWp solar PV system in Cardiff costs £6,000 to £9,000 installed. Cardiff receives approximately 3.4 to 3.7 peak sun hours per day — comparable to Bristol and the South West.',
   'Solar installations in Cardiff conservation areas (including Pontcanna, Cathedral Road, and Roath Park) require prior approval from Cardiff Council. Listed building consent may be required for listed properties.',
   'The Smart Export Guarantee pays Cardiff homeowners for electricity exported to the grid. Top SEG tariffs in 2025 range from 10p to 24p per kWh, earning £150 to £430 per year for a 4kWp system.',
-  'All solar PV installations must be MCS-certified and comply with BS 7671:2018+A3:2024. The connection to the consumer unit is notifiable work under Part P (Building Regulations for England) — but in Wales, Building Regulations Part L applies.',
+  'All solar PV installations must be MCS-certified and comply with BS 7671:2018+A4:2026. The connection to the consumer unit is notifiable work under Part P (Building Regulations for England) — but in Wales, Building Regulations Part L applies.',
 ];
 
 const faqs = [
@@ -79,7 +79,7 @@ const faqs = [
   {
     question: 'Do Welsh Building Regulations differ from English regulations for solar?',
     answer:
-      'Wales has its own Building Regulations, which broadly mirror those of England but are administered separately. Solar PV electrical work in Wales must comply with the Building Regulations 2010 (as applied in Wales), including Part L (conservation of fuel and power) and the electrical safety requirements. Competent Person Schemes (NICEIC, NAPIT, ELECSA) operate across Wales as in England. BS 7671:2018+A3:2024 applies equally in Wales as the wiring regulations standard.',
+      'Wales has its own Building Regulations, which broadly mirror those of England but are administered separately. Solar PV electrical work in Wales must comply with the Building Regulations 2010 (as applied in Wales), including Part L (conservation of fuel and power) and the electrical safety requirements. Competent Person Schemes (NICEIC, NAPIT, ELECSA) operate across Wales as in England. BS 7671:2018+A4:2026 applies equally in Wales as the wiring regulations standard.',
   },
   {
     question: 'Is battery storage worth it in Cardiff?',
@@ -459,7 +459,7 @@ const sections = [
                 required for SEG eligibility and most Welsh Government grant schemes. Check that
                 your installer is MCS-certified at mcs.org.uk.{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                  BS 7671:2018+A3:2024
+                  BS 7671:2018+A4:2026
                 </SEOInternalLink>{' '}
                 governs all electrical work including inverter connection.
               </span>

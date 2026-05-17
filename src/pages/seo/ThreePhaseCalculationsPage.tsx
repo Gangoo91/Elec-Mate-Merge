@@ -85,7 +85,7 @@ const faqs = [
   {
     question: 'Does Elec-Mate handle three-phase calculations?',
     answer:
-      'Yes. Elec-Mate includes a dedicated three-phase power calculator that computes line current from total power and power factor, converts between line and phase values, and handles both star and delta configurations. The cable sizing calculator has a three-phase mode that uses the correct three-phase columns from the Appendix 4 tables and applies the three-phase mV/A/m values for voltage drop verification. The voltage drop calculator handles both single-phase and three-phase circuits, using the correct table values for each. There is also a star-delta calculator for motor starting calculations. All three-phase tools work offline and are built to BS 7671:2018+A3:2024.',
+      'Yes. Elec-Mate includes a dedicated three-phase power calculator that computes line current from total power and power factor, converts between line and phase values, and handles both star and delta configurations. The cable sizing calculator has a three-phase mode that uses the correct three-phase columns from the Appendix 4 tables and applies the three-phase mV/A/m values for voltage drop verification. The voltage drop calculator handles both single-phase and three-phase circuits, using the correct table values for each. There is also a star-delta calculator for motor starting calculations. All three-phase tools work offline and are built to BS 7671:2018+A4:2026.',
   },
 ];
 
@@ -846,7 +846,7 @@ export default function ThreePhaseCalculationsPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Three-phase calculations, one tap away"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for three-phase power, cable sizing, and voltage drop calculations. 70+ calculators, 16 certificate types — all BS 7671:2018+A3:2024. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for three-phase power, cable sizing, and voltage drop calculations. 70+ calculators, 16 certificate types — all BS 7671:2018+A4:2026. 7-day free trial."
     />
   );
 }

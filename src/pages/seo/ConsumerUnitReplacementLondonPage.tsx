@@ -40,9 +40,9 @@ const tocItems = [
 
 const keyTakeaways = [
   'A consumer unit replacement in London typically costs between £550 and £2,800, reflecting a 15% to 30% premium over the national average due to higher overheads, parking, congestion charges, and operating costs.',
-  'Under Regulation 421.1.201 of BS 7671:2018+A3:2024, all domestic consumer units must be a type-tested coordinated assembly housed in a non-combustible (metal) enclosure.',
+  'Under Regulation 421.1.201 of BS 7671:2018+A4:2026, all domestic consumer units must be a type-tested coordinated assembly housed in a non-combustible (metal) enclosure.',
   'Consumer unit replacement is notifiable work under Part P of the Building Regulations (England and Wales). A registered electrician will self-certify through NICEIC, NAPIT, or ELECSA.',
-  'BS 7671:2018+A3:2024 requires 30 mA RCD protection for all socket-outlet circuits up to 32 A and for cables concealed in walls — making RCBOs the preferred choice in modern boards.',
+  'BS 7671:2018+A4:2026 requires 30 mA RCD protection for all socket-outlet circuits up to 32 A and for cables concealed in walls — making RCBOs the preferred choice in modern boards.',
   'London properties often have unique challenges: Victorian terraced houses with ageing lead-sheathed cables, limited cupboard space for boards, and shared risers in mansion blocks.',
 ];
 
@@ -65,7 +65,7 @@ const faqs = [
   {
     question: 'Do I need RCD protection when replacing a consumer unit?',
     answer:
-      'Yes. BS 7671:2018+A3:2024 requires 30 mA RCD protection for socket-outlet circuits rated up to 32 A and for cables concealed in walls at a depth less than 50 mm. In practice, fitting individual RCBOs on every circuit is the preferred approach as it provides both overcurrent and earth leakage protection per circuit.',
+      'Yes. BS 7671:2018+A4:2026 requires 30 mA RCD protection for socket-outlet circuits rated up to 32 A and for cables concealed in walls at a depth less than 50 mm. In practice, fitting individual RCBOs on every circuit is the preferred approach as it provides both overcurrent and earth leakage protection per circuit.',
   },
   {
     question: 'How long does a fuse board replacement take in a London flat?',
@@ -158,7 +158,7 @@ const sections = [
         <p>
           Under{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>
           , Regulation 421.1.201 requires that consumer units in domestic premises be a type-tested
           coordinated assembly housed in a non-combustible (metal) enclosure. BS 7671 also requires

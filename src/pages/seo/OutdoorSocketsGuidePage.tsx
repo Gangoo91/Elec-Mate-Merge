@@ -158,7 +158,7 @@ const sections = [
           protection for the circuit, correct cable selection and burial depth for underground runs,
           and compliance with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           including the relevant sections of Part 7 (Special Installations or Locations) where
           applicable.

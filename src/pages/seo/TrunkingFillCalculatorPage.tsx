@@ -1,4 +1,6 @@
 import { Helmet } from 'react-helmet';
+import { RecentReviews } from '@/components/seo/RecentReviews';
+import TrunkingSizeCalculator from '@/components/apprentice/calculators/TrunkingSizeCalculator';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
@@ -25,7 +27,7 @@ const faqs = [
   {
     question: 'What is the 45% fill rule for trunking?',
     answer:
-      'The 45% fill rule states that the total cross-sectional area of all cables installed in trunking must not exceed 45% of the internal cross-sectional area of the trunking. This rule comes from BS 7671:2018+A3:2024 and the IET Guidance Note 1. The remaining 55% of the trunking space is needed for heat dissipation (cables generate heat when carrying current, and the air space allows this heat to escape), ease of installation (cables need room to be laid in and arranged without bending them too tightly or forcing them into position), and future expansion (leaving spare capacity for additional circuits that may be needed later). The 45% limit applies to all types of cable trunking — PVC, metal, dado, skirting, and mini-trunking — regardless of whether the cables are single-core or multicore.',
+      'The 45% fill rule states that the total cross-sectional area of all cables installed in trunking must not exceed 45% of the internal cross-sectional area of the trunking. This rule comes from BS 7671:2018+A4:2026 and the IET Guidance Note 1. The remaining 55% of the trunking space is needed for heat dissipation (cables generate heat when carrying current, and the air space allows this heat to escape), ease of installation (cables need room to be laid in and arranged without bending them too tightly or forcing them into position), and future expansion (leaving spare capacity for additional circuits that may be needed later). The 45% limit applies to all types of cable trunking — PVC, metal, dado, skirting, and mini-trunking — regardless of whether the cables are single-core or multicore.',
   },
   {
     question: 'How do I calculate the cross-sectional area of a cable for trunking fill?',
@@ -110,9 +112,9 @@ const features = [
   },
   {
     icon: BookOpen,
-    title: 'BS 7671:2018+A3:2024 Compliant',
+    title: 'BS 7671:2018+A4:2026 Compliant',
     description:
-      'All cable dimensions and fill limits verified against BS 7671:2018+A3:2024 and the IET Guidance Note 1. Part of 70 electrical calculators built for UK electricians.',
+      'All cable dimensions and fill limits verified against BS 7671:2018+A4:2026 and the IET Guidance Note 1. Part of 70 electrical calculators built for UK electricians.',
   },
 ];
 
@@ -129,13 +131,7 @@ const softwareAppSchema = {
     price: '0',
     priceCurrency: 'GBP',
     description: '7-day free trial, then from £12.99/month',
-  },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.8',
-    ratingCount: '1000',
-    bestRating: '5',
-  },
+  }
 };
 
 const faqSchema = {
@@ -219,6 +215,13 @@ export default function TrunkingFillCalculatorPage() {
         </div>
       </section>
 
+      {/* Live calculator — free, no signup, BS 7671:2018+A4:2026 compliant */}
+      <section id="calculator" className="px-5 pb-12 scroll-mt-24">
+        <div className="max-w-4xl mx-auto">
+          <TrunkingSizeCalculator />
+        </div>
+      </section>
+
       {/* What Is Trunking Fill */}
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
@@ -233,7 +236,7 @@ export default function TrunkingFillCalculatorPage() {
           <div className="space-y-4 text-white leading-relaxed">
             <p>
               Trunking fill refers to the proportion of a cable trunking's internal cross-sectional
-              area that is occupied by cables. BS 7671:2018+A3:2024 and the IET Guidance Note 1
+              area that is occupied by cables. BS 7671:2018+A4:2026 and the IET Guidance Note 1
               state that the total cross-sectional area of all cables installed in trunking must not
               exceed 45% of the trunking's internal cross-sectional area. This is known as the 45%
               fill rule, and it applies to all types of cable trunking — PVC, galvanised steel,
@@ -642,6 +645,13 @@ export default function TrunkingFillCalculatorPage() {
       </section>
 
       {/* CTA */}
+            {/* Verified App Store reviews — policy-safe SoftwareApplication aggregateRating */}
+      <section className="px-5 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <RecentReviews />
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Size Trunking Correctly Every Time"
         subheading="Join 1,000+ UK electricians using Elec-Mate for on-site calculations. 7-day free trial, cancel anytime."

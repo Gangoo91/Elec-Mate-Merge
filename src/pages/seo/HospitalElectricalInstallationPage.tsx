@@ -38,7 +38,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Hospital electrical installations in the UK must comply with BS 7671:2018+A3:2024 Part 7 Section 710, which implements the requirements of IEC 60364-7-710 for special installations and locations — medical locations.',
+  'Hospital electrical installations in the UK must comply with BS 7671:2018+A4:2026 Part 7 Section 710, which implements the requirements of IEC 60364-7-710 for special installations and locations — medical locations.',
   'Medical locations are classified as Group 0 (no medical electrical equipment applied to the patient), Group 1 (applied parts used externally), or Group 2 (applied parts used in life-critical applications such as operating theatres and cardiac care units).',
   'Group 2 locations require IT systems (Isolated Terra systems) with insulation monitoring devices (IMDs) to allow early warning of a first earth fault without interrupting supply to life-support equipment.',
   "NHS England's Health Technical Memorandum HTM 06-01 provides authoritative design and management guidance for healthcare electrical services, supplementing the statutory requirements of BS 7671 and the Electricity at Work Regulations 1989.",
@@ -50,7 +50,7 @@ const faqs = [
     question:
       'What is IEC 60364-7-710 and how does it apply to UK hospital electrical installations?',
     answer:
-      'IEC 60364-7-710 is the international standard for medical locations, adopted in the UK as Part 7 Section 710 of BS 7671:2018+A3:2024. It defines the specific requirements for electrical installations in areas of hospitals, clinics, dental surgeries, and medical practices where medical electrical equipment is used on patients. The standard classifies medical locations into Group 0, Group 1, and Group 2 based on the intended use and the risk to the patient from a loss of electrical supply, and specifies protection measures appropriate to each group. All new UK hospital electrical installations and major refurbishments must comply with Section 710.',
+      'IEC 60364-7-710 is the international standard for medical locations, adopted in the UK as Part 7 Section 710 of BS 7671:2018+A4:2026. It defines the specific requirements for electrical installations in areas of hospitals, clinics, dental surgeries, and medical practices where medical electrical equipment is used on patients. The standard classifies medical locations into Group 0, Group 1, and Group 2 based on the intended use and the risk to the patient from a loss of electrical supply, and specifies protection measures appropriate to each group. All new UK hospital electrical installations and major refurbishments must comply with Section 710.',
   },
   {
     question: 'What is a Group 2 medical location and what are the electrical requirements?',
@@ -140,7 +140,7 @@ const sections = [
           Errors in design, installation, or maintenance can directly endanger patient lives.
         </p>
         <p>
-          The primary technical standard is Section 710 of BS 7671:2018+A3:2024, which implements
+          The primary technical standard is Section 710 of BS 7671:2018+A4:2026, which implements
           IEC 60364-7-710 for medical locations. The primary management and design guidance is NHS
           England's Health Technical Memorandum HTM 06-01. These documents must be read together —
           BS 7671 provides the statutory minimum requirements, while HTM 06-01 provides the
@@ -240,7 +240,7 @@ const sections = [
         <p>
           Section 710 of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           sets out specific requirements that supplement or modify the general requirements of the
           rest of the standard for medical locations. Key requirements include:

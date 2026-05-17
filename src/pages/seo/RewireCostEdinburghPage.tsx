@@ -43,7 +43,7 @@ const keyTakeaways = [
   "Scotland operates its own Building Standards system — Edinburgh rewires are notified to the City of Edinburgh Council's Building Standards department, not under Part P as in England. The process is similar but uses Scottish warrant procedures.",
   "Edinburgh's New Town Georgian terraces, Old Town tenements, and Victorian villas in Morningside and Marchmont are complex to rewire due to sandstone construction, high ceilings, and listed building designations in many areas.",
   'A typical rewire takes 3–5 days for a 2-bed property and 5–8 days for a 3-bed. Wall chasing in sandstone Edinburgh properties generates significant debris, and replastering is a separate cost.',
-  'On completion of any rewire in Scotland, the electrician must issue an Electrical Installation Certificate confirming compliance with BS 7671:2018+A3:2024 and submit a completion certificate to Building Standards.',
+  'On completion of any rewire in Scotland, the electrician must issue an Electrical Installation Certificate confirming compliance with BS 7671:2018+A4:2026 and submit a completion certificate to Building Standards.',
 ];
 
 const faqs = [
@@ -225,7 +225,7 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7671 compliance</strong> — despite Scotland's separate regulatory system,
-                the technical standard for electrical installations is still BS 7671:2018+A3:2024
+                the technical standard for electrical installations is still BS 7671:2018+A4:2026
                 (the IET Wiring Regulations). An EIC is issued on completion in the same way as in
                 England.
               </span>

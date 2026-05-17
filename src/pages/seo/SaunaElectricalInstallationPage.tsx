@@ -158,7 +158,7 @@ const sections = [
         <p>
           Sauna electrical work falls under{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           Section 703 (rooms and cabins containing sauna heaters). This section imposes specific
           requirements on wiring methods, cable types, equipment zoning, and protective measures

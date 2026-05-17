@@ -142,7 +142,7 @@ const sections = [
           is in a satisfactory condition — that it is preventing current leakage between conductors,
           and between conductors and earth. It is one of the mandatory tests specified in{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           (Chapter 61) and must be carried out on every new installation and as part of every
           periodic inspection and testing (EICR).
@@ -639,6 +639,7 @@ export default function InsulationResistanceTestingGuidePage() {
           <span className="text-yellow-400">IR Testing to BS 7671</span>
         </>
       }
+              noindex={true}
       heroSubtitle="Everything UK electricians need to know about insulation resistance testing — test voltages (500V DC and 1000V DC), minimum acceptable values (1MΩ per BS 7671 Table 61), disconnecting dimmers and RCDs, interpreting results, and locating common failures."
       readingTime={12}
       keyTakeaways={keyTakeaways}

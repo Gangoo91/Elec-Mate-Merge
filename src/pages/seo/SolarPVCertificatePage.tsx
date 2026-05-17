@@ -47,7 +47,7 @@ const faqs = [
   {
     question: 'What does BS 7671 Section 712 cover for solar PV installations?',
     answer:
-      'Section 712 of BS 7671:2018+A3:2024 covers the particular requirements for solar photovoltaic (PV) power supply systems. It addresses the specific hazards associated with PV installations — principally the fact that PV arrays generate DC voltage whenever exposed to light and cannot be simply switched off. Key requirements include: protection against electric shock on both the DC and AC sides; overcurrent protection for PV string and array cables; requirements for PV DC isolators and their location; earthing arrangements for the PV array frame; cable selection and installation methods for DC cables exposed to sunlight (UV-resistant); labelling requirements to warn that the PV array remains live even when the inverter is disconnected; and requirements for the PV installation to be designed so that maintenance can be carried out safely.',
+      'Section 712 of BS 7671:2018+A4:2026 covers the particular requirements for solar photovoltaic (PV) power supply systems. It addresses the specific hazards associated with PV installations — principally the fact that PV arrays generate DC voltage whenever exposed to light and cannot be simply switched off. Key requirements include: protection against electric shock on both the DC and AC sides; overcurrent protection for PV string and array cables; requirements for PV DC isolators and their location; earthing arrangements for the PV array frame; cable selection and installation methods for DC cables exposed to sunlight (UV-resistant); labelling requirements to warn that the PV array remains live even when the inverter is disconnected; and requirements for the PV installation to be designed so that maintenance can be carried out safely.',
   },
   {
     question: 'Can I complete solar PV certificates on a mobile device?',
@@ -117,7 +117,7 @@ const features = [
     icon: ShieldCheck,
     title: 'BS 7671 Section 712 Compliant',
     description:
-      'Certificate structure follows BS 7671:2018+A3:2024 Section 712 requirements for PV installations, covering both DC and AC side documentation.',
+      'Certificate structure follows BS 7671:2018+A4:2026 Section 712 requirements for PV installations, covering both DC and AC side documentation.',
   },
   {
     icon: Zap,
@@ -514,7 +514,7 @@ export default function SolarPVCertificatePage() {
       <section className="py-12 px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">
-            BS 7671:2018+A3:2024 Section 712 — Solar PV Requirements
+            BS 7671:2018+A4:2026 Section 712 — Solar PV Requirements
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
@@ -623,6 +623,26 @@ export default function SolarPVCertificatePage() {
       </section>
 
       {/* CTA */}
+      
+
+      {/* Related pages — auto-injected for internal-link health (audit criterion #7).
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/guides/solar-pv-certificate-requirements">Solar PV Certificate Requirements</SEOInternalLink>
+            <SEOInternalLink href="/guides/ac-vs-dc-earthing-solar-ev">AC vs DC Earthing for Solar PV and EV Charging</SEOInternalLink>
+            <SEOInternalLink href="/tools/eicr-certificate">EICR Certificate Guide 2026</SEOInternalLink>
+            <SEOInternalLink href="/guides/napit-certificate-guide">NAPIT Certificate Guide</SEOInternalLink>
+            <SEOInternalLink href="/solar-pv-grants">Solar Panel Grants UK 2025</SEOInternalLink>
+            <SEOInternalLink href="/solar-pv-maintenance">Solar Panel Maintenance UK</SEOInternalLink>
+            <SEOInternalLink href="/guides/ev-charger-certificate-requirements">EV Charger Certificate Requirements UK</SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-certificate-retention">How Long to Keep Electrical Certificates UK</SEOInternalLink>
+          </div>
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Stop wrestling with solar PV paperwork"
         subheading="Join 1,000+ UK electricians creating professional digital certificates. 7-day free trial, cancel anytime."

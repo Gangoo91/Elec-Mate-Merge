@@ -91,7 +91,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Complete guide to BS 7671:2018+A3:2024 — the IET Wiring Regulations.',
+    description: 'Complete guide to BS 7671:2018+A4:2026 — the IET Wiring Regulations.',
     icon: ShieldCheck,
     category: 'Guide',
   },

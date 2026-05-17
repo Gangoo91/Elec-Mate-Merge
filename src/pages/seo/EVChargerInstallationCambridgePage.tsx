@@ -284,7 +284,7 @@ const sections = [
         <p>
           All EV charger installations in Cambridge must comply with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A3:2024
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           Section 722. The key requirements for Cambridge domestic installations are:
         </p>
