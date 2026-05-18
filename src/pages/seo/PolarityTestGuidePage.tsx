@@ -541,8 +541,8 @@ const sections = [
           </ul>
         </div>
         <SEOAppBridge
-          title="Record polarity test results on site with Elec-Mate"
-          description="The Elec-Mate testing app lets you tick off polarity verification per circuit and log observations against specific accessories with their location. Export a compliant EICR PDF before you leave site. 7-day free trial."
+          title="Polarity Test Electrical: Log Results Fast"
+          description="Polarity test electrical circuits in minutes. Record per-circuit verification, export compliant EICR PDFs. BS 7671:2018+A4:2026 ready. Start free."
           icon={FileCheck2}
         />
       </>

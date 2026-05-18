@@ -532,8 +532,8 @@ const sections = [
           </ul>
         </div>
         <SEOAppBridge
-          title="Record Ze, Zs, and PFC results on site with Elec-Mate"
-          description="Enter loop impedance results directly on your phone. The Elec-Mate testing app auto-populates the schedule of test results and flags Zs values that exceed the maximum for the protective device. 7-day free trial."
+          title="Loop Impedance Test Results | Elec-Mate"
+          description="Record loop impedance test results on site in seconds. Auto-flags Zs values against BS 7671:2018+A4:2026 limits and generates compliant test schedules instantly."
           icon={FileCheck2}
         />
       </>

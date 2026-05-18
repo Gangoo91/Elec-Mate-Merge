@@ -1,0 +1,130 @@
+[
+  {
+    "slug": "/guides/smart-home-wiring-cost",
+    "file": "src/pages/seo/SmartHomeWiringCostPage.tsx",
+    "applied": {
+      "title": "Smart Home Wiring Cost Guide 2026",
+      "description": "What does professional smart home wiring cost in 2026? Compare installation prices, labour rates, and cable specs. Get accurate quotes in minutes with Elec-Mate."
+    }
+  },
+  {
+    "slug": "/guides/electrical-symbols-chart",
+    "file": "src/pages/seo/ElectricalSymbolsChartPage.tsx",
+    "applied": {
+      "title": "BS EN 60617 Electrical Symbols Chart",
+      "description": "BS EN 60617 symbols guide for UK electricians. Download the complete chart, learn 50+ standard symbols, and apply them to certificates and schematics instantly."
+    }
+  },
+  {
+    "slug": "/guides/ze-values-uk",
+    "file": "src/pages/seo/ZeValuesUKPage.tsx",
+    "applied": {
+      "title": "Ze Value Calculator | BS 7671:2018+A4:2026",
+      "description": "Calculate Ze values against BS 7671:2018+A4:2026 limits in seconds. Validate TN-S, TN-C-S, TT earthing instantly. Flag non-compliant results before sign-off."
+    }
+  },
+  {
+    "slug": "/guides/apprentice-electrician-salary",
+    "file": "src/pages/seo/ApprenticeSalaryPage.tsx",
+    "applied": {
+      "title": "2nd Year Apprentice Electrician Wages 2026",
+      "description": "What do 2nd year apprentices earn? Real UK wage data for 2026, salary progression rates, and how Elec-Mate helps you qualify faster to unlock higher pay bands."
+    }
+  },
+  {
+    "slug": "/guides/appendix-4-tables-bs-7671",
+    "file": "src/pages/seo/AppendixFourTablesPage.tsx",
+    "applied": {
+      "title": "BS 7671 Appendix 4 Tables 2026",
+      "description": "BS 7671:2018+A4:2026 Appendix 4 current-carrying capacity tables. Instant lookup by cable type and reference method. No site visits without them."
+    }
+  },
+  {
+    "slug": "/guides/max-demand-calculation-guide",
+    "file": "src/pages/seo/MaxDemandGuidePage.tsx",
+    "applied": {
+      "title": "After Diversity Maximum Demand Calculator",
+      "description": "Calculate ADMD in seconds using BS 7671:2018+A4:2026 diversity factors. Input circuit ratings, get accurate max demand in amps and kW instantly."
+    }
+  },
+  {
+    "slug": "/tools/cable-volt-drop-three-phase",
+    "file": "src/pages/seo/CableVoltDropThreePhasePage.tsx",
+    "applied": {
+      "title": "Three Phase Calculation Tool | BS 7671:2026",
+      "description": "Three phase voltage drop calculation in seconds. BS 7671:2026 compliant mV/A/m lookup, instant pass/fail results. No manual tables needed."
+    }
+  },
+  {
+    "slug": "/loop-impedance-testing-guide",
+    "file": "src/pages/seo/LoopImpedanceTestingGuidePage.tsx",
+    "applied": {
+      "title": "Loop Impedance Test Results | Elec-Mate",
+      "description": "Record loop impedance test results on site in seconds. Auto-flags Zs values against BS 7671:2018+A4:2026 limits and generates compliant test schedules instantly."
+    }
+  },
+  {
+    "slug": "/guides/ring-vs-radial-circuits",
+    "file": "src/pages/seo/RingVsRadialCircuitsPage.tsx",
+    "applied": {
+      "title": "32A Ring Circuit Design | BS 7671:2018+A4:2026",
+      "description": "32A ring circuit design, testing, and load limits under BS 7671:2018+A4:2026. Learn r1+r2/4 method, continuity checks, and when 32A rings meet regs."
+    }
+  },
+  {
+    "slug": "/tools/busbar-sizing-calculator",
+    "file": "src/pages/seo/BusbarSizingCalculatorPage.tsx",
+    "applied": {
+      "title": "Busbar Calculator | Size & Current Rating",
+      "description": "Busbar calculator for copper and aluminium. Size busbars to BS 7671:2018+A4:2026 in under 2 minutes. Voltage drop, thermal rise, fault withstand."
+    }
+  },
+  {
+    "slug": "/bonding-conductors-guide",
+    "file": "src/pages/seo/BondingConductorsGuidePage.tsx",
+    "applied": {
+      "title": "Bonding Conductor Size Guide BS 7671:2018+A4:2026",
+      "description": "Calculate bonding conductor sizes for 18th edition compliance. Free sizing tables, cable selection rules, and test recording tools for UK electricians."
+    }
+  },
+  {
+    "slug": "/guides/bathroom-electrical-zones-bs7671",
+    "file": "src/pages/seo/BathroomZoneElectricalPage.tsx",
+    "applied": {
+      "title": "Bathroom Electric Zones BS 7671:2018+A4:2026",
+      "description": "Bathroom electric zones explained: Zone 0, 1, 2 boundaries, IP ratings (IPX7/IPX4), socket placement rules. BS 7671 compliance for safe installations."
+    }
+  },
+  {
+    "slug": "/polarity-test-guide",
+    "file": "src/pages/seo/PolarityTestGuidePage.tsx",
+    "applied": {
+      "title": "Polarity Test Electrical: Log Results Fast",
+      "description": "Polarity test electrical circuits in minutes. Record per-circuit verification, export compliant EICR PDFs. BS 7671:2018+A4:2026 ready. Start free."
+    }
+  },
+  {
+    "slug": "/guides/radial-circuit-explained",
+    "file": "src/pages/seo/RadialCircuitGuidePage.tsx",
+    "applied": {
+      "title": "Radial Circuit: BS 7671:2018+A4:2026 Guide",
+      "description": "Radial circuits protect 32A+ loads in UK installations. Learn cable sizing, protection rules, and when radials outperform ring circuits under current regs."
+    }
+  },
+  {
+    "slug": "/continuity-testing-guide",
+    "file": "src/pages/seo/ContinuityTestingGuidePage.tsx",
+    "applied": {
+      "title": "Acceptable Continuity Test Results | Elec-Mate",
+      "description": "What are acceptable continuity readings? Learn BS 7671:2018+A4:2026 limits for r1+rn, r1+r2, and ring finals. Record results instantly on site."
+    }
+  },
+  {
+    "slug": "/tools/lighting-lux-calculator",
+    "file": "src/pages/seo/LightingLuxCalculatorPage.tsx",
+    "applied": {
+      "title": "Lux Level Calculation Tool | BS EN 12464-1",
+      "description": "Calculate lux levels for 20+ room types using BS EN 12464-1 standards. Free online tool with maintained illuminance values for offices, warehouses, retail and more."
+    }
+  }
+]

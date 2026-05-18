@@ -524,7 +524,7 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Quote and certify smart home installations"
+          title="Smart Home Wiring Cost Guide 2026"
           description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Price smart home jobs accurately and present professional documentation. 7-day free trial."
           icon={Home}
         />

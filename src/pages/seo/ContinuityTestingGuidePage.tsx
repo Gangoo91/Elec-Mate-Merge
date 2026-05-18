@@ -521,7 +521,7 @@ const sections = [
           </ul>
         </div>
         <SEOAppBridge
-          title="Enter test results on site — no evening paperwork"
+          title="Acceptable Continuity Test Results | Elec-Mate"
           description="The Elec-Mate testing app records r1+rn, r1+r2, and ring final continuity results on your phone. Auto-populates the schedule of test results and exports a compliant PDF. 7-day free trial."
           icon={FileCheck2}
         />

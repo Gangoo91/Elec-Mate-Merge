@@ -19,8 +19,8 @@ import {
 export default function LightingLuxCalculatorPage() {
   return (
     <ToolTemplate
-      title="Lighting Lux Level Calculator | Free Tool UK"
-      description="Calculate required lux levels for any room type using CIBSE recommendations and BS EN 12464-1. Covers offices, warehouses, kitchens, retail, schools, and domestic spaces. Free UK lighting calculator with maintained illuminance values."
+      title="Lux Level Calculation Tool | BS EN 12464-1"| Free Tool UK"
+      description="Calculate lux levels for 20+ room types using BS EN 12464-1 standards. Free online tool with maintained illuminance values for offices, warehouses, retail and more."
       datePublished="2026-01-20"
       dateModified="2026-02-13"
       breadcrumbs={[

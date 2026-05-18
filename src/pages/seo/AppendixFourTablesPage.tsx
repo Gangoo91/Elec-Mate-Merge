@@ -125,8 +125,8 @@ const sections = [
           ambient temperature and Tables 4C1 to 4C5 for grouping.
         </p>
         <SEOAppBridge
-          title="Every Appendix 4 table in your pocket"
-          description="Elec-Mate has every current-carrying capacity table from Appendix 4 built into the cable sizing calculator. Select cable type and reference method — the app looks up the correct value instantly. No more flicking through the brown book on site."
+          title="BS 7671 Appendix 4 Tables 2026"
+          description="BS 7671:2018+A4:2026 Appendix 4 current-carrying capacity tables. Instant lookup by cable type and reference method. No site visits without them."
           icon={BookOpen}
         />
       </>

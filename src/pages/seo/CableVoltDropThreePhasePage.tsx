@@ -335,8 +335,8 @@ const sections = [
           where the power factor can be significantly less than unity.
         </p>
         <SEOAppBridge
-          title="Calculate three-phase voltage drop instantly"
-          description="Enter your cable type, size, length, and current. Elec-Mate looks up the correct three-phase mV/A/m value from BS 7671 and gives you an instant pass/fail result. No table look-ups, no manual calculations."
+          title="Three Phase Calculation Tool | BS 7671:2026"
+          description="Three phase voltage drop calculation in seconds. BS 7671:2026 compliant mV/A/m lookup, instant pass/fail results. No manual tables needed."
           icon={Calculator}
         />
       </>

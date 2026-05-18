@@ -628,7 +628,7 @@ const sections = [
 export default function BathroomZoneElectricalPage() {
   return (
     <GuideTemplate
-      title="Bathroom Electrical Zones BS 7671 | Zone 0, 1, 2 IP Ratings Guide"
+      title="Bathroom Electric Zones BS 7671:2018+A4:2026"| Zone 0, 1, 2 IP Ratings Guide"
       description="Complete guide to bathroom electrical zones under BS 7671 Section 701. Zone 0, 1, and 2 boundaries, IP ratings required (IPX7, IPX4, IPX4), what is permitted in each zone, shaver socket placement, switch positions, and common installation mistakes."
       datePublished="2026-03-27"
       dateModified="2026-03-27"

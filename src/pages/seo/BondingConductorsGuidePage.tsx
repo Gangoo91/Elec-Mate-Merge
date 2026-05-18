@@ -604,7 +604,7 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Record bonding tests and complete EICRs on your phone"
+          title="Bonding Conductor Size Guide BS 7671:2018+A4:2026"
           description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with bonding test recording, AI board scanning, and instant PDF export. 7-day free trial."
           icon={FileCheck2}
         />

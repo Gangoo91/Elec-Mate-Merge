@@ -690,8 +690,8 @@ const sections = [
 export default function RadialCircuitGuidePage() {
   return (
     <GuideTemplate
-      title="Radial Circuit Explained | When to Use Radial vs Ring"
-      description="Complete guide to radial circuits in UK electrical installations. How radials work, when to use them instead of ring circuits, cable sizing, circuit protection, BS 7671 requirements, and common applications for domestic and commercial installations."
+      title="Radial Circuit: BS 7671:2018+A4:2026 Guide"| When to Use Radial vs Ring"
+      description="Radial circuits protect 32A+ loads in UK installations. Learn cable sizing, protection rules, and when radials outperform ring circuits under current regs."
       datePublished="2025-06-15"
       dateModified="2026-02-13"
       breadcrumbs={breadcrumbs}

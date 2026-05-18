@@ -363,8 +363,8 @@ const sections = [
           </p>
         </div>
         <SEOAppBridge
-          title="Calculate max demand in seconds"
-          description="Enter your circuit types and ratings into the Elec-Mate max demand calculator. It applies the correct diversity factors from BS 7671 Appendix A automatically and gives you the total max demand in amperes and kilowatts."
+          title="After Diversity Maximum Demand Calculator"
+          description="Calculate ADMD in seconds using BS 7671:2018+A4:2026 diversity factors. Input circuit ratings, get accurate max demand in amps and kW instantly."
           icon={Calculator}
         />
       </>
