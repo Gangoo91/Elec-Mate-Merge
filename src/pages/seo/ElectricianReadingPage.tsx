@@ -547,8 +547,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Reading's professional demographic expects professional documentation. An{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on
-                  a phone app and sent as a PDF before you leave the site sets you apart from
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on a
+                  phone app and sent as a PDF before you leave the site sets you apart from
                   competitors still posting handwritten certificates. For commercial work on
                   business parks, digital certificates and test results are increasingly a contract
                   requirement.
@@ -574,6 +574,7 @@ const sections = [
 export default function ElectricianReadingPage() {
   return (
     <GuideTemplate
+      localArea="Reading"
       title="Electrician in Reading | Find Qualified Electricians 2026"
       description="Find qualified, registered electricians in Reading. Realistic 2026 pricing, how to verify NICEIC/NAPIT registration, Victorian terrace rewiring, SSEN connections, Thames Valley tech corridor commercial work, and Part P compliance."
       datePublished="2026-03-27"

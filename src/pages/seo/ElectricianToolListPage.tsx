@@ -665,6 +665,7 @@ const relatedPages = [
 export default function ElectricianToolListPage() {
   return (
     <GuideTemplate
+      localArea="Tool List Uk"
       title="Electrician Tool List UK 2026 | Essential Tools Guide"
       description="Complete UK electrician tool list for 2026. Hand tools, VDE insulated tools, test equipment, power tools, PPE, budget guide, and brand recommendations. Everything you need to kit out as a professional electrician."
       datePublished="2025-01-15"

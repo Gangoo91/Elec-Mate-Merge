@@ -562,9 +562,9 @@ const sections = [
                   Exeter customers — whether homeowners, landlords, or commercial clients — expect
                   professional documentation. An{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on
-                  a phone app and sent as a PDF before you leave site demonstrates professionalism
-                  and speeds up the paperwork that can otherwise slow down your working day.
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on a
+                  phone app and sent as a PDF before you leave site demonstrates professionalism and
+                  speeds up the paperwork that can otherwise slow down your working day.
                 </p>
               </div>
             </div>
@@ -587,6 +587,7 @@ const sections = [
 export default function ElectricianExeterPage() {
   return (
     <GuideTemplate
+      localArea="Exeter"
       title="Electrician in Exeter | Find Qualified Electricians 2026"
       description="Find qualified, registered electricians in Exeter. Realistic 2026 pricing, how to verify NICEIC/NAPIT registration, period property rewiring, NGED connections, cathedral close conservation, eco-retrofit demand, and university HMO compliance."
       datePublished="2026-03-27"

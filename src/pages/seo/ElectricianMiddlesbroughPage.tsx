@@ -201,7 +201,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 7671 compliance</strong> — all work must comply with BS 7671:2018+A4:2026. RCD protection under Regulation 411.3.3 is required for socket
+                <strong>BS 7671 compliance</strong> — all work must comply with BS
+                7671:2018+A4:2026. RCD protection under Regulation 411.3.3 is required for socket
                 outlets up to 32A and for circuits in locations of increased shock risk.
               </span>
             </li>
@@ -498,11 +499,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Stand out with the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Send professional PDF quotes to Middlesbrough customers before a competitor does
-                  — useful for rewire estimates in the older terraced streets and consumer unit
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Send professional PDF quotes to Middlesbrough customers before a competitor does —
+                  useful for rewire estimates in the older terraced streets and consumer unit
                   replacements across the Tees Valley.
                 </p>
               </div>
@@ -526,6 +525,7 @@ const sections = [
 export default function ElectricianMiddlesbroughPage() {
   return (
     <GuideTemplate
+      localArea="Middlesbrough"
       title="Electrician in Middlesbrough | Local Electricians 2026"
       description="Find qualified electricians in Middlesbrough. Part P compliance, Northern Powergrid DNO, NICEIC and NAPIT registered electricians, EICR for landlords, consumer unit replacement, and Middlesbrough electrician rates for 2026."
       datePublished="2026-03-27"

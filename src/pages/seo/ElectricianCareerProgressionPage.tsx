@@ -145,10 +145,7 @@ const sections = [
           Every electrician career starts here. An electrical apprenticeship lasts 3 to 4 years and
           combines on-the-job training with college or training provider study. You work towards
           Level 3 in Electrotechnical (Installation Electrician) and culminate with the{' '}
-          <SEOInternalLink href="/am2-exam-preparation">
-            AM2 practical assessment
-          </SEOInternalLink>
-          .
+          <SEOInternalLink href="/am2-exam-preparation">AM2 practical assessment</SEOInternalLink>.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
@@ -550,6 +547,7 @@ const sections = [
 export default function ElectricianCareerProgressionPage() {
   return (
     <GuideTemplate
+      localArea="Career Progression"
       title="Electrician Career Progression | From Apprentice to MD"
       description="Complete guide to electrician career progression in the UK. Every stage from apprentice to business owner with typical salaries, qualifications needed, and how to accelerate your progression through specialisation and CPD."
       datePublished="2025-06-20"

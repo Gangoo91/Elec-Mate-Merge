@@ -446,8 +446,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Landlords and letting agents expect professional certificates. An{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on
-                  a phone app and sent as a PDF on site sets you apart from competitors.
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on a
+                  phone app and sent as a PDF on site sets you apart from competitors.
                 </p>
               </div>
             </div>
@@ -470,6 +470,7 @@ const sections = [
 export default function ElectricianStokeOnTrentPage() {
   return (
     <GuideTemplate
+      localArea="Stoke On Trent"
       title="Electrician in Stoke-on-Trent | Find Qualified Electricians 2026"
       description="Find qualified, registered electricians in Stoke-on-Trent. Realistic 2026 pricing, NICEIC/NAPIT verification, NGED connections, Part P compliance, pottery building conversions, and Potteries property challenges."
       datePublished="2026-03-27"

@@ -507,8 +507,8 @@ const sections = [
           domestic rates; Cowley and Blackbird Leys are more price-sensitive. Commercial rates vary
           significantly by sector — retail fit-outs at £300 to £400 per day, laboratory work at £380
           to £500. Use Elec-Mate's{' '}
-          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
-          produce accurate, itemised quotes tailored to the Oxford market.
+          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to produce
+          accurate, itemised quotes tailored to the Oxford market.
         </p>
       </>
     ),
@@ -562,10 +562,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Quote heritage rewires, HMO conversions, and commercial fit-outs with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Itemised PDF quotes with your branding, sent from the survey.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Itemised PDF quotes with your branding, sent from the survey.
                 </p>
               </div>
             </div>
@@ -588,6 +586,7 @@ const sections = [
 export default function ElectricianOxfordPage() {
   return (
     <GuideTemplate
+      localArea="Oxford"
       title="Electrician in Oxford | Local Electrical Guide"
       description="Complete guide for electricians working in Oxford. SSEN DNO, university college electrical work, listed building challenges, Cowley new builds, HMO conversions, Westgate commercial development, and realistic Oxford pricing."
       datePublished="2026-03-27"

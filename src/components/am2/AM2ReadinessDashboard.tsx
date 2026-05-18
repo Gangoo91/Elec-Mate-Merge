@@ -29,6 +29,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { AM2ReadinessGauge } from './AM2ReadinessGauge';
+import { AM2JourneyPanel } from './AM2JourneyPanel';
 import {
   useAM2Readiness,
   type AM2ReadinessStatus,
@@ -212,6 +213,12 @@ export function AM2ReadinessDashboard({ onNavigateToTab }: AM2ReadinessDashboard
         </div>
       </motion.div>
 
+      {/* Journey panel — target date + streak + projection. Sits below the
+          risk banner because it depends on having a sense of risk first. */}
+      <motion.div variants={fadeUp}>
+        <AM2JourneyPanel />
+      </motion.div>
+
       {/* Mode cards — connected grid, matches /apprentice/hub */}
       <motion.div variants={fadeUp} className="space-y-3">
         <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
@@ -219,9 +226,9 @@ export function AM2ReadinessDashboard({ onNavigateToTab }: AM2ReadinessDashboard
         </div>
         <div
           className={cn(
-            'relative grid auto-rows-[230px] sm:auto-rows-[240px] gap-[2px]',
+            'relative grid auto-rows-[230px] sm:auto-rows-[260px] lg:auto-rows-[280px] gap-[2px]',
             'bg-black border border-white/[0.08] rounded-2xl overflow-hidden',
-            'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4'
+            'grid-cols-1 sm:grid-cols-2'
           )}
         >
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
@@ -449,7 +456,7 @@ function ModeCard({
       <h3 className="mt-3 sm:mt-4 text-[18px] sm:text-[20px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors">
         {title}
       </h3>
-      <p className="mt-2 text-[12px] leading-relaxed text-white/60 max-w-[34ch]">{description}</p>
+      <p className="mt-2 text-[12.5px] leading-relaxed text-white/60 max-w-[44ch]">{description}</p>
 
       <div className="flex-grow" />
 

@@ -570,9 +570,8 @@ const sections = [
                   Glasgow letting agents and factors manage large portfolios of tenement flats. They
                   need certificates quickly and in digital format. Complete your{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> on your
-                  phone, send the PDF on the day, and build a reputation for fast, professional
-                  service.
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> on your phone, send
+                  the PDF on the day, and build a reputation for fast, professional service.
                 </p>
               </div>
             </div>
@@ -595,6 +594,7 @@ const sections = [
 export default function ElectricianGlasgowPage() {
   return (
     <GuideTemplate
+      localArea="Glasgow"
       title="Electrician in Glasgow | Qualified Electricians 2026"
       description="Find qualified, registered electricians in Glasgow. Scottish Building Standards (not Part P), SELECT trade body, SPEN connections, tenement rewiring, Glasgow pricing guide, and Scotland-specific electrical regulations."
       datePublished="2026-03-27"

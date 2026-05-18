@@ -440,10 +440,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Win more work with the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Send professional PDF quotes to Sunderland homeowners and landlords from the
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Send professional PDF quotes to Sunderland homeowners and landlords from the
                   survey — before a competitor can.
                 </p>
               </div>
@@ -467,6 +465,7 @@ const sections = [
 export default function ElectricianSunderlandPage() {
   return (
     <GuideTemplate
+      localArea="Sunderland"
       title="Electrician in Sunderland | Local Electricians 2026"
       description="Find qualified electricians in Sunderland. Part P compliance, Northern Powergrid DNO, NICEIC and NAPIT registered electricians, EICR costs, consumer unit replacement, and Sunderland electrician rates for 2026."
       datePublished="2026-03-27"

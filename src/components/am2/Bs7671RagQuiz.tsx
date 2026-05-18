@@ -22,11 +22,27 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, BookOpen, Check, X, RefreshCw, Trophy, Loader2 } from 'lucide-react';
+import {
+  ArrowLeft,
+  BookOpen,
+  Check,
+  X,
+  RefreshCw,
+  Trophy,
+  Loader2,
+  AlertTriangle,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { useAM2Readiness } from '@/hooks/am2/useAM2Readiness';
+import {
+  ConfidencePicker,
+  CalibrationPill,
+  computeCalibration,
+  getCalibrationOutcome,
+  type Confidence,
+} from './confidence';
 
 interface RagQuestion {
   facetId: string;
@@ -89,6 +105,7 @@ export function Bs7671RagQuiz({ onExit, onSessionComplete }: Bs7671RagQuizProps)
   const [questions, setQuestions] = useState<RagQuestion[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string>>({});
+  const [confidences, setConfidences] = useState<Record<number, Confidence>>({});
   const [revealed, setRevealed] = useState(false);
   const [startedAt, setStartedAt] = useState<number>(Date.now());
   const [error, setError] = useState<string | null>(null);
@@ -173,6 +190,7 @@ export function Bs7671RagQuiz({ onExit, onSessionComplete }: Bs7671RagQuizProps)
       setQuestions(picked);
       setCurrentIndex(0);
       setAnswers({});
+      setConfidences({});
       setRevealed(false);
       setStartedAt(Date.now());
       setPhase('quiz');
@@ -189,11 +207,20 @@ export function Bs7671RagQuiz({ onExit, onSessionComplete }: Bs7671RagQuizProps)
   const currentQ = questions[currentIndex];
   const userAnswer = answers[currentIndex];
   const isAnswered = userAnswer != null;
+  const userConfidence = confidences[currentIndex];
+  const hasConfidence = userConfidence != null;
   const isCorrect = isAnswered && currentQ && userAnswer === currentQ.correctReg.id;
+  const outcome = revealed && currentQ ? getCalibrationOutcome(!!isCorrect, userConfidence) : null;
 
   const handleAnswer = (optionId: string) => {
     if (isAnswered) return;
     setAnswers((a) => ({ ...a, [currentIndex]: optionId }));
+    // Do NOT reveal yet — wait for confidence pick.
+  };
+
+  const handleConfidence = (c: Confidence) => {
+    if (!isAnswered) return;
+    setConfidences((prev) => ({ ...prev, [currentIndex]: c }));
     setRevealed(true);
   };
 
@@ -271,6 +298,14 @@ export function Bs7671RagQuiz({ onExit, onSessionComplete }: Bs7671RagQuizProps)
     const secs = elapsed % 60;
     const tone = pct >= 70 ? 'text-emerald-300' : pct >= 50 ? 'text-amber-300' : 'text-red-300';
     const verdict = pct >= 70 ? 'Strong' : pct >= 50 ? 'Catching up' : 'Needs work';
+    const calibration = computeCalibration(
+      questions,
+      (q, i) => answers[i] === q.correctReg.id,
+      (i) => confidences[i]
+    );
+    const overconfidentQs = questions
+      .map((q, i) => ({ q, i, c: confidences[i], correct: answers[i] === q.correctReg.id }))
+      .filter((row) => row.c === 'certain' && !row.correct);
     return (
       <div className="mx-auto max-w-2xl px-4 sm:px-6 py-6 sm:py-10 space-y-6">
         <div className="space-y-1.5">
@@ -308,9 +343,75 @@ export function Bs7671RagQuiz({ onExit, onSessionComplete }: Bs7671RagQuizProps)
           </div>
         </div>
 
+        {/* Calibration panel — knowledge-confidence split. The headline is
+            the "certain & wrong" count: those are the regs you'd fail on
+            AM2 day without realising. */}
+        {calibration.total > 0 && (
+          <div className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_10%)] p-5 sm:p-6 space-y-4">
+            <div className="flex items-baseline justify-between gap-2 flex-wrap">
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
+                Confidence calibration
+              </div>
+              {calibration.certainAccuracy !== null && (
+                <div className="text-[11px] text-white/55">
+                  <span className="font-semibold text-white tabular-nums">
+                    {calibration.certainAccuracy}%
+                  </span>{' '}
+                  of your "certain" answers were right
+                </div>
+              )}
+            </div>
+            <div className="grid grid-cols-3 gap-2 sm:gap-3">
+              <CalTile
+                value={calibration.lockedIn}
+                label="Locked in"
+                sub="Right + certain"
+                tone="text-emerald-300"
+              />
+              <CalTile
+                value={calibration.overconfident}
+                label="Overconfident"
+                sub="Wrong + certain"
+                tone={calibration.overconfident > 0 ? 'text-red-300' : 'text-white/55'}
+                danger={calibration.overconfident > 0}
+              />
+              <CalTile
+                value={calibration.lucky}
+                label="Lucky"
+                sub="Right + guess"
+                tone={calibration.lucky > 0 ? 'text-amber-300' : 'text-white/55'}
+              />
+            </div>
+            {overconfidentQs.length > 0 && (
+              <div className="rounded-xl border border-red-400/30 bg-red-500/[0.06] p-3 sm:p-4 space-y-2.5">
+                <div className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-red-300">
+                  <AlertTriangle className="h-3.5 w-3.5" />
+                  Priority review · regs you got wrong while certain
+                </div>
+                <ul className="space-y-1.5">
+                  {overconfidentQs.map(({ q, i }) => (
+                    <li
+                      key={`oc-${i}`}
+                      className="text-[12px] text-white/80 flex items-start gap-2"
+                    >
+                      <span className="text-red-300/85 font-mono tabular-nums shrink-0">
+                        {q.correctReg.reg_number}
+                      </span>
+                      {q.correctReg.title && (
+                        <span className="text-white/70 leading-snug">{q.correctReg.title}</span>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        )}
+
         <ul className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden divide-y divide-white/[0.04]">
           {questions.map((q, i) => {
             const correct = answers[i] === q.correctReg.id;
+            const outcomeResult = getCalibrationOutcome(correct, confidences[i]);
             return (
               <li key={q.facetId} className="px-4 sm:px-5 py-3 flex items-start gap-3">
                 <span
@@ -326,8 +427,11 @@ export function Bs7671RagQuiz({ onExit, onSessionComplete }: Bs7671RagQuizProps)
                   )}
                 </span>
                 <div className="min-w-0 flex-1">
-                  <div className="text-[12.5px] text-white/85 leading-snug line-clamp-2">
-                    {q.prompt}
+                  <div className="flex items-start justify-between gap-2 flex-wrap">
+                    <div className="text-[12.5px] text-white/85 leading-snug line-clamp-2 min-w-0 flex-1">
+                      {q.prompt}
+                    </div>
+                    {outcomeResult && <CalibrationPill outcome={outcomeResult} />}
                   </div>
                   <div className="mt-1 text-[10.5px] text-elec-yellow/80 font-mono tabular-nums">
                     Reg {q.correctReg.reg_number}
@@ -408,6 +512,9 @@ export function Bs7671RagQuiz({ onExit, onSessionComplete }: Bs7671RagQuizProps)
           const isCorrectOpt = opt.id === currentQ.correctReg.id;
           const isUserPick = opt.id === userAnswer;
           const showState = revealed;
+          // Three visual states: pre-answer, answered-pre-reveal, revealed.
+          const pickedPreReveal = isAnswered && !revealed && isUserPick;
+          const neutralPreReveal = !isAnswered || (isAnswered && !revealed && !isUserPick);
           return (
             <button
               key={opt.id}
@@ -416,7 +523,11 @@ export function Bs7671RagQuiz({ onExit, onSessionComplete }: Bs7671RagQuizProps)
               disabled={isAnswered}
               className={cn(
                 'w-full text-left p-3.5 sm:p-4 rounded-xl border transition-colors touch-manipulation flex items-center gap-3',
-                !showState && 'border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.04]',
+                neutralPreReveal &&
+                  !isAnswered &&
+                  'border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.04]',
+                neutralPreReveal && isAnswered && 'border-white/[0.06] bg-white/[0.01] opacity-60',
+                pickedPreReveal && 'border-elec-yellow/50 bg-elec-yellow/[0.06]',
                 showState && isCorrectOpt && 'border-emerald-400/40 bg-emerald-500/[0.08]',
                 showState && !isCorrectOpt && isUserPick && 'border-red-400/40 bg-red-500/[0.08]',
                 showState &&
@@ -435,7 +546,8 @@ export function Bs7671RagQuiz({ onExit, onSessionComplete }: Bs7671RagQuizProps)
                     !isCorrectOpt &&
                     isUserPick &&
                     'border-red-400/50 bg-red-500/[0.12] text-red-200',
-                  !showState && 'border-white/[0.10] bg-white/[0.04] text-white/65',
+                  pickedPreReveal && 'border-elec-yellow/60 bg-elec-yellow/[0.12] text-elec-yellow',
+                  neutralPreReveal && 'border-white/[0.10] bg-white/[0.04] text-white/65',
                   showState &&
                     !isCorrectOpt &&
                     !isUserPick &&
@@ -453,7 +565,8 @@ export function Bs7671RagQuiz({ onExit, onSessionComplete }: Bs7671RagQuizProps)
                   'text-[13.5px] font-mono tabular-nums',
                   showState && isCorrectOpt && 'text-emerald-200 font-semibold',
                   showState && !isCorrectOpt && isUserPick && 'text-red-200',
-                  !showState && 'text-white/85',
+                  pickedPreReveal && 'text-elec-yellow font-semibold',
+                  neutralPreReveal && 'text-white/85',
                   showState && !isCorrectOpt && !isUserPick && 'text-white/45'
                 )}
               >
@@ -464,6 +577,11 @@ export function Bs7671RagQuiz({ onExit, onSessionComplete }: Bs7671RagQuizProps)
         })}
       </div>
 
+      {/* Confidence prompt — shown once an option is picked but before reveal */}
+      <AnimatePresence>
+        {isAnswered && !hasConfidence && <ConfidencePicker onPick={handleConfidence} />}
+      </AnimatePresence>
+
       <AnimatePresence>
         {revealed && (
           <motion.div
@@ -472,8 +590,11 @@ export function Bs7671RagQuiz({ onExit, onSessionComplete }: Bs7671RagQuizProps)
             exit={{ opacity: 0 }}
             className="rounded-2xl border border-elec-yellow/30 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-2"
           >
-            <div className="text-[10px] uppercase tracking-[0.16em] text-elec-yellow/85 font-semibold">
-              Citation · BS 7671
+            <div className="flex items-center justify-between gap-2 flex-wrap">
+              <div className="text-[10px] uppercase tracking-[0.16em] text-elec-yellow/85 font-semibold">
+                Citation · BS 7671
+              </div>
+              {outcome && <CalibrationPill outcome={outcome} />}
             </div>
             <div className="text-[13px] text-white font-semibold tabular-nums">
               Regulation {currentQ.correctReg.reg_number}
@@ -516,6 +637,35 @@ export function Bs7671RagQuiz({ onExit, onSessionComplete }: Bs7671RagQuizProps)
           transition={{ duration: 0.4 }}
         />
       </div>
+    </div>
+  );
+}
+
+function CalTile({
+  value,
+  label,
+  sub,
+  tone,
+  danger,
+}: {
+  value: number;
+  label: string;
+  sub: string;
+  tone: string;
+  danger?: boolean;
+}) {
+  return (
+    <div
+      className={cn(
+        'rounded-xl border px-3 sm:px-4 py-3',
+        danger ? 'border-red-400/30 bg-red-500/[0.04]' : 'border-white/[0.06] bg-white/[0.02]'
+      )}
+    >
+      <div className={cn('text-2xl sm:text-3xl font-semibold tabular-nums leading-none', tone)}>
+        {value}
+      </div>
+      <div className="mt-1.5 text-[11px] font-semibold text-white">{label}</div>
+      <div className="text-[10.5px] text-white/45 leading-tight">{sub}</div>
     </div>
   );
 }

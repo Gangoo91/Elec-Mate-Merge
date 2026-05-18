@@ -449,10 +449,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Heritage and Standard Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to send professional PDF quotes from Canterbury surveys. Quote heritage property
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  send professional PDF quotes from Canterbury surveys. Quote heritage property
                   rewires at the appropriate premium, and standard domestic work at South East
                   rates. Send quotes before you leave site.
                 </p>
@@ -477,6 +475,7 @@ const sections = [
 export default function ElectricianCanterburyPage() {
   return (
     <GuideTemplate
+      localArea="Canterbury"
       title="Electrician in Canterbury | Local Electricians 2026"
       description="Find qualified electricians in Canterbury. NICEIC and NAPIT registered, Part P compliant. South East rates, listed building work, student HMO EICRs, EV chargers, and consumer unit upgrades in Canterbury 2026."
       datePublished="2026-03-27"

@@ -260,8 +260,8 @@ const sections = [
           to any job in any industry. Tailor your personal statement to each application — if you
           are applying for a commercial role, lead with your commercial experience; if it is a
           testing-focused role, lead with your{' '}
-          <SEOInternalLink href="/city-guilds2391">2391 qualification</SEOInternalLink> and
-          testing experience.
+          <SEOInternalLink href="/city-guilds2391">2391 qualification</SEOInternalLink> and testing
+          experience.
         </p>
       </>
     ),
@@ -553,9 +553,11 @@ const sections = [
         />
         <p>
           Whether you are employed or{' '}
-          <SEOInternalLink href="/guides/going-self-employed-electrician">self-employed</SEOInternalLink>,
-          a strong CV combined with a verified digital profile gives you the best chance of landing
-          the roles and contracts you want.
+          <SEOInternalLink href="/guides/going-self-employed-electrician">
+            self-employed
+          </SEOInternalLink>
+          , a strong CV combined with a verified digital profile gives you the best chance of
+          landing the roles and contracts you want.
         </p>
         <SEOAppBridge
           title="Manage your business from your phone"
@@ -574,6 +576,7 @@ const sections = [
 export default function ElectricianCVGuidePage() {
   return (
     <GuideTemplate
+      localArea="Cv Guide"
       title="Electrician CV Guide 2026 | Template & Tips UK"
       description="Complete guide to writing an electrician CV that gets interviews. CV structure, qualifications section, experience tips, common mistakes to avoid, and how to stand out in the UK electrical industry."
       datePublished="2025-06-15"

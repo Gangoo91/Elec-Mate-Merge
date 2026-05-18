@@ -407,10 +407,10 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Completing an{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> on a phone
-                  app and sending an instant PDF sets you apart from competitors still posting
-                  handwritten certificates. Landlords and letting agents in Crawley increasingly
-                  expect digital documentation.
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> on a phone app and
+                  sending an instant PDF sets you apart from competitors still posting handwritten
+                  certificates. Landlords and letting agents in Crawley increasingly expect digital
+                  documentation.
                 </p>
               </div>
             </div>
@@ -433,6 +433,7 @@ const sections = [
 export default function ElectricianCrawleyPage() {
   return (
     <GuideTemplate
+      localArea="Crawley"
       title="Electrician in Crawley | Find Qualified Electricians 2026"
       description="Find qualified, registered electricians in Crawley. Realistic 2026 pricing, how to verify NICEIC/NAPIT registration, new town rewiring costs, UKPN connections, Part P compliance, and Crawley-specific electrical challenges."
       datePublished="2026-03-27"

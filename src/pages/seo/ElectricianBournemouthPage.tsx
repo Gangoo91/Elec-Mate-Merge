@@ -437,8 +437,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Documentation</h4>
                 <p className="text-white text-sm leading-relaxed">
                   An <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on
-                  a phone app and sent as a PDF before you leave site gives customers confidence and
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on a
+                  phone app and sent as a PDF before you leave site gives customers confidence and
                   saves you time on paperwork.
                 </p>
               </div>
@@ -462,6 +462,7 @@ const sections = [
 export default function ElectricianBournemouthPage() {
   return (
     <GuideTemplate
+      localArea="Bournemouth"
       title="Electrician in Bournemouth | Find Qualified Electricians 2026"
       description="Find qualified, registered electricians in Bournemouth. Realistic 2026 pricing, SSEN connections, coastal electrical considerations, flat conversion challenges, Part P compliance, and Bournemouth-specific information."
       datePublished="2026-03-27"

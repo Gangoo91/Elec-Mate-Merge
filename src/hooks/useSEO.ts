@@ -259,11 +259,44 @@ export const SEOSchemas = {
     })),
   }),
 
-  softwareApplication: (
-    name: string,
+  /**
+   * Service schema for local hub pages (/electricians/[city]).
+   *
+   * Elec-Mate doesn't carry out electrical work directly — it's a platform that
+   * connects users to vetted electricians and supplies certified-electrician
+   * software. So the correct schema is `Service` with `provider: Elec-Mate Ltd`
+   * and `areaServed: City: {cityName}`. This wins local-pack visibility on
+   * "electrician in {city}" searches.
+   */
+  service: (
+    cityName: string,
+    pageUrl: string,
     description: string,
-    url: string,
-  ) => {
+    serviceType = 'Electrical contractor directory and certification software'
+  ) => ({
+    '@type': 'Service',
+    name: `Electrician in ${cityName}`,
+    serviceType,
+    areaServed: {
+      '@type': 'City',
+      name: cityName,
+      containedInPlace: { '@type': 'Country', name: 'United Kingdom' },
+    },
+    provider: {
+      '@type': 'Organization',
+      name: 'Elec-Mate Ltd',
+      url: BASE_URL,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${BASE_URL}/logo.jpg`,
+      },
+    },
+    description,
+    url: pageUrl,
+    audience: { '@type': 'Audience', audienceType: 'Homeowners and trade buyers' },
+  }),
+
+  softwareApplication: (name: string, description: string, url: string) => {
     // Real aggregate from combinedStoreRating(). Returns null if no store
     // data is available — in which case we OMIT aggregateRating rather than
     // fabricate it (Google policy: review snippets must be verifiable).

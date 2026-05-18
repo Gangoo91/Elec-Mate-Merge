@@ -194,7 +194,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 7671 compliance</strong> — all electrical work must comply with BS 7671:2018+A4:2026. RCD protection is required for socket outlet circuits under
+                <strong>BS 7671 compliance</strong> — all electrical work must comply with BS
+                7671:2018+A4:2026. RCD protection is required for socket outlet circuits under
                 regulation 411.3.3 and for circuits in kitchens, bathrooms, and outdoors.
               </span>
             </li>
@@ -449,10 +450,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to send professional, detailed quotes to Rotherham homeowners and landlords. Clear
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  send professional, detailed quotes to Rotherham homeowners and landlords. Clear
                   quotes win work in a competitive local market.
                 </p>
               </div>
@@ -476,6 +475,7 @@ const sections = [
 export default function ElectricianRotherhamPage() {
   return (
     <GuideTemplate
+      localArea="Rotherham"
       title="Electrician in Rotherham | Local Electricians 2026"
       description="Find qualified electricians in Rotherham. Part P compliance, NICEIC registered, EICR for landlords, consumer unit replacement, house rewiring, and local electrician rates for Rotherham in 2026."
       datePublished="2026-03-27"

@@ -572,12 +572,10 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price Cumbrian jobs accurately with the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Factor travel time premiums for rural jobs, material lead times for remote
-                  sites, and specialist rates for industrial work. Send professional PDF quotes to
-                  clients from the survey.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Factor travel time premiums for rural jobs, material lead times for remote sites,
+                  and specialist rates for industrial work. Send professional PDF quotes to clients
+                  from the survey.
                 </p>
               </div>
             </div>
@@ -600,6 +598,7 @@ const sections = [
 export default function ElectricianCumbriaPage() {
   return (
     <GuideTemplate
+      localArea="Cumbria"
       title="Electrician in Cumbria | Local Electricians 2026"
       description="Find qualified electricians in Cumbria. Sellafield nuclear site requirements, BS 7671 and IEC 60364, Electricity North West DNO, Carlisle, Barrow, Whitehaven, Workington, and Cumbria electrician rates 2026."
       datePublished="2026-03-27"

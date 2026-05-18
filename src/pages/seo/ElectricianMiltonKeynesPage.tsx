@@ -531,8 +531,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Milton Keynes customers expect professional service. An{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on
-                  a phone app and sent as a PDF before you leave the site sets you apart from
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on a
+                  phone app and sent as a PDF before you leave the site sets you apart from
                   competitors still posting handwritten certificates.
                 </p>
               </div>
@@ -556,6 +556,7 @@ const sections = [
 export default function ElectricianMiltonKeynesPage() {
   return (
     <GuideTemplate
+      localArea="Milton Keynes"
       title="Electrician in Milton Keynes | Find Qualified Electricians 2026"
       description="Find qualified, registered electricians in Milton Keynes. Realistic 2026 pricing, how to verify NICEIC/NAPIT registration, new-build snagging, NGED connections, Part P compliance, and Milton Keynes-specific electrical guidance."
       datePublished="2026-03-27"

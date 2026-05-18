@@ -655,6 +655,7 @@ const sections = [
 export default function ElectricianBusinessInsurancePage() {
   return (
     <GuideTemplate
+      localArea="Business Insurance"
       title="Electrician Business Insurance UK 2026 | What You Need"
       description="Complete guide to business insurance for UK electricians. Public liability, professional indemnity, employers liability, tool cover, personal accident, cyber insurance. Typical costs £300-£800/year for sole traders."
       datePublished="2026-03-27"

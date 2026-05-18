@@ -484,8 +484,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Leicester landlords and letting agents expect professional documentation. An{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on
-                  a phone app and sent as a PDF before you leave the site sets you apart from
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on a
+                  phone app and sent as a PDF before you leave the site sets you apart from
                   competitors still posting handwritten certificates.
                 </p>
               </div>
@@ -509,6 +509,7 @@ const sections = [
 export default function ElectricianLeicesterPage() {
   return (
     <GuideTemplate
+      localArea="Leicester"
       title="Electrician in Leicester | Find Qualified Electricians 2026"
       description="Find qualified, registered electricians in Leicester. Realistic 2026 pricing, how to verify NICEIC/NAPIT registration, Victorian rewiring costs, NGED connections, Part P compliance, and HMO electrical requirements."
       datePublished="2026-03-27"

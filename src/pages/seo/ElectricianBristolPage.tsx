@@ -203,8 +203,8 @@ const sections = [
                 additions or alterations in bathrooms and wet rooms, outdoor electrical
                 installations, and work in special locations (swimming pools, saunas) are all
                 notifiable under Part P. An{' '}
-                <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> must be issued
-                for all notifiable work.
+                <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> must be issued for
+                all notifiable work.
               </span>
             </li>
           </ul>
@@ -569,12 +569,10 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price Bristol jobs accurately with the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Itemise materials, labour, testing, and certification for everything from
-                  consumer unit upgrades to full eco-retrofit packages. Professional PDF quotes
-                  build trust with Bristol's quality-conscious customers.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Itemise materials, labour, testing, and certification for everything from consumer
+                  unit upgrades to full eco-retrofit packages. Professional PDF quotes build trust
+                  with Bristol's quality-conscious customers.
                 </p>
               </div>
             </div>
@@ -597,6 +595,7 @@ const sections = [
 export default function ElectricianBristolPage() {
   return (
     <GuideTemplate
+      localArea="Bristol"
       title="Electrician in Bristol | Find Electricians 2026"
       description="Find qualified electricians in Bristol. WPD DNO, Georgian and Victorian properties in Clifton and Redland, eco-retrofit demand, HMO compliance, and local electrician rates for 2026."
       datePublished="2026-03-27"

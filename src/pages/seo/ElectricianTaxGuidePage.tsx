@@ -273,9 +273,11 @@ const sections = [
         <p>
           The golden rule: if you spent money to earn money, it is probably an allowable expense.
           When in doubt, keep the receipt and ask your accountant. Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/expenses-manager-electrician">expenses tracker</SEOInternalLink> lets you
-          photograph receipts on the spot, categorise them, and export everything your accountant
-          needs at year end.
+          <SEOInternalLink href="/tools/expenses-manager-electrician">
+            expenses tracker
+          </SEOInternalLink>{' '}
+          lets you photograph receipts on the spot, categorise them, and export everything your
+          accountant needs at year end.
         </p>
         <SEOAppBridge
           title="Never miss an allowable expense again"
@@ -494,8 +496,10 @@ const sections = [
           and submit VAT returns using compatible software. Spreadsheets alone are no longer
           acceptable — you need digital record-keeping software. Elec-Mate's{' '}
           <SEOInternalLink href="/electrician-invoice-app">invoice app</SEOInternalLink> and{' '}
-          <SEOInternalLink href="/tools/expenses-manager-electrician">expenses tracker</SEOInternalLink> provide
-          the digital records you need for MTD compliance.
+          <SEOInternalLink href="/tools/expenses-manager-electrician">
+            expenses tracker
+          </SEOInternalLink>{' '}
+          provide the digital records you need for MTD compliance.
         </p>
       </>
     ),
@@ -638,6 +642,7 @@ const sections = [
 export default function ElectricianTaxGuidePage() {
   return (
     <GuideTemplate
+      localArea="Tax Guide Uk"
       title="Electrician Tax Guide UK 2026 | Self-Employed & Ltd"
       description="Complete UK tax guide for self-employed electricians and limited companies. Covers self-assessment, allowable expenses, mileage, tools, CIS deductions, VAT threshold, and record keeping for HMRC."
       datePublished="2026-01-15"

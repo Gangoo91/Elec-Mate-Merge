@@ -519,9 +519,9 @@ const sections = [
                   Birmingham letting agents and property managers expect prompt, professional
                   certificates. Complete your{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> on your phone
-                  and email the PDF before leaving site. This sets you apart from competitors and
-                  speeds up the payment cycle with letting agents.
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> on your phone and
+                  email the PDF before leaving site. This sets you apart from competitors and speeds
+                  up the payment cycle with letting agents.
                 </p>
               </div>
             </div>
@@ -544,6 +544,7 @@ const sections = [
 export default function ElectricianBirminghamPage() {
   return (
     <GuideTemplate
+      localArea="Birmingham"
       title="Electrician in Birmingham | Find Local Electricians 2026"
       description="Find qualified, registered electricians in Birmingham. 2026 pricing guide, NICEIC/NAPIT verification, Victorian and 1930s rewiring, National Grid Electricity Distribution connections, HMO compliance in Selly Oak and Edgbaston, and HS2 development impact."
       datePublished="2026-03-27"

@@ -515,8 +515,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Norwich customers expect professional documentation. An{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on
-                  a phone app and sent as a PDF before you leave the site sets you apart from
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on a
+                  phone app and sent as a PDF before you leave the site sets you apart from
                   competitors still posting handwritten certificates.
                 </p>
               </div>
@@ -540,6 +540,7 @@ const sections = [
 export default function ElectricianNorwichPage() {
   return (
     <GuideTemplate
+      localArea="Norwich"
       title="Electrician in Norwich | Find Qualified Electricians 2026"
       description="Find qualified, registered electricians in Norwich. Realistic 2026 pricing, UKPN connections, heritage property rewiring, flood-risk electrical safety, Part P compliance, and Norwich-specific electrical information."
       datePublished="2026-03-27"

@@ -133,17 +133,17 @@ const sections = [
       <>
         <p>
           Retirement planning is one of the most neglected aspects of financial management for
-          self-employed electricians. When you are busy, billing well, and healthy, retirement
-          feels distant. But the compounding effect of pension contributions means that starting
-          early has an enormous impact on retirement outcomes — a 30-year-old who contributes
-          £500 per month will retire with far more than a 45-year-old making the same contribution.
+          self-employed electricians. When you are busy, billing well, and healthy, retirement feels
+          distant. But the compounding effect of pension contributions means that starting early has
+          an enormous impact on retirement outcomes — a 30-year-old who contributes £500 per month
+          will retire with far more than a 45-year-old making the same contribution.
         </p>
         <p>
-          Electricians face specific retirement planning challenges. The physical demands of the
-          job mean the effective working life may be shorter than in many other professions. Sole
+          Electricians face specific retirement planning challenges. The physical demands of the job
+          mean the effective working life may be shorter than in many other professions. Sole
           traders have no employer pension contributions to rely on. And for those who own an
-          electrical contracting business, understanding how to extract value from that business
-          at retirement is an important additional dimension.
+          electrical contracting business, understanding how to extract value from that business at
+          retirement is an important additional dimension.
         </p>
         <p>
           This guide covers the pension options for sole traders, limited company directors, and
@@ -167,9 +167,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Knee and joint problems</strong> — frequent kneeling during first-fix
-                and board work accelerates wear on knee joints. Many electricians develop
-                significant arthritis in their knees by their mid-50s.
+                <strong>Knee and joint problems</strong> — frequent kneeling during first-fix and
+                board work accelerates wear on knee joints. Many electricians develop significant
+                arthritis in their knees by their mid-50s.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -192,8 +192,8 @@ const sections = [
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Eyesight</strong> — reading small print (cable ratings, circuit diagrams,
-                schematic labels) becomes progressively more difficult in the late 40s and 50s.
-                Good quality reading glasses and well-designed labelling are essential.
+                schematic labels) becomes progressively more difficult in the late 40s and 50s. Good
+                quality reading glasses and well-designed labelling are essential.
               </span>
             </li>
           </ul>
@@ -209,10 +209,10 @@ const sections = [
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
             <p className="text-white text-sm">
-              <strong>Planning tip:</strong> Structure your transition. At 55–58, consider
-              reducing physical site work and moving into inspection and testing, supervision,
-              training delivery, or consultancy. These roles maintain income while drastically
-              reducing physical strain and can extend your working life significantly.
+              <strong>Planning tip:</strong> Structure your transition. At 55–58, consider reducing
+              physical site work and moving into inspection and testing, supervision, training
+              delivery, or consultancy. These roles maintain income while drastically reducing
+              physical strain and can extend your working life significantly.
             </p>
           </div>
         </div>
@@ -225,8 +225,8 @@ const sections = [
     content: (
       <>
         <p>
-          As a sole trader, there is no employer to make pension contributions on your behalf.
-          Every pound in your pension has to come from you. The key facts:
+          As a sole trader, there is no employer to make pension contributions on your behalf. Every
+          pound in your pension has to come from you. The key facts:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
@@ -241,29 +241,28 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Tax relief</strong> — pension contributions reduce your taxable profits.
-                If you earn £50,000 and contribute £10,000 to a pension, your taxable income is
-                effectively £40,000. For a basic-rate taxpayer, this saves £2,000 in income tax.
-                For a higher-rate taxpayer, the saving is £4,000.
+                <strong>Tax relief</strong> — pension contributions reduce your taxable profits. If
+                you earn £50,000 and contribute £10,000 to a pension, your taxable income is
+                effectively £40,000. For a basic-rate taxpayer, this saves £2,000 in income tax. For
+                a higher-rate taxpayer, the saving is £4,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>SIPP — the standard choice</strong> — a Self-Invested Personal Pension
-                offers flexibility, low costs (index fund options from 0.15% per year), and
-                control over investment decisions. Regular monthly contributions combined with
-                ad hoc larger contributions in good years is the typical approach for self-employed
-                electricians.
+                offers flexibility, low costs (index fund options from 0.15% per year), and control
+                over investment decisions. Regular monthly contributions combined with ad hoc larger
+                contributions in good years is the typical approach for self-employed electricians.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Carry forward</strong> — if you have unused annual allowance from the
-                previous three tax years, you can carry it forward and make a larger contribution
-                in a single year. This is useful for sole traders whose income fluctuates — you
-                can make smaller contributions in lean years and top up in profitable years.
+                previous three tax years, you can carry it forward and make a larger contribution in
+                a single year. This is useful for sole traders whose income fluctuates — you can
+                make smaller contributions in lean years and top up in profitable years.
               </span>
             </li>
           </ul>
@@ -292,28 +291,28 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>How it works</strong> — the company makes pension contributions directly
-                into your SIPP or company pension scheme as an employer. These contributions are
-                a business expense that reduces the company's taxable profit, cutting the
-                Corporation Tax bill (25% for profits above £50,000 in 2026).
+                into your SIPP or company pension scheme as an employer. These contributions are a
+                business expense that reduces the company's taxable profit, cutting the Corporation
+                Tax bill (25% for profits above £50,000 in 2026).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Tax efficiency example</strong> — a limited company with £80,000 profit
-                that makes a £20,000 employer pension contribution reduces taxable profit to
-                £60,000, saving £5,000 in Corporation Tax (at 25%). The £20,000 goes into the
-                pension with no income tax or NI — far more efficient than drawing it as a salary
-                or dividend and then contributing personally.
+                <strong>Tax efficiency example</strong> — a limited company with £80,000 profit that
+                makes a £20,000 employer pension contribution reduces taxable profit to £60,000,
+                saving £5,000 in Corporation Tax (at 25%). The £20,000 goes into the pension with no
+                income tax or NI — far more efficient than drawing it as a salary or dividend and
+                then contributing personally.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>The annual allowance still applies</strong> — employer contributions count
-                towards the £60,000 annual allowance. If you also make personal contributions,
-                the total cannot exceed the allowance without triggering a tax charge. Get
-                accountancy advice to ensure contributions are within the allowance each year.
+                towards the £60,000 annual allowance. If you also make personal contributions, the
+                total cannot exceed the allowance without triggering a tax charge. Get accountancy
+                advice to ensure contributions are within the allowance each year.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -336,9 +335,9 @@ const sections = [
     content: (
       <>
         <p>
-          All employed electricians have a legal right to automatic enrolment in a workplace
-          pension if they earn more than the enrolment threshold (£10,000 in 2026/27) and are
-          aged 22 to 66. Key facts:
+          All employed electricians have a legal right to automatic enrolment in a workplace pension
+          if they earn more than the enrolment threshold (£10,000 in 2026/27) and are aged 22 to 66.
+          Key facts:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -346,9 +345,9 @@ const sections = [
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Minimum contributions</strong> — in 2026/27, the minimum total contribution
-                is 8% of qualifying earnings (earnings between £6,240 and £50,270). At least 3%
-                must come from the employer. The government has proposed increasing minimum
-                employer contributions — check current rates with your employer.
+                is 8% of qualifying earnings (earnings between £6,240 and £50,270). At least 3% must
+                come from the employer. The government has proposed increasing minimum employer
+                contributions — check current rates with your employer.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -388,8 +387,8 @@ const sections = [
     content: (
       <>
         <p>
-          The State Pension is a valuable foundation for retirement income — £11,502 per year
-          (the 2026/27 full new State Pension) covers approximately one-third of the "moderate"
+          The State Pension is a valuable foundation for retirement income — £11,502 per year (the
+          2026/27 full new State Pension) covers approximately one-third of the "moderate"
           retirement income standard. Key actions to maximise your State Pension:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -407,17 +406,17 @@ const sections = [
               <span>
                 Consider buying missing NI years (Class 3 voluntary contributions, approximately
                 £824 per missing year in 2026/27). Each year you buy adds £329 per year to your
-                State Pension for life — a return of over 25% per year, making it exceptional
-                value if you are in reasonable health.
+                State Pension for life — a return of over 25% per year, making it exceptional value
+                if you are in reasonable health.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                Self-employed electricians should ensure they are registered for self-assessment
-                and paying Class 4 NI contributions annually — these count towards qualifying
-                years. Missing years from periods of inactivity or working abroad can be filled
-                with voluntary Class 3 contributions.
+                Self-employed electricians should ensure they are registered for self-assessment and
+                paying Class 4 NI contributions annually — these count towards qualifying years.
+                Missing years from periods of inactivity or working abroad can be filled with
+                voluntary Class 3 contributions.
               </span>
             </li>
           </ul>
@@ -442,10 +441,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">What makes a business saleable?</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Recurring maintenance contracts (ongoing revenue without new sales effort),
-                  a team that operates independently of the owner, documented processes and
-                  systems, clean financial records for the past 3 years, and active client
-                  relationships that are with the business (not personally with the owner).
+                  Recurring maintenance contracts (ongoing revenue without new sales effort), a team
+                  that operates independently of the owner, documented processes and systems, clean
+                  financial records for the past 3 years, and active client relationships that are
+                  with the business (not personally with the owner).
                 </p>
               </div>
             </div>
@@ -456,8 +455,8 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Tax on business sale</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Business Asset Disposal Relief (BADR) — formerly Entrepreneurs Relief — provides
-                  a 10% Capital Gains Tax rate on qualifying business sales up to a £1m lifetime
+                  Business Asset Disposal Relief (BADR) — formerly Entrepreneurs Relief — provides a
+                  10% Capital Gains Tax rate on qualifying business sales up to a £1m lifetime
                   limit. An electrical business sold for £300,000 with a cost base of £50,000
                   generates £250,000 of gain taxed at 10% (£25,000 CGT) rather than 20% (£50,000
                   CGT) — a saving of £25,000.
@@ -471,10 +470,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Start planning 5 years ahead</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  The best business exits are planned 3 to 5 years in advance. This gives time
-                  to build the management team, grow recurring revenues, and present 3 years of
-                  strong financial accounts. A business sold on impulse or in poor health always
-                  achieves less than one presented at its best.
+                  The best business exits are planned 3 to 5 years in advance. This gives time to
+                  build the management team, grow recurring revenues, and present 3 years of strong
+                  financial accounts. A business sold on impulse or in poor health always achieves
+                  less than one presented at its best.
                 </p>
               </div>
             </div>
@@ -492,6 +491,7 @@ const sections = [
 export default function ElectricianRetirementPlanningPage() {
   return (
     <GuideTemplate
+      localArea="Retirement Planning Uk"
       title="Electrician Retirement Planning UK | Pensions, Business Value & Exit"
       description="Retirement planning guide for UK electricians — sole trader SIPPs, limited company employer pension contributions, physical demands and realistic retirement age (58–62), and how to maximise business value for exit."
       datePublished="2026-03-27"

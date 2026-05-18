@@ -545,6 +545,7 @@ const sections = [
 export default function ElectricianStudyTipsPage() {
   return (
     <GuideTemplate
+      localArea="Study Tips"
       title="Study Tips for Electricians | Exam Preparation Guide"
       description="Evidence-based study techniques for electrical exams. Covers active recall, spaced repetition, flashcard technique, BS 7671 navigation, practice questions, and study planning for the 18th Edition, 2391, AM2, and NVQ."
       datePublished="2025-04-15"

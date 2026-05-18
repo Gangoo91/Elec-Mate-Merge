@@ -178,7 +178,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>No Part P in Scotland</strong> — the Scottish Technical Handbook Section 4
-                (Safety) sets the regulatory requirement. The electrical standard is the same (BS 7671:2018+A4:2026), but the certification and compliance route is through building
+                (Safety) sets the regulatory requirement. The electrical standard is the same (BS
+                7671:2018+A4:2026), but the certification and compliance route is through building
                 warrants, not the Part P competent person scheme self-certification model.
               </span>
             </li>
@@ -453,10 +454,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Win Dundee jobs with the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Send professional PDF quotes to customers and landlords from the survey.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Send professional PDF quotes to customers and landlords from the survey.
                 </p>
               </div>
             </div>
@@ -479,6 +478,7 @@ const sections = [
 export default function ElectricianDundeePage() {
   return (
     <GuideTemplate
+      localArea="Dundee"
       title="Electrician in Dundee | Local Electricians 2026"
       description="Find qualified electricians in Dundee. Scottish Building Standards, SSEN DNO, SELECT registration, tenement and social housing rewiring, EICR costs, and Dundee electrician rates for 2026."
       datePublished="2026-03-27"

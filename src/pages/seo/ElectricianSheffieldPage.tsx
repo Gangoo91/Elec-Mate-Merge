@@ -276,8 +276,8 @@ const sections = [
         <p>
           These prices are indicative and vary based on property condition, access, and
           specification. Use Elec-Mate's{' '}
-          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
-          build accurate, itemised quotes on site and send professional PDFs to customers instantly.
+          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to build
+          accurate, itemised quotes on site and send professional PDFs to customers instantly.
         </p>
       </>
     ),
@@ -639,10 +639,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote on Site, Win More Work</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to build professional, itemised quotes during the survey. Sheffield landlords with
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  build professional, itemised quotes during the survey. Sheffield landlords with
                   multiple HMOs value electricians who can provide clear pricing quickly. Send the
                   PDF quote before you leave the property.
                 </p>
@@ -657,9 +655,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Complete EICRs, EICs, and Minor Works Certificates on your phone during the job.
                   An <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed and
-                  sent as a PDF before you leave demonstrates professionalism and saves hours of
-                  admin.
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed and sent
+                  as a PDF before you leave demonstrates professionalism and saves hours of admin.
                 </p>
               </div>
             </div>
@@ -698,6 +695,7 @@ const sections = [
 export default function ElectricianSheffieldPage() {
   return (
     <GuideTemplate
+      localArea="Sheffield"
       title="Electrician in Sheffield | Find Qualified Electricians 2026"
       description="Find qualified, registered electricians in Sheffield. Realistic 2026 pricing, Northern Powergrid DNO, steel city industrial conversions, Crookes and Walkley stone terraces, university HMOs, Peak District conservation, and Meadowhall commercial work."
       datePublished="2026-03-27"

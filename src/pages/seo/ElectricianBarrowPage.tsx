@@ -535,10 +535,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price Barrow jobs accurately with the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Account for asbestos survey costs on pre-1985 properties, Walney Island coastal
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Account for asbestos survey costs on pre-1985 properties, Walney Island coastal
                   installation premiums, and travel time for rural Furness Peninsula jobs. Send
                   professional PDF quotes to clients from the survey.
                 </p>
@@ -563,6 +561,7 @@ const sections = [
 export default function ElectricianBarrowPage() {
   return (
     <GuideTemplate
+      localArea="Barrow In Furness"
       title="Electrician in Barrow-in-Furness | Local Electricians 2026"
       description="Find qualified electricians in Barrow-in-Furness, Cumbria. BAE Systems submarine facility, defence and marine electrical work, security clearances, Electricity North West DNO, and Barrow electrician rates 2026."
       datePublished="2026-03-27"

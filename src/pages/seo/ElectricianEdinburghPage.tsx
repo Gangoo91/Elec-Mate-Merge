@@ -571,10 +571,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price Edinburgh jobs accurately with the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Account for the higher material costs and labour times associated with tenement
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Account for the higher material costs and labour times associated with tenement
                   and period property work. Send professional PDF quotes to Edinburgh customers from
                   the survey.
                 </p>
@@ -599,6 +597,7 @@ const sections = [
 export default function ElectricianEdinburghPage() {
   return (
     <GuideTemplate
+      localArea="Edinburgh"
       title="Electrician in Edinburgh | Local Electricians 2026"
       description="Find qualified electricians in Edinburgh. Scottish Building Standards, SPEN DNO, listed building work, tenement rewiring, Edinburgh Festival installations, and local electrician rates for 2026."
       datePublished="2026-03-27"

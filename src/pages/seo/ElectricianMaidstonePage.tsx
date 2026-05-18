@@ -400,8 +400,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">On-Site Certification</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Complete <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink>{' '}
-                  and <SEOInternalLink href="/eic-certificate">EICs</SEOInternalLink> from
-                  your phone on Maidstone and Kent jobs. Issue certificates on site — no delays,
+                  and <SEOInternalLink href="/eic-certificate">EICs</SEOInternalLink> from your
+                  phone on Maidstone and Kent jobs. Issue certificates on site — no delays,
                   professional documentation every time.
                 </p>
               </div>
@@ -414,10 +414,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote and Win Kent Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to produce professional PDF quotes for Maidstone and surrounding Kent customers at
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  produce professional PDF quotes for Maidstone and surrounding Kent customers at
                   accurate South East rates. Quote on site and close more jobs.
                 </p>
               </div>
@@ -441,6 +439,7 @@ const sections = [
 export default function ElectricianMaidstonePage() {
   return (
     <GuideTemplate
+      localArea="Maidstone"
       title="Electrician in Maidstone | Local Electricians 2026"
       description="Find qualified electricians in Maidstone. NICEIC and NAPIT registered, Part P compliant. South East rates, EICRs, consumer unit upgrades, EV chargers, rural Kent properties in Maidstone 2026."
       datePublished="2026-03-27"

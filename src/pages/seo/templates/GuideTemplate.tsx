@@ -77,6 +77,12 @@ export interface GuideTemplateProps {
    * Google to drop the URL from the index faster.
    */
   noindex?: boolean;
+  /**
+   * Set to the city/area name (e.g. "Swindon") on local hub pages to emit
+   * Service schema with `areaServed`. Wins local-pack visibility on
+   * "electrician in {city}" searches.
+   */
+  localArea?: string;
 }
 
 export default function GuideTemplate({
@@ -104,6 +110,7 @@ export default function GuideTemplate({
   extraSchemas = [],
   embeddedTool,
   noindex = false,
+  localArea,
 }: GuideTemplateProps) {
   const pageUrl = breadcrumbs.length > 0 ? breadcrumbs[breadcrumbs.length - 1].href : '/';
 
@@ -150,11 +157,16 @@ export default function GuideTemplate({
       ? SEOSchemas.howTo(howToHeading || title, howToDescription || description, howToSteps)
       : null;
 
+  const serviceSchema = localArea
+    ? SEOSchemas.service(localArea, `https://www.elec-mate.com${pageUrl}`, description)
+    : null;
+
   const allSchemas = [
     webPageSchema,
     articleSchema,
     ...(faqSchema ? [faqSchema] : []),
     ...(howToSchema ? [howToSchema] : []),
+    ...(serviceSchema ? [serviceSchema] : []),
     ...extraSchemas,
   ];
 

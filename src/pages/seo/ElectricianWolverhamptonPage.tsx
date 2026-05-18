@@ -450,8 +450,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Landlords, letting agents, and property managers expect professional certificates.
                   An <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on
-                  a phone app and sent as a PDF on site sets you apart from competitors still using
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on a
+                  phone app and sent as a PDF on site sets you apart from competitors still using
                   handwritten forms.
                 </p>
               </div>
@@ -475,6 +475,7 @@ const sections = [
 export default function ElectricianWolverhamptonPage() {
   return (
     <GuideTemplate
+      localArea="Wolverhampton"
       title="Electrician in Wolverhampton | Find Qualified Electricians 2026"
       description="Find qualified, registered electricians in Wolverhampton. Realistic 2026 pricing, how to verify NICEIC/NAPIT registration, NGED connections, Part P compliance, and Wolverhampton-specific property challenges."
       datePublished="2026-03-27"

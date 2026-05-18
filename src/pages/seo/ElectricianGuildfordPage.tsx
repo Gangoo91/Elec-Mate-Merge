@@ -440,10 +440,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Win Premium Surrey Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to produce professional PDF quotes at Surrey premium rates. Quote large house
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  produce professional PDF quotes at Surrey premium rates. Quote large house
                   rewires, EV chargers, and solar PV installations — send the quote before leaving
                   the survey and close jobs faster.
                 </p>
@@ -468,6 +466,7 @@ const sections = [
 export default function ElectricianGuildfordPage() {
   return (
     <GuideTemplate
+      localArea="Guildford"
       title="Electrician in Guildford | Local Electricians 2026"
       description="Find qualified electricians in Guildford. NICEIC and NAPIT registered, Part P compliant. Premium Surrey rates, large house rewires, EICRs, HMO work, EV chargers, and solar PV in Guildford 2026."
       datePublished="2026-03-27"

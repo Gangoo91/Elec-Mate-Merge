@@ -36,7 +36,7 @@ const tocItems = [
 const keyTakeaways = [
   'Employed electricians in Birmingham typically earn £30,000 to £50,000 per year, broadly in line with the West Midlands average.',
   'Self-employed and limited company electricians in Birmingham and the wider West Midlands commonly achieve £42,000 to £65,000 per year.',
-  'Commonwealth Games legacy infrastructure, HS2, and Birmingham City Council\'s ongoing regeneration programme are sustaining demand for electrical skills in the region.',
+  "Commonwealth Games legacy infrastructure, HS2, and Birmingham City Council's ongoing regeneration programme are sustaining demand for electrical skills in the region.",
   'Day rates for self-employed Birmingham electricians range from £260 to £420 depending on sector, experience, and job type.',
   'The West Midlands manufacturing and automotive supply chain (Jaguar Land Rover, GKN, National Grid substations) creates consistent demand for industrial electricians at premium rates.',
 ];
@@ -73,7 +73,8 @@ const faqs = [
       'In the Birmingham market, the qualifications that deliver the most significant earnings uplift are: 2391 Inspection and Testing (mandatory for profitable EICR work — mandatory for landlords and letting agents), EV charger installation (OZEV approved installer — consistent demand across the West Midlands), 18th Edition (baseline, but required for all work), Solar PV and battery storage (growing residential demand, MCS pathway), CSCS Gold Card (mandatory for most site work), and CompEx (for petrochem and chemical work in the West Midlands industrial corridor). For those targeting the automotive supply chain, PSSR (Pressure Systems Safety Regulations) awareness and familiarity with machine safety standards (BS EN 60204-1) are valued.',
   },
   {
-    question: 'Are there opportunities for Birmingham electricians in the new-build residential sector?',
+    question:
+      'Are there opportunities for Birmingham electricians in the new-build residential sector?',
     answer:
       'Yes. Birmingham and the surrounding areas have significant new-build residential programmes — from large housing association schemes to private developer apartment blocks and suburban housing estates. New-build residential electrical work is typically priced by house type (detached, semi, terraced, apartment) on a fixed-price per-plot basis. Rates in the West Midlands for new-build plots are typically £2,500 to £5,000 per detached house (first fix and second fix combined), depending on size and specification. The work is consistent and volume-based, which suits electricians who can price efficiently and manage their time well. Plot work is generally less lucrative per day than domestic service work but provides consistent forward order books.',
   },
@@ -161,8 +162,8 @@ const sections = [
     content: (
       <>
         <p>
-          Employed electricians in Birmingham working for M&amp;E contractors, FM companies,
-          local authorities, and commercial organisations earn the following salary ranges in 2026:
+          Employed electricians in Birmingham working for M&amp;E contractors, FM companies, local
+          authorities, and commercial organisations earn the following salary ranges in 2026:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
@@ -177,15 +178,15 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Experienced electrician (3–7 years)</strong> — £34,000 to £44,000. On
-                larger commercial, industrial, or infrastructure projects in the West Midlands.
+                <strong>Experienced electrician (3–7 years)</strong> — £34,000 to £44,000. On larger
+                commercial, industrial, or infrastructure projects in the West Midlands.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Senior electrician / working foreman</strong> — £44,000 to £50,000.
-                Leading small teams on commercial or infrastructure projects.
+                <strong>Senior electrician / working foreman</strong> — £44,000 to £50,000. Leading
+                small teams on commercial or infrastructure projects.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -212,16 +213,16 @@ const sections = [
     content: (
       <>
         <p>
-          Self-employment is a well-established route for Birmingham electricians. Typical day
-          rates and annual earnings by work type:
+          Self-employment is a well-established route for Birmingham electricians. Typical day rates
+          and annual earnings by work type:
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Domestic</h3>
             <p className="text-white text-sm leading-relaxed">
-              Rewires, consumer units, EICRs, EV chargers. Day rate equivalent: £260 to £360.
-              Annual turnover: £60,000 to £90,000. Take-home after costs: £42,000 to £58,000.
-              Higher in affluent suburbs (Solihull, Sutton Coldfield, Edgbaston).
+              Rewires, consumer units, EICRs, EV chargers. Day rate equivalent: £260 to £360. Annual
+              turnover: £60,000 to £90,000. Take-home after costs: £42,000 to £58,000. Higher in
+              affluent suburbs (Solihull, Sutton Coldfield, Edgbaston).
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -264,9 +265,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>HS2 and transport infrastructure</strong> — Rail-qualified electricians
-                with PTS certification earn £350 to £500+ per day on HS2 and associated
-                infrastructure projects in the West Midlands.
+                <strong>HS2 and transport infrastructure</strong> — Rail-qualified electricians with
+                PTS certification earn £350 to £500+ per day on HS2 and associated infrastructure
+                projects in the West Midlands.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -274,8 +275,8 @@ const sections = [
               <span>
                 <strong>NHS and healthcare</strong> — The large NHS trust capital programmes
                 (University Hospitals Birmingham, BCHC, Sandwell and West Birmingham) provide
-                consistent, well-funded electrical work with framework rates above commercial
-                market rates.
+                consistent, well-funded electrical work with framework rates above commercial market
+                rates.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -337,9 +338,9 @@ const sections = [
         </div>
         <p>
           Because Birmingham's operating costs are significantly lower than London and the South
-          East, the real-terms financial position of a Birmingham-based self-employed electrician
-          is competitive — lower gross earnings are offset by lower overhead and a lower cost
-          of living.
+          East, the real-terms financial position of a Birmingham-based self-employed electrician is
+          competitive — lower gross earnings are offset by lower overhead and a lower cost of
+          living.
         </p>
       </>
     ),
@@ -375,9 +376,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Solar PV and heat pump growth</h4>
                 <p className="text-white text-sm leading-relaxed">
                   The West Midlands has significant uptake of solar PV and air source heat pumps,
-                  driven by the Boiler Upgrade Scheme and falling panel costs. Electricians with
-                  MCS accreditation for solar PV and battery storage, or RECC registration for
-                  heat pump electrical connections, can access a growing and well-paying market.
+                  driven by the Boiler Upgrade Scheme and falling panel costs. Electricians with MCS
+                  accreditation for solar PV and battery storage, or RECC registration for heat pump
+                  electrical connections, can access a growing and well-paying market.
                 </p>
               </div>
             </div>
@@ -400,6 +401,7 @@ const sections = [
 export default function ElectricianSalaryBirminghamPage() {
   return (
     <GuideTemplate
+      localArea="Salary Birmingham"
       title="Electrician Salary Birmingham 2026 | Employed & Self-Employed Rates"
       description="Realistic electrician salary figures for Birmingham and the West Midlands in 2026. Employed rates £30,000–£50,000, self-employed £42,000–£65,000. Top sectors, day rates, and market opportunities."
       datePublished="2026-03-27"

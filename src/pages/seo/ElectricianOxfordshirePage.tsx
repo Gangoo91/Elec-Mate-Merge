@@ -473,6 +473,7 @@ const sections = [
 export default function ElectricianOxfordshirePage() {
   return (
     <GuideTemplate
+      localArea="Oxfordshire"
       title="Electrician Oxfordshire — Find Qualified Electricians in Oxford, Abingdon, Banbury, Didcot"
       description="Find NICEIC and NAPIT registered electricians across Oxfordshire, covering Oxford, Abingdon, Banbury, Bicester, Witney, and Didcot. EICR, rewires, EV charging, heritage buildings, and research facility electrical work. DNO: SSEN."
       datePublished="2025-01-01"

@@ -400,8 +400,8 @@ const sections = [
       <>
         <p>
           If you are applying for a role that involves inspection and testing — or if you hold a{' '}
-          <SEOInternalLink href="/city-guilds2391">C&G 2391 qualification</SEOInternalLink>{' '}
-          — expect questions about test procedures and acceptable values:
+          <SEOInternalLink href="/city-guilds2391">C&G 2391 qualification</SEOInternalLink> — expect
+          questions about test procedures and acceptable values:
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
@@ -642,6 +642,7 @@ const sections = [
 export default function ElectricianInterviewQuestionsPage() {
   return (
     <GuideTemplate
+      localArea="Interview Questions"
       title="Electrician Interview Questions | Top 25 & Answers"
       description="Top 25 electrician interview questions with model answers. Technical questions on BS 7671, safe isolation, and Zs values. Behavioural questions, plus what to ask the employer. UK-focused guide for 2026."
       datePublished="2025-06-20"

@@ -180,7 +180,8 @@ const sections = [
               <span>
                 <strong>Technical Handbook Section 4 (Safety)</strong> — the Scottish equivalent of
                 Part P. Requires electrical installations to comply with BS 7671 and to be designed,
-                installed, inspected, and tested by a competent person. The electrical standard (BS 7671:2018+A4:2026) is identical — only the compliance route differs.
+                installed, inspected, and tested by a competent person. The electrical standard (BS
+                7671:2018+A4:2026) is identical — only the compliance route differs.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -469,10 +470,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price Aberdeen granite property jobs accurately with the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Account for surface-mounted trunking labour, longer cable runs, and the premium
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Account for surface-mounted trunking labour, longer cable runs, and the premium
                   Aberdeen customers expect for quality work.
                 </p>
               </div>
@@ -496,6 +495,7 @@ const sections = [
 export default function ElectricianAberdeenPage() {
   return (
     <GuideTemplate
+      localArea="Aberdeen"
       title="Electrician in Aberdeen | Local Electricians 2026"
       description="Find qualified electricians in Aberdeen. Scottish Building Standards, SSEN DNO, SELECT registration, granite property rewiring, CompEx certification for oil and gas, and Aberdeen electrician rates for 2026."
       datePublished="2026-03-27"

@@ -588,8 +588,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Brighton's informed customer base expects professional documentation. An{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on
-                  a phone app and sent as a PDF before you leave the site demonstrates the
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on a
+                  phone app and sent as a PDF before you leave the site demonstrates the
                   professionalism Brighton customers value.
                 </p>
               </div>
@@ -613,6 +613,7 @@ const sections = [
 export default function ElectricianBrightonPage() {
   return (
     <GuideTemplate
+      localArea="Brighton"
       title="Electrician in Brighton | Find Qualified Electricians 2026"
       description="Find qualified, registered electricians in Brighton. Realistic 2026 pricing, UKPN DNO connections, Regency listed building electrical work, seafront corrosion considerations, eco-retrofit demand, student HMOs, and Part P guidance."
       datePublished="2026-03-27"

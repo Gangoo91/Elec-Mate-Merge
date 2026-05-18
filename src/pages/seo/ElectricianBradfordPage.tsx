@@ -481,11 +481,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to send professional, detailed quotes to Bradford homeowners, landlords, and
-                  letting agents. Itemised quotes with accurate Bradford pricing win more work in a
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  send professional, detailed quotes to Bradford homeowners, landlords, and letting
+                  agents. Itemised quotes with accurate Bradford pricing win more work in a
                   competitive market.
                 </p>
               </div>
@@ -509,6 +507,7 @@ const sections = [
 export default function ElectricianBradfordPage() {
   return (
     <GuideTemplate
+      localArea="Bradford"
       title="Electrician Bradford | Find Qualified Electricians in Bradford"
       description="Find qualified electricians in Bradford. NICEIC and NAPIT registered, Part P compliant. Bradford electrician rates, EICRs for landlords, consumer unit replacement, house rewiring, and EV chargers in Bradford 2026."
       datePublished="2026-03-27"

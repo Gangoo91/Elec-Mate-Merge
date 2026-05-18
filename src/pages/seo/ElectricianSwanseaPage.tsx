@@ -546,9 +546,9 @@ const sections = [
                   Swansea landlords and letting agents managing student properties expect rapid
                   turnaround on EICRs and certificates. Completing an{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> on a phone
-                  app and sending the PDF before leaving site sets you apart from competitors still
-                  posting handwritten certificates.
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> on a phone app and
+                  sending the PDF before leaving site sets you apart from competitors still posting
+                  handwritten certificates.
                 </p>
               </div>
             </div>
@@ -571,6 +571,7 @@ const sections = [
 export default function ElectricianSwanseaPage() {
   return (
     <GuideTemplate
+      localArea="Swansea"
       title="Electrician in Swansea | Find Qualified Electricians 2026"
       description="Find qualified, registered electricians in Swansea. Realistic 2026 pricing, how to verify NICEIC/NAPIT registration, Victorian terrace rewiring, NGED connections, Welsh Building Regulations, SA1 waterfront regeneration, and student HMO compliance."
       datePublished="2026-03-27"

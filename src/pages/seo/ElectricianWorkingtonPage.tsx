@@ -500,10 +500,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price Workington jobs accurately with the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Account for coastal installation premiums, travel time for rural jobs, and
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Account for coastal installation premiums, travel time for rural jobs, and
                   specialist rates for industrial work.
                 </p>
               </div>
@@ -527,6 +525,7 @@ const sections = [
 export default function ElectricianWorkingtonPage() {
   return (
     <GuideTemplate
+      localArea="Workington"
       title="Electrician in Workington | Local Electricians 2026"
       description="Find qualified electricians in Workington, Cumbria. Industrial and chemical electrical work, Sellafield proximity, Electricity North West DNO, coastal IP ratings, and Workington electrician rates 2026."
       datePublished="2026-03-27"

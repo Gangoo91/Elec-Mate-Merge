@@ -508,6 +508,7 @@ const sections = [
 export default function ElectricianHertfordshirePage() {
   return (
     <GuideTemplate
+      localArea="Hertfordshire"
       title="Electrician Hertfordshire — Find Qualified Electricians in St Albans, Watford, Stevenage"
       description="Find NICEIC and NAPIT registered electricians across Hertfordshire, covering St Albans, Watford, Stevenage, Hemel Hempstead, Welwyn Garden City, and Hatfield. EICR, rewires, EV charging, and smart home installations."
       datePublished="2025-01-01"

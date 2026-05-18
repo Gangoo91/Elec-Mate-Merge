@@ -590,10 +590,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price Newcastle jobs accurately with the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . From Tyneside flat rewires to quayside commercial fit-outs, itemise materials,
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  From Tyneside flat rewires to quayside commercial fit-outs, itemise materials,
                   labour, testing, and certification. Professional PDF quotes build confidence with
                   landlords and commercial clients.
                 </p>
@@ -618,6 +616,7 @@ const sections = [
 export default function ElectricianNewcastlePage() {
   return (
     <GuideTemplate
+      localArea="Newcastle"
       title="Electrician in Newcastle | Local Electricians 2026"
       description="Find qualified electricians in Newcastle. Northern Powergrid DNO, Tyneside flat conversions, quayside regeneration, cold climate EV charging, student HMOs, and local electrician rates for 2026."
       datePublished="2026-03-27"

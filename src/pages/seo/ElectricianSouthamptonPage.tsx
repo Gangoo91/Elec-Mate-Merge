@@ -540,8 +540,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Southampton landlords and waterfront developers expect professional certificates.
                   An <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on
-                  a phone app and sent as a PDF before you leave the site sets you apart from
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on a
+                  phone app and sent as a PDF before you leave the site sets you apart from
                   competitors still posting handwritten certificates.
                 </p>
               </div>
@@ -565,6 +565,7 @@ const sections = [
 export default function ElectricianSouthamptonPage() {
   return (
     <GuideTemplate
+      localArea="Southampton"
       title="Electrician in Southampton | Find Qualified Electricians 2026"
       description="Find qualified, registered electricians in Southampton. Realistic 2026 pricing, SSEN DNO connections, post-war housing rewiring, port and marine work, student HMO compliance, waterfront installations, and Part P guidance."
       datePublished="2026-03-27"

@@ -441,11 +441,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote South East Jobs Accurately</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to produce professional PDF quotes for Slough customers. South East pricing built
-                  in — present quotes on site and win more jobs.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  produce professional PDF quotes for Slough customers. South East pricing built in
+                  — present quotes on site and win more jobs.
                 </p>
               </div>
             </div>
@@ -468,6 +466,7 @@ const sections = [
 export default function ElectricianSloughPage() {
   return (
     <GuideTemplate
+      localArea="Slough"
       title="Electrician in Slough | Local Electricians 2026"
       description="Find qualified electricians in Slough. NICEIC and NAPIT registered, Part P compliant. South East rates, EICRs, consumer unit upgrades, commercial and trading estate electrical work in Slough 2026."
       datePublished="2026-03-27"

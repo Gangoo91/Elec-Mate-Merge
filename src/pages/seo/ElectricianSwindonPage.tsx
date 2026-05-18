@@ -434,10 +434,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Win More Swindon Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Send professional PDF quotes from site using the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Accurate pricing for the Swindon market — quote consumer unit upgrades, EV
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Accurate pricing for the Swindon market — quote consumer unit upgrades, EV
                   chargers, and rewires and win work before the competition.
                 </p>
               </div>
@@ -461,6 +459,7 @@ const sections = [
 export default function ElectricianSwindonPage() {
   return (
     <GuideTemplate
+      localArea="Swindon"
       title="Electrician in Swindon | Local Electricians 2026"
       description="Find qualified electricians in Swindon. NICEIC and NAPIT registered, Part P compliant. Typical costs, EICRs, consumer unit upgrades, EV chargers, and solar PV in Swindon 2026."
       datePublished="2026-03-27"

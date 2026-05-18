@@ -510,10 +510,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price Whitehaven jobs accurately with the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Factor heritage premiums for Georgian town centre properties, planning
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Factor heritage premiums for Georgian town centre properties, planning
                   administration time for listed buildings, and coastal installation requirements
                   into your quotes.
                 </p>
@@ -538,6 +536,7 @@ const sections = [
 export default function ElectricianWhitehavenPage() {
   return (
     <GuideTemplate
+      localArea="Whitehaven"
       title="Electrician in Whitehaven | Local Electricians 2026"
       description="Find qualified electricians in Whitehaven, Cumbria. Sellafield nuclear site (9 miles), Georgian conservation area, Electricity North West DNO, coastal IP ratings, and Whitehaven electrician rates 2026."
       datePublished="2026-03-27"

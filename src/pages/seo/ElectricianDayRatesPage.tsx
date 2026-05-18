@@ -596,6 +596,7 @@ const sections = [
 export default function ElectricianDayRatesPage() {
   return (
     <GuideTemplate
+      localArea="Day Rates Uk"
       title="Electrician Day Rates UK 2026 | What to Charge"
       description="Complete guide to electrician day rates in the UK in 2026. Average rates by region, domestic vs commercial, experience levels, specialist premiums, and how to calculate and negotiate your day rate."
       datePublished="2025-07-01"

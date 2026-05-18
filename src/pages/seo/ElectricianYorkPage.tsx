@@ -364,10 +364,10 @@ const sections = [
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EICR inspections</strong> — commercial premises require an{' '}
-                <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> typically every 5
-                years. Hotels and guest houses with sleeping accommodation are treated as special
-                locations under BS 7671 and may require more frequent inspection. Many insurers
-                require a satisfactory EICR as a condition of cover.
+                <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> typically
+                every 5 years. Hotels and guest houses with sleeping accommodation are treated as
+                special locations under BS 7671 and may require more frequent inspection. Many
+                insurers require a satisfactory EICR as a condition of cover.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -462,8 +462,8 @@ const sections = [
           These rates are indicative for 2026 and will vary based on property access, complexity,
           and material costs. Flood-affected property work and listed building work command the
           highest premiums. Use Elec-Mate's{' '}
-          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
-          produce accurate, itemised quotes that reflect the true cost of specialist work.
+          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to produce
+          accurate, itemised quotes that reflect the true cost of specialist work.
         </p>
       </>
     ),
@@ -522,10 +522,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Price heritage rewires, flood remediation, and commercial maintenance contracts
                   with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Itemised PDF quotes with your branding, sent from the survey.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Itemised PDF quotes with your branding, sent from the survey.
                 </p>
               </div>
             </div>
@@ -548,6 +546,7 @@ const sections = [
 export default function ElectricianYorkPage() {
   return (
     <GuideTemplate
+      localArea="York"
       title="Electrician in York | Local Electrical Guide"
       description="Complete guide for electricians working in York. Northern Powergrid DNO, listed building electrical work, flood risk safety, tourism and hospitality electrical maintenance, and realistic York pricing."
       datePublished="2026-03-27"

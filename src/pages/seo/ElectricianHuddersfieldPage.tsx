@@ -363,7 +363,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 7671 compliance</strong> — all work must comply with BS 7671:2018+A4:2026. RCD protection is required for all socket outlet circuits up to
+                <strong>BS 7671 compliance</strong> — all work must comply with BS
+                7671:2018+A4:2026. RCD protection is required for all socket outlet circuits up to
                 32A under Regulation 411.3.3, and for circuits in kitchens, bathrooms, and outdoors.
               </span>
             </li>
@@ -483,10 +484,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to produce professional PDF quotes for Huddersfield homeowners, landlords, and
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  produce professional PDF quotes for Huddersfield homeowners, landlords, and
                   letting agents. Clear, itemised quotes at accurate West Yorkshire rates help win
                   work in a competitive market.
                 </p>
@@ -511,6 +510,7 @@ const sections = [
 export default function ElectricianHuddersfieldPage() {
   return (
     <GuideTemplate
+      localArea="Huddersfield"
       title="Electrician Huddersfield | Local Electricians Huddersfield & Kirklees"
       description="Find qualified electricians in Huddersfield. NICEIC and NAPIT registered, Part P compliant. EICRs for landlords and HMOs, consumer unit replacement, Victorian terrace rewires, and EV charger installation in Huddersfield 2026."
       datePublished="2026-03-27"

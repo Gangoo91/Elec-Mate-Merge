@@ -19,8 +19,16 @@ import {
   Trophy,
   Target,
   Zap,
+  AlertTriangle,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import {
+  ConfidencePicker,
+  CalibrationPill,
+  computeCalibration,
+  getCalibrationOutcome,
+  type Confidence,
+} from './confidence';
 import {
   am2QuestionBank,
   getRandomQuestions,
@@ -81,6 +89,7 @@ export function AM2KnowledgeQuiz({ onSessionComplete }: AM2KnowledgeQuizProps) {
   const [questions, setQuestions] = useState<AM2Question[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<(number | null)[]>([]);
+  const [confidences, setConfidences] = useState<(Confidence | null)[]>([]);
   const [showExplanation, setShowExplanation] = useState(false);
   const [startTime, setStartTime] = useState(0);
   const [elapsed, setElapsed] = useState(0);
@@ -134,6 +143,7 @@ export function AM2KnowledgeQuiz({ onSessionComplete }: AM2KnowledgeQuizProps) {
 
     setQuestions(pool);
     setAnswers(new Array(pool.length).fill(null));
+    setConfidences(new Array(pool.length).fill(null));
     setCurrentIndex(0);
     setShowExplanation(false);
     setStartTime(Date.now());
@@ -147,6 +157,19 @@ export function AM2KnowledgeQuiz({ onSessionComplete }: AM2KnowledgeQuizProps) {
       setAnswers((prev) => {
         const next = [...prev];
         next[currentIndex] = optionIndex;
+        return next;
+      });
+      // Reveal is deferred until confidence is picked.
+    },
+    [currentIndex, answers]
+  );
+
+  const handleConfidence = useCallback(
+    (c: Confidence) => {
+      if (answers[currentIndex] === null) return;
+      setConfidences((prev) => {
+        const next = [...prev];
+        next[currentIndex] = c;
         return next;
       });
       setShowExplanation(true);
@@ -182,11 +205,16 @@ export function AM2KnowledgeQuiz({ onSessionComplete }: AM2KnowledgeQuizProps) {
 
       if (user) {
         const timeSpent = Math.floor((Date.now() - startTime) / 1000);
+        const calib = computeCalibration(
+          questions,
+          (q, i) => answers[i] === q.correctAnswer,
+          (i) => confidences[i] ?? undefined
+        );
         saveAM2Session(user.id, {
           sessionType: 'knowledge_test',
           overallScore: pct,
           componentScores: { correct, total: questions.length },
-          sessionData: { difficulty, categoryScores: catScores },
+          sessionData: { difficulty, categoryScores: catScores, calibration: calib },
           timeSpentSeconds: timeSpent,
           startedAt: new Date(startTime).toISOString(),
         });
@@ -195,14 +223,24 @@ export function AM2KnowledgeQuiz({ onSessionComplete }: AM2KnowledgeQuizProps) {
       onSessionComplete?.();
       setPhase('results');
     }
-  }, [currentIndex, questions, answers, saveScore, user, startTime, difficulty, onSessionComplete]);
+  }, [
+    currentIndex,
+    questions,
+    answers,
+    confidences,
+    saveScore,
+    user,
+    startTime,
+    difficulty,
+    onSessionComplete,
+  ]);
 
   const handlePrev = useCallback(() => {
     if (currentIndex > 0) {
-      setShowExplanation(answers[currentIndex - 1] !== null);
+      setShowExplanation(confidences[currentIndex - 1] !== null);
       setCurrentIndex((i) => i - 1);
     }
-  }, [currentIndex, answers]);
+  }, [currentIndex, confidences]);
 
   const handleRetry = useCallback(() => {
     setPhase('setup');
@@ -315,8 +353,13 @@ export function AM2KnowledgeQuiz({ onSessionComplete }: AM2KnowledgeQuizProps) {
   if (phase === 'quiz' && questions.length > 0) {
     const q = questions[currentIndex];
     const userAnswer = answers[currentIndex];
+    const userConfidence = confidences[currentIndex];
     const isAnswered = userAnswer !== null;
+    const isRevealed = isAnswered && userConfidence !== null;
     const isCorrect = userAnswer === q.correctAnswer;
+    const outcome = isRevealed
+      ? getCalibrationOutcome(isCorrect, userConfidence ?? undefined)
+      : null;
 
     return (
       <div className="px-4 py-4 space-y-4 animate-fade-in">
@@ -364,15 +407,21 @@ export function AM2KnowledgeQuiz({ onSessionComplete }: AM2KnowledgeQuizProps) {
         {/* Options */}
         <div className="space-y-2">
           {q.options.map((option, idx) => {
+            const isUserPick = idx === userAnswer;
             let optionStyle = 'bg-elec-gray border-white/10 text-white';
-            if (isAnswered) {
+            if (isRevealed) {
               if (idx === q.correctAnswer) {
                 optionStyle = 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300';
-              } else if (idx === userAnswer && !isCorrect) {
+              } else if (isUserPick && !isCorrect) {
                 optionStyle = 'bg-red-500/10 border-red-500/30 text-red-300';
               } else {
-                optionStyle = 'bg-elec-gray border-white/5 text-white';
+                optionStyle = 'bg-elec-gray border-white/5 text-white opacity-60';
               }
+            } else if (isAnswered && isUserPick) {
+              // Picked but not yet revealed — waiting on confidence.
+              optionStyle = 'bg-elec-yellow/[0.06] border-elec-yellow/50 text-elec-yellow';
+            } else if (isAnswered) {
+              optionStyle = 'bg-elec-gray border-white/5 text-white/60';
             }
 
             return (
@@ -390,16 +439,22 @@ export function AM2KnowledgeQuiz({ onSessionComplete }: AM2KnowledgeQuizProps) {
                   {String.fromCharCode(65 + idx)}
                 </span>
                 <span className="flex-1 pt-0.5">{option}</span>
-                {isAnswered && idx === q.correctAnswer && (
+                {isRevealed && idx === q.correctAnswer && (
                   <CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0" />
                 )}
-                {isAnswered && idx === userAnswer && !isCorrect && (
+                {isRevealed && isUserPick && !isCorrect && (
                   <XCircle className="h-5 w-5 text-red-400 shrink-0" />
                 )}
               </button>
             );
           })}
         </div>
+
+        {/* Confidence prompt — shown once an option is picked but before
+            correctness is revealed. Three options: guess / likely / certain. */}
+        <AnimatePresence>
+          {isAnswered && !isRevealed && <ConfidencePicker onPick={handleConfidence} />}
+        </AnimatePresence>
 
         {/* Explanation */}
         <AnimatePresence>
@@ -418,9 +473,12 @@ export function AM2KnowledgeQuiz({ onSessionComplete }: AM2KnowledgeQuizProps) {
                     : 'bg-red-500/5 border-red-500/20'
                 )}
               >
-                <p className="text-xs font-semibold text-white mb-1">
-                  {isCorrect ? 'Correct!' : 'Incorrect'}
-                </p>
+                <div className="flex items-center justify-between gap-2 flex-wrap mb-1">
+                  <p className="text-xs font-semibold text-white">
+                    {isCorrect ? 'Correct!' : 'Incorrect'}
+                  </p>
+                  {outcome && <CalibrationPill outcome={outcome} />}
+                </div>
                 <p className="text-xs text-white leading-relaxed">{q.explanation}</p>
               </div>
             </motion.div>
@@ -444,12 +502,12 @@ export function AM2KnowledgeQuiz({ onSessionComplete }: AM2KnowledgeQuizProps) {
           </button>
           <button
             onClick={handleNext}
-            disabled={!isAnswered}
+            disabled={!isRevealed}
             className={cn(
               'flex-1 h-11 rounded-xl text-sm font-bold touch-manipulation flex items-center justify-center gap-1',
-              isAnswered
+              isRevealed
                 ? 'bg-elec-yellow text-black'
-                : 'bg-elec-gray border border-white/5 text-white'
+                : 'bg-elec-gray border border-white/5 text-white/50'
             )}
           >
             {currentIndex === questions.length - 1 ? 'See Results' : 'Next'}
@@ -466,6 +524,14 @@ export function AM2KnowledgeQuiz({ onSessionComplete }: AM2KnowledgeQuizProps) {
     const correct = questions.filter((q, i) => answers[i] === q.correctAnswer).length;
     const passed = score >= 70;
     const colour = passed ? '#22c55e' : score >= 50 ? '#f59e0b' : '#ef4444';
+    const calibration = computeCalibration(
+      questions,
+      (q, i) => answers[i] === q.correctAnswer,
+      (i) => confidences[i] ?? undefined
+    );
+    const overconfidentQs = questions
+      .map((q, i) => ({ q, i, c: confidences[i], wasCorrect: answers[i] === q.correctAnswer }))
+      .filter((row) => row.c === 'certain' && !row.wasCorrect);
 
     // Score ring
     const ringSize = 120;
@@ -569,6 +635,86 @@ export function AM2KnowledgeQuiz({ onSessionComplete }: AM2KnowledgeQuizProps) {
             })}
         </div>
 
+        {/* Confidence calibration — the danger metric is "overconfident
+            wrong" (certain + wrong). Surface that count separately from the
+            score, since that's the actionable AM2-day priority. */}
+        {calibration.total > 0 && (
+          <div className="space-y-3 rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4">
+            <div className="flex items-baseline justify-between gap-2 flex-wrap">
+              <h3 className="text-xs font-semibold text-white uppercase tracking-wider">
+                Confidence calibration
+              </h3>
+              {calibration.certainAccuracy !== null && (
+                <span className="text-[11px] text-white/55">
+                  <span className="font-semibold text-white tabular-nums">
+                    {calibration.certainAccuracy}%
+                  </span>{' '}
+                  certain-right rate
+                </span>
+              )}
+            </div>
+            <div className="grid grid-cols-3 gap-2">
+              <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-2.5">
+                <div className="text-xl font-semibold tabular-nums text-emerald-300 leading-none">
+                  {calibration.lockedIn}
+                </div>
+                <div className="mt-1.5 text-[10.5px] font-semibold text-white">Locked in</div>
+                <div className="text-[10px] text-white/45">Right + certain</div>
+              </div>
+              <div
+                className={cn(
+                  'rounded-lg border p-2.5',
+                  calibration.overconfident > 0
+                    ? 'border-red-400/30 bg-red-500/[0.04]'
+                    : 'border-white/[0.06] bg-white/[0.02]'
+                )}
+              >
+                <div
+                  className={cn(
+                    'text-xl font-semibold tabular-nums leading-none',
+                    calibration.overconfident > 0 ? 'text-red-300' : 'text-white/55'
+                  )}
+                >
+                  {calibration.overconfident}
+                </div>
+                <div className="mt-1.5 text-[10.5px] font-semibold text-white">Overconfident</div>
+                <div className="text-[10px] text-white/45">Wrong + certain</div>
+              </div>
+              <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-2.5">
+                <div
+                  className={cn(
+                    'text-xl font-semibold tabular-nums leading-none',
+                    calibration.lucky > 0 ? 'text-amber-300' : 'text-white/55'
+                  )}
+                >
+                  {calibration.lucky}
+                </div>
+                <div className="mt-1.5 text-[10.5px] font-semibold text-white">Lucky</div>
+                <div className="text-[10px] text-white/45">Right + guess</div>
+              </div>
+            </div>
+            {overconfidentQs.length > 0 && (
+              <div className="rounded-lg border border-red-400/30 bg-red-500/[0.06] p-3 space-y-2">
+                <div className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-red-300">
+                  <AlertTriangle className="h-3.5 w-3.5" />
+                  Priority review · wrong while certain
+                </div>
+                <ul className="space-y-1.5">
+                  {overconfidentQs.map(({ q, i }) => (
+                    <li
+                      key={`oc-${i}`}
+                      className="text-[12px] text-white/80 leading-snug line-clamp-2"
+                    >
+                      <span className="text-red-300/80 mr-1.5">·</span>
+                      {q.question}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Per-question Review */}
         <div className="space-y-2">
           <h3 className="text-xs font-semibold text-white uppercase tracking-wider">
@@ -578,6 +724,7 @@ export function AM2KnowledgeQuiz({ onSessionComplete }: AM2KnowledgeQuizProps) {
             {questions.map((q, i) => {
               const userAns = answers[i];
               const isCorrectQ = userAns === q.correctAnswer;
+              const outcomeQ = getCalibrationOutcome(isCorrectQ, confidences[i] ?? undefined);
               return (
                 <div
                   key={q.id}
@@ -601,7 +748,10 @@ export function AM2KnowledgeQuiz({ onSessionComplete }: AM2KnowledgeQuizProps) {
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs text-white line-clamp-2">{q.question}</p>
+                    <div className="flex items-start justify-between gap-2 flex-wrap">
+                      <p className="text-xs text-white line-clamp-2 min-w-0 flex-1">{q.question}</p>
+                      {outcomeQ && <CalibrationPill outcome={outcomeQ} />}
+                    </div>
                     {!isCorrectQ && (
                       <p className="text-[10px] text-emerald-300 mt-0.5">
                         Correct: {q.options[q.correctAnswer]}

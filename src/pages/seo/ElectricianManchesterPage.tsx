@@ -530,9 +530,9 @@ const sections = [
                   Manchester letting agents and property management companies increasingly require
                   digital certificates delivered promptly. An{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on
-                  your phone and emailed as a PDF on the day of the job gives you a significant
-                  advantage over competitors who post paper certificates days later.
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on your
+                  phone and emailed as a PDF on the day of the job gives you a significant advantage
+                  over competitors who post paper certificates days later.
                 </p>
               </div>
             </div>
@@ -555,6 +555,7 @@ const sections = [
 export default function ElectricianManchesterPage() {
   return (
     <GuideTemplate
+      localArea="Manchester"
       title="Electrician in Manchester | Qualified Electricians 2026"
       description="Find qualified, registered electricians in Manchester. 2026 pricing guide, how to verify NICEIC/NAPIT registration, terraced house rewiring, Electricity North West connections, HMO compliance, and Manchester-specific electrical regulations."
       datePublished="2026-03-27"

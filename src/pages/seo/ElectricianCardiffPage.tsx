@@ -629,10 +629,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price Cardiff jobs accurately with the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . From Cathays HMO upgrades to Cardiff Bay luxury fit-outs, itemise materials,
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  From Cathays HMO upgrades to Cardiff Bay luxury fit-outs, itemise materials,
                   labour, testing, and certification. Send professional PDF quotes that match the
                   expectations of Cardiff's quality-conscious market.
                 </p>
@@ -657,6 +655,7 @@ const sections = [
 export default function ElectricianCardiffPage() {
   return (
     <GuideTemplate
+      localArea="Cardiff"
       title="Electrician in Cardiff | Find Electricians 2026"
       description="Find qualified electricians in Cardiff. Welsh Building Regulations, WPD DNO, Cardiff Bay regeneration, Victorian terraces in Pontcanna and Canton, Rent Smart Wales, and local electrician rates for 2026."
       datePublished="2026-03-27"

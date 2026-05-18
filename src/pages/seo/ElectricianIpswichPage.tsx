@@ -435,8 +435,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Professional certification sets you apart. An{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on
-                  a phone app and sent as a PDF before you leave site gives customers confidence and
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on a
+                  phone app and sent as a PDF before you leave site gives customers confidence and
                   saves you time on paperwork.
                 </p>
               </div>
@@ -460,6 +460,7 @@ const sections = [
 export default function ElectricianIpswichPage() {
   return (
     <GuideTemplate
+      localArea="Ipswich"
       title="Electrician in Ipswich | Find Qualified Electricians 2026"
       description="Find qualified, registered electricians in Ipswich. Realistic 2026 pricing, UKPN connections, Victorian rewiring, waterfront developments, Part P compliance, and Ipswich-specific electrical information."
       datePublished="2026-03-27"

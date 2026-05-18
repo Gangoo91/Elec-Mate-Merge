@@ -552,8 +552,8 @@ const sections = [
                   Whether you are serving the domestic market or industrial clients, professional
                   documentation sets you apart. An{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on
-                  a phone app and sent as a PDF before you leave site demonstrates professionalism
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on a
+                  phone app and sent as a PDF before you leave site demonstrates professionalism
                   that landlords, homeowners, and commercial clients all value.
                 </p>
               </div>
@@ -577,6 +577,7 @@ const sections = [
 export default function ElectricianDerbyPage() {
   return (
     <GuideTemplate
+      localArea="Derby"
       title="Electrician in Derby | Find Qualified Electricians 2026"
       description="Find qualified, registered electricians in Derby. Realistic 2026 pricing, how to verify NICEIC/NAPIT registration, Victorian terrace rewiring, NGED connections, Rolls-Royce industrial work, flood risk electrical safety, and Cathedral Quarter conservation requirements."
       datePublished="2026-03-27"

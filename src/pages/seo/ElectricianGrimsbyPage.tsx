@@ -487,11 +487,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to send professional, detailed quotes to Grimsby homeowners and landlords.
-                  Itemised quotes with accurate local pricing win more work in a competitive and
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  send professional, detailed quotes to Grimsby homeowners and landlords. Itemised
+                  quotes with accurate local pricing win more work in a competitive and
                   price-sensitive market.
                 </p>
               </div>
@@ -532,6 +530,7 @@ const sections = [
 export default function ElectricianGrimsbyPage() {
   return (
     <GuideTemplate
+      localArea="Grimsby"
       title="Electrician Grimsby | Find Electricians in Grimsby & Cleethorpes"
       description="Find qualified electricians in Grimsby and Cleethorpes. NICEIC and NAPIT registered, Part P compliant. EICRs for landlords, consumer unit replacement, house rewiring, EV charger installation, and local electrician rates for Grimsby 2026."
       datePublished="2026-03-27"

@@ -490,10 +490,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Win more Bolton jobs with professional PDF quotes from the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Accurate pricing for the North West market built in — quote on site and send
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Accurate pricing for the North West market built in — quote on site and send
                   before you drive away.
                 </p>
               </div>
@@ -517,6 +515,7 @@ const sections = [
 export default function ElectricianBoltonPage() {
   return (
     <GuideTemplate
+      localArea="Bolton"
       title="Electrician in Bolton | Local Electricians 2026"
       description="Find qualified electricians in Bolton. NICEIC and NAPIT registered, Part P compliant. Typical costs, consumer unit upgrades, EICRs, rewires, and EV chargers in Bolton 2026."
       datePublished="2026-03-27"

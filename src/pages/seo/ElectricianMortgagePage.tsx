@@ -544,6 +544,7 @@ const sections = [
 export default function ElectricianMortgagePage() {
   return (
     <GuideTemplate
+      localArea="Finance"
       title="Electrician Mortgage UK | Getting a Mortgage as Self-Employed Electrician"
       description="Complete guide to getting a mortgage as a self-employed electrician in the UK — SA302 requirements, 2-3 years of accounts, contractor day rate mortgages, which lenders accept self-employed applicants (Halifax, Nationwide, specialist lenders), and deposit requirements."
       datePublished="2026-03-27"

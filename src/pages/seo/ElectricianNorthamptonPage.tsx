@@ -497,8 +497,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Northampton customers and letting agents expect professional service. An{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on
-                  a phone app and sent as a PDF before you leave the site sets you apart from
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on a
+                  phone app and sent as a PDF before you leave the site sets you apart from
                   competitors still posting handwritten certificates.
                 </p>
               </div>
@@ -522,6 +522,7 @@ const sections = [
 export default function ElectricianNorthamptonPage() {
   return (
     <GuideTemplate
+      localArea="Northampton"
       title="Electrician in Northampton | Find Qualified Electricians 2026"
       description="Find qualified, registered electricians in Northampton. Realistic 2026 pricing, how to verify NICEIC/NAPIT registration, Victorian rewiring costs, NGED connections, Part P compliance, and Northampton-specific electrical guidance."
       datePublished="2026-03-27"

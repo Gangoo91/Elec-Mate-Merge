@@ -372,8 +372,10 @@ const sections = [
           its make, model, serial number, date of purchase, and cost. Photograph your tool kit
           regularly. If you buy a new tester or power tool, add it to the list and update your
           insurer about the total value. Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/expenses-manager-electrician">expenses tracker</SEOInternalLink> can help
-          — every tool purchase you log is a record of what you own and what it cost.
+          <SEOInternalLink href="/tools/expenses-manager-electrician">
+            expenses tracker
+          </SEOInternalLink>{' '}
+          can help — every tool purchase you log is a record of what you own and what it cost.
         </p>
       </>
     ),
@@ -633,6 +635,7 @@ const sections = [
 export default function ElectricianInsurancePage() {
   return (
     <GuideTemplate
+      localArea="Insurance Uk"
       title="Electrician Insurance UK 2026 | What Cover Do You Need?"
       description="Complete guide to insurance for UK electricians. Covers public liability, professional indemnity, employers liability, tools cover, van insurance, typical costs, and how to choose the right provider."
       datePublished="2026-01-18"

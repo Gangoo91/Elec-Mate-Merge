@@ -465,6 +465,7 @@ const sections = [
 export default function ElectricianBerkshirePage() {
   return (
     <GuideTemplate
+      localArea="Berkshire"
       title="Electrician Berkshire — Find Qualified Electricians in Reading, Slough, Windsor, Bracknell"
       description="Find NICEIC and NAPIT registered electricians across Berkshire, covering Reading, Slough, Windsor, Bracknell, Newbury, Maidenhead, and Wokingham. EICR, rewires, EV charging, smart home, and commercial electrical work."
       datePublished="2025-01-01"

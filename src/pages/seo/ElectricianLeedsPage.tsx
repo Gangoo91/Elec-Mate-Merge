@@ -528,9 +528,9 @@ const sections = [
                   Leeds letting agents manage large portfolios of student and professional rental
                   properties. They need certificates fast and in digital format. Complete your{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> on your
-                  phone, email the PDF on the day, and stand out from competitors still posting
-                  paper copies.
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> on your phone,
+                  email the PDF on the day, and stand out from competitors still posting paper
+                  copies.
                 </p>
               </div>
             </div>
@@ -553,6 +553,7 @@ const sections = [
 export default function ElectricianLeedsPage() {
   return (
     <GuideTemplate
+      localArea="Leeds"
       title="Electrician in Leeds | Local Electricians 2026"
       description="Find qualified, registered electricians in Leeds. 2026 pricing guide, NICEIC/NAPIT verification, Yorkshire stone terrace rewiring, Northern Powergrid connections, student HMO compliance in Headingley and Hyde Park."
       datePublished="2026-03-27"

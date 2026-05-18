@@ -435,10 +435,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote and Win South East Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to produce professional PDF quotes for Basingstoke customers. Quote accurately at
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  produce professional PDF quotes for Basingstoke customers. Quote accurately at
                   South East rates and send quotes before you leave the survey.
                 </p>
               </div>
@@ -462,6 +460,7 @@ const sections = [
 export default function ElectricianBasingstokePage() {
   return (
     <GuideTemplate
+      localArea="Basingstoke"
       title="Electrician in Basingstoke | Local Electricians 2026"
       description="Find qualified electricians in Basingstoke. NICEIC and NAPIT registered, Part P compliant. South East rates, EICRs, consumer unit upgrades, EV chargers, and commercial electrical work in Basingstoke 2026."
       datePublished="2026-03-27"

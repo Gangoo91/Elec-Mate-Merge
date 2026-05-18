@@ -554,8 +554,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Nottingham landlords and managing agents expect prompt, professional certificates.
                   An <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on
-                  a phone app and sent as a PDF before you leave the site sets you apart from
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on a
+                  phone app and sent as a PDF before you leave the site sets you apart from
                   competitors still posting handwritten certificates.
                 </p>
               </div>
@@ -579,6 +579,7 @@ const sections = [
 export default function ElectricianNottinghamPage() {
   return (
     <GuideTemplate
+      localArea="Nottingham"
       title="Electrician in Nottingham | Find Qualified Electricians 2026"
       description="Find qualified, registered electricians in Nottingham. Realistic 2026 pricing, NGED DNO connections, selective licensing EICR requirements, Lace Market conversions, student HMO compliance, and Part P guidance."
       datePublished="2026-03-27"

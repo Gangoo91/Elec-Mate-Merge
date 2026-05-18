@@ -623,6 +623,7 @@ const relatedPages = [
 export default function ElectricianJobVacanciesPage() {
   return (
     <GuideTemplate
+      localArea="Job Vacancies"
       title="Electrician Job Vacancies UK | Where to Find Work in 2026"
       description="Complete guide to finding electrician job vacancies in the UK. Best job boards, recruitment agencies, social media strategies, direct approaches, contract vs permanent, and current pay rates for 2026."
       datePublished="2024-09-01"

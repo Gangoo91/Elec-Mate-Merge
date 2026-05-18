@@ -509,6 +509,7 @@ const sections = [
 export default function ElectricianToContractorPage() {
   return (
     <GuideTemplate
+      localArea="Career Ladder Uk"
       title="From Electrician to Electrical Contractor UK | Complete Business Guide"
       description="How UK electricians go self-employed and build a contracting business — Part P registration, pricing, essential insurance (PLI £2m min, ELI £5m statutory), when to hire your first employee, and tendering for commercial work."
       datePublished="2026-03-27"

@@ -445,12 +445,10 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Win Harrogate Jobs Professionally</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to produce professional PDF quotes for Harrogate customers. Quote Victorian
-                  property rewires, EV charger installations, and consumer unit upgrades at accurate
-                  North Yorkshire rates — send quotes before you leave the survey.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  produce professional PDF quotes for Harrogate customers. Quote Victorian property
+                  rewires, EV charger installations, and consumer unit upgrades at accurate North
+                  Yorkshire rates — send quotes before you leave the survey.
                 </p>
               </div>
             </div>
@@ -473,6 +471,7 @@ const sections = [
 export default function ElectricianHarrogatePage() {
   return (
     <GuideTemplate
+      localArea="Harrogate"
       title="Electrician in Harrogate | Local Electricians 2026"
       description="Find qualified electricians in Harrogate. NICEIC and NAPIT registered, Part P compliant. Yorkshire rates, Victorian property rewires, EICRs, EV chargers, and hotel electrical work in Harrogate 2026."
       datePublished="2026-03-27"

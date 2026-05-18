@@ -543,8 +543,8 @@ const sections = [
                   London customers — particularly in affluent boroughs and the commercial sector —
                   expect professional documentation. An{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on
-                  a phone app and sent as a PDF before you leave the site sets you apart from
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on a
+                  phone app and sent as a PDF before you leave the site sets you apart from
                   competitors still posting handwritten certificates.
                 </p>
               </div>
@@ -568,6 +568,7 @@ const sections = [
 export default function ElectricianLondonPage() {
   return (
     <GuideTemplate
+      localArea="London"
       title="Electrician in London | Find Qualified Electricians 2026"
       description="Find qualified, registered electricians in London. Realistic 2026 pricing, how to verify NICEIC/NAPIT registration, Victorian rewiring costs, UKPN connections, Part P compliance, and London-specific electrical regulations."
       datePublished="2026-03-27"

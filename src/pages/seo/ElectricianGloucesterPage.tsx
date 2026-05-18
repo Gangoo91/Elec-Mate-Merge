@@ -182,7 +182,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 7671 compliance</strong> — all work must comply with BS 7671:2018+A4:2026. RCD protection under Regulation 411.3.3 is mandatory for socket
+                <strong>BS 7671 compliance</strong> — all work must comply with BS
+                7671:2018+A4:2026. RCD protection under Regulation 411.3.3 is mandatory for socket
                 outlets up to 32A and for circuits in locations of increased shock risk.
               </span>
             </li>
@@ -410,10 +411,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Win Gloucester jobs with the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Send professional PDF quotes on survey day.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Send professional PDF quotes on survey day.
                 </p>
               </div>
             </div>
@@ -436,6 +435,7 @@ const sections = [
 export default function ElectricianGloucesterPage() {
   return (
     <GuideTemplate
+      localArea="Gloucester"
       title="Electrician in Gloucester | Local Electricians 2026"
       description="Find qualified electricians in Gloucester. Part P compliance, NGED DNO, NICEIC and NAPIT registered electricians, EICR for landlords, docks conversion electrical work, and Gloucester electrician rates for 2026."
       datePublished="2026-03-27"

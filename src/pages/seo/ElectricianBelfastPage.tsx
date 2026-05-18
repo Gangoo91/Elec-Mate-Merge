@@ -559,9 +559,9 @@ const sections = [
                   Belfast landlords, developers, and commercial clients expect professional
                   certificates. An{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on
-                  a phone app and sent as a PDF before you leave the site demonstrates
-                  professionalism and saves hours of admin.
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on a
+                  phone app and sent as a PDF before you leave the site demonstrates professionalism
+                  and saves hours of admin.
                 </p>
               </div>
             </div>
@@ -584,6 +584,7 @@ const sections = [
 export default function ElectricianBelfastPage() {
   return (
     <GuideTemplate
+      localArea="Belfast"
       title="Electrician in Belfast | Find Qualified Electricians 2026"
       description="Find qualified, registered electricians in Belfast. Realistic 2026 pricing, NIE Networks DNO, Northern Ireland Building Regulations (NOT Part P), Titanic Quarter developments, Victorian terrace rewiring, and student HMO compliance."
       datePublished="2026-03-27"

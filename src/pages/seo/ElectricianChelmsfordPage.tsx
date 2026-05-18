@@ -410,8 +410,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">On-Site Certification</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Complete <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink>{' '}
-                  and <SEOInternalLink href="/eic-certificate">EICs</SEOInternalLink> from
-                  your phone on Chelmsford jobs using AI-assisted board scanning. Issue professional
+                  and <SEOInternalLink href="/eic-certificate">EICs</SEOInternalLink> from your
+                  phone on Chelmsford jobs using AI-assisted board scanning. Issue professional
                   certificates on site and keep your landlord clients coming back.
                 </p>
               </div>
@@ -424,10 +424,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote and Win Essex Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to produce professional PDF quotes for Chelmsford customers at accurate South East
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  produce professional PDF quotes for Chelmsford customers at accurate South East
                   rates. Quote on site and send before you drive away.
                 </p>
               </div>
@@ -451,6 +449,7 @@ const sections = [
 export default function ElectricianChelmsfordPage() {
   return (
     <GuideTemplate
+      localArea="Chelmsford"
       title="Electrician in Chelmsford | Local Electricians 2026"
       description="Find qualified electricians in Chelmsford. NICEIC and NAPIT registered, Part P compliant. South East rates, EICRs, consumer unit upgrades, EV chargers, and commercial electrical work in Chelmsford 2026."
       datePublished="2026-03-27"

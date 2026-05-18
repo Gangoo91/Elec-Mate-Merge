@@ -503,10 +503,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price Chester jobs accurately with the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Account for the additional time needed in listed and heritage properties. Send
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Account for the additional time needed in listed and heritage properties. Send
                   professional PDF quotes to Chester customers from the site survey.
                 </p>
               </div>
@@ -530,6 +528,7 @@ const sections = [
 export default function ElectricianChesterPage() {
   return (
     <GuideTemplate
+      localArea="Chester"
       title="Electrician in Chester | Local Electricians 2026"
       description="Find qualified electricians in Chester. Part P compliance, NICEIC registered, listed building electrical work, EICR for landlords, consumer unit replacement, and local electrician rates for 2026."
       datePublished="2026-03-27"

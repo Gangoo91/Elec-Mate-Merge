@@ -67,7 +67,8 @@ const faqs = [
       'Electrical contracts managers typically progress from contracts supervisor roles after 3 to 5 years of supervisory experience. The contracts manager role moves further from the tools — it involves tendering for work, pricing variations, managing commercial relationships with clients and main contractors, monitoring the P&L of multiple contracts, and managing a team of supervisors and electricians. Qualifications that support the contracts manager role include: HNC or HND in Electrical Engineering, NVQ Level 5 or 6 in Construction Management, CIOB membership, or a construction-specific degree. Many contracts managers have been through the apprenticeship route and developed commercial skills through experience rather than formal academic qualifications.',
   },
   {
-    question: 'What is the difference between an Electrical Contracts Manager and an Electrical Director?',
+    question:
+      'What is the difference between an Electrical Contracts Manager and an Electrical Director?',
     answer:
       'An Electrical Contracts Manager has commercial and operational responsibility for a portfolio of contracts — they manage the projects and the people delivering them. An Electrical Director is typically a senior leader or company director responsible for the overall electrical business unit or division — setting strategy, managing key client relationships, overseeing business development, and holding P&L responsibility for the entire electrical operation. In smaller electrical contractors, the same person may hold both roles informally. In larger M&E contractors and national building services companies, the two roles are distinct. Electrical Directors typically need 15 to 20+ years of industry experience and often hold professional body membership (CIBSE, IET Membership or Fellowship, MIET or FIET).',
   },
@@ -176,7 +177,10 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-              <span>City &amp; Guilds 2365 Diploma in Electrical Installations (or equivalent Level 3 Tech Certificate)</span>
+              <span>
+                City &amp; Guilds 2365 Diploma in Electrical Installations (or equivalent Level 3
+                Tech Certificate)
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
@@ -221,7 +225,9 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Part P registration scheme membership (for domestic work): NAPIT, NICEIC, or similar</span>
+              <span>
+                Part P registration scheme membership (for domestic work): NAPIT, NICEIC, or similar
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
@@ -275,20 +281,25 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-              <span>One or more specialist qualifications (EV, solar PV, fire alarm, data, 2382 Design)</span>
+              <span>
+                One or more specialist qualifications (EV, solar PV, fire alarm, data, 2382 Design)
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Substantial experience of leading small teams or working as the senior electrician on a section of a project</span>
+              <span>
+                Substantial experience of leading small teams or working as the senior electrician
+                on a section of a project
+              </span>
             </li>
           </ul>
         </div>
         <p>
           Senior electricians are expected to be the point of technical reference on site — capable
           of reading and interpreting drawings, specifying materials, solving installation problems,
-          and mentoring junior electricians and apprentices. The move to senior electrician is
-          often marked by a significant salary uplift and forms the launching pad for progression
-          into supervisory roles.
+          and mentoring junior electricians and apprentices. The move to senior electrician is often
+          marked by a significant salary uplift and forms the launching pad for progression into
+          supervisory roles.
         </p>
       </>
     ),
@@ -329,10 +340,10 @@ const sections = [
           </ul>
         </div>
         <p>
-          At contracts supervisor level, the role shifts decisively from hands-on electrical work
-          to management of people, programme, and materials. The supervisor is responsible for
-          on-site productivity, quality, and safety on one or more electrical contracts, reporting
-          to the contracts manager.
+          At contracts supervisor level, the role shifts decisively from hands-on electrical work to
+          management of people, programme, and materials. The supervisor is responsible for on-site
+          productivity, quality, and safety on one or more electrical contracts, reporting to the
+          contracts manager.
         </p>
       </>
     ),
@@ -364,7 +375,10 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Commercial awareness: understanding of JCT/NEC contracts, variation management, final account negotiation</span>
+              <span>
+                Commercial awareness: understanding of JCT/NEC contracts, variation management,
+                final account negotiation
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
@@ -394,7 +408,9 @@ const sections = [
           <ul className="space-y-3 text-white text-sm">
             <li className="flex items-start gap-3">
               <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Proven P&amp;L management across multiple contracts or a business division</span>
+              <span>
+                Proven P&amp;L management across multiple contracts or a business division
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
@@ -402,7 +418,9 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-              <span>FIET, FCIBSE, or Chartered Engineer (CEng) status is common at director level</span>
+              <span>
+                FIET, FCIBSE, or Chartered Engineer (CEng) status is common at director level
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
@@ -413,10 +431,10 @@ const sections = [
         <p>
           At electrical director level, the role is primarily strategic and commercial. The director
           sets the direction of the electrical business, manages key client relationships, monitors
-          business performance, and leads the senior management team. Total remuneration at
-          director level in a mid-size M&amp;E contractor typically includes salary, performance
-          bonus (often 10 to 20% of salary), company car or car allowance, and potentially equity
-          or profit share.
+          business performance, and leads the senior management team. Total remuneration at director
+          level in a mid-size M&amp;E contractor typically includes salary, performance bonus (often
+          10 to 20% of salary), company car or car allowance, and potentially equity or profit
+          share.
         </p>
       </>
     ),
@@ -427,7 +445,8 @@ const sections = [
     content: (
       <>
         <p>
-          The standard employed career ladder is not the only route. Other well-trodden paths include:
+          The standard employed career ladder is not the only route. Other well-trodden paths
+          include:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -479,6 +498,7 @@ const sections = [
 export default function ElectricianCareerLadderPage() {
   return (
     <GuideTemplate
+      localArea="Career Ladder Uk"
       title="Electrician Career Ladder UK 2026 | Apprentice to Electrical Director"
       description="Complete guide to the UK electrician career ladder — apprentice, qualified electrician, senior electrician, contracts supervisor, contracts manager, and electrical director. Timelines, salaries, and required qualifications at each stage."
       datePublished="2026-03-27"

@@ -609,6 +609,7 @@ const sections = [
 export default function ElectricianPensionGuidePage() {
   return (
     <GuideTemplate
+      localArea="Pension Self Employed"
       title="Self-Employed Electrician Pension Guide UK 2026"
       description="Complete pension guide for self-employed electricians. NEST, SIPP, personal pension compared. Tax relief explained, how much to save, state pension qualification, and retirement planning."
       datePublished="2026-03-27"

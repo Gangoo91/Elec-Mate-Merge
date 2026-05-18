@@ -410,9 +410,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Efficient On-Site Certification</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Complete <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink>{' '}
-                  and <SEOInternalLink href="/eic-certificate">EICs</SEOInternalLink> on your
-                  phone using AI-assisted board scanning. Process high volumes of Colchester
-                  landlord EICRs efficiently and issue certificates on site.
+                  and <SEOInternalLink href="/eic-certificate">EICs</SEOInternalLink> on your phone
+                  using AI-assisted board scanning. Process high volumes of Colchester landlord
+                  EICRs efficiently and issue certificates on site.
                 </p>
               </div>
             </div>
@@ -426,10 +426,8 @@ const sections = [
                 </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to send professional PDF quotes from Colchester surveys. Accurate South East rates
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  send professional PDF quotes from Colchester surveys. Accurate South East rates
                   built in — close jobs faster by quoting on site.
                 </p>
               </div>
@@ -453,6 +451,7 @@ const sections = [
 export default function ElectricianColchesterPage() {
   return (
     <GuideTemplate
+      localArea="Colchester"
       title="Electrician in Colchester | Local Electricians 2026"
       description="Find qualified electricians in Colchester. NICEIC and NAPIT registered, Part P compliant. South East rates, EICRs, listed building work, HMO compliance, EV chargers, and consumer unit upgrades in Colchester 2026."
       datePublished="2026-03-27"

@@ -501,11 +501,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price Carlisle and north Cumbria jobs accurately with the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Account for travel time premiums on rural jobs and building warrant
-                  administration time on cross-border Scottish work.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Account for travel time premiums on rural jobs and building warrant administration
+                  time on cross-border Scottish work.
                 </p>
               </div>
             </div>
@@ -528,6 +526,7 @@ const sections = [
 export default function ElectricianCarlislePage() {
   return (
     <GuideTemplate
+      localArea="Carlisle"
       title="Electrician in Carlisle | Local Electricians 2026"
       description="Find qualified electricians in Carlisle, Cumbria. Part P, cross-border Scottish work, Electricity North West DNO, flood-affected properties, Victorian terraces, and Carlisle electrician rates 2026."
       datePublished="2026-03-27"

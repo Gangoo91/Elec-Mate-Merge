@@ -73,7 +73,7 @@ const AM2Simulator = () => {
         'animate-fade-in',
         isImmersive
           ? 'flex flex-col h-[100dvh]'
-          : 'mx-auto max-w-5xl pb-20 px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6'
+          : 'mx-auto max-w-6xl xl:max-w-7xl pb-20 px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6'
       )}
     >
       {!isImmersive && (
@@ -112,7 +112,7 @@ const AM2Simulator = () => {
       <div className={cn(isImmersive ? 'flex-1 min-h-0 overflow-hidden' : 'min-h-[60vh]')}>
         <div
           className={cn(
-            isImmersive ? 'mx-auto w-full max-w-3xl xl:max-w-4xl h-full flex flex-col' : 'w-full'
+            isImmersive ? 'mx-auto w-full max-w-4xl xl:max-w-5xl h-full flex flex-col' : 'w-full'
           )}
         >
           {activeTab === 'readiness' && (

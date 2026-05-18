@@ -397,6 +397,7 @@ const sections = [
 export default function ElectricianSalaryManchesterPage() {
   return (
     <GuideTemplate
+      localArea="Salary Manchester"
       title="Electrician Salary Manchester 2026 | Employed & Self-Employed Rates"
       description="Realistic electrician salary figures for Manchester and Greater Manchester in 2026. Employed rates £32,000–£52,000, self-employed £45,000–£70,000. Key sectors, day rates, and market opportunity."
       datePublished="2026-03-27"

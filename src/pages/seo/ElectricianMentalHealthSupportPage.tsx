@@ -57,7 +57,7 @@ const faqs = [
   {
     question: 'What resources does the Lighthouse Club provide?',
     answer:
-      'The Lighthouse Club is the principal mental health and welfare charity for the UK construction industry. Services include: the 24/7 Construction Industry Helpline (0345 605 1956), the Lighthouse Club App (free to download), welfare grants to help workers and families in financial crisis, an apprentice support programme, mental health training (Mental Health First Aid and the Lighthouse Club\'s own training for site managers and companies), and a network of volunteer worker befrienders. The Lighthouse Club is entirely funded by voluntary donations from the construction industry, including through events such as the industry\'s charity golf day, sponsored challenges, and corporate fundraising.',
+      "The Lighthouse Club is the principal mental health and welfare charity for the UK construction industry. Services include: the 24/7 Construction Industry Helpline (0345 605 1956), the Lighthouse Club App (free to download), welfare grants to help workers and families in financial crisis, an apprentice support programme, mental health training (Mental Health First Aid and the Lighthouse Club's own training for site managers and companies), and a network of volunteer worker befrienders. The Lighthouse Club is entirely funded by voluntary donations from the construction industry, including through events such as the industry's charity golf day, sponsored challenges, and corporate fundraising.",
   },
   {
     question: 'Is there specific support for self-employed electricians?',
@@ -132,11 +132,10 @@ const sections = [
     content: (
       <>
         <p>
-          The electrical and construction trades have some of the poorest mental health outcomes
-          of any sector in the UK. Construction workers are significantly more likely to die by
-          suicide than the national male average, and the culture of many site environments has
-          historically made it very hard for workers to acknowledge they are struggling or to
-          seek help.
+          The electrical and construction trades have some of the poorest mental health outcomes of
+          any sector in the UK. Construction workers are significantly more likely to die by suicide
+          than the national male average, and the culture of many site environments has historically
+          made it very hard for workers to acknowledge they are struggling or to seek help.
         </p>
         <p>
           This is changing — the Lighthouse Club, MHFA England, and many of the major contractors
@@ -145,8 +144,8 @@ const sections = [
           colleague is struggling can save a life.
         </p>
         <p>
-          This guide covers the specific mental health pressures in the electrical trade, the
-          key support organisations and helplines, the particular challenges for self-employed
+          This guide covers the specific mental health pressures in the electrical trade, the key
+          support organisations and helplines, the particular challenges for self-employed
           electricians, and what employers can do to create healthier workplaces.
         </p>
       </>
@@ -158,9 +157,9 @@ const sections = [
     content: (
       <>
         <p>
-          The data is stark. The Office for National Statistics suicide statistics consistently
-          show that construction occupations have among the highest age-standardised suicide
-          rates of any occupational group. Key contributing factors specific to the industry:
+          The data is stark. The Office for National Statistics suicide statistics consistently show
+          that construction occupations have among the highest age-standardised suicide rates of any
+          occupational group. Key contributing factors specific to the industry:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -176,9 +175,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Isolation</strong> — sole traders working alone on jobs have limited
-                social contact during the working day. The absence of colleagues to talk to is
-                a genuine mental health risk factor for self-employed workers.
+                <strong>Isolation</strong> — sole traders working alone on jobs have limited social
+                contact during the working day. The absence of colleagues to talk to is a genuine
+                mental health risk factor for self-employed workers.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -217,20 +216,22 @@ const sections = [
     content: (
       <>
         <p>
-          If you or someone you know is struggling, these are the key contacts. All are free
-          and confidential:
+          If you or someone you know is struggling, these are the key contacts. All are free and
+          confidential:
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
               <Phone className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Construction Industry Helpline — 0345 605 1956</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Construction Industry Helpline — 0345 605 1956
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   The primary dedicated support line for all construction and trades workers and
                   their families. Available 24 hours a day, 7 days a week. Free to call. Provides
-                  emotional support, practical advice, and access to welfare assistance. Run by
-                  the Lighthouse Construction Industry Charity.
+                  emotional support, practical advice, and access to welfare assistance. Run by the
+                  Lighthouse Construction Industry Charity.
                 </p>
               </div>
             </div>
@@ -242,9 +243,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Samaritans — 116 123</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Free to call from any phone, 24 hours a day, 365 days a year. Confidential
-                  emotional support for anyone feeling distressed or desperate. You do not have
-                  to be suicidal to call — the Samaritans are there for anyone who is struggling.
-                  Also available by email: jo@samaritans.org.
+                  emotional support for anyone feeling distressed or desperate. You do not have to
+                  be suicidal to call — the Samaritans are there for anyone who is struggling. Also
+                  available by email: jo@samaritans.org.
                 </p>
               </div>
             </div>
@@ -253,12 +254,14 @@ const sections = [
             <div className="flex items-start gap-4">
               <Phone className="w-6 h-6 text-green-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">CALM (Campaign Against Living Miserably) — 0800 58 58 58</h4>
+                <h4 className="font-bold text-white mb-1">
+                  CALM (Campaign Against Living Miserably) — 0800 58 58 58
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Free to call 5pm to midnight daily. Specifically aimed at men, who are
-                  statistically less likely to seek help through mainstream services. Also
-                  provides a webchat service at thecalmzone.net. Particularly relevant for the
-                  predominantly male trades workforce.
+                  statistically less likely to seek help through mainstream services. Also provides
+                  a webchat service at thecalmzone.net. Particularly relevant for the predominantly
+                  male trades workforce.
                 </p>
               </div>
             </div>
@@ -269,10 +272,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">In a crisis — 999 or A&E</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  If someone is in immediate danger — call 999. For a mental health crisis that
-                  does not require 999, call NHS 111 and select the mental health option. Most
-                  areas now have a 24/7 mental health crisis team available via 111. A&E
-                  departments can also provide emergency mental health support.
+                  If someone is in immediate danger — call 999. For a mental health crisis that does
+                  not require 999, call NHS 111 and select the mental health option. Most areas now
+                  have a 24/7 mental health crisis team available via 111. A&E departments can also
+                  provide emergency mental health support.
                 </p>
               </div>
             </div>
@@ -299,8 +302,8 @@ const sections = [
                 health and welfare charity for the UK construction industry. Operates the
                 Construction Industry Helpline (0345 605 1956), provides welfare grants, and
                 delivers mental health training for companies. The Lighthouse Club App is a free
-                download with self-help tools, a mood tracker, and direct helpline access.
-                Website: lighthouseclub.org
+                download with self-help tools, a mood tracker, and direct helpline access. Website:
+                lighthouseclub.org
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -316,10 +319,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Heart className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Band of Builders</strong> — a charity that mobilises construction
-                industry volunteers to carry out home adaptations for tradespeople and their
-                families who have suffered life-changing illness or injury, reducing a significant
-                source of stress and anxiety for affected workers. Website: bandofbuilders.org
+                <strong>Band of Builders</strong> — a charity that mobilises construction industry
+                volunteers to carry out home adaptations for tradespeople and their families who
+                have suffered life-changing illness or injury, reducing a significant source of
+                stress and anxiety for affected workers. Website: bandofbuilders.org
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -333,10 +336,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Heart className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>ECA (Electrical Contractors Association)</strong> — the ECA has an
-                employee assistance programme available to member companies and their staff,
-                providing confidential telephone counselling and access to mental health
-                professionals.
+                <strong>ECA (Electrical Contractors Association)</strong> — the ECA has an employee
+                assistance programme available to member companies and their staff, providing
+                confidential telephone counselling and access to mental health professionals.
               </span>
             </li>
           </ul>
@@ -361,29 +363,29 @@ const sections = [
               <span>
                 <strong>Isolation mitigation</strong> — deliberately maintain social contact.
                 Joining local trade associations, attending industry events, and building
-                relationships with other local self-employed trades workers creates a peer
-                network that substitutes for the workplace social environment. Sharing a WhatsApp
-                group with a few other local sparks provides both practical and social support.
+                relationships with other local self-employed trades workers creates a peer network
+                that substitutes for the workplace social environment. Sharing a WhatsApp group with
+                a few other local sparks provides both practical and social support.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Financial stress management</strong> — maintain 3 months of operating
-                costs as a cash buffer in a business account. This single measure removes the
-                anxiety spiral that accompanies a quiet week or a slow-paying client more than
-                any other. Invoice promptly, follow up on overdue payments, and do not let
-                unpaid invoices accumulate without action.
+                <strong>Financial stress management</strong> — maintain 3 months of operating costs
+                as a cash buffer in a business account. This single measure removes the anxiety
+                spiral that accompanies a quiet week or a slow-paying client more than any other.
+                Invoice promptly, follow up on overdue payments, and do not let unpaid invoices
+                accumulate without action.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Work boundaries</strong> — self-employed workers are often "always on".
-                Set defined working hours and defend them. Do not take client calls in the evening
-                or at weekends unless you have chosen to offer that service. Use technology to
-                manage expectations — an out-of-hours message setting response time expectations
-                removes the anxiety of feeling obligated to respond immediately.
+                <strong>Work boundaries</strong> — self-employed workers are often "always on". Set
+                defined working hours and defend them. Do not take client calls in the evening or at
+                weekends unless you have chosen to offer that service. Use technology to manage
+                expectations — an out-of-hours message setting response time expectations removes
+                the anxiety of feeling obligated to respond immediately.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -436,9 +438,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Mental Health First Aid training</h4>
                 <p className="text-white text-sm leading-relaxed">
                   MHFA England's 2-day course qualifies a person as a Mental Health First Aider —
-                  able to identify signs of mental ill health, listen without judgement, and
-                  provide initial support and signposting. For electrical contractors with a team,
-                  having a trained MHFA on site is as important as having a physical First Aider.
+                  able to identify signs of mental ill health, listen without judgement, and provide
+                  initial support and signposting. For electrical contractors with a team, having a
+                  trained MHFA on site is as important as having a physical First Aider.
                 </p>
               </div>
             </div>
@@ -453,16 +455,16 @@ const sections = [
     content: (
       <>
         <p>
-          Employers (including working proprietors who employ staff) have legal responsibilities
-          for employee mental health under:
+          Employers (including working proprietors who employ staff) have legal responsibilities for
+          employee mental health under:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Health and Safety at Work Act 1974</strong> — the general duty to ensure,
-                so far as reasonably practicable, the health, safety, and welfare of employees
+                <strong>Health and Safety at Work Act 1974</strong> — the general duty to ensure, so
+                far as reasonably practicable, the health, safety, and welfare of employees
                 encompasses mental health as well as physical health.
               </span>
             </li>
@@ -470,18 +472,18 @@ const sections = [
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Management of Health and Safety at Work Regulations 1999</strong> — require
-                employers to assess risks to mental health (including stress) and to take
-                preventive action. A documented stress risk assessment is increasingly expected
-                by enforcement authorities and insurers.
+                employers to assess risks to mental health (including stress) and to take preventive
+                action. A documented stress risk assessment is increasingly expected by enforcement
+                authorities and insurers.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Equality Act 2010</strong> — mental health conditions that have a
-                substantial and long-term adverse effect on normal day-to-day activities are
-                likely to constitute a disability under the Act, triggering the duty to make
-                reasonable adjustments.
+                substantial and long-term adverse effect on normal day-to-day activities are likely
+                to constitute a disability under the Act, triggering the duty to make reasonable
+                adjustments.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -489,9 +491,9 @@ const sections = [
               <span>
                 <strong>Practical minimum steps for electrical contractors with staff</strong> —
                 display the Construction Industry Helpline number in the office and van; include
-                mental health support signposting in new employee inductions; ensure working
-                hours are reasonable; act promptly if an employee's behaviour or performance
-                changes (this is often an early sign of mental health difficulty).
+                mental health support signposting in new employee inductions; ensure working hours
+                are reasonable; act promptly if an employee's behaviour or performance changes (this
+                is often an early sign of mental health difficulty).
               </span>
             </li>
           </ul>
@@ -508,6 +510,7 @@ const sections = [
 export default function ElectricianMentalHealthSupportPage() {
   return (
     <GuideTemplate
+      localArea="Mental Health Support"
       title="Electrician Mental Health Support UK | Construction Industry Resources"
       description="Mental health support for UK electricians and trades workers — Construction Industry Helpline (0345 605 1956), Lighthouse Club, Mates in Mind, CALM, and Samaritans. Self-employed pressures, site culture, and employer duties."
       datePublished="2026-03-27"

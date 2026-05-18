@@ -548,8 +548,8 @@ const sections = [
                   Plymouth landlords and letting agents managing student properties expect rapid
                   turnaround on EICRs and certificates. Completing an{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> on a phone
-                  app and sending the PDF before leaving site gives you a significant advantage,
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> on a phone app and
+                  sending the PDF before leaving site gives you a significant advantage,
                   particularly during the summer turnover period when hundreds of student properties
                   need inspection before the new academic year.
                 </p>
@@ -574,6 +574,7 @@ const sections = [
 export default function ElectricianPlymouthPage() {
   return (
     <GuideTemplate
+      localArea="Plymouth"
       title="Electrician in Plymouth | Find Qualified Electricians 2026"
       description="Find qualified, registered electricians in Plymouth. Realistic 2026 pricing, how to verify NICEIC/NAPIT registration, post-war rewiring, NGED connections, dockyard work, marine corrosion protection, and Barbican conservation requirements."
       datePublished="2026-03-27"

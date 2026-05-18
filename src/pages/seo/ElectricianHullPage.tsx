@@ -186,7 +186,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 7671 compliance</strong> — all work must comply with BS 7671:2018+A4:2026. RCD protection under Regulation 411.3.3 is mandatory for socket
+                <strong>BS 7671 compliance</strong> — all work must comply with BS
+                7671:2018+A4:2026. RCD protection under Regulation 411.3.3 is mandatory for socket
                 outlets up to 32A in dwellings and for circuits in locations of increased shock risk
                 (bathrooms, kitchens, outdoors).
               </span>
@@ -426,10 +427,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Win work in Hull's competitive market with the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Send professional PDF quotes on the day of the survey.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Send professional PDF quotes on the day of the survey.
                 </p>
               </div>
             </div>
@@ -452,6 +451,7 @@ const sections = [
 export default function ElectricianHullPage() {
   return (
     <GuideTemplate
+      localArea="Hull"
       title="Electrician in Hull | Local Electricians 2026"
       description="Find qualified electricians in Hull. Part P compliance, Northern Powergrid DNO, NICEIC and NAPIT registered electricians, EICR for landlords, consumer unit replacement, and Hull electrician rates for 2026."
       datePublished="2026-03-27"

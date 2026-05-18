@@ -334,9 +334,7 @@ const sections = [
           circuits (ground floor and first floor) for the main socket outlets, with radials for the
           kitchen (dedicated 32A ring or 20A radials for individual appliances), garage, and any
           extension or loft conversion. This balances efficiency, simplicity, and compliance. The{' '}
-          <SEOInternalLink href="/cable-sizing-calculator">
-            cable sizing calculator
-          </SEOInternalLink>{' '}
+          <SEOInternalLink href="/cable-sizing-calculator">cable sizing calculator</SEOInternalLink>{' '}
           can verify the cable sizes for both ring and radial options.
         </p>
       </>
@@ -360,10 +358,11 @@ const sections = [
               <span>
                 <strong>HMO licensing requirements</strong> — Coventry City Council operates
                 mandatory and additional HMO licensing schemes. Licensed HMOs require a satisfactory{' '}
-                <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> (maximum 5 years
-                old), a fire alarm system to BS 5839-6 (typically LD2 minimum, LD1 for higher-risk
-                properties), emergency lighting in escape routes, and adequate socket provision in
-                each letting room. The EICR requirement alone generates regular, recurring work.
+                <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> (maximum 5
+                years old), a fire alarm system to BS 5839-6 (typically LD2 minimum, LD1 for
+                higher-risk properties), emergency lighting in escape routes, and adequate socket
+                provision in each letting room. The EICR requirement alone generates regular,
+                recurring work.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -521,8 +520,8 @@ const sections = [
           Coventry's strength is volume. The sheer number of post-war properties needing rewires,
           the growing HMO market, and the accelerating EV charger demand mean that a well-organised
           electrician can achieve strong turnover at these rates. Use Elec-Mate's{' '}
-          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
-          produce accurate quotes quickly and convert more surveys into confirmed jobs.
+          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to produce
+          accurate quotes quickly and convert more surveys into confirmed jobs.
         </p>
       </>
     ),
@@ -577,11 +576,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Quote rewires, EV charger installations, and HMO conversions with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Professional PDF quotes with clear itemisation help you convert more surveys
-                  into confirmed work.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Professional PDF quotes with clear itemisation help you convert more surveys into
+                  confirmed work.
                 </p>
               </div>
             </div>
@@ -604,6 +601,7 @@ const sections = [
 export default function ElectricianCoventryPage() {
   return (
     <GuideTemplate
+      localArea="Coventry"
       title="Electrician in Coventry | Local Electrical Guide"
       description="Complete guide for electricians working in Coventry. NGED DNO, post-war housing rewiring, ring main vs radial circuits, university student HMOs, EV battery gigafactory demand, and realistic Coventry pricing."
       datePublished="2026-03-27"
