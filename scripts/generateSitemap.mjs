@@ -10,7 +10,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const SITE_URL = 'https://elec-mate.com';
+const SITE_URL = 'https://www.elec-mate.com';
 
 // Priority levels
 const PRIORITY = {

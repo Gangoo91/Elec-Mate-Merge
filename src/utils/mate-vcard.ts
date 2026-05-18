@@ -16,7 +16,7 @@ const VCARD = [
   `TEL;TYPE=CELL,VOICE:+${MATE_PHONE_RAW}`,
   `IMPP:whatsapp:+${MATE_PHONE_RAW}`,
   'EMAIL;TYPE=WORK:founder@elec-mate.com',
-  'URL:https://elec-mate.com',
+  'URL:https://www.elec-mate.com',
   'NOTE:Send anything: voice notes\\, photos\\, questions. "morning brief" / "create a quote" / "who hasn\'t paid?"',
   'END:VCARD',
   '',

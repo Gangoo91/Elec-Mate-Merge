@@ -443,7 +443,7 @@ export default function PricingStrategyElectricianPage() {
           operatingSystem: 'Web, iOS, Android',
           description:
             'Professional quoting, pricing strategy, and job costing tools for UK electricians. Fixed price, day rate, and hourly pricing with automatic overhead and margin calculation.',
-          url: 'https://elec-mate.com/tools/pricing-strategy-electrician',
+          url: 'https://www.elec-mate.com/tools/pricing-strategy-electrician',
           offers: {
             '@type': 'Offer',
             price: '0',

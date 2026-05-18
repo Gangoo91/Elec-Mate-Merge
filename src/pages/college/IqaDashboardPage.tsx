@@ -31,6 +31,9 @@ import { AddIqaSamplingPlanDialog } from '@/components/college/dialogs/AddIqaSam
 import { AddIqaFindingDialog } from '@/components/college/dialogs/AddIqaFindingDialog';
 import { AddStandardisationMeetingDialog } from '@/components/college/dialogs/AddStandardisationMeetingDialog';
 import { CoverageMatrixTab } from '@/components/college/iqa/CoverageMatrixTab';
+import { AssessorDriftPanel } from '@/components/college/iqa/AssessorDriftPanel';
+import { useEqaVisitPackExport } from '@/hooks/useEqaVisitPackExport';
+import { Download } from 'lucide-react';
 
 /* ==========================================================================
    IqaDashboardPage — /college/iqa
@@ -79,6 +82,23 @@ export default function IqaDashboardPage() {
   const [addPlanOpen, setAddPlanOpen] = useState(false);
   const [addFindingOpen, setAddFindingOpen] = useState(false);
   const [addMeetingOpen, setAddMeetingOpen] = useState(false);
+  const { exportPack, exporting: exportingPack } = useEqaVisitPackExport();
+
+  const handleEqaPack = async () => {
+    try {
+      await exportPack({ sinceDays: 365 });
+      toast({
+        title: 'EQA pack downloaded',
+        description: 'ZIP with plans, verdicts, findings, meetings + coverage. Last 12 months.',
+      });
+    } catch (e) {
+      toast({
+        title: 'EQA pack export failed',
+        description: (e as Error).message,
+        variant: 'destructive',
+      });
+    }
+  };
 
   const { plans, loading: plansLoading } = useIqaSamplingPlans();
   const { findings, loading: findingsLoading, close: closeFinding, remove: removeFinding } = useIqaFindings();
@@ -132,18 +152,30 @@ export default function IqaDashboardPage() {
           description="Sampling plans, findings, standardisation. Audit-grade trail for EQA visits."
           tone="blue"
           actions={
-            activeTab !== 'coverage' ? (
+            <div className="flex items-center gap-3 flex-wrap">
               <button
-                onClick={heroAction}
-                className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
+                type="button"
+                onClick={handleEqaPack}
+                disabled={exportingPack}
+                className="inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-blue-500/[0.10] border border-blue-400/40 text-[11.5px] font-semibold text-blue-200 hover:bg-blue-500/[0.18] disabled:opacity-50 touch-manipulation"
+                title="Download a ZIP of plans, verdicts, findings, meetings + coverage for the EQA visit"
               >
-                {activeTab === 'sampling'
-                  ? 'New plan →'
-                  : activeTab === 'findings'
-                    ? 'Log finding →'
-                    : 'New meeting →'}
+                <Download className="h-3 w-3" />
+                {exportingPack ? 'Building…' : 'EQA visit pack'}
               </button>
-            ) : null
+              {activeTab !== 'coverage' && (
+                <button
+                  onClick={heroAction}
+                  className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
+                >
+                  {activeTab === 'sampling'
+                    ? 'New plan →'
+                    : activeTab === 'findings'
+                      ? 'Log finding →'
+                      : 'New meeting →'}
+                </button>
+              )}
+            </div>
           }
         />
       </motion.div>
@@ -163,6 +195,13 @@ export default function IqaDashboardPage() {
             { value: meetings.length, label: 'All meetings', sub: 'Logged total', tone: 'purple' },
           ]}
         />
+      </motion.div>
+
+      {/* Assessor drift — collapsible alert panel that surfaces assessors
+          whose IQA agreement % has slipped. Renders nothing when no plans
+          exist, or a small "all clear" pill when everyone is green. */}
+      <motion.div variants={itemVariants}>
+        <AssessorDriftPanel />
       </motion.div>
 
       <motion.div variants={itemVariants}>

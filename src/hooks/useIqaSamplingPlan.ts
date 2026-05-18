@@ -84,6 +84,10 @@ export function useIqaSamplingPlan(planId: string | null) {
   const [samples, setSamples] = useState<IqaSampleRow[]>([]);
   const [eligible, setEligible] = useState<EligibleObservation[]>([]);
   const [eligibleOtj, setEligibleOtj] = useState<EligibleOtjEntry[]>([]);
+  /** Count of findings linked back to each sample via the sample_id FK.
+   *  Used by the SampleCard to render a "1 finding raised" badge so the
+   *  EQA-grade audit trail is visible in-product, not just in the DB. */
+  const [findingCountBySample, setFindingCountBySample] = useState<Map<string, number>>(new Map());
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   // Tracks the last total_assessments value we wrote so the realtime
@@ -183,6 +187,27 @@ export function useIqaSamplingPlan(planId: string | null) {
 
     const sampleRows = (samplesRes.data ?? []) as IqaSampleRow[];
     setSamples(sampleRows);
+
+    // Findings raised from these samples (FK sample_id → college_iqa_samples.id).
+    // Fire-and-forget — UI badge is non-critical and we'd rather not block
+    // the page render on a count query.
+    void (async () => {
+      const sampleIds = sampleRows.map((r) => r.id);
+      if (sampleIds.length === 0) {
+        setFindingCountBySample(new Map());
+        return;
+      }
+      const { data: findings } = await supabase
+        .from('college_iqa_findings')
+        .select('sample_id')
+        .in('sample_id', sampleIds);
+      const counts = new Map<string, number>();
+      for (const f of (findings ?? []) as Array<{ sample_id: string | null }>) {
+        if (!f.sample_id) continue;
+        counts.set(f.sample_id, (counts.get(f.sample_id) ?? 0) + 1);
+      }
+      setFindingCountBySample(counts);
+    })();
 
     // Filter out observations already sampled in this plan
     const sampledObsIds = new Set(
@@ -488,6 +513,7 @@ export function useIqaSamplingPlan(planId: string | null) {
     samples,
     eligible,
     eligibleOtj,
+    findingCountBySample,
     loading,
     error,
     refresh: fetch,

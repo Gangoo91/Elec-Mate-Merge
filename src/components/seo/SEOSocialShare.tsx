@@ -9,7 +9,7 @@ interface SEOSocialShareProps {
 
 export function SEOSocialShare({ url, title }: SEOSocialShareProps) {
   const [copied, setCopied] = useState(false);
-  const fullUrl = `https://elec-mate.com${url}`;
+  const fullUrl = `https://www.elec-mate.com${url}`;
   const encodedUrl = encodeURIComponent(fullUrl);
   const encodedTitle = encodeURIComponent(title);
 

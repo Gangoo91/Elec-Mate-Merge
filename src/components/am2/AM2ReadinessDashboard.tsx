@@ -1,26 +1,32 @@
 /**
  * AM2ReadinessDashboard
  *
- * Hero gauge, 4 component score cards (stacked), risk banner, gap analysis, and CTAs.
- * Mirrors EPA dashboard pattern with AM2-specific scoring and cyan theme.
+ * Replaces the prior cyan-themed stacked-cards layout with the apprentice
+ * hub design pattern: yellow accents, connected-grid mode cards, and a
+ * wider container so the page works on desktop without wasting screen.
+ *
+ * Sections (top → bottom):
+ *   1. Hero readiness gauge (kept, reskinned via existing AM2ReadinessGauge)
+ *   2. Recalculate + last-calculated stamp
+ *   3. Risk banner
+ *   4. Connected-grid of 4 mode cards — matches /apprentice/hub style:
+ *      yellow "01 · TESTING" eyebrow row, alert pill when score is low,
+ *      score / attempts / weight in the footer row, "Open →" CTA
+ *   5. Priority gaps (when present)
+ *   6. History link footer
  */
-
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
+import { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import {
   ShieldAlert,
   ShieldCheck,
-  TestTube2,
-  Search,
-  BookOpen,
   AlertTriangle,
   Loader2,
   RefreshCw,
-  ChevronRight,
-  Lock,
+  ArrowRight,
+  Clock,
 } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import { AM2ReadinessGauge } from './AM2ReadinessGauge';
 import {
   useAM2Readiness,
@@ -32,84 +38,102 @@ interface AM2ReadinessDashboardProps {
   onNavigateToTab: (tab: string) => void;
 }
 
-const STATUS_COLOURS: Record<AM2ReadinessStatus, { bg: string; text: string; border: string }> = {
-  ready: { bg: 'bg-emerald-500/10', text: 'text-emerald-400', border: 'border-emerald-500/30' },
-  nearly_ready: { bg: 'bg-blue-500/10', text: 'text-blue-400', border: 'border-blue-500/30' },
-  needs_work: { bg: 'bg-amber-500/10', text: 'text-amber-400', border: 'border-amber-500/30' },
-  not_ready: { bg: 'bg-red-500/10', text: 'text-red-400', border: 'border-red-500/30' },
-};
-
 const RISK_CONFIG = {
   high: {
     bg: 'bg-red-500/10',
     border: 'border-red-500/30',
-    text: 'text-red-400',
-    label: 'High Risk of Underperforming',
-    description: 'Significant gaps in key assessment areas — focus on the priorities below',
+    text: 'text-red-300',
+    label: 'High risk of underperforming',
+    description: 'Significant gaps in key assessment areas — focus on the priorities below.',
     icon: ShieldAlert,
   },
   moderate: {
     bg: 'bg-amber-500/10',
     border: 'border-amber-500/30',
-    text: 'text-amber-400',
-    label: 'Moderate Risk',
-    description: 'Some areas need attention before you book your AM2',
+    text: 'text-amber-300',
+    label: 'Moderate risk',
+    description: 'Some areas need attention before you book your AM2.',
     icon: AlertTriangle,
   },
   low: {
     bg: 'bg-emerald-500/10',
     border: 'border-emerald-500/30',
-    text: 'text-emerald-400',
-    label: 'Likely Competent',
-    description: "All sections at 70%+ — you're showing competence across AM2 areas",
+    text: 'text-emerald-300',
+    label: 'Likely competent',
+    description: "All sections at 70%+ — you're showing competence across AM2 areas.",
     icon: ShieldCheck,
   },
 };
 
-const COMPONENT_ICONS: Record<string, typeof Lock> = {
-  safeIsolation: Lock,
-  testingSequence: TestTube2,
-  faultDiagnosis: Search,
-  knowledgeAssessment: BookOpen,
-};
-
-const COMPONENT_ACCENT: Record<string, string> = {
-  testingSequence: 'border-l-blue-500',
-  faultDiagnosis: 'border-l-orange-500',
-  safeIsolation: 'border-l-cyan-500',
-  knowledgeAssessment: 'border-l-purple-500',
-};
-
-const COMPONENT_TAB: Record<string, string> = {
-  testingSequence: 'testing',
-  faultDiagnosis: 'faults',
-  safeIsolation: 'safe-isolation',
-  knowledgeAssessment: 'knowledge',
-};
+/* Mode-card metadata. Order matches the AM2 assessment-weighting order so
+   the highest-weighted area surfaces first. */
+const MODE_CARDS: Array<{
+  componentKey: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  tab: string;
+}> = [
+  {
+    componentKey: 'testingSequence',
+    eyebrow: 'Testing',
+    title: 'Testing sequence',
+    description: 'Run through the AM2 testing order — continuity, IR, polarity, Zs, RCD. Get it right end-to-end.',
+    tab: 'testing',
+  },
+  {
+    componentKey: 'faultDiagnosis',
+    eyebrow: 'Faults',
+    title: 'Fault diagnosis',
+    description: 'Work through fault scenarios on each circuit type. Logic, isolation, recovery.',
+    tab: 'faults',
+  },
+  {
+    componentKey: 'safeIsolation',
+    eyebrow: 'Isolation',
+    title: 'Safe isolation',
+    description: 'Practise the 8-step safe-isolation procedure. AM2 will fail you instantly on this — get it perfect.',
+    tab: 'safe-isolation',
+  },
+  {
+    componentKey: 'knowledgeAssessment',
+    eyebrow: 'Knowledge',
+    title: 'Knowledge test',
+    description: 'BS 7671, health & safety, building regs. 400-question bank with weak-topic feedback.',
+    tab: 'knowledge',
+  },
+];
 
 const stagger = {
   hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.04 },
-  },
+  visible: { opacity: 1, transition: { staggerChildren: 0.04 } },
 };
-
 const fadeUp = {
   hidden: { opacity: 0, y: 10 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.25, ease: 'easeOut' } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.25, ease: 'easeOut' as const } },
 };
 
 export function AM2ReadinessDashboard({ onNavigateToTab }: AM2ReadinessDashboardProps) {
   const { data, isLoading, recalculate } = useAM2Readiness();
 
+  // 8 cards is too many for AM2, 4 is the right shape. Compose them from
+  // MODE_CARDS + the live component scores so the grid always shows real
+  // numbers, not "Not started" boilerplate.
+  const cards = useMemo(() => {
+    if (!data) return [];
+    return MODE_CARDS.map((m, i) => {
+      const comp = data.components[m.componentKey];
+      return { ...m, index: i, comp };
+    });
+  }, [data]);
+
   if (isLoading) {
     return (
-      <div className="flex items-center gap-4 py-16 px-4">
-        <Loader2 className="h-8 w-8 animate-spin text-cyan-400 shrink-0" />
+      <div className="flex items-center gap-4 py-16 px-4 justify-center">
+        <Loader2 className="h-6 w-6 animate-spin text-elec-yellow shrink-0" />
         <div>
-          <p className="text-sm font-medium text-foreground">Calculating readiness...</p>
-          <p className="text-xs text-white mt-1">Analysing simulation results</p>
+          <p className="text-sm font-medium text-white">Calculating readiness…</p>
+          <p className="text-xs text-white/60 mt-1">Analysing simulation results</p>
         </div>
       </div>
     );
@@ -117,25 +141,23 @@ export function AM2ReadinessDashboard({ onNavigateToTab }: AM2ReadinessDashboard
 
   if (!data) {
     return (
-      <div className="py-12 px-4 space-y-5">
-        <div className="flex flex-col items-center text-center space-y-4">
-          <div className="h-16 w-16 rounded-2xl bg-cyan-500/10 flex items-center justify-center">
-            <ShieldAlert className="h-8 w-8 text-cyan-400" />
-          </div>
-          <div>
-            <p className="text-base font-semibold text-foreground">AM2 Readiness Score</p>
-            <p className="text-sm text-white mt-1 max-w-xs">
-              Complete simulations to build your readiness score and identify practical gaps before
-              you book.
-            </p>
-          </div>
-          <button
-            onClick={() => onNavigateToTab('safe-isolation')}
-            className="h-12 px-8 rounded-xl bg-cyan-500 text-black font-semibold text-sm touch-manipulation active:scale-95 transition-transform"
-          >
-            Start Safe Isolation
-          </button>
+      <div className="py-16 px-4 max-w-md mx-auto text-center space-y-4">
+        <div className="h-16 w-16 mx-auto rounded-2xl bg-elec-yellow/10 flex items-center justify-center">
+          <ShieldAlert className="h-8 w-8 text-elec-yellow" />
         </div>
+        <div>
+          <h2 className="text-base font-semibold text-white">AM2 readiness</h2>
+          <p className="text-sm text-white/60 mt-1">
+            Complete simulations to build your readiness score and identify practical gaps before
+            you book.
+          </p>
+        </div>
+        <button
+          onClick={() => onNavigateToTab('safe-isolation')}
+          className="h-11 px-6 rounded-xl bg-elec-yellow text-black font-semibold text-sm touch-manipulation active:scale-95 transition-transform"
+        >
+          Start safe isolation
+        </button>
       </div>
     );
   }
@@ -148,208 +170,251 @@ export function AM2ReadinessDashboard({ onNavigateToTab }: AM2ReadinessDashboard
       variants={stagger}
       initial="hidden"
       animate="visible"
-      className="space-y-5 px-4 py-5"
+      className="space-y-6 sm:space-y-8 px-4 sm:px-6 lg:px-8 py-5"
     >
-      {/* Hero Gauge */}
-      <motion.div variants={fadeUp} className="flex flex-col items-center py-4">
+      {/* Hero readiness gauge */}
+      <motion.div variants={fadeUp} className="flex flex-col items-center pt-2">
         <AM2ReadinessGauge score={data.overallScore} status={data.overallStatus} size={200} />
-
-        <div className="flex items-center gap-2 mt-3">
+        <div className="mt-3 flex items-center gap-3">
           <button
             onClick={recalculate}
-            className="flex items-center gap-1 text-xs text-white touch-manipulation h-8 px-2"
+            className="inline-flex items-center gap-1.5 text-[11.5px] font-medium text-white/70 hover:text-white touch-manipulation h-8 px-2.5 rounded-full hover:bg-white/[0.04] transition-colors"
           >
             <RefreshCw className="h-3 w-3" />
             Recalculate
           </button>
+          <span className="text-[10.5px] text-white/40 tabular-nums">
+            Last {data.calculatedAt.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}
+          </span>
         </div>
       </motion.div>
 
-      {/* Risk Banner */}
+      {/* Risk banner */}
       <motion.div
         variants={fadeUp}
         className={cn(
-          'p-4 rounded-xl border flex items-center gap-3',
+          'p-4 sm:p-5 rounded-2xl border flex items-start gap-3',
           riskConfig.bg,
           riskConfig.border
         )}
       >
-        <RiskIcon className={cn('h-6 w-6 shrink-0', riskConfig.text)} />
-        <div>
-          <p className={cn('text-sm font-semibold', riskConfig.text)}>{riskConfig.label}</p>
-          <p className="text-xs text-white">{riskConfig.description}</p>
+        <RiskIcon className={cn('h-5 w-5 shrink-0 mt-0.5', riskConfig.text)} />
+        <div className="min-w-0">
+          <p className={cn('text-[13.5px] font-semibold', riskConfig.text)}>{riskConfig.label}</p>
+          <p className="text-[12px] text-white/70 mt-0.5 leading-relaxed">{riskConfig.description}</p>
         </div>
       </motion.div>
 
-      {/* Disclaimer */}
-      <motion.p variants={fadeUp} className="text-[10px] text-white text-center px-2">
-        AM2-style simulation to identify practical gaps. Not affiliated with or endorsed by any
-        awarding organisation.
-      </motion.p>
-
-      {/* Component Score Cards — stacked full-width with left accent */}
-      <motion.div variants={fadeUp} className="space-y-2">
-        {Object.entries(data.components).map(([key, comp]) => (
-          <ComponentScoreCard
-            key={key}
-            componentKey={key}
-            component={comp}
-            onTap={() => onNavigateToTab(COMPONENT_TAB[key] || 'readiness')}
-          />
-        ))}
+      {/* Mode cards — connected grid, matches /apprentice/hub */}
+      <motion.div variants={fadeUp} className="space-y-3">
+        <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
+          Practical modes · take any in any order
+        </div>
+        <div
+          className={cn(
+            'relative grid auto-rows-[230px] sm:auto-rows-[240px] gap-[2px]',
+            'bg-black border border-white/[0.08] rounded-2xl overflow-hidden',
+            'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4'
+          )}
+        >
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
+          {cards.map((c) => (
+            <ModeCard
+              key={c.componentKey}
+              index={c.index}
+              eyebrow={c.eyebrow}
+              title={c.title}
+              description={c.description}
+              comp={c.comp}
+              onTap={() => onNavigateToTab(c.tab)}
+            />
+          ))}
+        </div>
       </motion.div>
 
-      {/* Gaps to Address */}
+      {/* Priority gaps */}
       {data.gaps.length > 0 && (
-        <motion.div variants={fadeUp} className="space-y-2">
-          <h3 className="text-xs font-semibold text-white uppercase tracking-wider">
-            Priority Areas
-          </h3>
-          {data.gaps.slice(0, 4).map((gap, i) => {
-            const priorityColour =
-              gap.priority === 'high'
-                ? 'border-red-500/30 bg-red-500/10'
-                : gap.priority === 'medium'
-                  ? 'border-amber-500/30 bg-amber-500/10'
-                  : 'border-blue-500/30 bg-blue-500/10';
-            const priorityText =
-              gap.priority === 'high'
-                ? 'text-red-400'
-                : gap.priority === 'medium'
-                  ? 'text-amber-400'
-                  : 'text-blue-400';
-
-            return (
-              <div
-                key={i}
-                className={cn(
-                  'flex items-start gap-3 p-3 rounded-xl border bg-elec-gray',
-                  priorityColour
-                )}
-              >
-                <span
-                  className={cn(
-                    'flex items-center justify-center h-5 w-5 rounded-full bg-white/15 text-[10px] font-bold shrink-0 mt-0.5',
-                    priorityText
-                  )}
-                >
-                  {i + 1}
-                </span>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-foreground">{gap.area}</p>
-                  <p className="text-xs text-white mt-0.5">{gap.description}</p>
-                  <p className="text-xs text-white mt-1 font-medium">{gap.action}</p>
-                </div>
-                <Badge variant="outline" className={cn('text-[10px] shrink-0', priorityText)}>
-                  {gap.priority}
-                </Badge>
-              </div>
-            );
-          })}
+        <motion.div variants={fadeUp} className="space-y-3">
+          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
+            Priority areas · in order
+          </div>
+          <ul className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden divide-y divide-white/[0.04]">
+            {data.gaps.slice(0, 4).map((gap, i) => {
+              const priorityTone =
+                gap.priority === 'high'
+                  ? 'text-red-300'
+                  : gap.priority === 'medium'
+                    ? 'text-amber-300'
+                    : 'text-blue-300';
+              return (
+                <li key={i} className="p-4 sm:p-5 flex items-start gap-3">
+                  <span
+                    className={cn(
+                      'h-6 w-6 rounded-full flex items-center justify-center text-[11px] font-bold shrink-0 bg-white/[0.04] border border-white/[0.06] mt-0.5',
+                      priorityTone
+                    )}
+                  >
+                    {i + 1}
+                  </span>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                      <p className="text-[13.5px] font-semibold text-white">{gap.area}</p>
+                      <span
+                        className={cn(
+                          'text-[9.5px] font-semibold uppercase tracking-[0.14em] px-1.5 py-0.5 rounded border',
+                          priorityTone,
+                          gap.priority === 'high'
+                            ? 'border-red-400/30 bg-red-500/[0.08]'
+                            : gap.priority === 'medium'
+                              ? 'border-amber-400/30 bg-amber-500/[0.08]'
+                              : 'border-blue-400/30 bg-blue-500/[0.08]'
+                        )}
+                      >
+                        {gap.priority}
+                      </span>
+                    </div>
+                    <p className="text-[12px] text-white/65 mt-1 leading-snug">{gap.description}</p>
+                    <p className="text-[12px] text-white/85 mt-1.5 font-medium leading-snug">
+                      → {gap.action}
+                    </p>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
         </motion.div>
       )}
 
-      {/* CTA Buttons */}
-      <motion.div variants={fadeUp} className="space-y-2">
+      {/* History link */}
+      <motion.div variants={fadeUp}>
         <button
-          onClick={() => onNavigateToTab('safe-isolation')}
-          className="w-full h-12 rounded-xl bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 font-medium text-sm touch-manipulation active:scale-[0.98] transition-transform flex items-center gap-3 px-4"
+          type="button"
+          onClick={() => onNavigateToTab('history')}
+          className="w-full inline-flex items-center justify-between gap-3 rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] hover:bg-white/[0.02] transition-colors p-4 sm:p-5 touch-manipulation"
         >
-          <Lock className="h-4 w-4 shrink-0" />
-          <span className="flex-1 text-left">Practise Safe Isolation</span>
-          <ChevronRight className="h-4 w-4 shrink-0" />
-        </button>
-        <button
-          onClick={() => onNavigateToTab('knowledge')}
-          className="w-full h-12 rounded-xl bg-blue-500/20 border border-blue-500/40 text-blue-300 font-medium text-sm touch-manipulation active:scale-[0.98] transition-transform flex items-center gap-3 px-4"
-        >
-          <BookOpen className="h-4 w-4 shrink-0" />
-          <span className="flex-1 text-left">Take Knowledge Test</span>
-          <ChevronRight className="h-4 w-4 shrink-0" />
+          <div className="flex items-center gap-3 min-w-0">
+            <Clock className="h-4 w-4 text-white/55 shrink-0" />
+            <div className="min-w-0 text-left">
+              <div className="text-[13px] font-semibold text-white">Session history</div>
+              <div className="text-[11.5px] text-white/55 leading-snug">
+                Every simulator run with score, components and time.
+              </div>
+            </div>
+          </div>
+          <ArrowRight className="h-4 w-4 text-elec-yellow/70 shrink-0" />
         </button>
       </motion.div>
 
-      <motion.p variants={fadeUp} className="text-[10px] text-white">
-        Last calculated{' '}
-        {data.calculatedAt.toLocaleTimeString('en-GB', {
-          hour: '2-digit',
-          minute: '2-digit',
-        })}
+      <motion.p variants={fadeUp} className="text-[10px] text-white/40 text-center px-2">
+        AM2-style simulation to identify practical gaps. Not affiliated with or endorsed by any
+        awarding organisation.
       </motion.p>
     </motion.div>
   );
 }
 
-// --- Component Score Card ---
+/* --- Mode card — apprentice-hub matched. -------------------------------- */
 
-function ComponentScoreCard({
-  componentKey,
-  component,
+function ModeCard({
+  index,
+  eyebrow,
+  title,
+  description,
+  comp,
   onTap,
 }: {
-  componentKey: string;
-  component: AM2Component;
+  index: number;
+  eyebrow: string;
+  title: string;
+  description: string;
+  comp: AM2Component | undefined;
   onTap: () => void;
 }) {
-  const Icon = COMPONENT_ICONS[componentKey] || Lock;
-  const statusColour = STATUS_COLOURS[component.status];
-  const accent = COMPONENT_ACCENT[componentKey] || 'border-l-cyan-500';
+  const score = comp?.score ?? 0;
+  const attempts = comp?.attempts ?? 0;
+  const weight = comp ? Math.round(comp.weight * 100) : 0;
+  const notStarted = score === 0 && attempts === 0;
+  const lowScore = !notStarted && score < 50;
+  const greatScore = score >= 70;
+
+  const scoreTone = notStarted
+    ? 'text-white/45'
+    : score >= 70
+      ? 'text-emerald-300'
+      : score >= 50
+        ? 'text-amber-300'
+        : 'text-red-300';
+
+  const statusLabel = notStarted
+    ? 'Not started'
+    : score >= 70
+      ? 'On track'
+      : score >= 50
+        ? 'Catching up'
+        : 'Needs work';
 
   return (
     <button
+      type="button"
       onClick={onTap}
-      className="w-full text-left touch-manipulation active:scale-[0.99] transition-transform"
+      className="group relative bg-[hsl(0_0%_10%)] hover:bg-elec-yellow/[0.04] transition-colors p-5 sm:p-6 text-left touch-manipulation flex flex-col h-full"
     >
-      <Card className={cn('border-l-4 bg-elec-gray', accent, statusColour.border)}>
-        <CardContent className="p-3.5 flex items-center gap-3">
-          <div
-            className={cn(
-              'h-10 w-10 rounded-xl flex items-center justify-center shrink-0 bg-white/5'
-            )}
-          >
-            <Icon className={cn('h-5 w-5', statusColour.text)} />
-          </div>
+      <div className="flex items-baseline justify-between gap-2">
+        <div className="flex items-baseline gap-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
+            {String(index + 1).padStart(2, '0')}
+          </span>
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            · {eyebrow}
+          </span>
+        </div>
+        {lowScore && (
+          <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-red-300 border border-red-400/30 bg-red-500/10 px-1.5 py-0.5 rounded">
+            Action
+          </span>
+        )}
+        {greatScore && (
+          <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-emerald-300 border border-emerald-400/30 bg-emerald-500/10 px-1.5 py-0.5 rounded">
+            70%+
+          </span>
+        )}
+      </div>
 
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-white">{component.label}</span>
-              {component.score === 0 && component.attempts === 0 ? (
-                <span className="text-xs text-white italic">Not Started</span>
-              ) : (
-                <span className={cn('text-lg font-bold', statusColour.text)}>
-                  {component.score}%
-                </span>
-              )}
-            </div>
+      <h3 className="mt-3 sm:mt-4 text-[18px] sm:text-[20px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors">
+        {title}
+      </h3>
+      <p className="mt-2 text-[12px] leading-relaxed text-white/60 max-w-[34ch]">{description}</p>
 
-            {/* Score bar */}
-            <div className="h-1.5 rounded-full bg-white/10 overflow-hidden mt-1.5">
-              <motion.div
-                className={cn(
-                  'h-full rounded-full',
-                  component.score >= 70
-                    ? 'bg-emerald-500'
-                    : component.score >= 40
-                      ? 'bg-amber-500'
-                      : 'bg-red-500'
-                )}
-                initial={{ width: 0 }}
-                animate={{ width: `${component.score}%` }}
-                transition={{ duration: 0.8, ease: 'easeOut', delay: 0.3 }}
-              />
-            </div>
+      <div className="flex-grow" />
 
-            <div className="flex items-center justify-between mt-1">
-              <span className="text-[10px] text-white">{component.detail}</span>
-              <span className="text-[10px] text-white">
-                {Math.round(component.weight * 100)}% weight
-              </span>
-            </div>
-          </div>
+      {/* Score bar */}
+      <div className="mt-3 h-1 rounded-full bg-white/[0.06] overflow-hidden">
+        <motion.div
+          className={cn(
+            'h-full rounded-full',
+            score >= 70 ? 'bg-emerald-400' : score >= 50 ? 'bg-amber-400' : score > 0 ? 'bg-red-400' : 'bg-white/20'
+          )}
+          initial={{ width: 0 }}
+          animate={{ width: `${score}%` }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+        />
+      </div>
 
-          <ChevronRight className="h-4 w-4 text-white shrink-0" />
-        </CardContent>
-      </Card>
+      <div className="mt-3 flex items-center justify-between gap-3 pt-3 border-t border-white/[0.05]">
+        <span className="text-[11px] text-white/55 truncate tabular-nums">
+          <span className={cn('font-semibold', scoreTone)}>
+            {notStarted ? '—' : `${score}%`}
+          </span>
+          <span className="mx-1.5 text-white/25">·</span>
+          {statusLabel}
+          <span className="mx-1.5 text-white/25">·</span>
+          {weight}% weight
+        </span>
+        <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-elec-yellow shrink-0">
+          Open
+          <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+        </span>
+      </div>
     </button>
   );
 }

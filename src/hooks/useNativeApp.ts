@@ -10,6 +10,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { openExternalUrl } from '@/utils/open-external-url';
 import { shareContent } from '@/utils/share';
+import { closeTopOverlay } from '@/lib/overlay-stack';
 
 // localStorage key used to remember a "share the referral link" intent when a
 // push is tapped while the user is logged out. Consumed after next successful
@@ -36,7 +37,7 @@ async function fireReferralShareIntent(userId: string, src: string): Promise<voi
     return;
   }
 
-  const referralUrl = `https://elec-mate.com/auth/signup?ref=${code}&src=${src}`;
+  const referralUrl = `https://www.elec-mate.com/auth/signup?ref=${code}&src=${src}`;
   const message =
     `Alright mate, check out Elec-Mate — does all your certs, quotes, invoices, and even has an AI agent for regs and admin.\n\n` +
     `I use it daily. Sign up with my link and your first month's free:\n${referralUrl}\n\n` +
@@ -115,23 +116,28 @@ export function useNativeApp() {
 
     const initNative = async () => {
       try {
-        // Configure status bar (dark theme)
+        // Status bar style — light icons on the dark app background. The actual
+        // bar background / overlay behaviour is owned by the native layer:
+        // Android's MainActivity enables edge-to-edge via
+        // WindowCompat.setDecorFitsSystemWindows(false) and CSS env(safe-area-inset-*)
+        // pads the WebView; iOS uses contentInset='automatic'. Calling
+        // setOverlaysWebView from JS here used to fight the Android edge-to-edge
+        // path and caused intermittent white bleed above the status bar.
         await StatusBar.setStyle({ style: Style.Dark });
 
-        if (Capacitor.getPlatform() === 'android') {
-          // Solid dark status bar that doesn't overlap content
-          await StatusBar.setOverlaysWebView({ overlay: false });
-          await StatusBar.setBackgroundColor({ color: '#0a0a0a' });
-        }
-
         if (Capacitor.getPlatform() === 'ios') {
-          // iOS can use overlay with safe-area insets
+          // iOS still benefits from explicit overlay so safe-area insets apply.
           await StatusBar.setOverlaysWebView({ overlay: true });
         }
 
         // Hide splash screen after first React paint — requestAnimationFrame
         // ensures the browser has committed at least one frame so the user
         // transitions directly from the native splash to rendered content.
+        // On Android 12+ the framework's Theme.SplashScreen renders first, then
+        // the Capacitor plugin overlays its own splash until this hide() fires.
+        // Both backgrounds are dark with the same bulb mark so the stack is not
+        // visible to the user — keep the manual hide so the WebView is revealed
+        // as soon as the first frame is ready.
         await new Promise<void>((resolve) => {
           requestAnimationFrame(() => {
             requestAnimationFrame(async () => {
@@ -167,17 +173,24 @@ export function useNativeApp() {
           }
         });
 
-        // Handle Android hardware back button — navigate back or minimise app
+        // Handle Android hardware back button. The native default would
+        // finish() the activity, so Capacitor takes over and lets us decide:
+        //   1. If any overlay (Sheet / Dialog / Sidebar) is open, close that
+        //      first — matches the Android system convention where back
+        //      dismisses the topmost UI layer before navigating.
+        //   2. Otherwise navigate browser history back if possible.
+        //   3. At the root with no history, minimise the app instead of
+        //      exiting so resuming from the launcher restores state instantly.
         App.addListener('backButton', ({ canGoBack }) => {
+          if (closeTopOverlay()) return;
           if (canGoBack || window.history.length > 1) {
             window.history.back();
           } else {
-            // At root — minimise instead of exiting
             App.minimizeApp();
           }
         });
 
-        // Handle deep links — extract the path from elecmate:// or https://elec-mate.com/
+        // Handle deep links — extract the path from elecmate:// or https://www.elec-mate.com/
         App.addListener('appUrlOpen', ({ url }) => {
           console.log('[DeepLink] Opened:', url);
           try {
@@ -194,7 +207,7 @@ export function useNativeApp() {
                 /* storage unavailable — not fatal */
               }
             }
-            // Support both https://elec-mate.com/path and elecmate://path
+            // Support both https://www.elec-mate.com/path and elecmate://path
             const path = parsed.pathname + parsed.search + parsed.hash;
             if (path && path !== '/') {
               navigateRef.current(path);

@@ -125,7 +125,7 @@ const softwareAppSchema = {
   operatingSystem: 'Web, iOS, Android',
   description:
     'Calculate trunking fill to the 45% rule from BS 7671. Check cable CSA against trunking capacity for all standard sizes, mixed cable types, and compartmentalised trunking.',
-  url: 'https://elec-mate.com/trunking-fill-calculator',
+  url: 'https://www.elec-mate.com/trunking-fill-calculator',
   offers: {
     '@type': 'Offer',
     price: '0',

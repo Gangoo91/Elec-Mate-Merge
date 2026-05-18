@@ -125,7 +125,7 @@ const softwareAppSchema = {
   operatingSystem: 'Web, iOS, Android',
   description:
     'Validate ring final circuit continuity test results. Check r1, rn, r2 readings, cross-connection results, identify spurs and faults. Built to GN3 and BS 7671:2018+A4:2026.',
-  url: 'https://elec-mate.com/tools/ring-circuit-calculator',
+  url: 'https://www.elec-mate.com/tools/ring-circuit-calculator',
   offers: {
     '@type': 'Offer',
     price: '0',

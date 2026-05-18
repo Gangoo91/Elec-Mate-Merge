@@ -158,7 +158,7 @@ const softwareAppSchema = {
   applicationCategory: 'BusinessApplication',
   operatingSystem: liveRating ? 'iOS, Android, Web' : 'iOS, Web',
   description: PAGE_DESCRIPTION,
-  url: 'https://elec-mate.com/adiabatic-equation-calculator',
+  url: 'https://www.elec-mate.com/adiabatic-equation-calculator',
   offers: {
     '@type': 'Offer',
     price: '0',

@@ -111,12 +111,12 @@ const articleSchema = {
     name: 'Elec-Mate',
     logo: {
       '@type': 'ImageObject',
-      url: 'https://elec-mate.com/logo.jpg',
+      url: 'https://www.elec-mate.com/logo.jpg',
     },
   },
   mainEntityOfPage: {
     '@type': 'WebPage',
-    '@id': 'https://elec-mate.com/guides/bs7671-observation-codes',
+    '@id': 'https://www.elec-mate.com/guides/bs7671-observation-codes',
   },
 };
 

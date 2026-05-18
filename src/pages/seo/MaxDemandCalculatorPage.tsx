@@ -125,7 +125,7 @@ const softwareAppSchema = {
   operatingSystem: 'Web, iOS, Android',
   description:
     'Calculate maximum demand to BS 7671 Appendix 12 with diversity factors from Table 1B. Covers domestic, commercial, cooker, shower, EV charger, and heating loads.',
-  url: 'https://elec-mate.com/max-demand-calculator',
+  url: 'https://www.elec-mate.com/max-demand-calculator',
   offers: {
     '@type': 'Offer',
     price: '0',

@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
+import { Capacitor } from '@capacitor/core';
+import { Clipboard } from '@capacitor/clipboard';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { toast } from 'sonner';
 import {
   Crown,
   Loader2,
@@ -19,6 +22,8 @@ import {
   CreditCard,
   ChevronLeft,
   Sparkles,
+  Copy,
+  Globe,
 } from 'lucide-react';
 
 const PASSWORD_REQUIREMENTS = [
@@ -271,6 +276,69 @@ export default function FounderSignup() {
       setSubmitting(false);
     }
   };
+
+  // Android in-app: Stripe checkout in the WebView is a Play Store policy
+  // grey area for digital subscriptions. Direct users to the website instead.
+  // The founder invite is a one-time link so copying it elsewhere is fine.
+  const isAndroidNative =
+    Capacitor.isNativePlatform() && Capacitor.getPlatform() === 'android';
+  if (!loading && isAndroidNative) {
+    const inviteUrl =
+      typeof window !== 'undefined'
+        ? `https://www.elec-mate.com${window.location.pathname}${window.location.search}`
+        : '';
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-zinc-900 via-black to-black flex items-center justify-center p-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="max-w-sm w-full"
+        >
+          <div className="p-8 rounded-3xl bg-white/[0.04] border border-yellow-500/30 text-center">
+            <div className="w-16 h-16 rounded-full bg-yellow-500/10 flex items-center justify-center mx-auto mb-4">
+              <Globe className="h-8 w-8 text-yellow-400" />
+            </div>
+            <h1 className="text-xl font-bold text-white mb-2">Finish on the web</h1>
+            <p className="text-muted-foreground mb-6 text-sm">
+              Founder checkout is handled on the Elec-Mate website. Copy your
+              invite link and open it in your browser to complete sign-up.
+            </p>
+            {inviteUrl && (
+              <div className="p-3 rounded-xl bg-black/40 border border-white/10 mb-4">
+                <p className="text-[11px] uppercase tracking-[0.15em] text-muted-foreground mb-1">
+                  Your invite link
+                </p>
+                <p className="text-xs text-white break-all font-mono">{inviteUrl}</p>
+              </div>
+            )}
+            <div className="space-y-3">
+              <Button
+                className="w-full h-11 touch-manipulation bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-400 hover:to-amber-400 text-black font-bold"
+                onClick={async () => {
+                  try {
+                    await Clipboard.write({ string: inviteUrl });
+                    toast.success('Invite link copied — paste it into your browser');
+                  } catch {
+                    toast.error('Could not copy — long-press the link to copy manually');
+                  }
+                }}
+              >
+                <Copy className="h-4 w-4 mr-2" />
+                Copy link
+              </Button>
+              <Button
+                variant="outline"
+                className="w-full h-11 touch-manipulation"
+                onClick={() => navigate('/')}
+              >
+                Back to app
+              </Button>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
 
   // Loading state
   if (loading) {

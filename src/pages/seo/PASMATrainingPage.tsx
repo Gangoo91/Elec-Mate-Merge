@@ -109,7 +109,7 @@ const courseSchema = {
   provider: {
     '@type': 'Organization',
     name: 'Elec-Mate',
-    url: 'https://elec-mate.com',
+    url: 'https://www.elec-mate.com',
   },
   offers: {
     '@type': 'Offer',

@@ -151,7 +151,7 @@ const softwareAppSchema = {
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'iOS, Android, Web',
   description: PAGE_DESCRIPTION,
-  url: 'https://elec-mate.com/tools/emergency-lighting-certificate',
+  url: 'https://www.elec-mate.com/tools/emergency-lighting-certificate',
   offers: {
     '@type': 'Offer',
     price: '0',

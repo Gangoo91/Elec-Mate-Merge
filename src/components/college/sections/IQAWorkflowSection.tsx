@@ -276,6 +276,16 @@ export function IQAWorkflowSection({ onNavigate: _onNavigate }: IQAWorkflowSecti
             Sampling plan, standardisation meetings, action tracking and external assessment
             dates.
           </p>
+
+          {/* Deprecation notice — this view computes theoretical sampling
+              from the grades table whereas the IQA Dashboard reads actual
+              plans. Encourage migration. */}
+          <a
+            href="/college/iqa"
+            className="mt-4 inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-amber-500/[0.10] border border-amber-400/30 text-[11.5px] font-semibold text-amber-200 hover:bg-amber-500/[0.18] transition-colors touch-manipulation"
+          >
+            ⚠ This view is legacy — open the new IQA Dashboard →
+          </a>
         </div>
       </motion.div>
 

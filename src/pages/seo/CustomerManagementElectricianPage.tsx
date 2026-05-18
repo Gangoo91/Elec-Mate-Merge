@@ -458,7 +458,7 @@ export default function CustomerManagementElectricianPage() {
           operatingSystem: 'Web, iOS, Android',
           description:
             'Customer management system for UK electricians. Client database, job history, certificate tracking, automated follow-ups, and repeat work management in one mobile-first CRM.',
-          url: 'https://elec-mate.com/tools/customer-management-electrician',
+          url: 'https://www.elec-mate.com/tools/customer-management-electrician',
           offers: {
             '@type': 'Offer',
             price: '0',

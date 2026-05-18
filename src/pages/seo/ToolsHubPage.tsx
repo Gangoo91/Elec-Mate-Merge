@@ -123,7 +123,7 @@ const collectionSchema = {
   '@type': 'CollectionPage',
   name: 'Electrical Tools Hub',
   description: PAGE_DESCRIPTION,
-  url: 'https://elec-mate.com/tools',
+  url: 'https://www.elec-mate.com/tools',
 };
 
 export default function ToolsHubPage() {

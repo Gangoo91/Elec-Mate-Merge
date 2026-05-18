@@ -106,7 +106,7 @@ const softwareAppSchema = {
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'iOS, Android, Web',
   description: PAGE_DESCRIPTION,
-  url: 'https://elec-mate.com/best-electrician-app-uk',
+  url: 'https://www.elec-mate.com/best-electrician-app-uk',
   offers: {
     '@type': 'Offer',
     price: '4.99',
@@ -146,7 +146,7 @@ const itemListSchema = {
       name: 'Elec-Mate',
       description:
         'All-in-one platform: 16 certificate types, 70+ calculators, 8 Elec-AI tools, training courses, business management.',
-      url: 'https://elec-mate.com',
+      url: 'https://www.elec-mate.com',
     },
     {
       '@type': 'ListItem',

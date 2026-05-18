@@ -9,19 +9,24 @@ import { useApprenticeDailyBrief, type ActionKind } from '@/hooks/useApprenticeD
    ========================================================================== */
 
 function resolveHref(kind: ActionKind, target?: string): string {
+  // College Hub is now hub-and-spoke (/apprentice/college/<section>) —
+  // map each daily-brief action to its focused sub-page rather than a
+  // fragment on the (no-longer-stacked) landing page.
   switch (kind) {
     case 'open_quiz':
-      return target ? `/apprentice/college-plan?quiz=${target}` : '/apprentice/college-plan#quizzes';
+      return target
+        ? `/apprentice/college/activities?quiz=${target}`
+        : '/apprentice/college/activities';
     case 'open_otj':
-      return '/apprentice/college-plan#otj';
+      return '/apprentice/college/activities';
     case 'open_portfolio':
-      return '/apprentice/college-plan#portfolio';
+      return '/apprentice/college/activities';
     case 'open_ac':
-      return '/apprentice/college-plan#ac-coverage';
+      return '/apprentice/college/progress';
     case 'open_epa_brief':
-      return '/apprentice/college-plan#epa';
+      return '/apprentice/college/epa';
     case 'open_reflection':
-      return '/apprentice/college-plan#reflection';
+      return '/apprentice/college/voice';
     default:
       return '/apprentice/college-plan';
   }

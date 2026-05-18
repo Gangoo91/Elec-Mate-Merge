@@ -440,7 +440,7 @@ export default function VATSchemeComparisonPage() {
           operatingSystem: 'Web, iOS, Android',
           description:
             'Compare VAT schemes for your electrical business. Standard rate, flat rate, cash accounting, and domestic reverse charge — find the scheme that saves you the most.',
-          url: 'https://elec-mate.com/tools/vat-scheme-comparison',
+          url: 'https://www.elec-mate.com/tools/vat-scheme-comparison',
           offers: {
             '@type': 'Offer',
             price: '0',

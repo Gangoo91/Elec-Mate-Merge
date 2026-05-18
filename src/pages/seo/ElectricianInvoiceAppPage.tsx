@@ -106,7 +106,7 @@ const softwareAppSchema = {
   operatingSystem: 'Web, iOS, Android',
   description:
     'Digital invoicing app for UK electricians. Stripe card payments, Xero and QuickBooks integration, automatic payment reminders, VAT and CIS compliance, expense tracking.',
-  url: 'https://elec-mate.com/electrician-invoice-app',
+  url: 'https://www.elec-mate.com/electrician-invoice-app',
   offers: {
     '@type': 'Offer',
     price: '0',

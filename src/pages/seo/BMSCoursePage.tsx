@@ -102,8 +102,8 @@ const courseSchema = {
   provider: {
     '@type': 'Organization',
     name: 'Elec-Mate',
-    url: 'https://elec-mate.com',
-    logo: 'https://elec-mate.com/logo.jpg',
+    url: 'https://www.elec-mate.com',
+    logo: 'https://www.elec-mate.com/logo.jpg',
   },
   educationalLevel: 'Professional',
   inLanguage: 'en-GB',
@@ -150,7 +150,7 @@ export default function BMSCoursePage() {
       provider: {
         '@type': 'Organization',
         name: 'Elec-Mate',
-        url: 'https://elec-mate.com',
+        url: 'https://www.elec-mate.com',
       },
       educationalLevel: 'Professional',
     },
@@ -170,19 +170,19 @@ export default function BMSCoursePage() {
                 '@type': 'ListItem',
                 position: 1,
                 name: 'Home',
-                item: 'https://elec-mate.com/',
+                item: 'https://www.elec-mate.com/',
               },
               {
                 '@type': 'ListItem',
                 position: 2,
                 name: 'Training',
-                item: 'https://elec-mate.com/training',
+                item: 'https://www.elec-mate.com/training',
               },
               {
                 '@type': 'ListItem',
                 position: 3,
                 name: 'BMS Course',
-                item: 'https://elec-mate.com/training/bms-course',
+                item: 'https://www.elec-mate.com/training/bms-course',
               },
             ],
           })}

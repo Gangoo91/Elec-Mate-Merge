@@ -77,7 +77,7 @@ export function useIqaSamplingPlans() {
     };
   }, [fetch]);
 
-  const create = useCallback(async (input: NewIqaSamplingPlan) => {
+  const create = useCallback(async (input: NewIqaSamplingPlan): Promise<IqaSamplingPlan> => {
     const { data: userData } = await supabase.auth.getUser();
     let collegeId: string | null = null;
     if (userData.user?.id) {
@@ -88,7 +88,7 @@ export function useIqaSamplingPlans() {
         .maybeSingle();
       collegeId = (profile?.college_id as string | null) ?? null;
     }
-    const { error: insErr } = await supabase
+    const { data, error: insErr } = await supabase
       .from('college_iqa_sampling')
       .insert({
         college_id: collegeId,
@@ -100,8 +100,11 @@ export function useIqaSamplingPlans() {
         period_end: input.period_end,
         target_sample_percent: input.target_sample_percent ?? null,
         notes: input.notes ?? null,
-      });
+      })
+      .select(COLS)
+      .single();
     if (insErr) throw insErr;
+    return data as IqaSamplingPlan;
   }, []);
 
   const remove = useCallback(async (id: string) => {

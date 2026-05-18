@@ -72,7 +72,7 @@ export const RUBRIC: readonly RubricCriterion[] = [
     label: 'Canonical correct',
     weight: 5,
     description:
-      'Canonical href equals https://elec-mate.com{slug} and matches the route — no cross-canonicalisation.',
+      'Canonical href equals https://www.elec-mate.com{slug} and matches the route — no cross-canonicalisation.',
   },
   {
     id: 'no_cannibalising_twin',

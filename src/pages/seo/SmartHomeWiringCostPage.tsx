@@ -540,8 +540,8 @@ const sections = [
 export default function SmartHomeWiringCostPage() {
   return (
     <GuideTemplate
-      title="Smart Home Wiring Cost UK 2026 | Installation Pricing"
-      description="How much does smart home wiring cost in the UK? From £500 for a single room to £5,000+ for whole-house systems. Smart lighting, Cat6 cabling, WiFi access points, smart switches, and structured cabling costs explained."
+      title="Smart Home Wiring Renovation Cost UK — Retrofit Pricing 2026"
+      description="Smart home wiring renovation cost UK — from £500 for a single room retrofit to £5,000+ for a whole-house rewire with Cat6, WiFi, smart switches and structured cabling. Real 2026 pricing from working electricians."
       datePublished="2026-03-27"
       dateModified="2026-03-27"
       breadcrumbs={breadcrumbs}
@@ -550,11 +550,11 @@ export default function SmartHomeWiringCostPage() {
       badgeIcon={PoundSterling}
       heroTitle={
         <>
-          Smart Home Wiring Cost:{' '}
-          <span className="text-yellow-400">UK Installation Pricing 2026</span>
+          Smart Home Wiring Renovation Cost UK:{' '}
+          <span className="text-yellow-400">Retrofit & Rewire Pricing 2026</span>
         </>
       }
-      heroSubtitle="How much does smart home wiring cost in the UK? This guide covers smart lighting, Cat6 structured cabling, WiFi access points, smart sockets, and whole-house vs room-by-room pricing from £500 to £5,000+."
+      heroSubtitle="Planning a smart home renovation? This guide covers retrofit costs by room and whole-house rewire pricing — smart lighting, Cat6 structured cabling, WiFi access points, smart sockets, switches and dimmers. From £500 for a single room to £5,000+ for a full retrofit, with real 2026 UK pricing from working electricians."
       readingTime={10}
       keyTakeaways={keyTakeaways}
       sections={sections}

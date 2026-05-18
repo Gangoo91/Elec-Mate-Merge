@@ -538,7 +538,7 @@ export default function StaffCostCalculatorPage() {
           operatingSystem: 'Web, iOS, Android',
           description:
             'Calculate the true cost of employing electricians, apprentices, and support staff. Employer NI, pension, holiday pay, and all hidden costs.',
-          url: 'https://elec-mate.com/tools/staff-cost-calculator',
+          url: 'https://www.elec-mate.com/tools/staff-cost-calculator',
           offers: {
             '@type': 'Offer',
             price: '0',

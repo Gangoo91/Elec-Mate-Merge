@@ -63,7 +63,7 @@ const ElecIdShare = () => {
   const qrRef = useRef<HTMLDivElement>(null);
 
   const elecIdNumber = profile?.elec_id_number || 'EM-XXXXXX';
-  const shareUrl = `https://elec-mate.com/verify/${elecIdNumber}`;
+  const shareUrl = `https://www.elec-mate.com/verify/${elecIdNumber}`;
 
   const fetchShareLinks = useCallback(async () => {
     if (!profile?.id) {
@@ -139,7 +139,7 @@ const ElecIdShare = () => {
     setIsCreatingLink(true);
     try {
       const shareToken = crypto.randomUUID().replace(/-/g, '').substring(0, 12);
-      const url = `https://elec-mate.com/share/${shareToken}`;
+      const url = `https://www.elec-mate.com/share/${shareToken}`;
 
       let expiresAt: string | null = null;
       const now = new Date();

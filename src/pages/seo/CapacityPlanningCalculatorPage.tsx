@@ -471,7 +471,7 @@ export default function CapacityPlanningCalculatorPage() {
           operatingSystem: 'Web, iOS, Android',
           description:
             'Plan workforce capacity, track utilisation rates, and schedule jobs efficiently for your electrical business.',
-          url: 'https://elec-mate.com/tools/capacity-planning-calculator',
+          url: 'https://www.elec-mate.com/tools/capacity-planning-calculator',
           offers: {
             '@type': 'Offer',
             price: '0',

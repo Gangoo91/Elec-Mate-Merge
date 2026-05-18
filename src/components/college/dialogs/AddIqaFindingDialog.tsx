@@ -33,9 +33,28 @@ import {
    optionally a specific observation).
    ========================================================================== */
 
+export interface AddIqaFindingPrefill {
+  iqa_id?: string;
+  assessor_id?: string;
+  /** Hard link back to the sample row that triggered this finding. Lets
+   *  the plan detail page list "findings raised from this sample" + gives
+   *  EQA verifiers a click-through audit trail. */
+  sample_id?: string;
+  finding_type?: FindingType;
+  severity?: FindingSeverity | '';
+  description?: string;
+  action_plan?: string;
+}
+
 interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  /**
+   * Pre-fill the form on open. Used to "promote" a sampling-verdict
+   * disagreement into a formal finding without re-typing the rationale.
+   * Form resets to EMPTY when the sheet closes.
+   */
+  prefill?: AddIqaFindingPrefill;
 }
 
 const NONE = '__none';
@@ -73,7 +92,7 @@ const EMPTY: FormState = {
   due_date: '',
 };
 
-export function AddIqaFindingDialog({ open, onOpenChange }: Props) {
+export function AddIqaFindingDialog({ open, onOpenChange, prefill }: Props) {
   const { toast } = useToast();
   const { staff } = useCollegeSupabase();
   const { create } = useIqaFindings();
@@ -81,8 +100,20 @@ export function AddIqaFindingDialog({ open, onOpenChange }: Props) {
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    if (open) setForm(EMPTY);
-  }, [open]);
+    if (!open) return;
+    // Merge prefill on top of EMPTY so the caller can seed any subset of
+    // fields (assessor_id + description + finding_type is the typical
+    // "promote sampling verdict to finding" case).
+    setForm({
+      ...EMPTY,
+      ...(prefill?.iqa_id != null && { iqa_id: prefill.iqa_id }),
+      ...(prefill?.assessor_id != null && { assessor_id: prefill.assessor_id }),
+      ...(prefill?.finding_type != null && { finding_type: prefill.finding_type }),
+      ...(prefill?.severity != null && { severity: prefill.severity }),
+      ...(prefill?.description != null && { description: prefill.description }),
+      ...(prefill?.action_plan != null && { action_plan: prefill.action_plan }),
+    });
+  }, [open, prefill]);
 
   const update = (patch: Partial<FormState>) =>
     setForm((p) => ({ ...p, ...patch }));
@@ -131,6 +162,7 @@ export function AddIqaFindingDialog({ open, onOpenChange }: Props) {
         iqa_id: form.iqa_id !== NONE ? form.iqa_id : null,
         assessor_id: form.assessor_id !== NONE ? form.assessor_id : null,
         assessor_name: selectedAssessor?.name ?? 'Unassigned',
+        sample_id: prefill?.sample_id ?? null,
         finding_type: form.finding_type,
         severity: (form.severity || null) as FindingSeverity | null,
         description: form.description.trim(),

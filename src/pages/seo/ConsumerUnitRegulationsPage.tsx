@@ -116,12 +116,12 @@ const articleSchema = {
     name: 'Elec-Mate',
     logo: {
       '@type': 'ImageObject',
-      url: 'https://elec-mate.com/logo.jpg',
+      url: 'https://www.elec-mate.com/logo.jpg',
     },
   },
   mainEntityOfPage: {
     '@type': 'WebPage',
-    '@id': 'https://elec-mate.com/guides/consumer-unit-regulations',
+    '@id': 'https://www.elec-mate.com/guides/consumer-unit-regulations',
   },
 };
 
@@ -140,13 +140,13 @@ const faqSchema = {
 const breadcrumbSchema = {
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://elec-mate.com/' },
-    { '@type': 'ListItem', position: 2, name: 'Guides', item: 'https://elec-mate.com/guides' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.elec-mate.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Guides', item: 'https://www.elec-mate.com/guides' },
     {
       '@type': 'ListItem',
       position: 3,
       name: 'Consumer Unit Regulations',
-      item: 'https://elec-mate.com/guides/consumer-unit-regulations',
+      item: 'https://www.elec-mate.com/guides/consumer-unit-regulations',
     },
   ],
 };

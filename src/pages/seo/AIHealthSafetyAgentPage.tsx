@@ -110,7 +110,7 @@ const softwareAppSchema = {
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'Web, iOS, Android',
   description: PAGE_DESCRIPTION,
-  url: 'https://elec-mate.com/tools/ai-health-safety',
+  url: 'https://www.elec-mate.com/tools/ai-health-safety',
   offers: {
     '@type': 'Offer',
     price: '0',

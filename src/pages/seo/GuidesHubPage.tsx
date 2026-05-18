@@ -109,7 +109,7 @@ const collectionSchema = {
   '@type': 'CollectionPage',
   name: 'Electrical Guides Hub',
   description: PAGE_DESCRIPTION,
-  url: 'https://elec-mate.com/guides',
+  url: 'https://www.elec-mate.com/guides',
 };
 
 export default function GuidesHubPage() {

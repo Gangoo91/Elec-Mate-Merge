@@ -43,11 +43,6 @@
 -keep public class * extends com.getcapacitor.BridgeActivity
 
 # ============================================================================
-# Cordova plugins (pulled in via capacitor-cordova-android-plugins)
-# ============================================================================
--keep class org.apache.cordova.** { *; }
-
-# ============================================================================
 # AndroidX / Kotlin metadata (rarely needed but cheap to keep)
 # ============================================================================
 -keep class kotlin.Metadata { *; }

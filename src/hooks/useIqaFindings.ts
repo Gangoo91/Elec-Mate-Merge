@@ -18,6 +18,10 @@ export interface IqaFinding {
   assessor_id: string | null;
   assessor_name: string;
   observation_id: string | null;
+  /** Hard FK to college_iqa_samples.id when the finding was promoted
+   *  from a sample verdict. Lets the plan page list "findings raised
+   *  from this sample" + powers click-through audit traceability. */
+  sample_id: string | null;
   finding_type: FindingType;
   severity: FindingSeverity | null;
   description: string;
@@ -35,6 +39,7 @@ export interface NewIqaFinding {
   assessor_id?: string | null;
   assessor_name: string;
   observation_id?: string | null;
+  sample_id?: string | null;
   finding_type: FindingType;
   severity?: FindingSeverity | null;
   description: string;
@@ -43,7 +48,7 @@ export interface NewIqaFinding {
 }
 
 const COLS =
-  'id, college_id, iqa_id, iqa_name_snapshot, assessor_id, assessor_name, observation_id, finding_type, severity, description, status, action_plan, due_date, resolution_notes, closed_at, created_at, updated_at';
+  'id, college_id, iqa_id, iqa_name_snapshot, assessor_id, assessor_name, observation_id, sample_id, finding_type, severity, description, status, action_plan, due_date, resolution_notes, closed_at, created_at, updated_at';
 
 export function useIqaFindings() {
   const [findings, setFindings] = useState<IqaFinding[]>([]);
@@ -103,6 +108,7 @@ export function useIqaFindings() {
         assessor_id: input.assessor_id ?? null,
         assessor_name: input.assessor_name,
         observation_id: input.observation_id ?? null,
+        sample_id: input.sample_id ?? null,
         finding_type: input.finding_type,
         severity: input.severity ?? null,
         description: input.description,

@@ -42,7 +42,6 @@ def create_scheduler() -> AsyncIOScheduler:
     from src.pipelines.outreach_businesses import (
         run_outreach_companies_house_pipeline,
         run_outreach_companies_house_web_pipeline,
-        run_outreach_google_places_pipeline,
         run_outreach_businesses_hunter_enrichment,
         run_outreach_yell_pipeline,
         run_outreach_checkatrade_pipeline,
@@ -137,15 +136,6 @@ def create_scheduler() -> AsyncIOScheduler:
         CronTrigger(hour=2, minute=30),
         id="outreach_companies_house",
         name="Outreach — Companies House SIC 43210/43220 import",
-        misfire_grace_time=7200,
-    )
-
-    # Google Places — weekly Monday 04:00 (supplements CH with sole traders)
-    scheduler.add_job(
-        run_outreach_google_places_pipeline,
-        CronTrigger(day_of_week="mon", hour=4, minute=0),
-        id="outreach_google_places",
-        name="Outreach — Google Places UK sweep",
         misfire_grace_time=7200,
     )
 

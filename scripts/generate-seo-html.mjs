@@ -25,7 +25,7 @@ const ROOT = join(__dirname, '..');
 const DIST = join(ROOT, 'dist');
 const SEO_ROUTES_FILE = join(ROOT, 'src/routes/SEORoutes.tsx');
 const SEO_PAGES_DIR = join(ROOT, 'src/pages/seo');
-const BASE_URL = 'https://elec-mate.com';
+const BASE_URL = 'https://www.elec-mate.com';
 
 // ---------------------------------------------------------------------------
 // 1. Read the built index.html template

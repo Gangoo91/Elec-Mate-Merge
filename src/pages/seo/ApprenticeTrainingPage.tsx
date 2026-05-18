@@ -102,8 +102,8 @@ const courseSchema = {
   provider: {
     '@type': 'Organization',
     name: 'Elec-Mate',
-    url: 'https://elec-mate.com',
-    logo: 'https://elec-mate.com/logo.jpg',
+    url: 'https://www.elec-mate.com',
+    logo: 'https://www.elec-mate.com/logo.jpg',
   },
   educationalLevel: 'Beginner to Intermediate',
   inLanguage: 'en-GB',
@@ -149,7 +149,7 @@ export default function ApprenticeTrainingPage() {
       provider: {
         '@type': 'Organization',
         name: 'Elec-Mate',
-        url: 'https://elec-mate.com',
+        url: 'https://www.elec-mate.com',
       },
       educationalLevel: 'Beginner to Intermediate',
     },
@@ -169,19 +169,19 @@ export default function ApprenticeTrainingPage() {
                 '@type': 'ListItem',
                 position: 1,
                 name: 'Home',
-                item: 'https://elec-mate.com/',
+                item: 'https://www.elec-mate.com/',
               },
               {
                 '@type': 'ListItem',
                 position: 2,
                 name: 'Training',
-                item: 'https://elec-mate.com/training',
+                item: 'https://www.elec-mate.com/training',
               },
               {
                 '@type': 'ListItem',
                 position: 3,
                 name: 'Electrical Apprentice Training',
-                item: 'https://elec-mate.com/training/electrical-apprentice',
+                item: 'https://www.elec-mate.com/training/electrical-apprentice',
               },
             ],
           })}

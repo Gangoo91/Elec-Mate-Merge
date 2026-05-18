@@ -104,7 +104,7 @@ const softwareAppSchema = {
   operatingSystem: 'iOS, Android, Web',
   description:
     'All-in-one platform for UK electricians: 8 certificates, 70+ calculators, 8 Elec-AI tools, training courses, and business management.',
-  url: 'https://elec-mate.com/compare/elec-mate-vs-icertifi',
+  url: 'https://www.elec-mate.com/compare/elec-mate-vs-icertifi',
   offers: {
     '@type': 'Offer',
     price: '4.99',

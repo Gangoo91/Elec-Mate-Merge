@@ -44,6 +44,21 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths"></meta-data>
         </provider>
+
+        <!--
+          FCM notification icon + accent colour. Android 5+ extracts the alpha
+          channel from the notification icon and tints it with the supplied
+          colour. Without these meta-data lines, FCM falls back to the launcher
+          icon (rendered as a generic grey silhouette). ic_notification is a
+          white-on-transparent bulb mark sized for the status bar; colorAccent
+          is the brand yellow (#facc15) defined in colors.xml.
+        -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_notification" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
     </application>
 
     <!-- Permissions -->

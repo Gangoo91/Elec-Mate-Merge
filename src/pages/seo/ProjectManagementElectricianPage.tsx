@@ -443,7 +443,7 @@ export default function ProjectManagementElectricianPage() {
           operatingSystem: 'Web, iOS, Android',
           description:
             'Project management tools for UK electrical contractors. Job scheduling, staff allocation, material tracking, progress monitoring, and client communication in one mobile-first app.',
-          url: 'https://elec-mate.com/tools/project-management-electrician',
+          url: 'https://www.elec-mate.com/tools/project-management-electrician',
           offers: {
             '@type': 'Offer',
             price: '0',

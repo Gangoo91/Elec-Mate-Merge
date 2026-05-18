@@ -125,7 +125,7 @@ const softwareAppSchema = {
   operatingSystem: 'Web, iOS, Android',
   description:
     'Calculate conduit fill using the cable factor method to BS 7671. Check maximum cables per conduit size, supports 16 mm to 50 mm, all standard cable types.',
-  url: 'https://elec-mate.com/tools/conduit-fill-calculator',
+  url: 'https://www.elec-mate.com/tools/conduit-fill-calculator',
   offers: {
     '@type': 'Offer',
     price: '0',

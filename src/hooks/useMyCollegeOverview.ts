@@ -162,7 +162,7 @@ export function useMyCollegeOverview(): MyCollegeOverview {
               detail:
                 row.verification_rationale?.slice(0, 140) ??
                 'Tutor needs more detail before signing this off.',
-              href: '/apprentice/college-plan#otj',
+              href: '/apprentice/college/activities',
             });
           }
         }
@@ -218,7 +218,7 @@ export function useMyCollegeOverview(): MyCollegeOverview {
             kind: 'goal_blocked',
             title: `Blocked: ${g.title}`,
             detail: "Reply to your tutor with what's in the way.",
-            href: '/apprentice/college-plan#plan',
+            href: '/apprentice/college/plan',
           });
         }
       }
@@ -230,7 +230,7 @@ export function useMyCollegeOverview(): MyCollegeOverview {
           kind: 'tutor_comment_unread',
           title: `New tutor comment: ${g.title}`,
           detail: 'Read and acknowledge to keep your plan up to date.',
-          href: '/apprentice/college-plan#plan',
+          href: '/apprentice/college/plan',
         });
       }
     }
@@ -260,7 +260,7 @@ export function useMyCollegeOverview(): MyCollegeOverview {
             detail: q.due_date
               ? `Was due ${new Date(q.due_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}`
               : null,
-            href: '/apprentice/college-plan#activities',
+            href: '/apprentice/college/activities',
           });
         }
       }

@@ -2,7 +2,7 @@
 """Generate split sitemaps for elec-mate.com."""
 from datetime import date
 
-BASE_URL = "https://elec-mate.com"
+BASE_URL = "https://www.elec-mate.com"
 TODAY = date.today().isoformat()
 
 # Read all routes

@@ -109,7 +109,7 @@ const collectionSchema = {
   '@type': 'CollectionPage',
   name: 'Electrical Training Hub',
   description: PAGE_DESCRIPTION,
-  url: 'https://elec-mate.com/training',
+  url: 'https://www.elec-mate.com/training',
 };
 
 export default function TrainingHubPage() {

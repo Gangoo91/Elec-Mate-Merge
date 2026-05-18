@@ -391,18 +391,18 @@ const LandingPage = () => {
         />
 
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://elec-mate.com/" />
+        <meta property="og:url" content="https://www.elec-mate.com/" />
         <meta property="og:title" content="Elec-Mate | The Complete Platform for UK Electricians" />
         <meta
           property="og:description"
           content="Training, AI tools, certificates & business management for UK electricians. From apprentice to employer — everything you need to learn, work smarter, and grow."
         />
-        <meta property="og:image" content="https://elec-mate.com/og-image.jpg" />
+        <meta property="og:image" content="https://www.elec-mate.com/og-image.jpg" />
         <meta property="og:site_name" content="Elec-Mate" />
         <meta property="og:locale" content="en_GB" />
 
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content="https://elec-mate.com/" />
+        <meta name="twitter:url" content="https://www.elec-mate.com/" />
         <meta
           name="twitter:title"
           content="Elec-Mate | The Complete Platform for UK Electricians"
@@ -411,13 +411,13 @@ const LandingPage = () => {
           name="twitter:description"
           content="Training, AI tools, certificates & business management for UK electricians. 5 AI specialists trained on BS 7671. Start free today."
         />
-        <meta name="twitter:image" content="https://elec-mate.com/og-image.jpg" />
+        <meta name="twitter:image" content="https://www.elec-mate.com/og-image.jpg" />
 
         <meta name="robots" content="index, follow" />
         <meta name="author" content="Elec-Mate" />
         <meta name="geo.region" content="GB" />
         <meta name="geo.placename" content="United Kingdom" />
-        <link rel="canonical" href="https://elec-mate.com/" />
+        <link rel="canonical" href="https://www.elec-mate.com/" />
 
         <script type="application/ld+json">
           {JSON.stringify({
@@ -451,8 +451,8 @@ const LandingPage = () => {
             '@context': 'https://schema.org',
             '@type': 'Organization',
             name: 'Elec-Mate',
-            url: 'https://elec-mate.com',
-            logo: 'https://elec-mate.com/logo.jpg',
+            url: 'https://www.elec-mate.com',
+            logo: 'https://www.elec-mate.com/logo.jpg',
             description: 'The complete platform for UK electricians',
             address: { '@type': 'PostalAddress', addressCountry: 'GB' },
             sameAs: [

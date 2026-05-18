@@ -467,7 +467,7 @@ export default function BreakEvenCalculatorPage() {
           operatingSystem: 'Web, iOS, Android',
           description:
             'Calculate the break-even point for your electrical business. Fixed vs variable costs, margin of safety, and pricing impact analysis.',
-          url: 'https://elec-mate.com/tools/break-even-calculator',
+          url: 'https://www.elec-mate.com/tools/break-even-calculator',
           offers: {
             '@type': 'Offer',
             price: '0',

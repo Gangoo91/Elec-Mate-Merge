@@ -1071,7 +1071,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
             <button
               onClick={async () => {
                 await copyToClipboard(
-                  `https://elec-mate.com/verify/${elecIdProfile.elec_id_number}`
+                  `https://www.elec-mate.com/verify/${elecIdProfile.elec_id_number}`
                 );
                 setCopiedLink(true);
                 setTimeout(() => setCopiedLink(false), 2000);

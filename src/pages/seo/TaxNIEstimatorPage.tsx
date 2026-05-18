@@ -465,7 +465,7 @@ export default function TaxNIEstimatorPage() {
           operatingSystem: 'Web, iOS, Android',
           description:
             'Estimate income tax and National Insurance for self-employed electricians. Real-time calculation, payment date reminders, and expense impact tracking.',
-          url: 'https://elec-mate.com/tools/tax-ni-estimator',
+          url: 'https://www.elec-mate.com/tools/tax-ni-estimator',
           offers: {
             '@type': 'Offer',
             price: '0',

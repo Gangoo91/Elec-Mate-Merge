@@ -28,7 +28,7 @@ const ROOT = join(__dirname, '..', '..');
 const REPORT = join(ROOT, 'reports', 'seo-audit.json');
 const LLMS = join(ROOT, 'public', 'llms.txt');
 const LLMS_FULL = join(ROOT, 'public', 'llms-full.txt');
-const BASE = 'https://elec-mate.com';
+const BASE = 'https://www.elec-mate.com';
 
 if (!existsSync(REPORT)) {
   console.error('No audit report. Run scripts/seo-audit/run.mjs first.');

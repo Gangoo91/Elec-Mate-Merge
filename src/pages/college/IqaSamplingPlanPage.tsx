@@ -19,6 +19,10 @@ import {
   type EligibleOtjEntry,
   type SampleVerdict,
 } from '@/hooks/useIqaSamplingPlan';
+import {
+  AddIqaFindingDialog,
+  type AddIqaFindingPrefill,
+} from '@/components/college/dialogs/AddIqaFindingDialog';
 
 /* ==========================================================================
    IqaSamplingPlanPage — /college/iqa/sampling/:id
@@ -57,6 +61,7 @@ export default function IqaSamplingPlanPage() {
   const data = useIqaSamplingPlan(id ?? null);
   const [visibleEligible, setVisibleEligible] = useState(50);
   const [visibleEligibleOtj, setVisibleEligibleOtj] = useState(50);
+  const [findingPrefill, setFindingPrefill] = useState<AddIqaFindingPrefill | null>(null);
 
   if (!id) {
     return (
@@ -118,6 +123,74 @@ export default function IqaSamplingPlanPage() {
         description: (e as Error).message,
         variant: 'destructive',
       });
+    }
+  };
+
+  // Random sampling — Fisher-Yates shuffle of the eligible list, slice N,
+  // fire the existing add fn for each. Done sequentially (not parallel) so
+  // we don't trigger a thundering-herd of inserts and so toast progress
+  // reads in order. Default 5 — the awarding-body benchmark for routine
+  // sampling on a quarterly plan.
+  const [pickingObs, setPickingObs] = useState(false);
+  const [pickingOtj, setPickingOtj] = useState(false);
+
+  const pickRandomObservations = async (n: number) => {
+    if (eligible.length === 0 || pickingObs) return;
+    setPickingObs(true);
+    try {
+      const pool = [...eligible];
+      for (let i = pool.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [pool[i], pool[j]] = [pool[j], pool[i]];
+      }
+      const picks = pool.slice(0, Math.min(n, pool.length));
+      let added = 0;
+      for (const p of picks) {
+        try {
+          await data.addSample(p.id);
+          added += 1;
+        } catch {
+          /* one row failing shouldn't kill the rest */
+        }
+      }
+      toast({
+        title: `Added ${added} random sample${added === 1 ? '' : 's'}`,
+        description: 'Mark each verdict from the In Scope list above.',
+      });
+    } finally {
+      setPickingObs(false);
+    }
+  };
+
+  const pickRandomOtj = async (n: number) => {
+    if (eligibleOtj.length === 0 || pickingOtj) return;
+    setPickingOtj(true);
+    try {
+      const pool = [...eligibleOtj];
+      for (let i = pool.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [pool[i], pool[j]] = [pool[j], pool[i]];
+      }
+      const picks = pool.slice(0, Math.min(n, pool.length));
+      let added = 0;
+      for (const p of picks) {
+        try {
+          await data.addOtjSample({
+            id: p.id,
+            title: p.title,
+            activity_date: p.activity_date,
+          });
+          added += 1;
+        } catch {
+          /* swallow per-row failures */
+        }
+      }
+      toast({
+        title: `Added ${added} random OTJ sample${added === 1 ? '' : 's'}`,
+        description: 'Mark each verdict from the In Scope list above.',
+      });
+    } finally {
+      setPickingOtj(false);
     }
   };
 
@@ -301,6 +374,7 @@ export default function IqaSamplingPlanPage() {
               <SampleCard
                 key={s.id}
                 sample={s}
+                linkedFindingCount={data.findingCountBySample.get(s.id) ?? 0}
                 onViewEvidence={() => handleViewEvidence(s)}
                 onSetVerdict={async (v, comments) => {
                   try {
@@ -313,6 +387,34 @@ export default function IqaSamplingPlanPage() {
                       variant: 'destructive',
                     });
                   }
+                }}
+                onPromoteToFinding={() => {
+                  // Pre-fill the AddIqaFindingDialog with this sample's
+                  // context so the IQA doesn't re-type the assessor /
+                  // description / rationale. Disagree → "action required",
+                  // refer → "concern". The IQA can override before saving.
+                  const findingType =
+                    s.verdict === 'disagree' ? 'action' : s.verdict === 'refer' ? 'concern' : 'observation';
+                  const what = s.otj_id
+                    ? (s.otj_title_snapshot ?? 'OTJ entry')
+                    : (s.observation_title_snapshot ?? 'Observation');
+                  const rationale = s.comments?.trim()
+                    ? `Rationale: ${s.comments.trim()}`
+                    : '';
+                  const description = [
+                    `Raised from IQA sample — verdict: ${VERDICT_LABEL[s.verdict].toLowerCase()}`,
+                    `Sample: ${what}`,
+                    rationale,
+                  ]
+                    .filter(Boolean)
+                    .join('\n');
+                  setFindingPrefill({
+                    iqa_id: plan.iqa_id ?? undefined,
+                    assessor_id: plan.assessor_id ?? undefined,
+                    sample_id: s.id,
+                    finding_type: findingType,
+                    description,
+                  });
                 }}
                 onRemove={async () => {
                   const ok = window.confirm('Remove from sample? Logged in audit trail.');
@@ -336,13 +438,31 @@ export default function IqaSamplingPlanPage() {
 
       {/* Eligible — pickable */}
       <motion.section variants={itemVariants} className="space-y-3">
-        <div>
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Available
+        <div className="flex items-end justify-between gap-3 flex-wrap">
+          <div>
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+              Available
+            </div>
+            <h2 className="mt-1 text-[20px] sm:text-[22px] font-semibold text-white tracking-tight">
+              Eligible observations · {eligible.length}
+            </h2>
           </div>
-          <h2 className="mt-1 text-[20px] sm:text-[22px] font-semibold text-white tracking-tight">
-            Eligible observations · {eligible.length}
-          </h2>
+          {eligible.length > 0 && (
+            <div className="flex items-center gap-1.5">
+              {[5, 10].map((n) => (
+                <button
+                  key={n}
+                  type="button"
+                  onClick={() => pickRandomObservations(n)}
+                  disabled={pickingObs || n > eligible.length}
+                  className="h-8 px-3 rounded-full bg-purple-500/[0.10] border border-purple-400/40 text-[11.5px] font-semibold text-purple-200 hover:bg-purple-500/[0.18] disabled:opacity-40 touch-manipulation"
+                  title={`Randomly pick ${n} unsampled observations`}
+                >
+                  {pickingObs ? '…' : `🎲 Pick ${n} random`}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
         {eligible.length === 0 ? (
           <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-6">
@@ -382,17 +502,35 @@ export default function IqaSamplingPlanPage() {
           to check the assessor's verdict. Only shows entries within the
           plan's period and (when set) verified by the plan's assessor. */}
       <motion.section variants={itemVariants} className="space-y-3">
-        <div>
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Available · OTJ
+        <div className="flex items-end justify-between gap-3 flex-wrap">
+          <div>
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+              Available · OTJ
+            </div>
+            <h2 className="mt-1 text-[20px] sm:text-[22px] font-semibold text-white tracking-tight">
+              Eligible OTJ entries · {eligibleOtj.length}
+            </h2>
+            <p className="mt-1 text-[12px] text-white leading-relaxed max-w-2xl">
+              Assessor-verified OTJ submissions in this period. Sample to confirm the assessor's
+              verdict was sound — agree, disagree or refer with comments.
+            </p>
           </div>
-          <h2 className="mt-1 text-[20px] sm:text-[22px] font-semibold text-white tracking-tight">
-            Eligible OTJ entries · {eligibleOtj.length}
-          </h2>
-          <p className="mt-1 text-[12px] text-white leading-relaxed max-w-2xl">
-            Assessor-verified OTJ submissions in this period. Sample to confirm the assessor's
-            verdict was sound — agree, disagree or refer with comments.
-          </p>
+          {eligibleOtj.length > 0 && (
+            <div className="flex items-center gap-1.5">
+              {[5, 10].map((n) => (
+                <button
+                  key={n}
+                  type="button"
+                  onClick={() => pickRandomOtj(n)}
+                  disabled={pickingOtj || n > eligibleOtj.length}
+                  className="h-8 px-3 rounded-full bg-purple-500/[0.10] border border-purple-400/40 text-[11.5px] font-semibold text-purple-200 hover:bg-purple-500/[0.18] disabled:opacity-40 touch-manipulation"
+                  title={`Randomly pick ${n} unsampled OTJ entries`}
+                >
+                  {pickingOtj ? '…' : `🎲 Pick ${n} random`}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
         {eligibleOtj.length === 0 ? (
           <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-6">
@@ -434,6 +572,17 @@ export default function IqaSamplingPlanPage() {
           </div>
         )}
       </motion.section>
+
+      {/* Findings dialog mounted at page level so the SampleCard can
+          "promote" a disagree/refer verdict into a formal finding without
+          duplicating the heavy form. Prefilled with the sample's context. */}
+      <AddIqaFindingDialog
+        open={findingPrefill !== null}
+        onOpenChange={(o) => {
+          if (!o) setFindingPrefill(null);
+        }}
+        prefill={findingPrefill ?? undefined}
+      />
     </PageFrame>
   );
 }
@@ -469,16 +618,39 @@ function VerdictTally({
 
 /* ──────────────────────────────────────────────────────── */
 
+// Numeric keyboard shortcuts on a SampleCard — order matches VERDICT_OPTIONS.
+const VERDICT_SHORTCUT: Record<SampleVerdict, string> = {
+  pending: '1',
+  agree: '2',
+  disagree: '3',
+  refer: '4',
+};
+const SHORTCUT_TO_VERDICT: Record<string, SampleVerdict> = {
+  '1': 'pending',
+  '2': 'agree',
+  '3': 'disagree',
+  '4': 'refer',
+};
+
 function SampleCard({
   sample,
+  linkedFindingCount,
   onSetVerdict,
   onRemove,
   onViewEvidence,
+  onPromoteToFinding,
 }: {
   sample: IqaSampleRow;
+  /** Count of findings raised from this sample (via the FK on
+   *  college_iqa_findings.sample_id). Renders a small badge in the
+   *  header so the IQA can see at a glance which samples already have
+   *  a finding logged against them. */
+  linkedFindingCount: number;
   onSetVerdict: (v: SampleVerdict, comments?: string) => Promise<void>;
   onRemove: () => Promise<void>;
   onViewEvidence: () => void;
+  /** Open the Findings dialog with this sample's context prefilled. */
+  onPromoteToFinding: () => void;
 }) {
   const [editing, setEditing] = useState(false);
   const [comments, setComments] = useState(sample.comments ?? '');
@@ -494,12 +666,38 @@ function SampleCard({
     setEditing(false);
   };
 
+  // Keyboard shortcuts: 1/2/3/4 sets verdict when the card is focused.
+  // We use tabIndex on the wrapper so click/tab gives keyboard focus, and
+  // bail out when the user is typing in the comments textarea (editing).
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (editing) return;
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    const target = e.target as HTMLElement;
+    if (target.tagName === 'TEXTAREA' || target.tagName === 'INPUT') return;
+    const next = SHORTCUT_TO_VERDICT[e.key];
+    if (!next || next === sample.verdict) return;
+    e.preventDefault();
+    void onSetVerdict(next, comments);
+  };
+
   return (
-    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 sm:px-6 py-4">
+    <div
+      tabIndex={0}
+      onKeyDown={handleKeyDown}
+      aria-label={`Sample ${sample.observation_title_snapshot ?? sample.otj_title_snapshot ?? 'untitled'} — keyboard 1/2/3/4 to set verdict`}
+      className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 sm:px-6 py-4 focus-visible:border-elec-yellow/40 focus-visible:ring-1 focus-visible:ring-elec-yellow/20 outline-none">
       <div className="flex items-start justify-between gap-3 flex-wrap">
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2 flex-wrap">
             <Pill tone={verdictTone}>{VERDICT_LABEL[sample.verdict]}</Pill>
+            {linkedFindingCount > 0 && (
+              <span
+                className="inline-flex items-center h-5 px-1.5 rounded-md bg-amber-500/[0.10] border border-amber-400/30 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-amber-200"
+                title={`${linkedFindingCount} IQA finding${linkedFindingCount === 1 ? '' : 's'} raised from this sample`}
+              >
+                {linkedFindingCount} finding{linkedFindingCount === 1 ? '' : 's'}
+              </span>
+            )}
             <span className="text-[11px] text-white tabular-nums">
               Sampled {formatDate(sample.sampled_at)}
             </span>
@@ -546,7 +744,7 @@ function SampleCard({
               type="button"
               onClick={() => onSetVerdict(v, comments)}
               className={cn(
-                'h-8 px-3 rounded-full text-[11.5px] font-medium border transition-colors touch-manipulation',
+                'h-8 px-3 rounded-full text-[11.5px] font-medium border transition-colors touch-manipulation inline-flex items-center gap-1.5',
                 active
                   ? tone === 'green'
                     ? 'bg-emerald-500/[0.12] border-emerald-500/40 text-emerald-200'
@@ -555,7 +753,14 @@ function SampleCard({
                       : 'bg-amber-500/[0.12] border-amber-500/40 text-amber-200'
                   : 'bg-[hsl(0_0%_14%)] border-white/[0.08] text-white hover:text-white hover:border-white/[0.18]'
               )}
+              title={`Set verdict (keyboard: ${VERDICT_SHORTCUT[v]})`}
             >
+              <span
+                aria-hidden
+                className="inline-flex items-center justify-center h-4 w-4 rounded bg-white/[0.08] text-[9.5px] font-mono tabular-nums text-white/65"
+              >
+                {VERDICT_SHORTCUT[v]}
+              </span>
               {VERDICT_LABEL[v]}
             </button>
           );
@@ -568,6 +773,16 @@ function SampleCard({
         >
           View evidence
         </button>
+        {(sample.verdict === 'disagree' || sample.verdict === 'refer') && (
+          <button
+            type="button"
+            onClick={onPromoteToFinding}
+            className="h-8 px-3 rounded-full border bg-amber-500/[0.10] border-amber-400/40 text-[11.5px] font-semibold text-amber-200 hover:bg-amber-500/[0.18] transition-colors touch-manipulation"
+            title="Raise an IQA finding from this sample"
+          >
+            Raise finding →
+          </button>
+        )}
         <button
           type="button"
           onClick={onRemove}

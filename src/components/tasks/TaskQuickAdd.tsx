@@ -1,8 +1,8 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mic, MicOff, Send } from 'lucide-react';
-import { Capacitor } from '@capacitor/core';
 import { cn } from '@/lib/utils';
+import { useSpeechToText } from '@/hooks/useSpeechToText';
 
 interface TaskQuickAddProps {
   onQuickSave: (title: string) => Promise<string | null>;
@@ -10,85 +10,42 @@ interface TaskQuickAddProps {
   onShowTemplates: () => void;
 }
 
-// Web Speech API types
-interface SpeechRecognitionEvent {
-  results: { [index: number]: { [index: number]: { transcript: string } } };
-  resultIndex: number;
-}
-
-interface SpeechRecognitionInstance {
-  lang: string;
-  interimResults: boolean;
-  maxAlternatives: number;
-  continuous: boolean;
-  onresult: ((event: SpeechRecognitionEvent) => void) | null;
-  onend: (() => void) | null;
-  onerror: (() => void) | null;
-  start: () => void;
-  stop: () => void;
-}
-
 export function TaskQuickAdd({ onQuickSave, onExpandForm, onShowTemplates }: TaskQuickAddProps) {
   const [title, setTitle] = useState('');
   const [saving, setSaving] = useState(false);
-  const [isListening, setIsListening] = useState(false);
-  const [speechSupported, setSpeechSupported] = useState(false);
-  const recognitionRef = useRef<SpeechRecognitionInstance | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Check Speech API support
-  // Web Speech Recognition is not supported in Capacitor's WKWebView on iOS —
-  // the constructor may exist but the API is non-functional. Hide the mic button
-  // entirely on native to avoid showing a feature that silently does nothing.
+  // Single-shot dictation — replaces inline Web Speech API so the mic also
+  // works on Android (via @capacitor-community/speech-recognition).
+  const {
+    isSupported: speechSupported,
+    isListening,
+    interimTranscript,
+    startListening,
+    stopListening,
+    resetTranscript,
+  } = useSpeechToText({
+    continuous: false,
+    interimResults: true,
+    lang: 'en-GB',
+    onFinalChunk: (_chunk, full) => {
+      setTitle(full.trim());
+    },
+  });
+
+  // Mirror the rolling partial result into the input so the user sees their
+  // words as they speak (matches the old inline behaviour).
   useEffect(() => {
-    if (Capacitor.isNativePlatform()) {
-      setSpeechSupported(false);
-      return;
+    if (isListening && interimTranscript) {
+      setTitle(interimTranscript);
     }
-    const SpeechRecognitionCtor =
-      (window as unknown as Record<string, unknown>).SpeechRecognition ||
-      (window as unknown as Record<string, unknown>).webkitSpeechRecognition;
-    setSpeechSupported(!!SpeechRecognitionCtor);
-  }, []);
+  }, [isListening, interimTranscript]);
 
-  const startListening = useCallback(() => {
-    const SpeechRecognitionCtor =
-      (window as unknown as Record<string, unknown>).SpeechRecognition ||
-      (window as unknown as Record<string, unknown>).webkitSpeechRecognition;
-    if (!SpeechRecognitionCtor) return;
-
-    const recognition = new (SpeechRecognitionCtor as unknown as {
-      new (): SpeechRecognitionInstance;
-    })();
-    recognition.lang = 'en-GB';
-    recognition.interimResults = true;
-    recognition.maxAlternatives = 1;
-    recognition.continuous = false;
-
-    recognition.onresult = (event: SpeechRecognitionEvent) => {
-      const transcript = event.results[0][0].transcript;
-      setTitle(transcript);
-    };
-
-    recognition.onend = () => {
-      setIsListening(false);
-    };
-
-    recognition.onerror = () => {
-      setIsListening(false);
-    };
-
-    recognitionRef.current = recognition;
-    recognition.start();
-    setIsListening(true);
-  }, []);
-
-  const stopListening = useCallback(() => {
-    if (recognitionRef.current) {
-      recognitionRef.current.stop();
-    }
-    setIsListening(false);
-  }, []);
+  // Reset the hook's internal transcript whenever the input is cleared so the
+  // next dictation starts fresh.
+  useEffect(() => {
+    if (!isListening && !title) resetTranscript();
+  }, [isListening, title, resetTranscript]);
 
   async function handleSubmit() {
     if (!title.trim() || saving) return;

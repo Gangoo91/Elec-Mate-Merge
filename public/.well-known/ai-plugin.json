@@ -9,9 +9,9 @@
   },
   "api": {
     "type": "openapi",
-    "url": "https://elec-mate.com/llms.txt"
+    "url": "https://www.elec-mate.com/llms.txt"
   },
-  "logo_url": "https://elec-mate.com/logo.jpg",
+  "logo_url": "https://www.elec-mate.com/logo.jpg",
   "contact_email": "support@elec-mate.com",
-  "legal_info_url": "https://elec-mate.com/terms"
+  "legal_info_url": "https://www.elec-mate.com/terms"
 }

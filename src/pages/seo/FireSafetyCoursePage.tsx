@@ -380,7 +380,7 @@ const extraSchemas = [
     provider: {
       '@type': 'Organization',
       name: 'Elec-Mate',
-      url: 'https://elec-mate.com',
+      url: 'https://www.elec-mate.com',
     },
     educationalLevel: 'Beginner',
     inLanguage: 'en-GB',

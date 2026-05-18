@@ -1,5 +1,5 @@
 # Elec-Mate Robots.txt
-# https://elec-mate.com
+# https://www.elec-mate.com
 # The UK's all-in-one electrical certification, training, and AI platform
 # Last updated: 2026-03-27
 
@@ -263,10 +263,10 @@ Crawl-delay: 1
 # SITEMAPS
 # ==========================================================
 
-Sitemap: https://elec-mate.com/sitemap.xml
-Sitemap: https://elec-mate.com/sitemap-guides.xml
-Sitemap: https://elec-mate.com/sitemap-seo.xml
-Sitemap: https://elec-mate.com/sitemap-tools.xml
-Sitemap: https://elec-mate.com/sitemap-training.xml
-Sitemap: https://elec-mate.com/sitemap-pages.xml
-Sitemap: https://elec-mate.com/sitemap-compare.xml
+Sitemap: https://www.elec-mate.com/sitemap.xml
+Sitemap: https://www.elec-mate.com/sitemap-guides.xml
+Sitemap: https://www.elec-mate.com/sitemap-seo.xml
+Sitemap: https://www.elec-mate.com/sitemap-tools.xml
+Sitemap: https://www.elec-mate.com/sitemap-training.xml
+Sitemap: https://www.elec-mate.com/sitemap-pages.xml
+Sitemap: https://www.elec-mate.com/sitemap-compare.xml

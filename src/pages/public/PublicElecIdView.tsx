@@ -365,7 +365,7 @@ export default function PublicElecIdView() {
             If you believe this is an error, contact the credential holder directly.
           </div>
           <a
-            href="https://elec-mate.com"
+            href="https://www.elec-mate.com"
             className="inline-flex items-center gap-2 mt-6 text-sm text-elec-yellow hover:underline"
           >
             Learn about Elec-ID →
@@ -891,7 +891,7 @@ export default function PublicElecIdView() {
                 no card required.
               </p>
               <a
-                href="https://elec-mate.com"
+                href="https://www.elec-mate.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 h-11 px-4 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black text-sm font-semibold transition-all touch-manipulation"
@@ -908,7 +908,7 @@ export default function PublicElecIdView() {
         <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <span className="text-xs text-white font-medium">Powered by Elec-ID</span>
           <a
-            href="https://elec-mate.com"
+            href="https://www.elec-mate.com"
             target="_blank"
             rel="noopener noreferrer"
             className="text-xs text-white hover:text-elec-yellow transition-colors touch-manipulation py-2"

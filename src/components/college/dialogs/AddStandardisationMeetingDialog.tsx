@@ -21,8 +21,27 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { ClipboardList } from 'lucide-react';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import { useStandardisationMeetings } from '@/hooks/useStandardisationMeetings';
+
+/* Standard four-item awarding-body agenda. Pre-filled by "Use template"
+   so newly-logged meetings start with the right structure rather than a
+   blank field. EQA verifiers look for these in the minutes. */
+const STANDARD_AGENDA = [
+  '1. Calibration sample review — anonymised cross-mark of recent samples; surface any verdict mismatches.',
+  '2. Awarding-body updates — circulate guidance, qualification spec changes, EQA correspondence.',
+  '3. Actions from last meeting — status on each open action; close or carry forward.',
+  '4. New IQA findings & themes — common issues across assessors, areas needing further calibration.',
+].join('\n');
+
+const STANDARD_ACTIONS = [
+  'Re-sample any verdicts flagged in section 1',
+  'Circulate awarding-body updates to assessor team',
+  'Schedule follow-up review of carry-forward actions',
+].join('\n');
+
+const STANDARD_TOPIC = 'Standardisation & calibration review';
 
 /* ==========================================================================
    AddStandardisationMeetingDialog — log a standardisation meeting with
@@ -97,6 +116,22 @@ export function AddStandardisationMeetingDialog({ open, onOpenChange }: Props) {
     });
   };
 
+  /** Pre-fill the form with the four-item awarding-body agenda + suggested
+   *  actions. Only overrides fields the IQA hasn't touched yet so they
+   *  can apply the template, edit, and never lose work. */
+  const applyTemplate = () => {
+    setForm((p) => ({
+      ...p,
+      topic: p.topic.trim() || STANDARD_TOPIC,
+      decisions: p.decisions.trim() || STANDARD_AGENDA,
+      action_items_text: p.action_items_text.trim() || STANDARD_ACTIONS,
+    }));
+    toast({
+      title: 'Standard agenda applied',
+      description: 'Edit any section before saving.',
+    });
+  };
+
   const handleSave = async () => {
     if (!form.topic.trim()) {
       toast({ title: 'Topic required', variant: 'destructive' });
@@ -160,6 +195,19 @@ export function AddStandardisationMeetingDialog({ open, onOpenChange }: Props) {
             </>
           }
         >
+          {/* Standard awarding-body agenda — one tap to pre-fill the
+              decisions + actions fields with the four-item template every
+              EQA verifier expects to see. Non-destructive (only fills
+              empty fields). */}
+          <button
+            type="button"
+            onClick={applyTemplate}
+            className="inline-flex items-center gap-1.5 h-7 px-2.5 rounded-full bg-elec-yellow/[0.10] border border-elec-yellow/30 text-[11.5px] font-semibold text-elec-yellow hover:bg-elec-yellow/[0.18] touch-manipulation"
+          >
+            <ClipboardList className="h-3 w-3" />
+            Use standard agenda
+          </button>
+
           <FormCard eyebrow="Meeting">
             <FormGrid cols={2}>
               <Field label="Date" required>

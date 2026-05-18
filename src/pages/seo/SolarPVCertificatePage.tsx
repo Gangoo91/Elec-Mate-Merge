@@ -151,7 +151,7 @@ const softwareAppSchema = {
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'iOS, Android, Web',
   description: PAGE_DESCRIPTION,
-  url: 'https://elec-mate.com/tools/solar-pv-certificate',
+  url: 'https://www.elec-mate.com/tools/solar-pv-certificate',
   offers: {
     '@type': 'Offer',
     price: '0',

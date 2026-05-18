@@ -109,7 +109,7 @@ const collectionSchema = {
   '@type': 'CollectionPage',
   name: 'Electrician App Comparison Hub',
   description: PAGE_DESCRIPTION,
-  url: 'https://elec-mate.com/compare',
+  url: 'https://www.elec-mate.com/compare',
 };
 
 export default function CompareHubPage() {

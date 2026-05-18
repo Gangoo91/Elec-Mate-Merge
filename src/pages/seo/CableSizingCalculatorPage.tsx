@@ -153,7 +153,7 @@ const softwareAppSchema = {
   applicationCategory: 'UtilitiesApplication',
   operatingSystem: 'iOS, Android, Web',
   description: PAGE_DESCRIPTION,
-  url: 'https://elec-mate.com/cable-sizing-calculator',
+  url: 'https://www.elec-mate.com/cable-sizing-calculator',
   offers: {
     '@type': 'Offer',
     price: '0',

@@ -120,7 +120,7 @@ const softwareAppSchema = {
   operatingSystem: 'Web, iOS, Android',
   description:
     'Calculate earth fault loop impedance (Zs) to BS 7671. Verify Ze + R1+R2, check maximum Zs values for MCBs and RCBOs, temperature correction.',
-  url: 'https://elec-mate.com/tools/earth-loop-impedance-calculator',
+  url: 'https://www.elec-mate.com/tools/earth-loop-impedance-calculator',
   offers: {
     '@type': 'Offer',
     price: '0',

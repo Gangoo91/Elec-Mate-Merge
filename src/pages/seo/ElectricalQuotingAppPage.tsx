@@ -101,7 +101,7 @@ const softwareAppSchema = {
   operatingSystem: 'Web, iOS, Android',
   description:
     'Smart quoting app for UK electricians. AI-powered cost estimation, professional PDF quotes, material pricing, labour calculation, quote-to-invoice conversion, and client portal.',
-  url: 'https://elec-mate.com/electrical-quoting-app',
+  url: 'https://www.elec-mate.com/electrical-quoting-app',
   offers: {
     '@type': 'Offer',
     price: '0',

@@ -126,7 +126,7 @@ const courseSchema = {
   provider: {
     '@type': 'Organization',
     name: 'Elec-Mate',
-    url: 'https://elec-mate.com',
+    url: 'https://www.elec-mate.com',
   },
   educationalLevel: 'Professional',
   inLanguage: 'en-GB',
@@ -159,19 +159,19 @@ const breadcrumbSchema = {
       '@type': 'ListItem',
       position: 1,
       name: 'Home',
-      item: 'https://elec-mate.com',
+      item: 'https://www.elec-mate.com',
     },
     {
       '@type': 'ListItem',
       position: 2,
       name: 'Training',
-      item: 'https://elec-mate.com/training',
+      item: 'https://www.elec-mate.com/training',
     },
     {
       '@type': 'ListItem',
       position: 3,
       name: 'AM2 Exam Preparation',
-      item: 'https://elec-mate.com/training/am2-exam-preparation',
+      item: 'https://www.elec-mate.com/training/am2-exam-preparation',
     },
   ],
 };

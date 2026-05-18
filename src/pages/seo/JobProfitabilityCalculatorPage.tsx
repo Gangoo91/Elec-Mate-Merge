@@ -100,7 +100,7 @@ const softwareAppSchema = {
   operatingSystem: 'Web, iOS, Android',
   description:
     'Calculate profit margins on every electrical job. Track material costs, labour hours, overheads, and actual vs quoted prices. Part of 14 business calculators for UK electricians.',
-  url: 'https://elec-mate.com/tools/job-profitability-calculator',
+  url: 'https://www.elec-mate.com/tools/job-profitability-calculator',
   offers: {
     '@type': 'Offer',
     price: '0',

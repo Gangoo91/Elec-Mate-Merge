@@ -100,7 +100,7 @@ const softwareAppSchema = {
   operatingSystem: 'Web, iOS, Android',
   description:
     'Plan and forecast cash flow for your electrical business. Track income, expenses, invoices, and predict cash positions. Stop cash flow surprises before they happen.',
-  url: 'https://elec-mate.com/tools/cash-flow-planner',
+  url: 'https://www.elec-mate.com/tools/cash-flow-planner',
   offers: {
     '@type': 'Offer',
     price: '0',

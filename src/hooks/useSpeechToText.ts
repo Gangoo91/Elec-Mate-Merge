@@ -2,16 +2,21 @@
 /**
  * useSpeechToText
  *
- * Reusable hook wrapping the Web Speech API for speech-to-text.
- * Falls back between webkitSpeechRecognition and SpeechRecognition.
- * Uses en-GB locale (UK English). Supports continuous and single-shot modes.
+ * Unified speech-to-text hook. On web (Chromium/Safari) uses the Web Speech
+ * API. On Capacitor native (iOS WKWebView already supports Web Speech, but
+ * Android WebView does NOT) falls back to `@capacitor-community/speech-recognition`
+ * so voice features work on Android.
+ *
+ * Same return shape on every platform — call sites stay unchanged.
  *
  * Features:
- * - `onFinalChunk` callback: fired each time the API commits a final result
+ * - `onFinalChunk` callback: fired each time the engine commits a final result
  * - Safari auto-restart: Safari kills recognition after ~60s, this auto-restarts
+ * - Android: requests RECORD_AUDIO + speech permission via plugin
  */
 
 import { useState, useRef, useCallback, useEffect } from 'react';
+import { Capacitor } from '@capacitor/core';
 
 interface UseSpeechToTextOptions {
   /** Keep listening until explicitly stopped (default: true) */
@@ -25,7 +30,7 @@ interface UseSpeechToTextOptions {
 }
 
 interface UseSpeechToTextReturn {
-  /** Whether the browser supports the Speech API */
+  /** Whether the current platform can dictate speech */
   isSupported: boolean;
   /** Whether the recogniser is currently active */
   isListening: boolean;
@@ -33,7 +38,7 @@ interface UseSpeechToTextReturn {
   transcript: string;
   /** Partial in-progress text (clears once finalised) */
   interimTranscript: string;
-  /** Confidence of the last final result (0-1) */
+  /** Confidence of the last final result (0-1) — only set on web */
   confidence: number;
   /** Last error message, if any */
   error: string | null;
@@ -47,17 +52,32 @@ interface UseSpeechToTextReturn {
 
 type SpeechRecognitionType = typeof window extends { SpeechRecognition: infer T } ? T : any;
 
-function getSpeechRecognition(): SpeechRecognitionType | null {
+function getWebSpeechRecognition(): SpeechRecognitionType | null {
   if (typeof window === 'undefined') return null;
-  return (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition || null;
+  return (
+    (window as any).SpeechRecognition ||
+    (window as any).webkitSpeechRecognition ||
+    null
+  );
 }
+
+const isNativePlatform = Capacitor.isNativePlatform();
+// Android WebView does not expose Web Speech API, so we always route through
+// the native plugin on Android. iOS WKWebView DOES expose it, but going
+// through the native plugin there gives better mic-permission UX, so we
+// route both native platforms via the plugin.
+const useNativePlugin = isNativePlatform;
 
 export function useSpeechToText(options: UseSpeechToTextOptions = {}): UseSpeechToTextReturn {
   const { continuous = true, interimResults = true, lang = 'en-GB', onFinalChunk } = options;
 
-  const SpeechRecognition = getSpeechRecognition();
-  const isSupported = SpeechRecognition !== null;
+  const WebSpeechRecognition = getWebSpeechRecognition();
 
+  // Track support: assume true on native (probed lazily on first start), use
+  // Web Speech detection on browser.
+  const [isSupported, setIsSupported] = useState<boolean>(
+    useNativePlugin ? true : WebSpeechRecognition !== null
+  );
   const [isListening, setIsListening] = useState(false);
   const [transcript, setTranscript] = useState('');
   const [interimTranscript, setInterimTranscript] = useState('');
@@ -65,23 +85,126 @@ export function useSpeechToText(options: UseSpeechToTextOptions = {}): UseSpeech
   const [error, setError] = useState<string | null>(null);
 
   const recognitionRef = useRef<any>(null);
-  // Track whether the user intentionally stopped vs Safari killing the session
   const intentionalStopRef = useRef(false);
-  // Keep a ref to the latest transcript so onFinalChunk gets the full text
   const transcriptRef = useRef('');
-  // Keep a stable ref to the callback to avoid re-creating recognition on every render
   const onFinalChunkRef = useRef(onFinalChunk);
   onFinalChunkRef.current = onFinalChunk;
+  const nativeListenersRef = useRef<Array<{ remove: () => Promise<void> }>>([]);
+  const lastPartialRef = useRef('');
 
-  const startListening = useCallback(() => {
-    if (!SpeechRecognition) {
+  // ── NATIVE start/stop ──────────────────────────────────────────────────────
+  const startListeningNative = useCallback(async () => {
+    intentionalStopRef.current = false;
+    setError(null);
+    try {
+      const { SpeechRecognition } = await import(
+        '@capacitor-community/speech-recognition'
+      );
+      const probe = await SpeechRecognition.available();
+      if (!probe.available) {
+        setIsSupported(false);
+        setError('Speech recognition not available on this device');
+        return;
+      }
+      const perm = await SpeechRecognition.checkPermissions();
+      if (perm.speechRecognition !== 'granted') {
+        const req = await SpeechRecognition.requestPermissions();
+        if (req.speechRecognition !== 'granted') {
+          setError('Microphone permission denied');
+          return;
+        }
+      }
+
+      // Attach listeners idempotently — clear any stale ones first.
+      for (const h of nativeListenersRef.current) {
+        h.remove().catch(() => undefined);
+      }
+      nativeListenersRef.current = [];
+
+      const partial = await SpeechRecognition.addListener(
+        'partialResults',
+        (data: { matches?: string[] }) => {
+          const first = data?.matches?.[0];
+          if (!first) return;
+          lastPartialRef.current = first;
+          if (interimResults) setInterimTranscript(first);
+        }
+      );
+      const stateListener = await SpeechRecognition.addListener(
+        'listeningState',
+        async (data: { status: 'started' | 'stopped' }) => {
+          if (data.status === 'started') {
+            setIsListening(true);
+            return;
+          }
+          // 'stopped': commit the latest partial as final, restart if continuous
+          // and the user didn't intentionally stop.
+          const finalText = lastPartialRef.current;
+          if (finalText) {
+            setTranscript((prev) => {
+              const updated = prev ? `${prev} ${finalText}` : finalText;
+              transcriptRef.current = updated;
+              onFinalChunkRef.current?.(finalText, updated);
+              return updated;
+            });
+            lastPartialRef.current = '';
+            setInterimTranscript('');
+          }
+
+          if (!intentionalStopRef.current && continuous) {
+            try {
+              await SpeechRecognition.start({
+                language: lang,
+                maxResults: 1,
+                partialResults: true,
+                popup: false,
+              });
+              return;
+            } catch {
+              /* restart failed — fall through */
+            }
+          }
+          setIsListening(false);
+        }
+      );
+      nativeListenersRef.current.push(partial, stateListener);
+
+      await SpeechRecognition.start({
+        language: lang,
+        maxResults: 1,
+        partialResults: true,
+        popup: false,
+      });
+    } catch (err) {
+      console.error('[useSpeechToText] native start failed', err);
+      setError(err instanceof Error ? err.message : String(err));
+      setIsListening(false);
+    }
+  }, [continuous, interimResults, lang]);
+
+  const stopListeningNative = useCallback(async () => {
+    intentionalStopRef.current = true;
+    try {
+      const { SpeechRecognition } = await import(
+        '@capacitor-community/speech-recognition'
+      );
+      await SpeechRecognition.stop();
+    } catch {
+      /* ignore */
+    }
+    setIsListening(false);
+    setInterimTranscript('');
+  }, []);
+
+  // ── WEB start/stop ─────────────────────────────────────────────────────────
+  const startListeningWeb = useCallback(() => {
+    if (!WebSpeechRecognition) {
       setError('Speech recognition not supported in this browser');
       return;
     }
 
     intentionalStopRef.current = false;
 
-    // Stop any existing instance
     if (recognitionRef.current) {
       try {
         recognitionRef.current.stop();
@@ -90,7 +213,7 @@ export function useSpeechToText(options: UseSpeechToTextOptions = {}): UseSpeech
       }
     }
 
-    const recognition = new SpeechRecognition();
+    const recognition = new WebSpeechRecognition();
     recognition.lang = lang;
     recognition.continuous = continuous;
     recognition.interimResults = interimResults;
@@ -118,10 +241,7 @@ export function useSpeechToText(options: UseSpeechToTextOptions = {}): UseSpeech
         setTranscript((prev) => {
           const updated = prev + finalText;
           transcriptRef.current = updated;
-          // Fire the onFinalChunk callback with the new chunk and full transcript
-          if (onFinalChunkRef.current) {
-            onFinalChunkRef.current(finalText, updated);
-          }
+          onFinalChunkRef.current?.(finalText, updated);
           return updated;
         });
       }
@@ -129,21 +249,18 @@ export function useSpeechToText(options: UseSpeechToTextOptions = {}): UseSpeech
     };
 
     recognition.onerror = (event: any) => {
-      // 'no-speech' and 'aborted' are non-critical — user just didn't speak or we stopped
       if (event.error === 'no-speech' || event.error === 'aborted') return;
       setError(`Speech error: ${event.error}`);
       setIsListening(false);
     };
 
     recognition.onend = () => {
-      // Safari auto-restart: if user didn't intentionally stop, restart
-      // Safari kills continuous recognition after ~60s
       if (!intentionalStopRef.current && continuous) {
         try {
           recognition.start();
-          return; // Don't set isListening to false — we're restarting
+          return;
         } catch {
-          // Failed to restart — fall through to normal onend handling
+          /* fall through */
         }
       }
       setIsListening(false);
@@ -152,9 +269,9 @@ export function useSpeechToText(options: UseSpeechToTextOptions = {}): UseSpeech
 
     recognitionRef.current = recognition;
     recognition.start();
-  }, [SpeechRecognition, lang, continuous, interimResults]);
+  }, [WebSpeechRecognition, lang, continuous, interimResults]);
 
-  const stopListening = useCallback(() => {
+  const stopListeningWeb = useCallback(() => {
     intentionalStopRef.current = true;
     if (recognitionRef.current) {
       try {
@@ -168,15 +285,33 @@ export function useSpeechToText(options: UseSpeechToTextOptions = {}): UseSpeech
     setInterimTranscript('');
   }, []);
 
+  // ── Public API (dispatches to the right platform) ──────────────────────────
+  const startListening = useCallback(() => {
+    if (useNativePlugin) {
+      void startListeningNative();
+    } else {
+      startListeningWeb();
+    }
+  }, [startListeningNative, startListeningWeb]);
+
+  const stopListening = useCallback(() => {
+    if (useNativePlugin) {
+      void stopListeningNative();
+    } else {
+      stopListeningWeb();
+    }
+  }, [stopListeningNative, stopListeningWeb]);
+
   const resetTranscript = useCallback(() => {
     setTranscript('');
     setInterimTranscript('');
     setConfidence(0);
     setError(null);
     transcriptRef.current = '';
+    lastPartialRef.current = '';
   }, []);
 
-  // Clean up on unmount
+  // Cleanup on unmount.
   useEffect(() => {
     return () => {
       intentionalStopRef.current = true;
@@ -184,9 +319,13 @@ export function useSpeechToText(options: UseSpeechToTextOptions = {}): UseSpeech
         try {
           recognitionRef.current.stop();
         } catch {
-          /* already stopped */
+          /* ignore */
         }
       }
+      for (const h of nativeListenersRef.current) {
+        h.remove().catch(() => undefined);
+      }
+      nativeListenersRef.current = [];
     };
   }, []);
 

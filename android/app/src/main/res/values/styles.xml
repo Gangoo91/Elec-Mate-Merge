@@ -12,15 +12,28 @@
     <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:background">@null</item>
+        <!-- Dark window background prevents any white bleed behind the status bar
+             once the splash theme switches over. Matches Capacitor's android.backgroundColor. -->
+        <item name="android:windowBackground">@color/colorPrimary</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
     </style>
 
 
+    <!-- Android 12+ SplashScreen API. windowSplashScreenBackground fills the
+         screen with the dark brand colour; windowSplashScreenAnimatedIcon
+         renders the bulb mark inside the framework's 240dp icon circle (inner
+         160dp visible). postSplashScreenTheme switches to the regular theme
+         after launch so the dark windowBackground takes over — without this,
+         the launch background would leak behind the transparent status bar
+         for the whole app lifetime. -->
     <style name="AppTheme.NoActionBarLaunch" parent="Theme.SplashScreen">
-        <item name="android:background">@drawable/splash</item>
+        <item name="android:windowSplashScreenBackground">@color/colorPrimary</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_splash_icon</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">@color/colorPrimary</item>
+        <item name="postSplashScreenTheme">@style/AppTheme.NoActionBar</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">false</item>

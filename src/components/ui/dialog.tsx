@@ -3,8 +3,25 @@ import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { X } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
+import { pushOverlay } from '@/lib/overlay-stack';
 
-const Dialog = DialogPrimitive.Root;
+// Wrap Radix Root so we can register with the global overlay stack while open.
+// The Android hardware back button handler in useNativeApp pops the topmost
+// overlay before navigating route history — matching native Android UX.
+const Dialog = ({
+  open,
+  onOpenChange,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof DialogPrimitive.Root>) => {
+  React.useEffect(() => {
+    if (!open || !onOpenChange) return;
+    const unregister = pushOverlay(() => onOpenChange(false));
+    return unregister;
+  }, [open, onOpenChange]);
+
+  return <DialogPrimitive.Root open={open} onOpenChange={onOpenChange} {...props} />;
+};
+Dialog.displayName = 'Dialog';
 
 const DialogTrigger = DialogPrimitive.Trigger;
 

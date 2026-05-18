@@ -75,6 +75,17 @@ export function IqaOtjAuditSection() {
         feed the per-assessor agreement rate so you can spot drift early.
       </p>
 
+      {/* Pointer to the full IQA Dashboard. This OTJ view stays useful
+          as a per-assessor agreement rollup but most of the workflow —
+          sampling plans, findings, standardisation, coverage matrix —
+          lives on /college/iqa now. */}
+      <a
+        href="/college/iqa"
+        className="inline-flex items-center gap-1.5 h-7 px-2.5 rounded-full bg-blue-500/[0.10] border border-blue-400/30 text-[11.5px] font-semibold text-blue-200 hover:bg-blue-500/[0.18] transition-colors touch-manipulation"
+      >
+        Full IQA Dashboard →
+      </a>
+
       {/* Assessor rollup */}
       {!loading && rollup.length > 0 && (
         <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">

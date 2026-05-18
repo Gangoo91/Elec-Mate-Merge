@@ -48,7 +48,7 @@ const patched = original.replace(urlBlockRe, (block) => {
   const locMatch = block.match(/<loc>([^<]+)<\/loc>/);
   if (!locMatch) return block;
   const fullUrl = locMatch[1].trim();
-  // Convert https://elec-mate.com/foo → /foo for comparison
+  // Convert https://www.elec-mate.com/foo → /foo for comparison
   const slug = fullUrl.replace(/^https?:\/\/[^/]+/, '') || '/';
   if (killSlugs.has(slug)) {
     removed++;

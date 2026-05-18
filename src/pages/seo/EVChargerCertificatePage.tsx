@@ -130,7 +130,7 @@ const softwareAppSchema = {
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'iOS, Android, Web',
   description: PAGE_DESCRIPTION,
-  url: 'https://elec-mate.com/ev-charger-certificate',
+  url: 'https://www.elec-mate.com/ev-charger-certificate',
   offers: {
     '@type': 'Offer',
     price: '0',

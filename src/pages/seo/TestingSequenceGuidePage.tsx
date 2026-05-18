@@ -115,12 +115,12 @@ const articleSchema = {
     name: 'Elec-Mate',
     logo: {
       '@type': 'ImageObject',
-      url: 'https://elec-mate.com/logo.jpg',
+      url: 'https://www.elec-mate.com/logo.jpg',
     },
   },
   mainEntityOfPage: {
     '@type': 'WebPage',
-    '@id': 'https://elec-mate.com/guides/testing-sequence-guide',
+    '@id': 'https://www.elec-mate.com/guides/testing-sequence-guide',
   },
 };
 
@@ -139,13 +139,13 @@ const faqSchema = {
 const breadcrumbSchema = {
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://elec-mate.com/' },
-    { '@type': 'ListItem', position: 2, name: 'Guides', item: 'https://elec-mate.com/guides' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.elec-mate.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Guides', item: 'https://www.elec-mate.com/guides' },
     {
       '@type': 'ListItem',
       position: 3,
       name: 'Testing Sequence Guide',
-      item: 'https://elec-mate.com/guides/testing-sequence-guide',
+      item: 'https://www.elec-mate.com/guides/testing-sequence-guide',
     },
   ],
 };

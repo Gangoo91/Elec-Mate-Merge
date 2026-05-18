@@ -155,12 +155,12 @@ const organizationWebsiteSchema = {
   '@graph': [
     {
       '@type': 'Organization',
-      '@id': 'https://elec-mate.com/#organization',
+      '@id': 'https://www.elec-mate.com/#organization',
       name: 'Elec-Mate',
-      url: 'https://elec-mate.com',
+      url: 'https://www.elec-mate.com',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://elec-mate.com/logo.jpg',
+        url: 'https://www.elec-mate.com/logo.jpg',
       },
       sameAs: [
         'https://www.facebook.com/elecmate',
@@ -197,11 +197,11 @@ const organizationWebsiteSchema = {
     },
     {
       '@type': 'WebSite',
-      '@id': 'https://elec-mate.com/#website',
-      url: 'https://elec-mate.com',
+      '@id': 'https://www.elec-mate.com/#website',
+      url: 'https://www.elec-mate.com',
       name: 'Elec-Mate',
       publisher: {
-        '@id': 'https://elec-mate.com/#organization',
+        '@id': 'https://www.elec-mate.com/#organization',
       },
       description:
         "The UK's all-in-one platform for electricians — digital certificates, AI tools, training, calculators, and business management.",

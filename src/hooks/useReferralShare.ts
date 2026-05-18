@@ -19,7 +19,7 @@ interface ReferralShareOptions {
 }
 
 const SHARE_MESSAGE = (code: string, _src: string) =>
-  `Alright mate, check out Elec-Mate — does all your certs, quotes, invoices, and even has an AI agent for regs and admin.\n\nI use it daily. Sign up with my link and your first month's free:\nhttps://elec-mate.com/r/${code}\n\nProper game changer for the paperwork.`;
+  `Alright mate, check out Elec-Mate — does all your certs, quotes, invoices, and even has an AI agent for regs and admin.\n\nI use it daily. Sign up with my link and your first month's free:\nhttps://www.elec-mate.com/r/${code}\n\nProper game changer for the paperwork.`;
 
 function buildWhatsAppUrl(message: string): string {
   return `https://wa.me/?text=${encodeURIComponent(message)}`;
@@ -55,7 +55,7 @@ export function useReferralShare(options: ReferralShareOptions = {}) {
     fetchCode();
   }, [user?.id]);
 
-  const referralUrl = referralCode ? `https://elec-mate.com/r/${referralCode}` : null;
+  const referralUrl = referralCode ? `https://www.elec-mate.com/r/${referralCode}` : null;
 
   // Track share event
   const trackShare = useCallback(

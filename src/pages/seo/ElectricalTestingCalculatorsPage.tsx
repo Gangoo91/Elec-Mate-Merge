@@ -53,7 +53,7 @@ const softwareApplicationSchema = {
   applicationCategory: 'UtilitiesApplication',
   operatingSystem: 'Web, iOS, Android',
   description: PAGE_DESCRIPTION,
-  url: 'https://elec-mate.com/electrical-testing-calculators',
+  url: 'https://www.elec-mate.com/electrical-testing-calculators',
   offers: {
     '@type': 'Offer',
     price: '0',
@@ -118,7 +118,7 @@ const itemListSchema = {
     '@type': 'ListItem',
     position: index + 1,
     name,
-    url: 'https://elec-mate.com/electrical-testing-calculators',
+    url: 'https://www.elec-mate.com/electrical-testing-calculators',
   })),
 };
 

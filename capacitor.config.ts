@@ -24,12 +24,16 @@ const config: CapacitorConfig = {
   // Plugin configurations
   plugins: {
     // Splash Screen
+    // Note: on Android 12+ the system SplashScreen API takes over (configured
+    // via AppTheme.NoActionBarLaunch in styles.xml). This Capacitor plugin
+    // covers older Android + iOS. CENTER_INSIDE keeps the bulb mark at its
+    // authored size instead of zooming to fill the screen like CENTER_CROP.
     SplashScreen: {
       launchAutoHide: false, // We hide manually after first React paint
       launchFadeOutDuration: 300, // Smooth fade into the app
       backgroundColor: '#0a0a0a', // Dark background matching app
       showSpinner: false,
-      androidScaleType: 'CENTER_CROP',
+      androidScaleType: 'CENTER_INSIDE',
       splashFullScreen: true,
       splashImmersive: true,
     },

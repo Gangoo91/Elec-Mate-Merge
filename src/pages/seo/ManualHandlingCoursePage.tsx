@@ -144,7 +144,7 @@ const courseSchema = {
   provider: {
     '@type': 'Organization',
     name: 'Elec-Mate',
-    url: 'https://elec-mate.com',
+    url: 'https://www.elec-mate.com',
   },
   educationalLevel: 'Professional',
   inLanguage: 'en-GB',
@@ -190,18 +190,18 @@ export default function ManualHandlingCoursePage() {
             '@context': 'https://schema.org',
             '@type': 'BreadcrumbList',
             itemListElement: [
-              { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://elec-mate.com' },
+              { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.elec-mate.com' },
               {
                 '@type': 'ListItem',
                 position: 2,
                 name: 'Training',
-                item: 'https://elec-mate.com/training',
+                item: 'https://www.elec-mate.com/training',
               },
               {
                 '@type': 'ListItem',
                 position: 3,
                 name: 'Manual Handling Course',
-                item: 'https://elec-mate.com/manual-handling-course',
+                item: 'https://www.elec-mate.com/manual-handling-course',
               },
             ],
           })}

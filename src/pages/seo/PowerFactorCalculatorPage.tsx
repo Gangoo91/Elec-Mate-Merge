@@ -125,7 +125,7 @@ const softwareAppSchema = {
   operatingSystem: 'Web, iOS, Android',
   description:
     'Calculate power factor, convert between kW kVA and kVAr, size capacitor banks for PF correction. Built for UK electricians to BS 7671:2018+A4:2026.',
-  url: 'https://elec-mate.com/tools/power-factor-calculator',
+  url: 'https://www.elec-mate.com/tools/power-factor-calculator',
   offers: {
     '@type': 'Offer',
     price: '0',

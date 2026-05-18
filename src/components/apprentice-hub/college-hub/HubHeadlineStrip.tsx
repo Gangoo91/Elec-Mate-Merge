@@ -18,6 +18,9 @@ interface Props {
 }
 
 export function HubHeadlineStrip({ stats }: Props) {
+  // Each tile routes straight to its own sub-page so the apprentice
+  // doesn't have to scroll the hub. Same KPIs, but the affordance now
+  // matches the hub-and-spoke layout.
   const tiles: Array<{
     label: string;
     value: string;
@@ -30,7 +33,7 @@ export function HubHeadlineStrip({ stats }: Props) {
       value: fmtHours(stats.verified_otj_minutes),
       sub: stats.pending_otj_minutes > 0 ? `${fmtHours(stats.pending_otj_minutes)} pending` : null,
       tone: 'text-white/85',
-      href: '#otj',
+      href: '/apprentice/college/activities',
     },
     {
       label: 'Open goals',
@@ -41,25 +44,15 @@ export function HubHeadlineStrip({ stats }: Props) {
           : stats.blocked_goals > 0
             ? `${stats.blocked_goals} blocked`
             : null,
-      tone:
-        stats.overdue_goals > 0
-          ? 'text-white/85'
-          : stats.blocked_goals > 0
-            ? 'text-white/85'
-            : 'text-white/85',
-      href: '#plan',
+      tone: 'text-white/85',
+      href: '/apprentice/college/plan',
     },
     {
       label: 'Quizzes to do',
       value: stats.pending_quizzes.toString(),
       sub: stats.overdue_quizzes > 0 ? `${stats.overdue_quizzes} overdue` : null,
-      tone:
-        stats.overdue_quizzes > 0
-          ? 'text-white/85'
-          : stats.pending_quizzes > 0
-            ? 'text-white/85'
-            : 'text-white/85',
-      href: '#activities',
+      tone: 'text-white/85',
+      href: '/apprentice/college/activities',
     },
     {
       // Replaces EPA verdict (apprentice can't read epa_judgements yet) with
@@ -67,8 +60,8 @@ export function HubHeadlineStrip({ stats }: Props) {
       label: 'Portfolio',
       value: stats.unactioned_portfolio_comments.toString(),
       sub: stats.unactioned_portfolio_comments > 0 ? 'tutor needs reply' : 'all clear',
-      tone: stats.unactioned_portfolio_comments > 0 ? 'text-white/85' : 'text-white/85',
-      href: '#portfolio',
+      tone: 'text-white/85',
+      href: '/apprentice/college/activity',
     },
   ];
 

@@ -136,7 +136,7 @@ export default function HowToSizeCablesPage() {
     title: 'How to Size Cables to BS 7671 | Complete Guide | Elec-Mate',
     description:
       'Complete guide to cable sizing using BS 7671:2018+A4:2026 Appendix 4 tables. Current carrying capacity, derating factors, voltage drop, and fault current verification with worked examples.',
-    canonical: 'https://elec-mate.com/guides/how-to-size-cables-bs-7671',
+    canonical: 'https://www.elec-mate.com/guides/how-to-size-cables-bs-7671',
   });
 
   return (

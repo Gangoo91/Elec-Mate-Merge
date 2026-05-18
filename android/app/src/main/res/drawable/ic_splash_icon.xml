@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Android 12+ SplashScreen API icon. The framework renders this drawable
+  inside a 240dp circle, expecting the visible artwork to fit within the
+  inner 160dp. We reuse ic_launcher_foreground which is already authored
+  with that safe-zone padding, so the bulb mark sits perfectly in the
+  splash circle.
+-->
+<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+        android:src="@mipmap/ic_launcher_foreground"
+        android:gravity="center" />

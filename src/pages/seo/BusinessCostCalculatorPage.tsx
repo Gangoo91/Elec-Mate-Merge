@@ -476,7 +476,7 @@ export default function BusinessCostCalculatorPage() {
           operatingSystem: 'Web, iOS, Android',
           description:
             'Calculate the true running costs of your electrical business. Van, tools, insurance, fuel, training, marketing — know your overheads and price every job to profit.',
-          url: 'https://elec-mate.com/tools/business-cost-calculator',
+          url: 'https://www.elec-mate.com/tools/business-cost-calculator',
           offers: {
             '@type': 'Offer',
             price: '0',

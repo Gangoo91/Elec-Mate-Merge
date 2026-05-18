@@ -110,7 +110,7 @@ const softwareAppSchema = {
   applicationCategory: 'UtilitiesApplication',
   operatingSystem: 'Web, iOS, Android',
   description: PAGE_DESCRIPTION,
-  url: 'https://elec-mate.com/tools/ai-circuit-designer',
+  url: 'https://www.elec-mate.com/tools/ai-circuit-designer',
   offers: {
     '@type': 'Offer',
     price: '0',

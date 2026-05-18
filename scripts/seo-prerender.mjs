@@ -143,7 +143,7 @@ async function renderRoute(browser, routePath, stats) {
 
   const ctx = await browser.newContext({
     userAgent:
-      'Mozilla/5.0 (ElecMate SEO Prerender; +https://elec-mate.com) Chrome/Playwright',
+      'Mozilla/5.0 (ElecMate SEO Prerender; +https://www.elec-mate.com) Chrome/Playwright',
     serviceWorkers: 'block', // never let sw.js intercept during prerender
     bypassCSP: true,
     javaScriptEnabled: true,

@@ -7,6 +7,7 @@ const ApprenticeHub = lazy(() => import('@/pages/ApprenticeHub'));
 const ApprenticeMentalHealth = lazy(() => import('@/pages/MentalHealthHub'));
 const RightsAndPay = lazy(() => import('@/pages/apprentice/RightsAndPay'));
 const MyCollegePlanPage = lazy(() => import('@/pages/apprentice/MyCollegePlanPage'));
+const MyCollegeSectionPage = lazy(() => import('@/pages/apprentice/MyCollegeSectionPage'));
 const VoiceSurveyPage = lazy(() => import('@/pages/apprentice/VoiceSurveyPage'));
 const CollegeAiPage = lazy(() => import('@/pages/apprentice/CollegeAiPage'));
 const RightsWages = lazy(() => import('@/pages/apprentice/rights-guide/WagesPage'));
@@ -298,6 +299,14 @@ const ApprenticeRoutes = () => (
       element={
         <LazyRoute>
           <MyCollegePlanPage />
+        </LazyRoute>
+      }
+    />
+    <Route
+      path="college/:section"
+      element={
+        <LazyRoute>
+          <MyCollegeSectionPage />
         </LazyRoute>
       }
     />

@@ -1,39 +1,7 @@
-import { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
-
-interface SpeechRecognitionEventLike {
-  results: {
-    length: number;
-    [index: number]: {
-      isFinal: boolean;
-      [index: number]: { transcript: string };
-    };
-  };
-}
-
-interface SpeechRecognitionLike {
-  lang: string;
-  continuous: boolean;
-  interimResults: boolean;
-  onresult: ((e: SpeechRecognitionEventLike) => void) | null;
-  onerror: ((e: { error?: string }) => void) | null;
-  onend: (() => void) | null;
-  start: () => void;
-  stop: () => void;
-  abort: () => void;
-}
-
-type SpeechRecognitionCtor = new () => SpeechRecognitionLike;
-
-function getSpeechRecognitionCtor(): SpeechRecognitionCtor | null {
-  if (typeof window === 'undefined') return null;
-  const w = window as unknown as {
-    SpeechRecognition?: SpeechRecognitionCtor;
-    webkitSpeechRecognition?: SpeechRecognitionCtor;
-  };
-  return w.SpeechRecognition ?? w.webkitSpeechRecognition ?? null;
-}
+import { useSpeechToText } from '@/hooks/useSpeechToText';
 
 interface VoiceInputButtonProps {
   /** Called with the transcribed text once dictation ends. */
@@ -59,86 +27,52 @@ export const VoiceInputButton = memo(function VoiceInputButton({
   lang = 'en-GB',
   className,
 }: VoiceInputButtonProps) {
-  const ctorRef = useRef<SpeechRecognitionCtor | null>(null);
-  const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
-  const transcriptRef = useRef<string>('');
-  const [supported, setSupported] = useState<boolean>(false);
-  const [listening, setListening] = useState(false);
   const haptic = useHaptic();
+  const wasListeningRef = useRef(false);
 
+  // Single-shot dictation: continuous=false so the engine ends as soon as the
+  // user stops speaking, and we deliver the final transcript via onFinalChunk
+  // OR by reading transcript when listening flips false.
+  const {
+    isSupported: supported,
+    isListening: listening,
+    transcript,
+    interimTranscript,
+    startListening,
+    stopListening,
+    resetTranscript,
+  } = useSpeechToText({
+    continuous: false,
+    interimResults: true,
+    lang,
+    onFinalChunk: (_chunk, full) => {
+      const trimmed = full.trim();
+      if (trimmed) onTranscript(trimmed);
+    },
+  });
+
+  // Fallback path: some engines never deliver a final chunk for short utterances
+  // and only emit interim results. When listening ends, flush the interim text.
   useEffect(() => {
-    const Ctor = getSpeechRecognitionCtor();
-    ctorRef.current = Ctor;
-    setSupported(!!Ctor);
-    return () => {
-      try {
-        recognitionRef.current?.abort();
-      } catch {
-        // ignore
+    if (wasListeningRef.current && !listening) {
+      const fallback = (transcript || interimTranscript).trim();
+      if (fallback && !transcript) {
+        onTranscript(fallback);
       }
-      recognitionRef.current = null;
-    };
-  }, []);
-
-  const stop = useCallback(() => {
-    try {
-      recognitionRef.current?.stop();
-    } catch {
-      // ignore
+      resetTranscript();
     }
-  }, []);
-
-  const start = useCallback(() => {
-    if (!ctorRef.current) return;
-    if (disabled) return;
-
-    try {
-      const instance = new ctorRef.current();
-      instance.lang = lang;
-      instance.continuous = false;
-      instance.interimResults = true;
-
-      transcriptRef.current = '';
-
-      instance.onresult = (event) => {
-        let combined = '';
-        for (let i = 0; i < event.results.length; i++) {
-          const result = event.results[i];
-          combined += result[0]?.transcript ?? '';
-        }
-        transcriptRef.current = combined.trim();
-      };
-
-      instance.onerror = (e) => {
-        console.warn('[VoiceInputButton] recognition error', e?.error);
-        setListening(false);
-      };
-
-      instance.onend = () => {
-        setListening(false);
-        const final = transcriptRef.current.trim();
-        if (final) {
-          onTranscript(final);
-        }
-      };
-
-      recognitionRef.current = instance;
-      instance.start();
-      setListening(true);
-      haptic.selection();
-    } catch (err) {
-      console.warn('[VoiceInputButton] failed to start recognition', err);
-      setListening(false);
-    }
-  }, [disabled, lang, onTranscript, haptic]);
+    wasListeningRef.current = listening;
+  }, [listening, transcript, interimTranscript, onTranscript, resetTranscript]);
 
   const handleClick = useCallback(() => {
     if (listening) {
-      stop();
+      stopListening();
     } else {
-      start();
+      if (disabled) return;
+      startListening();
+      haptic.selection();
     }
-  }, [listening, start, stop]);
+  }, [listening, disabled, startListening, stopListening, haptic]);
 
   const effectivelyDisabled = disabled || !supported;
 

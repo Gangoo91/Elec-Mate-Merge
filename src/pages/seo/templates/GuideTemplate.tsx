@@ -112,33 +112,33 @@ export default function GuideTemplate({
   // WebPage schema — tells Google this is a standalone educational page with clear author/publisher
   const webPageSchema = {
     '@type': 'WebPage',
-    '@id': `https://elec-mate.com${pageUrl}`,
-    url: `https://elec-mate.com${pageUrl}`,
+    '@id': `https://www.elec-mate.com${pageUrl}`,
+    url: `https://www.elec-mate.com${pageUrl}`,
     name: title,
     description,
     datePublished,
     dateModified: dateModified || datePublished,
     inLanguage: 'en-GB',
-    isPartOf: { '@id': 'https://elec-mate.com/#website' },
+    isPartOf: { '@id': 'https://www.elec-mate.com/#website' },
     publisher: {
       '@type': 'Organization',
-      '@id': 'https://elec-mate.com/#organization',
+      '@id': 'https://www.elec-mate.com/#organization',
       name: 'Elec-Mate',
     },
     author: {
       '@type': 'Organization',
       name: 'Elec-Mate Technical Team',
-      url: 'https://elec-mate.com',
+      url: 'https://www.elec-mate.com',
     },
     breadcrumb: {
       '@type': 'BreadcrumbList',
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://elec-mate.com/' },
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.elec-mate.com/' },
         ...breadcrumbs.map((b, i) => ({
           '@type': 'ListItem',
           position: i + 2,
           name: b.label,
-          item: `https://elec-mate.com${b.href}`,
+          item: `https://www.elec-mate.com${b.href}`,
         })),
       ],
     },

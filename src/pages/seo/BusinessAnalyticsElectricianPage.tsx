@@ -438,7 +438,7 @@ export default function BusinessAnalyticsElectricianPage() {
           operatingSystem: 'Web, iOS, Android',
           description:
             'Real-time business analytics for UK electricians. Track revenue, job profitability, customer trends, cash flow, and KPIs — all in one dashboard built for the electrical trade.',
-          url: 'https://elec-mate.com/tools/business-analytics-electrician',
+          url: 'https://www.elec-mate.com/tools/business-analytics-electrician',
           offers: {
             '@type': 'Offer',
             price: '0',

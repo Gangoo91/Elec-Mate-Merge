@@ -103,7 +103,7 @@ const courseSchema = {
   provider: {
     '@type': 'Organization',
     name: 'Elec-Mate',
-    url: 'https://elec-mate.com',
+    url: 'https://www.elec-mate.com',
   },
   educationalLevel: 'Intermediate',
   inLanguage: 'en-GB',
@@ -142,19 +142,19 @@ const breadcrumbSchema = {
       '@type': 'ListItem',
       position: 1,
       name: 'Home',
-      item: 'https://elec-mate.com',
+      item: 'https://www.elec-mate.com',
     },
     {
       '@type': 'ListItem',
       position: 2,
       name: 'Training',
-      item: 'https://elec-mate.com/training',
+      item: 'https://www.elec-mate.com/training',
     },
     {
       '@type': 'ListItem',
       position: 3,
       name: 'Level 3 Electrical Installation',
-      item: 'https://elec-mate.com/training/level-3-electrical',
+      item: 'https://www.elec-mate.com/training/level-3-electrical',
     },
   ],
 };

@@ -160,13 +160,13 @@ const faqSchema = {
 const breadcrumbSchema = {
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://elec-mate.com/' },
-    { '@type': 'ListItem', position: 2, name: 'Guides', item: 'https://elec-mate.com/guides' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.elec-mate.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Guides', item: 'https://www.elec-mate.com/guides' },
     {
       '@type': 'ListItem',
       position: 3,
       name: 'How to Do Safe Isolation',
-      item: 'https://elec-mate.com/how-to-do-safe-isolation',
+      item: 'https://www.elec-mate.com/how-to-do-safe-isolation',
     },
   ],
 };
