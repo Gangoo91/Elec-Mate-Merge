@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Overview of the wiring regulations and key changes in Amendment 3.',
+    description: 'Overview of the wiring regulations and key changes in Amendment 4.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
@@ -610,7 +610,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Record earth electrode test results on site with Elec-Mate"
-          description="Enter Ra values, electrode details, and RCD compliance calculations on your phone. The Elec-Mate testing app exports a compliant schedule of test results instantly. 7-day free trial."
+          description="Enter Ra values, electrode details, and RCD compliance calculations on your phone. The Elec-Mate testing app exports a compliant schedule of test results…"
           icon={FileCheck2}
         />
       </>
@@ -673,10 +673,10 @@ const sections = [
 export default function EarthElectrodeTestingPage() {
   return (
     <GuideTemplate
-      title="Earth Electrode Testing Guide UK | Rod, Plate & Strip Electrodes"
-      description="Complete guide to earth electrode testing for UK electricians. Types of earth electrode, fall of potential method, stakeless clamp method, acceptable resistance values, BS 7671 TT system requirements, and seasonal variation in soil resistance."
+      title="Earth Electrode Testing Guide UK | Rod, Plate & Strip"
+      description="Complete guide to earth electrode testing for UK electricians. Types of earth electrode, fall of potential method, stakeless clamp method…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

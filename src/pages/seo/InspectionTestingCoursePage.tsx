@@ -18,7 +18,7 @@ import {
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
-const PAGE_TITLE = 'Inspection and Testing Course Online | C&G 2391 Preparation | Elec-Mate';
+const PAGE_TITLE = 'Inspection & Testing Course | C&G 2391 Online Prep';
 const PAGE_DESCRIPTION =
   'Study for the C&G 2391 Inspection and Testing qualification online. AI-powered study assistant, mock exams, and practical scenario walkthroughs. From £5.99/mo.';
 
@@ -83,7 +83,7 @@ const features = [
     icon: Brain,
     title: 'AI Study Assistant',
     description:
-      'Ask questions about any regulation, testing procedure, or scenario. The AI study assistant provides detailed explanations with BS 7671 regulation references and practical examples.',
+      'Ask questions about any regulation, testing procedure, or scenario. The AI study assistant provides detailed explanations with BS 7671 regulation…',
   },
   {
     icon: TestTube2,
@@ -95,25 +95,25 @@ const features = [
     icon: ClipboardCheck,
     title: 'Mock Exam Questions',
     description:
-      'Hundreds of practice questions covering the full 2391 syllabus. Timed mock exams simulate the real written assessment with instant marking and detailed explanations.',
+      'Hundreds of practice questions covering the full 2391 syllabus. Timed mock exams simulate the real written assessment with instant marking and detailed…',
   },
   {
     icon: Search,
     title: 'Scenario Walkthroughs',
     description:
-      'Realistic inspection scenarios covering domestic, commercial, and industrial installations. Work through each scenario step by step with AI guidance and feedback.',
+      'Realistic inspection scenarios covering domestic, commercial, and industrial installations. Work through each scenario step by step with AI guidance and…',
   },
   {
     icon: FileCheck2,
     title: 'Certificate Practice',
     description:
-      'Practise completing EICs and EICRs accurately. The app validates every field and flags common documentation mistakes before you encounter them in the real assessment.',
+      'Practise completing EICs and EICRs accurately. The app validates every field and flags common documentation mistakes before you encounter them in the…',
   },
   {
     icon: BookOpen,
     title: 'Regulation Lookup',
     description:
-      'Instant access to BS 7671 regulation references and GN3 guidance. Search by topic, regulation number, or keyword. The study assistant explains regulations in plain language.',
+      'Instant access to BS 7671 regulation references and GN3 guidance. Search by topic, regulation number, or keyword.',
   },
 ];
 
@@ -620,7 +620,7 @@ export default function InspectionTestingCoursePage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Study for the C&G 2391 with Elec-Mate"
-            description="Elec-Mate's Study Centre has revision materials, exam prep, and on-the-job reference guides — including full coverage of inspection and testing, BS 7671, and practical scenario walkthroughs."
+            description="Elec-Mate's Study Centre has revision materials, exam prep, and on-the-job reference guides — including full coverage of inspection and testing, BS 7671…"
             ctaText="Try Elec-Mate free"
             ctaHref="/auth/signup"
             icon={GraduationCap}

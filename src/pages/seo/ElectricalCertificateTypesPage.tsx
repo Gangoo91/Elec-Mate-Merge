@@ -27,7 +27,7 @@ import {
 
 const PAGE_TITLE = 'Electrical Certificate Types UK | Complete Guide';
 const PAGE_DESCRIPTION =
-  'Complete guide to all UK electrical certificate types — EICR, EIC, Minor Works, Domestic EIC, EV Charger, Fire Alarm (BS 5839), Emergency Lighting (BS 5266), Solar PV (MCS), and PAT Testing. When each is required, who can issue them, legal requirements. For UK electricians.';
+  'Every UK electrical certificate type: EICR, EIC, MWC, EV, BS 5839 fire alarm, BS 5266 emergency lighting, MCS solar PV, PAT. When + who + legal.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -122,7 +122,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="All 16 certificate types in one app"
-          description="Elec-Mate is the only platform that has EICR, EIC, Minor Works, EV Charger, Fire Alarm, Emergency Lighting, Solar PV, and PAT Testing certificates in one app. Board scanner, voice test entry, digital signatures, PDF export. Start your free trial."
+          description="Elec-Mate is the only platform that has EICR, EIC, Minor Works, EV Charger, Fire Alarm, Emergency Lighting, Solar PV…"
           icon={FileCheck2}
         />
       </>
@@ -192,7 +192,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AI Board Scanner reads the DB from a photo"
-          description="Point your phone camera at the distribution board and the AI reads MCB ratings, circuit details, and board layout. Start your EICR with half the data already filled in."
+          description="Point your phone camera at the distribution board and the AI reads MCB ratings, circuit details, and board layout."
           icon={Camera}
         />
       </>
@@ -508,7 +508,7 @@ const sections = [
         <p>
           With{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            Amendment 3 (A4:2026)
+            Amendment 4 (A4:2026)
           </SEOInternalLink>{' '}
           introducing Regulation 530.3.201 on bidirectional protective devices, solar PV
           installations with battery storage now require specific consideration of whether the
@@ -722,7 +722,7 @@ export default function ElectricalCertificateTypesPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2024-08-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Certificate Hub"

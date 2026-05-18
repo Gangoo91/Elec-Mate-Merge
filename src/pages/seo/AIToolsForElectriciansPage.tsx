@@ -15,10 +15,10 @@ import {
 export default function AIToolsForElectriciansPage() {
   return (
     <GuideTemplate
-      title="AI Tools for Electricians 2026 | Complete Guide"
-      description="How AI is transforming electrical work in 2026. Practical guide to AI board scanning, defect classification, cost estimation, circuit design, RAMS generation, fault diagnosis, and more. Covers privacy, accuracy, and what to look for in AI tools."
+      title="AI for Electricians: 7 Tools 2026"
+      description="AI for electricians cuts survey time by 40%. Board scanning, fault diagnosis, cost estimation. See which tools pass accuracy tests and protect your data."
       datePublished="2026-01-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'AI Tools for Electricians', href: '/guides/ai-tools-for-electricians' },
@@ -180,7 +180,7 @@ export default function AIToolsForElectriciansPage() {
               </p>
               <SEOAppBridge
                 title="AI Board Scanner — Built Into Elec-Mate"
-                description="Photograph any consumer unit and the AI extracts circuit data, device ratings, and board layout in seconds. Review and edit before it flows into your EICR. No separate app needed."
+                description="Photograph any consumer unit and the AI extracts circuit data, device ratings, and board layout in seconds."
                 icon={Camera}
               />
               <p>
@@ -224,7 +224,7 @@ export default function AIToolsForElectriciansPage() {
               </p>
               <SEOAppBridge
                 title="Defect Code AI — Instant C1/C2/C3/FI Classification"
-                description="Describe any defect in plain English. The AI assigns the correct observation code, cites the specific BS 7671 regulation, and writes a professional observation for your certificate."
+                description="Describe any defect in plain English. The AI assigns the correct observation code, cites the specific BS 7671 regulation…"
                 icon={Search}
               />
             </>
@@ -264,7 +264,7 @@ export default function AIToolsForElectriciansPage() {
               </p>
               <SEOAppBridge
                 title="AI Cost Engineer — Quotes in Under a Minute"
-                description="Describe any electrical job and the AI generates an itemised quote with real UK trade pricing, labour estimates, and your profit margin. Convert to a professional PDF quote with one tap."
+                description="Describe any electrical job and the AI generates an itemised quote with real UK trade pricing, labour estimates, and your profit margin."
                 icon={PoundSterling}
               />
               <p>
@@ -312,7 +312,7 @@ export default function AIToolsForElectriciansPage() {
               </p>
               <SEOAppBridge
                 title="AI Circuit Designer — Full CU Schedules to BS 7671"
-                description="Describe the installation and the AI produces a complete consumer unit schedule with cable sizes, protective devices, diversity calculations, and RCD/SPD recommendations. All to BS 7671:2018+A4:2026."
+                description="Describe the installation and the AI produces a complete consumer unit schedule with cable sizes, protective devices, diversity calculations…"
                 icon={CircuitBoard}
               />
             </>
@@ -354,7 +354,7 @@ export default function AIToolsForElectriciansPage() {
               </p>
               <SEOAppBridge
                 title="AI RAMS Generator — Site-Specific in 60 Seconds"
-                description="Describe the job and location. The AI generates a site-specific risk assessment and method statement with all relevant hazards, control measures, and legal references. Export as a professional PDF."
+                description="Describe the job and location. The AI generates a site-specific risk assessment and method statement with all relevant hazards, control measures…"
                 icon={ShieldAlert}
               />
             </>
@@ -534,7 +534,7 @@ export default function AIToolsForElectriciansPage() {
               </p>
               <SEOAppBridge
                 title="Elec-Mate — 8 AI Agents, 12 AI Tools, Zero Extra Cost"
-                description="Elec-Mate's AI stack spans estimating, design, installation guidance, maintenance, health and safety, and more — plus Board Scanner, Defect Code AI, Voice to Test Results, Remedial Estimator, Component Identifier, Fault Diagnosis, Regulations Lookup, Client Explainer, Diagram Builder, and Report Writer. All included in your subscription."
+                description="Elec-Mate's AI stack spans estimating, design, installation guidance, maintenance, health and safety, and more — plus Board Scanner, Defect Code AI…"
                 icon={Sparkles}
               />
             </>

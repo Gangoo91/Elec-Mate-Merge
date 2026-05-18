@@ -405,7 +405,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Study inspection and testing for the AM2 with AI"
-          description="Elec-Mate's inspection and testing module covers the full BS 7671 testing sequence, schedule of test results completion, and common fault-finding scenarios — everything you need for AM2 preparation."
+          description="Elec-Mate's inspection and testing module covers the full BS 7671 testing sequence, schedule of test results completion…"
           icon={GraduationCap}
         />
       </>
@@ -456,10 +456,10 @@ const sections = [
 export default function AM2AssessmentPrepPage() {
   return (
     <GuideTemplate
-      title="AM2 Assessment Preparation Guide UK | EMTA Practical Assessment for Electricians"
-      description="Complete preparation guide for the AM2 practical assessment for electrical apprentices. What the AM2 covers, how to book, pass rate, common failure reasons, and a 2–4 week focused preparation plan for the EMTA End Point Assessment."
+      title="AM2 Assessment Preparation Guide UK | EMTA Practical"
+      description="Complete preparation guide for the AM2 practical assessment for electrical apprentices. What the AM2 covers, how to book, pass rate…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

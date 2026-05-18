@@ -21,7 +21,7 @@ import {
 
 const PAGE_TITLE = 'Fire Alarm Systems Course | BS 5839 Training';
 const PAGE_DESCRIPTION =
-  'Comprehensive BS 5839 fire alarm systems training for UK electricians. System categories L1-L5, grades A-F, detector types, zoning, commissioning and maintenance. 8 modules with video content, interactive quizzes, and AI tutor.';
+  'BS 5839 fire alarm training for UK electricians: categories L1-L5, grades A-F, detector types, zoning, commissioning, maintenance. 8 modules.';
 
 const breadcrumbs = [
   { label: 'Training', href: '/training' },
@@ -87,42 +87,42 @@ const modules = [
   {
     title: 'Introduction to Fire Detection and Alarm Systems',
     description:
-      'The purpose of fire alarm systems, relevant legislation (Regulatory Reform (Fire Safety) Order 2005), BS 5839-1 and BS 5839-6 overview, and the role of the electrician in fire alarm work.',
+      'The purpose of fire alarm systems, relevant legislation (Regulatory Reform (Fire Safety) Order 2005), BS 5839-1 and BS 5839-6 overview…',
   },
   {
     title: 'System Categories and Coverage',
     description:
-      'Life protection categories L1 to L5 and property protection categories P1 and P2. How to determine the correct category based on building use, fire risk assessment, and regulatory requirements.',
+      'Life protection categories L1 to L5 and property protection categories P1 and P2. How to determine the correct category based on building use…',
   },
   {
     title: 'System Grades A to F',
     description:
-      'Domestic grading under BS 5839-6. Grade A (conventional panel with dedicated wiring) through Grade F (standalone alarms). Interlinked systems, radio-linked detectors, and Grade D installations for new-build housing.',
+      'Domestic grading under BS 5839-6. Grade A (conventional panel with dedicated wiring) through Grade F (standalone alarms).',
   },
   {
     title: 'Detection Devices and Their Applications',
     description:
-      'Optical smoke detectors, ionisation detectors, heat detectors (fixed temperature and rate-of-rise), multi-sensor detectors, beam detectors, aspirating systems, and flame detectors. Selection based on environment and fire risk type.',
+      'Optical smoke detectors, ionisation detectors, heat detectors (fixed temperature and rate-of-rise), multi-sensor detectors, beam detectors…',
   },
   {
     title: 'Alarm Devices and Notification',
     description:
-      'Sounders, voice alarm systems, visual alarm devices (VADs), fire alarm routing equipment, remote monitoring, and interface with other building systems. BS 5839-1 sounder level requirements (minimum 65 dBA, 75 dBA in sleeping areas).',
+      'Sounders, voice alarm systems, visual alarm devices (VADs), fire alarm routing equipment, remote monitoring, and interface with other building systems.',
   },
   {
     title: 'System Design and Circuit Wiring',
     description:
-      'Zoning principles, loop wiring for addressable systems, radial wiring for conventional systems, fire-resistant cable selection (BS 7629, BS 8434), circuit monitoring, and short-circuit isolators.',
+      'Zoning principles, loop wiring for addressable systems, radial wiring for conventional systems, fire-resistant cable selection (BS 7629, BS 8434)…',
   },
   {
     title: 'Installation and Wiring Practices',
     description:
-      'Detector spacing and positioning (ceiling coverage, distances from walls and obstructions), call point heights, cable routing and segregation from mains wiring, equipment mounting, and BS 7671 compliance for fire alarm circuits.',
+      'Detector spacing and positioning (ceiling coverage, distances from walls and obstructions), call point heights…',
   },
   {
     title: 'Commissioning, Testing, and Maintenance',
     description:
-      'Pre-commissioning checks, zone-by-zone verification, cause-and-effect testing, sounder level measurements, documentation and as-built drawings, handover procedures, routine testing schedules, and annual maintenance requirements.',
+      'Pre-commissioning checks, zone-by-zone verification, cause-and-effect testing, sounder level measurements, documentation and as-built drawings…',
   },
 ];
 
@@ -131,7 +131,7 @@ const features = [
     icon: BrainCircuit,
     title: 'AI Study Assistant',
     description:
-      'Ask any BS 5839 question in plain English. Get detailed answers on system categories, detector spacing rules, cable specifications, and commissioning procedures.',
+      'Ask any BS 5839 question in plain English. Get detailed answers on system categories, detector spacing rules, cable specifications…',
   },
   {
     icon: Radio,
@@ -143,7 +143,7 @@ const features = [
     icon: ClipboardCheck,
     title: 'Interactive Quizzes',
     description:
-      'Test your knowledge after every module with scenario-based questions. Identify system categories, select correct detectors for environments, and verify commissioning procedures.',
+      'Test your knowledge after every module with scenario-based questions. Identify system categories, select correct detectors for environments…',
   },
   {
     icon: Clock,
@@ -155,13 +155,13 @@ const features = [
     icon: Layers,
     title: 'Flashcard Decks',
     description:
-      'Spaced repetition flashcards covering BS 5839 categories, grades, detector types, cable specifications, and sounder requirements. Study during breaks on site.',
+      'Spaced repetition flashcards covering BS 5839 categories, grades, detector types, cable specifications, and sounder requirements.',
   },
   {
     icon: FileCheck2,
     title: 'Mock Exams',
     description:
-      'Full-length mock examinations covering all eight modules. Instant marking with detailed explanations for every answer. Track your readiness score over time.',
+      'Full-length mock examinations covering all eight modules. Instant marking with detailed explanations for every answer.',
   },
 ];
 
@@ -225,7 +225,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Study BS 5839 with AI-powered explanations"
-          description="Struggling with the difference between L2 and L3 categories? Not sure which grade applies to a three-storey HMO? Ask the Elec-Mate AI tutor any BS 5839 question and get a clear, detailed answer with regulation references."
+          description="Struggling with the difference between L2 and L3 categories? Not sure which grade applies to a three-storey HMO?"
           icon={BrainCircuit}
         />
       </>
@@ -384,7 +384,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Interactive quizzes on detector selection"
-          description="Test your understanding of which detector type suits each environment. Scenario-based questions covering kitchens, corridors, plant rooms, sleeping areas, and dusty environments — with detailed explanations for every answer."
+          description="Test your understanding of which detector type suits each environment. Scenario-based questions covering kitchens, corridors, plant rooms…"
           icon={ClipboardCheck}
         />
       </>
@@ -554,7 +554,7 @@ export default function FireAlarmSystemsCoursePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Fire Safety Training"

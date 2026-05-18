@@ -21,9 +21,9 @@ export default function TaxNIEstimatorPage() {
   return (
     <BusinessTemplate
       title="Tax & NI Estimator for Electricians"
-      description="Estimate your income tax and National Insurance as a self-employed electrician in the UK. Class 2 and Class 4 NI, tax bands for 2025/26, quarterly payments on account, and allowable expenses — all calculated automatically."
+      description="Estimate your income tax and National Insurance as a self-employed electrician in the UK. Class 2 and Class 4 NI, tax bands for 2025/26…"
       datePublished="2025-09-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Business Tools', href: '/tools' },
         { label: 'Tax & NI Estimator', href: PAGE_PATH },
@@ -237,7 +237,7 @@ export default function TaxNIEstimatorPage() {
           appBridge: {
             title: 'Never Be Caught Short by Payments on Account',
             description:
-              'Elec-Mate calculates your payments on account alongside your main tax bill and shows exactly when each payment is due. Set up monthly savings transfers automatically.',
+              'Elec-Mate calculates your payments on account alongside your main tax bill and shows exactly when each payment is due.',
             icon: Calendar,
           },
         },

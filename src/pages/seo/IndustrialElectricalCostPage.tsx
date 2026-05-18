@@ -611,10 +611,10 @@ const sections = [
 export default function IndustrialElectricalCostPage() {
   return (
     <GuideTemplate
-      title="Industrial Electrical Installation Cost UK 2025 | Factory Wiring Costs"
-      description="Industrial electrical installation costs UK 2025. Per square metre estimates, 3-phase distribution, motor control centres, cable containment systems, ATEX hazardous areas. Typical manufacturing unit £15,000–£100,000+."
+      title="Industrial Electrical Installation Cost UK 2025 | Factory"
+      description="Industrial electrical installation costs UK 2025. Per square metre estimates, 3-phase distribution, motor control centres, cable containment systems…"
       datePublished="2025-01-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Industrial Cost Guide"

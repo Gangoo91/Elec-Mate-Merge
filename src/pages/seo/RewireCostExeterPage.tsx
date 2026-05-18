@@ -549,9 +549,9 @@ export default function RewireCostExeterPage() {
   return (
     <GuideTemplate
       title="House Rewire Cost Exeter 2025 | Rewire Devon"
-      description="House rewire costs in Exeter for 2025. Prices for all property sizes, Part P compliance, NICEIC and NAPIT contractors, signs your Exeter property needs rewiring, timescales, and certification explained."
+      description="House rewire costs in Exeter for 2025. Prices for all property sizes, Part P compliance, NICEIC and NAPIT contractors…"
       datePublished="2025-01-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Rewire Cost Guide"

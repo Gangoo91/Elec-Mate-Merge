@@ -5,14 +5,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // FI classification rules and procedures match GN3 Section 3.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const eicrCodeFIConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-code-fi-further-investigation',
   title:
-    'EICR Code FI — Further Investigation Required | When to Use It Correctly | Elec-Mate',
+    'EICR Code FI — Further Investigation Required | When to Use',
   description:
-    'EICR code FI explained: when "further investigation required" is the right classification, why an FI makes the overall report "unsatisfactory" (and when it doesn\'t), and how to scope the follow-up work clearly. BS 7671:2018+A4:2026 and IET GN3 aligned.',
+    'EICR code FI explained: when "further investigation required" is the right classification, and how to scope the follow-up work clearly. BS 7671:2018+A4:2026 and IET GN3 aligned.',
   datePublished: published,
   dateModified: modified,
   readingTime: 9,

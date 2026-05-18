@@ -615,7 +615,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Pass your scheme assessment with confidence"
-          description="Elec-Mate generates properly formatted BS 7671 certificates with complete test results. Your assessor will see exactly what they expect. Join 1,000+ UK electricians using Elec-Mate for professional certification. 7-day free trial."
+          description="Elec-Mate generates properly formatted BS 7671 certificates with complete test results. Your assessor will see exactly what they expect."
           icon={ShieldCheck}
         />
       </>
@@ -631,9 +631,9 @@ export default function CompetentPersonSchemePage() {
   return (
     <GuideTemplate
       title="Competent Person Scheme | Electrical Registration UK"
-      description="Complete guide to competent person schemes for UK electricians. NICEIC, NAPIT, ELECSA, and BRE compared. Costs, assessment process, qualification requirements, how to register, and the benefits of scheme membership."
+      description="Competent person schemes for UK electricians: NICEIC, NAPIT, ELECSA, Stroma, BRE compared on cost, assessment, and notifiable work coverage."
       datePublished="2025-05-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Registration Guide"

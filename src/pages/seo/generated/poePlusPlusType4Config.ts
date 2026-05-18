@@ -5,14 +5,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // cabling systems), BS EN 50174 (Installation of cabling) and BS EN 60950 / 62368.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const poePlusPlusType4Config: GeneratedGuideConfig = {
   pagePath: '/guides/poe-plus-plus-type-4-90w-installation',
   title:
-    'PoE++ Type 4 (IEEE 802.3bt) 90W Installation Guide for UK Electricians | Elec-Mate',
+    'PoE++ Type 4 (IEEE 802.3bt) 90W Installation Guide for UK',
   description:
-    'Practical UK installation guide to Power over Ethernet Type 4 (IEEE 802.3bt) at 90W — power budgeting, cable selection (Cat6 vs Cat6a vs Cat7), 4-pair power delivery, voltage drop, bundle de-rating, BS 7671 Section 715 applicability, surge protection, and inspection and testing on the structured cabling side.',
+    'Practical UK installation guide to Power over Ethernet Type 4 (IEEE 802.3bt) at 90W — power budgeting, cable selection (Cat6 vs Cat6a vs Cat7)…',
   datePublished: published,
   dateModified: modified,
   readingTime: 18,
@@ -506,7 +506,7 @@ export const poePlusPlusType4Config: GeneratedGuideConfig = {
     {
       href: '/guides/poe-lighting-guide',
       title: 'PoE Lighting Guide',
-      description: 'Design and installation of PoE-powered LED lighting for commercial, education and healthcare buildings — power budgeting, Section 715 compliance and dimming control.',
+      description: 'Design and installation of PoE-powered LED lighting for commercial, education and healthcare buildings — power budgeting…',
       icon: 'BookOpen',
       category: 'Guide',
     },

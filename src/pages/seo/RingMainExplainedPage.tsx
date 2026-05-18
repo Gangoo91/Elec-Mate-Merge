@@ -276,7 +276,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Record ring test results by voice"
-          description="Elec-Mate's voice test entry lets you speak R1, R2, and R1+R2 readings at each socket while your probes are in position. The app records the values, validates them against expected ranges, and flags any anomalies."
+          description="Elec-Mate's voice test entry lets you speak R1, R2, and R1+R2 readings at each socket while your probes are in position."
           icon={TestTube2}
         />
       </>
@@ -576,7 +576,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Test and certify ring circuits on your phone"
-          description="Elec-Mate's EICR and EIC apps include the complete ring circuit test schedule. Enter R1, R2, and R1+R2 values at each socket by voice — the app validates readings and flags anomalies automatically."
+          description="Elec-Mate's EICR and EIC apps include the complete ring circuit test schedule. Enter R1, R2…"
           icon={FileCheck2}
         />
       </>
@@ -592,9 +592,9 @@ export default function RingMainExplainedPage() {
   return (
     <GuideTemplate
       title="Ring Main Explained | Ring Final Circuit Guide UK"
-      description="Complete guide to ring final circuits (ring mains) in the UK. How rings work, testing with R1, R2, and R1+R2, max demand, common faults, spurs, and the ring vs radial debate — all referenced to BS 7671."
+      description="Complete guide to ring final circuits (ring mains) in the UK. How rings work, testing with R1, R2, and R1+R2, max demand, common faults, spurs…"
       datePublished="2025-09-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

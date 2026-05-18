@@ -212,7 +212,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Size XLPE cables with correct 90°C ratings"
-          description="Elec-Mate's cable sizing calculator applies the correct current rating tables for XLPE-insulated cables, with derating for grouping, ambient temperature, and installation method."
+          description="Elec-Mate's cable sizing calculator applies the correct current rating tables for XLPE-insulated cables, with derating for grouping, ambient temperature…"
           icon={Cable}
         />
       </>
@@ -376,7 +376,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Record cable type and CPR class on your EIC"
-          description="Elec-Mate's EIC certificate app captures cable type, conductor material, insulation type, and CPR classification. Generate compliant certificates on site and send to clients instantly."
+          description="Elec-Mate's EIC certificate app captures cable type, conductor material, insulation type, and CPR classification."
           icon={ClipboardCheck}
         />
       </>
@@ -391,10 +391,10 @@ const sections = [
 export default function PVCvsXLPECablePage() {
   return (
     <GuideTemplate
-      title="PVC vs XLPE vs LSOH Cable | Temperature Ratings and CPR Classes UK"
-      description="Complete guide to PVC, XLPE, and LSOH cable insulation types for UK electricians. Temperature ratings (70°C vs 90°C), BS EN 50575 CPR fire classes, when LSOH is required, and current rating differences."
+      title="PVC vs XLPE vs LSOH Cable | Temperature Ratings and CPR"
+      description="Complete guide to PVC, XLPE, and LSOH cable insulation types for UK electricians. Temperature ratings (70°C vs 90°C), BS EN 50575 CPR fire classes…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cable Insulation Guide"

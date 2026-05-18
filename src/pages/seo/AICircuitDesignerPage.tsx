@@ -25,7 +25,7 @@ import { Link } from 'react-router-dom';
 
 const PAGE_TITLE = 'AI Circuit Designer | BS 7671 Compliant Design Tool | Elec-Mate';
 const PAGE_DESCRIPTION =
-  'Design electrical circuits with AI tailored and trained specifically for UK electrical work. Automatic cable sizing, protection device selection, and voltage drop verification to BS 7671:2018+A4:2026.';
+  'Design circuits with AI trained for UK electrical work. Cable sizing, protection device selection, and voltage drop to BS 7671:2018+A4:2026.';
 
 const faqs = [
   {
@@ -70,13 +70,13 @@ const features = [
     icon: Cable,
     title: 'Adiabatic Cable Sizing',
     description:
-      'Full BS 7671 Appendix 4 cable sizing with all correction factors: ambient temperature (Ca), grouping (Cg), thermal insulation (Ci), and semi-enclosed fuse factor (Cc).',
+      'Full BS 7671 Appendix 4 cable sizing with all correction factors: ambient temperature (Ca), grouping (Cg), thermal insulation (Ci)…',
   },
   {
     icon: ShieldCheck,
     title: 'Protection Device Selection',
     description:
-      'Automatic selection of MCBs, RCBOs, and RCDs with correct type ratings. Type B for resistive loads, Type C for small motors, Type D for large inductive loads.',
+      'Automatic selection of MCBs, RCBOs, and RCDs with correct type ratings. Type B for resistive loads, Type C for small motors…',
   },
   {
     icon: Gauge,
@@ -394,7 +394,7 @@ export default function AICircuitDesignerPage() {
               RCDs detect only AC residual currents, Type A RCDs detect AC and pulsating DC residual
               currents, and Type B RCDs detect AC, pulsating DC, and smooth DC residual currents.
               The designer selects the correct type based on the equipment connected, in accordance
-              with BS 7671 Regulation 531.3 and the new Regulation 530.3.2 added by Amendment 3:2024
+              with BS 7671 Regulation 531.3 and the new Regulation 530.3.2 added by Amendment 4:2024
               covering bidirectional and unidirectional protective devices.
             </p>
           </div>
@@ -431,12 +431,12 @@ export default function AICircuitDesignerPage() {
             <p>
               The AI Circuit Designer is tailored and trained specifically for UK electrical work.
               Its knowledge base covers the complete scope of BS 7671:2018+A4:2026 (the 18th Edition
-              of the IET Wiring Regulations including Amendment 3, issued July 2024), the IET
+              of the IET Wiring Regulations including Amendment 4, issued July 2024), the IET
               On-Site Guide, all eight IET Guidance Notes, and a curated library of real-world
               installation case studies and worked examples.
             </p>
             <p>
-              Amendment 3:2024 (A4:2026) is particularly relevant for the Circuit Designer because
+              Amendment 4:2024 (A4:2026) is particularly relevant for the Circuit Designer because
               it adds Regulation 530.3.2, which introduces requirements for bidirectional and
               unidirectional protective devices. This is critical for modern installations
               incorporating battery energy storage systems, solar PV arrays, and other sources of
@@ -448,7 +448,7 @@ export default function AICircuitDesignerPage() {
           <div className="mt-8 grid sm:grid-cols-2 gap-4">
             {[
               'BS 7671:2018+A4:2026 (18th Edition)',
-              'Amendment 3:2024 — Regulation 530.3.2',
+              'Amendment 4:2024 — Regulation 530.3.2',
               'IET On-Site Guide',
               'IET Guidance Notes 1-8',
               'GN3: Inspection & Testing (9th Edition)',
@@ -503,7 +503,7 @@ export default function AICircuitDesignerPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Design Circuits + Create Certificates in One App"
-            description="Use the AI Circuit Designer alongside Elec-Mate's EIC certificate tool. Design the circuit, verify compliance, then document it — all from your phone. Try the full platform free for 7 days."
+            description="Use the AI Circuit Designer alongside Elec-Mate's EIC certificate tool. Design the circuit, verify compliance, then document it — all from your phone."
             icon={CircuitBoard}
           />
           <p className="text-white mt-4 text-sm">

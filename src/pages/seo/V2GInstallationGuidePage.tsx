@@ -618,7 +618,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify V2G charger installations"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Everything you need for V2G installations. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
           icon={Car}
         />
       </>
@@ -634,9 +634,9 @@ export default function V2GInstallationGuidePage() {
   return (
     <GuideTemplate
       title="Vehicle to Grid (V2G) Installation | UK Electrician Guide"
-      description="Complete guide to Vehicle to Grid (V2G) installation in the UK. Bidirectional chargers, BS 7671 regulations, G99 DNO application, compatible vehicles, grid services revenue, installation process, and certification requirements."
+      description="Complete guide to Vehicle to Grid (V2G) installation in the UK. Bidirectional chargers, BS 7671 regulations, G99 DNO application, compatible vehicles…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Emerging Technology"

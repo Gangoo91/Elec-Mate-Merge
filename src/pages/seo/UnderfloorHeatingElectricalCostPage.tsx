@@ -520,7 +520,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote underfloor heating installations accurately"
-          description="Elec-Mate's quoting app lets you itemise mats, thermostats, circuits, and labour with real trade pricing. AI cost engineering checks your prices against current data."
+          description="Elec-Mate's quoting app lets you itemise mats, thermostats, circuits, and labour with real trade pricing."
           icon={Calculator}
         />
       </>
@@ -584,7 +584,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify UFH installations faster"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site EIC certification. Everything you need for underfloor heating work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site EIC certification. Everything you need for underfloor heating work."
           icon={Wrench}
         />
       </>
@@ -600,9 +600,9 @@ export default function UnderfloorHeatingElectricalCostPage() {
   return (
     <GuideTemplate
       title="Underfloor Heating Electrical Cost UK 2026 | Price Guide"
-      description="How much does electric underfloor heating cost in 2026? Complete UK price guide covering heating mats, cables, thermostats, dedicated circuits, insulation, running costs, and wet vs electric comparison. Real trade pricing for electricians."
+      description="How much does electric underfloor heating cost in 2026? Complete UK price guide covering heating mats, cables, thermostats, dedicated circuits…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

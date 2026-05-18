@@ -5,14 +5,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // and the Electricity at Work Regulations 1989.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const confinedSpaceElectricalWorkConfig: GeneratedGuideConfig = {
   pagePath: '/guides/confined-space-electrical-work',
   title:
-    'Confined Space Electrical Work — UK Procedure for Electricians | Elec-Mate',
+    'Confined Space Electrical Work — UK Procedure for',
   description:
-    'Confined space electrical work in the UK: what counts as a confined space, the Confined Spaces Regulations 1997 procedure, electrical-specific hazards, isolation, atmospheric testing, rescue arrangements and how to write a compliant RAMS. Aligned to HSE L101, INDG258 and the Electricity at Work Regulations 1989.',
+    'Confined space electrical work in the UK: what counts as a confined space, the Confined Spaces Regulations 1997 procedure, electrical-specific hazards…',
   datePublished: published,
   dateModified: modified,
   readingTime: 12,
@@ -127,7 +127,7 @@ export const confinedSpaceElectricalWorkConfig: GeneratedGuideConfig = {
         {
           type: 'callout',
           tone: 'warning',
-          title: 'A rescue plan that relies on "calling 999" is not a rescue plan',
+          title: 'A rescue plan that relies on "calling 999" is not a rescue',
           text:
             'HSE L101 makes clear that emergency arrangements must enable rescue without depending on the public emergency services as the primary response. By the time a fire-and-rescue team arrives, an unconscious person in an oxygen-deficient chamber is almost certainly dead. The rescue arrangement must be on-site, rehearsed, and capable of immediate action.',
         },

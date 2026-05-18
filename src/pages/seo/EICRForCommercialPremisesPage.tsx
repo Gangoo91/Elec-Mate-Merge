@@ -429,7 +429,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Professional EICR for commercial clients"
-          description="Elec-Mate produces professional commercial EICRs that satisfy insurers, the HSE, and building managers. Multi-board support, unlimited circuits, AI board scanning, and instant PDF delivery. The EICR the client needs, delivered on site."
+          description="Elec-Mate produces professional commercial EICRs that satisfy insurers, the HSE, and building managers."
           icon={FileCheck2}
         />
       </>
@@ -708,7 +708,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Commercial EICRs on your phone"
-          description="Join 1,000+ UK electricians using Elec-Mate for commercial EICR certificates. Multi-board support, AI board scanning, voice entry, remedial quoting, and instant delivery. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for commercial EICR certificates. Multi-board support, AI board scanning, voice entry, remedial quoting…"
           icon={Building}
         />
       </>
@@ -724,9 +724,9 @@ export default function EICRForCommercialPremisesPage() {
   return (
     <GuideTemplate
       title="EICR for Commercial Premises | Requirements UK"
-      description="Complete guide to EICR requirements for commercial premises in the UK. Health and Safety at Work Act obligations, Electricity at Work Regulations 1989, employer duties, 5-year inspection cycle, insurance requirements, penalties, and what electricians need to know."
+      description="Complete guide to EICR requirements for commercial premises in the UK. Health and Safety at Work Act obligations, Electricity at Work Regulations 1989…"
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Commercial Guide"

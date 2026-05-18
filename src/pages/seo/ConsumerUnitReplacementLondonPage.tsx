@@ -101,7 +101,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/consumer-unit-regulations',
     title: 'Consumer Unit Regulations UK',
     description:
-      'Detailed guide to the regulations governing consumer units including Amendment 3 changes.',
+      'Detailed guide to the regulations governing consumer units including Amendment 4 changes.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -476,7 +476,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Find registered electricians for consumer unit replacement"
-          description="Elec-Mate connects you with NICEIC and NAPIT registered electricians in your area of London. Get itemised quotes, track your job, and receive your EIC digitally."
+          description="Elec-Mate connects you with NICEIC and NAPIT registered electricians in your area of London. Get itemised quotes, track your job…"
           icon={MapPin}
         />
       </>
@@ -491,10 +491,10 @@ const sections = [
 export default function ConsumerUnitReplacementLondonPage() {
   return (
     <GuideTemplate
-      title="Consumer Unit Replacement London | Fuse Board Upgrade Cost 2026"
-      description="How much does a consumer unit replacement cost in London in 2026? Local pricing for fuse board upgrades, Part P notification, what to expect, and how to choose a registered electrician in London."
+      title="Consumer Unit Replacement London | Fuse Board Upgrade Cost"
+      description="How much does a consumer unit replacement cost in London in 2026? Local pricing for fuse board upgrades, Part P notification, what to expect…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="London Price Guide"

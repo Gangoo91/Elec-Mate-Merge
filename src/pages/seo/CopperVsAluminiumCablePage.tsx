@@ -237,7 +237,7 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Record cable type and termination details on your certificates"
+          title="Record cable type and termination details on your"
           description="Elec-Mate's EIC certificate app includes fields for conductor material, cable type, and installation notes. Generate professional PDF certificates on site."
           icon={Cable}
         />
@@ -395,7 +395,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Size cables correctly with BS 7671 Appendix 4"
-          description="Elec-Mate's cable sizing calculator applies the correct current rating tables for copper and aluminium conductors, with derating for grouping, temperature, and installation method. Get the right cable size on the survey."
+          description="Elec-Mate's cable sizing calculator applies the correct current rating tables for copper and aluminium conductors, with derating for grouping…"
           icon={Calculator}
         />
       </>
@@ -411,9 +411,9 @@ export default function CopperVsAluminiumCablePage() {
   return (
     <GuideTemplate
       title="Copper vs Aluminium Cable | BS 7671 Current Ratings UK Guide"
-      description="Complete guide to copper vs aluminium electrical cable for UK electricians. BS 7671 Appendix 4 current ratings, anti-oxidant compound termination requirements, when aluminium is appropriate, and jointing methods."
+      description="Complete guide to copper vs aluminium electrical cable for UK electricians. BS 7671 Appendix 4 current ratings…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cable Selection Guide"

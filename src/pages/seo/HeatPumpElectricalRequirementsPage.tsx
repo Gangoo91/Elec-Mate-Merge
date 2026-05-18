@@ -215,7 +215,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Size heat pump circuits and quote electrical packages"
-          description="Elec-Mate's cable sizing calculator and quoting app help UK electricians design and price heat pump electrical packages. Get the circuit sizing right on the survey, not after installation. 7-day free trial."
+          description="Elec-Mate's cable sizing calculator and quoting app help UK electricians design and price heat pump electrical packages."
           icon={Leaf}
         />
       </>
@@ -495,7 +495,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify heat pump electrical installations"
-          description="Join 1,000+ UK electricians using Elec-Mate for heat pump circuit sizing, professional quoting, and on-site EIC certification. Everything needed for heat pump electrical sub-contract work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for heat pump circuit sizing, professional quoting, and on-site EIC certification."
           icon={Leaf}
         />
       </>
@@ -510,10 +510,10 @@ const sections = [
 export default function HeatPumpElectricalRequirementsPage() {
   return (
     <GuideTemplate
-      title="Heat Pump Electrical Requirements UK | ASHP Circuit Sizing and Installation"
-      description="Complete guide to air source heat pump electrical requirements in the UK. ASHP circuit sizing (32A–63A), DNO notification, immersion backup circuit, UFH zone controls, MCS certification, and BUS grant up to £7,500."
+      title="Heat Pump Electrical Requirements UK | ASHP Circuit Sizing"
+      description="Complete guide to air source heat pump electrical requirements in the UK. ASHP circuit sizing (32A–63A), DNO notification, immersion backup circuit…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

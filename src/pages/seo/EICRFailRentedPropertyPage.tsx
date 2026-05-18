@@ -373,7 +373,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="EICR and remedial quote in one visit"
-          description="Elec-Mate auto-flags unsatisfactory reports and its remedial estimator prices every C1, C2, and FI defect instantly. Hand the landlord the EICR and a priced quote for the fix before you leave the property. No second trip."
+          description="Elec-Mate auto-flags unsatisfactory reports and its remedial estimator prices every C1, C2, and FI defect instantly."
           icon={Receipt}
         />
       </>
@@ -800,7 +800,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Convert every EICR fail into a priced remedial job"
-          description="Elec-Mate flags unsatisfactory EICRs automatically and prices every defect with the remedial estimator. Send the EICR, quote, and invoice to the landlord from site. 7-day free trial."
+          description="Elec-Mate flags unsatisfactory EICRs automatically and prices every defect with the remedial estimator."
           icon={Receipt}
         />
       </>
@@ -816,9 +816,9 @@ export default function EICRFailRentedPropertyPage() {
   return (
     <GuideTemplate
       title="EICR Fail on Rented Property | Landlord Guide"
-      description="What happens when an EICR fails on a rented property. Landlord obligations under the 2020 Regulations, 28-day remedial deadline, C1 vs C2 defects, getting quotes for remedial work, local authority enforcement, tenant rights, and insurance implications."
+      description="What happens when an EICR fails on a rented property. Landlord obligations under the 2020 Regulations, 28-day remedial deadline, C1 vs C2 defects…"
       datePublished="2025-07-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Landlord Guide"

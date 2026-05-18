@@ -501,7 +501,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Certificate management for SELECT-registered electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate to complete EICRs, Minor Works Certificates, and Electrical Installation Certificates on site. AI board scanning, instant PDF generation, and automatic client delivery. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to complete EICRs, Minor Works Certificates, and Electrical Installation Certificates on site."
           icon={FileCheck2}
         />
       </>
@@ -516,10 +516,10 @@ const sections = [
 export default function SelectElectricalRegistrationPage() {
   return (
     <GuideTemplate
-      title="SELECT Electrical Registration Scotland | Approved Contractor Guide"
-      description="Complete guide to SELECT electrical registration in Scotland — Building Standards Scotland explained, how the Approved Certifier scheme works, inspection process, costs, and SELECT vs NICEIC for Scottish electricians."
+      title="SELECT Electrical Registration Scotland | Approved"
+      description="Complete guide to SELECT electrical registration in Scotland — Building Standards Scotland explained, how the Approved Certifier scheme works…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Scotland Guide"

@@ -19,9 +19,9 @@ export default function SolarPanelSizingCalculatorPage() {
   return (
     <ToolTemplate
       title="Solar Panel Sizing Calculator UK | Free Tool"
-      description="Calculate solar panel system size for UK installations. Determine kWp capacity, estimate annual yield based on roof orientation and tilt, assess battery storage requirements, and check G98/G99 grid connection limits. Part of 50+ free electrical calculators."
+      description="Calculate solar panel system size for UK installations. Determine kWp capacity, estimate annual yield based on roof orientation and tilt…"
       datePublished="2026-01-30"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Solar Panel Sizing Calculator', href: '/tools/solar-panel-sizing-calculator' },
@@ -105,7 +105,7 @@ export default function SolarPanelSizingCalculatorPage() {
           appBridge: {
             title: 'Size Solar PV Systems in Minutes',
             description:
-              'Enter the roof dimensions, orientation, and electricity consumption. The calculator recommends the optimal kWp, estimates annual yield, and checks G98/G99 limits.',
+              'Enter the roof dimensions, orientation, and electricity consumption. The calculator recommends the optimal kWp, estimates annual yield…',
             icon: Sun,
           },
         },
@@ -267,7 +267,7 @@ export default function SolarPanelSizingCalculatorPage() {
           appBridge: {
             title: 'UK-Specific Yield Estimates',
             description:
-              'The solar calculator uses UK solar irradiance data by region to give accurate yield estimates. Enter your postcode area and get a location-specific prediction.',
+              'The solar calculator uses UK solar irradiance data by region to give accurate yield estimates.',
             icon: BarChart3,
           },
         },
@@ -430,7 +430,7 @@ export default function SolarPanelSizingCalculatorPage() {
           icon: Shield,
           title: 'G98/G99 Classification',
           description:
-            'Automatically checks the inverter AC output against G98/G99 grid connection limits and advises whether simplified notification or full DNO application is required.',
+            'Automatically checks the inverter AC output against G98/G99 grid connection limits and advises whether simplified notification or full DNO application is…',
         },
         {
           icon: Gauge,

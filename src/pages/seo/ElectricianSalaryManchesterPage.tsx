@@ -240,7 +240,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote Manchester jobs accurately and professionally"
-          description="Elec-Mate's quoting app helps Manchester electricians win more work with professional, itemised quotes built in minutes. Materials, labour, and testing all covered."
+          description="Elec-Mate's quoting app helps Manchester electricians win more work with professional, itemised quotes built in minutes."
           icon={Briefcase}
         />
       </>
@@ -398,10 +398,10 @@ export default function ElectricianSalaryManchesterPage() {
   return (
     <GuideTemplate
       localArea="Salary Manchester"
-      title="Electrician Salary Manchester 2026 | Employed & Self-Employed Rates"
-      description="Realistic electrician salary figures for Manchester and Greater Manchester in 2026. Employed rates £32,000–£52,000, self-employed £45,000–£70,000. Key sectors, day rates, and market opportunity."
+      title="Electrician Salary Manchester 2026 | Employed &"
+      description="Realistic electrician salary figures for Manchester and Greater Manchester in 2026. Employed rates £32,000–£52,000, self-employed £45,000–£70,000."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Salary Guide"

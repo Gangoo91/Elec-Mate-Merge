@@ -350,7 +350,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Check maximum Zs values instantly"
-          description="Enter the MCB type and rating in Elec-Mate and instantly see the maximum permitted Zs value from BS 7671. Compare it with your measured value on site — no need to carry the regulation book or flip through tables."
+          description="Enter the MCB type and rating in Elec-Mate and instantly see the maximum permitted Zs value from BS 7671."
           icon={Search}
         />
       </>
@@ -514,7 +514,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AI board scanner reads MCB ratings from a photo"
-          description="Point your phone camera at the consumer unit. Elec-Mate reads every MCB type and rating from the photo — B6, B32, C32 — and cross-references them against the circuit details. Mismatches are flagged automatically."
+          description="Point your phone camera at the consumer unit. Elec-Mate reads every MCB type and rating from the photo — B6, B32…"
           icon={Brain}
         />
       </>
@@ -530,9 +530,9 @@ export default function WhatIsACircuitBreakerPage() {
   return (
     <GuideTemplate
       title="What Is a Circuit Breaker? | MCB Explained Simply"
-      description="Plain English guide to circuit breakers (MCBs). How MCBs work with thermal and magnetic trip mechanisms, MCB vs fuse, Type B, C, and D explained, common ratings, and why circuit breakers trip."
+      description="Plain English guide to circuit breakers (MCBs). How MCBs work with thermal and magnetic trip mechanisms, MCB vs fuse, Type B, C, and D explained…"
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Electrical Basics"

@@ -318,7 +318,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Generate CDM-compliant RAMS in minutes"
-          description="Elec-Mate's AI RAMS generator creates task-specific risk assessments and method statements for construction site electrical work. Covers isolation, cable installation, containment fixing, and testing sequences. Print or share as PDF directly from site."
+          description="Elec-Mate's AI RAMS generator creates task-specific risk assessments and method statements for construction site electrical work."
           icon={FileCheck2}
         />
       </>
@@ -738,7 +738,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Ready-made toolbox talks in Elec-Mate"
-          description="Access a library of electrical safety toolbox talks covering safe isolation, cable avoidance, temporary supplies, and more. Each talk includes key points, discussion prompts, and a digital sign-in sheet. Download as PDF or share with your team on site."
+          description="Access a library of electrical safety toolbox talks covering safe isolation, cable avoidance, temporary supplies, and more."
           icon={Megaphone}
         />
       </>
@@ -811,9 +811,9 @@ export default function ConstructionSiteSafetyPage() {
   return (
     <GuideTemplate
       title="Construction Site Safety for Electricians | Complete Guide"
-      description="Comprehensive construction site safety guide for electricians. Covers site induction, CDM 2015 duties, CSCS card requirements, PPE, permit to work systems, welfare facilities, toolbox talks, and incident reporting."
+      description="Comprehensive construction site safety guide for electricians. Covers site induction, CDM 2015 duties, CSCS card requirements, PPE…"
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Site Safety"

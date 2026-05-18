@@ -127,7 +127,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description:
-      'Complete guide to the 18th Edition of the IET Wiring Regulations including Amendment 3:2024.',
+      'Complete guide to the 18th Edition of the IET Wiring Regulations including Amendment 4:2024.',
     icon: FileText,
     category: 'Guide',
   },
@@ -272,7 +272,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Plan your next project in minutes"
-          description="Describe the project scope, and the AI produces a complete schedule with tasks, durations, dependencies, and milestones. No project management experience needed."
+          description="Describe the project scope, and the AI produces a complete schedule with tasks, durations, dependencies, and milestones."
           icon={GanttChart}
         />
       </>
@@ -410,9 +410,9 @@ export default function AIProjectManagerPage() {
   return (
     <ToolTemplate
       title="AI Project Manager for Electricians | Planning Tool"
-      description="Plan and manage electrical projects with AI tailored for UK work. Smart scheduling, resource allocation, material estimation, and timeline tracking. Part of 8 specialist Elec-AI agents."
+      description="Plan and manage electrical projects with AI tailored for UK work. Smart scheduling, resource allocation, material estimation, and timeline tracking."
       datePublished="2025-08-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="AI Project Agent"

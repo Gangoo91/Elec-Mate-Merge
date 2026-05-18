@@ -628,7 +628,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Handle emergency call-outs professionally"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site certificates, fault documentation, and instant invoicing. Complete the job from fault to certificate in a single visit. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site certificates, fault documentation, and instant invoicing."
           icon={Zap}
         />
       </>
@@ -644,9 +644,9 @@ export default function ElectricalEmergencyPage() {
   return (
     <GuideTemplate
       title="Electrical Emergency | What to Do & Who to Call UK"
-      description="Complete guide to electrical emergencies in the UK. What to do during a power cut, burning smell, electric shock, or flooding. When to call 999, your DNO on 105, or a qualified electrician."
+      description="Complete guide to electrical emergencies in the UK. What to do during a power cut, burning smell, electric shock, or flooding."
       datePublished="2025-08-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Emergency Guide"

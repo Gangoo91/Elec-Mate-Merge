@@ -137,7 +137,7 @@ const features = [
     icon: PenTool,
     title: 'Professional Report Generation',
     description:
-      'Generate polished, branded reports in seconds. Inspection summaries, condition reports, proposals, and completion reports — all formatted for client presentation.',
+      'Generate polished, branded reports in seconds. Inspection summaries, condition reports, proposals…',
   },
   {
     icon: FileText,
@@ -393,7 +393,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Turn observations into action plans"
-          description="The Report Writer converts your EICR observations into a prioritised remedial recommendation report with plain-English explanations and approximate costs. Professional documents your clients will understand."
+          description="The Report Writer converts your EICR observations into a prioritised remedial recommendation report with plain-English explanations and approximate costs."
           icon={ListChecks}
         />
       </>
@@ -409,9 +409,9 @@ export default function AIReportWriterPage() {
   return (
     <ToolTemplate
       title="AI Report Writer | Electrical Reports & Proposals"
-      description="Generate professional electrical reports and proposals with AI. Inspection summaries, condition reports, client proposals, and remedial recommendations — all branded with your company details."
+      description="Generate professional electrical reports and proposals with AI. Inspection summaries, condition reports, client proposals…"
       datePublished="2025-08-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="AI Report Agent"

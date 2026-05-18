@@ -6,14 +6,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Guide.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const prosumerLVInstallationConfig: GeneratedGuideConfig = {
   pagePath: '/guides/prosumer-low-voltage-electrical-installation',
   title:
     'Prosumer\'s Low Voltage Electrical Installation (BS 7671 A4:2026 Item 14.0) | Elec-Mate',
   description:
-    'A "prosumer" installation both consumes and produces electricity — solar PV, battery storage, EV V2G, wind, CHP. The new BS 7671:2018+A4:2026 EIC Schedule of Inspections item 14.0 explained.',
+    'A "prosumer" installation both consumes and produces electricity — solar PV, battery storage, EV V2G, wind, CHP.',
   datePublished: published,
   dateModified: modified,
   readingTime: 10,
@@ -80,7 +80,7 @@ export const prosumerLVInstallationConfig: GeneratedGuideConfig = {
         {
           type: 'callout',
           tone: 'info',
-          title: 'A dedicated inspection item makes prosumer compliance visible',
+          title: 'A dedicated inspection item makes prosumer compliance',
           text:
             'Before A4:2026, an inspector could complete an EIC without explicitly considering prosumer equipment — the system would be inspected under general rules and any non-compliances surfaced as observations against Sections 4, 5 or 6. Item 14.0 makes prosumer-specific inspection mandatory and visible on every EIC.',
         },

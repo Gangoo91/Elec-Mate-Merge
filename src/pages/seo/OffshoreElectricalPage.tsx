@@ -608,7 +608,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage your offshore qualifications with Elec-Mate"
-          description="Keep your BOSIET, CompEx, 18th Edition, and all offshore certifications organised with renewal reminders. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial."
+          description="Keep your BOSIET, CompEx, 18th Edition, and all offshore certifications organised with renewal reminders. Join 1,000+ UK electricians using Elec-Mate."
           icon={ShieldCheck}
         />
       </>
@@ -623,10 +623,10 @@ const sections = [
 export default function OffshoreElectricalPage() {
   return (
     <GuideTemplate
-      title="Offshore Electrical Engineer UK | Oil & Gas Platform Electrical"
-      description="Complete guide to offshore electrical engineering in the UK — ATEX Zone 0/1/2 classification, Ex equipment selection, essential services, ESD, BOSIET training, GWO certification, 2-week rotation, and day rates of £400–£700."
+      title="Offshore Electrical Engineer UK | Oil & Gas Platform"
+      description="Complete guide to offshore electrical engineering in the UK — ATEX Zone 0/1/2 classification, Ex equipment selection, essential services, ESD…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Specialist Sector"

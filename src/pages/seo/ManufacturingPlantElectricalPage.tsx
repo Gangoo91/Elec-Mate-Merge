@@ -602,8 +602,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Manage manufacturing plant electrical projects with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. Complete EICs and EICRs on your phone with instant PDF export. 7-day free trial."
+          title="Manage manufacturing plant electrical projects with"
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, quoting, and project management."
           icon={FileCheck2}
         />
       </>
@@ -618,10 +618,10 @@ const sections = [
 export default function ManufacturingPlantElectricalPage() {
   return (
     <GuideTemplate
-      title="Manufacturing Plant Electrical Installation | Industrial Electrical UK"
-      description="Complete guide to manufacturing plant electrical installation in the UK. Motor starters, VFDs, PLC integration, emergency stop systems to BS EN ISO 13850, safety interlocks, power quality, BS EN 60204-1 machine electrical requirements, and Electricity at Work Regulations 1989."
+      title="Manufacturing Plant Electrical Installation | Industrial"
+      description="Complete guide to manufacturing plant electrical installation in the UK. Motor starters, VFDs, PLC integration…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Industrial Electrical Guide"

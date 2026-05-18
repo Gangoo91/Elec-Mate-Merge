@@ -271,7 +271,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Get assessment-ready with professional certificates"
-          description="Elec-Mate creates BS 7671-compliant certificates with complete test schedules and professional formatting. When the ELECSA assessor reviews your documentation, everything is accurate, organised, and instantly accessible."
+          description="Elec-Mate creates BS 7671-compliant certificates with complete test schedules and professional formatting."
           icon={FileText}
         />
       </>
@@ -562,7 +562,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Keep your professional profile up to date"
-          description="Elec-Mate's ElecID tracks your qualifications, CPD hours, and certification history in one verified digital profile. Share it with assessors, clients, and employers. Always current, always professional."
+          description="Elec-Mate's ElecID tracks your qualifications, CPD hours, and certification history in one verified digital profile."
           icon={ShieldCheck}
         />
       </>
@@ -578,9 +578,9 @@ export default function ELECSARegistrationPage() {
   return (
     <GuideTemplate
       title="ELECSA Registration | How to Join & Costs UK"
-      description="Complete guide to ELECSA registration for UK electricians. What ELECSA offers, the registration process, assessment details, costs, domestic vs commercial schemes, and how ELECSA compares to NICEIC and NAPIT."
+      description="Complete guide to ELECSA registration for UK electricians. What ELECSA offers, the registration process, assessment details, costs…"
       datePublished="2025-08-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Scheme Guide"

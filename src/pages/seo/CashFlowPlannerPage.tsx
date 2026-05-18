@@ -59,37 +59,37 @@ const features = [
     icon: TrendingUp,
     title: 'Cash Flow Forecasting',
     description:
-      'Forecast your cash position for the next 3 to 6 months. See exactly when money will come in from confirmed jobs and when expenses are due. Spot cash gaps before they become crises.',
+      'Forecast your cash position for the next 3 to 6 months. See exactly when money will come in from confirmed jobs and when expenses are due.',
   },
   {
     icon: Receipt,
     title: 'Invoice Tracking',
     description:
-      'Track every invoice — sent, viewed, accepted, paid, overdue. See your total outstanding at a glance. Automatic reminders chase late payers so you do not have to.',
+      'Track every invoice — sent, viewed, accepted, paid, overdue. See your total outstanding at a glance.',
   },
   {
     icon: Wallet,
     title: 'Expense Management',
     description:
-      'Track all business expenses — materials, fuel, tools, insurance, subscriptions. Categorise by job or by type. Export for your accountant or for self-assessment.',
+      'Track all business expenses — materials, fuel, tools, insurance, subscriptions. Categorise by job or by type.',
   },
   {
     icon: Calendar,
     title: 'Payment Calendar',
     description:
-      'Visualise when payments are expected and when bills are due. Weekly and monthly views show your cash position at every point. Plan material purchases around incoming payments.',
+      'Visualise when payments are expected and when bills are due. Weekly and monthly views show your cash position at every point.',
   },
   {
     icon: AlertTriangle,
     title: 'Cash Gap Alerts',
     description:
-      'Receive alerts when your forecast shows a cash shortfall. Early warning gives you time to chase invoices, delay non-essential purchases, or arrange temporary finance.',
+      'Receive alerts when your forecast shows a cash shortfall. Early warning gives you time to chase invoices, delay non-essential purchases…',
   },
   {
     icon: PoundSterling,
     title: 'Profit vs Cash Analysis',
     description:
-      'Understand the difference between profit and cash. A profitable month does not mean positive cash flow if clients have not paid. Track both metrics side by side.',
+      'Understand the difference between profit and cash. A profitable month does not mean positive cash flow if clients have not paid.',
   },
 ];
 
@@ -99,7 +99,7 @@ const softwareAppSchema = {
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'Web, iOS, Android',
   description:
-    'Plan and forecast cash flow for your electrical business. Track income, expenses, invoices, and predict cash positions. Stop cash flow surprises before they happen.',
+    'Plan and forecast cash flow for your electrical business. Track income, expenses, invoices, and predict cash positions.',
   url: 'https://www.elec-mate.com/tools/cash-flow-planner',
   offers: {
     '@type': 'Offer',
@@ -131,7 +131,7 @@ export default function CashFlowPlannerPage() {
   useSEO({
     title: 'Cash Flow Planner for Electricians | Financial Management',
     description:
-      'Plan and forecast cash flow for your electrical business. Track income, expenses, invoices, and predict cash positions. Stop cash flow surprises before they happen.',
+      'Plan and forecast cash flow for your electrical business. Track income, expenses, invoices, and predict cash positions.',
   });
 
   return (
@@ -389,7 +389,7 @@ export default function CashFlowPlannerPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Take Control of Your Cash Flow with Elec-Mate"
-            description="Forecast cash flow, track invoices, manage expenses, and spot cash gaps early — all in an app built specifically for UK electrical businesses. Integrates with your jobs, quotes, and invoices automatically."
+            description="Forecast cash flow, track invoices, manage expenses, and spot cash gaps early — all in an app built specifically for UK electrical businesses."
             ctaText="Start planning free"
             ctaHref="/auth/signup"
           />
@@ -425,6 +425,26 @@ export default function CashFlowPlannerPage() {
       </section>
 
       {/* CTA */}
+      
+
+      {/* Related calculators — peer surface for internal-link health.
+          Hand-curated where slug-token matching couldn't surface peers. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical calculators</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/tools/expenses-manager-electrician">Expenses Manager for Electricians</SEOInternalLink>
+            <SEOInternalLink href="/tools/vat-scheme-comparison">VAT Scheme Comparison</SEOInternalLink>
+            <SEOInternalLink href="/job-profitability-calculator">Job Profitability Calculator</SEOInternalLink>
+            <SEOInternalLink href="/tools/tax-ni-estimator">Tax & NI Estimator for Electricians</SEOInternalLink>
+            <SEOInternalLink href="/tools/pricing-strategy-electrician">Pricing Strategy for Electricians</SEOInternalLink>
+            <SEOInternalLink href="/guides/cash-flow-management-electricians">Cash Flow Management for Electricians UK 2026</SEOInternalLink>
+            <SEOInternalLink href="/tools/business-cost-calculator">Business Cost Calculator</SEOInternalLink>
+            <SEOInternalLink href="/tools/business-analytics-electrician">Business Analytics for Electricians</SEOInternalLink>
+          </div>
+        </div>
+      </section>
+
       <SEOCTASection
         heading="Take Control of Your Cash Flow"
         subheading="Join 1,000+ UK electricians using Elec-Mate to forecast cash flow, chase invoices, and never be surprised by a cash gap again. 7-day free trial, cancel anytime."

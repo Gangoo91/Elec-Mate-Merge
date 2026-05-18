@@ -640,7 +640,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your business professionally"
-          description="Elec-Mate helps you quote, certify, and manage your electrical business from your phone. Professional tools for professional electricians. 7-day free trial."
+          description="Elec-Mate helps you quote, certify, and manage your electrical business from your phone. Professional tools for professional electricians."
           icon={Shield}
         />
       </>
@@ -657,9 +657,9 @@ export default function ElectricianBusinessInsurancePage() {
     <GuideTemplate
       localArea="Business Insurance"
       title="Electrician Business Insurance UK 2026 | What You Need"
-      description="Complete guide to business insurance for UK electricians. Public liability, professional indemnity, employers liability, tool cover, personal accident, cyber insurance. Typical costs £300-£800/year for sole traders."
+      description="Complete guide to business insurance for UK electricians. Public liability, professional indemnity, employers liability, tool cover, personal accident…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Insurance Guide"

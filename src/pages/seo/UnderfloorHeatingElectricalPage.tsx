@@ -279,7 +279,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Size the UFH circuit in seconds"
-          description="Enter the heating load, cable length, and installation method into Elec-Mate's cable sizing calculator. It applies all correction factors from BS 7671 Appendix 4 and confirms the MCB rating, cable size, and voltage drop — instantly."
+          description="Enter the heating load, cable length, and installation method into Elec-Mate's cable sizing calculator."
           icon={Calculator}
         />
       </>
@@ -569,8 +569,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Complete UFH installations faster with Elec-Mate"
-          description="Cable sizing, circuit design, EIC certification, quoting, and invoicing — all on your phone. Join 1,000+ UK electricians already using the app. 7-day free trial."
+          title="Dedicated circuit for underfloor heating"
+          description="Does electric UFH need its own circuit? Yes — BS 7671:2018+A4:2026 requires separate protection. Design yours in minutes with Elec-Mate."
           icon={Thermometer}
         />
       </>
@@ -586,9 +586,9 @@ export default function UnderfloorHeatingElectricalPage() {
   return (
     <GuideTemplate
       title="Underfloor Heating Electrical | Wiring & Circuit Guide"
-      description="Complete guide to electric underfloor heating wiring. Cable vs mat systems, dedicated circuit requirements, thermostat wiring, RCD protection, cable sizing, and insulation testing for UFH installations under BS 7671."
+      description="Complete guide to electric underfloor heating wiring. Cable vs mat systems, dedicated circuit requirements, thermostat wiring, RCD protection…"
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

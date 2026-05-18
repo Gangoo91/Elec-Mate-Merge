@@ -24,7 +24,7 @@ import {
 
 const PAGE_TITLE = 'RCD Testing Procedure | How to Test RCDs BS 7671';
 const PAGE_DESCRIPTION =
-  'Complete RCD testing procedure per BS 7671 for UK electricians. Full test sequence: half-rated current (must NOT trip), 1x rated current (must trip within 300 ms), 5x rated current (must trip within 40 ms for 30 mA), ramp test, half-cycle test, button test. Testing at 0 and 180 degree phase angle. Time-delayed and discrimination testing. Record results with Elec-Mate.';
+  'RCD testing procedure per BS 7671: half-rated (no trip), 1× (<300 ms), 5× (<40 ms for 30 mA), ramp, half-cycle, 0°/180°, time-delay, discrimination.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -308,7 +308,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Auto-validated RCD trip times in the schedule of tests"
-          description="Enter the trip times from your MFT and Elec-Mate instantly validates them against BS 7671 requirements — 300 ms at 1x, 40 ms at 5x for general-type, or the Type S limits for time-delayed devices. Failures are flagged with the correct observation code."
+          description="Enter the trip times from your MFT and Elec-Mate instantly validates them against BS 7671 requirements — 300 ms at 1x, 40 ms at 5x for general-type…"
           icon={ClipboardCheck}
         />
       </>
@@ -517,7 +517,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Voice to test results — speak trip times hands-free"
-          description="On site with your MFT in one hand? Just speak: 'RCBO 1, 5x trip time 28 milliseconds.' Elec-Mate fills in the schedule of test results and validates the trip time against BS 7671 requirements automatically."
+          description="On site with your MFT in one hand? Just speak: 'RCBO 1, 5x trip time 28 milliseconds.' Elec-Mate fills in the schedule of test results and validates the…"
           icon={Mic}
         />
         <p>
@@ -598,7 +598,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="EICR and EIC forms capture all RCD test data"
-          description="Elec-Mate's digital EICR and EIC forms have dedicated fields for every RCD test — trip times at 1x and 5x on both half-cycles, half-rated pass/fail, RCD type, and rated IΔn. Auto-validation flags any trip time outside BS 7671 limits."
+          description="Elec-Mate's digital EICR and EIC forms have dedicated fields for every RCD test — trip times at 1x and 5x on both half-cycles, half-rated pass/fail…"
           icon={FileCheck2}
         />
       </>
@@ -663,7 +663,7 @@ export default function RCDTestingProcedurePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2024-11-12"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

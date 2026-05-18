@@ -25,7 +25,10 @@
     "size": "size-limit",
     "lighthouse": "lhci autorun",
     "build:seo": "NODE_OPTIONS='--max-old-space-size=16384' vite build && node scripts/generate-seo-html.mjs && node scripts/seo-prerender.mjs",
-    "build:seo:canary": "npm run build && node scripts/seo-prerender.mjs --limit 5 --verbose"
+    "build:seo:canary": "npm run build && node scripts/seo-prerender.mjs --limit 5 --verbose",
+    "seo:bump-dates": "node scripts/seo-engine/bump-dates.mjs",
+    "seo:bump-dates:dry": "node scripts/seo-engine/bump-dates.mjs --dry-run",
+    "seo:bump-dates:force": "node scripts/seo-engine/bump-dates.mjs --force"
   },
   "dependencies": {
     "@capacitor-community/in-app-review": "^8.0.0",

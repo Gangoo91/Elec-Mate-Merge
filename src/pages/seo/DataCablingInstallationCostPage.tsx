@@ -600,7 +600,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote data cabling projects professionally"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting with itemised pricing, professional PDF output, and AI cost engineering. Diversify into data cabling with confidence. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting with itemised pricing, professional PDF output, and AI cost engineering."
           icon={Wrench}
         />
       </>
@@ -616,9 +616,9 @@ export default function DataCablingInstallationCostPage() {
   return (
     <GuideTemplate
       title="Data Cabling Installation Cost UK 2026 | Cat6 Pricing"
-      description="How much does data cabling installation cost in the UK in 2026? Complete guide covering Cat6 and Cat6a per-point pricing, comms cabinets, patch panels, WiFi AP cabling, fibre backbone, testing, and costs for small office to large commercial installations."
+      description="How much does data cabling installation cost in the UK in 2026? Complete guide covering Cat6 and Cat6a per-point pricing, comms cabinets, patch panels…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

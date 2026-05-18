@@ -647,7 +647,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Track Every Calibration Date"
-          description="Register your test instruments, set calibration reminders, store certificates digitally, and get alerts if you try to certify with an expired calibration. Part of the complete Elec-Mate platform."
+          description="Register your test instruments, set calibration reminders, store certificates digitally, and get alerts if you try to certify with an expired calibration."
           icon={Gauge}
         />
       </>
@@ -663,9 +663,9 @@ export default function ElectricalToolCalibrationPage() {
   return (
     <GuideTemplate
       title="Electrical Tool Calibration | When & Why UK Guide"
-      description="Complete guide to electrical test instrument calibration. 12-month calibration cycle, UKAS accredited labs, what happens during calibration, costs, scheme requirements, and calibration tracking with Elec-Mate."
+      description="Complete guide to electrical test instrument calibration. 12-month calibration cycle, UKAS accredited labs, what happens during calibration, costs…"
       datePublished="2026-01-25"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

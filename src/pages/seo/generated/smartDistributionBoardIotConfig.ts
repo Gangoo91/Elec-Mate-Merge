@@ -5,14 +5,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // (In-cable control & protective devices), and the Building Regulations Part P.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const smartDistributionBoardIotConfig: GeneratedGuideConfig = {
   pagePath: '/guides/smart-distribution-board-iot-consumer-unit',
   title:
-    'Smart Distribution Board / IoT Consumer Unit Installation Guide (UK) | Elec-Mate',
+    'Smart Distribution Board / IoT Consumer Unit Installation',
   description:
-    'UK installation guide for smart consumer units and IoT distribution boards — per-circuit energy monitoring, remote breaker switching, BS EN 61439 type-tested assembly status, BS 7671 Section 537 isolation implications, AFDD integration, load shedding for EV and heat pump customers, Octopus smart tariff integration, cybersecurity for mains-rated WiFi devices, and Building Regulations Part P notifiable work.',
+    'UK installation guide for smart consumer units and IoT distribution boards — per-circuit energy monitoring, remote breaker switching…',
   datePublished: published,
   dateModified: modified,
   readingTime: 15,
@@ -113,7 +113,7 @@ export const smartDistributionBoardIotConfig: GeneratedGuideConfig = {
         {
           type: 'callout',
           tone: 'warning',
-          title: 'A WiFi consumer unit is a mains-rated device on a domestic network',
+          title: 'A WiFi consumer unit is a mains-rated device on a domestic',
           text:
             'The same SSID is shared by smart speakers, doorbells, TVs and visitors\' phones. A poorly secured endpoint becomes a lateral-movement target. Recommend a segmented IoT SSID with a strong passphrase, and document it at handover.',
         },

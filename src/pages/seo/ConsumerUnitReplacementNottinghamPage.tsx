@@ -517,7 +517,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Nottingham electrical business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting. Eliminate paperwork and complete more jobs per day. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting."
           icon={FileCheck2}
         />
       </>
@@ -533,9 +533,9 @@ export default function ConsumerUnitReplacementNottinghamPage() {
   return (
     <GuideTemplate
       title="Consumer Unit Replacement Nottingham | Fuse Box Nottingham"
-      description="Consumer unit replacement in Nottingham — metal enclosure rules, Part P Building Regulations, costs £380–700, BS EN 61439, NICEIC electricians in the East Midlands. Complete guide 2026."
+      description="Consumer unit replacement in Nottingham — metal enclosure rules, Part P Building Regulations, costs £380–700, BS EN 61439…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Electrical Guide"

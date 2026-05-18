@@ -589,7 +589,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional certification for Bath electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting. Georgian rewires, UFH, or commercial — certify it all on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting."
           icon={MapPin}
         />
       </>
@@ -606,9 +606,9 @@ export default function ElectricianBathPage() {
     <GuideTemplate
       localArea="Bath"
       title="Electrician in Bath | Local Electrical Guide"
-      description="Complete guide for electricians working in Bath. NGED DNO, UNESCO World Heritage conservation controls, Georgian townhouse rewiring, Bath stone properties, underfloor heating in listed buildings, and realistic Bath pricing."
+      description="Complete guide for electricians working in Bath. NGED DNO, UNESCO World Heritage conservation controls, Georgian townhouse rewiring…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Location Guide"

@@ -604,7 +604,7 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Run your Edinburgh electrical business smarter with Elec-Mate"
+          title="Run your Edinburgh electrical business smarter with"
           description="Join 1,000+ UK electricians using Elec-Mate to quote jobs, complete certificates on site, and manage their business from their phone. 7-day free trial."
           icon={PoundSterling}
         />
@@ -621,9 +621,9 @@ export default function ElectricianSalaryEdinburghPage() {
   return (
     <GuideTemplate
       title="Electrician Salary Edinburgh 2025 | Electrician Pay Scotland"
-      description="Electrician salary guide for Edinburgh 2025. JIB-SECTA Scotland rates, SECTT apprenticeships, employed vs self-employed earnings, specialist uplifts, apprentice rates, and benefits for Edinburgh electricians."
+      description="Electrician salary guide for Edinburgh 2025. JIB-SECTA Scotland rates, SECTT apprenticeships, employed vs self-employed earnings, specialist uplifts…"
       datePublished="2025-01-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Salary Guide"

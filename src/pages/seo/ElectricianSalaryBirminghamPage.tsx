@@ -236,7 +236,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote Birmingham jobs professionally and win more work"
-          description="Elec-Mate's quoting app helps Birmingham electricians build detailed, professional estimates in minutes. Get paid faster with polished invoices and certificates."
+          description="Elec-Mate's quoting app helps Birmingham electricians build detailed, professional estimates in minutes."
           icon={Briefcase}
         />
       </>
@@ -402,10 +402,10 @@ export default function ElectricianSalaryBirminghamPage() {
   return (
     <GuideTemplate
       localArea="Salary Birmingham"
-      title="Electrician Salary Birmingham 2026 | Employed & Self-Employed Rates"
-      description="Realistic electrician salary figures for Birmingham and the West Midlands in 2026. Employed rates £30,000–£50,000, self-employed £42,000–£65,000. Top sectors, day rates, and market opportunities."
+      title="Electrician Salary Birmingham 2026 | Employed &"
+      description="Realistic electrician salary figures for Birmingham and the West Midlands in 2026. Employed rates £30,000–£50,000, self-employed £42,000–£65,000."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Salary Guide"

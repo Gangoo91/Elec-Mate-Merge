@@ -506,7 +506,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Record Zs test results digitally"
-          description="Elec-Mate's schedule of test results auto-validates your Zs readings against the maximum permitted values for the protective device. Instant pass/fail indication on site."
+          description="Elec-Mate's schedule of test results auto-validates your Zs readings against the maximum permitted values for the protective device."
           icon={ClipboardCheck}
         />
       </>
@@ -675,9 +675,9 @@ export default function Regulation411AutoDisconnectionPage() {
   return (
     <GuideTemplate
       title="Regulation 411 | Automatic Disconnection of Supply Explained"
-      description="Complete guide to Regulation 411 (Automatic Disconnection of Supply) in BS 7671. Disconnection times, Zs values, MCB types B/C/D, TN-S vs TN-C-S vs TT systems, loop impedance testing, and worked examples for electricians."
+      description="Complete guide to Regulation 411 (Automatic Disconnection of Supply) in BS 7671. Disconnection times, Zs values, MCB types B/C/D…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulation Deep-Dive"

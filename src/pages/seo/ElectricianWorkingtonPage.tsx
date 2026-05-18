@@ -510,7 +510,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Workington electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for west Cumbria's industrial sites, coastal properties, and nuclear-adjacent work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -527,9 +527,9 @@ export default function ElectricianWorkingtonPage() {
     <GuideTemplate
       localArea="Workington"
       title="Electrician in Workington | Local Electricians 2026"
-      description="Find qualified electricians in Workington, Cumbria. Industrial and chemical electrical work, Sellafield proximity, Electricity North West DNO, coastal IP ratings, and Workington electrician rates 2026."
+      description="Find qualified electricians in Workington, Cumbria. Industrial and chemical electrical work, Sellafield proximity, Electricity North West DNO…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Workington"

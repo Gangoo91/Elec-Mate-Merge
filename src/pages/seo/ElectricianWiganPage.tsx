@@ -477,7 +477,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Wigan electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the residential and rental electrical market in Wigan and Greater Manchester. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -494,9 +494,9 @@ export default function ElectricianWiganPage() {
     <GuideTemplate
       localArea="Wigan"
       title="Electrician in Wigan | Local Electricians 2026"
-      description="Find qualified electricians in Wigan. Part P compliance, NICEIC registered, EICR for landlords, consumer unit replacement, house rewiring, and local electrician rates for Wigan in 2026."
+      description="Find qualified electricians in Wigan. Part P compliance, NICEIC registered, EICR for landlords, consumer unit replacement, house rewiring…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Wigan"

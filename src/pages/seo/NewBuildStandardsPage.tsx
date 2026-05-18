@@ -243,7 +243,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="EV charger certificates in minutes"
-          description="Elec-Mate's EV Charger Certificate template is designed for Part S compliance. Complete the certificate on site, attach photos, and send the PDF to the developer before you leave."
+          description="Elec-Mate's EV Charger Certificate template is designed for Part S compliance. Complete the certificate on site, attach photos…"
           icon={Car}
         />
       </>
@@ -414,7 +414,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Record every fitting for SAP compliance"
-          description="Elec-Mate's EIC template includes dedicated fields for lighting type, wattage, and efficacy. Generate SAP-ready documentation as part of your standard certificate workflow."
+          description="Elec-Mate's EIC template includes dedicated fields for lighting type, wattage, and efficacy. Generate SAP-ready documentation as part of your standard…"
           icon={Calculator}
         />
       </>
@@ -631,9 +631,9 @@ export default function NewBuildStandardsPage() {
   return (
     <GuideTemplate
       title="New Build Electrical Standards | Building Regs Guide"
-      description="Complete guide to new build electrical standards in the UK. Approved Document P, EV charging (Part S), smoke and heat detection, AFDD and SPD requirements, SAP calculations, and testing certification for new dwellings."
+      description="Complete guide to new build electrical standards in the UK. Approved Document P, EV charging (Part S), smoke and heat detection…"
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="New Build Guide"

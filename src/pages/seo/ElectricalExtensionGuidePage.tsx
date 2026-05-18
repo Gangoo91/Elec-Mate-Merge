@@ -20,9 +20,9 @@ export default function ElectricalExtensionGuidePage() {
   return (
     <GuideTemplate
       title="House Extension Electrics | Wiring & Regulations Guide"
-      description="Complete guide to electrical wiring for house extensions in the UK. Covers new circuit design, connecting to existing distribution boards, Part P notification, lighting and socket layouts, external circuits, and how to plan the electrical work alongside the building project."
+      description="Complete guide to electrical wiring for house extensions in the UK. Covers new circuit design, connecting to existing distribution boards…"
       datePublished="2026-01-12"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Installation', href: '/guides' },
         { label: 'Extension Electrics', href: '/guides/house-extension-electrics' },
@@ -128,7 +128,7 @@ export default function ElectricalExtensionGuidePage() {
               </div>
               <SEOAppBridge
                 title="AI Circuit Designer for Extension Planning"
-                description="Elec-Mate's AI Circuit Designer generates a complete circuit specification for your extension. Enter the room dimensions, intended use, and appliance list — the AI recommends the number and type of circuits, cable sizes, protective device ratings, and consumer unit requirements."
+                description="Elec-Mate's AI Circuit Designer generates a complete circuit specification for your extension."
                 icon={Brain}
               />
             </>
@@ -460,7 +460,7 @@ export default function ElectricalExtensionGuidePage() {
               </div>
               <SEOAppBridge
                 title="Cable Sizing for Extension Circuits"
-                description="Elec-Mate's cable sizing calculator handles every circuit in your extension project — ring finals, radials, lighting circuits, cooker circuits, and sub-main cables. Enter the circuit parameters and get the correct cable size with all derating factors applied automatically."
+                description="Elec-Mate's cable sizing calculator handles every circuit in your extension project — ring finals, radials, lighting circuits, cooker circuits…"
                 icon={Calculator}
               />
             </>

@@ -108,7 +108,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description:
-      'Complete guide to the 18th Edition of the IET Wiring Regulations including Amendment 3:2024.',
+      'Complete guide to the 18th Edition of the IET Wiring Regulations including Amendment 4:2024.',
     icon: FileText,
     category: 'Guide',
   },
@@ -135,7 +135,7 @@ const features = [
     icon: ClipboardCheck,
     title: 'Tailored Checklists',
     description:
-      'Generate commissioning checklists specific to your installation type. Domestic, commercial, industrial, EV chargers, solar PV — each gets the correct test sequence.',
+      'Generate commissioning checklists specific to your installation type. Domestic, commercial, industrial, EV chargers…',
   },
   {
     icon: Gauge,
@@ -165,7 +165,7 @@ const features = [
     icon: Brain,
     title: 'Installation-Specific Knowledge',
     description:
-      'Understands EV charger commissioning, solar PV systems, battery storage, three-phase installations, and emergency lighting — each with their specific test requirements.',
+      'Understands EV charger commissioning, solar PV systems, battery storage, three-phase installations…',
   },
 ];
 
@@ -273,7 +273,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Generate your commissioning checklist"
-          description="Open the Commissioning Specialist in Elec-Mate, describe the installation, and get a tailored commissioning checklist in seconds. Every test in the correct BS 7671 sequence."
+          description="Open the Commissioning Specialist in Elec-Mate, describe the installation, and get a tailored commissioning checklist in seconds."
           icon={ClipboardCheck}
         />
       </>
@@ -353,7 +353,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Professional commissioning records in minutes"
-          description="Complete your commissioning in the app and export professional documentation instantly. Test results flow directly into your EIC or EICR — no double data entry."
+          description="Complete your commissioning in the app and export professional documentation instantly. Test results flow directly into your EIC or EICR — no double data…"
           icon={FileText}
         />
       </>
@@ -382,7 +382,7 @@ const sections = [
           Chapter 64.
         </p>
         <p>
-          Amendment 3:2024 adds Regulation 530.3.2 covering bidirectional and unidirectional
+          Amendment 4:2024 adds Regulation 530.3.2 covering bidirectional and unidirectional
           protective devices. For installations with solar PV, battery storage, or other sources of
           reverse power flow, the Commissioning Specialist includes verification steps to confirm
           that the installed protective devices are suitable for the direction of energy flow — a
@@ -410,9 +410,9 @@ export default function AICommissioningSpecialistPage() {
   return (
     <ToolTemplate
       title="AI Commissioning Specialist | Electrical Guidance"
-      description="Commission electrical installations with AI tailored for UK work. Generates tailored commissioning checklists, functional test guidance, and documentation to BS 7671:2018+A4:2026. Part of 8 specialist Elec-AI agents."
+      description="Commission electrical installations with AI tailored for UK work. Generates tailored commissioning checklists, functional test guidance…"
       datePublished="2025-08-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="AI Commissioning Agent"

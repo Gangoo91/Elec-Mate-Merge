@@ -510,9 +510,9 @@ export default function FireAlarmFaultFindingPage() {
   return (
     <GuideTemplate
       title="Fire Alarm Fault Finding | Fire Detection System Problems UK"
-      description="Fire alarm fault? This guide covers zone faults, detector contamination, panel faults, power supply issues, BS 5839 compliance, and when to use a competent fire alarm engineer."
+      description="Fire alarm fault? This guide covers zone faults, detector contamination, panel faults, power supply issues, BS 5839 compliance…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Fault Finding Guide"

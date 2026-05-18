@@ -384,7 +384,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Document hazardous area electrical work professionally"
-          description="Elec-Mate's certificate and test record tools help you produce the professional documentation required for ATEX installation dossiers and BS EN 60079-17 inspection records. Works offline on process sites."
+          description="Elec-Mate's certificate and test record tools help you produce the professional documentation required for ATEX installation dossiers and BS EN 60079-17…"
           icon={FileCheck2}
         />
       </>
@@ -435,9 +435,9 @@ export default function ATEXHazardousAreaElectricalPage() {
   return (
     <GuideTemplate
       title="ATEX Hazardous Area Electrical Installations UK | Guide"
-      description="Complete guide to ATEX hazardous area electrical installations for UK electricians. Zone classification, Ex equipment markings, BS EN 60079-14 installation, BS EN 60079-17 inspection, DSEAR 2002, and CompEx competency requirements."
+      description="Complete guide to ATEX hazardous area electrical installations for UK electricians. Zone classification, Ex equipment markings…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Specialist Guide"

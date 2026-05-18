@@ -21,9 +21,9 @@ export default function IPRatingGuidePage() {
   return (
     <ToolTemplate
       title="IP Rating Guide | Ingress Protection Explained"
-      description="Complete guide to IP ratings for electrical equipment. Explains first digit (solids 0-6), second digit (liquids 0-9), IP2X, IPXXB, and common ratings like IP20, IP44, IP55, IP65, IP67, and IP68. UK electrician reference with BS EN 60529."
+      description="Complete guide to IP ratings for electrical equipment. Explains first digit (solids 0-6), second digit (liquids 0-9), IP2X, IPXXB…"
       datePublished="2026-01-30"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'IP Rating Guide', href: '/tools/ip-rating-guide' },
@@ -96,7 +96,7 @@ export default function IPRatingGuidePage() {
           appBridge: {
             title: 'IP Rating Quick Lookup',
             description:
-              'Decode any IP rating instantly. Enter the two digits and Elec-Mate explains exactly what protection the enclosure provides. Part of the built-in reference tools.',
+              'Decode any IP rating instantly. Enter the two digits and Elec-Mate explains exactly what protection the enclosure provides.',
             icon: Search,
           },
         },
@@ -375,7 +375,7 @@ export default function IPRatingGuidePage() {
           appBridge: {
             title: 'IP Rating Reference Built Into Elec-Mate',
             description:
-              'Decode any IP rating instantly. Check BS 7671 zone requirements. Verify that installed equipment has the correct IP rating for its location — all from one app.',
+              'Decode any IP rating instantly. Check BS 7671 zone requirements. Verify that installed equipment has the correct IP rating for its location — all from…',
             icon: Shield,
           },
         },

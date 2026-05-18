@@ -625,7 +625,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Revise for your EAL Level 3 with Elec-Mate"
-          description="Flashcards, AI tutor, and mock exams for every unit of your EAL Level 3 Electrical Installation qualification. Study on your phone, pass your exams. 7-day free trial."
+          description="Flashcards, AI tutor, and mock exams for every unit of your EAL Level 3 Electrical Installation qualification. Study on your phone, pass your exams."
           icon={BookOpen}
         />
       </>
@@ -640,10 +640,10 @@ const sections = [
 export default function EALLevel3GuidePage() {
   return (
     <GuideTemplate
-      title="EAL Level 3 Electrical Installation | EAL vs City & Guilds Guide"
-      description="Complete guide to the EAL Level 3 Electrical Installation qualification. What EAL is, qualification structure, units covered, EAL vs City & Guilds comparison, employer and college acceptance, assessment methods, and next steps."
+      title="EAL Level 3 Electrical Installation | EAL vs City & Guilds"
+      description="Complete guide to the EAL Level 3 Electrical Installation qualification. What EAL is, qualification structure, units covered…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Qualification Guide"

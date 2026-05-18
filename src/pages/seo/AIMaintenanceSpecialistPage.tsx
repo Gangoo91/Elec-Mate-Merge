@@ -118,7 +118,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description:
-      'Complete guide to the 18th Edition of the IET Wiring Regulations including Amendment 3:2024.',
+      'Complete guide to the 18th Edition of the IET Wiring Regulations including Amendment 4:2024.',
     icon: FileText,
     category: 'Guide',
   },
@@ -155,7 +155,7 @@ const features = [
     icon: ShieldCheck,
     title: 'Compliance Tracking',
     description:
-      'Track all statutory and regulatory testing requirements. Automatic alerts when periodic inspections, emergency lighting tests, and fire alarm tests are due.',
+      'Track all statutory and regulatory testing requirements. Automatic alerts when periodic inspections, emergency lighting tests…',
   },
   {
     icon: FileText,
@@ -167,7 +167,7 @@ const features = [
     icon: Bot,
     title: 'Conversational Guidance',
     description:
-      'Ask the AI about specific maintenance scenarios, unusual readings, or equipment-specific procedures. Get immediate, contextual answers from a specialist agent.',
+      'Ask the AI about specific maintenance scenarios, unusual readings, or equipment-specific procedures.',
   },
 ];
 
@@ -384,7 +384,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Track compliance across all your sites"
-          description="Set up your maintenance contracts in Elec-Mate and never miss a statutory test again. Automatic scheduling, reminders, and professional reporting for every site."
+          description="Set up your maintenance contracts in Elec-Mate and never miss a statutory test again. Automatic scheduling, reminders…"
           icon={ShieldCheck}
         />
       </>
@@ -400,9 +400,9 @@ export default function AIMaintenanceSpecialistPage() {
   return (
     <ToolTemplate
       title="AI Maintenance Specialist | Electrical Systems"
-      description="Plan and execute electrical maintenance programmes with AI tailored for UK installations. Intelligent scheduling, fault prediction, condition monitoring, and compliance tracking to BS 7671:2018+A4:2026."
+      description="Plan and execute electrical maintenance programmes with AI tailored for UK installations. Intelligent scheduling, fault prediction, condition monitoring…"
       datePublished="2025-08-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="AI Maintenance Agent"

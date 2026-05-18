@@ -20,9 +20,9 @@ export default function MICCCableGuidePage() {
   return (
     <GuideTemplate
       title="MICC Cable Guide | Mineral Insulated Copper Clad"
-      description="Complete guide to MICC (Mineral Insulated Copper Clad) cable. Properties, fire performance, where to use MICC cable, termination and sealing, testing procedures, BS EN 60702, and comparison with FP200 fire performance cable for UK electrical installations."
+      description="Complete guide to MICC (Mineral Insulated Copper Clad) cable. Properties, fire performance, where to use MICC cable, termination and sealing…"
       datePublished="2025-06-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'MICC Cable', href: '/guides/micc-cable-guide' },
@@ -325,7 +325,7 @@ export default function MICCCableGuidePage() {
               </div>
               <SEOAppBridge
                 title="Fire Alarm Certificate Forms"
-                description="Elec-Mate's fire alarm certificate forms include specific fields for cable type (MICC, FP200), insulation resistance results, and fire alarm system categories. Generate professional BS 5839 certificates with all required test data."
+                description="Elec-Mate's fire alarm certificate forms include specific fields for cable type (MICC, FP200), insulation resistance results…"
                 icon={FileText}
               />
             </>
@@ -466,7 +466,7 @@ export default function MICCCableGuidePage() {
               </p>
               <SEOAppBridge
                 title="Record MICC Test Results Digitally"
-                description="Elec-Mate's certificate forms capture insulation resistance readings with trend analysis — compare current readings against previous inspection results to identify deteriorating MICC cable seals before they become a safety issue."
+                description="Elec-Mate's certificate forms capture insulation resistance readings with trend analysis — compare current readings against previous inspection results…"
                 icon={ClipboardCheck}
               />
             </>

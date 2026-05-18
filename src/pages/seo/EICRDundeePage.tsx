@@ -531,7 +531,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Dundee EICR business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -547,9 +547,9 @@ export default function EICRDundeePage() {
   return (
     <GuideTemplate
       title="EICR Dundee | Electrical Inspection Dundee"
-      description="EICR Dundee — costs, Scottish legal requirements, and what to expect from an electrical inspection in Dundee. Guide for landlords, homeowners, and electricians covering Dundee's tenement properties, Scottish Repairing Standard, and 2026 pricing."
+      description="EICR Dundee 2026: typical costs, Scottish letting + landlord legal duties, and what to expect from an electrical inspection — for trade + clients."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

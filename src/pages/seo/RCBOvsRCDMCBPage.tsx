@@ -102,7 +102,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
-      'Amendment 3 requirements, metal enclosures, and consumer unit replacement regulations.',
+      'Amendment 4 requirements, metal enclosures, and consumer unit replacement regulations.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -279,7 +279,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="AI board scanner identifies every RCBO and MCB"
-          description="Point your phone at the consumer unit. Elec-Mate's AI board scanner reads every device — RCBO, MCB, RCD, isolator — identifying type (A, B, F), rating, and manufacturer. The EICR schedule populates automatically. No writing anything down."
+          description="Point your phone at the consumer unit. Elec-Mate's AI board scanner reads every device — RCBO, MCB, RCD, isolator — identifying type (A, B, F), rating…"
           icon={Camera}
         />
       </>
@@ -437,7 +437,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Voice test entry for EICR schedule of tests"
-          description="Whether the board has RCBOs or shared RCDs, Elec-Mate records the protection arrangement for every circuit. Speak your test results — 'RCBO 1, Type A, 30 milliamp, trip time positive 22 milliseconds' — and the schedule fills in automatically. 70+ calculators validate every reading against BS 7671."
+          description="Whether the board has RCBOs or shared RCDs, Elec-Mate records the protection arrangement for every circuit."
           icon={Mic}
         />
       </>
@@ -551,7 +551,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Capture every protection device with AI board scanning"
-          description="Elec-Mate's AI board scanner reads the consumer unit from a photo — identifying every MCB, RCBO, RCD, and isolator with its type, rating, and manufacturer. The EICR and EIC schedules auto-populate. Combined with voice test entry and 70+ calculators, you complete certificates faster and more accurately."
+          description="Elec-Mate's AI board scanner reads the consumer unit from a photo — identifying every MCB, RCBO, RCD, and isolator with its type, rating…"
           icon={Camera}
         />
       </>
@@ -567,9 +567,9 @@ export default function RCBOvsRCDMCBPage() {
   return (
     <GuideTemplate
       title="RCBO vs RCD + MCB | Which Is Better?"
-      description="Complete comparison of RCBO boards vs split-load RCD+MCB consumer units for UK electricians. Cost comparison, nuisance tripping advantage, fault diagnosis, consumer unit design trends, and practical guidance on when to use each arrangement."
+      description="Complete comparison of RCBO boards vs split-load RCD+MCB consumer units for UK electricians. Cost comparison, nuisance tripping advantage…"
       datePublished="2025-07-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Protection Design"

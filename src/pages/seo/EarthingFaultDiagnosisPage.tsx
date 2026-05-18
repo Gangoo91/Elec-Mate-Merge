@@ -362,7 +362,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AI guides you through earth fault diagnosis"
-          description="Enter your insulation resistance readings and circuit details. Elec-Mate AI suggests the most efficient half-split strategy, identifies the likely fault type, and generates the correct observation code for the EICR."
+          description="Enter your insulation resistance readings and circuit details. Elec-Mate AI suggests the most efficient half-split strategy…"
           icon={Brain}
         />
       </>
@@ -606,7 +606,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Record test results by voice, on site"
-          description="Elec-Mate voice entry lets you speak insulation resistance readings while your hands are on the test leads. AI flags low readings, suggests observation codes, and generates the EICR automatically. 7-day free trial."
+          description="Elec-Mate voice entry lets you speak insulation resistance readings while your hands are on the test leads."
           icon={Brain}
         />
       </>
@@ -622,9 +622,9 @@ export default function EarthingFaultDiagnosisPage() {
   return (
     <GuideTemplate
       title="Earthing Fault Diagnosis | Finding Earth Faults"
-      description="How to find earth faults in electrical installations. Expert guide covering insulation resistance testing, the half-split method, earth leakage clamp meter technique, common fault locations, and intermittent faults. For qualified electricians."
+      description="How to find earth faults in electrical installations. Expert guide covering insulation resistance testing, the half-split method…"
       datePublished="2025-06-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting"

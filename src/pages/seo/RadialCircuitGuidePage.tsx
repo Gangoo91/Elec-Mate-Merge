@@ -282,7 +282,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Size radial circuit cables in seconds"
-          description="Elec-Mate's cable sizing calculator applies all BS 7671 correction factors for your radial circuit automatically. Enter the load, cable length, installation method, and get the correct cable size with voltage drop confirmation."
+          description="Elec-Mate's cable sizing calculator applies all BS 7671 correction factors for your radial circuit automatically."
           icon={Calculator}
         />
       </>
@@ -673,7 +673,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Check voltage drop and Zs before you install"
-          description="Elec-Mate's voltage drop calculator and cable sizing tool check your radial circuit design against BS 7671 limits before you run a single metre of cable. Avoid costly rework by getting it right at the design stage."
+          description="Elec-Mate's voltage drop calculator and cable sizing tool check your radial circuit design against BS 7671 limits before you run a single metre of cable."
           icon={Calculator}
         />
       </>
@@ -688,10 +688,10 @@ const sections = [
 export default function RadialCircuitGuidePage() {
   return (
     <GuideTemplate
-      title="Radial Circuit: BS 7671:2018+A4:2026 Rules"
-      description="Radial circuits handle 32A loads safely. Master cable sizing, MCB protection, and design rules under 2026 regs—plus when to use radials over rings."
+      title="Radial Circuit: Cable Size & MCB Rules 2026"
+      description="Radial circuits protect 32A loads safely. Learn cable sizing, MCB selection, and BS 7671:2018+A4:2026 design rules for domestic and commercial installs."
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

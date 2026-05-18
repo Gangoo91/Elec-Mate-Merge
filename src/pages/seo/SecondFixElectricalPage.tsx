@@ -238,7 +238,7 @@ const sections = [
         <p>
           Under{' '}
           <SEOInternalLink href="/guides/consumer-unit-regulations">
-            BS 7671 and Amendment 3 (A4:2026)
+            BS 7671 and Amendment 4 (A4:2026)
           </SEOInternalLink>
           , consumer units in domestic premises must be constructed of non-combustible material
           (typically steel). The choice between a split-load board with RCDs and a board populated
@@ -387,7 +387,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Enter test results by voice while you test"
-          description="Elec-Mate's voice test entry lets you speak your readings directly into the schedule of test results. 'Ring circuit 1, R1+R2 0.32, Zs 0.89, insulation resistance 200 megohms.' No putting down the probes to type."
+          description="Elec-Mate's voice test entry lets you speak your readings directly into the schedule of test results."
           icon={TestTube2}
         />
       </>
@@ -455,7 +455,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Complete EIC certificates on your phone"
-          description="Join 1,000+ UK electricians creating professional EIC certificates with Elec-Mate. AI board scanner, voice test entry, schedule of test results, and instant PDF delivery. 7-day free trial."
+          description="Join 1,000+ UK electricians creating professional EIC certificates with Elec-Mate. AI board scanner, voice test entry, schedule of test results…"
           icon={FileCheck2}
         />
       </>
@@ -579,9 +579,9 @@ export default function SecondFixElectricalPage() {
   return (
     <GuideTemplate
       title="Second Fix Electrical | Completion & Testing Guide"
-      description="Complete guide to second fix electrical work in the UK. Fitting accessories, consumer unit wiring, labelling, initial verification testing under BS 7671 Chapter 64, and issuing the EIC certificate."
+      description="Second fix electrical work in the UK: fitting accessories, consumer unit wiring, labelling, testing sequence, snagging, sign-off documentation."
       datePublished="2025-07-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

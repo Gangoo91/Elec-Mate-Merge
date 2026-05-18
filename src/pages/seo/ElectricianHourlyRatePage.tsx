@@ -577,7 +577,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, invoice, and certify — all from your phone"
-          description="Join 1,000+ UK electricians using Elec-Mate to produce professional quotes, certificates, and invoices on site. Stop losing jobs to slower competitors. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to produce professional quotes, certificates, and invoices on site. Stop losing jobs to slower competitors."
           icon={Zap}
         />
       </>
@@ -592,10 +592,10 @@ const sections = [
 export default function ElectricianHourlyRatePage() {
   return (
     <GuideTemplate
-      title="Electrician Hourly Rate UK 2026 | Regional Rates, Callouts and Pricing Guide"
-      description="What electricians charge per hour in the UK in 2026. Regional rates: London £65–£90/hr, South East £55–£75/hr, Midlands/North £40–£60/hr, Scotland £45–£65/hr. Emergency rates (1.5x–2x), callout charges, overhead breakdown, and how to price jobs."
+      title="Electrician Hourly Rate UK 2026 | Regional Rates, Callouts"
+      description="What electricians charge per hour in the UK in 2026. Regional rates: London £65–£90/hr, South East £55–£75/hr, Midlands/North £40–£60/hr…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Pricing Guide"

@@ -557,7 +557,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete commercial installation certificates on your phone"
-          description="Elec-Mate's EIC and EICR apps help you certify commercial cable tray installations on site. Record circuit tests, earth continuity, and installation details — instant PDF export. 7-day free trial."
+          description="Elec-Mate's EIC and EICR apps help you certify commercial cable tray installations on site. Record circuit tests, earth continuity…"
           icon={FileCheck2}
         />
       </>
@@ -572,10 +572,10 @@ const sections = [
 export default function CableTrayInstallationPage() {
   return (
     <GuideTemplate
-      title="Cable Tray Installation UK | Commercial & Industrial Cable Management"
-      description="Complete UK guide to cable tray installation. Types (perforated, solid bottom, ladder, wire mesh), materials (hot-dip galvanised, stainless steel, PVC), support spacing, earthing requirements, fill ratio, and typical commercial installation sequence."
+      title="Cable Tray Installation UK | Commercial & Industrial Cable"
+      description="Complete UK guide to cable tray installation. Types (perforated, solid bottom, ladder, wire mesh), materials (hot-dip galvanised, stainless steel, PVC)…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

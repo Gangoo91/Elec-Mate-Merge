@@ -21,7 +21,7 @@ import {
 
 const PAGE_TITLE = 'Insulation Resistance Minimum Values | BS 7671 Guide';
 const PAGE_DESCRIPTION =
-  'Complete guide to insulation resistance minimum values per BS 7671 Table 61. 1 megohm minimum, test voltage by circuit voltage, what affects readings, troubleshooting low IR values. For UK electricians.';
+  'Insulation resistance minimums per BS 7671 Table 61: 1 MΩ floor, test voltage by circuit voltage, what affects readings, low-IR troubleshooting.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -218,7 +218,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Auto-validates every IR reading on site"
-          description="Enter your insulation resistance reading into Elec-Mate and the app instantly validates it against the BS 7671 minimum of 1 MΩ. Any reading below the threshold is flagged in red. The test voltage is recorded alongside the result on the schedule of tests."
+          description="Enter your insulation resistance reading into Elec-Mate and the app instantly validates it against the BS 7671 minimum of 1 MΩ."
           icon={Calculator}
         />
       </>
@@ -465,7 +465,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Instant IR validation on site"
-          description="Enter your insulation resistance readings and Elec-Mate validates each one against the BS 7671 minimum of 1 MΩ. Failures are flagged in red. Borderline readings (1-2 MΩ) get an amber warning. Voice entry lets you speak results while holding your test probes."
+          description="Enter your insulation resistance readings and Elec-Mate validates each one against the BS 7671 minimum of 1 MΩ. Failures are flagged in red."
           icon={Gauge}
         />
         <p>
@@ -541,7 +541,7 @@ export default function InsulationResistanceMinimumValuesPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-03-12"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

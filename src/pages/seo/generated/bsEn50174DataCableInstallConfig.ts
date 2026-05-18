@@ -5,14 +5,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // 15 April 2026), Section 528 (Proximity to other services) and the IET On-Site Guide.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const bsEn50174DataCableInstallConfig: GeneratedGuideConfig = {
   pagePath: '/guides/bs-en-50174-data-cable-installation',
   title:
-    'BS EN 50174 Data Cable Installation Practice — UK Electricians Guide | Elec-Mate',
+    'BS EN 50174 Data Cable Installation Practice — UK',
   description:
-    'BS EN 50174 explained for UK electricians — installation planning under Parts 1, 2 and 3, pull tension, bend radius, segregation under BS 7671 Section 528, tray fill, earthing of containment, and the documentation to hand a compliant cabling job to the network installer.',
+    'BS EN 50174 explained for UK electricians — installation planning under Parts 1, 2 and 3, pull tension, bend radius…',
   datePublished: published,
   dateModified: modified,
   readingTime: 16,
@@ -175,7 +175,7 @@ export const bsEn50174DataCableInstallConfig: GeneratedGuideConfig = {
         {
           type: 'callout',
           tone: 'warning',
-          title: 'The "tight 90 at the back of the cabinet" is the most common failure',
+          title: 'The "tight 90 at the back of the cabinet" is the most',
           text:
             'The single most common defect that fails certification is a sharp 90° bend where the cable transitions from a basket tray into the back of a 19" rack, or from a tray down a riser into a wall box. Use a 100 mm sweep bend or cable management rings — never run the cable directly against the rear frame.',
         },
@@ -210,7 +210,7 @@ export const bsEn50174DataCableInstallConfig: GeneratedGuideConfig = {
         {
           type: 'callout',
           tone: 'warning',
-          title: 'Mixed compartments without a barrier — non-compliant on both standards',
+          title: 'Mixed compartments without a barrier — non-compliant on',
           text:
             'Running Cat6a alongside SWA mains in the same compartment of dado trunking without a metallic divider fails BS 7671 Section 528.1 AND the separation distances of BS EN 50174-2. Either fit the divider, run in separate trunking, or accept the link will fail certification and the EIC cannot be honestly signed.',
         },

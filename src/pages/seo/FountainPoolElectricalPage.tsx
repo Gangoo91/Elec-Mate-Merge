@@ -520,8 +520,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Water feature electrical certification made simple with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion, test result recording, and instant PDF export. Ideal for fountain, pool, and water feature installations. 7-day free trial."
+          title="Water feature electrical certification made simple with"
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion, test result recording, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -536,10 +536,10 @@ const sections = [
 export default function FountainPoolElectricalPage() {
   return (
     <GuideTemplate
-      title="Decorative Fountain & Feature Pool Electrical | BS 7671 Section 702"
-      description="Complete guide to decorative fountain, feature pool, and garden water feature electrical installations under BS 7671 Section 702. Zone requirements, IP ratings, SELV, underwater luminaires, and supplementary bonding."
+      title="Decorative Fountain & Feature Pool Electrical | BS 7671"
+      description="Complete guide to decorative fountain, feature pool, and garden water feature electrical installations under BS 7671 Section 702."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Specialist Installation"

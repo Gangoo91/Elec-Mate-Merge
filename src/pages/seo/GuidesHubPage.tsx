@@ -14,9 +14,9 @@ import {
   Zap,
 } from 'lucide-react';
 
-const PAGE_TITLE = 'Electrical Guides Hub | BS 7671, Testing, Compliance and Installation Guides';
+const PAGE_TITLE = 'UK Electrical Guides | BS 7671, Testing, Compliance';
 const PAGE_DESCRIPTION =
-  'Browse Elec-Mate electrical guides covering BS 7671, inspection and testing, Part P, earthing, consumer units, EV charging, solar PV, and practical electrician workflows.';
+  'Elec-Mate electrical guides: BS 7671, inspection + testing, Part P, earthing, consumer units, EV charging, solar PV, practical workflows.';
 
 const features = [
   {
@@ -121,7 +121,7 @@ export default function GuidesHubPage() {
       { name: 'Home', url: '/' },
       { name: 'Guides', url: '/guides' },
     ],
-    dateModified: '2026-04-12',
+    dateModified: '2026-05-18',
     author: 'Elec-Mate Technical Team',
   });
 

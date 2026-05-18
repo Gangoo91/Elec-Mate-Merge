@@ -18,7 +18,7 @@ import {
 
 const PAGE_TITLE = 'How Long to Keep Electrical Certificates UK';
 const PAGE_DESCRIPTION =
-  'Complete guide to electrical certificate retention periods in the UK. EICR, EIC, Minor Works retention rules. Landlord obligations, commercial requirements, digital vs paper storage, legal discovery, and insurance claims.';
+  'UK electrical certificate retention: EICR, EIC, Minor Works rules. Landlord + commercial duties, digital vs paper, legal discovery, insurance.';
 
 const breadcrumbs = [
   { label: 'Certificates', href: '/guides/electrical-certificate-types-uk' },
@@ -180,7 +180,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Permanent cloud storage for all certificates"
-          description="Every certificate created in Elec-Mate is stored in the cloud permanently. No storage limits, no expiry. Search by property, date, or client. Download any certificate as a professional PDF at any time. No more lost paper certificates."
+          description="Every certificate created in Elec-Mate is stored in the cloud permanently. No storage limits, no expiry. Search by property, date, or client."
           icon={Cloud}
         />
       </>
@@ -326,7 +326,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Never lose a certificate again"
-          description="Elec-Mate stores every certificate in the cloud the moment you create it. Search by property address, client name, certificate type, or date. Download a professional PDF instantly. Your complete certificate history in one searchable place."
+          description="Elec-Mate stores every certificate in the cloud the moment you create it. Search by property address, client name, certificate type, or date."
           icon={Search}
         />
       </>
@@ -426,7 +426,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Professional certificate records management"
-          description="Elec-Mate stores all your certificates in the cloud permanently. Search by property, date, client, or certificate type. Download professional PDFs any time. No storage limits. No paper filing. Built for electricians who take their records seriously."
+          description="Elec-Mate stores all your certificates in the cloud permanently. Search by property, date, client, or certificate type."
           icon={Cloud}
         />
         <p>
@@ -498,7 +498,7 @@ export default function ElectricalCertificateRetentionPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-07-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Compliance Guide"

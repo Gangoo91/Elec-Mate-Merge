@@ -413,7 +413,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AI generates your RAMS in minutes"
-          description="Elec-Mate's AI Health and Safety agent creates risk assessments and method statements tailored to each job. Describe the work — domestic rewire, commercial fit-out, solar PV installation — and get a professional RAMS document covering CDM requirements, EAWR compliance, and site-specific hazards."
+          description="Elec-Mate's AI Health and Safety agent creates risk assessments and method statements tailored to each job."
           icon={Brain}
         />
       </>
@@ -684,7 +684,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="CDM compliance without the paperwork pain"
-          description="Elec-Mate's AI Health and Safety agent generates RAMS documents tailored to each job. Digital certificates provide professional as-built documentation. 46+ training courses keep your competence current. 7-day free trial, cancel anytime."
+          description="Elec-Mate's AI Health and Safety agent generates RAMS documents tailored to each job. Digital certificates provide professional as-built documentation."
           icon={ShieldCheck}
         />
       </>
@@ -700,9 +700,9 @@ export default function CDM2015ElectriciansPage() {
   return (
     <GuideTemplate
       title="CDM 2015 for Electricians | Duties & Responsibilities"
-      description="Complete guide to CDM 2015 for electrical contractors. Contractor duties, principal designer, principal contractor, pre-construction information, construction phase plan, and health and safety file requirements."
+      description="Complete guide to CDM 2015 for electrical contractors. Contractor duties, principal designer, principal contractor, pre-construction information…"
       datePublished="2025-05-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations"

@@ -56,7 +56,7 @@ const faqs = [
   {
     question: 'Do I need CPD if I am not registered with a competent person scheme?',
     answer:
-      'If you are not registered with a competent person scheme (such as NICEIC, NAPIT, or ELECSA), there is no legal requirement for CPD. However, CPD is strongly recommended for all electricians regardless of scheme membership. The electrical industry is constantly evolving — BS 7671 is amended regularly (Amendment 3 was issued in 2024, Amendment 4 is expected in 2026), new technologies such as EV charging and battery storage are creating demand for new skills, and health and safety regulations are updated frequently. An electrician who does not keep their knowledge current risks making errors, using outdated practices, and losing work to competitors who can demonstrate up-to-date competence. Even without a formal requirement, CPD makes you a better, safer, and more employable electrician.',
+      'If you are not registered with a competent person scheme (such as NICEIC, NAPIT, or ELECSA), there is no legal requirement for CPD. However, CPD is strongly recommended for all electricians regardless of scheme membership. The electrical industry is constantly evolving — BS 7671 is amended regularly (Amendment 4 was issued in 2024, Amendment 4 is expected in 2026), new technologies such as EV charging and battery storage are creating demand for new skills, and health and safety regulations are updated frequently. An electrician who does not keep their knowledge current risks making errors, using outdated practices, and losing work to competitors who can demonstrate up-to-date competence. Even without a formal requirement, CPD makes you a better, safer, and more employable electrician.',
   },
   {
     question: 'What happens if I do not complete my CPD hours?',
@@ -165,7 +165,7 @@ const sections = [
         <p>
           <strong>Regulatory changes:</strong>{' '}
           <SEOInternalLink href="/eighteenth-edition-course">BS 7671</SEOInternalLink> is
-          amended regularly. Amendment 3 was issued in July 2024, adding requirements for
+          amended regularly. Amendment 4 was issued in July 2024, adding requirements for
           bidirectional and unidirectional devices (Section 530, A4:2026 addition). Amendment 4 is
           expected in 2026. Each amendment changes how installations must be designed, installed,
           and tested. If you are not aware of the changes, you risk non-compliant work — which can
@@ -233,7 +233,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="CPD Hours Tracked Automatically"
-          description="Every minute of study on Elec-Mate is automatically logged with timestamps, topics, and durations. Download your complete CPD report for your scheme assessment — no manual tracking needed."
+          description="Every minute of study on Elec-Mate is automatically logged with timestamps, topics, and durations."
           icon={Clock}
         />
       </>
@@ -307,7 +307,7 @@ const sections = [
           have the biggest impact on your career.
         </p>
         <p>
-          <strong>BS 7671:2018+A4:2026 Update:</strong> If you qualified before Amendment 3 was
+          <strong>BS 7671:2018+A4:2026 Update:</strong> If you qualified before Amendment 4 was
           issued in July 2024, you need to understand the changes — including the new requirements
           for bidirectional and unidirectional devices. The{' '}
           <SEOInternalLink href="/eighteenth-edition-course">
@@ -336,7 +336,7 @@ const sections = [
           <strong>Inspection and Testing Update:</strong> If you hold the{' '}
           <SEOInternalLink href="/city-guilds2391">C&G 2391</SEOInternalLink> and want to
           stay current with testing practices, a refresher course covers the latest requirements,
-          common EICR issues, and changes introduced by Amendment 3.
+          common EICR issues, and changes introduced by Amendment 4.
         </p>
         <p>
           <strong>Emergency Lighting (BS 5266):</strong> Emergency lighting design, installation,
@@ -351,7 +351,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="46+ Courses on One Platform"
-          description="From BS 7671 updates to EV charging, solar PV, fire alarm, and health and safety courses — Elec-Mate has 46+ courses across 4 categories. Study on your phone between jobs. Every minute tracked as CPD."
+          description="From BS 7671 updates to EV charging, solar PV, fire alarm, and health and safety courses — Elec-Mate has 46+ courses across 4 categories."
           icon={BookOpen}
         />
       </>
@@ -487,7 +487,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="46+ CPD Courses on Your Phone"
-          description="Study between jobs with courses covering BS 7671, EV charging, solar PV, fire alarm, health and safety, and more. Every minute tracked as CPD. Generate scheme-ready reports in one tap."
+          description="Study between jobs with courses covering BS 7671, EV charging, solar PV, fire alarm, health and safety, and more. Every minute tracked as CPD."
           icon={Brain}
         />
       </>
@@ -498,10 +498,10 @@ const sections = [
 export default function CPDForElectriciansPage() {
   return (
     <GuideTemplate
-      title="CPD for Electricians UK 2026 | Continuing Professional Development"
-      description="Complete guide to CPD for UK electricians in 2026. How many hours you need, what counts as CPD, popular courses, recording CPD for your scheme assessment, and 46+ courses on Elec-Mate."
+      title="CPD for Electricians UK 2026 | Continuing Professional"
+      description="Complete guide to CPD for UK electricians in 2026. How many hours you need, what counts as CPD, popular courses…"
       datePublished="2025-07-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="CPD Guide"

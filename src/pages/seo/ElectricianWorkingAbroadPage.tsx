@@ -457,7 +457,7 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Manage your electrical business and certificates wherever you are"
+          title="Manage your electrical business and certificates wherever"
           description="Elec-Mate works on iOS and Android — complete certificates, manage jobs, and stay on top of your business whether you are in the UK or working abroad."
           icon={Globe}
         />
@@ -473,10 +473,10 @@ const sections = [
 export default function ElectricianWorkingAbroadPage() {
   return (
     <GuideTemplate
-      title="UK Electricians Working Abroad | UAE, Australia, Canada Guide 2026"
-      description="Guide for UK electricians working abroad — Middle East salaries (UAE £55,000–£100,000 tax-free), Australia, Canada. Qualification equivalency (BS 7671 vs NEC, AS/NZS 3000), visa routes, and practical considerations."
+      title="UK Electricians Working Abroad | UAE, Australia, Canada"
+      description="Guide for UK electricians working abroad — Middle East salaries (UAE £55,000–£100,000 tax-free), Australia, Canada."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

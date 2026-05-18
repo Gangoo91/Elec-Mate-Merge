@@ -531,7 +531,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional certification for York electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting. Everything you need for domestic, commercial, and heritage electrical work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting."
           icon={MapPin}
         />
       </>
@@ -548,9 +548,9 @@ export default function ElectricianYorkPage() {
     <GuideTemplate
       localArea="York"
       title="Electrician in York | Local Electrical Guide"
-      description="Complete guide for electricians working in York. Northern Powergrid DNO, listed building electrical work, flood risk safety, tourism and hospitality electrical maintenance, and realistic York pricing."
+      description="Complete guide for electricians working in York. Northern Powergrid DNO, listed building electrical work, flood risk safety…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Location Guide"

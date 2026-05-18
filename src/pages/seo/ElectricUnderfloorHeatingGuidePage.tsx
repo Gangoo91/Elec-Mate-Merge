@@ -504,10 +504,10 @@ const sections = [
 export default function ElectricUnderfloorHeatingGuidePage() {
   return (
     <GuideTemplate
-      title="Electric Underfloor Heating Installation Guide — Mat, Loose Wire, BS 7671 Section 753"
-      description="Complete UK guide to electric underfloor heating: mat vs loose wire systems, thermostat wiring, BS 7671 Regulation 753, circuit sizing, RCBO protection, bathroom zone requirements, and testing."
+      title="Electric Underfloor Heating Installation Guide — Mat, Loose"
+      description="Complete UK guide to electric underfloor heating: mat vs loose wire systems, thermostat wiring, BS 7671 Regulation 753, circuit sizing, RCBO protection…"
       datePublished="2024-06-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Underfloor Heating"

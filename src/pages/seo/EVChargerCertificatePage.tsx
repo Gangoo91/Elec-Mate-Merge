@@ -21,7 +21,7 @@ import {
   Gauge,
 } from 'lucide-react';
 
-const PAGE_TITLE = 'EV Charger Installation Certificate App | BS 7671 Section 722 | Elec-Mate';
+const PAGE_TITLE = 'EV Charger Certificate App | BS 7671 Section 722';
 const PAGE_DESCRIPTION =
   'Create EV charger installation certificates on your phone. BS 7671 Section 722 compliant. PME assessment, load management, and digital signatures. Start free.';
 
@@ -90,37 +90,37 @@ const features = [
     icon: ShieldCheck,
     title: 'Section 722 Compliant',
     description:
-      'Every EV charger certificate includes the full BS 7671 Section 722 checklist. PME assessment, earthing requirements, and load management documentation are built into the form structure.',
+      'Every EV charger certificate includes the full BS 7671 Section 722 checklist. PME assessment, earthing requirements…',
   },
   {
     icon: Activity,
     title: 'PME Assessment Built In',
     description:
-      'The dedicated PME assessment section walks you through Regulation 722.411.4.1. Earth electrode requirements, protective conductor sizing, and RCD selection are all guided and validated.',
+      'The dedicated PME assessment section walks you through Regulation 722.411.4.1. Earth electrode requirements, protective conductor sizing…',
   },
   {
     icon: Gauge,
     title: 'Maximum Demand Calculator',
     description:
-      'Calculate the total maximum demand including the new EV charger. The app flags when the load exceeds the supply fuse rating and prompts you to document load management measures.',
+      'Calculate the total maximum demand including the new EV charger. The app flags when the load exceeds the supply fuse rating and prompts you to document…',
   },
   {
     icon: Smartphone,
     title: 'Complete on Your Phone',
     description:
-      'Fill out the entire EV charger certificate on site using your phone or tablet. Works offline with automatic saving, so you never lose data even in a garage with no signal.',
+      'Fill out the entire EV charger certificate on site using your phone or tablet. Works offline with automatic saving…',
   },
   {
     icon: PenTool,
     title: 'Digital Signatures',
     description:
-      'Capture installer and client signatures directly on-screen. No printing or scanning required. The signed certificate is ready to send before you leave the property.',
+      'Capture installer and client signatures directly on-screen. No printing or scanning required.',
   },
   {
     icon: Download,
     title: 'PDF Export for Grant Claims',
     description:
-      'Export a professional PDF that meets scheme provider and grant submission requirements. All Section 722 documentation, test results, and photographs in one clean document.',
+      'Export a professional PDF that meets scheme provider and grant submission requirements. All Section 722 documentation, test results…',
   },
 ];
 
@@ -166,7 +166,7 @@ const howToSchema = {
 
 export default function EVChargerCertificatePage() {
   useSEO({
-    title: 'EV Charger Installation Certificate App | BS 7671 Section 722',
+    title: 'EV Charger Installation Certificate App | BS 7671 Section',
     description: PAGE_DESCRIPTION,
     schema: softwareAppSchema,
   });
@@ -679,7 +679,7 @@ export default function EVChargerCertificatePage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Create EV Charger Certificates on Your Phone"
-            description="BS 7671 Section 722 compliant EV charger installation certificates with PME assessment, load management documentation, and digital signatures — completed on site before you leave."
+            description="BS 7671 Section 722 compliant EV charger installation certificates with PME assessment, load management documentation…"
             ctaText="Start 7-day free trial"
             ctaHref="/auth/signup"
           />

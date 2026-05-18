@@ -386,7 +386,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Industrial training on Elec-Mate"
-          description="Elec-Mate's training courses cover three-phase systems, motor control, inspection and testing of industrial installations, and BS 7671 requirements for industrial premises. Study on your phone between shifts."
+          description="Elec-Mate's training courses cover three-phase systems, motor control, inspection and testing of industrial installations…"
           icon={GraduationCap}
         />
       </>
@@ -605,7 +605,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Generate RAMS for industrial work"
-          description="Elec-Mate's AI RAMS Generator creates site-specific Risk Assessments and Method Statements for industrial electrical activities — motor replacements, switchgear maintenance, cable installations, and commissioning. Professional documentation ready for the safety manager."
+          description="Elec-Mate's AI RAMS Generator creates site-specific Risk Assessments and Method Statements for industrial electrical activities — motor replacements…"
           icon={HardHat}
         />
       </>
@@ -773,9 +773,9 @@ export default function IndustrialElectricianGuidePage() {
   return (
     <GuideTemplate
       title="Industrial Electrician Guide | Skills & Career UK"
-      description="Complete guide to working as an industrial electrician in the UK. Three-phase systems, motor control, PLC programming, variable speed drives, maintenance strategies, qualifications, earnings, and career progression in industrial electrical work."
+      description="Complete guide to working as an industrial electrician in the UK. Three-phase systems, motor control, PLC programming, variable speed drives…"
       datePublished="2025-06-25"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

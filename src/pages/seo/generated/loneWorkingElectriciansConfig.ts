@@ -5,13 +5,13 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Edition) and the Electricity at Work Regulations 1989.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const loneWorkingElectriciansConfig: GeneratedGuideConfig = {
   pagePath: '/guides/lone-working-electricians',
   title: 'Lone Working Procedures for UK Electricians | Elec-Mate',
   description:
-    'Lone working procedures for UK electricians: what counts as lone working in the trade, the legal duty under HSE INDG73 and the Management of Health and Safety at Work Regulations 1999, control measures, tasks you must not do alone, and mental health considerations. Practical, BS 7671 and EAWR 1989 aligned guidance.',
+    'Lone working procedures for UK electricians: what counts as lone working in the trade…',
   datePublished: published,
   dateModified: modified,
   readingTime: 12,

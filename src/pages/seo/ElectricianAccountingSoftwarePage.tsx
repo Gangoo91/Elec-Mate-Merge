@@ -20,9 +20,9 @@ export default function ElectricianAccountingSoftwarePage() {
   return (
     <GuideTemplate
       title="Accounting Software for Electricians | Best Options 2026"
-      description="Compare the best accounting software for UK electricians in 2026. Covers QuickBooks, Xero, and FreeAgent features, MTD for VAT compliance, expense tracking, invoicing integration, and how to choose the right platform for your electrical business."
+      description="Compare the best accounting software for UK electricians in 2026. Covers QuickBooks, Xero, and FreeAgent features, MTD for VAT compliance…"
       datePublished="2026-01-08"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Business', href: '/guides' },
         { label: 'Accounting Software', href: '/guides/electrician-accounting-software' },
@@ -399,7 +399,7 @@ export default function ElectricianAccountingSoftwarePage() {
               </p>
               <SEOAppBridge
                 title="Job Profitability Tracking in Elec-Mate"
-                description="While your accounting software tracks overall business finances, Elec-Mate's job profitability calculator tracks individual job performance. See exactly which jobs make money and which lose money — material costs, labour hours, and profit margin for every job."
+                description="While your accounting software tracks overall business finances, Elec-Mate's job profitability calculator tracks individual job performance."
                 icon={TrendingUp}
               />
             </>
@@ -517,7 +517,7 @@ export default function ElectricianAccountingSoftwarePage() {
               </div>
               <SEOAppBridge
                 title="Cash Flow Planner for Electrical Businesses"
-                description="Elec-Mate's cash flow planner helps you forecast income and expenses across upcoming jobs. See projected revenue, material costs, and profit margins before jobs start — then compare with actual results in your accounting software after completion."
+                description="Elec-Mate's cash flow planner helps you forecast income and expenses across upcoming jobs. See projected revenue, material costs…"
                 icon={PoundSterling}
               />
             </>

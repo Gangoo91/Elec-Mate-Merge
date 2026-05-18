@@ -20,9 +20,9 @@ export default function ElectricalMarketingTipsPage() {
   return (
     <GuideTemplate
       title="Marketing Tips for Electricians | Get More Work UK"
-      description="Practical marketing strategies for UK electricians. Covers Google Business Profile optimisation, social media, word of mouth, website essentials, van livery, Checkatrade and Bark, email marketing, and building a consistent pipeline of work."
+      description="Practical marketing strategies for UK electricians. Covers Google Business Profile optimisation, social media, word of mouth, website essentials…"
       datePublished="2026-01-30"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Business', href: '/guides/business' },
         { label: 'Marketing Tips', href: '/guides/marketing-tips-electricians' },
@@ -172,7 +172,7 @@ export default function ElectricalMarketingTipsPage() {
               </p>
               <SEOAppBridge
                 title="Professional branding at every customer touchpoint"
-                description="Elec-Mate generates branded PDF certificates, quotes, and invoices with your logo. Every document the customer receives reinforces your professional image and drives repeat business and referrals."
+                description="Elec-Mate generates branded PDF certificates, quotes, and invoices with your logo. Every document the customer receives reinforces your professional…"
                 icon={FileText}
               />
             </>
@@ -469,7 +469,7 @@ export default function ElectricalMarketingTipsPage() {
               </p>
               <SEOAppBridge
                 title="Professional paperwork that generates reviews"
-                description="When customers receive branded certificates, clear quotes, and instant invoices from Elec-Mate, they notice the professionalism. That professionalism translates directly into five-star reviews and recommendations."
+                description="When customers receive branded certificates, clear quotes, and instant invoices from Elec-Mate, they notice the professionalism."
                 icon={Star}
               />
             </>

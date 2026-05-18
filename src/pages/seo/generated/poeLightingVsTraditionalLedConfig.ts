@@ -5,14 +5,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // (Lamp Controlgear) and the IET On-Site Guide for low-voltage installations.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const poeLightingVsTraditionalLedConfig: GeneratedGuideConfig = {
   pagePath: '/guides/poe-lighting-vs-traditional-led-wiring',
   title:
-    'PoE Lighting vs Traditional Mains LED Wiring — Comparison Guide for UK Electricians | Elec-Mate',
+    'PoE Lighting vs Traditional Mains LED Wiring — Comparison',
   description:
-    'Head-to-head comparison of Power-over-Ethernet (PoE) lighting and traditional mains LED for UK electricians — capex, installation labour, BS 7671 vs Section 715 ELV implications, inspection and testing differences, BMS integration, future-proofing and the use cases where each technology wins.',
+    'Head-to-head comparison of Power-over-Ethernet (PoE) lighting and traditional mains LED for UK electricians — capex, installation labour…',
   datePublished: published,
   dateModified: modified,
   readingTime: 18,
@@ -529,7 +529,7 @@ export const poeLightingVsTraditionalLedConfig: GeneratedGuideConfig = {
     {
       href: '/guides/structured-cabling-bs-en-50173-electricians',
       title: 'Structured Cabling (BS EN 50173) for Electricians',
-      description: 'The BS EN 50173 channel certification regime that sits behind every PoE lighting handover — test instruments, permanent link vs channel, and per-channel reporting.',
+      description: 'The BS EN 50173 channel certification regime that sits behind every PoE lighting handover — test instruments, permanent link vs channel…',
       icon: 'Cable',
       category: 'Guide',
     },

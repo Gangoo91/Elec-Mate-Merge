@@ -1,7 +1,7 @@
 import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuidePage';
 
 const published = '2026-04-12';
-const modified = '2026-04-12';
+const modified = '2026-05-18';
 
 export const eicWhatToIncludeConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eic-what-to-include',

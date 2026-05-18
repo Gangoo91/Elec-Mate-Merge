@@ -541,7 +541,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify security lighting installations"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Price security lighting jobs accurately and deliver professional documentation. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={Lightbulb}
         />
       </>
@@ -557,9 +557,9 @@ export default function SecurityLightingCostPage() {
   return (
     <GuideTemplate
       title="Security Lighting Installation Cost UK 2026 | Prices"
-      description="How much does security lighting cost to install in the UK? Typical prices from £100 to £600 per light. PIR floodlights, dusk-to-dawn lights, CCTV power, IP ratings, SWA cable, and planning considerations explained."
+      description="Security lighting installation cost in the UK 2026: £100–£600 per light. PIR, dusk-to-dawn, LED, smart-controlled — wiring, IP rating, RCD."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

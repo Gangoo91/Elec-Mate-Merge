@@ -337,7 +337,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote EV charger installations with confidence"
-          description="Elec-Mate's AI cost engineer helps you build accurate, itemised quotes for EV charger installations. Cable sizing, material costs, and professional PDF quotes — all from your phone."
+          description="Elec-Mate's AI cost engineer helps you build accurate, itemised quotes for EV charger installations."
           icon={Car}
         />
       </>
@@ -567,7 +567,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more EV charger installations"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Quote EV installations accurately and deliver professional results. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
           icon={Car}
         />
       </>
@@ -583,9 +583,9 @@ export default function EVChargerInstallationCostPage() {
   return (
     <GuideTemplate
       title="EV Charger Installation Cost UK 2026 | Complete Price Guide"
-      description="How much does EV charger installation cost in the UK in 2026? Complete price guide covering 7kW home chargers, 22kW commercial units, Section 722 requirements, RCD types, DNO notification, and OZEV grants."
+      description="How much does EV charger installation cost in the UK in 2026? Complete price guide covering 7kW home chargers, 22kW commercial units…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

@@ -492,7 +492,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Bradford electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the residential and rental electrical market in Bradford and West Yorkshire. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -508,10 +508,10 @@ export default function ElectricianBradfordPage() {
   return (
     <GuideTemplate
       localArea="Bradford"
-      title="Electrician Bradford | Find Qualified Electricians in Bradford"
-      description="Find qualified electricians in Bradford. NICEIC and NAPIT registered, Part P compliant. Bradford electrician rates, EICRs for landlords, consumer unit replacement, house rewiring, and EV chargers in Bradford 2026."
+      title="Electrician Bradford | Find Qualified Electricians in"
+      description="Find qualified electricians in Bradford. NICEIC and NAPIT registered, Part P compliant. Bradford electrician rates, EICRs for landlords…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Bradford"

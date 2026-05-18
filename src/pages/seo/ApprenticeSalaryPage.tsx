@@ -272,7 +272,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Pass First Time — Earn More Faster"
-          description="Elec-Mate's flashcards with spaced repetition, 2,000+ practice questions, and mock exams help you pass every qualification first time. No resits, no delays, no lost earnings."
+          description="Elec-Mate's flashcards with spaced repetition, 2,000+ practice questions, and mock exams help you pass every qualification first time."
           icon={TrendingUp}
         />
       </>
@@ -411,7 +411,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Plan Your Career Progression with Elec-Mate"
-          description="Elec-Mate's career pathway tools help you plan your progression from apprentice to qualified electrician and beyond. Track qualifications, identify skill gaps, and map your route to higher earnings."
+          description="Elec-Mate's career pathway tools help you plan your progression from apprentice to qualified electrician and beyond."
           icon={TrendingUp}
         />
       </>
@@ -473,7 +473,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="2nd Year Apprentice Electrician Wages 2026"
-          description="What do 2nd year apprentices earn in 2026? Find current wage rates, pay scales, and progression benchmarks for UK electrical apprenticeships."
+          description="2nd year apprentice electrician wages in 2026: current rates, pay scales, and progression benchmarks. Know your earning potential."
           icon={GraduationCap}
         />
       </>
@@ -485,9 +485,9 @@ export default function ApprenticeSalaryPage() {
   return (
     <GuideTemplate
       title="Apprentice Electrician Salary UK 2026 | Pay & Rates"
-      description="Complete guide to apprentice electrician pay rates in the UK for 2026. Minimum wage rates by age and year, JIB/ECS graded rates, weekly take-home pay, overtime, travel allowances, and salary after qualification."
+      description="Complete guide to apprentice electrician pay rates in the UK for 2026. Minimum wage rates by age and year, JIB/ECS graded rates, weekly take-home pay…"
       datePublished="2025-09-10"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Salary Guide"

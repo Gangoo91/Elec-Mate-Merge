@@ -99,7 +99,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Overview of the IET Wiring Regulations including Amendment 3 changes.',
+    description: 'Overview of the IET Wiring Regulations including Amendment 4 changes.',
     icon: BookOpen,
     category: 'Guide',
   },
@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
-      'Current regulations for consumer units, MCB types, RCD arrangements, and Amendment 3.',
+      'Current regulations for consumer units, MCB types, RCD arrangements, and Amendment 4.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -647,8 +647,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="BS EN 60617 Electrical Symbols Chart"
-          description="BS EN 60617 symbols guide for UK electricians. 2026-compliant chart with 150+ standard symbols, instant PDF download, and certification support."
+          title="BS EN 60617 Symbols Chart – 150+ Electrical"
+          description="BS EN 60617 symbols explained for UK electricians. 150+ standard symbols, 2026-compliant, downloadable chart, and quick reference guide."
           icon={PenTool}
         />
       </>
@@ -664,9 +664,9 @@ export default function ElectricalSymbolsChartPage() {
   return (
     <GuideTemplate
       title="Electrical Symbols Chart | BS EN 60617 Reference"
-      description="Complete reference chart for electrical symbols used in the UK following BS EN 60617. Switch symbols, socket symbols, light symbols, protection device symbols, circuit symbols, and how to read circuit diagrams."
+      description="Complete reference chart for electrical symbols used in the UK following BS EN 60617. Switch symbols, socket symbols, light symbols…"
       datePublished="2025-11-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Reference Guide"

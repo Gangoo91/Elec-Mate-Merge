@@ -59,7 +59,7 @@ const features = [
     icon: Layers,
     title: 'Level 2 & 3 Courses',
     description:
-      'Structured course content covering the full Level 2 and Level 3 Diploma in Electrical Installation syllabuses. Every unit mapped to the apprenticeship standard.',
+      'Structured course content covering the full Level 2 and Level 3 Diploma in Electrical Installation syllabuses.',
   },
   {
     icon: Target,
@@ -71,25 +71,25 @@ const features = [
     icon: BrainCircuit,
     title: 'AI-Graded EPA Simulator',
     description:
-      'Practice End Point Assessment scenarios with AI that grades your responses, identifies weak areas, and provides detailed feedback matching real EPA marking criteria.',
+      'Practice End Point Assessment scenarios with AI that grades your responses, identifies weak areas…',
   },
   {
     icon: FolderOpen,
     title: 'Portfolio Tracking',
     description:
-      'Digital portfolio builder to capture evidence of competence. Photograph work, log site activities, link evidence to apprenticeship standard criteria, and export for assessment.',
+      'Digital portfolio builder to capture evidence of competence. Photograph work, log site activities, link evidence to apprenticeship standard criteria…',
   },
   {
     icon: Clock,
     title: 'OJT Hours Management',
     description:
-      'Automatic off-the-job training hours tracking. Logs study time, generates weekly and monthly reports, calculates your 6 hours per week target, and alerts if you are falling behind.',
+      'Automatic off-the-job training hours tracking. Logs study time, generates weekly and monthly reports, calculates your 6 hours per week target…',
   },
   {
     icon: BarChart3,
     title: 'Progress Dashboard',
     description:
-      'Visual progress tracking across every module, unit, and assessment area. See exactly where you stand and what to focus on next. Share progress with your employer.',
+      'Visual progress tracking across every module, unit, and assessment area. See exactly where you stand and what to focus on next.',
   },
 ];
 
@@ -98,7 +98,7 @@ const courseSchema = {
   '@type': 'Course',
   name: 'Electrical Apprentice Training Online - Level 2, 3 & AM2',
   description:
-    'Complete electrical apprentice training platform covering Level 2 & 3 Diplomas, AM2 preparation, EPA simulator with AI grading, portfolio tracking, and OJT hours management.',
+    'Complete electrical apprentice training platform covering Level 2 & 3 Diplomas, AM2 preparation, EPA simulator with AI grading, portfolio tracking…',
   provider: {
     '@type': 'Organization',
     name: 'Elec-Mate',
@@ -141,7 +141,7 @@ export default function ApprenticeTrainingPage() {
   useSEO({
     title: 'Electrical Apprentice Training Online | Level 2, 3 & AM2',
     description:
-      'Complete electrical apprentice training platform. Level 2 & 3 courses, AM2 preparation, EPA simulator with AI grading, portfolio tracking, and OJT hours management.',
+      'Complete electrical apprentice training platform. Level 2 & 3 courses, AM2 preparation, EPA simulator with AI grading, portfolio tracking…',
     schema: {
       '@type': 'Course',
       name: 'Electrical Apprentice Training Online',
@@ -255,13 +255,13 @@ export default function ApprenticeTrainingPage() {
                 step: '2',
                 title: 'Level 3 Diploma in Electrical Installation',
                 description:
-                  'Advanced training in design, inspection and testing, fault diagnosis, BS 7671 wiring regulations, and special installations. Completed over years two and three.',
+                  'Advanced training in design, inspection and testing, fault diagnosis, BS 7671 wiring regulations, and special installations.',
               },
               {
                 step: '3',
                 title: 'AM2 Practical Assessment',
                 description:
-                  'Two-day practical assessment covering single-phase and three-phase installation, safe isolation, fault finding, and inspection and testing to industry standards.',
+                  'Two-day practical assessment covering single-phase and three-phase installation, safe isolation, fault finding…',
               },
               {
                 step: '4',
@@ -273,7 +273,7 @@ export default function ApprenticeTrainingPage() {
                 step: '5',
                 title: 'JIB Grading',
                 description:
-                  'Upon successful completion, you receive your JIB ECS card as an Installation Electrician or Maintenance Electrician, confirming your status as a qualified professional.',
+                  'Upon successful completion, you receive your JIB ECS card as an Installation Electrician or Maintenance Electrician…',
               },
             ].map((item) => (
               <div
@@ -544,7 +544,7 @@ export default function ApprenticeTrainingPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="The Training App Built for Electrical Apprentices"
-            description="46+ courses covering Level 2, Level 3, and 18th Edition. 2,000+ practice questions, AM2 simulator, AI tutor, and flashcards with spaced repetition. Join 1,000+ UK electricians on Elec-Mate."
+            description="46+ courses covering Level 2, Level 3, and 18th Edition. 2,000+ practice questions, AM2 simulator, AI tutor, and flashcards with spaced repetition."
             icon={Award}
           />
           <p className="text-white mt-4 text-sm">

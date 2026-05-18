@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Complete reference to the IET Wiring Regulations with Amendment 3 changes.',
+    description: 'Complete reference to the IET Wiring Regulations with Amendment 4 changes.',
     icon: BookOpen,
     category: 'Guide',
   },
@@ -154,7 +154,7 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          (the IET Wiring Regulations, 18th Edition with Amendment 3) and follows a structured
+          (the IET Wiring Regulations, 18th Edition with Amendment 4) and follows a structured
           sequence that ensures the completed installation is safe, functional, and compliant.
         </p>
         <p>
@@ -359,7 +359,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Size cables instantly with Elec-Mate"
-          description="Elec-Mate's cable sizing calculator applies all correction factors automatically, checks voltage drop, and verifies fault protection — giving you a BS 7671 compliant cable size in seconds."
+          description="Elec-Mate's cable sizing calculator applies all correction factors automatically, checks voltage drop…"
           icon={Calculator}
         />
       </>
@@ -631,7 +631,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Design circuits on your phone with AI"
-          description="Join 1,000+ UK electricians using Elec-Mate's AI Circuit Designer and BS 7671 calculators. Cable sizing, voltage drop, fault protection — all calculated instantly. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate's AI Circuit Designer and BS 7671 calculators. Cable sizing, voltage drop…"
           icon={PenTool}
         />
       </>
@@ -647,9 +647,9 @@ export default function ElectricalDesignGuidePage() {
   return (
     <GuideTemplate
       title="Electrical Design Guide | BS 7671 Design Process"
-      description="Complete guide to electrical design under BS 7671. Assessment of general characteristics, design current, cable selection with correction factors, protection coordination, voltage drop, earthing and bonding, and discrimination."
+      description="Complete guide to electrical design under BS 7671. Assessment of general characteristics, design current, cable selection with correction factors…"
       datePublished="2025-10-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Design Guide"

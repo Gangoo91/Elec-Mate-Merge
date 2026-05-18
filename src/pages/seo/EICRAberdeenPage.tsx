@@ -569,7 +569,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Aberdeen EICR business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -584,10 +584,10 @@ const sections = [
 export default function EICRAberdeenPage() {
   return (
     <GuideTemplate
-      title="EICR Aberdeen | Electrical Installation Condition Report Aberdeen"
-      description="EICR Aberdeen — costs, legal requirements, and what to expect from an Electrical Installation Condition Report in Aberdeen. Guidance for landlords, homeowners, and electricians covering Scottish regulations, granite tenement wiring, and 2026 pricing."
+      title="EICR Aberdeen | Electrical Installation Condition Report"
+      description="EICR Aberdeen — costs, legal requirements, and what to expect from an Electrical Installation Condition Report in Aberdeen."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

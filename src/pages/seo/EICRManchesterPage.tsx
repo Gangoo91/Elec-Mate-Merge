@@ -673,9 +673,9 @@ export default function EICRManchesterPage() {
   return (
     <GuideTemplate
       title="EICR Manchester | Electrical Inspection Cost 2026"
-      description="EICR costs in Manchester for 2026. Landlord legal requirements, selective licensing areas, terraced house inspection challenges, observation codes, and how to find a qualified inspector. Prices from £100 for a flat to £400+ for a house."
+      description="EICR costs in Manchester for 2026. Landlord legal requirements, selective licensing areas, terraced house inspection challenges, observation codes…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

@@ -5,14 +5,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // On-Site Guide for low-voltage installations.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const section715ElvLightingA4Config: GeneratedGuideConfig = {
   pagePath: '/guides/section-715-elv-lighting-a4-2026',
   title:
-    'BS 7671 Section 715 Extra-Low Voltage Lighting (A4:2026) — ELV, SELV, PELV & PoE Lighting Guide | Elec-Mate',
+    'BS 7671 Section 715 Extra-Low Voltage Lighting (A4:2026)',
   description:
-    'BS 7671:2018+A4:2026 Section 715 explained: ELV definition, SELV vs PELV vs FELV, Class III equipment, transformer / driver selection under BS EN 61347, maximum cable lengths, volt drop, and how Section 715 applies to Power over Ethernet (PoE) lighting at 57 V DC.',
+    'BS 7671:2018+A4:2026 Section 715 explained: ELV definition, SELV vs PELV vs FELV, Class III equipment, transformer / driver selection under BS EN 61347…',
   datePublished: published,
   dateModified: modified,
   readingTime: 17,
@@ -117,7 +117,7 @@ export const section715ElvLightingA4Config: GeneratedGuideConfig = {
         {
           type: 'callout',
           tone: 'info',
-          title: 'Section 715 sits alongside, not instead of, the rest of BS 7671',
+          title: 'Section 715 sits alongside, not instead of, the rest of BS',
           text:
             'An ELV lighting circuit still has an upstream LV final circuit feeding the driver or PoE switch. The LV side is governed by Section 4, Section 5 and the relevant Section 7 location requirements (Section 701 bathrooms, Section 702 swimming pools, etc.). Section 715 governs the ELV side downstream of the source.',
         },

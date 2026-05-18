@@ -224,7 +224,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Complete certificates on site, not at your desk"
-          description="Elec-Mate's AI board scanner, voice test entry, and automatic Zs validation mean the certificate is finished before you pack up. No clipboard, no desk time, no re-writing."
+          description="Elec-Mate's AI board scanner, voice test entry, and automatic Zs validation mean the certificate is finished before you pack up."
           icon={Camera}
         />
       </>
@@ -403,7 +403,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Send certificates from site in seconds"
-          description="Complete the certificate, tap send, and the client has a professional PDF by email or WhatsApp before you leave. No desk time, no posting, no scanning. Elec-Mate handles the delivery."
+          description="Complete the certificate, tap send, and the client has a professional PDF by email or WhatsApp before you leave. No desk time, no posting, no scanning."
           icon={Send}
         />
       </>
@@ -583,7 +583,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Switch from paper to digital in minutes"
-          description="Download Elec-Mate and complete your first digital certificate today. AI board scanner, voice test entry, defect code AI, and instant PDF delivery. 7-day free trial, cancel anytime."
+          description="Download Elec-Mate and complete your first digital certificate today. AI board scanner, voice test entry, defect code AI, and instant PDF delivery."
           icon={Smartphone}
         />
       </>
@@ -599,9 +599,9 @@ export default function DigitalVsPaperCertificatesPage() {
   return (
     <GuideTemplate
       title="Digital vs Paper Electrical Certificates | Comparison"
-      description="Compare digital and paper electrical certificates for UK electricians. Legal validity, scheme acceptance, speed, accuracy, storage, delivery, and cost savings of going digital."
+      description="Compare digital and paper electrical certificates for UK electricians. Legal validity, scheme acceptance, speed, accuracy, storage, delivery…"
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Certificate Guide"

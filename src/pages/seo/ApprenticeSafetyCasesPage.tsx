@@ -268,7 +268,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Safety Training Built for Apprentices"
-          description="Elec-Mate includes health and safety courses, safe isolation training, risk assessment guidance, and near miss reporting frameworks. Build genuine safety competence from your first day on site."
+          description="Elec-Mate includes health and safety courses, safe isolation training, risk assessment guidance, and near miss reporting frameworks."
           icon={ShieldCheck}
         />
       </>
@@ -520,7 +520,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Build Real Safety Competence from Day One"
-          description="Health and safety courses, safe isolation training, risk assessment guidance, flashcards, and site diary with safety tracking. Elec-Mate builds the safety mindset that protects you throughout your career. 7-day free trial."
+          description="Health and safety courses, safe isolation training, risk assessment guidance, flashcards, and site diary with safety tracking."
           icon={Shield}
         />
       </>
@@ -532,9 +532,9 @@ export default function ApprenticeSafetyCasesPage() {
   return (
     <GuideTemplate
       title="Safety Cases for Electrical Apprentices | Real Scenarios"
-      description="Real-world safety scenarios for electrical apprentices. Learn from near misses, understand safe isolation for beginners, master incident reporting, and build a safety-first mindset from your first day on site."
+      description="Real-world safety scenarios for electrical apprentices. Learn from near misses, understand safe isolation for beginners, master incident reporting…"
       datePublished="2026-01-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

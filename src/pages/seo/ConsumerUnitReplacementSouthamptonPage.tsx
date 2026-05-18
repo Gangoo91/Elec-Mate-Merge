@@ -522,7 +522,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Southampton electrical business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting. Eliminate evening paperwork. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting. Eliminate evening paperwork."
           icon={FileCheck2}
         />
       </>
@@ -538,9 +538,9 @@ export default function ConsumerUnitReplacementSouthamptonPage() {
   return (
     <GuideTemplate
       title="Consumer Unit Replacement Southampton | Fuse Box Southampton"
-      description="Consumer unit replacement in Southampton — metal enclosure rules, Part P Building Regulations, costs £400–800, BS EN 61439, NICEIC electricians in Hampshire. Complete guide 2026."
+      description="Consumer unit replacement in Southampton — metal enclosure rules, Part P Building Regulations, costs £400–800, BS EN 61439…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Electrical Guide"

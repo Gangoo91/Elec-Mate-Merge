@@ -328,7 +328,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Study for your interview with Elec-Mate"
-          description="Access 50+ structured training courses covering BS 7671, inspection and testing, and practical electrical knowledge. Revise the regulations and procedures that come up in every interview."
+          description="Access 50+ structured training courses covering BS 7671, inspection and testing, and practical electrical knowledge."
           icon={GraduationCap}
         />
       </>
@@ -627,7 +627,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Stand out with a verified ElecID profile"
-          description="Share your Elec-Mate ElecID with employers — a verified digital profile showing your qualifications, CPD, and certification history. One link that proves your competence."
+          description="Share your Elec-Mate ElecID with employers — a verified digital profile showing your qualifications, CPD, and certification history."
           icon={ShieldCheck}
         />
       </>
@@ -644,9 +644,9 @@ export default function ElectricianInterviewQuestionsPage() {
     <GuideTemplate
       localArea="Interview Questions"
       title="Electrician Interview Questions | Top 25 & Answers"
-      description="Top 25 electrician interview questions with model answers. Technical questions on BS 7671, safe isolation, and Zs values. Behavioural questions, plus what to ask the employer. UK-focused guide for 2026."
+      description="Top 25 electrician interview questions with model answers. Technical questions on BS 7671, safe isolation, and Zs values."
       datePublished="2025-06-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

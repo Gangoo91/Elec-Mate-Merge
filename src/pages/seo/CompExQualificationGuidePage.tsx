@@ -340,7 +340,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Track your qualifications and certifications"
-          description="Elec-Mate's profile tools help you manage your electrical qualifications, training cards, and certification expiry dates. Never miss a renewal deadline for CompEx, ECS, or CCNSG."
+          description="Elec-Mate's profile tools help you manage your electrical qualifications, training cards, and certification expiry dates."
           icon={BadgeCheck}
         />
       </>
@@ -438,10 +438,10 @@ const sections = [
 export default function CompExQualificationGuidePage() {
   return (
     <GuideTemplate
-      title="CompEx Qualification Guide UK | Explosive Atmospheres Competency"
-      description="Complete guide to CompEx certification for UK electricians. Units EX01–EX04, assessment process, approved training centres, cost (£1,500–£3,000), 5-day assessment, DSEAR competency requirement, and career benefits in offshore, chemical, and nuclear work."
+      title="CompEx Qualification Guide UK | Explosive Atmospheres"
+      description="Complete guide to CompEx certification for UK electricians. Units EX01–EX04, assessment process, approved training centres, cost (£1,500–£3,000)…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Training Guide"

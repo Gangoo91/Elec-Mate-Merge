@@ -569,7 +569,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Build your electrical career with Elec-Mate"
-          description="Professional certificates, quoting tools, job management, and AI-powered business support for self-employed electricians and growing electrical businesses. 7-day free trial."
+          description="Professional certificates, quoting tools, job management, and AI-powered business support for self-employed electricians and growing electrical…"
           icon={GraduationCap}
         />
       </>
@@ -584,10 +584,10 @@ const sections = [
 export default function ApprenticeProgressionGuidePage() {
   return (
     <GuideTemplate
-      title="Electrical Apprentice Career Progression | After Your Apprenticeship"
-      description="Complete guide to career progression after an electrical apprenticeship. JIB ECS Gold Card, AM2 assessment, Level 3 qualification, supervisor and foreman roles, electrical design, HNC/HND study, becoming self-employed, and UK salary progression."
+      title="Electrical Apprentice Career Progression | After Your"
+      description="Complete guide to career progression after an electrical apprenticeship. JIB ECS Gold Card, AM2 assessment, Level 3 qualification…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Progression Guide"

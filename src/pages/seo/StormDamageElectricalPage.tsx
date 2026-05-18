@@ -490,7 +490,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Respond to storm damage with confidence"
-          description="Elec-Mate gives you EICR certificates, quoting, and cable sizing on your phone. Be the electrician that customers call when they need help most. 7-day free trial."
+          description="Elec-Mate gives you EICR certificates, quoting, and cable sizing on your phone. Be the electrician that customers call when they need help most."
           icon={CloudLightning}
         />
       </>
@@ -506,9 +506,9 @@ export default function StormDamageElectricalPage() {
   return (
     <GuideTemplate
       title="Storm Damage Electrical Safety | Emergency Guide UK"
-      description="What to do about electrical damage after a storm. Downed power lines (call 105), water ingress in consumer units, emergency isolation, when to call the DNO vs an electrician, and surge protection. Essential safety advice."
+      description="What to do about electrical damage after a storm. Downed power lines (call 105), water ingress in consumer units, emergency isolation…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Emergency Safety Guide"

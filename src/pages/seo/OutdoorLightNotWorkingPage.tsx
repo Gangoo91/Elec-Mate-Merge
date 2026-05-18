@@ -728,8 +728,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Document outdoor lighting work with professional certificates"
-          description="Elec-Mate lets you complete Minor Works Certificates and EICRs on your phone with full test result recording, photo attachments, and instant PDF export. Perfect for outdoor circuit work."
+          title="Document outdoor lighting work with professional"
+          description="Elec-Mate lets you complete Minor Works Certificates and EICRs on your phone with full test result recording, photo attachments, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -745,9 +745,9 @@ export default function OutdoorLightNotWorkingPage() {
   return (
     <GuideTemplate
       title="Outdoor Light Not Working | Troubleshooting Guide"
-      description="Outdoor light not working? Learn the common causes — moisture ingress, PIR/photocell faults, SWA cable damage, LED driver failure, RCD tripping, corroded junction boxes — and when to call an electrician. Guide for UK homeowners and electricians."
+      description="Outdoor light not working? Learn the common causes — moisture ingress, PIR/photocell faults, SWA cable damage, LED driver failure, RCD tripping…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting"

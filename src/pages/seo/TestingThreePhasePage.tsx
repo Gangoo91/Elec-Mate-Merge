@@ -20,7 +20,7 @@ import {
 
 const PAGE_TITLE = 'Testing a Three Phase Installation | Procedure Guide';
 const PAGE_DESCRIPTION =
-  'Complete guide to testing three-phase electrical installations. Phase rotation, voltage measurement, PFC on all phases, loop impedance, RCD testing, neutral-earth voltage. BS 7671 procedure for UK electricians.';
+  'Testing three-phase electrical installations: phase rotation, voltage, PFC on all phases, loop impedance, RCDs, N-E voltage. BS 7671 procedure.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -358,7 +358,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Per-phase PFC and Zs validation"
-          description="Elec-Mate records Zs and PFC for each phase independently. The app validates each value against BS 7671 limits and flags any phase that exceeds the maximum permitted Zs or has a PFC above the device breaking capacity."
+          description="Elec-Mate records Zs and PFC for each phase independently. The app validates each value against BS 7671 limits and flags any phase that exceeds the…"
           icon={Calculator}
         />
       </>
@@ -494,7 +494,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Full three-phase support built in"
-          description="Elec-Mate handles three-phase certificates with per-phase test results, phase rotation recording, supply voltage documentation, and neutral-earth voltage. The schedule of tests auto-validates every value on every phase. Generate professional three-phase EICRs and EICs with one tap."
+          description="Elec-Mate handles three-phase certificates with per-phase test results, phase rotation recording, supply voltage documentation, and neutral-earth voltage."
           icon={Zap}
         />
         <p>
@@ -569,7 +569,7 @@ export default function TestingThreePhasePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-07-08"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

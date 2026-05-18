@@ -510,7 +510,7 @@ const sections = [
           </ul>
         </div>
         <SEOAppBridge
-          title="Are you an electrician? Manage all your certification with Elec-Mate"
+          title="Are you an electrician? Manage all your certification with"
           description="Complete EICs, EICRs, and minor works certificates on your phone. Join 1,000+ UK electricians. 7-day free trial, cancel anytime."
           icon={FileCheck2}
         />
@@ -527,9 +527,9 @@ export default function ElectricityMeterGuidePage() {
   return (
     <GuideTemplate
       title="Electricity Meter Guide UK | Smart Meters, Types & Readings"
-      description="Complete UK electricity meter guide. Types of meter (single rate, Economy 7, smart SMETS2), time-of-use tariffs, how to read your meter, faulty meter action, meter tampering consequences, and what electrical work near the meter requires DNO permission."
+      description="Complete UK electricity meter guide. Types of meter (single rate, Economy 7, smart SMETS2), time-of-use tariffs, how to read your meter…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Electrical Guide"

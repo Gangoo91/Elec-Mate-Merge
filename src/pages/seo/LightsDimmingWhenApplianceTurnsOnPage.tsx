@@ -375,7 +375,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Diagnose electrical issues with AI fault finding"
-          description="Elec-Mate's AI fault diagnosis tool helps electricians systematically identify the cause of voltage drop issues, dimming lights, and other common faults. Guided diagnostic workflows with BS 7671 regulation references."
+          description="Elec-Mate's AI fault diagnosis tool helps electricians systematically identify the cause of voltage drop issues, dimming lights, and other common faults."
           icon={Search}
         />
       </>
@@ -599,7 +599,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICR certificates on your phone"
-          description="Found a fault? Document it professionally with Elec-Mate's EICR certificate app. AI board scanning, observation codes, and instant PDF export. Join 1,000+ UK electricians. 7-day free trial."
+          description="Found a fault? Document it professionally with Elec-Mate's EICR certificate app. AI board scanning, observation codes, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -615,9 +615,9 @@ export default function LightsDimmingWhenApplianceTurnsOnPage() {
   return (
     <GuideTemplate
       title="Lights Dimming When Appliance Turns On | Causes & Fixes"
-      description="Why do your lights dim when an appliance turns on? Learn the causes — from normal inrush current to dangerous loose connections — and when to call an electrician. Covers voltage drop, undersized cables, and supply issues."
+      description="Why do your lights dim when an appliance turns on? Learn the causes — from normal inrush current to dangerous loose connections — and when to call an…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting Guide"

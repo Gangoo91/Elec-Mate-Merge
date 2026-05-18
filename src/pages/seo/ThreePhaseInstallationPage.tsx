@@ -301,7 +301,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Design balanced three phase boards with AI"
-          description="Elec-Mate's AI circuit designer analyses your load schedule, allocates circuits across phases for optimal balance, and sizes cables automatically. Try it free for 7 days."
+          description="Elec-Mate's AI circuit designer analyses your load schedule, allocates circuits across phases for optimal balance, and sizes cables automatically."
           icon={CircuitBoard}
         />
       </>
@@ -436,7 +436,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Size three phase cables in seconds"
-          description="Elec-Mate's cable sizing calculator handles single and three phase circuits. Enter the load, cable type, installation method, and length — get the correct conductor size with all correction factors applied. No manual table lookups."
+          description="Elec-Mate's cable sizing calculator handles single and three phase circuits. Enter the load, cable type, installation method…"
           icon={Calculator}
         />
       </>
@@ -620,9 +620,9 @@ export default function ThreePhaseInstallationPage() {
   return (
     <GuideTemplate
       title="Three Phase Installation Guide | BS 7671 UK"
-      description="Complete guide to three phase electrical installations in the UK. Covers when three phase is needed, load balancing, TPN distribution boards, cable sizing, testing, and certification under BS 7671."
+      description="Complete guide to three phase electrical installations in the UK. Covers when three phase is needed, load balancing, TPN distribution boards…"
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

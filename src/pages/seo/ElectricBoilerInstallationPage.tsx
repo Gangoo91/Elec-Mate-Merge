@@ -572,10 +572,10 @@ const sections = [
 export default function ElectricBoilerInstallationPage() {
   return (
     <GuideTemplate
-      title="12kW Shower Cable Size & Installation"
-      description="12kW shower requires 10mm² cable minimum under BS 7671:2018+A4:2026. Learn correct sizing, earthing, and Part P compliance for safe high-load circuits."
+      title="12kW Shower Cable Size: 10mm² Guide"
+      description="12kW shower needs 10mm² cable minimum under BS 7671:2018+A4:2026. Verify sizing, earthing, and circuit protection for safe installation."
       datePublished="2024-06-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

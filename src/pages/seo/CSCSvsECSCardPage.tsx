@@ -474,7 +474,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Professional certificates and qualification tracking"
-          description="Elec-Mate helps you track your qualifications, card expiry dates, and CPD records in one place. Plus professional EIC, EICR, and minor works certificates from your phone. 7-day free trial."
+          description="Elec-Mate helps you track your qualifications, card expiry dates, and CPD records in one place."
           icon={CreditCard}
         />
       </>
@@ -490,9 +490,9 @@ export default function CSCSvsECSCardPage() {
   return (
     <GuideTemplate
       title="CSCS vs ECS Card | Which Card Do Electricians Need? UK 2026"
-      description="CSCS vs ECS card comparison for UK electricians. Which sites accept which, how to get each card, costs, renewal, and which one you actually need. Clear guidance for 2026."
+      description="CSCS vs ECS card comparison for UK electricians. Which sites accept which, how to get each card, costs, renewal, and which one you actually need."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

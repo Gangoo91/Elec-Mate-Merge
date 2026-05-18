@@ -20,9 +20,9 @@ export default function ElectricalSiteInductionPage() {
   return (
     <GuideTemplate
       title="Site Induction for Electricians | What to Expect"
-      description="Complete guide to site inductions for electricians working on construction and commercial sites in the UK. CDM 2015 requirements, what is covered during an induction, RAMS review, permit to work systems, emergency procedures, and how to prepare."
+      description="Site inductions for electricians on UK construction + commercial sites: what to expect, paperwork, PPE, permits, CDM 2015 duties, RAMS sign-off."
       datePublished="2026-01-28"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Safety', href: '/guides/safety' },
         { label: 'Site Induction', href: '/guides/electrical-site-induction' },
@@ -293,7 +293,7 @@ export default function ElectricalSiteInductionPage() {
               </p>
               <SEOAppBridge
                 title="AI generates site-specific RAMS in under 60 seconds"
-                description="Describe your job and the site conditions in plain English. Elec-Mate's AI RAMS Generator creates a complete, site-specific risk assessment and method statement ready for the principal contractor. No more rejected RAMS."
+                description="Describe your job and the site conditions in plain English. Elec-Mate's AI RAMS Generator creates a complete…"
                 icon={Brain}
               />
             </>
@@ -440,7 +440,7 @@ export default function ElectricalSiteInductionPage() {
               </p>
               <SEOAppBridge
                 title="All your site documents on your phone"
-                description="Elec-Mate stores your qualifications, insurance, competent person registration, and RAMS digitally. Pull up any document during an induction without searching through your van. Always prepared, always professional."
+                description="Elec-Mate stores your qualifications, insurance, competent person registration, and RAMS digitally."
                 icon={FileText}
               />
             </>

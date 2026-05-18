@@ -592,7 +592,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Build a more valuable electrical business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, invoicing, and electrical certification. Build the systems and records that make your business more valuable and easier to sell. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, invoicing, and electrical certification."
           icon={BarChart2}
         />
       </>
@@ -607,10 +607,10 @@ const sections = [
 export default function ElectricalBusinessValuationPage() {
   return (
     <GuideTemplate
-      title="Electrical Business Valuation UK | How Much Is My Electrical Company Worth?"
-      description="Complete guide to valuing an electrical contracting business in the UK — EBITDA multiples (1–3x for small contractors), revenue multiples, asset value, what increases value (recurring contracts, trained staff, plant), preparing for sale, and earn-out structures."
+      title="Electrical Business Valuation UK | How Much Is My"
+      description="Complete guide to valuing an electrical contracting business in the UK — EBITDA multiples (1–3x for small contractors), revenue multiples, asset value…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Finance Guide"

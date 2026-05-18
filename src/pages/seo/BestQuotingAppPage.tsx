@@ -23,9 +23,9 @@ export default function BestQuotingAppPage() {
   return (
     <ComparisonTemplate
       title="Best Quoting App for Electricians 2026 | Compared"
-      description="Compare the best quoting and invoicing apps for UK electricians in 2026. Elec-Mate vs Powered Now vs Tradify — pricing, certificate integration, AI tools, and payment features compared side by side."
+      description="Compare the best quoting and invoicing apps for UK electricians in 2026. Elec-Mate vs Powered Now vs Tradify — pricing, certificate integration…"
       datePublished="2026-01-30"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Comparisons', href: '/compare' },
         {
@@ -129,7 +129,7 @@ export default function BestQuotingAppPage() {
               </p>
               <SEOAppBridge
                 title="Certificate to Invoice in One Tap"
-                description="Complete an EICR on site, generate the invoice from the same app, email both to the client, and collect Stripe payment before leaving. Only Elec-Mate offers this workflow."
+                description="Complete an EICR on site, generate the invoice from the same app, email both to the client, and collect Stripe payment before leaving."
                 icon={Receipt}
               />
             </>
@@ -181,7 +181,7 @@ export default function BestQuotingAppPage() {
               </p>
               <SEOAppBridge
                 title="AI Remedial Cost Estimator"
-                description="EICR defects converted to a priced remedial works quotation using real UK trade pricing. Itemised materials, labour rates, and professional formatting. Only available in Elec-Mate."
+                description="EICR defects converted to a priced remedial works quotation using real UK trade pricing. Itemised materials, labour rates, and professional formatting."
                 icon={PoundSterling}
               />
               <p>

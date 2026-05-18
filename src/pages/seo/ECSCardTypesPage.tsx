@@ -316,7 +316,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Prepare for every qualification with Elec-Mate"
-          description="Whether you are studying for the 18th Edition, 2391, NVQ, or preparing for the AM2, Elec-Mate has you covered. 46+ training courses, flashcards, mock exams, AM2 simulator, and progress tracking. Start your 7-day free trial."
+          description="Whether you are studying for the 18th Edition, 2391, NVQ, or preparing for the AM2, Elec-Mate has you covered."
           icon={GraduationCap}
         />
       </>
@@ -522,7 +522,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Track your qualification progress with Elec-Mate"
-          description="Elec-Mate's progress tracking shows you exactly where you are on the path to your gold card. Complete courses, flashcard sets, and mock exams are all tracked — so you know what you have covered and what is left to do."
+          description="Elec-Mate's progress tracking shows you exactly where you are on the path to your gold card. Complete courses, flashcard sets…"
           icon={Award}
         />
       </>
@@ -538,9 +538,9 @@ export default function ECSCardTypesPage() {
   return (
     <GuideTemplate
       title="ECS Card Types | Which Card Do You Need?"
-      description="Complete guide to ECS card types for electricians in the UK. Covers Apprentice, Provisional, Installation Electrician (gold), and Technician cards. How to apply, renewal, CSCS link, and career progression."
+      description="Complete guide to ECS card types for electricians in the UK. Covers Apprentice, Provisional, Installation Electrician (gold), and Technician cards."
       datePublished="2025-05-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

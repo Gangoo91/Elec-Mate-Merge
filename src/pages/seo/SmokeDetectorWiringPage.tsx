@@ -446,7 +446,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Generate the EIC for smoke detection circuits"
-          description="Elec-Mate creates the Electrical Installation Certificate on your phone. Add the smoke detection circuit to the schedule, record the test results, and send the completed certificate to the customer or Building Control — before you leave the property."
+          description="Elec-Mate creates the Electrical Installation Certificate on your phone. Add the smoke detection circuit to the schedule, record the test results…"
           icon={FileCheck2}
         />
       </>
@@ -593,9 +593,9 @@ export default function SmokeDetectorWiringPage() {
   return (
     <GuideTemplate
       title="Smoke Detector Wiring Guide | Mains Interlinked UK"
-      description="Complete guide to wiring mains-interlinked smoke detectors in UK dwellings. BS 5839-6 Grade D systems, interconnection methods, battery backup, detector positioning, Part B compliance, testing, and certification."
+      description="Complete guide to wiring mains-interlinked smoke detectors in UK dwellings. BS 5839-6 Grade D systems, interconnection methods, battery backup…"
       datePublished="2025-07-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

@@ -89,7 +89,7 @@ const features = [
     icon: Calculator,
     title: 'Instant Voltage Drop Calculation',
     description:
-      'Enter your cable size, length, and load current. Get the voltage drop in volts and as a percentage instantly with pass/fail indication against BS 7671 limits.',
+      'Enter your cable size, length, and load current. Get the voltage drop in volts and as a percentage instantly with pass/fail indication against BS 7671…',
   },
   {
     icon: Cable,
@@ -113,13 +113,13 @@ const features = [
     icon: BookOpen,
     title: 'Built-in mV/A/m Tables',
     description:
-      'All BS 7671 Appendix 4 voltage drop tables built in. No need to carry the regulation book — select your cable and the correct value is looked up automatically.',
+      'All BS 7671 Appendix 4 voltage drop tables built in. No need to carry the regulation book — select your cable and the correct value is looked up…',
   },
   {
     icon: Shield,
     title: 'BS 7671:2018+A4:2026 Compliant',
     description:
-      'All calculations follow the current 18th Edition wiring regulations including Amendment 3. Values verified against the published tables in Appendix 4.',
+      'All calculations follow the current 18th Edition wiring regulations including Amendment 4. Values verified against the published tables in Appendix 4.',
   },
 ];
 
@@ -167,7 +167,7 @@ export default function VoltageDropCalculatorPage() {
   useSEO({
     title: 'Voltage Drop Calculator UK | BS 7671 Compliant',
     description:
-      'Calculate voltage drop to BS 7671 limits. Check maximum cable run lengths, verify compliance with 3% lighting and 5% power limits. Part of 70 free electrical calculators.',
+      'Calculate voltage drop to BS 7671 limits. Check maximum cable run lengths, verify compliance with 3% lighting and 5% power limits.',
   });
 
   return (
@@ -699,6 +699,24 @@ export default function VoltageDropCalculatorPage() {
       <section className="px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <RecentReviews />
+        </div>
+      </section>
+
+      
+
+      {/* Related calculators — peer surface for internal-link health.
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical calculators</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/guides/voltage-drop-limits-bs-7671">Voltage Drop Limits BS 7671</SEOInternalLink>
+            <SEOInternalLink href="/guides/high-voltage-electrical-work-uk">High Voltage Electrical Work UK</SEOInternalLink>
+            <SEOInternalLink href="/guides/voltage-too-high-or-low">Voltage Too High or Too Low</SEOInternalLink>
+            <SEOInternalLink href="/tools/cable-volt-drop-three-phase">Three Phase Voltage Drop Calculator</SEOInternalLink>
+            <SEOInternalLink href="/guides/prosumer-low-voltage-electrical-installation">/guides/prosumer-low-voltage-electrical-installation</SEOInternalLink>
+            <SEOInternalLink href="/guides/reduced-low-voltage-110v-cte-site-supplies">/guides/reduced-low-voltage-110v-cte-site-supplies</SEOInternalLink>
+          </div>
         </div>
       </section>
 

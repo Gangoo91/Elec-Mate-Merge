@@ -491,7 +491,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Track PPE and tool inspection dates"
-          description="Elec-Mate's site safety tools help you manage PPE inspection records, tool calibration dates, and training certificates. Never miss an expiry date. Stay compliant with NICEIC and NAPIT scheme requirements."
+          description="Elec-Mate's site safety tools help you manage PPE inspection records, tool calibration dates, and training certificates. Never miss an expiry date."
           icon={Shield}
         />
       </>
@@ -648,7 +648,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AI-powered RAMS include PPE requirements"
-          description="When you generate a risk assessment with Elec-Mate's AI Health and Safety agent, the PPE requirements are automatically included based on the hazards identified. Every risk assessment specifies exactly which PPE is needed, to which standard, and why."
+          description="When you generate a risk assessment with Elec-Mate's AI Health and Safety agent…"
           icon={Brain}
         />
       </>
@@ -663,10 +663,10 @@ const sections = [
 export default function PPEForElectriciansPage() {
   return (
     <GuideTemplate
-      title="PPE for Electricians | What You Need on Site"
-      description="Complete guide to PPE for electricians. Insulated gloves (BS EN 60903), safety boots, eye protection, arc flash PPE categories, voltage-rated VDE tools, head protection, and legal duties under the Personal Protective Equipment at Work Regulations 2022."
+      title="Electrical Clothing Requirements 2026"
+      description="PPE for UK electricians on site: insulated gloves (Class 0/00), arc flash suits, safety boots, hi-vis, helmets, eye protection — what + when + how."
       datePublished="2025-04-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

@@ -27,7 +27,7 @@ import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
 const PAGE_TITLE = 'How to Fill In an EICR Form | Step-by-Step Guide | Elec-Mate';
 const PAGE_DESCRIPTION =
-  'Complete step-by-step guide to filling in an EICR (Electrical Installation Condition Report) form. Observation codes C1, C2, C3, FI explained. BS 7671:2018+A4:2026 compliant.';
+  'Step-by-step EICR form walkthrough: every field, observation codes C1/C2/C3/FI, BS 7671:2018+A4:2026 compliant. For UK electricians.';
 
 const faqs = [
   {
@@ -119,13 +119,13 @@ const features = [
     icon: ShieldCheck,
     title: 'BS 7671:2018+A4:2026',
     description:
-      'Built to the current 18th Edition including Amendment 3. Observation coding, Zs limits, and form structure all follow the standard.',
+      'Built to the current 18th Edition including Amendment 4. Observation coding, Zs limits, and form structure all follow the standard.',
   },
   {
     icon: CheckCircle2,
     title: 'Auto-Validation',
     description:
-      'Test results are checked against BS 7671 maximum permitted values as you enter them. Zs, insulation resistance, and RCD times are all validated automatically.',
+      'Test results are checked against BS 7671 maximum permitted values as you enter them. Zs, insulation resistance…',
   },
   {
     icon: Clock,
@@ -163,7 +163,7 @@ const howToSchema = {
   '@type': 'HowTo',
   name: 'How to Fill In an EICR Form',
   description:
-    'A complete step-by-step guide to filling in an Electrical Installation Condition Report (EICR) form, from recording supply characteristics to completing the declaration.',
+    'A complete step-by-step guide to filling in an Electrical Installation Condition Report (EICR) form…',
   step: howToSteps.map((step, index) => ({
     '@type': 'HowToStep',
     position: index + 1,
@@ -270,7 +270,7 @@ export default function HowToFillInEICRPage() {
               An Electrical Installation Condition Report (EICR) is the formal document produced
               following a periodic inspection and testing of a fixed electrical installation. It is
               defined by BS 7671:2018+A4:2026 (the IET Wiring Regulations, 18th Edition with
-              Amendment 3) and follows the model forms published in Appendix 6 of the standard. The
+              Amendment 4) and follows the model forms published in Appendix 6 of the standard. The
               EICR replaced the older Periodic Inspection Report (PIR) and is the standard report
               format used across the UK electrical industry.
             </p>
@@ -581,8 +581,8 @@ export default function HowToFillInEICRPage() {
       <section className="py-4 px-5">
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
-            title="Digital EICR Forms — Complete on Your Phone, Export PDF on Site"
-            description="Elec-Mate's digital EICR and test certificates make inspection reporting faster and more professional. Auto-validate results against BS 7671 limits and send PDFs to clients instantly."
+            title="Digital EICR Forms — Complete on Your Phone, Export PDF on"
+            description="Elec-Mate's digital EICR and test certificates make inspection reporting faster and more professional."
             ctaText="Try Elec-Mate free"
             ctaHref="/auth/signup"
             icon={FileCheck2}

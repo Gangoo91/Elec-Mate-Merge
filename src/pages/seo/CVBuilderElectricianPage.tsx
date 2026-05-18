@@ -135,37 +135,37 @@ const features = [
     icon: Layout,
     title: 'Electrician-Specific Templates',
     description:
-      'Professional CV templates structured for the electrical trade. Sections for qualifications, ECS card, specialist skills, and project experience — not generic one-size-fits-all layouts.',
+      'Professional CV templates structured for the electrical trade. Sections for qualifications, ECS card, specialist skills…',
   },
   {
     icon: Award,
     title: 'Qualifications & Certifications',
     description:
-      'Dedicated section for BS 7671, C&G 2382, C&G 2391, AM2, ECS/JIB card, Part P, and all specialist certifications. Clearly formatted so employers can assess your qualification level instantly.',
+      'Dedicated section for BS 7671, C&G 2382, C&G 2391, AM2, ECS/JIB card, Part P, and all specialist certifications.',
   },
   {
     icon: Wrench,
     title: 'Skills & Competency Mapping',
     description:
-      'Highlight specific competencies employers search for: testing and inspection, consumer unit upgrades, EV charger installation, fire alarm systems, solar PV, and more.',
+      'Highlight specific competencies employers search for: testing and inspection, consumer unit upgrades, EV charger installation, fire alarm systems…',
   },
   {
     icon: Download,
     title: 'Professional PDF Export',
     description:
-      'Export as a clean, ATS-friendly PDF that passes automated screening by recruitment agencies. Single-column layout with standard formatting for maximum compatibility.',
+      'Export as a clean, ATS-friendly PDF that passes automated screening by recruitment agencies. Single-column layout with standard formatting for maximum…',
   },
   {
     icon: Zap,
     title: 'Auto-Populate from Profile',
     description:
-      'Pull in qualifications, training history, and certifications from your Elec-Mate profile automatically. Review and edit before exporting — nothing is included without your approval.',
+      'Pull in qualifications, training history, and certifications from your Elec-Mate profile automatically.',
   },
   {
     icon: FileText,
     title: 'Multiple CV Versions',
     description:
-      'Save different versions tailored to different roles — domestic, commercial, industrial, inspection, or specialist. Edit independently and export separate PDFs for targeted applications.',
+      'Save different versions tailored to different roles — domestic, commercial, industrial, inspection, or specialist.',
   },
 ];
 
@@ -394,9 +394,9 @@ export default function CVBuilderElectricianPage() {
   return (
     <ToolTemplate
       title="CV Builder for Electricians | Professional CV Tool"
-      description="Build a professional electrician CV with templates designed for the electrical trade. Highlight qualifications, ECS card details, specialist skills, and project experience. ATS-friendly PDF export."
+      description="Build a professional electrician CV with templates designed for the electrical trade. Highlight qualifications, ECS card details, specialist skills…"
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Professional CV Tool"

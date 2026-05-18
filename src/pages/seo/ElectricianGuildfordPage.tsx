@@ -451,7 +451,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Guildford electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the premium South East market. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the premium South East market."
           icon={MapPin}
         />
       </>
@@ -468,9 +468,9 @@ export default function ElectricianGuildfordPage() {
     <GuideTemplate
       localArea="Guildford"
       title="Electrician in Guildford | Local Electricians 2026"
-      description="Find qualified electricians in Guildford. NICEIC and NAPIT registered, Part P compliant. Premium Surrey rates, large house rewires, EICRs, HMO work, EV chargers, and solar PV in Guildford 2026."
+      description="Find qualified electricians in Guildford. NICEIC and NAPIT registered, Part P compliant. Premium Surrey rates, large house rewires, EICRs, HMO work…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Guildford"

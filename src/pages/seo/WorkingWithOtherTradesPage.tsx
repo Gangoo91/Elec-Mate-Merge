@@ -505,10 +505,10 @@ const sections = [
 export default function WorkingWithOtherTradesPage() {
   return (
     <GuideTemplate
-      title="Working with Other Trades as an Electrician UK 2026 | Site Guide"
-      description="Guide to working with plumbers, builders, and plasterers on site. First fix timing, protecting cables, coordination, scheduling, and handling disputes. Practical advice for electricians."
+      title="Working with Other Trades as an Electrician UK 2026 | Site"
+      description="Guide to working with plumbers, builders, and plasterers on site. First fix timing, protecting cables, coordination, scheduling, and handling disputes."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Site Guide"

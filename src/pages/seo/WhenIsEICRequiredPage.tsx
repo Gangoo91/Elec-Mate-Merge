@@ -19,9 +19,9 @@ export default function WhenIsEICRequiredPage() {
   return (
     <GuideTemplate
       title="When Is an EIC Required? BS 7671 Guide | Elec-Mate"
-      description="Complete guide to when an Electrical Installation Certificate (EIC) is required under BS 7671:2018+A4:2026. New circuits, rewires, consumer unit changes, extensions, loft conversions, and all Part P notifiable work explained."
+      description="When an Electrical Installation Certificate (EIC) is required under BS 7671:2018+A4:2026: new installs, alterations, what triggers EIC vs MWC."
       datePublished="2025-06-10"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'When Is an EIC Required?', href: '/guides/when-is-eic-required' },
@@ -64,7 +64,7 @@ export default function WhenIsEICRequiredPage() {
               <p>
                 An Electrical Installation Certificate (EIC) is the formal document issued upon
                 completion of new electrical installation work. It certifies that the design,
-                construction, and inspection and testing of the new work comply with BS 7671:2018+A4:2026 — the 18th Edition of the IET Wiring Regulations with Amendment 3.
+                construction, and inspection and testing of the new work comply with BS 7671:2018+A4:2026 — the 18th Edition of the IET Wiring Regulations with Amendment 4.
               </p>
               <p>
                 The EIC is defined in Appendix 6 of BS 7671 and follows the model forms published in
@@ -501,7 +501,7 @@ export default function WhenIsEICRequiredPage() {
               </p>
               <SEOAppBridge
                 title="Digital Signatures — No Paper Required"
-                description="Elec-Mate captures all three signatures digitally on your phone or tablet. The designer, constructor, and inspector each sign on-screen. Signatures are embedded in the PDF certificate and stored securely in the cloud. No paper forms, no scanning, no double-handling."
+                description="Elec-Mate captures all three signatures digitally on your phone or tablet. The designer, constructor, and inspector each sign on-screen."
                 icon={PenTool}
               />
             </>
@@ -565,7 +565,7 @@ export default function WhenIsEICRequiredPage() {
               </div>
               <SEOAppBridge
                 title="The Complete EIC — On Your Phone"
-                description="Elec-Mate has 16 certificate types including the full EIC, Minor Works, EICR, EV Charger, Emergency Lighting, Fire Alarm, Solar PV, and PAT. All with auto-validation, digital signatures, and instant PDF export. Start your 7-day free trial."
+                description="Elec-Mate has 16 certificate types including the full EIC, Minor Works, EICR, EV Charger, Emergency Lighting, Fire Alarm, Solar PV, and PAT."
                 icon={FileCheck2}
               />
             </>

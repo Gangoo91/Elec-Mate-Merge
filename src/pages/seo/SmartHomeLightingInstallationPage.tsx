@@ -301,7 +301,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Design smart lighting circuits and quote accurately"
-          description="Elec-Mate's circuit design tools help UK electricians plan smart lighting installations, quote accurately, and produce professional EIC certificates. 7-day free trial."
+          description="Elec-Mate's circuit design tools help UK electricians plan smart lighting installations, quote accurately, and produce professional EIC certificates."
           icon={Lightbulb}
         />
       </>
@@ -524,7 +524,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify smart lighting installations"
-          description="Elec-Mate gives UK electricians professional quoting and on-site EIC certification for smart lighting projects. Price per-point costs, neutral wire remediation, and commissioning time. 7-day free trial."
+          description="Elec-Mate gives UK electricians professional quoting and on-site EIC certification for smart lighting projects."
           icon={Lightbulb}
         />
       </>
@@ -539,10 +539,10 @@ const sections = [
 export default function SmartHomeLightingInstallationPage() {
   return (
     <GuideTemplate
-      title="Smart Home Lighting Installation UK | DALI, KNX, Zigbee and Z-Wave Guide"
-      description="Complete guide to smart home lighting installation in the UK. DALI vs KNX vs Zigbee, neutral wire requirements, lux levels from CIBSE LG3 and BS EN 12464-1, daylight harvesting, presence detection, and costs from £30 to £400+ per point."
+      title="Smart Home Lighting Installation UK | DALI, KNX, Zigbee and"
+      description="Complete guide to smart home lighting installation in the UK. DALI vs KNX vs Zigbee, neutral wire requirements…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

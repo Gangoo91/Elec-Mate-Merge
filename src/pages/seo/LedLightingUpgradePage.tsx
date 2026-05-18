@@ -582,7 +582,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote LED upgrades and issue certificates with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate to quote jobs, issue electrical certificates, and manage their business on site. LED upgrade quotes with energy saving calculations, Minor Works Certificates, and instant PDF delivery. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to quote jobs, issue electrical certificates, and manage their business on site."
           icon={FileCheck2}
         />
       </>
@@ -597,10 +597,10 @@ const sections = [
 export default function LedLightingUpgradePage() {
   return (
     <GuideTemplate
-      title="LED Lighting Upgrade UK | Replacing Fluorescent & Halogen Lights"
-      description="Complete guide to LED lighting upgrades in the UK. T8 fluorescent to LED (Type A/B/C), GU10 halogen replacement, MR16 transformer compatibility, dimmer compatibility, payback calculations, and typical costs from £10–£120 per fitting."
+      title="LED Lighting Upgrade UK | Replacing Fluorescent & Halogen"
+      description="Complete guide to LED lighting upgrades in the UK. T8 fluorescent to LED (Type A/B/C), GU10 halogen replacement, MR16 transformer compatibility…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Upgrade Guide"

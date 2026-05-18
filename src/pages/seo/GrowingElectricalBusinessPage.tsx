@@ -568,7 +568,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="The business platform built for growing electrical companies"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, invoicing, job management, and certification. From sole trader to multi-van operation. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, invoicing, job management, and certification. From sole trader to multi-van operation."
           icon={TrendingUp}
         />
       </>
@@ -584,9 +584,9 @@ export default function GrowingElectricalBusinessPage() {
   return (
     <GuideTemplate
       title="How to Grow Your Electrical Business UK | Scaling Guide"
-      description="Complete guide to growing a UK electrical business — from sole trader to small team to established contractor. Hiring your first employee, business systems, van management, when to go Ltd, and gross profit targets."
+      description="Complete guide to growing a UK electrical business — from sole trader to small team to established contractor."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Business Guide"

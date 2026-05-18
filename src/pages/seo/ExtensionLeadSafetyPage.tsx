@@ -473,8 +473,8 @@ const sections = [
           </ul>
         </div>
         <SEOAppBridge
-          title="1m Extension Lead 1 Socket | Safety Tested"
-          description="1m single socket extension leads tested to BS 7671:2018+A4:2026. Heavy-duty rated for site use. Order online with next-day delivery."
+          title="1m 1 Socket Extension Lead | BS 7671:2018+A4:2026"
+          description="1m single socket extension lead rated 1300W. BS 7671:2018+A4:2026 compliant, heavy-duty construction for site and workshop use."
           icon={FileCheck2}
         />
       </>
@@ -489,10 +489,10 @@ const sections = [
 export default function ExtensionLeadSafetyPage() {
   return (
     <GuideTemplate
-      title="Extension Lead Safety UK | Safe Use of Extension Leads & Multi-Plugs"
-      description="Complete guide to safe extension lead use in the UK. Load calculations (do not exceed 13A), daisy-chaining dangers, RCD-protected leads, coiled cable reel fire risk, outdoor IP ratings, and when to get a socket installed instead."
+      title="Extension Lead Safety UK | Safe Use of Extension Leads &"
+      description="Complete guide to safe extension lead use in the UK. Load calculations (do not exceed 13A), daisy-chaining dangers, RCD-protected leads…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

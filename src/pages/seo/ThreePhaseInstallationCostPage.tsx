@@ -403,7 +403,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote 3-phase installations accurately"
-          description="Elec-Mate's quoting app lets you itemise every component across all three phases, apply your margins, and send a professional PDF quote. AI cost engineering checks your prices against trade data."
+          description="Elec-Mate's quoting app lets you itemise every component across all three phases, apply your margins, and send a professional PDF quote."
           icon={Calculator}
         />
         <p>
@@ -630,7 +630,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify 3-phase installations"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site EIC certification. Everything you need for 3-phase work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site EIC certification. Everything you need for 3-phase work."
           icon={Wrench}
         />
       </>
@@ -646,9 +646,9 @@ export default function ThreePhaseInstallationCostPage() {
   return (
     <GuideTemplate
       title="3-Phase Installation Cost UK 2026 | Supply Upgrade Guide"
-      description="How much does a 3-phase installation cost in the UK in 2026? Complete guide covering DNO application costs, 3-phase consumer units, labour, G99 notification, and total project costs for workshops, commercial premises, and EV fleet charging."
+      description="How much does a 3-phase installation cost in the UK in 2026? Complete guide covering DNO application costs, 3-phase consumer units, labour…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

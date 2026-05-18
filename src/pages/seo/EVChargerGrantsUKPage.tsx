@@ -592,10 +592,10 @@ const sections = [
 export default function EVChargerGrantsUKPage() {
   return (
     <GuideTemplate
-      title="EV Charger Grants UK 2026 | WCS, EV Infrastructure Grant & VAT Exemption"
-      description="Complete guide to EV charger grants in the UK in 2026. The EVHS closed March 2022 — find out what is still available: Workplace Charging Scheme (£350/socket, up to £14,000), EV Infrastructure Grant for Carparks, 0% VAT on residential installation, and Home Energy Scotland."
+      title="EV Charger Grants UK 2026 | WCS, EV Infrastructure Grant &"
+      description="Complete guide to EV charger grants in the UK in 2026. The EVHS closed March 2022 — find out what is still available…"
       datePublished="2025-01-01"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EV Grant Guide"

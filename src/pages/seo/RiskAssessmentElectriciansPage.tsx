@@ -468,7 +468,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Generate site-specific risk assessments with AI"
-          description="Elec-Mate's AI Health and Safety agent creates risk assessments tailored to your job. Describe the task and site conditions, and get a complete risk assessment covering all electrical and non-electrical hazards with correct control measures. Ready in minutes, not hours."
+          description="Elec-Mate's AI Health and Safety agent creates risk assessments tailored to your job. Describe the task and site conditions…"
           icon={Shield}
         />
       </>
@@ -708,7 +708,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Create RAMS in minutes, not hours"
-          description="Elec-Mate's AI Health and Safety agent generates complete RAMS packages — risk assessment and method statement — tailored to your specific job. Describe the work, and get a professional document covering all hazards, control measures, and safe systems of work. Used by 1,000+ UK electricians."
+          description="Elec-Mate's AI Health and Safety agent generates complete RAMS packages — risk assessment and method statement — tailored to your specific job."
           icon={Brain}
         />
       </>
@@ -724,9 +724,9 @@ export default function RiskAssessmentElectriciansPage() {
   return (
     <GuideTemplate
       title="Risk Assessment for Electricians | Free Template Guide"
-      description="Complete guide to risk assessments for electricians. HSE 5-step process, electrical-specific hazards, template structure, legal requirements under the Management of Health and Safety at Work Regulations 1999, and free template guidance."
+      description="Complete guide to risk assessments for electricians. HSE 5-step process, electrical-specific hazards, template structure…"
       datePublished="2025-03-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

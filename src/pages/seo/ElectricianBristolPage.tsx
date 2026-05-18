@@ -580,7 +580,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Bristol electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the demands of Bristol's diverse property market. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -597,9 +597,9 @@ export default function ElectricianBristolPage() {
     <GuideTemplate
       localArea="Bristol"
       title="Electrician in Bristol | Find Electricians 2026"
-      description="Find qualified electricians in Bristol. WPD DNO, Georgian and Victorian properties in Clifton and Redland, eco-retrofit demand, HMO compliance, and local electrician rates for 2026."
+      description="Find qualified electricians in Bristol. WPD DNO, Georgian and Victorian properties in Clifton and Redland, eco-retrofit demand, HMO compliance…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Bristol"

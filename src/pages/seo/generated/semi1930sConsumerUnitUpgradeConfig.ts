@@ -1,11 +1,11 @@
 import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuidePage';
 
 const published = '2026-04-12';
-const modified = '2026-04-12';
+const modified = '2026-05-18';
 
 export const semi1930sConsumerUnitUpgradeConfig: GeneratedGuideConfig = {
   pagePath: '/guides/1930s-semi-consumer-unit-upgrade',
-  title: '1930s Semi Consumer Unit Upgrade | Electrician Guide | Elec-Mate',
+  title: '1930s Semi Consumer Unit Upgrade | Electrician Guide',
   description:
     'What to expect when upgrading a consumer unit in a 1930s semi, including access, cable condition, earthing, testing, and common cost drivers.',
   datePublished: published,
@@ -106,6 +106,31 @@ export const semi1930sConsumerUnitUpgradeConfig: GeneratedGuideConfig = {
           type: 'paragraph',
           text:
             'For homeowners, the most useful explanation is usually simple: the board upgrade is one part of making the electrics safer and easier to manage, but the condition of the rest of the installation still matters.',
+        },
+      ],
+    },
+    {
+      id: 'what-1930s-semis-actually-throw-at-you',
+      heading: 'What 1930s semis actually throw at you',
+      blocks: [
+        {
+          type: 'paragraph',
+          text:
+            'A 1930s semi-detached consumer unit upgrade looks straightforward on paper — swap the old fuse board, fit a modern dual-RCD or all-RCBO unit, certify, leave. In practice almost every 1930s installation hides at least one surprise. The earthing arrangement may be TT with a corroded electrode. The bonding may be missing or borrowed from a gas pipe that has since been replaced with plastic. The lighting circuits may be rubber-insulated and crumbling.',
+        },
+        {
+          type: 'paragraph',
+          text:
+            'The honest electrician walks the installation before quoting. Open the meter box, lift a few floorboards, look at the kitchen ring junction box, and check the bathroom for a missing supplementary bond. Each of these is an extra hour on the job — but each is also a £100-200 surcharge if you find it on the day. Price it before you commit.',
+        },
+        {
+          type: 'list',
+          items: [
+            'Check the earthing arrangement at the cut-out before quoting — TT installations need an electrode + verification.',
+            'Test the main bonding to gas and water — broken bonds are a C1 and a free upgrade if you missed them.',
+            'Sample at least one lighting circuit for old rubber/lead insulation — found late, this changes the scope.',
+            'Confirm RCD compatibility with old appliances — refrigerators and freezers can trip Type AC RCDs on inrush.',
+          ],
         },
       ],
     },

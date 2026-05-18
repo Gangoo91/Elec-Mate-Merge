@@ -277,6 +277,7 @@ const EvidenceManager = ({ entryId, evidenceFiles, onEvidenceUpdate }: EvidenceM
               </div>
             </div>
           )}
+        </div>
       </div>
 
       {/* Evidence files list */}

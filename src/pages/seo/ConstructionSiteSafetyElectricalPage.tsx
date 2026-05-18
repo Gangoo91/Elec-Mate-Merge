@@ -363,7 +363,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Generate site electrical RAMS instantly"
-          description="Elec-Mate's AI RAMS generator creates comprehensive Risk Assessment and Method Statements for construction site electrical work. CDM-compliant, site-specific, and ready to submit to the principal contractor."
+          description="Elec-Mate's AI RAMS generator creates comprehensive Risk Assessment and Method Statements for construction site electrical work."
           icon={ClipboardCheck}
         />
       </>
@@ -643,7 +643,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Stay safe and compliant on site"
-          description="Elec-Mate generates RAMS, certificates, and safety documentation for construction site electrical work. AI-powered, mobile-first, and designed for the realities of site work. 7-day free trial."
+          description="Elec-Mate generates RAMS, certificates, and safety documentation for construction site electrical work."
           icon={HardHat}
         />
       </>
@@ -659,9 +659,9 @@ export default function ConstructionSiteSafetyElectricalPage() {
   return (
     <GuideTemplate
       title="Construction Site Electrical Safety | CDM Guide"
-      description="Complete guide to construction site electrical safety for UK electricians. CDM 2015 duties, 110V reduced voltage systems, temporary distribution, cable protection, 3-monthly inspection requirements, emergency procedures, and RAMS for electrical work."
+      description="Complete guide to construction site electrical safety for UK electricians. CDM 2015 duties, 110V reduced voltage systems, temporary distribution…"
       datePublished="2025-08-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Site Safety Guide"

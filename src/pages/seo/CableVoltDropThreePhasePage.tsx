@@ -174,7 +174,7 @@ const features = [
     icon: Shield,
     title: 'BS 7671:2018+A4:2026 Compliant',
     description:
-      'All calculations follow the current 18th Edition wiring regulations including Amendment 3. Values verified against the published Appendix 4 tables.',
+      'All calculations follow the current 18th Edition wiring regulations including Amendment 4. Values verified against the published Appendix 4 tables.',
   },
 ];
 
@@ -336,7 +336,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Three Phase Calculation Tool | BS 7671:2026"
-          description="Three phase voltage drop calculator for BS 7671:2026. Instant mV/A/m results, no manual tables. Pass/fail compliance check in seconds."
+          description="Three phase voltage drop calculator built for BS 7671:2026. Get mV/A/m results instantly—no tables, no guesswork. Compliance check in seconds."
           icon={Calculator}
         />
       </>
@@ -457,7 +457,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Instant pass/fail against BS 7671 limits"
-          description="Elec-Mate automatically selects the correct limit — 20 V for three-phase power, 12 V for three-phase lighting — and displays a clear colour-coded pass/fail result. No mental arithmetic on site."
+          description="Elec-Mate automatically selects the correct limit — 20 V for three-phase power…"
           icon={Shield}
         />
       </>
@@ -620,9 +620,9 @@ export default function CableVoltDropThreePhasePage() {
   return (
     <ToolTemplate
       title="Three Phase Voltage Drop Calculator | BS 7671 Tool"
-      description="Calculate three-phase voltage drop to BS 7671 limits. Root 3 factor, balanced and unbalanced loads, SWA and multicore cables. Pass/fail indication against 5% power and 3% lighting limits on 400 V three-phase circuits."
+      description="Calculate three-phase voltage drop to BS 7671 limits. Root 3 factor, balanced and unbalanced loads, SWA and multicore cables."
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="BS 7671 Compliant"

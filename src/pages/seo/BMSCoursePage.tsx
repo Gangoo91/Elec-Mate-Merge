@@ -59,13 +59,13 @@ const features = [
     icon: BrainCircuit,
     title: 'AI Study Assistant',
     description:
-      'Ask any BMS question in plain English. Our AI understands HVAC control loops, protocol specifications, and commissioning procedures, giving you detailed, practical answers.',
+      'Ask any BMS question in plain English. Our AI understands HVAC control loops, protocol specifications, and commissioning procedures, giving you detailed…',
   },
   {
     icon: Cpu,
     title: 'Protocol Deep Dives',
     description:
-      'Comprehensive coverage of BACnet, Modbus, KNX, and DALI protocols with practical examples of network architecture, addressing, and data point configuration.',
+      'Comprehensive coverage of BACnet, Modbus, KNX, and DALI protocols with practical examples of network architecture, addressing…',
   },
   {
     icon: BarChart3,
@@ -83,13 +83,13 @@ const features = [
     icon: Clock,
     title: 'Study Anywhere',
     description:
-      'Access all course material on your phone, tablet, or desktop. Study during breaks on site, on the commute, or at home. Your progress syncs across every device automatically.',
+      'Access all course material on your phone, tablet, or desktop. Study during breaks on site, on the commute, or at home.',
   },
   {
     icon: Settings,
     title: 'Commissioning Skills',
     description:
-      'Learn systematic BMS commissioning procedures including point-to-point testing, loop checking, trend logging analysis, and performance verification against design intent.',
+      'Learn systematic BMS commissioning procedures including point-to-point testing, loop checking, trend logging analysis…',
   },
 ];
 
@@ -98,7 +98,7 @@ const courseSchema = {
   '@type': 'Course',
   name: 'BMS Course Online - Building Management Systems Training',
   description:
-    'Comprehensive online BMS training for electricians. HVAC controls, BACnet, Modbus, KNX protocols, sensor types, energy management, and commissioning. 7 modules with mock exams.',
+    'Comprehensive online BMS training for electricians. HVAC controls, BACnet, Modbus, KNX protocols, sensor types, energy management, and commissioning.',
   provider: {
     '@type': 'Organization',
     name: 'Elec-Mate',
@@ -141,7 +141,7 @@ export default function BMSCoursePage() {
   useSEO({
     title: 'BMS Course Online | Building Management Systems Training',
     description:
-      'Study Building Management Systems (BMS) online. HVAC controls, sensors, communication protocols (BACnet, Modbus, KNX), energy management. 7 modules with mock exams.',
+      'Study Building Management Systems (BMS) online. HVAC controls, sensors, communication protocols (BACnet, Modbus, KNX), energy management.',
     schema: {
       '@type': 'Course',
       name: 'BMS Course Online - Building Management Systems',
@@ -495,7 +495,7 @@ export default function BMSCoursePage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Upskill into BMS with Elec-Mate"
-            description="Access BMS training, 70+ electrical calculators, 16 certificate types, and AI-powered study tools — all in one app built for UK electricians. Study at your own pace around your working day."
+            description="Access BMS training, 70+ electrical calculators, 16 certificate types, and AI-powered study tools — all in one app built for UK electricians."
             ctaText="Start 7-day free trial"
             ctaHref="/auth/signup"
           />
@@ -570,7 +570,7 @@ export default function BMSCoursePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
             <SEOInternalLink href="/training/instrumentation-course">Instrumentation Course for Electricians</SEOInternalLink>
             <SEOInternalLink href="/training/mewp-course">MEWP Course</SEOInternalLink>
-            <SEOInternalLink href="/training/bs-7671-amendment-3-course">BS 7671 Amendment 3 Course</SEOInternalLink>
+            <SEOInternalLink href="/training/bs-7671-amendment-3-course">BS 7671 Amendment 4 Course</SEOInternalLink>
             <SEOInternalLink href="/training/cdm-regulations-course">CDM Regulations Course for Electricians</SEOInternalLink>
             <SEOInternalLink href="/training/workplace-safety-course">Workplace Safety Course</SEOInternalLink>
             <SEOInternalLink href="/guides/building-management-systems-bms-electrical">Building Management Systems (BMS) Electrical Guide UK</SEOInternalLink>

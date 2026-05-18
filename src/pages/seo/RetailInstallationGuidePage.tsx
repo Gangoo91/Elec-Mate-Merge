@@ -355,7 +355,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Fire alarm certificates on your phone"
-          description="Elec-Mate's fire alarm certificate template covers commissioning, periodic inspection, and servicing records in accordance with BS 5839-1. Complete the certificate on site and deliver it to the client instantly."
+          description="Elec-Mate's fire alarm certificate template covers commissioning, periodic inspection, and servicing records in accordance with BS 5839-1."
           icon={Siren}
         />
       </>
@@ -632,7 +632,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Professional retail certificates on your phone"
-          description="Join 1,000+ UK electricians creating professional EIC, EICR, and specialist certificates with AI board scanning, voice entry, and instant PDF delivery. 7-day free trial."
+          description="Join 1,000+ UK electricians creating professional EIC, EICR, and specialist certificates with AI board scanning, voice entry, and instant PDF delivery."
           icon={FileCheck2}
         />
       </>
@@ -648,9 +648,9 @@ export default function RetailInstallationGuidePage() {
   return (
     <GuideTemplate
       title="Retail Electrical Installation | Shop Fit-Out Guide"
-      description="Complete guide to retail electrical installation and shop fit-out. Lighting design, emergency lighting (BS 5266), fire alarm integration (BS 5839), power distribution, maximum demand, and Part P compliance for retail premises."
+      description="Complete guide to retail electrical installation and shop fit-out. Lighting design, emergency lighting (BS 5266), fire alarm integration (BS 5839)…"
       datePublished="2025-10-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Retail Guide"

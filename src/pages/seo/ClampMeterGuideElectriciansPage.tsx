@@ -323,7 +323,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Log clamp meter readings with AI assistance"
-          description="Tell the Elec-Mate AI your clamp meter readings and circuit details. Get instant analysis of load imbalance, overloading risk, harmonic concerns, and recommended next steps."
+          description="Tell the Elec-Mate AI your clamp meter readings and circuit details. Get instant analysis of load imbalance, overloading risk, harmonic concerns…"
           icon={Gauge}
         />
       </>
@@ -560,10 +560,10 @@ const sections = [
 export default function ClampMeterGuideElectriciansPage() {
   return (
     <GuideTemplate
-      title="Clamp Meter Guide for Electricians UK 2026 | AC vs DC, Accuracy, Best Meters"
-      description="Complete clamp meter guide for UK electricians. AC vs DC clamp meters, accuracy considerations, harmonic assessment, leakage current measurement, and the best clamp meters in 2026 including Fluke 376 FC and Megger DCM305E."
+      title="Clamp Meter Guide for Electricians UK 2026 | AC vs DC,"
+      description="Complete clamp meter guide for UK electricians. AC vs DC clamp meters, accuracy considerations, harmonic assessment, leakage current measurement…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Tools & Equipment Guide"

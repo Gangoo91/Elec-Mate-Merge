@@ -488,7 +488,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Certify new-build EV charger installations"
-          description="Elec-Mate generates the Electrical Installation Certificate for EV charger circuits on your phone. Fill in the schedule of test results, record the earth rod resistance, and send the completed EIC to the developer before you leave site."
+          description="Elec-Mate generates the Electrical Installation Certificate for EV charger circuits on your phone."
           icon={FileCheck2}
         />
       </>
@@ -635,9 +635,9 @@ export default function ElectricCarChargingAtHomePage() {
   return (
     <GuideTemplate
       title="Electric Car Charging at Home | Installation Guide UK"
-      description="Complete guide to electric car charging at home in the UK. 3-pin vs wallbox, 7kW vs 22kW charging speeds, installation costs, smart charging regulations, OZEV grant status, Part S building regulations, and electrical requirements under BS 7671 Section 722."
+      description="Complete guide to electric car charging at home in the UK. 3-pin vs wallbox, 7kW vs 22kW charging speeds, installation costs, smart charging regulations…"
       datePublished="2025-04-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

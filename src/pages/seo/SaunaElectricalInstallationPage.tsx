@@ -517,9 +517,9 @@ export default function SaunaElectricalInstallationPage() {
   return (
     <GuideTemplate
       title="Sauna Electrical Installation | Special Location Guide UK"
-      description="Complete guide to sauna electrical installation in the UK. Dedicated supply, BS 7671 Section 703 requirements, heat-resistant cable, temperature zones, RCD protection, testing, and certification."
+      description="Complete guide to sauna electrical installation in the UK. Dedicated supply, BS 7671 Section 703 requirements, heat-resistant cable, temperature zones…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

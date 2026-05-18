@@ -278,7 +278,7 @@ const sections = [
               Search BS 7671 in plain English. Ask "what are the Zs values for a 32A Type B MCB on a
               TN-C-S system?" or "what does Regulation 411.3.3 require?" and get the specific
               regulation text with practical guidance. Covers the complete 18th Edition including{' '}
-              <SEOInternalLink href="/guides/bs-7671-amendment-3-changes">Amendment 3:2024</SEOInternalLink>{' '}
+              <SEOInternalLink href="/guides/bs-7671-amendment-3-changes">Amendment 4:2024</SEOInternalLink>{' '}
               and Regulation 530.3.201.
             </p>
           </div>
@@ -466,7 +466,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="See the accuracy for yourself"
-          description="Ask any regulation question, request any cable sizing calculation, or describe any fault. Compare the AI's answer against your own knowledge. 7-day free trial."
+          description="Ask any regulation question, request any cable sizing calculation, or describe any fault. Compare the AI's answer against your own knowledge."
           icon={ShieldCheck}
         />
       </>
@@ -574,9 +574,9 @@ export default function HowAIHelpsElectriciansPage() {
   return (
     <GuideTemplate
       title="How AI Helps Electricians | Real World Uses"
-      description="Discover how AI is transforming electrical work in the UK. 8 specialist AI agents for fault diagnosis, circuit design, cost estimation, and compliance. Real-world use cases and time savings data from working electricians."
+      description="Discover how AI is transforming electrical work in the UK. 8 specialist AI agents for fault diagnosis, circuit design, cost estimation, and compliance."
       datePublished="2025-08-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="AI for Electricians"

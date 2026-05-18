@@ -717,8 +717,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Win more HMO work with Elec-Mate"
-          description="Complete HMO EICRs on your phone, quote remedial works on site, and build a recurring HMO landlord client base. 7-day free trial for UK electricians."
+          title="EICR frequency for HMO UK 2026"
+          description="HMO landlords must test every 5 years under BS 7671:2018+A4:2026. Learn legal EICR intervals, what fails cost, and how to comply."
           icon={FileCheck2}
         />
       </>
@@ -733,10 +733,10 @@ const sections = [
 export default function HMOElectricalRequirementsPage() {
   return (
     <GuideTemplate
-      title="HMO Electrical Requirements UK | Houses in Multiple Occupation"
-      description="Full guide to HMO electrical requirements in the UK. Mandatory licensing, EICR frequency, fire detection to BS 5839-6, emergency lighting to BS 5266-1, RCD protection, smoke and heat detector placement per room, landlord responsibilities, and 2026 compliance costs."
+      title="HMO Electrical Requirements UK | Houses in Multiple"
+      description="Full guide to HMO electrical requirements in the UK. Mandatory licensing, EICR frequency, fire detection to BS 5839-6, emergency lighting to BS 5266-1…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="HMO Landlord Guide"

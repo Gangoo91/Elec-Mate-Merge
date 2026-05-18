@@ -269,7 +269,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Test and record voltage readings with Elec-Mate"
-          description="Use Elec-Mate's voice test entry to record supply voltage readings, Zs values, and prospective fault current while your hands are on the test leads. All readings feed directly into the EICR schedule of test results."
+          description="Use Elec-Mate's voice test entry to record supply voltage readings, Zs values, and prospective fault current while your hands are on the test leads."
           icon={Activity}
         />
       </>
@@ -468,7 +468,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Record test results by voice while diagnosing"
-          description="Probes in hand? Speak your voltage readings and Elec-Mate enters them directly into the schedule of test results. No putting the probes down to type. Diagnose the loose neutral faster and document everything."
+          description="Probes in hand? Speak your voltage readings and Elec-Mate enters them directly into the schedule of test results. No putting the probes down to type."
           icon={Brain}
         />
       </>
@@ -551,9 +551,9 @@ export default function LooseNeutralSymptomsPage() {
   return (
     <GuideTemplate
       title="Loose Neutral | Symptoms, Dangers & How to Fix"
-      description="Expert guide to loose neutral symptoms: flickering lights, voltage fluctuations, tingling from metalwork, and the dangers of an open neutral on TN-C-S (PME) systems. How to diagnose, who is responsible, and how to fix it."
+      description="Loose neutral symptoms: flickering lights, voltage fluctuations, tingling from metalwork, dim/bright cycle. How to diagnose, fix, and stay safe."
       datePublished="2025-09-12"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting Guide"

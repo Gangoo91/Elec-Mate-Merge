@@ -451,7 +451,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Doncaster electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the residential and commercial electrical market in Doncaster. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -468,9 +468,9 @@ export default function ElectricianDoncasterPage() {
     <GuideTemplate
       localArea="Doncaster"
       title="Electrician in Doncaster | Local Electricians 2026"
-      description="Find qualified electricians in Doncaster. Part P compliance, NICEIC registered, EICR for landlords, consumer unit replacement, house rewiring, and local electrician rates for Doncaster in 2026."
+      description="Find qualified electricians in Doncaster. Part P compliance, NICEIC registered, EICR for landlords, consumer unit replacement, house rewiring…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Doncaster"

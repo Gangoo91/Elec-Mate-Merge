@@ -436,7 +436,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Board Scanner Identifies Cable Colours"
-          description="Elec-Mate's AI board scanner photographs the inside of a consumer unit and identifies cable colours, conductor identification, and any mixed-colour wiring. It flags missing earth sleeving, missing switch wire identification, and the absence of mixed-colour warning notices."
+          description="Elec-Mate's AI board scanner photographs the inside of a consumer unit and identifies cable colours, conductor identification…"
           icon={Camera}
         />
       </>
@@ -580,9 +580,9 @@ export default function CableColourCodesPage() {
   return (
     <GuideTemplate
       title="Cable Colour Codes UK | Complete Reference for Electricians"
-      description="Complete UK cable colour code reference for electricians. Current harmonised colours (brown, blue, green/yellow), old UK colours (red, black, green), three-phase colours, flex colours, BS 7671 identification requirements, mixed colour installations. With identification tables and EICR observation guidance."
+      description="Complete UK cable colour code reference for electricians. Current harmonised colours (brown, blue, green/yellow), old UK colours (red, black, green)…"
       datePublished="2025-05-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Essential Reference"

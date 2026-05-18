@@ -323,7 +323,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Organise your portfolio with Elec-Mate"
-          description="Digital portfolio management for apprentices. Photograph work with structured templates, collect witness testimonies, and track which NVQ units you have covered. Share your portfolio with your assessor digitally."
+          description="Digital portfolio management for apprentices. Photograph work with structured templates, collect witness testimonies…"
           icon={ClipboardCheck}
         />
       </>
@@ -477,7 +477,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Manage your business from day one"
-          description="When you are ready to go self-employed, Elec-Mate handles quoting, invoicing, certification, scheduling, and customer management. Everything a sole-trader electrician needs in one app. 7-day free trial."
+          description="When you are ready to go self-employed, Elec-Mate handles quoting, invoicing, certification, scheduling, and customer management."
           icon={Briefcase}
         />
       </>
@@ -617,9 +617,9 @@ export default function Year4ElectricalApprenticePage() {
   return (
     <GuideTemplate
       title="Year 4 Electrical Apprentice | Final Year Guide 2026"
-      description="Complete guide to year 4 of an electrical apprenticeship. AM2 assessment, End-Point Assessment (EPA), final portfolio submission, NICEIC/NAPIT registration, and transitioning to qualified electrician."
+      description="Complete guide to year 4 of an electrical apprenticeship. AM2 assessment, End-Point Assessment (EPA), final portfolio submission…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

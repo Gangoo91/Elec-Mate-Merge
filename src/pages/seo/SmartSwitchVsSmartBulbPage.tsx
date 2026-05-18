@@ -312,8 +312,8 @@ const sections = [
           </ul>
         </div>
         <SEOAppBridge
-          title="Issue Minor Works Certificates for smart switch installations"
-          description="Elec-Mate's Minor Works Certificate app lets you issue compliant certificates for smart switch wiring on site. Record test results and send PDFs to clients instantly from your phone."
+          title="Issue Minor Works Certificates for smart switch"
+          description="Elec-Mate's Minor Works Certificate app lets you issue compliant certificates for smart switch wiring on site."
           icon={FileCheck2}
         />
       </>
@@ -379,10 +379,10 @@ const sections = [
 export default function SmartSwitchVsSmartBulbPage() {
   return (
     <GuideTemplate
-      title="Smart Switch vs Smart Bulb | Neutral Wire Requirements UK Guide"
-      description="Complete guide to smart switches vs smart bulbs for UK electricians. The neutral wire problem in UK switch wiring, BS 7671 compliance, Zigbee vs Z-Wave vs Wi-Fi, and when to choose each solution for domestic smart lighting."
+      title="Smart Switch vs Smart Bulb | Neutral Wire Requirements UK"
+      description="Complete guide to smart switches vs smart bulbs for UK electricians. The neutral wire problem in UK switch wiring, BS 7671 compliance…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Smart Home Guide"

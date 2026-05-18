@@ -601,7 +601,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="All BS 7671 calculators in your pocket"
-          description="Elec-Mate gives you voltage drop, cable sizing, prospective fault current, and earth loop impedance calculators — all on your phone, all following BS 7671:2018+A4:2026. 7-day free trial."
+          description="Elec-Mate gives you voltage drop, cable sizing, prospective fault current, and earth loop impedance calculators — all on your phone…"
           icon={Calculator}
         />
       </>
@@ -617,9 +617,9 @@ export default function VoltageTooHighLowPage() {
   return (
     <GuideTemplate
       title="Voltage Too High or Too Low | Causes & Solutions"
-      description="Is your voltage too high or too low? Expert guide covering the acceptable UK range (216V-253V), loose neutral faults, DNO supply issues, voltage optimisation, and testing methods. Includes diagnostic steps for electricians."
+      description="Is your voltage too high or too low? Expert guide covering the acceptable UK range (216V-253V), loose neutral faults, DNO supply issues…"
       datePublished="2025-05-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting"

@@ -626,7 +626,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win student property EICR work with Elec-Mate"
-          description="Complete student house EICRs on your phone, quote remedial works on site, and build a recurring student landlord client base. 7-day free trial for UK electricians."
+          description="Complete student house EICRs on your phone, quote remedial works on site, and build a recurring student landlord client base."
           icon={FileCheck2}
         />
       </>
@@ -641,10 +641,10 @@ const sections = [
 export default function StudentHouseElectricalPage() {
   return (
     <GuideTemplate
-      title="Student House Electrical Safety UK | Guide for Landlords & Students"
-      description="Student house electrical safety guide for landlords and students in the UK. EICR requirements, HMO considerations, common student electrical hazards, overloaded sockets, illegal extension leads, landlord obligations, what students can check themselves, and how to report electrical faults."
+      title="Student House Electrical Safety UK | Guide for Landlords &"
+      description="Student house electrical safety guide for landlords and students in the UK. EICR requirements, HMO considerations, common student electrical hazards…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Student Property Guide"

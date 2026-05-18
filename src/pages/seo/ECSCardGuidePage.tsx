@@ -548,7 +548,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Professional certificate management for ECS cardholders"
-          description="Join 1,000+ UK electricians using Elec-Mate to complete EICRs, Minor Works Certificates, and Electrical Installation Certificates on their phone. AI board scanning, instant PDF generation, and automatic client delivery. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to complete EICRs, Minor Works Certificates, and Electrical Installation Certificates on their phone."
           icon={FileCheck2}
         />
       </>
@@ -564,9 +564,9 @@ export default function ECSCardGuidePage() {
   return (
     <GuideTemplate
       title="ECS Card Guide UK | Electrotechnical Certification Scheme"
-      description="Complete guide to ECS cards for UK electricians — all card types (trainee, apprentice, qualified, technician, manager), how to apply, evidence requirements, renewal, and how ECS differs from CSCS."
+      description="Complete guide to ECS cards for UK electricians — all card types (trainee, apprentice, qualified, technician, manager), how to apply…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Qualifications Guide"

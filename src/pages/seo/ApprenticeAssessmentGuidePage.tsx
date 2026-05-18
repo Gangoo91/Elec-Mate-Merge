@@ -241,7 +241,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Track your on-programme progress with Elec-Mate"
-          description="The apprentice hub includes an OJT tracker, site diary, and portfolio builder that maps your evidence to the apprenticeship standard criteria. See exactly where you stand and what you need to complete."
+          description="The apprentice hub includes an OJT tracker, site diary, and portfolio builder that maps your evidence to the apprenticeship standard criteria."
           icon={BarChart3}
         />
       </>
@@ -374,7 +374,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Practise with the EPA simulator"
-          description="Elec-Mate's EPA simulator walks you through realistic synoptic project scenarios with timed tasks, marking criteria, and AI-powered feedback on your approach. Build confidence before the real assessment."
+          description="Elec-Mate's EPA simulator walks you through realistic synoptic project scenarios with timed tasks, marking criteria…"
           icon={Target}
         />
       </>
@@ -597,9 +597,9 @@ export default function ApprenticeAssessmentGuidePage() {
   return (
     <GuideTemplate
       title="Apprentice Assessment Guide | What to Expect UK"
-      description="Complete guide to electrical apprentice assessment in the UK. On-programme assessment, gateway requirements, EPA synoptic project, professional discussion, grading criteria, and how to prepare for every stage."
+      description="Complete guide to electrical apprentice assessment in the UK. On-programme assessment, gateway requirements, EPA synoptic project…"
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

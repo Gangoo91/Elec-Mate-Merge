@@ -279,7 +279,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Electrical calculations on your phone"
-          description="Elec-Mate includes built-in calculators for cable sizing, voltage drop, maximum demand, prospective fault current, and more. Enter the values, get the answer — with the working shown and the relevant BS 7671 regulation referenced."
+          description="Elec-Mate includes built-in calculators for cable sizing, voltage drop, maximum demand, prospective fault current, and more."
           icon={Calculator}
         />
       </>
@@ -514,7 +514,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Study electrical theory on your phone"
-          description="Elec-Mate's Study Centre covers all the theory you need — from basic Ohm's Law through to three-phase calculations and BS 7671 regulations. Short, focused sections with worked examples. Study between jobs or on the train."
+          description="Elec-Mate's Study Centre covers all the theory you need — from basic Ohm's Law through to three-phase calculations and BS 7671 regulations."
           icon={GraduationCap}
         />
       </>
@@ -530,9 +530,9 @@ export default function HowElectricityWorksPage() {
   return (
     <GuideTemplate
       title="How Electricity Works | Basic Electrical Theory Guide"
-      description="Plain English guide to how electricity works. Covers voltage, current, resistance, Ohm's Law, AC vs DC, power calculations, and circuit types. Essential theory for electricians and apprentices."
+      description="Plain English guide to how electricity works. Covers voltage, current, resistance, Ohm's Law, AC vs DC, power calculations, and circuit types."
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Electrical Theory"

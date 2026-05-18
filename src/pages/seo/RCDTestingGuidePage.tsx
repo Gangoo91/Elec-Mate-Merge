@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Overview of the wiring regulations and key changes in Amendment 3.',
+    description: 'Overview of the wiring regulations and key changes in Amendment 4.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
@@ -464,7 +464,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Record RCD test results on site with Elec-Mate"
-          description="Enter RCD trip times and phase angle results on your phone. The Elec-Mate testing app auto-checks results against BS EN 61008/61009 limits and flags failures instantly. 7-day free trial."
+          description="Enter RCD trip times and phase angle results on your phone. The Elec-Mate testing app auto-checks results against BS EN 61008/61009 limits and flags…"
           icon={FileCheck2}
         />
       </>
@@ -580,9 +580,9 @@ export default function RCDTestingGuidePage() {
   return (
     <GuideTemplate
       title="RCD Testing Guide UK | RCD Test Procedures BS 7671"
-      description="Complete guide to RCD testing for UK electricians. Half-rated current test, rated current trip time (300ms for 30mA type), 5 times current test (40ms), ramp test, instrument connection, recording results, and nuisance tripping causes."
+      description="Complete guide to RCD testing for UK electricians. Half-rated current test, rated current trip time (300ms for 30mA type), 5 times current test (40ms)…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

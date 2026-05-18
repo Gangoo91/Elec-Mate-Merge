@@ -79,7 +79,7 @@ const faqs = [
   {
     question: 'When should I replace an RCD rather than finding the source of leakage?',
     answer:
-      'An RCD should be replaced (not relocated) if: the RCD itself is faulty — RCDs can develop internal leakage or sensitivity drift over time; the installation design is such that too many circuits with inherently high leakage (VSDs, DALI, commercial kitchen equipment) are sharing a single main RCD; or the RCD type is mismatched to the loads it protects (e.g., a Type AC RCD protecting circuits with DC-pulsating components requires upgrading to Type A or Type F per BS 7671:2018+A4:2026 Amendment 3). In most cases, however, replacing the RCD without addressing the source of the leakage will not solve the problem — the nuisance tripping will recur. The correct approach is to identify and reduce the leakage, then verify the RCD is functioning correctly.',
+      'An RCD should be replaced (not relocated) if: the RCD itself is faulty — RCDs can develop internal leakage or sensitivity drift over time; the installation design is such that too many circuits with inherently high leakage (VSDs, DALI, commercial kitchen equipment) are sharing a single main RCD; or the RCD type is mismatched to the loads it protects (e.g., a Type AC RCD protecting circuits with DC-pulsating components requires upgrading to Type A or Type F per BS 7671:2018+A4:2026 Amendment 4). In most cases, however, replacing the RCD without addressing the source of the leakage will not solve the problem — the nuisance tripping will recur. The correct approach is to identify and reduce the leakage, then verify the RCD is functioning correctly.',
   },
 ];
 
@@ -221,7 +221,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Document earth leakage findings on your phone"
-          description="Elec-Mate's EICR app lets you record earth leakage investigation findings, add photos, and generate professional reports with coded observations — all on site from your phone."
+          description="Elec-Mate's EICR app lets you record earth leakage investigation findings, add photos…"
           icon={AlertTriangle}
         />
       </>
@@ -465,7 +465,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Upgrade RCD Type for VSD Circuits</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Variable speed drives produce DC-pulsating leakage that can blind a Type AC RCD.
-                  BS 7671:2018+A4:2026 Amendment 3 now requires Type A or Type F RCDs to protect
+                  BS 7671:2018+A4:2026 Amendment 4 now requires Type A or Type F RCDs to protect
                   circuits supplying VSDs and EV chargers. Upgrading from Type AC to Type A reduces
                   nuisance tripping and ensures correct detection of DC fault currents.
                 </p>
@@ -485,10 +485,10 @@ const sections = [
 export default function TroubleshootingHighEarthLeakagePage() {
   return (
     <GuideTemplate
-      title="Troubleshooting High Earth Leakage | RCD Nuisance Tripping Guide"
-      description="Complete guide to troubleshooting high earth leakage and RCD nuisance tripping for UK electricians. Covers the clamp meter method, isolating the leaking circuit, and common culprits including fluorescent fittings, DALI systems, and old appliances."
+      title="Troubleshooting High Earth Leakage | RCD Nuisance Tripping"
+      description="Troubleshoot high earth leakage + RCD nuisance tripping for UK electricians: split-load boards, cumulative leakage, Type A/F RCDs, fault tracing."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Fault Finding Guide"

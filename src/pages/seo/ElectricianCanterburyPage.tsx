@@ -460,7 +460,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Canterbury electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for South East electricians working across Kent and Canterbury. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -477,9 +477,9 @@ export default function ElectricianCanterburyPage() {
     <GuideTemplate
       localArea="Canterbury"
       title="Electrician in Canterbury | Local Electricians 2026"
-      description="Find qualified electricians in Canterbury. NICEIC and NAPIT registered, Part P compliant. South East rates, listed building work, student HMO EICRs, EV chargers, and consumer unit upgrades in Canterbury 2026."
+      description="Find qualified electricians in Canterbury. NICEIC and NAPIT registered, Part P compliant. South East rates, listed building work, student HMO EICRs…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Canterbury"

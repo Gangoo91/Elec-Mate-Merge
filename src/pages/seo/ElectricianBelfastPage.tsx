@@ -569,7 +569,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Belfast electrical business from your phone"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs…"
           icon={MapPin}
         />
       </>
@@ -586,9 +586,9 @@ export default function ElectricianBelfastPage() {
     <GuideTemplate
       localArea="Belfast"
       title="Electrician in Belfast | Find Qualified Electricians 2026"
-      description="Find qualified, registered electricians in Belfast. Realistic 2026 pricing, NIE Networks DNO, Northern Ireland Building Regulations (NOT Part P), Titanic Quarter developments, Victorian terrace rewiring, and student HMO compliance."
+      description="Find qualified, registered electricians in Belfast. Realistic 2026 pricing, NIE Networks DNO, Northern Ireland Building Regulations (NOT Part P)…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Find an Electrician"

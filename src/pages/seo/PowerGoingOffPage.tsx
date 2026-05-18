@@ -292,7 +292,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AI fault diagnosis for tripping circuits"
-          description="Describe the symptoms — which device trips, when it happens, what appliances are connected — and Elec-Mate AI identifies the most likely cause and recommended tests. Faster diagnosis, fewer wasted hours on site."
+          description="Describe the symptoms — which device trips, when it happens, what appliances are connected — and Elec-Mate AI identifies the most likely cause and…"
           icon={Brain}
         />
       </>
@@ -554,7 +554,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Complete fault diagnosis on your phone"
-          description="Elec-Mate gives you AI fault diagnosis, all BS 7671 calculators, and digital certificates in one app. Diagnose the fault, calculate the fix, issue the certificate — all from site. 7-day free trial."
+          description="Elec-Mate gives you AI fault diagnosis, all BS 7671 calculators, and digital certificates in one app."
           icon={Wrench}
         />
       </>
@@ -570,9 +570,9 @@ export default function PowerGoingOffPage() {
   return (
     <GuideTemplate
       title="Power Going Off Randomly | Electrical Causes & Fixes"
-      description="Why does your power keep going off? Expert guide covering loose main fuse connections, MCB and RCD tripping, overloaded circuits, DNO supply faults, and emergency procedures. Includes diagnosis steps for electricians."
+      description="Why does your power keep going off? Expert guide covering loose main fuse connections, MCB and RCD tripping, overloaded circuits, DNO supply faults…"
       datePublished="2025-03-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting"

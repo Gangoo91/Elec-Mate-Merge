@@ -611,7 +611,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage your electrical business from your van"
-          description="Elec-Mate gives you quoting, certification, and job management on your phone. Complete EICs, send quotes, and manage your schedule from the driver's seat. 7-day free trial."
+          description="Elec-Mate gives you quoting, certification, and job management on your phone. Complete EICs, send quotes, and manage your schedule from the driver's seat."
           icon={Truck}
         />
       </>
@@ -627,9 +627,9 @@ export default function ElectricianVanSetupGuidePage() {
   return (
     <GuideTemplate
       title="Electrician Van Setup Guide 2026 | Best Van Racking"
-      description="Complete guide to setting up an electrician van. Racking systems compared (Sortimo, Bott, Van Guard), tool organisation, cable storage, test instrument protection, security, inverters, and van branding."
+      description="Complete guide to setting up an electrician van. Racking systems compared (Sortimo, Bott, Van Guard), tool organisation, cable storage…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Business Guide"

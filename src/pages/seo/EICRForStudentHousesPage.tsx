@@ -536,10 +536,10 @@ const sections = [
 export default function EICRForStudentHousesPage() {
   return (
     <GuideTemplate
-      title="EICR for Student Houses — HMO Electrical Inspection Guide 2024"
-      description="EICR requirements for student houses and HMOs: 5-year mandatory inspection cycle, local authority enforcement, common defects (missing RCDs, old consumer units), costs (\u00a3150\u2013\u00a3350), and landlord obligations after a C2 finding."
+      title="EICR for Student Houses — HMO Electrical Inspection Guide"
+      description="EICR requirements for student houses and HMOs: 5-year mandatory inspection cycle, local authority enforcement, common defects (missing RCDs…"
       datePublished="2024-06-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Landlord Guide"

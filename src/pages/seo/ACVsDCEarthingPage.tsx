@@ -315,7 +315,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Complete EV charging installation certificates on your phone"
-          description="Elec-Mate's EIC app includes fields for EV charging circuit details, RCD type, earthing system, and DNO notification. Generate compliant PDF certificates on site."
+          description="Elec-Mate's EIC app includes fields for EV charging circuit details, RCD type, earthing system, and DNO notification."
           icon={Cable}
         />
       </>
@@ -407,7 +407,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Complete solar PV and EV charging certificates on your phone"
-          description="Elec-Mate's Solar PV and EIC certificate apps capture all required details: RCD type, earthing system, insulation resistance test results, and commissioning data. Generate compliant PDF certificates on site."
+          description="Elec-Mate's Solar PV and EIC certificate apps capture all required details: RCD type, earthing system, insulation resistance test results…"
           icon={Sun}
         />
       </>
@@ -423,9 +423,9 @@ export default function ACVsDCEarthingPage() {
   return (
     <GuideTemplate
       title="AC vs DC Earthing for Solar PV and EV Charging | UK Guide"
-      description="Complete guide to AC vs DC earthing for UK electricians. Type B RCD requirement for DC fault currents (BS 7671 Regulation 411.3.3 and Table 7.3(ii)), solar PV DC earthing, EV charging earthing, and PE conductor requirements."
+      description="Complete guide to AC vs DC earthing for UK electricians. Type B RCD requirement for DC fault currents (BS 7671 Regulation 411.3.3 and Table 7.3(ii))…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="DC Earthing Guide"

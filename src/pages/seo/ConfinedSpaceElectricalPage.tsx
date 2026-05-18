@@ -503,7 +503,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Generate confined space RAMS with Elec-Mate"
-          description="Elec-Mate's AI RAMS generator creates comprehensive risk assessments and method statements for electrical work in confined spaces, including atmospheric hazard assessment, rescue arrangements, and permit to work documentation. 7-day free trial."
+          description="Elec-Mate's AI RAMS generator creates comprehensive risk assessments and method statements for electrical work in confined spaces…"
           icon={ClipboardCheck}
         />
       </>
@@ -549,10 +549,10 @@ const sections = [
 export default function ConfinedSpaceElectricalPage() {
   return (
     <GuideTemplate
-      title="Confined Space Electrical Work UK | Safety in Confined Spaces"
-      description="UK guide to electrical work in confined spaces. Confined Spaces Regulations 1997, what counts as a confined space, gas testing, entry and standby team requirements, ATEX equipment, and permit to work."
+      title="Confined Space Electrical Work UK | Safety in Confined"
+      description="UK guide to electrical work in confined spaces. Confined Spaces Regulations 1997, what counts as a confined space, gas testing…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

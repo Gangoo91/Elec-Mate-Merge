@@ -340,7 +340,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Practise the testing sequence until it is automatic"
-          description="The Elec-Mate AM2 simulator walks you through every test in the correct BS 7671 sequence. Enter your readings, get instant feedback on whether each result passes, and learn why the order matters."
+          description="The Elec-Mate AM2 simulator walks you through every test in the correct BS 7671 sequence. Enter your readings…"
           icon={ClipboardCheck}
         />
       </>
@@ -574,7 +574,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Start practising for the AM2 today"
-          description="Join hundreds of apprentices using Elec-Mate to prepare for the AM2 assessment. Timed scenarios, fault diagnosis trainer, testing sequence walkthroughs, and AI revision support. 7-day free trial."
+          description="Join hundreds of apprentices using Elec-Mate to prepare for the AM2 assessment. Timed scenarios, fault diagnosis trainer, testing sequence walkthroughs…"
           icon={GraduationCap}
         />
       </>
@@ -590,9 +590,9 @@ export default function AM2SimulatorGuidePage() {
   return (
     <GuideTemplate
       title="AM2 Simulator | Practice Assessment Tool"
-      description="Prepare for the AM2 practical assessment with timed practice scenarios, cable termination guides, testing procedure walkthroughs, and fault diagnosis training. Free 7-day trial on Elec-Mate."
+      description="Prepare for the AM2 practical assessment with timed practice scenarios, cable termination guides, testing procedure walkthroughs…"
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Tool"

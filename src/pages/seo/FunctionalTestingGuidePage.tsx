@@ -20,7 +20,7 @@ import {
 
 const PAGE_TITLE = 'Functional Testing Guide | What to Check After Installation';
 const PAGE_DESCRIPTION =
-  'Complete guide to functional testing for UK electricians. RCD test button checks, switching devices, isolators, interlocking, circuit identification, labelling requirements. BS 7671 compliant procedures with Elec-Mate.';
+  'Functional testing for UK electricians: RCD test buttons, switching devices, isolators, interlocks, circuit ID, labelling. BS 7671 compliant.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -234,7 +234,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Board scanner reads your MCB/RCBO ratings automatically"
-          description="Point your phone at the distribution board and Elec-Mate's AI reads the device ratings, types, and circuit references. The functional test checklist is pre-populated with the correct device information for each circuit."
+          description="Point your phone at the distribution board and Elec-Mate's AI reads the device ratings, types, and circuit references."
           icon={ClipboardCheck}
         />
       </>
@@ -441,7 +441,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Never miss a functional test item"
-          description="Elec-Mate's functional testing checklist is built into every certificate. Each item has a pass/fail/N/A selector. The app will not let you issue a certificate until all mandatory functional test items have been completed — no more missed checks."
+          description="Elec-Mate's functional testing checklist is built into every certificate. Each item has a pass/fail/N/A selector."
           icon={Shield}
         />
         <p>
@@ -519,7 +519,7 @@ export default function FunctionalTestingGuidePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-06-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

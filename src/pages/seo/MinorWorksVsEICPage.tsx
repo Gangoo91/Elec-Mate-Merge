@@ -204,8 +204,8 @@ const sections = [
           verify CPC continuity and polarity. This is covered by BS 7671 Regulation 620.3.
         </p>
         <SEOAppBridge
-          title="Minor Works in Under 3 Minutes"
-          description="Elec-Mate auto-fills your company details, personal information, and scheme registration number. Enter the circuit details, test results, and signature — the PDF is ready to send before you pack up. All 16 certificate types in one app."
+          title="EIC Form: Minor Works vs Full Certificate"
+          description="EIC form confusion costs time on site. Compare minor works certificates against full EICs under BS 7671:2018+A4:2026."
           icon={FileText}
         />
       </>
@@ -265,7 +265,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Full EIC with Three Signature Blocks"
-          description="Elec-Mate includes the complete EIC form with all three signature blocks, schedule of inspections, and schedule of test results. Auto-validates all test results against BS 7671 limits as you enter them on site."
+          description="Elec-Mate includes the complete EIC form with all three signature blocks, schedule of inspections, and schedule of test results."
           icon={FileCheck2}
         />
       </>
@@ -594,7 +594,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="All 16 Certificate Types in One App"
-          description="Stop guessing which certificate to use. Elec-Mate guides you to the right form based on the scope of work. Minor Works, EIC, EICR, and 5 more — all with auto-fill, digital signatures, and PDF export."
+          description="Stop guessing which certificate to use. Elec-Mate guides you to the right form based on the scope of work."
           icon={ClipboardCheck}
         />
       </>
@@ -605,10 +605,10 @@ const sections = [
 export default function MinorWorksVsEICPage() {
   return (
     <GuideTemplate
-      title="Minor Works vs EIC | Which Certificate Do I Need? | Elec-Mate"
-      description="When to use a Minor Works certificate and when a full EIC is required. Practical examples, Part P requirements, common mistakes, and edge cases. For UK electricians."
+      title="Minor Works vs EIC | Which Certificate Do I Need?"
+      description="When to use a Minor Works certificate and when a full EIC is required. Practical examples, Part P requirements, common mistakes, and edge cases."
       datePublished="2025-05-08"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Guide"

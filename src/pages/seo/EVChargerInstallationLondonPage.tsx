@@ -530,7 +530,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify London EV installations"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. Professional quotes and certificates from your phone — built for electricians on the move."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification."
           icon={Car}
         />
       </>
@@ -546,9 +546,9 @@ export default function EVChargerInstallationLondonPage() {
   return (
     <GuideTemplate
       title="EV Charger Installation London 2026 | Costs, DNO, and Grants"
-      description="How much does EV charger installation cost in London in 2026? Local costs, UKPN DNO notification, London borough grants, terraced house cable routing, PME earthing requirements, and Section 722 compliance."
+      description="How much does EV charger installation cost in London in 2026? Local costs, UKPN DNO notification, London borough grants, terraced house cable routing…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="London Guide"

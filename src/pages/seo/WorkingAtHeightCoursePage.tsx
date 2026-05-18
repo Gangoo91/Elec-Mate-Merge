@@ -21,7 +21,7 @@ import {
 
 const PAGE_TITLE = 'Working at Height Course | Electrical Safety Training';
 const PAGE_DESCRIPTION =
-  'Working at height training for UK electricians. Work at Height Regulations 2005, hierarchy of controls, ladder safety, mobile tower scaffolding, fall arrest systems, and risk assessment. 6 modules with video content, quizzes, and AI tutor.';
+  'Working at height training for UK electricians: WAHR 2005, hierarchy of controls, ladder safety, mobile towers, fall arrest, RAs. 6 modules.';
 
 const breadcrumbs = [
   { label: 'Training', href: '/training' },
@@ -86,32 +86,32 @@ const modules = [
   {
     title: 'Introduction to Working at Height',
     description:
-      'Falls from height statistics, the Work at Height Regulations 2005, duties of employers and employees, the definition of working at height, and why electricians are at particular risk.',
+      'Falls from height statistics, the Work at Height Regulations 2005, duties of employers and employees, the definition of working at height…',
   },
   {
     title: 'Risk Assessment for Working at Height',
     description:
-      'How to carry out a working at height risk assessment. Identifying hazards, evaluating risk, selecting appropriate control measures, and recording the assessment. Site-specific considerations for electrical work.',
+      'How to carry out a working at height risk assessment. Identifying hazards, evaluating risk, selecting appropriate control measures…',
   },
   {
     title: 'The Hierarchy of Controls',
     description:
-      'Avoiding work at height where possible, collective protection (guardrails, scaffolding, nets), personal protection (harness and lanyard, fall arrest), and minimising fall distance and consequences.',
+      'Avoiding work at height where possible, collective protection (guardrails, scaffolding, nets), personal protection (harness and lanyard, fall arrest)…',
   },
   {
     title: 'Ladder and Stepladder Safety',
     description:
-      'Ladder selection and inspection, correct positioning (1-in-4 rule), securing and footing, three points of contact, safe working practices, and when ladders are and are not appropriate for electrical work.',
+      'Ladder selection and inspection, correct positioning (1-in-4 rule), securing and footing, three points of contact, safe working practices…',
   },
   {
     title: 'Mobile Towers and Scaffolding',
     description:
-      'PASMA tower assembly principles, safe working heights, stability requirements (3:1 base-to-height ratio for indoor use), inspection requirements, and use of mobile towers for electrical installation work.',
+      'PASMA tower assembly principles, safe working heights, stability requirements (3:1 base-to-height ratio for indoor use), inspection requirements…',
   },
   {
     title: 'Fall Arrest and Emergency Procedures',
     description:
-      'Personal fall protection systems (harness, lanyard, anchor points), equipment inspection, suspension trauma awareness, rescue planning, and first-response procedures when someone falls from height.',
+      'Personal fall protection systems (harness, lanyard, anchor points), equipment inspection, suspension trauma awareness, rescue planning…',
   },
 ];
 
@@ -120,7 +120,7 @@ const features = [
     icon: BrainCircuit,
     title: 'AI Study Assistant',
     description:
-      'Ask any working at height question in plain English. Get instant answers on WAHR 2005 requirements, ladder safety rules, tower specifications, and fall arrest equipment.',
+      'Ask any working at height question in plain English. Get instant answers on WAHR 2005 requirements, ladder safety rules, tower specifications…',
   },
   {
     icon: HardHat,
@@ -132,25 +132,25 @@ const features = [
     icon: ClipboardCheck,
     title: 'Interactive Quizzes',
     description:
-      'Scenario-based questions after every module. Assess risk, select the correct access equipment, identify unsafe practices, and demonstrate knowledge of emergency procedures.',
+      'Scenario-based questions after every module. Assess risk, select the correct access equipment, identify unsafe practices…',
   },
   {
     icon: Clock,
     title: 'Study Anywhere',
     description:
-      'Complete the course on your phone, tablet, or desktop. Study during breaks on site, at home in the evening, or on the commute. Progress syncs across all your devices.',
+      'Complete the course on your phone, tablet, or desktop. Study during breaks on site, at home in the evening, or on the commute.',
   },
   {
     icon: Layers,
     title: 'Flashcard Decks',
     description:
-      'Spaced repetition flashcards covering WAHR 2005, hierarchy of controls, ladder safety rules, tower specifications, fall arrest terminology, and RIDDOR reporting requirements.',
+      'Spaced repetition flashcards covering WAHR 2005, hierarchy of controls, ladder safety rules, tower specifications, fall arrest terminology…',
   },
   {
     icon: FileCheck2,
     title: 'CPD Certificate',
     description:
-      'Downloadable CPD certificate on successful completion of all six modules. Automatically recorded in your Elec-Mate CPD portfolio with annual renewal reminders.',
+      'Downloadable CPD certificate on successful completion of all six modules. Automatically recorded in your Elec-Mate CPD portfolio with annual renewal…',
   },
 ];
 
@@ -293,7 +293,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Interactive quizzes on the hierarchy of controls"
-          description="Test your understanding with scenario-based questions. Given a specific electrical task, select the correct level of the hierarchy and the most appropriate access equipment. Detailed explanations for every answer."
+          description="Test your understanding with scenario-based questions. Given a specific electrical task…"
           icon={ClipboardCheck}
         />
       </>
@@ -414,7 +414,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Track all your safety training in one place"
-          description="Elec-Mate tracks your working at height, asbestos awareness, manual handling, and all other CPD training. Downloadable certificates, automatic renewal reminders, and a CPD portfolio accepted by all competent person schemes."
+          description="Elec-Mate tracks your working at height, asbestos awareness, manual handling, and all other CPD training."
           icon={ShieldCheck}
         />
       </>
@@ -506,7 +506,7 @@ export default function WorkingAtHeightCoursePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-05-05"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Health & Safety Training"

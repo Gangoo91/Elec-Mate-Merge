@@ -598,7 +598,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Professional farm certificates on your phone"
-          description="Join 1,000+ UK electricians creating EICR and EIC certificates with AI-assisted observation coding, photo documentation, and instant PDF delivery. 7-day free trial."
+          description="Join 1,000+ UK electricians creating EICR and EIC certificates with AI-assisted observation coding, photo documentation, and instant PDF delivery."
           icon={FileCheck2}
         />
       </>
@@ -614,9 +614,9 @@ export default function AgriculturalInstallationsPage() {
   return (
     <GuideTemplate
       title="Agricultural Electrical Installations | BS 7671 Part 7"
-      description="Complete guide to agricultural electrical installations under BS 7671 Section 705. Earthing and bonding for livestock buildings, IP ratings, RCD protection, supplementary bonding requirements, and periodic inspection intervals for farms."
+      description="Complete guide to agricultural electrical installations under BS 7671 Section 705. Earthing and bonding for livestock buildings, IP ratings…"
       datePublished="2025-07-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Agricultural Guide"

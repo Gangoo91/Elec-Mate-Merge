@@ -382,7 +382,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Pass your scheme assessment with professional documentation"
-          description="Elec-Mate creates professional, BS 7671-compliant certificates with complete test results. When the assessor reviews your paperwork, everything is accurate, consistent, and digitally organised. No more boxes of handwritten certificates."
+          description="Elec-Mate creates professional, BS 7671-compliant certificates with complete test results. When the assessor reviews your paperwork…"
           icon={FileText}
         />
       </>
@@ -556,7 +556,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Digital certificates that impress any assessor"
-          description="Elec-Mate produces professional, BS 7671-compliant certificates with full test schedules. Whether your assessor is from NICEIC, NAPIT, or ELECSA, your documentation will be clear, accurate, and instantly accessible."
+          description="Elec-Mate produces professional, BS 7671-compliant certificates with full test schedules. Whether your assessor is from NICEIC, NAPIT, or ELECSA…"
           icon={Award}
         />
       </>
@@ -572,9 +572,9 @@ export default function NICEICvsNAPICPage() {
   return (
     <GuideTemplate
       title="NICEIC vs NAPIT | Which Scheme Is Best? 2026"
-      description="Detailed comparison of NICEIC and NAPIT competent person schemes for UK electricians. Costs, assessment process, reputation, coverage, switching between schemes, and dual registration. Updated for 2026."
+      description="Detailed comparison of NICEIC and NAPIT competent person schemes for UK electricians. Costs, assessment process, reputation, coverage…"
       datePublished="2025-08-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Scheme Comparison"

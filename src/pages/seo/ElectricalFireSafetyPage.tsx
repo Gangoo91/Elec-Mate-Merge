@@ -590,7 +590,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs on your phone with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Identify electrical fire risks and send reports to clients immediately. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={Flame}
         />
       </>
@@ -605,10 +605,10 @@ const sections = [
 export default function ElectricalFireSafetyPage() {
   return (
     <GuideTemplate
-      title="Electrical Fire Safety UK | Preventing Electrical Fires Guide"
-      description="UK electrical fire safety guide — leading causes of electrical fires, arcing faults and AFDDs, overloaded sockets, old wiring risks, smoke detection, extension lead safety, rental property requirements, and what to do if an electrical fire starts."
+      title="Electrical Fire Safety UK | Preventing Electrical Fires"
+      description="UK electrical fire safety guide — leading causes of electrical fires, arcing faults and AFDDs, overloaded sockets, old wiring risks, smoke detection…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Fire Safety"

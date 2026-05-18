@@ -215,7 +215,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote professionally from your first job"
-          description="Elec-Mate gives new electrical contractors professional quoting, invoicing, and certificate tools — so you look established from day one. Start your 7-day free trial."
+          description="Elec-Mate gives new electrical contractors professional quoting, invoicing, and certificate tools — so you look established from day one."
           icon={Briefcase}
         />
       </>
@@ -332,7 +332,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Build and send professional quotes in minutes"
-          description="Elec-Mate's quoting app calculates materials, labour, and testing — producing professional PDF quotes sent directly from your phone. Win more work and get paid faster."
+          description="Elec-Mate's quoting app calculates materials, labour, and testing — producing professional PDF quotes sent directly from your phone."
           icon={Calculator}
         />
       </>
@@ -510,10 +510,10 @@ export default function ElectricianToContractorPage() {
   return (
     <GuideTemplate
       localArea="Career Ladder Uk"
-      title="From Electrician to Electrical Contractor UK | Complete Business Guide"
-      description="How UK electricians go self-employed and build a contracting business — Part P registration, pricing, essential insurance (PLI £2m min, ELI £5m statutory), when to hire your first employee, and tendering for commercial work."
+      title="From Electrician to Electrical Contractor UK | Complete"
+      description="How UK electricians go self-employed and build a contracting business — Part P registration, pricing, essential insurance (PLI £2m min…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Business Guide"

@@ -24,7 +24,7 @@ import {
 
 const PAGE_TITLE = 'Cable Sizing Calculator BS 7671 | Free Online Tool | Elec-Mate';
 const PAGE_DESCRIPTION =
-  'Calculate cable sizes to BS 7671:2018 + Amendment 3. Considers current carrying capacity, voltage drop, fault current, and thermal constraints. 70 electrical calculators included.';
+  'Calculate cable sizes to BS 7671:2018+A4:2026 — current capacity, voltage drop, fault current, thermal limits. 70 calculators included.';
 
 const faqs = [
   {
@@ -178,7 +178,7 @@ const howToSchema = {
   '@type': 'HowTo',
   name: 'How to Size a Cable to BS 7671',
   description:
-    'A step-by-step guide to selecting the correct cable size for an electrical circuit using the methodology set out in BS 7671:2018 (IET Wiring Regulations, 18th Edition).',
+    'A step-by-step guide to selecting the correct cable size for an electrical circuit using the methodology set out in BS 7671:2018 (IET Wiring Regulations…',
   step: howToSteps.map((step, index) => ({
     '@type': 'HowToStep',
     position: index + 1,
@@ -643,7 +643,7 @@ export default function CableSizingCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Cable Sizing in Your Pocket — On Any Job Site"
-            description="Use Elec-Mate's built-in cable sizing calculator on site — voltage drop, correction factors, ring circuit checks and more. All BS 7671 Appendix 4 tables included, works offline."
+            description="Use Elec-Mate's built-in cable sizing calculator on site — voltage drop, correction factors, ring circuit checks and more."
             ctaText="Try Elec-Mate free"
             ctaHref="/auth/signup"
           />

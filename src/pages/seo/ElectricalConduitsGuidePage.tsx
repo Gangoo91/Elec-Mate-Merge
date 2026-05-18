@@ -20,9 +20,9 @@ export default function ElectricalConduitsGuidePage() {
   return (
     <GuideTemplate
       title="Electrical Conduit Guide | Types, Sizing & Installation"
-      description="Complete guide to electrical conduit for UK installations. PVC conduit, galvanised steel conduit, flexible conduit, sizes, bending techniques, draw wires, conduit fill calculation, BS 7671 requirements, and installation best practice for domestic and commercial work."
+      description="Complete guide to electrical conduit for UK installations. PVC conduit, galvanised steel conduit, flexible conduit, sizes, bending techniques…"
       datePublished="2025-06-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Installation', href: '/guides' },
         { label: 'Conduit Guide', href: '/guides/electrical-conduit-guide' },
@@ -385,7 +385,7 @@ export default function ElectricalConduitsGuidePage() {
               </div>
               <SEOAppBridge
                 title="Conduit Fill Calculator"
-                description="Elec-Mate's conduit fill calculator instantly determines the maximum number of cables for any conduit size and cable combination. Select the conduit type and size, add the cables, and the calculator shows the fill percentage with a clear pass or fail indication."
+                description="Elec-Mate's conduit fill calculator instantly determines the maximum number of cables for any conduit size and cable combination."
                 icon={Calculator}
               />
             </>
@@ -542,7 +542,7 @@ export default function ElectricalConduitsGuidePage() {
               — covers conduit installation as part of the first fix sequence.
               <SEOAppBridge
                 title="AI Installation Guide"
-                description="Elec-Mate's AI installer agent provides conduit sizing guidance, bend calculations, and installation sequences. Describe your job and get tailored recommendations for conduit type, size, fixings, and cable routing."
+                description="Elec-Mate's AI installer agent provides conduit sizing guidance, bend calculations, and installation sequences."
                 icon={Brain}
               />
             </>

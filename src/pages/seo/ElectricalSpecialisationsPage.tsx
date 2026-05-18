@@ -442,7 +442,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Track your specialist CPD with Elec-Mate"
-          description="Log your specialist training courses, manufacturer certifications, and CPD hours in one place. Your ElecID profile shows clients and employers your verified specialist credentials."
+          description="Log your specialist training courses, manufacturer certifications, and CPD hours in one place."
           icon={GraduationCap}
         />
       </>
@@ -556,7 +556,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs faster with Elec-Mate"
-          description="AI board scanner, voice test entry, automatic defect coding, and instant PDF delivery. Testing specialists using Elec-Mate complete EICRs in half the time — more inspections per day, more revenue per week."
+          description="AI board scanner, voice test entry, automatic defect coding, and instant PDF delivery. Testing specialists using Elec-Mate complete EICRs in half the…"
           icon={Zap}
         />
       </>
@@ -630,9 +630,9 @@ export default function ElectricalSpecialisationsPage() {
   return (
     <GuideTemplate
       title="Electrical Specialisations | Career Options UK"
-      description="Guide to electrical specialisations in the UK: fire alarm, EV charging, solar PV, data cabling, BMS, industrial, and testing specialist. Qualifications, earning potential, and career paths for each."
+      description="Guide to electrical specialisations in the UK: fire alarm, EV charging, solar PV, data cabling, BMS, industrial, and testing specialist."
       datePublished="2025-07-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

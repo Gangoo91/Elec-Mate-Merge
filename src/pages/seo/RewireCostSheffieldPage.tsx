@@ -407,7 +407,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AI Cost Engineer for Sheffield Rewire Quotes"
-          description="Electricians: describe the job and get a detailed rewire quote with materials breakdown, cable quantities, labour hours, and profit margin from real UK trade pricing data."
+          description="Electricians: describe the job and get a detailed rewire quote with materials breakdown, cable quantities, labour hours…"
           icon={Brain}
         />
       </>
@@ -539,7 +539,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage Sheffield rewire projects with Elec-Mate"
-          description="Electricians: quote rewires with AI cost engineering, manage projects with task tracking, complete EIC certificates on your phone, and send professional invoices. 7-day free trial."
+          description="Electricians: quote rewires with AI cost engineering, manage projects with task tracking, complete EIC certificates on your phone…"
           icon={Wrench}
         />
       </>
@@ -554,10 +554,10 @@ const sections = [
 export default function RewireCostSheffieldPage() {
   return (
     <GuideTemplate
-      title="House Rewire Cost Sheffield 2025 | Rewire Prices South Yorkshire"
-      description="How much does a house rewire cost in Sheffield in 2025? Real prices for 2-bed, 3-bed, and 4-bed properties — Victorian hillside terraces in Walkley and Crookes, Part P notification, disruption, replastering costs, and finding a NICEIC-registered electrician in Sheffield."
+      title="House Rewire Cost Sheffield 2025 | Rewire Prices South"
+      description="House rewire cost in Sheffield 2026: 2-bed £3,000–£4,200, 3-bed £4,000–£5,800, 4-bed £5,200–£7,800. Part P notification + EIC certificate included."
       datePublished="2025-01-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

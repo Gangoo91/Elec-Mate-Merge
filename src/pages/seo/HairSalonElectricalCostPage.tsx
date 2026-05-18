@@ -429,7 +429,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote salon fit-outs station by station"
-          description="Elec-Mate's quoting app handles per-station pricing, lighting schedules, and IP-rated accessories. AI cost engineering checks your rates against current market data."
+          description="Elec-Mate's quoting app handles per-station pricing, lighting schedules, and IP-rated accessories."
           icon={Calculator}
         />
       </>
@@ -445,9 +445,9 @@ export default function HairSalonElectricalCostPage() {
   return (
     <GuideTemplate
       title="Hair Salon Electrical Cost 2026 | UK Salon Fit-Out Guide"
-      description="How much does hair salon electrical installation cost in 2026? UK guide covering styling station wiring, wash station IP ratings, salon lighting, and realistic costs from £3,000 to £10,000."
+      description="How much does hair salon electrical installation cost in 2026? UK guide covering styling station wiring, wash station IP ratings, salon lighting…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

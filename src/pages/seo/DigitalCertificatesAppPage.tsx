@@ -24,9 +24,9 @@ export default function DigitalCertificatesAppPage() {
   return (
     <ToolTemplate
       title="Digital Electrical Certificates App | EICR EIC MW"
-      description="Elec-Mate's digital electrical certificates app for UK electricians. 16 certificate types — EICR, EIC, Minor Works, EV Charger, Solar PV, Fire Alarm, Emergency Lighting, and PAT. AI board scanner, voice test entry, defect code AI, digital signatures, professional PDF export, WhatsApp and email delivery, offline support, and BS 7671:2018+A4:2026 compliant."
+      description="Elec-Mate's digital electrical certificates app for UK electricians. 16 certificate types — EICR, EIC, Minor Works, EV Charger, Solar PV, Fire Alarm…"
       datePublished="2026-01-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Digital Certificates App', href: '/tools/digital-certificates-app' },
@@ -98,7 +98,7 @@ export default function DigitalCertificatesAppPage() {
           appBridge: {
             title: '16 Certificate Types, Unlimited Usage',
             description:
-              'EICR, EIC, Minor Works, EV Charger, Solar PV, Fire Alarm, Emergency Lighting, and PAT. AI-powered, digitally signed, professional PDF output. From £5.99/month with 7-day free trial.',
+              'EICR, EIC, Minor Works, EV Charger, Solar PV, Fire Alarm, Emergency Lighting, and PAT. AI-powered, digitally signed, professional PDF output.',
             icon: FileCheck2,
           },
         },
@@ -210,7 +210,7 @@ export default function DigitalCertificatesAppPage() {
           appBridge: {
             title: 'AI Tools for Faster Certificates',
             description:
-              'Board scanner, voice test entry, defect code AI, and remedial cost estimator. Four AI tools that cut certificate completion time by up to 60%. Included in all plans.',
+              'Board scanner, voice test entry, defect code AI, and remedial cost estimator. Four AI tools that cut certificate completion time by up to 60%.',
             icon: Brain,
           },
         },

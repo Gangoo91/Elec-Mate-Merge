@@ -19,10 +19,10 @@ import {
 export default function LightingLuxCalculatorPage() {
   return (
     <ToolTemplate
-      title="Lux Level Calculation Tool | 20+ Room Types"
-      description="Calculate lux levels for offices, warehouses and retail spaces using BS EN 12464-1. Free tool with instant illuminance values for 20+ room types."
+      title="Lux Level Calculation Tool | Free"
+      description="Calculate lux levels for 20+ room types instantly. BS EN 12464-1 compliant illuminance values for offices, warehouses, retail. No signup required."
       datePublished="2026-01-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Lighting Lux Calculator', href: '/tools/lighting-lux-calculator' },
@@ -96,7 +96,7 @@ export default function LightingLuxCalculatorPage() {
           appBridge: {
             title: 'Calculate Lux Levels Instantly',
             description:
-              'Enter room dimensions, select the room type, and choose your luminaire. Elec-Mate calculates the number of fittings needed to meet CIBSE recommendations — no manual lookup required.',
+              'Enter room dimensions, select the room type, and choose your luminaire. Elec-Mate calculates the number of fittings needed to meet CIBSE recommendations…',
             icon: Lightbulb,
           },
         },
@@ -253,7 +253,7 @@ export default function LightingLuxCalculatorPage() {
           appBridge: {
             title: 'Room Index Calculated Automatically',
             description:
-              'Enter room length, width, and luminaire mounting height. Elec-Mate calculates the room index, looks up the utilisation factor, and applies it to the lumen method — all in one step.',
+              'Enter room length, width, and luminaire mounting height. Elec-Mate calculates the room index, looks up the utilisation factor…',
             icon: Calculator,
           },
         },
@@ -338,7 +338,7 @@ export default function LightingLuxCalculatorPage() {
           icon: Sun,
           title: 'CIBSE Lux Tables Built In',
           description:
-            'All CIBSE recommended lux levels for offices, warehouses, retail, schools, hospitals, kitchens, and domestic rooms are pre-loaded. Select the room type and the target lux is set automatically.',
+            'All CIBSE recommended lux levels for offices, warehouses, retail, schools, hospitals, kitchens, and domestic rooms are pre-loaded.',
         },
         {
           icon: Calculator,
@@ -350,7 +350,7 @@ export default function LightingLuxCalculatorPage() {
           icon: Ruler,
           title: 'Room Index Calculation',
           description:
-            'Automatically calculates the room index from room length, width, and mounting height. Uses the room index to look up the utilisation factor from built-in tables.',
+            'Automatically calculates the room index from room length, width, and mounting height. Uses the room index to look up the utilisation factor from built-in…',
         },
         {
           icon: Eye,

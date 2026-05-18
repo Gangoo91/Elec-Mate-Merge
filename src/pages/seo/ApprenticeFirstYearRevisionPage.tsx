@@ -636,7 +636,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Start revising for Year 1 with Elec-Mate"
-          description="Flashcards, AI tutor, mock exams, and course modules for electrical apprentices. Built for mobile — revise on your commute, on your break, or at home. 7-day free trial."
+          description="Flashcards, AI tutor, mock exams, and course modules for electrical apprentices. Built for mobile — revise on your commute, on your break, or at home."
           icon={BookOpen}
         />
       </>
@@ -651,10 +651,10 @@ const sections = [
 export default function ApprenticeFirstYearRevisionPage() {
   return (
     <GuideTemplate
-      title="Electrical Apprentice Year 1 Revision | First Year Study Guide"
-      description="Complete Year 1 electrical apprentice revision guide. Ohm's Law, electrical units (V, A, Ω, W), basic circuit theory, series and parallel circuits, DC and AC fundamentals, basic tools, health and safety legislation, and PAT testing introduction."
+      title="Electrical Apprentice Year 1 Revision | First Year Study"
+      description="Complete Year 1 electrical apprentice revision guide. Ohm's Law, electrical units (V, A, Ω, W), basic circuit theory, series and parallel circuits…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Study Guide"

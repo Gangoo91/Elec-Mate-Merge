@@ -428,10 +428,10 @@ const sections = [
 export default function ElectricalFaultFindingGuidePage() {
   return (
     <GuideTemplate
-      title="Electrical Fault Finding Guide — Systematic Approach for UK Electricians"
-      description="A complete guide to electrical fault finding: earth faults, open circuits, short circuits, and high resistance faults. Test sequence, diagnostic tools, and safe isolation procedure under BS 7671."
+      title="Electrical Fault Finding Guide — Systematic Approach for UK"
+      description="A complete guide to electrical fault finding: earth faults, open circuits, short circuits, and high resistance faults."
       datePublished="2024-06-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Technical Guide"

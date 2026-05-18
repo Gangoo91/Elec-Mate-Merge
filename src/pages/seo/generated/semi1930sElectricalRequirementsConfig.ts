@@ -1,11 +1,11 @@
 import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuidePage';
 
 const published = '2026-04-12';
-const modified = '2026-04-12';
+const modified = '2026-05-18';
 
 export const semi1930sElectricalRequirementsConfig: GeneratedGuideConfig = {
   pagePath: '/guides/1930s-semi-electrical-requirements',
-  title: '1930s Semi Electrical Requirements | Survey and Upgrade Guide | Elec-Mate',
+  title: '1930s Semi Electrical Requirements | Survey and Upgrade',
   description:
     'Common electrical requirements and survey issues in a 1930s semi, including the signs that point to upgrades, rewire work, and a clearer next step.',
   datePublished: published,

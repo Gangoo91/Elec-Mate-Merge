@@ -328,7 +328,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AI board scanner identifies MCB types from a photo"
-          description="Point your phone at the consumer unit and Elec-Mate reads every MCB and RCBO — type (B, C, D), rating, manufacturer. The schedule of test results auto-populates with the correct maximum Zs for each device. No manual lookups."
+          description="Point your phone at the consumer unit and Elec-Mate reads every MCB and RCBO — type (B, C, D), rating, manufacturer."
           icon={Calculator}
         />
       </>
@@ -500,7 +500,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="70+ calculators including Zs by MCB type"
-          description="Elec-Mate has every BS 7671 maximum Zs value built in. Select the MCB type (B, C, or D) and rating, and the calculator shows the tabulated maximum and the 0.8-corrected value instantly. Plus cable sizing, voltage drop, PFC, adiabatic, and maximum demand calculators."
+          description="Elec-Mate has every BS 7671 maximum Zs value built in. Select the MCB type (B, C, or D) and rating…"
           icon={Calculator}
         />
       </>
@@ -559,7 +559,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Voice test entry records MCB details hands-free"
-          description="As you inspect the consumer unit, speak the MCB details — 'Circuit 1, Type B, 32 amp, ring final' — and Elec-Mate fills in the schedule. Combined with the AI board scanner that reads MCB labels from photos, you capture every detail without writing anything down."
+          description="As you inspect the consumer unit, speak the MCB details — 'Circuit 1, Type B, 32 amp, ring final' — and Elec-Mate fills in the schedule."
           icon={Mic}
         />
       </>
@@ -575,9 +575,9 @@ export default function MCBTypesBCDPage() {
   return (
     <GuideTemplate
       title="MCB Types B, C and D Explained | Trip Characteristics"
-      description="Complete guide to MCB types B, C, and D for UK electricians. Magnetic trip characteristics (Type B 3-5x, Type C 5-10x, Type D 10-20x), when to use each type, how MCB type affects maximum Zs values, common selection mistakes, and practical guidance for inspection and testing."
+      description="Complete guide to MCB types B, C, and D for UK electricians. Magnetic trip characteristics (Type B 3-5x, Type C 5-10x, Type D 10-20x)…"
       datePublished="2025-06-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Protection Devices"

@@ -663,7 +663,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Cambridge landlord EICR business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day during the Cambridge summer rush. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -678,10 +678,10 @@ const sections = [
 export default function LandlordElectricalSafetyCambridgePage() {
   return (
     <GuideTemplate
-      title="Landlord Electrical Safety Cambridge | EICR for Landlords Cambridge"
-      description="Landlord electrical safety requirements in Cambridge. 2020 Regulations, Cambridge City Council enforcement, student HMO licensing, penalties up to £30,000, EICR costs, and finding qualified inspectors in Cambridge."
+      title="Landlord Electrical Safety Cambridge | EICR for Landlords"
+      description="Landlord electrical safety requirements in Cambridge. 2020 Regulations, Cambridge City Council enforcement, student HMO licensing…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Landlord Guide"

@@ -392,10 +392,10 @@ const sections = [
 export default function SumpPumpElectricalInstallationPage() {
   return (
     <GuideTemplate
-      title="Sump Pump Electrical Installation Guide — BS 7671 Wiring Requirements"
-      description="How to wire a sump pump correctly — dedicated circuit, 30mA RCD protection, IP ratings, float switch wiring, and isolation requirements under BS 7671. UK Part P compliance guide."
+      title="Sump Pump Electrical Installation Guide — BS 7671 Wiring"
+      description="How to wire a sump pump correctly — dedicated circuit, 30mA RCD protection, IP ratings, float switch wiring, and isolation requirements under BS 7671."
       datePublished="2024-06-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Wiring Guide"

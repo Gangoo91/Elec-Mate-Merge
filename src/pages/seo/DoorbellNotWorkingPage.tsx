@@ -461,9 +461,9 @@ export default function DoorbellNotWorkingPage() {
   return (
     <GuideTemplate
       title="Doorbell Not Working | Causes & Fixes"
-      description="Why has your doorbell stopped working? Covers wired, wireless, and smart doorbells — transformer failure, dead batteries, Wi-Fi issues, and corroded buttons. Step-by-step diagnosis for UK homeowners and electricians."
+      description="Why has your doorbell stopped working? Covers wired, wireless, and smart doorbells — transformer failure, dead batteries, Wi-Fi issues…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting"

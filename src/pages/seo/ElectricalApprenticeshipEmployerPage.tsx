@@ -439,7 +439,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Apprentice Learning Platform"
-          description="Elec-Mate Study Centre covers Level 2, Level 3, and AM2 preparation. Your apprentice studies on their phone alongside on-the-job training. Track progress through every module and identify areas that need more attention."
+          description="Elec-Mate Study Centre covers Level 2, Level 3, and AM2 preparation. Your apprentice studies on their phone alongside on-the-job training."
           icon={GraduationCap}
         />
       </>
@@ -707,7 +707,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Train Your Apprentice with Elec-Mate"
-          description="Level 2, Level 3, AM2 preparation, and EPA readiness. Your apprentice studies on their phone alongside on-the-job training. Track progress and identify areas that need more practice. 7-day free trial."
+          description="Level 2, Level 3, AM2 preparation, and EPA readiness. Your apprentice studies on their phone alongside on-the-job training."
           icon={Users}
         />
       </>
@@ -723,9 +723,9 @@ export default function ElectricalApprenticeshipEmployerPage() {
   return (
     <GuideTemplate
       title="Electrical Apprenticeship Employer Guide | Hiring & Training"
-      description="Complete employer guide to electrical apprenticeships. Funding, levy, training providers, supervision duties, EPA preparation, employer responsibilities, and how Elec-Mate supports apprentice training."
+      description="Complete employer guide to electrical apprenticeships. Funding, levy, training providers, supervision duties, EPA preparation, employer responsibilities…"
       datePublished="2026-01-28"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Employer Guide"

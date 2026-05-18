@@ -582,7 +582,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete bathroom EICs with zone compliance built in"
-          description="Elec-Mate's EIC Certificate app includes Section 701 zone guidance. AI board scanning, voice test entry, and instant PDF — issue the bathroom electrical certificate on site before you leave."
+          description="Elec-Mate's EIC Certificate app includes Section 701 zone guidance. AI board scanning, voice test entry…"
           icon={FileCheck2}
         />
       </>
@@ -645,10 +645,10 @@ const sections = [
 export default function BathroomZoneElectricalPage() {
   return (
     <GuideTemplate
-      title="Bathroom Electric Zones BS 7671:2018+A4:2026"
-      description="Complete guide to bathroom electrical zones under BS 7671 Section 701. Zone 0, 1, and 2 boundaries, IP ratings required (IPX7, IPX4, IPX4), what is permitted in each zone, shaver socket placement, switch positions, and common installation mistakes."
+      title="Bathroom Electric Zones: BS 7671:2018+A4:2026"
+      description="Bathroom electric zones explained: Zone 0, 1, 2 boundaries, IP ratings (IPX7/IPX4), switch placement rules. Comply with BS 7671 Section 701 safely."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="BS 7671 Guide"

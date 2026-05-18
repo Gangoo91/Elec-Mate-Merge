@@ -518,7 +518,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete MICC installation certificates on your phone"
-          description="Elec-Mate's EIC and EICR apps let you certify fire-critical MICC cable installations on site. Record IR test results, cable details, and installation notes — instant PDF export. 7-day free trial."
+          description="Elec-Mate's EIC and EICR apps let you certify fire-critical MICC cable installations on site."
           icon={FileCheck2}
         />
       </>
@@ -534,9 +534,9 @@ export default function MineralInsulatedCableGuidePage() {
   return (
     <GuideTemplate
       title="Mineral Insulated Cable (MICC/PYRO) UK | Installation Guide"
-      description="Complete UK guide to Mineral Insulated Copper Clad (MICC) cable — Pyrotenax, magnesium oxide insulation, extreme fire and temperature resistance, termination tools and seals, applications in fire circuits and hazardous areas, and cost comparison with FP200 Gold."
+      description="Complete UK guide to Mineral Insulated Copper Clad (MICC) cable — Pyrotenax, magnesium oxide insulation, extreme fire and temperature resistance…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

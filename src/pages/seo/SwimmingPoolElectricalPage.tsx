@@ -587,8 +587,8 @@ const sections = [
           powered pumps, heaters, or lighting, Section 702 applies in full.
         </p>
         <SEOAppBridge
-          title="Look up hot tub electrical requirements"
-          description="Not sure about earthing, zone dimensions, or IP ratings for a hot tub installation? Ask Elec-Mate AI and get the exact regulation reference with practical guidance — on site, in seconds."
+          title="Swimming pool electrical wiring UK regs"
+          description="Swimming pool wiring must comply with BS 7671:2018+A4:2026 zones. Learn earthing, IP ratings…"
           icon={Brain}
         />
       </>
@@ -723,7 +723,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete swimming pool inspections on your phone"
-          description="EICR certificates, AI regulations lookup, and professional calculators — all built for UK electricians. Handle Section 702 installations with confidence. 7-day free trial."
+          description="EICR certificates, AI regulations lookup, and professional calculators — all built for UK electricians. Handle Section 702 installations with confidence."
           icon={Droplet}
         />
       </>
@@ -739,9 +739,9 @@ export default function SwimmingPoolElectricalPage() {
   return (
     <GuideTemplate
       title="Swimming Pool Electrical Regulations | BS 7671 Section 702"
-      description="Complete guide to swimming pool electrical regulations under BS 7671 Section 702. Zone 0, 1, 2 requirements, IP ratings, SELV, supplementary bonding, hot tub wiring, and inspection procedures for UK electricians."
+      description="Complete guide to swimming pool electrical regulations under BS 7671 Section 702. Zone 0, 1, 2 requirements, IP ratings, SELV, supplementary bonding…"
       datePublished="2025-04-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations Guide"

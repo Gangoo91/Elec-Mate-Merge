@@ -28,7 +28,7 @@ export function SEOPageShell({ breadcrumbs, tocItems, children }: SEOPageShellPr
       <SEOJumpNav items={jumpNavItems} />
 
       {/* Full-width content */}
-      <div className="max-w-4xl mx-auto px-5 sm:px-6 lg:px-8 py-8">{children}</div>
+      <div className="max-w-5xl mx-auto px-5 sm:px-6 lg:px-8 py-8">{children}</div>
 
       {/* Mobile TOC bottom sheet */}
       <SEOTableOfContents items={tocItems} />

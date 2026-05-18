@@ -5,14 +5,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // (Luminaires) and the IET On-Site Guide.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const daliLightingControlWiringConfig: GeneratedGuideConfig = {
   pagePath: '/guides/dali-lighting-control-wiring-bs-en-62386',
   title:
-    'DALI Lighting Control Wiring Guide (BS EN 62386) for UK Electricians | Elec-Mate',
+    'DALI Lighting Control Wiring Guide (BS EN 62386) for UK',
   description:
-    'A UK electrician guide to DALI lighting control wiring under BS EN 62386 — DALI-1 vs DALI-2 vs D4i, bus topology, 16V DC power, cable selection, Section 528 segregation under BS 7671:2018+A4:2026, commissioning and emergency lighting.',
+    'A UK electrician guide to DALI lighting control wiring under BS EN 62386 — DALI-1 vs DALI-2 vs D4i, bus topology, 16V DC power, cable selection…',
   datePublished: published,
   dateModified: modified,
   readingTime: 16,

@@ -20,7 +20,7 @@ import {
 
 const PAGE_TITLE = 'Renewable Energy Course | Solar PV & Battery Storage';
 const PAGE_DESCRIPTION =
-  'Comprehensive solar PV and battery storage training for UK electricians. Inverter types, string design, G98/G99 grid connection, MCS certification, battery technologies, and BS 7671 compliance. 10 modules with video content, quizzes, and AI tutor.';
+  'Solar PV + battery storage training for UK electricians: inverters, string design, G98/G99 grid connection, MCS certification, BS 7671. 10 modules.';
 
 const breadcrumbs = [
   { label: 'Training', href: '/training' },
@@ -86,52 +86,52 @@ const modules = [
   {
     title: 'Introduction to Renewable Energy',
     description:
-      'The UK energy landscape, climate targets, renewable energy technologies overview, government incentives (SEG, ECO), and the role of electricians in the renewable energy sector.',
+      'The UK energy landscape, climate targets, renewable energy technologies overview, government incentives (SEG, ECO)…',
   },
   {
     title: 'Solar PV Cell Technology',
     description:
-      'Photovoltaic effect, monocrystalline vs polycrystalline vs thin-film technologies, cell efficiency ratings, temperature coefficients, degradation rates, and data sheet interpretation.',
+      'Photovoltaic effect, monocrystalline vs polycrystalline vs thin-film technologies, cell efficiency ratings, temperature coefficients, degradation rates…',
   },
   {
     title: 'System Design and String Sizing',
     description:
-      'Roof assessment (orientation, pitch, shading analysis), energy yield estimation, string sizing calculations accounting for temperature extremes, MPPT voltage windows, and system simulation tools.',
+      'Roof assessment (orientation, pitch, shading analysis), energy yield estimation, string sizing calculations accounting for temperature extremes…',
   },
   {
     title: 'Inverter Technology',
     description:
-      'String inverters, micro-inverters, and power optimisers. MPPT operation, conversion efficiency, anti-islanding protection, reactive power control, and inverter selection for different system sizes.',
+      'String inverters, micro-inverters, and power optimisers. MPPT operation, conversion efficiency, anti-islanding protection, reactive power control…',
   },
   {
     title: 'Battery Storage Fundamentals',
     description:
-      'Lithium-ion chemistry (LFP vs NMC), battery capacity and depth of discharge, cycle life, battery management systems (BMS), thermal management, and fire safety considerations.',
+      'Lithium-ion chemistry (LFP vs NMC), battery capacity and depth of discharge, cycle life, battery management systems (BMS), thermal management…',
   },
   {
     title: 'Battery System Design and Integration',
     description:
-      'AC-coupled vs DC-coupled systems, hybrid inverters, energy management systems, self-consumption optimisation, time-of-use tariff integration, and backup power functionality.',
+      'AC-coupled vs DC-coupled systems, hybrid inverters, energy management systems, self-consumption optimisation, time-of-use tariff integration…',
   },
   {
     title: 'Grid Connection and DNO Requirements',
     description:
-      'G98 and G99 Engineering Recommendations, DNO notification and application procedures, export limitation, anti-islanding requirements, and the Electricity Safety, Quality and Continuity Regulations.',
+      'G98 and G99 Engineering Recommendations, DNO notification and application procedures, export limitation, anti-islanding requirements…',
   },
   {
     title: 'DC Wiring and Safety',
     description:
-      'DC isolator requirements, MC4 connector installation, cable sizing for DC circuits, string protection (fuses and diodes), arc fault detection, and BS 7671 Section 712 for PV installations.',
+      'DC isolator requirements, MC4 connector installation, cable sizing for DC circuits, string protection (fuses and diodes), arc fault detection…',
   },
   {
     title: 'Installation, Commissioning, and Certification',
     description:
-      'Mounting system installation, cable routing and containment, AC and DC testing procedures, commissioning checks, MCS documentation requirements, and handover procedures.',
+      'Mounting system installation, cable routing and containment, AC and DC testing procedures, commissioning checks, MCS documentation requirements…',
   },
   {
     title: 'MCS Certification and Business Development',
     description:
-      'The MCS certification process, ongoing compliance requirements, consumer code obligations, SEG registration, marketing your solar PV services, and building a sustainable renewable energy business.',
+      'The MCS certification process, ongoing compliance requirements, consumer code obligations, SEG registration, marketing your solar PV services…',
   },
 ];
 
@@ -140,25 +140,25 @@ const features = [
     icon: BrainCircuit,
     title: 'AI Study Assistant',
     description:
-      'Ask any solar PV or battery storage question. Get instant answers on string sizing, inverter selection, G98/G99 requirements, and MCS certification processes.',
+      'Ask any solar PV or battery storage question. Get instant answers on string sizing, inverter selection, G98/G99 requirements…',
   },
   {
     icon: Sun,
     title: 'Video Content',
     description:
-      'Step-by-step video guides covering panel installation, DC wiring, inverter commissioning, battery system setup, and CT clamp configuration for export monitoring.',
+      'Step-by-step video guides covering panel installation, DC wiring, inverter commissioning, battery system setup…',
   },
   {
     icon: ClipboardCheck,
     title: 'Interactive Quizzes',
     description:
-      'Scenario-based questions after every module. Calculate string sizes, select appropriate inverters, identify DC safety requirements, and design battery storage systems.',
+      'Scenario-based questions after every module. Calculate string sizes, select appropriate inverters, identify DC safety requirements…',
   },
   {
     icon: Clock,
     title: 'Study Planner',
     description:
-      'Set your target completion date and Elec-Mate creates a personalised study schedule across all ten modules. Daily progress tracking and automated reminders.',
+      'Set your target completion date and Elec-Mate creates a personalised study schedule across all ten modules.',
   },
   {
     icon: Layers,
@@ -265,7 +265,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AI-powered explanations for solar PV design"
-          description="Struggling with string sizing calculations? Not sure how temperature coefficients affect your design? Ask the Elec-Mate AI tutor any solar PV question and get a step-by-step worked example with clear explanations."
+          description="Struggling with string sizing calculations? Not sure how temperature coefficients affect your design?"
           icon={BrainCircuit}
         />
       </>
@@ -413,7 +413,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="46+ structured courses with progress tracking"
-          description="Study solar PV alongside BS 7671, inspection and testing, EV charging, and dozens more courses — all included in your Elec-Mate subscription. Track your progress across every course with visual dashboards and AI-recommended study paths."
+          description="Study solar PV alongside BS 7671, inspection and testing, EV charging, and dozens more courses — all included in your Elec-Mate subscription."
           icon={GraduationCap}
         />
       </>
@@ -505,7 +505,7 @@ export default function RenewableEnergyCoursePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-07-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Renewable Energy Training"

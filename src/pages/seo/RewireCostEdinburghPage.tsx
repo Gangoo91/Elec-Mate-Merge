@@ -465,7 +465,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AI Cost Engineer for Edinburgh Rewire Quotes"
-          description="Electricians: describe the job and get a detailed rewire quote with materials breakdown, cable quantities, labour hours, and profit margin from real UK trade pricing data."
+          description="Electricians: describe the job and get a detailed rewire quote with materials breakdown, cable quantities, labour hours…"
           icon={Brain}
         />
       </>
@@ -578,7 +578,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage Edinburgh rewire projects with Elec-Mate"
-          description="Electricians: quote rewires with AI cost engineering, manage projects with task tracking, complete EIC certificates on your phone, and send professional invoices. 7-day free trial."
+          description="Electricians: quote rewires with AI cost engineering, manage projects with task tracking, complete EIC certificates on your phone…"
           icon={Wrench}
         />
       </>
@@ -594,9 +594,9 @@ export default function RewireCostEdinburghPage() {
   return (
     <GuideTemplate
       title="House Rewire Cost Edinburgh 2025 | Rewire Prices Scotland"
-      description="How much does a house rewire cost in Edinburgh in 2025? Real prices for flats, semis, and period properties — Scottish Building Standards explained, sandstone replastering costs, listed buildings, and finding a qualified Edinburgh electrician."
+      description="How much does a house rewire cost in Edinburgh in 2025? Real prices for flats, semis, and period properties — Scottish Building Standards explained…"
       datePublished="2025-01-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

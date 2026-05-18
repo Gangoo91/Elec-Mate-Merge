@@ -537,7 +537,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more workplace EV charging contracts with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for EV certificates, quoting, and job management. Professional documentation wins commercial repeat business. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for EV certificates, quoting, and job management. Professional documentation wins commercial repeat business."
           icon={FileCheck2}
         />
       </>
@@ -553,9 +553,9 @@ export default function WorkplaceEVChargingPage() {
   return (
     <GuideTemplate
       title="Workplace EV Charging Installation UK | Business EV Chargers"
-      description="Complete guide to workplace EV charging in the UK. Workplace Charging Scheme grant £350 per socket, planning permission, load balancing for fleets, 3-phase vs single phase, employee and visitor charging, and installation costs for 2026."
+      description="Complete guide to workplace EV charging in the UK. Workplace Charging Scheme grant £350 per socket, planning permission, load balancing for fleets…"
       datePublished="2025-01-01"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Workplace EV Guide"

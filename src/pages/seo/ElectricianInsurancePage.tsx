@@ -503,7 +503,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Track insurance costs alongside all business expenses"
-          description="Elec-Mate's expenses tracker captures every business cost including insurance premiums, tool purchases, fuel, and materials. See your real profit in real time and export everything for your accountant."
+          description="Elec-Mate's expenses tracker captures every business cost including insurance premiums, tool purchases, fuel, and materials."
           icon={Receipt}
         />
       </>
@@ -620,7 +620,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Keep a digital record of every tool and expense"
-          description="Elec-Mate's expenses tracker creates a digital audit trail of every tool purchase, complete with receipts and amounts. If you ever need to make a tools insurance claim, the inventory is already there."
+          description="Elec-Mate's expenses tracker creates a digital audit trail of every tool purchase, complete with receipts and amounts."
           icon={Wrench}
         />
       </>
@@ -637,9 +637,9 @@ export default function ElectricianInsurancePage() {
     <GuideTemplate
       localArea="Insurance Uk"
       title="Electrician Insurance UK 2026 | What Cover Do You Need?"
-      description="Complete guide to insurance for UK electricians. Covers public liability, professional indemnity, employers liability, tools cover, van insurance, typical costs, and how to choose the right provider."
+      description="Complete guide to insurance for UK electricians. Covers public liability, professional indemnity, employers liability, tools cover, van insurance…"
       datePublished="2026-01-18"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Insurance Guide"

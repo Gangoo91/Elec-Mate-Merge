@@ -494,7 +494,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICs and EICRs on site with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site certificate completion, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site certificate completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -510,9 +510,9 @@ export default function PowerSurgeProtectionPage() {
   return (
     <GuideTemplate
       title="Power Surge Protection UK | SPD Installation Guide"
-      description="Complete guide to power surge protection in the UK. What causes surges, Type 1/2/3 SPDs explained, BS 7671 Amendment 2 requirements, SPD installation costs (£150–400), and what surge devices protect."
+      description="Complete guide to power surge protection in the UK. What causes surges, Type 1/2/3 SPDs explained, BS 7671 Amendment 2 requirements…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Electrical Guide"

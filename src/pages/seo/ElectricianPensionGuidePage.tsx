@@ -611,9 +611,9 @@ export default function ElectricianPensionGuidePage() {
     <GuideTemplate
       localArea="Pension Self Employed"
       title="Self-Employed Electrician Pension Guide UK 2026"
-      description="Complete pension guide for self-employed electricians. NEST, SIPP, personal pension compared. Tax relief explained, how much to save, state pension qualification, and retirement planning."
+      description="Pension guide for self-employed UK electricians: NEST, SIPP, personal pensions compared on fees, flexibility, tax relief, and growth potential."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Financial Guide"

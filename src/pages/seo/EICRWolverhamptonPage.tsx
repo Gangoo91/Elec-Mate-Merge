@@ -317,7 +317,7 @@ const sections = [
               <Zap className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Non-compliant consumer units</strong> — plastic consumer units replaced
-                after 2016 must be housed in a non-combustible enclosure under Amendment 3 to the
+                after 2016 must be housed in a non-combustible enclosure under Amendment 4 to the
                 17th Edition (now incorporated into BS 7671:2018). Older plastic enclosures without
                 metal blanking plates present a fire risk and are recorded as C2.
               </span>
@@ -538,7 +538,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more EICR work in Wolverhampton with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and convert findings to remedial quotes on the spot. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -553,10 +553,10 @@ const sections = [
 export default function EICRWolverhamptonPage() {
   return (
     <GuideTemplate
-      title="EICR Wolverhampton | Electrical Installation Condition Report"
-      description="EICR Wolverhampton — landlord regulations, costs, common findings in older West Midlands properties, qualified electrician requirements, observation codes, and enforcement by City of Wolverhampton Council. 2026 guide."
+      title="EICR Wolverhampton | Electrical Installation Condition"
+      description="EICR Wolverhampton — landlord regulations, costs, common findings in older West Midlands properties, qualified electrician requirements…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

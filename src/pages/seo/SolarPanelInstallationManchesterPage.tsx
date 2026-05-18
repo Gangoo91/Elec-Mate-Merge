@@ -656,10 +656,10 @@ const sections = [
 export default function SolarPanelInstallationManchesterPage() {
   return (
     <GuideTemplate
-      title="Solar Panel Installation Manchester 2025 | Solar PV Northwest"
-      description="Solar panel installation in Manchester 2025: costs £5,000–£7,500, irradiance ~900 kWh/kWp/year. Smart Export Guarantee, MCS certification, planning permission, battery storage, and payback period guide for the North West."
+      title="Solar Panel Installation Manchester 2025 | Solar PV"
+      description="Solar panel installation in Manchester 2026: 4kW system £5,000–£7,500, irradiance ~900 kWh/kWp/year, G98 grid connection, MCS, BS 7671 712."
       datePublished="2025-01-01"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Solar Guide"

@@ -422,9 +422,9 @@ export default function CookerConnectionCostPage() {
   return (
     <GuideTemplate
       title="Cooker Connection Cost 2026 | UK Price Guide"
-      description="How much does it cost to connect an electric cooker in 2026? UK price guide covering existing circuit connections, new cooker circuits, cable sizes, and regulations. £100-250 for existing circuits, £250-500 for new circuits."
+      description="How much does it cost to connect an electric cooker in 2026? UK price guide covering existing circuit connections, new cooker circuits, cable sizes…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

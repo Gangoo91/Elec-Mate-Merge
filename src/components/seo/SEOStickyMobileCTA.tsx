@@ -61,6 +61,30 @@ export function SEOStickyMobileCTA({
     return () => window.removeEventListener('scroll', onScroll);
   }, [appearAfterScroll]);
 
+  // Hide while the user is typing in any input — prevents the sticky bar
+  // covering the email field on the inline lead magnet (and any other form).
+  const [inputFocused, setInputFocused] = useState(false);
+  useEffect(() => {
+    const onFocusIn = (e: FocusEvent) => {
+      const t = e.target as HTMLElement | null;
+      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable)) {
+        setInputFocused(true);
+      }
+    };
+    const onFocusOut = (e: FocusEvent) => {
+      const t = e.target as HTMLElement | null;
+      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable)) {
+        setInputFocused(false);
+      }
+    };
+    document.addEventListener('focusin', onFocusIn);
+    document.addEventListener('focusout', onFocusOut);
+    return () => {
+      document.removeEventListener('focusin', onFocusIn);
+      document.removeEventListener('focusout', onFocusOut);
+    };
+  }, []);
+
   const handleDismiss = () => {
     setDismissed(true);
     try {
@@ -70,7 +94,7 @@ export function SEOStickyMobileCTA({
     }
   };
 
-  if (dismissed || !visible) return null;
+  if (dismissed || !visible || inputFocused) return null;
 
   return (
     <div

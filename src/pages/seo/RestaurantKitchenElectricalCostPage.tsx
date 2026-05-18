@@ -372,7 +372,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote restaurant kitchen electrical accurately"
-          description="Elec-Mate's quoting app handles equipment schedules, interlock systems, IP-rated accessories, and commercial distribution. AI cost engineering validates your prices."
+          description="Elec-Mate's quoting app handles equipment schedules, interlock systems, IP-rated accessories, and commercial distribution."
           icon={Calculator}
         />
       </>
@@ -486,7 +486,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote commercial kitchen electrical projects"
-          description="Elec-Mate's quoting app handles equipment schedules, interlock systems, IP-rated accessories, and 3-phase distribution for restaurant fit-outs. Professional PDF quotes."
+          description="Elec-Mate's quoting app handles equipment schedules, interlock systems, IP-rated accessories, and 3-phase distribution for restaurant fit-outs."
           icon={Calculator}
         />
       </>
@@ -501,10 +501,10 @@ const sections = [
 export default function RestaurantKitchenElectricalCostPage() {
   return (
     <GuideTemplate
-      title="Restaurant Kitchen Electrical Cost 2026 | UK Commercial Kitchen Guide"
-      description="How much does restaurant kitchen electrical installation cost in 2026? UK guide covering 3-phase supply, extraction interlock, IP ratings, emergency stop, and realistic costs from £5,000 to £15,000."
+      title="Restaurant Kitchen Electrical Cost 2026 | UK Commercial"
+      description="How much does restaurant kitchen electrical installation cost in 2026? UK guide covering 3-phase supply, extraction interlock, IP ratings…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

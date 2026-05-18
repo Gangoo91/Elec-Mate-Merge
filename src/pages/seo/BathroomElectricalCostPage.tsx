@@ -534,9 +534,9 @@ export default function BathroomElectricalCostPage() {
   return (
     <GuideTemplate
       title="Bathroom Electrical Cost 2026 | UK Price Guide"
-      description="How much does bathroom electrical work cost in 2026? Complete UK price guide covering extractor fans, downlights, shaver sockets, electric showers, underfloor heating, and full bathroom rewires. Realistic trade prices and labour rates."
+      description="How much does bathroom electrical work cost in 2026? Complete UK price guide covering extractor fans, downlights, shaver sockets, electric showers…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

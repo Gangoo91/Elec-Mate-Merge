@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Amendment 3 wiring regulations — key changes for solar and EV installations.',
+    description: 'Amendment 4 wiring regulations — key changes for solar and EV installations.',
     icon: FileCheck2,
     category: 'Guide',
   },
@@ -562,7 +562,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your solar PV business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, quoting, and job management. Complete EICs and MWCs for solar installations before you leave site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, quoting, and job management."
           icon={Sun}
         />
       </>
@@ -577,10 +577,10 @@ const sections = [
 export default function SolarPanelInstallationNottinghamPage() {
   return (
     <GuideTemplate
-      title="Solar Panel Installation Nottingham 2025 | Solar PV East Midlands"
-      description="Solar panel installation costs in Nottingham 2025. Typical 4kW system costs £5,500–£8,000 installed. Nottingham irradiance data, MCS installer requirement, Smart Export Guarantee, battery storage, and planning permission guidance."
+      title="Solar Panel Installation Nottingham 2025 | Solar PV East"
+      description="Solar panel installation costs in Nottingham 2026: typical 4kW system £5,500–£8,000 installed, ~960 kWh/kWp/year, G98 grid connection, MCS."
       datePublished="2025-01-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Solar Guide"

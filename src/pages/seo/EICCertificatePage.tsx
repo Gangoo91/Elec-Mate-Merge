@@ -90,7 +90,7 @@ const features = [
     icon: Users,
     title: 'Three-Signature Support',
     description:
-      'Built-in support for separate designer, constructor, and inspector signatures. One person can sign all three roles, or different individuals can each sign their own section.',
+      'Built-in support for separate designer, constructor, and inspector signatures. One person can sign all three roles…',
   },
   {
     icon: PenTool,
@@ -102,7 +102,7 @@ const features = [
     icon: ListChecks,
     title: 'Full Schedule of Inspections',
     description:
-      'The complete schedule of items inspected is built into the form, matching the BS 7671 Appendix 6 model form. Tick each item as you inspect, with nothing missed.',
+      'The complete schedule of items inspected is built into the form, matching the BS 7671 Appendix 6 model form.',
   },
   {
     icon: Download,
@@ -120,7 +120,7 @@ const features = [
     icon: ClipboardCheck,
     title: 'Test Result Validation',
     description:
-      'Automatic validation of all test results against BS 7671 limits. Flags insulation resistance below 1 MΩ, high Zs values, slow RCD trip times, and incomplete fields before you sign off.',
+      'Automatic validation of all test results against BS 7671 limits. Flags insulation resistance below 1 MΩ, high Zs values, slow RCD trip times…',
   },
 ];
 
@@ -130,7 +130,7 @@ const softwareAppSchema = {
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'Web, iOS, Android',
   description:
-    'Create Electrical Installation Certificates (EIC) on your phone. Design, construction, inspection, and testing sections. BS 7671 compliant with digital signatures and PDF export.',
+    'Create Electrical Installation Certificates (EIC) on your phone. Design, construction, inspection, and testing sections.',
   offers: {
     '@type': 'Offer',
     price: '0',
@@ -174,7 +174,7 @@ export default function EICCertificatePage() {
   useSEO({
     title: 'EIC Certificate App | Electrical Installation Certificate',
     description:
-      'Create Electrical Installation Certificates (EIC) on your phone. Design, construction, inspection, and testing sections. BS 7671 compliant with digital signatures and PDF export.',
+      'Create Electrical Installation Certificates (EIC) on your phone. Design, construction, inspection, and testing sections.',
   });
 
   return (
@@ -731,7 +731,7 @@ export default function EICCertificatePage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Generate Professional EIC Certificates with Elec-Mate"
-            description="Create compliant Electrical Installation Certificates on your phone — with digital signatures, test result validation, and instant PDF export. Ready to share with clients before you leave site."
+            description="Create compliant Electrical Installation Certificates on your phone — with digital signatures, test result validation, and instant PDF export."
             ctaText="Create your first EIC free"
             ctaHref="/auth/signup"
           />

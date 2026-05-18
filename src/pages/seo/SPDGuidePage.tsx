@@ -303,7 +303,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Check SPD requirements with AI regulations lookup"
-          description="Not sure whether the installation needs an SPD? Use Elec-Mate's AI regulations assistant to look up the exact BS 7671 requirements for any scenario — supply type, building use, lightning exposure, and equipment sensitivity."
+          description="Not sure whether the installation needs an SPD? Use Elec-Mate's AI regulations assistant to look up the exact BS 7671 requirements for any scenario —…"
           icon={Brain}
         />
       </>
@@ -366,7 +366,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          Amendment 3 (A4:2026) added new requirements in Section 530 dealing with bidirectional and
+          Amendment 4 (A4:2026) added new requirements in Section 530 dealing with bidirectional and
           unidirectional devices, which has implications for SPD installations in properties with
           solar PV or battery storage where current can flow in both directions.
         </p>
@@ -498,7 +498,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Design circuits with SPD coordination built in"
-          description="Elec-Mate's AI Circuit Designer helps you specify SPD type, location, and coordination for any installation. Input the supply type, building use, and lightning exposure — get the correct SPD specification and cable routing."
+          description="Elec-Mate's AI Circuit Designer helps you specify SPD type, location, and coordination for any installation."
           icon={Brain}
         />
       </>
@@ -641,18 +641,18 @@ const sections = [
 export default function SPDGuidePage() {
   return (
     <GuideTemplate
-      title="SPD Surge Protection Guide | BS 7671 Requirements"
-      description="Complete guide to SPD surge protection devices for UK electricians. Type 1, Type 2, and Type 3 SPDs explained, BS 7671 Regulation 443.4 risk assessment, installation methods, coordination, and common mistakes."
+      title="SPD Installation Guide | BS 7671 443.4 Walkthrough"
+      description="Installer-focused SPD walkthrough for UK electricians: Type 1/2/3 selection, 443.4 risk assessment, CU mounting, conductor lengths, and end-of-life checks."
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations Guide"
       badgeIcon={Shield}
       heroTitle={
         <>
-          SPD Surge Protection:{' '}
-          <span className="text-yellow-400">BS 7671 Requirements and Installation Guide</span>
+          SPD Installation Walkthrough:{' '}
+          <span className="text-yellow-400">443.4 Risk Assessment to Final Sign-Off</span>
         </>
       }
               noindex={true}

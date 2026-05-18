@@ -453,7 +453,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Send the EICR to the landlord before you leave site"
-          description="Elec-Mate exports the completed EICR as a professional PDF and sends it by email or WhatsApp in one tap. The landlord can forward it to the tenant immediately. No desk time, no delay."
+          description="Elec-Mate exports the completed EICR as a professional PDF and sends it by email or WhatsApp in one tap."
           icon={Send}
         />
       </>
@@ -625,7 +625,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete the EICR and send it from site"
-          description="Elec-Mate makes landlord EICRs fast and professional. AI board scanner, voice test entry, defect-to-quote conversion, and instant PDF delivery to the landlord by email or WhatsApp. 7-day free trial."
+          description="Elec-Mate makes landlord EICRs fast and professional. AI board scanner, voice test entry, defect-to-quote conversion…"
           icon={FileCheck2}
         />
       </>
@@ -641,9 +641,9 @@ export default function ElectricalSafetyLandlordPage() {
   return (
     <GuideTemplate
       title="Electrical Safety Landlord Checklist | Complete 2026 Guide"
-      description="Complete electrical safety checklist for UK landlords. Covers EICR requirements, PAT testing, smoke alarms, CO alarms, tenant notification, record keeping, and HMO extras. Penalties up to £30,000."
+      description="Complete electrical safety checklist for UK landlords. Covers EICR requirements, PAT testing, smoke alarms, CO alarms, tenant notification…"
       datePublished="2025-04-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Landlord Guide"

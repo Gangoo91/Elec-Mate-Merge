@@ -668,7 +668,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more licensed premises electrical work with Elec-Mate"
-          description="Complete commercial EICRs on your phone, quote remedial works and upgrades on site, and build recurring relationships with pub operators and licensing managers. 7-day free trial for UK electricians."
+          description="Complete commercial EICRs on your phone, quote remedial works and upgrades on site…"
           icon={FileCheck2}
         />
       </>
@@ -683,10 +683,10 @@ const sections = [
 export default function PubLicensedPremisesEICRPage() {
   return (
     <GuideTemplate
-      title="EICR for Pubs & Licensed Premises UK | Licensing Requirements"
-      description="Complete guide to EICR for pubs and licensed premises in the UK. Licensing Act 2003 requirements, local authority licence conditions, EICR frequency, cellar equipment and beer cooler circuits, gaming machine circuits, emergency lighting to BS 5266-1, fire alarms to BS 5839-1, and 2026 compliance costs."
+      title="EICR for Pubs & Licensed Premises UK | Licensing"
+      description="Complete guide to EICR for pubs and licensed premises in the UK. Licensing Act 2003 requirements, local authority licence conditions, EICR frequency…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Licensed Premises Guide"

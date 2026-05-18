@@ -6,14 +6,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Edition) and the IET On-Site Guide.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const a4EICModelFormConfig: GeneratedGuideConfig = {
   pagePath: '/guides/bs-7671-a4-2026-eic-model-form',
   title:
-    'BS 7671 A4:2026 — Electrical Installation Certificate (EIC) Changes Explained | Elec-Mate',
+    'BS 7671 A4:2026 — Electrical Installation Certificate (EIC)',
   description:
-    'Amendment 4 (January 2026) rebuilt the BS 7671 Electrical Installation Certificate. The new EIC introduces item 14.0 Prosumer LV installations, TN-C-S (PME) / (PNB) split, AFDD + SPD requirements and a Schedule of Inspections covering items 1.0 through 14.0. Every change explained.',
+    'Amendment 4 (January 2026) rebuilt the BS 7671 Electrical Installation Certificate. The new EIC introduces item 14.0 Prosumer LV installations…',
   datePublished: published,
   dateModified: modified,
   readingTime: 12,

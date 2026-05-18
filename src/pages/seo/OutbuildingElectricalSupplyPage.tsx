@@ -307,7 +307,7 @@ const sections = [
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Enclosure type:</strong> Metal consumer units are required for consumer
-                units in dwellings (post-2016 Amendment 3 to BS 7671). For outbuildings that
+                units in dwellings (post-2016 Amendment 4 to BS 7671). For outbuildings that
                 are not classified as dwellings, plastic enclosures are technically permitted,
                 but metal enclosures are recommended for fire containment in all cases.
               </span>
@@ -390,7 +390,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Record earth electrode test results on site"
-          description="Elec-Mate's EIC Certificate app includes earth electrode resistance recording in the test results schedule. Complete the outbuilding installation certificate on site and send the PDF to the homeowner before you leave."
+          description="Elec-Mate's EIC Certificate app includes earth electrode resistance recording in the test results schedule."
           icon={FileCheck2}
         />
       </>
@@ -535,10 +535,10 @@ const sections = [
 export default function OutbuildingElectricalSupplyPage() {
   return (
     <GuideTemplate
-      title="Outbuilding Electrical Supply Guide UK | Garage, Shed, Workshop"
-      description="Complete guide to supplying electricity to a garage, shed, summerhouse, or workshop. SWA armoured cable vs overhead (min 3.5m, 5.2m over driveways), consumer unit in outbuilding, TT earthing and earth electrode, RCD protection requirements, and Part P notification."
+      title="Overhead Cable to Outbuilding: 3.5m Min Height"
+      description="Overhead cable installation for garages, sheds, workshops. BS 7671:2018+A4:2026 clearance rules, SWA vs overhead, RCD protection, TT earthing setup."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Outbuilding Supply Guide"

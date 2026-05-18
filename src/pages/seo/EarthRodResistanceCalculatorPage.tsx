@@ -18,10 +18,10 @@ import {
 export default function EarthRodResistanceCalculatorPage() {
   return (
     <ToolTemplate
-      title="Ra x Iδn ≤ 50V Calculator | BS 7671:2018+A4:2026"
-      description="Calculate Ra x Iδn ≤ 50V compliance for TT systems under BS 7671:2018+A4:2026. Instant earth electrode resistance results for safe touch voltage limits."
+      title="Ra x Iδn ≤ 50V Calculator | BS 7671:2026"
+      description="Calculate Ra x Iδn ≤ 50V touch voltage limits for TT earthing systems. Instant earth rod resistance results compliant with BS 7671:2018+A4:2026."
       datePublished="2026-01-22"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         {
@@ -100,7 +100,7 @@ export default function EarthRodResistanceCalculatorPage() {
           appBridge: {
             title: 'Calculate Earth Rod Resistance Instantly',
             description:
-              'Enter rod length, diameter, and soil type. Elec-Mate calculates the expected resistance and tells you whether it meets BS 7671 requirements for your RCD rating.',
+              'Enter rod length, diameter, and soil type. Elec-Mate calculates the expected resistance and tells you whether it meets BS 7671 requirements for your RCD…',
             icon: ArrowDownToLine,
           },
         },
@@ -237,7 +237,7 @@ export default function EarthRodResistanceCalculatorPage() {
           appBridge: {
             title: 'UK Soil Types Built Into the Calculator',
             description:
-              'Select your soil type from the dropdown and Elec-Mate uses the appropriate resistivity range. Or enter a measured value from a four-electrode soil resistivity test for maximum accuracy.',
+              'Select your soil type from the dropdown and Elec-Mate uses the appropriate resistivity range.',
             icon: Globe,
           },
         },

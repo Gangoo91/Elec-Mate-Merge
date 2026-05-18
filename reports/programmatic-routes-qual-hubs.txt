@@ -1,0 +1,23 @@
+// Lazy:
+const QualHub236502Page = lazy(() => import('@/pages/seo/QualHub236502Page'));
+const QualHub236503Page = lazy(() => import('@/pages/seo/QualHub236503Page'));
+const QualHub236603Page = lazy(() => import('@/pages/seo/QualHub236603Page'));
+const QualHub5357Page = lazy(() => import('@/pages/seo/QualHub5357Page'));
+const QualHub539303Page = lazy(() => import('@/pages/seo/QualHub539303Page'));
+const QualHub234603Page = lazy(() => import('@/pages/seo/QualHub234603Page'));
+const QualHub2357Page = lazy(() => import('@/pages/seo/QualHub2357Page'));
+const QualHub6103907XPage = lazy(() => import('@/pages/seo/QualHub6103907XPage'));
+const QualHub8202Page = lazy(() => import('@/pages/seo/QualHub8202Page'));
+const QualHubEalNetp3Page = lazy(() => import('@/pages/seo/QualHubEalNetp3Page'));
+
+// Routes:
+      <Route path="/guides/2365-02-complete-guide" element={<LazyRoute><QualHub236502Page /></LazyRoute>} />
+      <Route path="/guides/2365-03-complete-guide" element={<LazyRoute><QualHub236503Page /></LazyRoute>} />
+      <Route path="/guides/2366-03-complete-guide" element={<LazyRoute><QualHub236603Page /></LazyRoute>} />
+      <Route path="/guides/5357-complete-guide" element={<LazyRoute><QualHub5357Page /></LazyRoute>} />
+      <Route path="/guides/5393-03-complete-guide" element={<LazyRoute><QualHub539303Page /></LazyRoute>} />
+      <Route path="/guides/2346-03-complete-guide" element={<LazyRoute><QualHub234603Page /></LazyRoute>} />
+      <Route path="/guides/2357-complete-guide" element={<LazyRoute><QualHub2357Page /></LazyRoute>} />
+      <Route path="/guides/eal-level-3-electrotechnical-complete-guide" element={<LazyRoute><QualHub6103907XPage /></LazyRoute>} />
+      <Route path="/guides/8202-complete-guide" element={<LazyRoute><QualHub8202Page /></LazyRoute>} />
+      <Route path="/guides/eal-netp3-complete-guide" element={<LazyRoute><QualHubEalNetp3Page /></LazyRoute>} />

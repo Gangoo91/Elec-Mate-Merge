@@ -519,7 +519,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage off-grid installations with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for certificates, quoting, and job management. Complete EIC and commissioning documents on your phone. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for certificates, quoting, and job management. Complete EIC and commissioning documents on your phone."
           icon={Sun}
         />
       </>
@@ -535,9 +535,9 @@ export default function OffGridElectricalSystemPage() {
   return (
     <GuideTemplate
       title="Off-Grid Electrical Systems UK | Off-Grid Power Design Guide"
-      description="Complete guide to off-grid electrical systems in the UK. When off-grid makes sense (remote properties, narrowboats), system design (solar, battery, generator), 12V vs 24V vs 48V DC, inverter/charger selection, battery sizing, grid-forming inverters, and costs vs grid connection."
+      description="Complete guide to off-grid electrical systems in the UK. When off-grid makes sense (remote properties, narrowboats), system design (solar, battery…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Off-Grid Power Guide"

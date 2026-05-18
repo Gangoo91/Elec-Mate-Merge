@@ -625,9 +625,9 @@ export default function HowToFindAnElectricianPage() {
   return (
     <GuideTemplate
       title="How to Find a Good Electrician UK | What to Check"
-      description="Complete guide to finding a qualified electrician in the UK. NICEIC, NAPIT, and ELECSA explained. Qualifications to check, questions to ask, red flags to watch for, and how to compare quotes."
+      description="Finding a qualified electrician in the UK: NICEIC, NAPIT, ELECSA, Stroma explained. Questions to ask, certs to demand, red flags to avoid."
       datePublished="2026-01-22"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Homeowner Guide"

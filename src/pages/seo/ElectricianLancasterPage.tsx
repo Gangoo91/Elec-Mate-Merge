@@ -468,7 +468,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Lancaster electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the HMO, student rental, and rural property markets in Lancaster. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -485,9 +485,9 @@ export default function ElectricianLancasterPage() {
     <GuideTemplate
       localArea="Lancaster"
       title="Electrician in Lancaster | Local Electricians 2026"
-      description="Find qualified electricians in Lancaster. Part P compliance, NICEIC registered, EICR for HMO landlords, consumer unit replacement, and local electrician rates for Lancaster in 2026."
+      description="Find qualified electricians in Lancaster. Part P compliance, NICEIC registered, EICR for HMO landlords, consumer unit replacement…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Lancaster"

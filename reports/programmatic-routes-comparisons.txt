@@ -1,0 +1,13 @@
+// Lazy:
+const Cg2365Vs5357Vs2366Page = lazy(() => import('@/pages/seo/Cg2365Vs5357Vs2366Page'));
+const Nvq2357VsApprenticeshipStandard5357Page = lazy(() => import('@/pages/seo/Nvq2357VsApprenticeshipStandard5357Page'));
+const CityAndGuildsVsEalPage = lazy(() => import('@/pages/seo/CityAndGuildsVsEalPage'));
+const TLevelVsApprenticeshipElectricalPage = lazy(() => import('@/pages/seo/TLevelVsApprenticeshipElectricalPage'));
+const DomesticInstallerVsFullElectricianPage = lazy(() => import('@/pages/seo/DomesticInstallerVsFullElectricianPage'));
+
+// Routes:
+      <Route path="/guides/cg-2365-vs-5357-vs-2366" element={<LazyRoute><Cg2365Vs5357Vs2366Page /></LazyRoute>} />
+      <Route path="/guides/nvq-2357-vs-apprenticeship-standard-5357" element={<LazyRoute><Nvq2357VsApprenticeshipStandard5357Page /></LazyRoute>} />
+      <Route path="/guides/city-and-guilds-vs-eal" element={<LazyRoute><CityAndGuildsVsEalPage /></LazyRoute>} />
+      <Route path="/guides/t-level-vs-apprenticeship-electrical" element={<LazyRoute><TLevelVsApprenticeshipElectricalPage /></LazyRoute>} />
+      <Route path="/guides/domestic-installer-vs-full-electrician" element={<LazyRoute><DomesticInstallerVsFullElectricianPage /></LazyRoute>} />

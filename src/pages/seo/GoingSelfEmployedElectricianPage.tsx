@@ -395,7 +395,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Price every job for profit, not just survival"
-          description="Elec-Mate's AI cost engineer calculates the true cost of each job — labour, materials, overheads, and profit margin. Generate professional quotes from your phone that cover your costs and grow your business."
+          description="Elec-Mate's AI cost engineer calculates the true cost of each job — labour, materials, overheads, and profit margin."
           icon={Calculator}
         />
       </>
@@ -576,8 +576,8 @@ const sections = [
           </ul>
         </div>
         <SEOAppBridge
-          title="Run your business from your phone — quoting, invoicing, expenses, and cash flow"
-          description="Elec-Mate gives you the complete business toolkit. Create quotes with the AI cost engineer, send professional invoices, track expenses with receipt scanning, and see your real-time profit and cash flow. 7-day free trial."
+          title="Run your business from your phone — quoting, invoicing,"
+          description="Elec-Mate gives you the complete business toolkit. Create quotes with the AI cost engineer, send professional invoices…"
           icon={BarChart3}
         />
       </>
@@ -643,9 +643,9 @@ export default function GoingSelfEmployedElectricianPage() {
   return (
     <GuideTemplate
       title="Going Self-Employed as an Electrician | Complete Guide"
-      description="Complete guide to going self-employed as an electrician in the UK. Covers HMRC registration, competent person schemes, pricing, getting customers, tools and van, insurance, and financial setup."
+      description="Complete guide to going self-employed as an electrician in the UK. Covers HMRC registration, competent person schemes, pricing, getting customers…"
       datePublished="2026-01-12"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Self-Employed Guide"

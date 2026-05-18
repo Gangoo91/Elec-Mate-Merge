@@ -147,7 +147,7 @@ const features = [
     icon: Wrench,
     title: 'First Fix and Second Fix',
     description:
-      'Complete checklists for first fix (back boxes, containment, cable installation) and second fix (accessories, termination, labelling) with inspection points.',
+      'Complete checklists for first fix (back boxes, containment, cable installation) and second fix (accessories, termination…',
   },
   {
     icon: TestTube,
@@ -273,7 +273,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Get cable routing guidance for your next job"
-          description="Describe the cable route and the AI provides safe zone compliance, joist drilling rules, fire stopping requirements, and derating factors. All with BS 7671 references."
+          description="Describe the cable route and the AI provides safe zone compliance, joist drilling rules, fire stopping requirements, and derating factors."
           icon={Cable}
         />
       </>
@@ -446,7 +446,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Get testing guidance on your phone"
-          description="The AI Installation Specialist walks you through the GN3 test sequence step by step. Instrument selection, connections, expected values, and what to do when results are outside limits."
+          description="The AI Installation Specialist walks you through the GN3 test sequence step by step. Instrument selection, connections, expected values…"
           icon={TestTube}
         />
       </>
@@ -462,9 +462,9 @@ export default function AIInstallationSpecialistPage() {
   return (
     <ToolTemplate
       title="AI Installation Specialist | Guidance Tool"
-      description="Step-by-step electrical installation guidance from AI trained for UK work. Cable routing, containment sizing, first and second fix checklists, and GN3 testing procedures. All with BS 7671 references."
+      description="Step-by-step electrical installation guidance from AI trained for UK work. Cable routing, containment sizing, first and second fix checklists…"
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="AI Installation Agent"

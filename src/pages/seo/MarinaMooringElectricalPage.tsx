@@ -533,7 +533,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Marina inspection work made simple with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, test result recording, and instant PDF export. Ideal for annual marina and pontoon inspections. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, test result recording, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -548,10 +548,10 @@ const sections = [
 export default function MarinaMooringElectricalPage() {
   return (
     <GuideTemplate
-      title="Marina & Mooring Electrical Installation UK | BS 7671 Section 709"
-      description="Complete guide to marina and mooring electrical installations under BS 7671 Section 709. Shore power connections, galvanic corrosion, earth leakage monitoring, IEC 60309 CEE connectors, RCD requirements, and annual inspection obligations."
+      title="Marina & Mooring Electrical Installation UK | BS 7671"
+      description="Complete guide to marina and mooring electrical installations under BS 7671 Section 709. Shore power connections, galvanic corrosion…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Specialist Installation"

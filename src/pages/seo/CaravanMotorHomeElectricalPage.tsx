@@ -545,8 +545,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Caravan & motorhome electrical checks made simple with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site inspection reporting, test result recording, and instant PDF export. Ideal for leisure vehicle annual electrical checks. 7-day free trial."
+          title="Caravan & motorhome electrical checks made simple with"
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site inspection reporting, test result recording, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -562,9 +562,9 @@ export default function CaravanMotorHomeElectricalPage() {
   return (
     <GuideTemplate
       title="Caravan & Motorhome Electrical Guide UK | 12V & 230V Systems"
-      description="Complete guide to caravan and motorhome electrical systems — leisure batteries, solar charging, mains hookup, inverters, 12V DC systems, shore power safety, and maintenance. UK standards and practical advice."
+      description="Complete guide to caravan and motorhome electrical systems — leisure batteries, solar charging, mains hookup, inverters, 12V DC systems…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Electrical Guide"

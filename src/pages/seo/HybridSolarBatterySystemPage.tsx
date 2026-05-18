@@ -499,9 +499,9 @@ export default function HybridSolarBatterySystemPage() {
   return (
     <GuideTemplate
       title="Hybrid Solar Battery System UK | Solar + Storage Explained"
-      description="Complete guide to hybrid solar battery systems in the UK. What hybrid means (grid-tied + battery), hybrid inverter vs AC-coupling, self-consumption optimisation, Octopus Agile time-of-use tariff benefits, grid export management, and popular hybrid systems including SolarEdge, GivEnergy, and Sungrow."
+      description="Complete guide to hybrid solar battery systems in the UK. What hybrid means (grid-tied + battery), hybrid inverter vs AC-coupling…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Hybrid Solar Guide"

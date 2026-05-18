@@ -39,7 +39,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Consumer unit replacement in Brighton typically costs £450 to £800, reflecting South East labour rates. Costs include the metal consumer unit, all labour, testing to BS 7671, and the Electrical Installation Certificate.',
-  'Metal consumer unit enclosures are mandatory for all domestic replacements since January 2016 under BS 7671 Regulation 421.1.201 (Amendment 3), unchanged in BS 7671:2018+A4:2026.',
+  'Metal consumer unit enclosures are mandatory for all domestic replacements since January 2016 under BS 7671 Regulation 421.1.201 (Amendment 4), unchanged in BS 7671:2018+A4:2026.',
   'Brighton has extensive Victorian and Edwardian terraced and converted flat housing — particularly in Hanover, Kemptown, Preston Park, and Seven Dials — where rewireable fuse boards and pre-RCD wiring are common EICR findings.',
   'Consumer unit replacement is Part P notifiable work in England. Brighton homeowners must use a registered competent person (NICEIC/NAPIT/ELECSA) or notify Brighton &amp; Hove City Council Building Control.',
   'The Brighton &amp; Hove private rented sector is one of the largest in Sussex — landlords are required to obtain EICRs every five years, and consumer unit deficiencies are among the most common C2 observations.',
@@ -59,7 +59,7 @@ const faqs = [
   {
     question: 'Do I need a metal consumer unit in Brighton?',
     answer:
-      'Yes. Since 1 January 2016, Amendment 3 to BS 7671:2008 introduced Regulation 421.1.201 requiring all domestic consumer unit replacements to use a non-combustible (metal) enclosure. The requirement is carried forward in BS 7671:2018+A4:2026 (the current wiring regulations). A qualified Brighton electrician will only supply and install a compliant metal consumer unit. Plastic consumer units are not permitted for new or replacement domestic installations.',
+      'Yes. Since 1 January 2016, Amendment 4 to BS 7671:2008 introduced Regulation 421.1.201 requiring all domestic consumer unit replacements to use a non-combustible (metal) enclosure. The requirement is carried forward in BS 7671:2018+A4:2026 (the current wiring regulations). A qualified Brighton electrician will only supply and install a compliant metal consumer unit. Plastic consumer units are not permitted for new or replacement domestic installations.',
   },
   {
     question: 'My Brighton flat is in a converted Victorian house — what are the typical issues?',
@@ -289,7 +289,7 @@ const sections = [
     content: (
       <>
         <p>
-          Regulation 421.1.201, introduced by Amendment 3 to BS 7671:2008 and effective from 1
+          Regulation 421.1.201, introduced by Amendment 4 to BS 7671:2008 and effective from 1
           January 2016, requires all consumer units and similar switchgear in domestic premises to
           have a non-combustible (metal) enclosure. This requirement is unchanged in BS 7671:2018+A4:2026 — the current edition of the wiring regulations. Every consumer unit
           replacement in Brighton must comply.
@@ -541,7 +541,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Brighton electrical business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and professional certificate management. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and professional certificate management."
           icon={FileCheck2}
         />
       </>
@@ -556,10 +556,10 @@ const sections = [
 export default function ConsumerUnitReplacementBrightonPage() {
   return (
     <GuideTemplate
-      title="Consumer Unit Replacement Brighton | Fuse Box Brighton — Costs &amp; Regulations 2026"
-      description="Consumer unit replacement in Brighton — typical cost £450–£800, metal enclosures mandatory since 2016, Part P notification required. Find a qualified electrician in the BN postcode area. Full guide for Brighton homeowners and landlords."
+      title="Consumer Unit Replacement Brighton | Fuse Box Brighton"
+      description="Consumer unit replacement in Brighton — typical cost £450–£800, metal enclosures mandatory since 2016, Part P notification required."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Electrician Guide"

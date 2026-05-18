@@ -36,6 +36,7 @@ import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { useAM2Readiness } from '@/hooks/am2/useAM2Readiness';
+import { useRegAttempts } from '@/hooks/am2/useRegAttempts';
 import {
   ConfidencePicker,
   CalibrationPill,
@@ -100,6 +101,7 @@ interface Bs7671RagQuizProps {
 export function Bs7671RagQuiz({ onExit, onSessionComplete }: Bs7671RagQuizProps) {
   const { user } = useAuth();
   const { saveScore } = useAM2Readiness();
+  const { recordAttempt } = useRegAttempts();
 
   const [phase, setPhase] = useState<'loading' | 'quiz' | 'results' | 'error'>('loading');
   const [questions, setQuestions] = useState<RagQuestion[]>([]);
@@ -219,9 +221,18 @@ export function Bs7671RagQuiz({ onExit, onSessionComplete }: Bs7671RagQuizProps)
   };
 
   const handleConfidence = (c: Confidence) => {
-    if (!isAnswered) return;
+    if (!isAnswered || !currentQ) return;
     setConfidences((prev) => ({ ...prev, [currentIndex]: c }));
     setRevealed(true);
+    // Fire-and-forget — record this attempt for adaptive drill scheduling.
+    // Failure here is non-fatal; the quiz continues regardless.
+    const wasCorrect = userAnswer === currentQ.correctReg.id;
+    void recordAttempt({
+      regulationId: currentQ.correctReg.id,
+      regNumber: currentQ.correctReg.reg_number,
+      correct: wasCorrect,
+      confidence: c,
+    });
   };
 
   const handleNext = () => {

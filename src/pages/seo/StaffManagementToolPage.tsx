@@ -93,13 +93,13 @@ const features = [
     icon: Clock,
     title: 'Live Time Tracking',
     description:
-      'Operatives log hours against specific jobs from their phones. Travel and on-site time tracked separately. Weekly totals calculated automatically for payroll.',
+      'Operatives log hours against specific jobs from their phones. Travel and on-site time tracked separately.',
   },
   {
     icon: CalendarDays,
     title: 'Job Allocation Calendar',
     description:
-      'Visual calendar showing all operatives and their scheduled work. Assign jobs based on availability, qualifications, and location. Drag-and-drop rescheduling.',
+      'Visual calendar showing all operatives and their scheduled work. Assign jobs based on availability, qualifications, and location.',
   },
   {
     icon: GraduationCap,
@@ -213,7 +213,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Live Time Tracking"
-          description="Your team logs hours against specific jobs from their phones. See who is on which site in real time. Weekly time reports exported for payroll with a single tap. No more paper timesheets."
+          description="Your team logs hours against specific jobs from their phones. See who is on which site in real time."
           icon={Clock}
         />
       </>
@@ -390,7 +390,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Compliance Dashboard"
-          description="See the compliance status of every team member at a glance. Automatic reminders before credentials expire. Generate qualification reports for scheme assessors and principal contractors in seconds."
+          description="See the compliance status of every team member at a glance. Automatic reminders before credentials expire."
           icon={ShieldCheck}
         />
       </>
@@ -451,9 +451,9 @@ export default function StaffManagementToolPage() {
   return (
     <BusinessTemplate
       title="Staff Management for Electrical Contractors"
-      description="Staff management tools built for electrical contractors. Time tracking, job allocation, skills matrix, holiday management, and compliance tracking. Manage your team from one platform."
+      description="Staff management tools built for electrical contractors. Time tracking, job allocation, skills matrix, holiday management, and compliance tracking."
       datePublished="2025-06-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Business Tools"

@@ -1,6 +1,8 @@
 import { serve } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import { captureException } from '../_shared/sentry.ts';
+import { searchFacets, formatFacetsForPrompt } from '../_shared/bs7671-facets-rag.ts';
+import { generateLargeEmbedding } from '../_shared/ai-providers.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -168,25 +170,72 @@ const searchRegulations = async (supabase: any, keywords: string[]): Promise<any
   }
 };
 
-// Search practical work intelligence with improved matching
-const searchPractical = async (supabase: any, keywords: string[]): Promise<any[]> => {
-  if (keywords.length === 0) return [];
+/**
+ * PWI v2 hybrid search — vector + BM25 + filters via
+ * `search_practical_work_intelligence_hybrid`. Falls back to keyword `ilike`
+ * if the RPC errors or no embedding is available.
+ *
+ * Returns the same shape as before (title/content/category) so the prompt
+ * builder doesn't need to change.
+ */
+const searchPractical = async (
+  supabase: any,
+  query: string,
+  keywords: string[]
+): Promise<any[]> => {
+  if (!query && keywords.length === 0) return [];
 
+  // Try hybrid RAG first
   try {
-    // Search in both content and title for better matching
-    const orConditions = keywords.flatMap((k) => [`content.ilike.%${k}%`, `title.ilike.%${k}%`]);
+    let embedding: number[] | null = null;
+    const openAiKey = Deno.env.get('OPENAI_API_KEY');
+    if (openAiKey) {
+      try {
+        embedding = await generateLargeEmbedding(query, openAiKey);
+      } catch (err) {
+        console.warn('[chat-assistant] PWI embedding failed, hybrid will be BM25-only:', err);
+      }
+    }
+    const { data, error } = await supabase.rpc('search_practical_work_intelligence_hybrid', {
+      query_text: query,
+      query_embedding: embedding,
+      filter_activity_types: null,
+      filter_equipment: null,
+      filter_skill_level: null,
+      match_count: 10,
+    });
+    if (!error && Array.isArray(data) && data.length > 0) {
+      return data.map((row: any) => ({
+        title: row.primary_topic ?? row.equipment_category ?? 'Practical guidance',
+        content: row.content ?? '',
+        category: row.activity_types?.[0] ?? row.equipment_category ?? null,
+      }));
+    }
+    if (error) {
+      console.warn('[chat-assistant] PWI hybrid RPC failed, falling back to keyword:', error);
+    }
+  } catch (e) {
+    console.warn('[chat-assistant] PWI hybrid exception, falling back:', e);
+  }
 
+  // Keyword fallback
+  if (keywords.length === 0) return [];
+  try {
+    const orConditions = keywords.flatMap((k) => [`content.ilike.%${k}%`]);
     const { data, error } = await supabase
       .from('practical_work_intelligence')
-      .select('title, content, category')
+      .select('content, primary_topic, equipment_category')
       .or(orConditions.join(','))
-      .limit(15); // Increased from 5 to 15
-
+      .limit(10);
     if (error) {
-      console.error('Practical search error:', error);
+      console.error('Practical keyword fallback error:', error);
       return [];
     }
-    return data || [];
+    return (data ?? []).map((row: any) => ({
+      title: row.primary_topic ?? row.equipment_category ?? 'Practical guidance',
+      content: row.content ?? '',
+      category: row.equipment_category ?? null,
+    }));
   } catch (e) {
     console.error('Practical search exception:', e);
     return [];
@@ -274,6 +323,337 @@ const buildContext = (
   return context;
 };
 
+/**
+ * Load the student's snapshot — profile + AM2 scores + recent sessions +
+ * calibration data. This becomes the "Dave knows about you" block in the
+ * system prompt: which course, recent practice, weak components, the regs
+ * they got wrong while certain (the dangerous knowledge gaps).
+ *
+ * All queries are best-effort: if any one fails we still build the prompt
+ * from whatever did come back. Dave never blocks on context loading.
+ */
+async function loadStudentContext(supabase: any, userId: string | undefined) {
+  if (!userId) return null;
+  const since30 = new Date(Date.now() - 30 * 86_400_000).toISOString();
+  const since14 = new Date(Date.now() - 14 * 86_400_000).toISOString();
+
+  // Each query individually wrapped so one table missing or one column
+  // renamed doesn't take down the entire context block. Empty/null
+  // fallback is fine — Dave just gets less context.
+  const safe = async <T>(p: Promise<{ data: T | null; error: unknown }>): Promise<T | null> => {
+    try {
+      const { data, error } = await p;
+      if (error) return null;
+      return data;
+    } catch {
+      return null;
+    }
+  };
+
+  const [
+    profile,
+    am2Scores,
+    recentSessions,
+    portfolio,
+    evidence,
+    otj,
+    epa,
+    epaMocks,
+    ilpGoals,
+    attendance,
+    acCoverage,
+  ] = await Promise.all([
+    safe(
+      supabase
+        .from('profiles')
+        .select('first_name, apprentice_level, apprentice_year, specialisation, role')
+        .eq('id', userId)
+        .maybeSingle()
+    ),
+    safe(
+      supabase
+        .from('am2_scores')
+        .select('component_key, score, attempts')
+        .eq('user_id', userId)
+    ),
+    safe(
+      supabase
+        .from('am2_mock_sessions')
+        .select('session_type, overall_score, completed_at, session_data, status')
+        .eq('user_id', userId)
+        .eq('status', 'completed')
+        .gte('completed_at', since30)
+        .order('completed_at', { ascending: false })
+        .limit(10)
+    ),
+    safe(
+      supabase
+        .from('portfolio_items')
+        .select('id, category, grade, created_at')
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false })
+        .limit(50)
+    ),
+    safe(
+      supabase
+        .from('evidence_uploads')
+        .select('id, verification_status, created_at')
+        .eq('user_id', userId)
+        .gte('created_at', since30)
+        .limit(30)
+    ),
+    safe(
+      supabase
+        .from('college_otj_entries')
+        .select('duration_minutes, verification_status, activity_date, source_kind')
+        .eq('student_id', userId)
+        .gte('activity_date', since30.slice(0, 10))
+        .limit(50)
+    ),
+    safe(
+      supabase
+        .from('college_epa')
+        .select('status, gateway_date, epa_date, result')
+        .eq('student_id', userId)
+        .maybeSingle()
+    ),
+    safe(
+      supabase
+        .from('epa_mock_sessions')
+        .select('overall_score, completed_at, session_type')
+        .eq('user_id', userId)
+        .order('completed_at', { ascending: false })
+        .limit(3)
+    ),
+    safe(
+      supabase
+        .from('college_ilp_goals')
+        .select('description, status, created_at')
+        .eq('student_id', userId)
+        .neq('status', 'completed')
+        .order('created_at', { ascending: false })
+        .limit(3)
+    ),
+    safe(
+      supabase
+        .from('college_attendance')
+        .select('status, date')
+        .eq('student_id', userId)
+        .gte('date', since30.slice(0, 10))
+        .limit(40)
+    ),
+    safe(
+      supabase
+        .from('student_ac_coverage')
+        .select('total_acs, covered_acs')
+        .eq('student_id', userId)
+        .maybeSingle()
+    ),
+  ]);
+
+  const evidence14d = ((evidence as Array<{ created_at: string }> | null) ?? []).filter(
+    (e) => new Date(e.created_at) >= new Date(since14)
+  );
+
+  return {
+    profile,
+    am2Scores: am2Scores ?? [],
+    recentSessions: recentSessions ?? [],
+    portfolio: portfolio ?? [],
+    evidence14d,
+    otj: otj ?? [],
+    epa,
+    epaMocks: epaMocks ?? [],
+    ilpGoals: ilpGoals ?? [],
+    attendance: attendance ?? [],
+    acCoverage,
+  };
+}
+
+/**
+ * Compose the student-context block for the system prompt. Compact: a few
+ * lines that tell Dave who he's talking to, what they've practised, and
+ * where the gaps are. Avoid long lists — keep it skimmable for the model.
+ */
+function formatStudentContext(ctx: any): string {
+  if (!ctx) return '';
+  const {
+    profile,
+    am2Scores,
+    recentSessions,
+    portfolio,
+    evidence14d,
+    otj,
+    epa,
+    epaMocks,
+    ilpGoals,
+    attendance,
+    acCoverage,
+  } = ctx;
+  const lines: string[] = [];
+
+  // Identity / course
+  if (profile?.first_name) {
+    const bits: string[] = [`Apprentice: ${profile.first_name}`];
+    if (profile.apprentice_level) bits.push(profile.apprentice_level);
+    if (profile.apprentice_year) bits.push(`Year ${profile.apprentice_year}`);
+    if (profile.specialisation) bits.push(profile.specialisation);
+    lines.push(bits.join(' · '));
+  }
+
+  // AM2 component readiness
+  if (Array.isArray(am2Scores) && am2Scores.length > 0) {
+    const sorted = [...am2Scores].sort((a, b) => (a.score ?? 0) - (b.score ?? 0));
+    const weak = sorted.filter((s: any) => (s.score ?? 0) < 70).slice(0, 3);
+    const strong = sorted.filter((s: any) => (s.score ?? 0) >= 70);
+    if (weak.length > 0) {
+      lines.push(
+        'AM2 weak areas: ' +
+          weak.map((s: any) => `${s.component_key} ${Math.round(s.score)}%`).join(', ')
+      );
+    }
+    if (strong.length > 0) {
+      lines.push(
+        'AM2 strong areas: ' +
+          strong.map((s: any) => `${s.component_key} ${Math.round(s.score)}%`).join(', ')
+      );
+    }
+  }
+
+  // Recent practice + calibration
+  if (Array.isArray(recentSessions) && recentSessions.length > 0) {
+    const fortnightAgo = Date.now() - 14 * 86_400_000;
+    const recent = recentSessions.filter(
+      (s: any) => new Date(s.completed_at).getTime() >= fortnightAgo
+    );
+    if (recent.length > 0) {
+      const byType: Record<string, number> = {};
+      for (const s of recent) byType[s.session_type] = (byType[s.session_type] ?? 0) + 1;
+      lines.push(
+        `Practised last 14 days: ${Object.entries(byType)
+          .map(([t, n]) => `${n}× ${t.replace(/_/g, ' ')}`)
+          .join(', ')}`
+      );
+    }
+    let overconfidentTotal = 0;
+    let lockedInTotal = 0;
+    let certainCount = 0;
+    for (const s of recentSessions) {
+      const cal = s.session_data?.calibration;
+      if (cal && typeof cal === 'object') {
+        overconfidentTotal += Number(cal.overconfident ?? 0);
+        lockedInTotal += Number(cal.lockedIn ?? 0);
+        certainCount += Number(cal.certainCount ?? 0);
+      }
+    }
+    if (overconfidentTotal > 0) {
+      const accuracy = certainCount > 0
+        ? Math.round((lockedInTotal / certainCount) * 100)
+        : null;
+      lines.push(
+        `Calibration: ${overconfidentTotal} overconfident-wrong in recent quizzes` +
+          (accuracy !== null ? ` (${accuracy}% certain-right)` : '') +
+          ' — gaps they don\'t know they have. Probe gently.'
+      );
+    }
+  } else if (Array.isArray(recentSessions)) {
+    lines.push('No AM2 practice sessions yet — encourage starting.');
+  }
+
+  // Portfolio + evidence — apprentice's visible work record
+  if (Array.isArray(portfolio) && portfolio.length > 0) {
+    const recent14 = portfolio.filter(
+      (p: any) => new Date(p.created_at).getTime() >= Date.now() - 14 * 86_400_000
+    ).length;
+    lines.push(
+      `Portfolio: ${portfolio.length} item${portfolio.length === 1 ? '' : 's'}` +
+        (recent14 > 0 ? `, ${recent14} added in last 14 days` : '')
+    );
+  } else if (Array.isArray(portfolio)) {
+    lines.push('Portfolio: empty — encourage adding evidence from recent jobs.');
+  }
+  if (Array.isArray(evidence14d) && evidence14d.length > 0) {
+    const pending = evidence14d.filter((e: any) => e.verification_status === 'pending').length;
+    const verified = evidence14d.filter(
+      (e: any) => e.verification_status === 'verified' || e.verification_status === 'approved'
+    ).length;
+    lines.push(
+      `Evidence uploads (14d): ${evidence14d.length} total` +
+        (pending > 0 ? `, ${pending} awaiting tutor sign-off` : '') +
+        (verified > 0 ? `, ${verified} verified` : '')
+    );
+  }
+
+  // OTJ hours — verified vs pending
+  if (Array.isArray(otj) && otj.length > 0) {
+    const verifiedMin = otj
+      .filter((e: any) => e.verification_status?.startsWith('verified'))
+      .reduce((a: number, e: any) => a + (e.duration_minutes ?? 0), 0);
+    const pendingMin = otj
+      .filter((e: any) => e.verification_status === 'pending')
+      .reduce((a: number, e: any) => a + (e.duration_minutes ?? 0), 0);
+    const totalHours = Math.round((verifiedMin + pendingMin) / 60);
+    lines.push(
+      `OTJ (last 30d): ${totalHours}h logged` +
+        (verifiedMin > 0 ? `, ${Math.round(verifiedMin / 60)}h verified` : '') +
+        (pendingMin > 0 ? `, ${Math.round(pendingMin / 60)}h pending` : '')
+    );
+  }
+
+  // EPA — gateway + mock scores
+  if (epa) {
+    const bits: string[] = [`EPA gateway: ${epa.status ?? 'not set'}`];
+    if (epa.gateway_date) bits.push(`gateway ${epa.gateway_date}`);
+    if (epa.epa_date) bits.push(`EPA ${epa.epa_date}`);
+    if (epa.result) bits.push(`result: ${epa.result}`);
+    lines.push(bits.join(' · '));
+  }
+  if (Array.isArray(epaMocks) && epaMocks.length > 0) {
+    const last = epaMocks[0];
+    const avg = Math.round(
+      epaMocks.reduce((a: number, m: any) => a + (m.overall_score ?? 0), 0) / epaMocks.length
+    );
+    lines.push(
+      `EPA mocks: ${epaMocks.length} run, latest ${Math.round(last.overall_score ?? 0)}%, avg ${avg}%`
+    );
+  }
+
+  // ILP — active tutor-set goals
+  if (Array.isArray(ilpGoals) && ilpGoals.length > 0) {
+    lines.push(
+      `Active ILP goals: ${ilpGoals
+        .map((g: any) => `"${(g.description ?? '').slice(0, 80)}"`)
+        .join('; ')}`
+    );
+  }
+
+  // Attendance — % present last 30d
+  if (Array.isArray(attendance) && attendance.length > 0) {
+    const present = attendance.filter(
+      (a: any) => a.status === 'Present' || a.status === 'present'
+    ).length;
+    const pct = Math.round((present / attendance.length) * 100);
+    lines.push(`College attendance (30d): ${pct}% present (${present}/${attendance.length})`);
+  }
+
+  // AC coverage — qualification progress
+  if (acCoverage && acCoverage.total_acs > 0) {
+    const pct = Math.round((acCoverage.covered_acs / acCoverage.total_acs) * 100);
+    lines.push(
+      `Qualification AC coverage: ${pct}% (${acCoverage.covered_acs}/${acCoverage.total_acs} assessment criteria evidenced)`
+    );
+  }
+
+  if (lines.length === 0) return '';
+
+  return (
+    '\n\n=== STUDENT CONTEXT (Dave knows this about the apprentice) ===\n' +
+    lines.map((l) => `- ${l}`).join('\n') +
+    '\nUse this to personalise replies. Reference weak areas, gaps, or progress when relevant — never lecture or shame. Treat the apprentice as an adult professional.\n' +
+    '=== END STUDENT CONTEXT ===\n'
+  );
+}
+
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -289,6 +669,7 @@ serve(async (req) => {
       imageUrl,
       qualificationCode,
       qualificationName,
+      userId,
     } = await req.json();
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
     const supabaseUrl = Deno.env.get('SUPABASE_URL');
@@ -301,28 +682,50 @@ serve(async (req) => {
     // Initialize Supabase client for RAG
     const supabase = createClient(supabaseUrl!, supabaseKey!);
 
-    // Extract keywords and perform parallel RAG searches
+    // Resolve user identity. Prefer the auth header (verified, anti-spoofing),
+    // fall back to the explicit userId in the body for clients that pass it.
+    let resolvedUserId: string | undefined = userId;
+    try {
+      const authHeader = req.headers.get('Authorization');
+      if (authHeader?.startsWith('Bearer ')) {
+        const { data } = await supabase.auth.getUser(authHeader.slice(7));
+        if (data?.user?.id) resolvedUserId = data.user.id;
+      }
+    } catch {
+      // Anon access still works — we just won't load student context.
+    }
+
+    // Extract keywords and perform parallel RAG searches + student snapshot.
+    // The bs7671_facets hybrid search is the canonical BS 7671 RAG (46k rows
+    // across BS 7671 / OSG / GN3 / AM4:2026); we still keep the older
+    // regulations_intelligence keyword search for redundancy.
     const keywords = extractKeywords(message);
 
-    // Parallel RAG searches (50-100ms)
-    const [regulations, practical, qualificationReqs] = await Promise.all([
-      searchRegulations(supabase, keywords),
-      searchPractical(supabase, keywords),
-      qualificationCode
-        ? searchQualificationRequirements(supabase, qualificationCode, keywords)
-        : Promise.resolve([]),
-    ]);
+    const [regulations, practical, qualificationReqs, facets, studentContext] =
+      await Promise.all([
+        searchRegulations(supabase, keywords),
+        searchPractical(supabase, message, keywords),
+        qualificationCode
+          ? searchQualificationRequirements(supabase, qualificationCode, keywords)
+          : Promise.resolve([]),
+        searchFacets(supabase, { query: message, matchCount: 6 }).catch(() => []),
+        loadStudentContext(supabase, resolvedUserId),
+      ]);
 
     // Build context from RAG results
     const ragContext = buildContext(regulations, practical, qualificationReqs, qualificationName);
+    const facetsBlock = facets.length > 0
+      ? `\n\n📘 BS 7671 FACETS (hybrid vector+BM25 retrieval, top ${facets.length}):\n${formatFacetsForPrompt(facets)}\n`
+      : '';
+    const studentBlock = formatStudentContext(studentContext);
 
     // Build system prompt with RAG context at the TOP for priority
-    const ragSection = ragContext
+    const ragSection = ragContext || facetsBlock
       ? `
 === CRITICAL: USE THIS TECHNICAL REFERENCE ===
 The following information comes from official BS 7671 regulations and verified practical guidance.
 You MUST base your answer on this documentation. Quote regulation numbers where relevant.
-${ragContext}
+${ragContext}${facetsBlock}
 === END TECHNICAL REFERENCE ===
 
 `
@@ -455,7 +858,7 @@ Remember: You're not just answering questions - you're training the next generat
 
 When answering questions about testing, procedures, or regulations, ALWAYS check the technical reference provided above and cite specific regulation numbers (e.g., "According to Regulation 613.2...").
 
-Current topic context: ${context || 'general electrical apprenticeship support'}${qualificationName ? `\n\nYou know this apprentice is studying ${qualificationName}${qualificationCode ? ` (${qualificationCode})` : ''}. When relevant, reference their specific learning outcomes and assessment criteria.` : ''}`;
+Current topic context: ${context || 'general electrical apprenticeship support'}${qualificationName ? `\n\nYou know this apprentice is studying ${qualificationName}${qualificationCode ? ` (${qualificationCode})` : ''}. When relevant, reference their specific learning outcomes and assessment criteria.` : ''}${studentBlock}`;
 
     // Build messages array with conversation history
     const conversationHistory = Array.isArray(history)

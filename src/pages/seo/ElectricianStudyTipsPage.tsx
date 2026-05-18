@@ -323,7 +323,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Ready-made flashcards for every electrical exam"
-          description="Elec-Mate includes flashcard sets for the 18th Edition, 2391, AM2, NVQ knowledge tests, and more. Spaced repetition scheduling, progress tracking, and the ability to create your own cards. Study on your phone, on the bus, on your break."
+          description="Elec-Mate includes flashcard sets for the 18th Edition, 2391, AM2, NVQ knowledge tests, and more."
           icon={Brain}
         />
       </>
@@ -477,7 +477,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Let Elec-Mate build your study plan"
-          description="Elec-Mate's AI study planner creates a personalised revision schedule based on your exam date, your current knowledge level, and your available study time. It schedules flashcard reviews, course modules, and mock exams — and adjusts the plan as you progress."
+          description="Elec-Mate's AI study planner creates a personalised revision schedule based on your exam date, your current knowledge level…"
           icon={Target}
         />
       </>
@@ -547,9 +547,9 @@ export default function ElectricianStudyTipsPage() {
     <GuideTemplate
       localArea="Study Tips"
       title="Study Tips for Electricians | Exam Preparation Guide"
-      description="Evidence-based study techniques for electrical exams. Covers active recall, spaced repetition, flashcard technique, BS 7671 navigation, practice questions, and study planning for the 18th Edition, 2391, AM2, and NVQ."
+      description="Evidence-based study techniques for electrical exams. Covers active recall, spaced repetition, flashcard technique, BS 7671 navigation…"
       datePublished="2025-04-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Study Guide"

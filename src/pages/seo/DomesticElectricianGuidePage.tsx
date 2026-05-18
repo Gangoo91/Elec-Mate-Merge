@@ -280,7 +280,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="All 16 certificate types in one app"
-          description="EIC, MEIWC, EICR, minor works, fire alarm, emergency lighting, EV charger, and PAT testing certificates. Complete them on your phone on site, send them to the customer before you leave. No evening paperwork."
+          description="EIC, MEIWC, EICR, minor works, fire alarm, emergency lighting, EV charger, and PAT testing certificates."
           icon={FileCheck2}
         />
       </>
@@ -541,7 +541,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Stop doing paperwork in the evening"
-          description="Complete certificates on site. Generate quotes from the schedule of rates. Send invoices before you leave the property. Elec-Mate eliminates the evening desk work that eats into your earnings. 7-day free trial."
+          description="Complete certificates on site. Generate quotes from the schedule of rates. Send invoices before you leave the property."
           icon={Receipt}
         />
       </>
@@ -834,7 +834,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="One app for every domestic job"
-          description="Join 1,000+ UK electricians using Elec-Mate for domestic certification, calculations, quoting, and invoicing. All on your phone, all on site. 7-day free trial, cancel anytime."
+          description="Join 1,000+ UK electricians using Elec-Mate for domestic certification, calculations, quoting, and invoicing. All on your phone, all on site."
           icon={Zap}
         />
       </>
@@ -850,9 +850,9 @@ export default function DomesticElectricianGuidePage() {
   return (
     <GuideTemplate
       title="Domestic Electrician Guide UK 2026 | Everything You Need"
-      description="Complete guide to working as a domestic electrician in the UK. Typical jobs, Part P requirements, competent person schemes, qualifications, earnings, tools, and how Elec-Mate handles every domestic certification and calculation."
+      description="Complete guide to working as a domestic electrician in the UK. Typical jobs, Part P requirements, competent person schemes, qualifications, earnings…"
       datePublished="2025-06-15"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

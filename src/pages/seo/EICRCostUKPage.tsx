@@ -360,32 +360,32 @@ const sections = [
             {
               title: 'Number of circuits',
               description:
-                'Each circuit requires individual testing — continuity, insulation resistance, polarity, Zs, and RCD times. More circuits means more time. A 6-circuit flat takes less than half the time of a 20-circuit house.',
+                'Each circuit requires individual testing — continuity, insulation resistance, polarity, Zs, and RCD times. More circuits means more time.',
             },
             {
               title: 'Number of distribution boards',
               description:
-                'Each board needs individual Ze measurement, supply characteristics recording, and its own schedule of test results. Properties with extensions, outbuildings, or sub-mains feeding secondary boards take significantly longer.',
+                'Each board needs individual Ze measurement, supply characteristics recording, and its own schedule of test results.',
             },
             {
               title: 'Age and condition of the wiring',
               description:
-                'Older installations (pre-1970 rubber or lead-sheathed cable, old colour codes, rewirable fuses) take longer to inspect and are far more likely to generate observations. Newer installations with modern cables and RCBOs are faster and cleaner.',
+                'Older installations (pre-1970 rubber or lead-sheathed cable, old colour codes, rewirable fuses) take longer to inspect and are far more likely to…',
             },
             {
               title: 'Access difficulty',
               description:
-                'A consumer unit in a locked cupboard behind furniture, circuits running through loft spaces with no boarding, or rooms that cannot be accessed due to tenant belongings all add time. Poor access may also result in FI codes, which require follow-up visits.',
+                'A consumer unit in a locked cupboard behind furniture, circuits running through loft spaces with no boarding…',
             },
             {
               title: 'Specialist circuits',
               description:
-                'EV chargers, solar PV, battery storage, hot tubs, swimming pools, emergency lighting, fire alarm systems — each requires specific testing procedures and knowledge. These circuits justify a higher price.',
+                'EV chargers, solar PV, battery storage, hot tubs, swimming pools, emergency lighting…',
             },
             {
               title: 'Location',
               description:
-                'London and South East prices are typically 10 to 25% higher than the national average. This reflects higher running costs (parking, congestion charge, insurance, rent) and higher local demand.',
+                'London and South East prices are typically 10 to 25% higher than the national average. This reflects higher running costs (parking, congestion charge…',
             },
           ].map((factor) => (
             <div
@@ -404,7 +404,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="AI Board Scanner saves 30 minutes per EICR"
-          description="Point your phone camera at the distribution board. Elec-Mate reads MCB/RCBO ratings, circuit details, and board layout from the photo — so you start the EICR with half the data already filled in. More time saved means more profit per job."
+          description="Point your phone camera at the distribution board. Elec-Mate reads MCB/RCBO ratings, circuit details…"
           icon={Camera}
         />
       </>
@@ -550,7 +550,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Observations to priced remedial quote in seconds"
-          description="Every C1, C2, and FI observation you add to the EICR feeds directly into the remedial works estimator. It prices materials, labour, and margin for each fix. Hand the landlord the EICR and the quote in the same visit."
+          description="Every C1, C2, and FI observation you add to the EICR feeds directly into the remedial works estimator."
           icon={Receipt}
         />
       </>
@@ -717,7 +717,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Start earning more from every EICR"
-          description="Join 1,000+ UK electricians completing EICR certificates, generating remedial quotes, and sending invoices — all from their phones, all on site. 7-day free trial, cancel anytime."
+          description="Join 1,000+ UK electricians completing EICR certificates, generating remedial quotes, and sending invoices — all from their phones, all on site."
           icon={PoundSterling}
         />
       </>
@@ -733,9 +733,9 @@ export default function EICRCostUKPage() {
   return (
     <GuideTemplate
       title="EICR Cost UK 2026 | What Should You Charge?"
-      description="EICR cost guide for UK electricians in 2026. Average prices by property type (1-bed flat to commercial), factors affecting cost, how to price competitively, and how Elec-Mate's quoting tools turn every EICR into a fully-invoiced job."
+      description="EICR cost guide for UK electricians in 2026. Average prices by property type (1-bed flat to commercial), factors affecting cost…"
       datePublished="2025-02-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Pricing Guide"

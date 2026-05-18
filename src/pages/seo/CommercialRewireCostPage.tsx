@@ -492,7 +492,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote commercial rewires with confidence"
-          description="Elec-Mate's quoting app handles itemised commercial tenders with distribution equipment, containment schedules, and final circuit costing. AI cost engineering validates your rates against current market data."
+          description="Elec-Mate's quoting app handles itemised commercial tenders with distribution equipment, containment schedules, and final circuit costing."
           icon={Calculator}
         />
       </>
@@ -507,10 +507,10 @@ const sections = [
 export default function CommercialRewireCostPage() {
   return (
     <GuideTemplate
-      title="Commercial Rewire Cost 2026 | UK Per m² Price Guide"
-      description="How much does a commercial rewire cost in 2026? UK per square metre pricing for 3-phase distribution, containment, data cabling, fire alarm, and emergency lighting. £30-80/m² with realistic breakdowns."
+      title="1000 sqft Commercial Rewire Cost 2026"
+      description="1000 sqft commercial rewire costs £3,000–8,000 in 2026. Get exact pricing for distribution, containment, data cabling, fire alarm…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

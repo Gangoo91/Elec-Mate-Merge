@@ -6,14 +6,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // (Smart Charge Points) Regulations 2021.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const section722EvChargingA4Config: GeneratedGuideConfig = {
   pagePath: '/guides/section-722-ev-charging-a4-2026-changes',
   title:
-    'Section 722 EV Charging Changes (BS 7671:2018+A4:2026) | Elec-Mate',
+    'Section 722 EV Charging Changes (BS 7671:2018+A4:2026)',
   description:
-    'A clause-by-clause walk-through of what Amendment 4:2026 changed in Section 722 of BS 7671 for electric vehicle charging installations — RDC-DD, PME (TN-C-S) earthing, outdoor IP ratings, Type B RCDs, bidirectional V2G, and the EIC paperwork that follows.',
+    'A clause-by-clause walk-through of what Amendment 4:2026 changed in Section 722 of BS 7671 for electric vehicle charging installations — RDC-DD…',
   datePublished: published,
   dateModified: modified,
   readingTime: 16,
@@ -86,7 +86,7 @@ export const section722EvChargingA4Config: GeneratedGuideConfig = {
         {
           type: 'callout',
           tone: 'warning',
-          title: 'Do not assume Type A + integral RDC-DD without checking the data sheet',
+          title: 'Do not assume Type A + integral RDC-DD without checking the',
           text:
             'Not every EV charge point on the UK market includes an integral RDC-DD that satisfies BS EN 62955. Some imports and heavy-duty commercial chargers require an external Type B RCD. Always confirm by manufacturer datasheet before specifying the upstream device. The Elec-Mate [cable size calculator](/guides/cable-size-for-ev-charger) prompts for the RDC-DD type as part of the design step.',
         },
@@ -378,7 +378,7 @@ export const section722EvChargingA4Config: GeneratedGuideConfig = {
     {
       href: '/guides/bs-7671-a4-2026-summary',
       title: 'BS 7671 A4:2026 Summary',
-      description: 'A high-level walk-through of every meaningful change in Amendment 4:2026 across the whole Standard — AFDD, PME, schedule columns, model forms and Section 722.',
+      description: 'A high-level walk-through of every meaningful change in Amendment 4:2026 across the whole Standard — AFDD, PME, schedule columns…',
       icon: 'BookOpen',
       category: 'Guide',
     },
@@ -406,14 +406,14 @@ export const section722EvChargingA4Config: GeneratedGuideConfig = {
     {
       href: '/smart-ev-charging',
       title: 'Smart EV Charging',
-      description: 'How smart charge point firmware, the Smart Charge Points Regulations 2021, and the BS 7671 hardware duties intersect — with a note on V2G bidirectional flows.',
+      description: 'How smart charge point firmware, the Smart Charge Points Regulations 2021, and the BS 7671 hardware duties intersect — with a note on V2G bidirectional…',
       icon: 'Zap',
       category: 'Guide',
     },
     {
       href: '/workplace-ev-charging',
       title: 'Workplace EV Charging',
-      description: 'Multi-point commercial and workplace EV charging — load balancing, discrimination, three-phase distribution, and EIC documentation across multiple chargers.',
+      description: 'Multi-point commercial and workplace EV charging — load balancing, discrimination, three-phase distribution…',
       icon: 'Building2',
       category: 'Guide',
     },

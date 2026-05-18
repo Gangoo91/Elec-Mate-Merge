@@ -706,7 +706,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs faster with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -722,9 +722,9 @@ export default function EICRNewcastlePage() {
   return (
     <GuideTemplate
       title="EICR Newcastle | Electrical Safety Report Cost 2026"
-      description="EICR costs in Newcastle for 2026. Landlord legal requirements, Tyneside flat conversion challenges, student area enforcement, observation codes explained, and how to find a qualified inspector. Prices from £100 for a flat to £400+ for a house."
+      description="EICR costs in Newcastle for 2026. Landlord legal requirements, Tyneside flat conversion challenges, student area enforcement…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

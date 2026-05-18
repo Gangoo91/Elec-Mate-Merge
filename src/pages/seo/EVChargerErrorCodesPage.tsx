@@ -622,7 +622,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Document EV charger faults professionally"
-          description="Elec-Mate's certificate apps let you complete EICRs and Minor Works Certificates for EV charger installations on your phone with photo evidence and instant PDF export."
+          description="Elec-Mate's certificate apps let you complete EICRs and Minor Works Certificates for EV charger installations on your phone with photo evidence and…"
           icon={FileCheck2}
         />
       </>
@@ -638,9 +638,9 @@ export default function EVChargerErrorCodesPage() {
   return (
     <GuideTemplate
       title="EV Charger Error Codes | Zappi, Pod Point & Andersen Guide"
-      description="Common EV charger error codes explained — Zappi, Pod Point, and Andersen. RCD trips, earth faults, overcurrent, and communication faults. What each code means and when to call an electrician."
+      description="Common EV charger error codes explained — Zappi, Pod Point, and Andersen. RCD trips, earth faults, overcurrent, and communication faults."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EV Charging"

@@ -426,7 +426,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Manage your team with Elec-Mate"
-          description="Track your team's qualifications, ECS card expiry dates, and training needs. Elec-Mate helps electrical contractors stay compliant and plan upskilling for their workforce."
+          description="Track your team's qualifications, ECS card expiry dates, and training needs. Elec-Mate helps electrical contractors stay compliant and plan upskilling…"
           icon={Users}
         />
       </>
@@ -441,10 +441,10 @@ const sections = [
 export default function JIBGradingExplainedPage() {
   return (
     <GuideTemplate
-      title="JIB Grading Explained | Electrician Pay Rates & Grades UK 2026"
-      description="Complete guide to JIB grading for UK electricians. ECS grades, 2026 pay rates by grade, progression pathway from Electrician to Technician, how to apply, and benefits of JIB grading."
+      title="ECS Grading: 2026 Pay Rates & Progression"
+      description="ECS grading structure for UK electricians: 5 grades, 2026 pay scales, and clear progression from Approved to Senior Technician. Get certified today."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

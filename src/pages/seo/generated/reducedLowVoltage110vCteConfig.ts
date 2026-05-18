@@ -6,14 +6,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Regulations 1989.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const reducedLowVoltage110vCteConfig: GeneratedGuideConfig = {
   pagePath: '/guides/reduced-low-voltage-110v-cte-site-supplies',
   title:
-    'Reduced Low Voltage (110V CTE) Construction Site Supplies — BS 7671:2018+A4:2026 Section 704 | Elec-Mate',
+    'Reduced Low Voltage (110V CTE) Construction Site Supplies',
   description:
-    '110V centre-tapped earth (CTE) reduced low voltage construction site supplies under BS 7671:2018+A4:2026 Section 704 — why 55V to earth is used on sites, BS 7375 yellow socket colour coding, site transformer ratings, RCD requirements, distribution units, tool selection and the temporary supply certificate that gets you off the gate.',
+    '110V centre-tapped earth (CTE) reduced low voltage construction site supplies under BS 7671:2018+A4:2026 Section 704 — why 55V to earth is used on sites…',
   datePublished: published,
   dateModified: modified,
   readingTime: 14,
@@ -275,7 +275,7 @@ export const reducedLowVoltage110vCteConfig: GeneratedGuideConfig = {
         {
           type: 'callout',
           tone: 'warning',
-          title: 'If the centre-tap earth bond fails, you lose the protective measure',
+          title: 'If the centre-tap earth bond fails, you lose the protective',
           text:
             'The entire 55V-to-earth assumption depends on the midpoint of the transformer secondary being bonded to earth. If that bond is broken (cut wire, corroded terminal, missing link) the 110V system is no longer CTE — it becomes a floating 110V system, and the protective measure is lost. Periodic inspection (EICR) of a site supply must verify the centre-tap earth bond.',
         },

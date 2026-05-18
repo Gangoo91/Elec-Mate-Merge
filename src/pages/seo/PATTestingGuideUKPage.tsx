@@ -7,9 +7,9 @@ export default function PATTestingGuideUKPage() {
   return (
     <GuideTemplate
       title="PAT Testing Guide UK 2026 | Requirements & Law"
-      description="Complete guide to PAT testing in the UK. Covers legal requirements, Electricity at Work Regulations 1989, IET Code of Practice 5th Edition, who needs PAT testing, testing frequency, Class I vs Class II, pass/fail criteria, and record keeping."
+      description="Complete guide to PAT testing in the UK. Covers legal requirements, Electricity at Work Regulations 1989, IET Code of Practice 5th Edition…"
       datePublished="2026-01-25"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'PAT Testing Guide UK', href: '/guides/pat-testing-guide-uk' },
@@ -469,8 +469,8 @@ export default function PATTestingGuideUKPage() {
               </p>
 
               <SEOAppBridge
-                title="PAT Testing Certificates — Digital Records and Professional PDFs"
-                description="Elec-Mate includes a PAT testing certificate form with digital record keeping. Complete tests on your phone, generate professional PDF reports, and send results to clients instantly. Full audit trail for every appliance."
+                title="PAT Testing Certificates — Digital Records and Professional"
+                description="Elec-Mate includes a PAT testing certificate form with digital record keeping. Complete tests on your phone, generate professional PDF reports…"
                 icon={ClipboardCheck}
               />
             </>
@@ -525,7 +525,7 @@ export default function PATTestingGuideUKPage() {
 
               <SEOAppBridge
                 title="Manage Your PAT Testing Business With Elec-Mate"
-                description="Customer management, quoting, invoicing, expense tracking, and professional PAT certificates — everything you need to run a profitable PAT testing round. Track when clients are due for retesting and send reminders automatically."
+                description="Customer management, quoting, invoicing, expense tracking, and professional PAT certificates — everything you need to run a profitable PAT testing round."
                 icon={Users}
               />
 

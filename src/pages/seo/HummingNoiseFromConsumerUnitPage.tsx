@@ -387,7 +387,7 @@ const sections = [
         </p>
         <p>
           Modern consumer units are required to be metal-enclosed (since January 2016 under
-          Amendment 3 to BS 7671). The metal enclosure provides fire containment — if a fault causes
+          Amendment 4 to BS 7671). The metal enclosure provides fire containment — if a fault causes
           overheating inside the consumer unit, the metal box prevents the fire from spreading to
           the surrounding building fabric. Older plastic consumer units do not provide this
           protection and are one of the reasons why consumer unit upgrades are recommended.
@@ -431,7 +431,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Identify consumer unit faults with AI"
-          description="Elec-Mate's AI board scanner identifies consumer unit components and flags potential issues. Combined with the fault diagnosis tool, you can systematically investigate and document consumer unit problems."
+          description="Elec-Mate's AI board scanner identifies consumer unit components and flags potential issues. Combined with the fault diagnosis tool…"
           icon={Search}
         />
       </>
@@ -609,7 +609,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Document consumer unit inspections on your phone"
-          description="Elec-Mate's EICR and Minor Works certificate apps let you document consumer unit findings with photos, observation codes, and instant PDF export. AI board scanning identifies components automatically."
+          description="Elec-Mate's EICR and Minor Works certificate apps let you document consumer unit findings with photos, observation codes, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -625,9 +625,9 @@ export default function HummingNoiseFromConsumerUnitPage() {
   return (
     <GuideTemplate
       title="Humming Noise From Consumer Unit | What It Means"
-      description="Why is your consumer unit humming? Learn the difference between normal MCB buzz and dangerous loose connections, what thermal effects look like, and when to call an electrician. Covers busbar issues, overloaded circuits, and fire safety."
+      description="Why is your consumer unit humming? Learn the difference between normal MCB buzz and dangerous loose connections, what thermal effects look like…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

@@ -1,11 +1,11 @@
 import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuidePage';
 
 const published = '2026-04-12';
-const modified = '2026-04-12';
+const modified = '2026-05-18';
 
 export const eicCommonMistakesConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eic-common-mistakes',
-  title: 'EIC Common Mistakes | Electrical Installation Certificate Guide | Elec-Mate',
+  title: 'EIC Common Mistakes | Electrical Installation Certificate',
   description:
     'The common mistakes that weaken an Electrical Installation Certificate, from missing readings to vague handover notes, and how to avoid them on site.',
   datePublished: published,
@@ -93,6 +93,31 @@ export const eicCommonMistakesConfig: GeneratedGuideConfig = {
           type: 'paragraph',
           text:
             'That is where a good quote matters. If the EIC turns into a larger repair or upgrade, the [electrical quoting app](/electrical-quoting-app) helps you turn the findings into a proper follow-on price without starting from scratch.',
+        },
+      ],
+    },
+    {
+      id: 'real-world-fixes',
+      heading: 'Real-world fixes that strengthen the EIC',
+      blocks: [
+        {
+          type: 'paragraph',
+          text:
+            'On every job there is a small list of EIC mistakes that come back again and again. The supply details get filled in from memory rather than from the meter, the schedule of test results gets squeezed onto one row when there should be three, and the observations get written so quickly they no longer line up with what the client is looking at. None of these are dramatic on their own, but together they make a certificate feel rushed.',
+        },
+        {
+          type: 'paragraph',
+          text:
+            'The fix is usually a five-minute habit change, not a new tool. Take the supply photo before the cover goes back on. Record every test result on the day, not at the end of the week. Read the observations back to the client in plain English before you hand over. Each of these closes off a category of mistake before it becomes a callback.',
+        },
+        {
+          type: 'list',
+          items: [
+            'Photograph the supply head, earthing arrangement, and meter serial before the cover goes back on.',
+            'Write observations as if the client is going to read them to their insurer — because they might.',
+            'Cross-check the schedule of test results against the EIC supply details before sign-off.',
+            'Keep one PDF master per job — do not let the certificate, photos, and quote drift into separate threads.',
+          ],
         },
       ],
     },

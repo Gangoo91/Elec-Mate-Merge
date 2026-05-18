@@ -6,14 +6,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Electricity at Work Regulations 1989.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const nearMissReportingElectriciansConfig: GeneratedGuideConfig = {
   pagePath: '/guides/near-miss-reporting-electricians',
   title:
-    'Near-Miss Reporting for Electricians (UK HSE Framework) | Elec-Mate',
+    'Near-Miss Reporting for Electricians (UK HSE Framework)',
   description:
-    'Near-miss reporting for UK electricians: what counts, why under-reporting is dangerous, the HSE framework, RIDDOR dangerous-occurrence scope, and how to embed reporting in your daily work. Aligned to RIDDOR 2013, HSE INDG453 and the Management of Health and Safety at Work Regulations 1999.',
+    'Near-miss reporting for UK electricians: what counts, why under-reporting is dangerous, the HSE framework, RIDDOR dangerous-occurrence scope…',
   datePublished: published,
   dateModified: modified,
   readingTime: 11,
@@ -52,7 +52,7 @@ export const nearMissReportingElectriciansConfig: GeneratedGuideConfig = {
         {
           type: 'callout',
           tone: 'info',
-          title: 'The only difference between a near-miss and an accident is the outcome',
+          title: 'The only difference between a near-miss and an accident is',
           text:
             'The hazard, the failure in controls and the root cause are the same. This is why HSE places such weight on near-miss data: it reveals the same weaknesses as an accident report, without the human cost. Treat near-misses as leading indicators, not as paperwork.',
         },

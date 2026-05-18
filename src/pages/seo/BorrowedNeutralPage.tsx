@@ -24,7 +24,7 @@ import {
 
 const PAGE_TITLE = 'Borrowed Neutral | What It Is & How to Find It';
 const PAGE_DESCRIPTION =
-  'What is a borrowed neutral fault and how do you find it? Complete guide covering what happens when a neutral from one circuit connects to another circuit, how it causes RCD tripping, symptoms, how to identify by disconnecting neutrals at the DB and resistance testing, how to fix by tracing and reconnecting, and why it matters for safety and test accuracy.';
+  'Borrowed neutral faults explained: what causes RCD tripping when neutrals cross circuits, symptoms, how to identify at the DB, and how to fix safely.';
 
 const breadcrumbs = [
   { label: 'Troubleshooting', href: '/guides/troubleshooting' },
@@ -279,7 +279,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="AI Fault Diagnosis"
-          description="Describe the tripping pattern to Elec-Mate's AI diagnostic agent — which circuits are in use when it trips, whether it correlates with specific circuit combinations — and the AI identifies the borrowed neutral pattern and guides you through the diagnostic process step by step."
+          description="Describe the tripping pattern to Elec-Mate's AI diagnostic agent — which circuits are in use when it trips…"
           icon={Search}
         />
       </>
@@ -558,12 +558,12 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Ring Circuit Calculator"
-          description="Elec-Mate's ring circuit calculator helps identify ring circuit faults including borrowed neutrals. Enter your measured R1, Rn, and R2 values and the app flags any anomalies that suggest a neutral connection to another circuit. Expected values are calculated based on cable type and length for comparison."
+          description="Elec-Mate's ring circuit calculator helps identify ring circuit faults including borrowed neutrals."
           icon={Calculator}
         />
         <SEOAppBridge
           title="Defect Code AI"
-          description="Describe the borrowed neutral finding to the Defect Code AI and it classifies the severity, assigns the appropriate observation code, and recommends the remedial action for the EICR. It considers factors such as the number of circuits affected, the earthing arrangement, and the type of RCD protection in place."
+          description="Describe the borrowed neutral finding to the Defect Code AI and it classifies the severity, assigns the appropriate observation code…"
           icon={Search}
         />
         <p>
@@ -635,7 +635,7 @@ export default function BorrowedNeutralPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-11-01"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting"

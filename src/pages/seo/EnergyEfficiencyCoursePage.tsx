@@ -22,7 +22,7 @@ import {
 
 const PAGE_TITLE = 'Energy Efficiency Course | Electrical & Building Services';
 const PAGE_DESCRIPTION =
-  'Energy efficiency training for UK electricians. Part L Building Regulations, LED lighting design, power factor correction, voltage optimisation, EPC ratings, and energy auditing. 7 modules with video lessons, quizzes, and AI tutor.';
+  'Energy efficiency for UK electricians: Part L Building Regs, LED lighting design, power factor, voltage optimisation, EPCs, energy auditing.';
 
 const breadcrumbs = [
   { label: 'Training', href: '/training' },
@@ -86,37 +86,37 @@ const modules = [
   {
     title: 'Energy Efficiency Fundamentals',
     description:
-      'Energy consumption in buildings, the UK net zero target, the role of electricians in reducing energy use, energy units and measurement, and the business case for energy efficiency improvements.',
+      'Energy consumption in buildings, the UK net zero target, the role of electricians in reducing energy use, energy units and measurement…',
   },
   {
     title: 'Building Regulations Part L',
     description:
-      'Part L 2021 requirements in detail. Maximum lighting power densities, minimum luminous efficacy, lighting controls requirements, metering provisions, and the interaction between Part L and BS 7671.',
+      'Part L 2021 requirements in detail. Maximum lighting power densities, minimum luminous efficacy, lighting controls requirements, metering provisions…',
   },
   {
     title: 'LED Lighting Design and Efficiency',
     description:
-      'LED technology, colour temperature, CRI, driver types, dimming compatibility, lumen method calculations, lighting layouts for compliance with Part L and CIBSE guides, and retrofitting existing installations.',
+      'LED technology, colour temperature, CRI, driver types, dimming compatibility, lumen method calculations…',
   },
   {
     title: 'Smart Lighting Controls',
     description:
-      'DALI lighting control, occupancy sensing (PIR, microwave, ultrasonic), daylight harvesting, time scheduling, scene control, and emergency lighting integration. Commissioning smart lighting systems.',
+      'DALI lighting control, occupancy sensing (PIR, microwave, ultrasonic), daylight harvesting, time scheduling, scene control…',
   },
   {
     title: 'Power Factor and Power Quality',
     description:
-      'Power factor explained, measuring power factor, reactive power charges, capacitor bank sizing and installation, harmonic distortion from LED drivers and VFDs, and power quality monitoring.',
+      'Power factor explained, measuring power factor, reactive power charges, capacitor bank sizing and installation…',
   },
   {
     title: 'Renewable Energy Integration',
     description:
-      'Solar PV system overview, battery storage basics, EV charger load management, voltage optimisation, and how these technologies integrate with the building electrical installation.',
+      'Solar PV system overview, battery storage basics, EV charger load management, voltage optimisation…',
   },
   {
     title: 'Energy Auditing and EPCs',
     description:
-      'Carrying out a basic energy audit, identifying energy waste, EPC methodology and ratings, recommending cost-effective improvements, and presenting findings to clients. Assessment and CPD certificate.',
+      'Carrying out a basic energy audit, identifying energy waste, EPC methodology and ratings, recommending cost-effective improvements…',
   },
 ];
 
@@ -125,13 +125,13 @@ const features = [
     icon: BrainCircuit,
     title: 'AI Study Assistant',
     description:
-      'Ask any energy efficiency question in plain English. Get instant answers on Part L compliance, lighting calculations, power factor correction, and EPC improvements.',
+      'Ask any energy efficiency question in plain English. Get instant answers on Part L compliance, lighting calculations, power factor correction…',
   },
   {
     icon: Lightbulb,
     title: 'LED Design Calculations',
     description:
-      'Step-by-step lumen method calculations, luminaire selection guides, and lighting layout exercises. Learn to design compliant, efficient lighting schemes from scratch.',
+      'Step-by-step lumen method calculations, luminaire selection guides, and lighting layout exercises.',
   },
   {
     icon: BarChart3,
@@ -143,13 +143,13 @@ const features = [
     icon: ClipboardCheck,
     title: 'Interactive Quizzes',
     description:
-      'Scenario-based assessments after every module. Calculate lighting densities, size capacitor banks, assess EPC improvements, and demonstrate regulatory knowledge.',
+      'Scenario-based assessments after every module. Calculate lighting densities, size capacitor banks, assess EPC improvements…',
   },
   {
     icon: Clock,
     title: 'Study Anywhere',
     description:
-      'Complete the course on your phone, tablet, or desktop. Study during breaks on site, at home, or on the commute. Progress syncs across all your devices automatically.',
+      'Complete the course on your phone, tablet, or desktop. Study during breaks on site, at home, or on the commute.',
   },
   {
     icon: FileCheck2,
@@ -195,7 +195,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="46+ courses including energy efficiency"
-          description="Elec-Mate gives you access to every course on the platform — energy efficiency, renewable energy, BMS, and all the core electrical qualifications. One subscription covers everything."
+          description="Elec-Mate gives you access to every course on the platform — energy efficiency, renewable energy, BMS, and all the core electrical qualifications."
           icon={Zap}
         />
       </>
@@ -357,7 +357,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Energy efficiency training with practical exercises"
-          description="The Elec-Mate course includes practical exercises where you carry out simulated energy audits, calculate lighting densities, size capacitor banks, and recommend EPC improvements. All supported by the AI study assistant."
+          description="The Elec-Mate course includes practical exercises where you carry out simulated energy audits, calculate lighting densities, size capacitor banks…"
           icon={Sun}
         />
       </>
@@ -454,7 +454,7 @@ export default function EnergyEfficiencyCoursePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-08-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="CPD Training"

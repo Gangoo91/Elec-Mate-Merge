@@ -248,7 +248,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage Port Electrical Projects with Elec-Mate"
-          description="Generate Electrical Installation Certificates for industrial and commercial projects. Log test results, create schedules of tests, and share certificates with clients instantly."
+          description="Generate Electrical Installation Certificates for industrial and commercial projects. Log test results, create schedules of tests…"
           ctaText="Try Elec-Mate free"
         />
       </>
@@ -379,9 +379,9 @@ export default function ElectricianSuffolkPage() {
   return (
     <GuideTemplate
       title="Electrician Suffolk — Find Registered Electricians Near You"
-      description="Find NICEIC, ELECSA, and NAPIT-registered electricians across Suffolk including Ipswich, Bury St Edmunds, Lowestoft, Felixstowe, Sudbury, and Newmarket. Part P compliant, fully insured."
+      description="Find NICEIC, ELECSA, and NAPIT-registered electricians across Suffolk including Ipswich, Bury St Edmunds, Lowestoft, Felixstowe, Sudbury, and Newmarket."
       datePublished="2024-06-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Location Guide"

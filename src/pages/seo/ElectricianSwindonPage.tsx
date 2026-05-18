@@ -444,7 +444,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Swindon electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for electricians across Swindon and Wiltshire. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -461,9 +461,9 @@ export default function ElectricianSwindonPage() {
     <GuideTemplate
       localArea="Swindon"
       title="Electrician in Swindon | Local Electricians 2026"
-      description="Find qualified electricians in Swindon. NICEIC and NAPIT registered, Part P compliant. Typical costs, EICRs, consumer unit upgrades, EV chargers, and solar PV in Swindon 2026."
+      description="Find qualified electricians in Swindon. NICEIC and NAPIT registered, Part P compliant. Typical costs, EICRs, consumer unit upgrades, EV chargers…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Swindon"

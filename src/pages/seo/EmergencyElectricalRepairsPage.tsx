@@ -20,9 +20,9 @@ export default function EmergencyElectricalRepairsPage() {
   return (
     <GuideTemplate
       title="Emergency Electrical Repairs | What Counts & Cost UK"
-      description="What qualifies as an emergency electrical repair in the UK, typical call-out charges, common electrical emergencies, temporary vs permanent fixes, when to call an electrician vs the DNO, and how to stay safe while waiting for help."
+      description="What qualifies as an emergency electrical repair in the UK, typical call-out charges, common electrical emergencies, temporary vs permanent fixes…"
       datePublished="2026-01-25"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'Emergency Repairs', href: '/guides/emergency-electrical-repairs' },
@@ -286,7 +286,7 @@ export default function EmergencyElectricalRepairsPage() {
               </p>
               <SEOAppBridge
                 title="Price emergency work accurately on the spot"
-                description="Elec-Mate's AI Cost Engineer generates accurate pricing for any electrical job in seconds, including emergency premiums. Create a professional quote from your van and send it to the customer before you start work."
+                description="Elec-Mate's AI Cost Engineer generates accurate pricing for any electrical job in seconds, including emergency premiums."
                 icon={PoundSterling}
               />
             </>
@@ -492,7 +492,7 @@ export default function EmergencyElectricalRepairsPage() {
               </p>
               <SEOAppBridge
                 title="Invoice and certify emergency work on the spot"
-                description="Elec-Mate generates minor works certificates, professional invoices with online payment links, and written reports from your phone. Complete the paperwork before you leave site."
+                description="Elec-Mate generates minor works certificates, professional invoices with online payment links, and written reports from your phone."
                 icon={Receipt}
               />
             </>

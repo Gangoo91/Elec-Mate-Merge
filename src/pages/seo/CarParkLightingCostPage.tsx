@@ -357,7 +357,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote car park lighting per column"
-          description="Elec-Mate's quoting app handles per-column pricing with separate line items for columns, luminaires, foundations, cabling, controls, and CCTV integration. Professional PDF quotes."
+          description="Elec-Mate's quoting app handles per-column pricing with separate line items for columns, luminaires, foundations, cabling, controls, and CCTV integration."
           icon={Calculator}
         />
       </>
@@ -469,7 +469,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote car park projects with combined services"
-          description="Elec-Mate's quoting app handles multi-discipline car park projects — lighting columns, CCTV, EV charging, and access control in a single itemised quote. 7-day free trial."
+          description="Elec-Mate's quoting app handles multi-discipline car park projects — lighting columns, CCTV, EV charging, and access control in a single itemised quote."
           icon={Calculator}
         />
       </>
@@ -484,10 +484,10 @@ const sections = [
 export default function CarParkLightingCostPage() {
   return (
     <GuideTemplate
-      title="Car Park Lighting Cost 2026 | Column & Bollard UK Price Guide"
-      description="How much does car park lighting cost in 2026? UK guide covering column lighting at £500-2000 per column, bollards, CCTV integration, BMS controls, and complete project costs."
+      title="Car Park Lighting Cost 2026 | Column & Bollard UK Price"
+      description="How much does car park lighting cost in 2026? UK guide covering column lighting at £500-2000 per column, bollards, CCTV integration, BMS controls…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

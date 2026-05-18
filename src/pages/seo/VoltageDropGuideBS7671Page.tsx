@@ -19,9 +19,9 @@ export default function VoltageDropGuideBS7671Page() {
   return (
     <GuideTemplate
       title="Voltage Drop Limits BS 7671 | How to Calculate | Elec-Mate"
-      description="Complete guide to voltage drop limits and calculations to BS 7671:2018+A4:2026. Regulation 525.1 limits (3% lighting, 5% other), the mV/A/m formula with worked examples, Appendix 4 tables, and temperature correction explained."
+      description="Complete guide to voltage drop limits and calculations to BS 7671:2018+A4:2026. Regulation 525.1 limits (3% lighting, 5% other)…"
       datePublished="2025-07-01"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'Voltage Drop Limits BS 7671', href: '/guides/voltage-drop-limits-bs-7671' },
@@ -198,7 +198,7 @@ export default function VoltageDropGuideBS7671Page() {
               </p>
               <SEOAppBridge
                 title="Voltage Drop Calculator — Instant Results"
-                description="Enter the cable type, cable size, length, and load current. Elec-Mate calculates the voltage drop instantly and shows a clear pass/fail against BS 7671 limits. Also built into the cable sizing calculator so voltage drop is automatically checked when you size a cable."
+                description="Enter the cable type, cable size, length, and load current. Elec-Mate calculates the voltage drop instantly and shows a clear pass/fail against BS 7671…"
                 icon={Calculator}
               />
             </>
@@ -377,7 +377,7 @@ export default function VoltageDropGuideBS7671Page() {
               </p>
               <SEOAppBridge
                 title="Every Appendix 4 Table Built In"
-                description="Elec-Mate's voltage drop calculator and cable sizing calculator have every Appendix 4 table built in. Select the cable type and size, and the correct mV/A/m value is used automatically. No need to look up tables — just enter your parameters and get the result."
+                description="Elec-Mate's voltage drop calculator and cable sizing calculator have every Appendix 4 table built in."
                 icon={BookOpen}
               />
             </>
@@ -581,7 +581,7 @@ export default function VoltageDropGuideBS7671Page() {
               </div>
               <SEOAppBridge
                 title="Single-Phase and Three-Phase Calculations"
-                description="Elec-Mate's voltage drop calculator handles both single-phase and three-phase circuits. Select the supply type, enter the cable details and load, and get an instant result with the correct mV/A/m value from the appropriate Appendix 4 table. Works offline on site."
+                description="Elec-Mate's voltage drop calculator handles both single-phase and three-phase circuits. Select the supply type, enter the cable details and load…"
                 icon={Zap}
               />
             </>

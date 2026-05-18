@@ -40,7 +40,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Regulation 411.3.3 requires additional protection by an RCD with a rated residual operating current (I delta n) not exceeding 30mA for socket outlets with a rated current not exceeding 32A and for mobile equipment with a rated current not exceeding 32A for use outdoors.',
-  'Since Amendment 3 to BS 7671, additional protection by 30mA RCD is also required for all AC final circuits supplying luminaires within domestic premises (Regulation 411.3.4).',
+  'Since Amendment 4 to BS 7671, additional protection by 30mA RCD is also required for all AC final circuits supplying luminaires within domestic premises (Regulation 411.3.4).',
   'Regulation 411.3.4 provides a specific exemption: a socket outlet may be excluded from 30mA RCD protection where a documented risk assessment determines that the socket is for connection of a specific item of equipment and is suitably labelled.',
   'Type AC RCDs detect sinusoidal AC fault currents only. Type A detects AC and pulsating DC fault currents. Type F adds protection against fault currents from frequency-controlled equipment. Type B detects all fault current types including smooth DC.',
   'Nuisance tripping is the most common complaint with RCD-protected installations. The main causes are accumulated earth leakage from multiple circuits on one RCD, faulty appliances, damp or moisture in outdoor circuits, and long cable runs with high capacitive leakage.',
@@ -75,7 +75,7 @@ const faqs = [
   {
     question: 'Do lighting circuits need 30mA RCD protection?',
     answer:
-      'Since Amendment 3 to BS 7671, Regulation 411.3.4 requires additional protection by a 30mA RCD for all AC final circuits supplying luminaires within domestic (household) premises. This was a significant change — previously, only socket outlets and outdoor equipment were explicitly covered. The requirement reflects the increased use of LED luminaires with electronic drivers and the risk of electric shock during lamp replacement. For non-domestic premises, lighting circuits do not automatically require 30mA RCD protection unless they fall under another applicable regulation (for example, circuits in bathrooms under Section 701, or circuits in locations containing a bath or shower).',
+      'Since Amendment 4 to BS 7671, Regulation 411.3.4 requires additional protection by a 30mA RCD for all AC final circuits supplying luminaires within domestic (household) premises. This was a significant change — previously, only socket outlets and outdoor equipment were explicitly covered. The requirement reflects the increased use of LED luminaires with electronic drivers and the risk of electric shock during lamp replacement. For non-domestic premises, lighting circuits do not automatically require 30mA RCD protection unless they fall under another applicable regulation (for example, circuits in bathrooms under Section 701, or circuits in locations containing a bath or shower).',
   },
   {
     question: 'Can I use the freezer socket exemption on any circuit?',
@@ -200,7 +200,7 @@ const sections = [
           requirement for all new installations, additions, and alterations.
         </p>
         <p>
-          Amendment 3 to BS 7671 (effective January 2024) extended the requirement further.
+          Amendment 4 to BS 7671 (effective January 2024) extended the requirement further.
           Regulation 411.3.4 now requires additional protection by a 30mA RCD for all AC final
           circuits supplying luminaires within domestic (household) premises. This was a major
           change that affected consumer unit design for domestic installations.
@@ -231,7 +231,7 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 All AC final circuits supplying luminaires in domestic premises (Regulation 411.3.4,
-                Amendment 3)
+                Amendment 4)
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -464,7 +464,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Design consumer unit layouts with AI"
-          description="Elec-Mate's AI circuit designer helps you allocate circuits, select RCD/RCBO configurations, and produce professional schedules of circuits. Get the board design right before you start the installation."
+          description="Elec-Mate's AI circuit designer helps you allocate circuits, select RCD/RCBO configurations, and produce professional schedules of circuits."
           icon={CircuitBoard}
         />
       </>
@@ -596,7 +596,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Record RCD test results digitally"
-          description="Elec-Mate auto-populates RCD test fields on your EIC and EICR certificates. Enter trip times on site and get instant pass/fail validation against BS 7671 requirements."
+          description="Elec-Mate auto-populates RCD test fields on your EIC and EICR certificates. Enter trip times on site and get instant pass/fail validation against BS 7671…"
           icon={ClipboardCheck}
         />
       </>
@@ -612,9 +612,9 @@ export default function Regulation418SupplementaryProtectionPage() {
   return (
     <GuideTemplate
       title="Regulation 418 | Supplementary Protection by RCDs"
-      description="Complete guide to supplementary protection by RCDs in BS 7671. Regulation 411.3.3 additional protection, mandatory RCD circuits, exemptions, Type AC/A/F/B RCDs, RCBO vs split-load boards, and nuisance tripping solutions."
+      description="Complete guide to supplementary protection by RCDs in BS 7671. Regulation 411.3.3 additional protection, mandatory RCD circuits, exemptions…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulation Deep-Dive"

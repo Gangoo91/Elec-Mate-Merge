@@ -20,10 +20,10 @@ const PAGE_PATH = '/tools/vat-scheme-comparison';
 export default function VATSchemeComparisonPage() {
   return (
     <BusinessTemplate
-      title="VAT Scheme Comparison | Flat Rate vs Standard for Electricians"
-      description="Compare VAT schemes for your electrical business. Standard rate, flat rate scheme, limited cost trader rules, cash accounting, and the domestic reverse charge — which saves you the most money?"
+      title="VAT Scheme Comparison | Flat Rate vs Standard for"
+      description="Compare VAT schemes for your electrical business. Standard rate, flat rate scheme, limited cost trader rules, cash accounting…"
       datePublished="2025-05-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Business Tools', href: '/tools' },
         { label: 'VAT Scheme Comparison', href: PAGE_PATH },
@@ -142,7 +142,7 @@ export default function VATSchemeComparisonPage() {
           appBridge: {
             title: 'Track VAT Automatically with Elec-Mate',
             description:
-              'Elec-Mate records VAT on every invoice and expense, calculates your quarterly liability, and produces VAT return summaries. No spreadsheets, no missed claims.',
+              'Elec-Mate records VAT on every invoice and expense, calculates your quarterly liability, and produces VAT return summaries.',
             icon: Receipt,
           },
         },
@@ -305,7 +305,7 @@ export default function VATSchemeComparisonPage() {
           appBridge: {
             title: 'DRC-Compliant Invoicing Built In',
             description:
-              'Elec-Mate generates DRC-compliant invoices automatically. Select CIS reverse charge, and the invoice shows the correct notation, VAT treatment, and amounts.',
+              'Elec-Mate generates DRC-compliant invoices automatically. Select CIS reverse charge, and the invoice shows the correct notation, VAT treatment…',
             icon: FileText,
           },
         },
@@ -439,7 +439,7 @@ export default function VATSchemeComparisonPage() {
           applicationCategory: 'BusinessApplication',
           operatingSystem: 'Web, iOS, Android',
           description:
-            'Compare VAT schemes for your electrical business. Standard rate, flat rate, cash accounting, and domestic reverse charge — find the scheme that saves you the most.',
+            'Compare VAT schemes for your electrical business. Standard rate, flat rate, cash accounting…',
           url: 'https://www.elec-mate.com/tools/vat-scheme-comparison',
           offers: {
             '@type': 'Offer',

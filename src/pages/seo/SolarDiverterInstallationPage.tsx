@@ -471,7 +471,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Manage solar diverter jobs with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, job management, and certification. Issue EICs and Minor Works Certificates on your phone. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, job management, and certification. Issue EICs and Minor Works Certificates on your phone."
           icon={Zap}
         />
       </>
@@ -487,9 +487,9 @@ export default function SolarDiverterInstallationPage() {
   return (
     <GuideTemplate
       title="Solar PV Diverter Installation UK | Immersion Diverter Guide"
-      description="Complete guide to solar diverter installation in the UK. What a solar diverter does, popular brands (iBoost, Eddi, Immersun), installation requirements, costs £200–£400 plus installation, savings, and wiring considerations."
+      description="Complete guide to solar diverter installation in the UK. What a solar diverter does, popular brands (iBoost, Eddi, Immersun), installation requirements…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Solar Diverter Guide"

@@ -405,7 +405,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AI Cost Engineer for Liverpool Rewire Quotes"
-          description="Electricians: describe the job and get a detailed rewire quote with materials breakdown, cable quantities, labour hours, and profit margin from real UK trade pricing data."
+          description="Electricians: describe the job and get a detailed rewire quote with materials breakdown, cable quantities, labour hours…"
           icon={Brain}
         />
       </>
@@ -542,7 +542,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage Liverpool rewire projects with Elec-Mate"
-          description="Electricians: quote rewires with AI cost engineering, manage projects with task tracking, complete EIC certificates on your phone, and send professional invoices. 7-day free trial."
+          description="Electricians: quote rewires with AI cost engineering, manage projects with task tracking, complete EIC certificates on your phone…"
           icon={Wrench}
         />
       </>
@@ -558,9 +558,9 @@ export default function RewireCostLiverpoolPage() {
   return (
     <GuideTemplate
       title="House Rewire Cost Liverpool 2025 | Rewire Prices Merseyside"
-      description="How much does a house rewire cost in Liverpool in 2025? Real prices for 2-bed, 3-bed, and 4-bed properties — Victorian terraces in Toxteth and Wavertree, Part P notification, disruption, replastering costs, and finding a NICEIC-registered electrician in Liverpool."
+      description="How much does a house rewire cost in Liverpool in 2025? Real prices for 2-bed, 3-bed, and 4-bed properties — Victorian terraces in Toxteth and Wavertree…"
       datePublished="2025-01-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

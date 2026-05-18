@@ -19,9 +19,9 @@ export default function SolarPanelInstallationPage() {
   return (
     <GuideTemplate
       title="Solar Panel Installation UK 2026 | Guide & Requirements"
-      description="Complete UK guide to domestic solar panel installation. MCS certification, DNO notification (G98/G99), Part P, earthing considerations, inverter types, battery storage, Smart Export Guarantee, costs, payback period, and certificates required."
+      description="Complete UK guide to domestic solar panel installation. MCS certification, DNO notification (G98/G99), Part P, earthing considerations, inverter types…"
       datePublished="2025-06-15"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'Solar Panel Installation', href: '/guides/solar-panel-installation' },
@@ -301,7 +301,7 @@ export default function SolarPanelInstallationPage() {
               </p>
               <SEOAppBridge
                 title="Cable Sizing Calculator for Solar PV"
-                description="Elec-Mate's cable sizing calculator handles both DC and AC sides of a solar PV installation. Enter the string voltage, current, and cable run length — the calculator applies the correct derating factors, checks voltage drop, and recommends the right cable size for both sides of the system."
+                description="Elec-Mate's cable sizing calculator handles both DC and AC sides of a solar PV installation. Enter the string voltage, current…"
                 icon={Calculator}
               />
             </>
@@ -360,7 +360,7 @@ export default function SolarPanelInstallationPage() {
               </p>
               <SEOAppBridge
                 title="AI Circuit Designer for Solar PV Systems"
-                description="Elec-Mate's AI Circuit Designer helps you plan the complete electrical design for a solar PV installation — string configuration, inverter selection, cable sizing for both DC and AC sides, protection coordination, and earthing arrangements. Get a professional design in minutes."
+                description="Elec-Mate's AI Circuit Designer helps you plan the complete electrical design for a solar PV installation — string configuration, inverter selection…"
                 icon={Brain}
               />
             </>
@@ -401,7 +401,7 @@ export default function SolarPanelInstallationPage() {
                 <SEOInternalLink href="/guides/consumer-unit-regulations">
                   consumer unit regulations
                 </SEOInternalLink>{' '}
-                apply in full, including the Amendment 3 requirements for bidirectional devices.
+                apply in full, including the Amendment 4 requirements for bidirectional devices.
               </p>
             </>
           ),
@@ -560,7 +560,7 @@ export default function SolarPanelInstallationPage() {
               </div>
               <SEOAppBridge
                 title="Solar PV Certificate in Elec-Mate"
-                description="Elec-Mate has a dedicated Solar PV Certificate form covering both DC and AC side documentation, string configurations, inverter specifications, and G98/G99 details. Complete everything on site, capture digital signatures, and export a professional PDF — ready for the client, MCS upload, and DNO submission."
+                description="Elec-Mate has a dedicated Solar PV Certificate form covering both DC and AC side documentation, string configurations, inverter specifications…"
                 icon={FileText}
               />
             </>
@@ -629,7 +629,7 @@ export default function SolarPanelInstallationPage() {
               </p>
               <SEOAppBridge
                 title="AI Cost Engineer for Solar PV Quoting"
-                description="Elec-Mate's AI Cost Engineer generates accurate quotes for solar PV installations in seconds. Enter the system size, panel type, inverter specification, and installation complexity — get a detailed breakdown of material and labour costs backed by real trade pricing data."
+                description="Elec-Mate's AI Cost Engineer generates accurate quotes for solar PV installations in seconds."
                 icon={PoundSterling}
               />
             </>
@@ -729,7 +729,7 @@ export default function SolarPanelInstallationPage() {
         {
           href: '/guides/consumer-unit-regulations',
           title: 'Consumer Unit Regulations',
-          description: 'Amendment 3, bidirectional devices, and consumer unit requirements.',
+          description: 'Amendment 4, bidirectional devices, and consumer unit requirements.',
           icon: ShieldCheck,
           category: 'Regulations',
         },

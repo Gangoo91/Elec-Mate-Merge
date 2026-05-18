@@ -597,7 +597,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage healthcare electrical projects with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. Complete EICs and EICRs on your phone. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. Complete EICs and EICRs on your phone."
           icon={FileCheck2}
         />
       </>
@@ -612,10 +612,10 @@ const sections = [
 export default function HospitalElectricalInstallationPage() {
   return (
     <GuideTemplate
-      title="Hospital Electrical Installation UK | Healthcare Electrical Systems"
-      description="Complete guide to hospital and healthcare electrical installation in the UK. IEC 60364-7-710, BS 7671 Section 710, Class 1 and 2 medical locations, isolated power supplies, IMDs, essential services, HTM 06-01, and patient environment earthing."
+      title="Hospital Electrical Installation UK | Healthcare Electrical"
+      description="Complete guide to hospital and healthcare electrical installation in the UK. IEC 60364-7-710, BS 7671 Section 710, Class 1 and 2 medical locations…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Healthcare Electrical Guide"

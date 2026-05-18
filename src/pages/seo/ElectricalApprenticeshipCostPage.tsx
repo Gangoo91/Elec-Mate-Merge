@@ -315,22 +315,22 @@ const sections = [
             {
               title: '100% funding for small employers with young apprentices',
               description:
-                'Employers with fewer than 50 employees pay no co-investment at all when taking on apprentices aged 16 to 18. The government covers 100% of the training cost. This removes all financial barriers for small electrical businesses wanting to train the next generation.',
+                'Employers with fewer than 50 employees pay no co-investment at all when taking on apprentices aged 16 to 18.',
             },
             {
               title: '£1,000 employer incentive for 16 to 18-year-old apprentices',
               description:
-                'Employers receive a £1,000 payment from the government for each apprentice they hire who is aged 16 to 18 at the start of the apprenticeship. This payment is split into two instalments — £500 at 90 days and £500 at 365 days.',
+                'Employers receive a £1,000 payment from the government for each apprentice they hire who is aged 16 to 18 at the start of the apprenticeship.',
             },
             {
               title: 'Levy transfer from larger employers',
               description:
-                'Levy-paying employers can transfer up to 25% of their annual levy to other employers. This means a main M&E contractor could transfer levy funds to its sub-contractors to help them take on apprentices. If you work as a sub-contractor for a larger company, ask if they would transfer levy funds to support your apprentice.',
+                'Levy-paying employers can transfer up to 25% of their annual levy to other employers. This means a main M&E contractor could transfer levy funds to its…',
             },
             {
               title: 'Additional learning support',
               description:
-                'Training providers receive additional funding for apprentices who need learning support — for example, those with learning difficulties, disabilities, or English as a second language. This ensures that apprentices who need extra help receive it without cost to the employer.',
+                'Training providers receive additional funding for apprentices who need learning support — for example, those with learning difficulties, disabilities…',
             },
           ].map((item) => (
             <div
@@ -349,7 +349,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Apprentice study courses built into Elec-Mate"
-          description="Level 2 and Level 3 electrical courses, AM2 preparation, portfolio guidance, and 8 AI agents that answer any technical question. Apprentices can study on their phones between site work and college."
+          description="Level 2 and Level 3 electrical courses, AM2 preparation, portfolio guidance, and 8 AI agents that answer any technical question."
           icon={GraduationCap}
         />
       </>
@@ -538,7 +538,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Track your apprenticeship progress with Elec-Mate"
-          description="Study courses, portfolio guidance, AM2 preparation, and AI-powered regulation help — all designed for apprentices who want to qualify first time and start earning qualified wages sooner."
+          description="Study courses, portfolio guidance, AM2 preparation, and AI-powered regulation help — all designed for apprentices who want to qualify first time and…"
           icon={Brain}
         />
       </>
@@ -554,9 +554,9 @@ export default function ElectricalApprenticeshipCostPage() {
   return (
     <GuideTemplate
       title="Electrical Apprenticeship Cost | Fees & Funding UK"
-      description="How much does an electrical apprenticeship cost in the UK? Apprenticeship levy explained, funding bands, co-investment, additional costs for tools and equipment, and apprentice wages from year 1 to qualified."
+      description="How much does an electrical apprenticeship cost in the UK? Apprenticeship levy explained, funding bands, co-investment…"
       datePublished="2025-08-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

@@ -446,7 +446,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AI regulation lookup — always current"
-          description="Elec-Mate's built-in regulation assistant references BS 7671:2018+A3:2024 directly. Ask any question about wiring regulations and get the specific regulation number, section, and guidance. No flipping through the brown book."
+          description="Elec-Mate's built-in regulation assistant references BS 7671:2018+A3:2024 directly. Ask any question about wiring regulations and get the specific…"
           icon={BookOpen}
         />
       </>
@@ -660,8 +660,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="14th Edition Wiring Regulations Timeline"
-          description="14th Edition replaced in 2008. Understand the full UK electrical regulations timeline, key dates, and what changed. Stay compliant with current standards."
+          title="14th Edition Electrical Regulations: 2008 Replaced"
+          description="14th Edition ended in 2008. Track every UK wiring regulations update from 1st to current BS 7671:2018+A4:2026. Compliance timeline for electricians."
           icon={Clock}
         />
       </>
@@ -677,9 +677,9 @@ export default function ElectricalRegulationsTimelinePage() {
   return (
     <GuideTemplate
       title="UK Electrical Regulations Timeline | Key Dates & Changes"
-      description="Complete timeline of UK electrical wiring regulations from the 1st Edition in 1882 to BS 7671:2018+A3:2024. Key milestones, regulatory bodies, Part P, Amendment 3, and upcoming changes."
+      description="UK electrical wiring regulations timeline: from the 1st Edition (1882) to BS 7671:2018+A4:2026. Every amendment, key changes, what stayed the same."
       datePublished="2026-01-25"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations"

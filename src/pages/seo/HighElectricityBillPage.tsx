@@ -376,7 +376,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Diagnose immersion heater faults with AI"
-          description="Describe the symptoms — scalding water, hot switch, high bill — and Elec-Mate's AI fault diagnosis identifies the likely cause, suggests test procedures, and helps you explain the findings to the customer."
+          description="Describe the symptoms — scalding water, hot switch, high bill — and Elec-Mate's AI fault diagnosis identifies the likely cause, suggests test procedures…"
           icon={Brain}
         />
       </>
@@ -543,7 +543,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Professional reports and remedial quotes"
-          description="Found the cause of the high bill? Use Elec-Mate to generate a professional EICR or condition report, classify defects with AI-assisted observation codes, and price the remedial work — all before you leave the property."
+          description="Found the cause of the high bill? Use Elec-Mate to generate a professional EICR or condition report, classify defects with AI-assisted observation codes…"
           icon={FileCheck2}
         />
       </>
@@ -615,9 +615,9 @@ export default function HighElectricityBillPage() {
   return (
     <GuideTemplate
       title="High Electricity Bill | Electrical Causes & Fixes"
-      description="Unexpectedly high electricity bill? Expert guide to electrical causes including earth leakage, faulty immersion heater thermostats, storage heater problems, and meter issues. How an electrician investigates and fixes the fault."
+      description="Unexpectedly high electricity bill? Expert guide to electrical causes including earth leakage, faulty immersion heater thermostats…"
       datePublished="2025-09-05"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting Guide"

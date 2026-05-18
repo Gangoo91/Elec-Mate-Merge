@@ -540,7 +540,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more EICR work across Cheltenham with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more inspections per day and convert findings to remedial quotes on the spot. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -556,9 +556,9 @@ export default function EICRCheltenhamPage() {
   return (
     <GuideTemplate
       title="EICR Cheltenham | Electrical Inspection Cheltenham"
-      description="EICR Cheltenham — landlord regulations, inspection costs, common findings in period and Regency properties, qualified electrician requirements, and enforcement by Cheltenham Borough Council. 2026 guide."
+      description="EICR Cheltenham — landlord regulations, inspection costs, common findings in period and Regency properties, qualified electrician requirements…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

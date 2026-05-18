@@ -483,7 +483,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Document immersion heater work on your phone"
-          description="Elec-Mate's certificate apps let you record test results, issue Minor Works Certificates, and export professional PDFs on site. Join 1,000+ UK electricians."
+          description="Elec-Mate's certificate apps let you record test results, issue Minor Works Certificates, and export professional PDFs on site."
           icon={FileCheck2}
         />
       </>
@@ -499,9 +499,9 @@ export default function ImmersionHeaterNotWorkingPage() {
   return (
     <GuideTemplate
       title="Immersion Heater Not Working | Causes & Fixes"
-      description="Why is your immersion heater not heating water? Covers tripped MCBs, faulty thermostats, failed elements, and timer problems. Step-by-step diagnosis for UK homeowners and electricians."
+      description="Why is your immersion heater not heating water? Covers tripped MCBs, faulty thermostats, failed elements, and timer problems."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting"

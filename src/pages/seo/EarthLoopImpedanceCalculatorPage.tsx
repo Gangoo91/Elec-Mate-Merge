@@ -85,7 +85,7 @@ const features = [
     icon: Thermometer,
     title: 'Temperature Correction Built In',
     description:
-      'Automatically applies the correct temperature correction factor for thermoplastic and thermosetting cables. No need to remember the 1.20 or 1.28 multipliers.',
+      'Automatically applies the correct temperature correction factor for thermoplastic and thermosetting cables.',
   },
   {
     icon: Shield,
@@ -103,7 +103,7 @@ const features = [
     icon: BookOpen,
     title: 'BS 7671:2018+A4:2026 Compliant',
     description:
-      'All maximum Zs values verified against the current 18th Edition wiring regulations including Amendment 3. Updated tables for all protective device types.',
+      'All maximum Zs values verified against the current 18th Edition wiring regulations including Amendment 4. Updated tables for all protective device types.',
   },
   {
     icon: CircuitBoard,
@@ -145,7 +145,7 @@ const howToSchema = {
   '@type': 'HowTo',
   name: 'How to Calculate Earth Fault Loop Impedance (Zs) to BS 7671',
   description:
-    'Step-by-step guide to calculating and verifying earth fault loop impedance for electrical installations in the UK using BS 7671 tables and the Zs = Ze + (R1+R2) formula.',
+    'Step-by-step guide to calculating and verifying earth fault loop impedance for electrical installations in the UK using BS 7671 tables and the Zs = Ze +…',
   step: howToSteps.map((step, index) => ({
     '@type': 'HowToStep',
     position: index + 1,
@@ -158,7 +158,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
   useSEO({
     title: 'Earth Loop Impedance Calculator (Zs) | BS 7671',
     description:
-      'Calculate earth fault loop impedance (Zs) to BS 7671. Verify Ze + R1+R2, check maximum Zs values for MCBs and RCBOs, temperature correction. Part of 70 electrical calculators.',
+      'Calculate earth fault loop impedance (Zs) to BS 7671. Verify Ze + R1+R2, check maximum Zs values for MCBs and RCBOs, temperature correction.',
   });
 
   return (
@@ -844,7 +844,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Verify Zs on Site — Instantly"
-            description="Use Elec-Mate's built-in Zs calculator on every job. Enter your measured earth fault loop impedance and the app checks it against BS 7671 tables for your protective device. Works offline."
+            description="Use Elec-Mate's built-in Zs calculator on every job. Enter your measured earth fault loop impedance and the app checks it against BS 7671 tables for your…"
             ctaText="Try Elec-Mate free"
             ctaHref="/auth/signup"
           />
@@ -884,6 +884,26 @@ export default function EarthLoopImpedanceCalculatorPage() {
       <section className="px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <RecentReviews />
+        </div>
+      </section>
+
+      
+
+      {/* Related calculators — peer surface for internal-link health.
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical calculators</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/guides/earth-fault-loop-impedance-explained">Earth Fault Loop Impedance Explained</SEOInternalLink>
+            <SEOInternalLink href="/guides/earth-fault-loop-impedance-calculation">Earth Fault Loop Impedance Calculation</SEOInternalLink>
+            <SEOInternalLink href="/guides/earth-fault-loop-impedance-testing">Earth Fault Loop Impedance Testing</SEOInternalLink>
+            <SEOInternalLink href="/guides/earth-loop-impedance-too-high">Earth Loop Impedance Too High</SEOInternalLink>
+            <SEOInternalLink href="/guides/earth-fault-loop-impedance-too-high">Earth Fault Loop Impedance Too High</SEOInternalLink>
+            <SEOInternalLink href="/loop-impedance-testing-guide">Loop Impedance Testing Guide</SEOInternalLink>
+            <SEOInternalLink href="/guides/earth-electrode-testing">Earth Electrode Testing</SEOInternalLink>
+            <SEOInternalLink href="/earth-electrode-testing">Earth Electrode Testing Guide UK</SEOInternalLink>
+          </div>
         </div>
       </section>
 

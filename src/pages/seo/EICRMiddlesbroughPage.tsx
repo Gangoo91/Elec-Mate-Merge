@@ -317,7 +317,7 @@ const sections = [
               <span>
                 <strong>Non-compliant consumer unit enclosures</strong> — consumer units installed
                 in combustible plastic enclosures after 2016 do not meet the requirements
-                incorporated into BS 7671:2018 (derived from Amendment 3 to the 17th Edition). These
+                incorporated into BS 7671:2018 (derived from Amendment 4 to the 17th Edition). These
                 are recorded as C2 where the enclosure presents a fire risk.
               </span>
             </li>
@@ -531,7 +531,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more EICR work across Middlesbrough with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more inspections per day and convert findings to remedial quotes on the spot. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -546,10 +546,10 @@ const sections = [
 export default function EICRMiddlesbroughPage() {
   return (
     <GuideTemplate
-      title="EICR Middlesbrough | Electrical Installation Condition Report"
-      description="EICR Middlesbrough — landlord regulations, inspection costs in the Tees Valley, common findings in older terraced properties, qualified electrician requirements, and enforcement by Middlesbrough Council. 2026 guide."
+      title="EICR Middlesbrough | Electrical Installation Condition"
+      description="EICR Middlesbrough — landlord regulations, inspection costs in the Tees Valley, common findings in older terraced properties…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

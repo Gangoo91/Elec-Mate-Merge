@@ -575,7 +575,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Build your portfolio digitally"
-          description="Elec-Mate helps apprentices organise portfolio evidence, photograph work with structured templates, and track NVQ progress. Digital evidence is easier to organise, share with assessors, and keep safe."
+          description="Elec-Mate helps apprentices organise portfolio evidence, photograph work with structured templates, and track NVQ progress."
           icon={ClipboardCheck}
         />
       </>
@@ -653,9 +653,9 @@ export default function Year3ElectricalApprenticePage() {
   return (
     <GuideTemplate
       title="Year 3 Electrical Apprentice | What to Expect 2026"
-      description="Complete guide to year 3 of an electrical apprenticeship in the UK. Level 3 diploma, increased site responsibility, AM2 preparation, 18th Edition exam, pay progression, and building portfolio evidence."
+      description="Complete guide to year 3 of an electrical apprenticeship in the UK. Level 3 diploma, increased site responsibility, AM2 preparation, 18th Edition exam…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

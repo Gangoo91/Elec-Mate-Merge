@@ -5,14 +5,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // CDM 2015 statutory framework and the Electricity at Work Regulations 1989.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const ramsForEICRInspectionConfig: GeneratedGuideConfig = {
   pagePath: '/guides/rams-for-eicr-inspection',
   title:
-    'RAMS for an EICR Inspection — UK Electrical Method Statement Guide | Elec-Mate',
+    'RAMS for an EICR Inspection — UK Electrical Method',
   description:
-    'A complete RAMS (Risk Assessment & Method Statement) guide for UK EICR inspections. Covers EICR-specific hazards, live-testing controls under EAWR 1989 Regulation 14, CDM 2015 contractor duties, isolation procedures, lone-working controls and a C1 emergency plan. BS 7671:2018+A4:2026 and IET GN3 (9th Edition) aligned.',
+    'A complete RAMS (Risk Assessment & Method Statement) guide for UK EICR inspections. Covers EICR-specific hazards…',
   datePublished: published,
   dateModified: modified,
   readingTime: 13,
@@ -333,7 +333,7 @@ export const ramsForEICRInspectionConfig: GeneratedGuideConfig = {
       href: '/tools/rams-generator',
       title: 'In-App RAMS Generator',
       description:
-        'Generate a bespoke EICR RAMS in under five minutes — EICR-specific hazards, Regulation 14 live-testing justification, C1 emergency plan, digital sign-off chain.',
+        'Generate a bespoke EICR RAMS in under five minutes — EICR-specific hazards, Regulation 14 live-testing justification, C1 emergency plan…',
       icon: 'ClipboardCheck',
       category: 'Tool',
     },
@@ -357,7 +357,7 @@ export const ramsForEICRInspectionConfig: GeneratedGuideConfig = {
       href: '/guides/cdm-2015-for-electricians',
       title: 'CDM 2015 for Electricians',
       description:
-        'How the Construction (Design and Management) Regulations 2015 apply to electrical inspection, testing and installation — contractor duties under Regulation 15.',
+        'How the Construction (Design and Management) Regulations 2015 apply to electrical inspection…',
       icon: 'BookOpen',
       category: 'Guide',
     },

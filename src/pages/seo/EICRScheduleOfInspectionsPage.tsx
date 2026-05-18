@@ -9,7 +9,7 @@ import { ClipboardCheck, FileCheck2, ShieldCheck, Zap, FileText, Camera, Eye } f
 
 const PAGE_TITLE = 'EICR Schedule of Inspections | What to Check';
 const PAGE_DESCRIPTION =
-  'Complete guide to the EICR schedule of inspections per BS 7671 Appendix 6. Distribution equipment, wiring systems, current-using equipment, protective measures, isolation and switching. What each item means, common C2/C3 observations, and inspection tips.';
+  'EICR schedule of inspections per BS 7671 Appendix 6: DB equipment, wiring, current-using kit, protective measures, isolation. C2/C3 tips.';
 
 const breadcrumbs = [
   { label: 'Certificates', href: '/guides/electrical-certificate-types-uk' },
@@ -113,7 +113,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Complete Schedule of Inspections in the app"
-          description="Elec-Mate has the full BS 7671 Appendix 6 Schedule of Inspections built into the EICR form. Tick items as you walk the installation. Any unticked items are flagged. Board scanner pre-populates distribution board details from a photo."
+          description="Elec-Mate has the full BS 7671 Appendix 6 Schedule of Inspections built into the EICR form. Tick items as you walk the installation."
           icon={ClipboardCheck}
         />
       </>
@@ -623,7 +623,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Board scanner pre-populates the EICR"
-          description="Point your phone camera at any distribution board and Elec-Mate's AI board scanner reads MCB ratings, circuit designations, and board layout from the photo. The data populates the EICR automatically — saving you 15 to 20 minutes of data entry per board."
+          description="Point your phone camera at any distribution board and Elec-Mate's AI board scanner reads MCB ratings, circuit designations…"
           icon={Camera}
         />
       </>
@@ -687,7 +687,7 @@ export default function EICRScheduleOfInspectionsPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-07-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Inspection Guide"

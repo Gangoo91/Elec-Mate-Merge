@@ -545,7 +545,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Cardiff electrical business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting. Eliminate paperwork and build a stronger South Wales electrical business. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting."
           icon={FileCheck2}
         />
       </>
@@ -561,9 +561,9 @@ export default function ConsumerUnitReplacementCardiffPage() {
   return (
     <GuideTemplate
       title="Consumer Unit Replacement Cardiff | Fuse Box Wales"
-      description="Consumer unit replacement in Cardiff — metal enclosure rules, Welsh building regulations, costs £400–750, BS EN 61439, NICEIC electricians in South Wales. Complete guide for Cardiff homeowners and landlords 2026."
+      description="Consumer unit replacement in Cardiff — metal enclosure rules, Welsh building regulations, costs £400–750, BS EN 61439, NICEIC electricians in South Wales."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Electrical Guide"

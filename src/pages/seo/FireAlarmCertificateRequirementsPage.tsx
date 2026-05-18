@@ -384,7 +384,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Digital fire alarm commissioning certificates"
-          description="Complete commissioning certificates on your phone with Elec-Mate. Record device tests, sounder levels, battery results, and cause-and-effect verification as you work through the system. Export a professional PDF before you leave site."
+          description="Complete commissioning certificates on your phone with Elec-Mate. Record device tests, sounder levels, battery results…"
           icon={FileCheck2}
         />
       </>
@@ -612,7 +612,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Digital fire alarm logbook in Elec-Mate"
-          description="Replace paper logbooks with Elec-Mate's digital fire alarm record system. All certificates, service reports, and test records stored securely in the cloud. Retrieve any record instantly, share with clients, and never lose a certificate again."
+          description="Replace paper logbooks with Elec-Mate's digital fire alarm record system. All certificates, service reports…"
           icon={ClipboardCheck}
         />
       </>
@@ -628,9 +628,9 @@ export default function FireAlarmCertificateRequirementsPage() {
   return (
     <GuideTemplate
       title="Fire Alarm Certificate Requirements | BS 5839 UK"
-      description="Complete guide to fire alarm certificate requirements under BS 5839. Covers design, installation, commissioning, and verification certificates plus annual service records. What each certificate must contain and who can issue them."
+      description="Complete guide to fire alarm certificate requirements under BS 5839. Covers design, installation, commissioning…"
       datePublished="2026-02-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Certificates"

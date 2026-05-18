@@ -602,7 +602,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage security system jobs with Elec-Mate"
-          description="Quote, invoice, and track intruder alarm and security system installations alongside your electrical work. Join UK electricians running their businesses with Elec-Mate. 7-day free trial."
+          description="Quote, invoice, and track intruder alarm and security system installations alongside your electrical work."
           icon={FileCheck2}
         />
       </>
@@ -618,9 +618,9 @@ export default function IntruderAlarmInstallationPage() {
   return (
     <GuideTemplate
       title="Intruder Alarm Installation UK | Burglar Alarm Wiring Guide"
-      description="Intruder alarm installation guide for the UK. BS EN 50131 grades 1–4 explained, wired vs wireless systems, PIR placement, door contacts, control panel sizing, ARC monitoring, NSI/SSAIB certification, and professional vs DIY."
+      description="Intruder alarm installation guide for the UK. BS EN 50131 grades 1–4 explained, wired vs wireless systems, PIR placement, door contacts…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Security Systems Guide"

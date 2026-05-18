@@ -230,7 +230,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Complete school EICRs digitally"
-          description="Elec-Mate handles large-scale EICRs with ease. Scan each distribution board, enter test results by voice, record observations, and generate a professional PDF report covering every board in the school. Send it to the business manager before you leave site."
+          description="Elec-Mate handles large-scale EICRs with ease. Scan each distribution board, enter test results by voice, record observations…"
           icon={FileCheck2}
         />
       </>
@@ -587,7 +587,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Impress schools with professional digital reports"
-          description="Elec-Mate generates professional PDF certificates and reports that school business managers can file directly into their compliance systems. EICR, emergency lighting, and test records — all digital, all professional, all from your phone."
+          description="Elec-Mate generates professional PDF certificates and reports that school business managers can file directly into their compliance systems."
           icon={FileCheck2}
         />
       </>
@@ -603,9 +603,9 @@ export default function SchoolElectricalInspectionPage() {
   return (
     <GuideTemplate
       title="School Electrical Inspection | Requirements UK"
-      description="Complete guide to electrical inspection requirements for UK schools. 5-year EICR, emergency lighting testing, fire alarm maintenance, PAT testing, DfE guidance, and who is responsible. For electricians and school premises managers."
+      description="Complete guide to electrical inspection requirements for UK schools. 5-year EICR, emergency lighting testing, fire alarm maintenance, PAT testing…"
       datePublished="2025-05-30"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Inspection Guide"

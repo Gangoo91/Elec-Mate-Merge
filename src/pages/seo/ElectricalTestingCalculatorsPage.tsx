@@ -25,7 +25,7 @@ import { Button } from '@/components/ui/button';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
-const PAGE_TITLE = 'Electrical Testing Calculators | Zs, Fault Current, RCD | Elec-Mate';
+const PAGE_TITLE = 'Electrical Testing Calculators | Zs, Fault Current, RCD';
 const PAGE_DESCRIPTION =
   '70 electrical calculators for UK electricians. Earth loop impedance, fault current, RCD testing, conduit fill, max demand, and more. All BS 7671 compliant.';
 
@@ -92,7 +92,7 @@ const faqData = [
   {
     question: 'Are the calculators compliant with the latest BS 7671 amendments?',
     answer:
-      'Yes. All Elec-Mate calculators are compliant with BS 7671:2018+A4:2026 (the 18th Edition IET Wiring Regulations) and incorporate values from Amendment 3:2024 where applicable. Amendment 3 (A4:2026), issued 31 July 2024, adds new Section 530 requirements covering bidirectional and unidirectional protective devices. Our maximum Zs values, disconnection times, cable ratings, and all reference tables are sourced directly from BS 7671 and the IET On-Site Guide. When amendments or corrections are published, we update all affected calculators within 30 days.',
+      'Yes. All Elec-Mate calculators are compliant with BS 7671:2018+A4:2026 (the 18th Edition IET Wiring Regulations) and incorporate values from Amendment 4:2024 where applicable. Amendment 4 (A4:2026), issued 31 July 2024, adds new Section 530 requirements covering bidirectional and unidirectional protective devices. Our maximum Zs values, disconnection times, cable ratings, and all reference tables are sourced directly from BS 7671 and the IET On-Site Guide. When amendments or corrections are published, we update all affected calculators within 30 days.',
   },
 ];
 
@@ -240,7 +240,7 @@ export default function ElectricalTestingCalculatorsPage() {
           </h1>
           <p className="text-lg text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             Every calculation you need on site, from earth loop impedance and fault current to
-            conduit fill and maximum demand. All values cross-referenced against BS 7671:2018+A4:2026 and Amendment 3:2024.
+            conduit fill and maximum demand. All values cross-referenced against BS 7671:2018+A4:2026 and Amendment 4:2024.
           </p>
           <Link to="/auth/signup">
             <Button className="h-14 px-10 text-base font-semibold bg-yellow-500 hover:bg-yellow-400 active:scale-[0.97] text-black touch-manipulation transition-transform">
@@ -505,7 +505,7 @@ export default function ElectricalTestingCalculatorsPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="70 Electrical Calculators in One App"
-            description="Elec-Mate's calculator suite covers earth loop impedance, cable sizing, voltage drop, RCD testing, conduit fill, and more — all BS 7671 compliant and available on your phone."
+            description="Elec-Mate's calculator suite covers earth loop impedance, cable sizing, voltage drop, RCD testing, conduit fill…"
             ctaText="Try Elec-Mate free"
             ctaHref="/auth/signup"
             icon={Calculator}

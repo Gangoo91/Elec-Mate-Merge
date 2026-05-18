@@ -26,7 +26,7 @@ import { Link } from 'react-router-dom';
 
 const PAGE_TITLE = 'RAMS Generator for Electricians | AI Risk Assessments | Elec-Mate';
 const PAGE_DESCRIPTION =
-  'Generate professional RAMS (Risk Assessments & Method Statements) for electrical work using AI. CDM 2015 compliant, COSHH integration, site-specific hazards. Built for UK electricians.';
+  'Generate RAMS for electrical work using AI: CDM 2015 compliant, COSHH integration, site-specific hazards. Built for UK electricians.';
 
 const faqs = [
   {
@@ -72,31 +72,31 @@ const features = [
     icon: ShieldCheck,
     title: 'CDM 2015 Compliant',
     description:
-      'Every generated document aligns with the Construction (Design and Management) Regulations 2015. Hazard identification, risk matrices, and control measures all included.',
+      'Every generated document aligns with the Construction (Design and Management) Regulations 2015.',
   },
   {
     icon: Flame,
     title: 'COSHH Integration',
     description:
-      'Automatic COSHH assessments for hazardous substances relevant to your electrical work. PVC fumes, solvents, silica dust, and more — all identified and documented.',
+      'Automatic COSHH assessments for hazardous substances relevant to your electrical work. PVC fumes, solvents, silica dust…',
   },
   {
     icon: HardHat,
     title: 'Electrical-Specific Hazards',
     description:
-      'Purpose-built for electricians. Covers electric shock, arc flash, working at height, live working, asbestos risk, and all common site hazards for electrical contractors.',
+      'Purpose-built for electricians. Covers electric shock, arc flash, working at height, live working, asbestos risk…',
   },
   {
     icon: FileText,
     title: 'Professional PDF Export',
     description:
-      'Export your RAMS as a branded, professional PDF ready to submit to principal contractors, clients, and site safety teams. Your company details and logo included.',
+      'Export your RAMS as a branded, professional PDF ready to submit to principal contractors, clients, and site safety teams.',
   },
   {
     icon: Smartphone,
     title: 'Works Offline on Site',
     description:
-      'Generate and edit RAMS even without signal. Perfect for basement plant rooms, new-build sites with no Wi-Fi, and rural locations. Syncs when connectivity returns.',
+      'Generate and edit RAMS even without signal. Perfect for basement plant rooms, new-build sites with no Wi-Fi, and rural locations.',
   },
 ];
 
@@ -106,7 +106,7 @@ const softwareAppSchema = {
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'Web, iOS, Android',
   description:
-    'AI-powered RAMS generator for UK electricians. Produces CDM 2015 compliant risk assessments and method statements from job descriptions. Part of 70+ electrical tools and calculators.',
+    'AI-powered RAMS generator for UK electricians. Produces CDM 2015 compliant risk assessments and method statements from job descriptions.',
   offers: {
     '@type': 'Offer',
     price: '0',

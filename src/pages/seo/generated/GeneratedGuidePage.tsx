@@ -4,38 +4,72 @@ import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
 import {
   AlertTriangle,
+  Battery,
   BookOpen,
+  Briefcase,
+  Building,
   Building2,
   Calculator,
   Cable,
+  Camera,
+  Car,
   CheckCircle2,
+  CircuitBoard,
   ClipboardCheck,
   FileCheck2,
   FileText,
+  Flame,
   Gauge,
+  GraduationCap,
+  HardHat,
   Home,
+  Lightbulb,
+  Lock,
+  MapPin,
+  Network,
   PoundSterling,
+  Power,
   Search,
   ShieldCheck,
+  Sun,
+  User,
+  Users,
   Wrench,
   Zap,
 } from 'lucide-react';
 
 const iconMap = {
   AlertTriangle,
+  Battery,
   BookOpen,
+  Briefcase,
+  Building,
   Building2,
   Calculator,
   Cable,
+  Camera,
+  Car,
   CheckCircle2,
+  CircuitBoard,
   ClipboardCheck,
   FileCheck2,
   FileText,
+  Flame,
   Gauge,
+  GraduationCap,
+  HardHat,
   Home,
+  Lightbulb,
+  Lock,
+  MapPin,
+  Network,
   PoundSterling,
+  Power,
   Search,
   ShieldCheck,
+  Sun,
+  User,
+  Users,
   Wrench,
   Zap,
 };
@@ -58,7 +92,9 @@ interface ListBlock {
 interface CalloutBlock {
   type: 'callout';
   title: string;
-  text: string;
+  /** Body text — either `text` or `body` accepted (historic alias). */
+  text?: string;
+  body?: string;
   tone?: BlockTone;
 }
 
@@ -120,7 +156,8 @@ export interface GeneratedGuideConfig {
   noindex?: boolean;
 }
 
-function renderRichText(text: string): ReactNode[] {
+function renderRichText(text: string | undefined | null): ReactNode[] {
+  if (typeof text !== 'string' || text.length === 0) return [];
   const nodes: ReactNode[] = [];
   const pattern = /\[([^\]]+)\]\(([^)]+)\)/g;
   let lastIndex = 0;
@@ -202,6 +239,7 @@ function renderBlock(block: GeneratedGuideBlock, index: number) {
     const tone = block.tone ?? 'info';
     const styles = getToneClasses(tone);
     const Icon = tone === 'warning' ? AlertTriangle : tone === 'pricing' ? PoundSterling : Zap;
+    const calloutText = block.text ?? block.body ?? '';
 
     return (
       <div key={index} className={`rounded-2xl border p-5 my-4 ${styles.box}`}>
@@ -209,7 +247,7 @@ function renderBlock(block: GeneratedGuideBlock, index: number) {
           <Icon className={`w-5 h-5 mt-0.5 shrink-0 ${styles.icon}`} />
           <div>
             <h3 className={`font-bold mb-2 ${styles.title}`}>{block.title}</h3>
-            <p className="text-white leading-relaxed">{renderRichText(block.text)}</p>
+            <p className="text-white leading-relaxed">{renderRichText(calloutText)}</p>
           </div>
         </div>
       </div>

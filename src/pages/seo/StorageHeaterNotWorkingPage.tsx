@@ -489,7 +489,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Document storage heater installations on your phone"
-          description="Elec-Mate's certificate apps let you record test results and issue certificates for storage heater work with instant PDF export. Join 1,000+ UK electricians."
+          description="Elec-Mate's certificate apps let you record test results and issue certificates for storage heater work with instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -505,9 +505,9 @@ export default function StorageHeaterNotWorkingPage() {
   return (
     <GuideTemplate
       title="Storage Heater Not Working | Causes & Fixes"
-      description="Why is your storage heater not heating? Covers input/output controls, Economy 7 off-peak supply faults, element failure, and time switch problems. UK guide for homeowners and electricians."
+      description="Why is your storage heater not heating? Covers input/output controls, Economy 7 off-peak supply faults, element failure, and time switch problems."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting"

@@ -1,13 +1,13 @@
 import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuidePage';
 
 const published = '2026-04-12';
-const modified = '2026-04-12';
+const modified = '2026-05-18';
 
 export const fullRewireCostGuideConfig: GeneratedGuideConfig = {
   pagePath: '/guides/full-rewire-cost-guide',
-  title: 'Full Rewire Cost Guide | Electrical Rewire Pricing | Elec-Mate',
+  title: 'Full Rewire Cost Guide | Electrical Rewire Pricing',
   description:
-    'A clear guide to full rewire pricing for homeowners and electricians, including the main cost drivers, what changes the quote, and how to explain the price simply.',
+    'A clear guide to full rewire pricing for homeowners and electricians, including the main cost drivers, what changes the quote…',
   datePublished: published,
   dateModified: modified,
   readingTime: 10,

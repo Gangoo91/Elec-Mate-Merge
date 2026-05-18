@@ -200,7 +200,7 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          — the IET Wiring Regulations, 18th Edition with Amendment 3. It is a 2-hour, 60-question
+          — the IET Wiring Regulations, 18th Edition with Amendment 4. It is a 2-hour, 60-question
           multiple-choice exam. The pass mark is typically 60% (36 out of 60 correct answers).
         </p>
         <p>Key topics covered in mock exams should include:</p>
@@ -261,7 +261,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="18th Edition mock exams on your phone"
-          description="Elec-Mate's study centre includes mock exams for the C&G 2382, with detailed explanations linked to specific BS 7671 regulation numbers. Track your scores, identify weak areas, and study anywhere."
+          description="Elec-Mate's study centre includes mock exams for the C&G 2382, with detailed explanations linked to specific BS 7671 regulation numbers."
           icon={Brain}
         />
       </>
@@ -596,8 +596,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="2391 Mock Exam | Free Practice Tests"
-          description="2391 mock exam with 200+ questions aligned to BS 7671:2018+A4:2026. Identify weak areas, track scores, study offline. Start free today."
+          title="2391 Mock Exam – 200+ Practice Questions"
+          description="2391 mock exam with 200+ questions mapped to BS 7671:2018+A4:2026. Track progress, identify gaps, pass first time. Free access."
           icon={Brain}
         />
       </>
@@ -613,9 +613,9 @@ export default function MockExamsElectricalPage() {
   return (
     <GuideTemplate
       title="Mock Exams for Electricians | Practice Tests Online"
-      description="Mock exams for UK electricians. Practice tests for 18th Edition (C&G 2382), 2391 Inspection and Testing, AM2 practical assessment, and EPA. Exam technique tips, study strategies, and progress tracking."
+      description="Mock exams for UK electricians. Practice tests for 18th Edition (C&G 2382), 2391 Inspection and Testing, AM2 practical assessment, and EPA."
       datePublished="2025-02-28"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Exam Preparation"

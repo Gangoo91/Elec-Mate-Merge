@@ -6,12 +6,12 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Regulations 1989.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const section537IsolationSwitchingA4Config: GeneratedGuideConfig = {
   pagePath: '/guides/section-537-isolation-switching-a4-2026',
   title:
-    'Section 537 Isolation & Switching under BS 7671:2018+A4:2026 — What\'s Changed | Elec-Mate',
+    'Section 537 Isolation & Switching | BS 7671 A4:2026',
   description:
     'A working electrician\'s guide to Section 537 of BS 7671:2018+A4:2026 — the four switching functions, padlockable isolator requirements, EV charge point isolation, battery storage DC switching, solar PV rooftop isolators, and what A4:2026 actually changed.',
   datePublished: published,

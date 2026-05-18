@@ -196,7 +196,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Invoice on site — before you leave the driveway"
-          description="Elec-Mate lets you create and send professional invoices from your phone the moment the job is complete. Track payment status and send automated reminders. Get paid faster by invoicing faster."
+          description="Elec-Mate lets you create and send professional invoices from your phone the moment the job is complete."
           icon={Send}
         />
       </>
@@ -615,8 +615,8 @@ const sections = [
           accordingly.
         </p>
         <SEOAppBridge
-          title="Get paid faster with professional invoicing and payment tracking"
-          description="Elec-Mate lets you create and send professional invoices from your phone, track payment status in real time, and send automated reminders for overdue invoices. Stop chasing — start getting paid. 7-day free trial."
+          title="Get paid faster with professional invoicing and payment"
+          description="Elec-Mate lets you create and send professional invoices from your phone, track payment status in real time…"
           icon={BarChart3}
         />
       </>
@@ -632,9 +632,9 @@ export default function DebtRecoveryElectricianPage() {
   return (
     <GuideTemplate
       title="Debt Recovery for Electricians | Getting Paid UK Guide"
-      description="Complete guide to debt recovery for UK electricians. Covers payment terms, late payment interest under the 1998 Act, Letter Before Action, Small Claims Court, statutory demand, and credit control best practice."
+      description="Complete guide to debt recovery for UK electricians. Covers payment terms, late payment interest under the 1998 Act, Letter Before Action…"
       datePublished="2026-01-25"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Getting Paid"

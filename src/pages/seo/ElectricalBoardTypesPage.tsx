@@ -20,9 +20,9 @@ export default function ElectricalBoardTypesPage() {
   return (
     <GuideTemplate
       title="Consumer Unit Types | Split Load, Dual RCD & RCBO Boards"
-      description="Complete guide to consumer unit types used in UK domestic and commercial electrical installations. Split load boards, dual RCD boards, high integrity boards, all-RCBO boards, main switch only boards — pros, cons, cost comparison, and which to specify for each job type."
+      description="Consumer unit types in UK domestic + commercial installations: split-load, dual-RCD, all-RCBO, high-integrity, metal-clad, and BS 7671 A4:2026 rules."
       datePublished="2025-06-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'Consumer Unit Types', href: '/guides/consumer-unit-types' },
@@ -389,7 +389,7 @@ export default function ElectricalBoardTypesPage() {
               </p>
               <SEOAppBridge
                 title="Design Consumer Units with AI Assistance"
-                description="Elec-Mate's AI circuit designer helps you specify the right consumer unit type, select appropriate RCBOs for each circuit, and generate a complete circuit schedule with cable sizes, protection devices, and Zs values — all compliant with BS 7671:2018+A4:2026."
+                description="Elec-Mate's AI circuit designer helps you specify the right consumer unit type, select appropriate RCBOs for each circuit…"
                 icon={Brain}
               />
             </>
@@ -513,7 +513,7 @@ export default function ElectricalBoardTypesPage() {
               </div>
               <SEOAppBridge
                 title="Generate Circuit Schedules for Any Board Type"
-                description="Elec-Mate generates complete circuit schedules with cable sizes, protection devices, Zs values, and voltage drop for all consumer unit types. Export directly to your EIC or EICR certificate. All BS 7671:2018+A4:2026 compliant."
+                description="Elec-Mate generates complete circuit schedules with cable sizes, protection devices, Zs values, and voltage drop for all consumer unit types."
                 icon={ClipboardCheck}
               />
             </>
@@ -561,7 +561,7 @@ export default function ElectricalBoardTypesPage() {
         {
           href: '/guides/consumer-unit-regulations',
           title: 'Consumer Unit Regulations',
-          description: 'Metal CU requirements, RCD protection, and Amendment 3 changes.',
+          description: 'Metal CU requirements, RCD protection, and Amendment 4 changes.',
           icon: ShieldCheck,
           category: 'Regulations',
         },

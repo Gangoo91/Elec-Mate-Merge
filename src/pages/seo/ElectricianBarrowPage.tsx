@@ -545,8 +545,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Professional electrical tools for Barrow-in-Furness electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for Barrow's Victorian terraces, defence-adjacent work, and Furness Peninsula rural properties. 7-day free trial."
+          title="Professional electrical tools for Barrow-in-Furness"
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -563,9 +563,9 @@ export default function ElectricianBarrowPage() {
     <GuideTemplate
       localArea="Barrow In Furness"
       title="Electrician in Barrow-in-Furness | Local Electricians 2026"
-      description="Find qualified electricians in Barrow-in-Furness, Cumbria. BAE Systems submarine facility, defence and marine electrical work, security clearances, Electricity North West DNO, and Barrow electrician rates 2026."
+      description="Find qualified electricians in Barrow-in-Furness, Cumbria. BAE Systems submarine facility, defence and marine electrical work, security clearances…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Barrow-in-Furness"

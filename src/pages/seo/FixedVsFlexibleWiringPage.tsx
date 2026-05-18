@@ -399,7 +399,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Record flex defects on your EICR efficiently"
-          description="Elec-Mate's EICR app includes voice-entry for observations, code C1/C2/C3 classification, photo attachment, and automatic schedule of circuits. Complete EICRs faster and generate professional PDF reports on site."
+          description="Elec-Mate's EICR app includes voice-entry for observations, code C1/C2/C3 classification, photo attachment, and automatic schedule of circuits."
           icon={ClipboardCheck}
         />
       </>
@@ -439,9 +439,9 @@ export default function FixedVsFlexibleWiringPage() {
   return (
     <GuideTemplate
       title="Fixed Wiring vs Flexible Wiring Standards | BS 7671 UK Guide"
-      description="Complete guide to fixed wiring vs flexible wiring standards for UK electricians. BS 7671 Regulation 521.9.1 requirements, current rating differences (Tables 4D vs 4F), when flexible cable is permitted, and EICR inspection of flex terminations."
+      description="Complete guide to fixed wiring vs flexible wiring standards for UK electricians. BS 7671 Regulation 521.9.1 requirements…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Wiring Standards Guide"

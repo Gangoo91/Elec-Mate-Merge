@@ -362,7 +362,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Train your apprentices with Elec-Mate"
-          description="Structured training courses for Level 2 and Level 3 electrical apprentices. OJT evidence tracking, EPA preparation, and BS 7671 study resources — all on their phone. Included in every subscription."
+          description="Structured training courses for Level 2 and Level 3 electrical apprentices. OJT evidence tracking, EPA preparation…"
           icon={GraduationCap}
         />
       </>
@@ -610,7 +610,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Consistent pricing across your entire team"
-          description="Elec-Mate's AI Cost Engineer generates itemised quotes from a job description. Every operative produces quotes with the same materials pricing, labour rates, and profit margin. No more inconsistent quoting from different team members."
+          description="Elec-Mate's AI Cost Engineer generates itemised quotes from a job description. Every operative produces quotes with the same materials pricing…"
           icon={Receipt}
         />
       </>
@@ -671,7 +671,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="One app for your entire team"
-          description="Certificates, calculators, AI tools, quoting, invoicing, RAMS, and training — all in one app. Every operative in your business gets the same professional tools on their phone. Scale your contracting business with Elec-Mate."
+          description="Certificates, calculators, AI tools, quoting, invoicing, RAMS, and training — all in one app."
           icon={Briefcase}
         />
       </>
@@ -687,9 +687,9 @@ export default function ElectricianContractorGuidePage() {
   return (
     <GuideTemplate
       title="Electrical Contractor Guide | Running a Team UK"
-      description="Complete guide to growing an electrical contracting business in the UK. Sole trader to limited company, employing staff, apprenticeships, CIS obligations, insurance, fleet management, pricing at scale, and building systems for growth."
+      description="Complete guide to growing an electrical contracting business in the UK. Sole trader to limited company, employing staff, apprenticeships…"
       datePublished="2025-09-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Business Guide"

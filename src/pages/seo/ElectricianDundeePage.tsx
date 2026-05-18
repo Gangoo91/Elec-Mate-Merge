@@ -463,7 +463,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Dundee electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for Scottish Building Standards compliance. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -480,9 +480,9 @@ export default function ElectricianDundeePage() {
     <GuideTemplate
       localArea="Dundee"
       title="Electrician in Dundee | Local Electricians 2026"
-      description="Find qualified electricians in Dundee. Scottish Building Standards, SSEN DNO, SELECT registration, tenement and social housing rewiring, EICR costs, and Dundee electrician rates for 2026."
+      description="Find qualified electricians in Dundee. Scottish Building Standards, SSEN DNO, SELECT registration, tenement and social housing rewiring, EICR costs…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Dundee"

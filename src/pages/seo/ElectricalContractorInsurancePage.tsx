@@ -544,7 +544,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Protect your business with professional documentation"
-          description="Join 1,000+ UK electricians using Elec-Mate for compliant certificates, professional quotes, and organised job records. 7-day free trial — no credit card required."
+          description="Join 1,000+ UK electricians using Elec-Mate for compliant certificates, professional quotes, and organised job records."
           icon={Zap}
         />
       </>
@@ -559,10 +559,10 @@ const sections = [
 export default function ElectricalContractorInsurancePage() {
   return (
     <GuideTemplate
-      title="Electrical Contractor Insurance UK 2026 | PL, EL, PI and Tools Guide"
-      description="Complete guide to insurance for electrical contractors in the UK. Public liability (minimum £2m, typically £5m), employer's liability (legal requirement, £5m minimum), professional indemnity, tool insurance, van insurance, NICEIC/NAPIT requirements, and 2026 costs."
+      title="Electrical Contractor Insurance UK 2026 | PL, EL, PI and"
+      description="Complete guide to insurance for electrical contractors in the UK. Public liability (minimum £2m, typically £5m), employer's liability (legal requirement…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Business Guide"

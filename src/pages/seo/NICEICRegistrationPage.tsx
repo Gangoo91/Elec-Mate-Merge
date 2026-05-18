@@ -16,7 +16,7 @@ import {
 
 const PAGE_TITLE = 'NICEIC Registration 2026 | How to Join & Requirements';
 const PAGE_DESCRIPTION =
-  'Complete guide to NICEIC registration in 2026. Registration types (Domestic Installer, Approved Contractor), qualification requirements, costs, application process, initial assessment, and ongoing compliance. Comparison with NAPIT and ELECSA.';
+  'NICEIC registration in 2026: Domestic Installer + Approved Contractor, qual requirements, costs, application, assessment vs NAPIT + ELECSA.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -272,7 +272,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Professional certificates ready for NICEIC"
-          description="Elec-Mate generates BS 7671 compliant certificates in professional PDF format — ready to present at your NICEIC assessment or upload to the NICEIC contractor portal. All 16 certificate types with auto-validation and digital signatures."
+          description="Elec-Mate generates BS 7671 compliant certificates in professional PDF format — ready to present at your NICEIC assessment or upload to the NICEIC…"
           icon={FileCheck2}
         />
       </>
@@ -358,7 +358,7 @@ const sections = [
           If the assessor identifies any issues, you will be given the opportunity to address them
           before your registration is confirmed. Common issues include out-of-date instrument
           calibration, incomplete or incorrectly completed certificates, and gaps in knowledge of
-          recent regulation changes (such as the requirements of Amendment 3).
+          recent regulation changes (such as the requirements of Amendment 4).
         </p>
       </>
     ),
@@ -390,7 +390,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Keep your certificate records assessment-ready"
-          description="All certificates created in Elec-Mate are stored in the cloud permanently. Search by date, property, or client. Download professional PDFs any time for your NICEIC assessor. No more hunting through filing cabinets the night before an assessment."
+          description="All certificates created in Elec-Mate are stored in the cloud permanently. Search by date, property, or client."
           icon={ClipboardCheck}
         />
       </>
@@ -501,7 +501,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Certificates that work with any scheme provider"
-          description="Elec-Mate certificates are built to BS 7671:2018+A4:2026 and work with NICEIC, NAPIT, ELECSA, and BRE Certification. Professional PDF output meets all scheme provider requirements. Upload directly to any scheme portal."
+          description="Elec-Mate certificates are built to BS 7671:2018+A4:2026 and work with NICEIC, NAPIT, ELECSA, and BRE Certification."
           icon={FileCheck2}
         />
       </>
@@ -545,7 +545,7 @@ const relatedPages = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Complete guide to BS 7671:2018+A4:2026 including Amendment 3 changes.',
+    description: 'Complete guide to BS 7671:2018+A4:2026 including Amendment 4 changes.',
     icon: GraduationCap,
     category: 'Guide',
   },
@@ -568,7 +568,7 @@ export default function NICEICRegistrationPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-06-15"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Registration Guide"

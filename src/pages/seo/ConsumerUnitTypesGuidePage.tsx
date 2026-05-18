@@ -35,7 +35,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Since January 2016, new and replacement consumer units installed in domestic premises in England and Wales must have a metal-clad enclosure to comply with Amendment 3 to BS 7671:2008 (now incorporated into BS 7671:2018+A4:2026). Plastic-clad consumer units are no longer acceptable for new installations in dwellings.',
+  'Since January 2016, new and replacement consumer units installed in domestic premises in England and Wales must have a metal-clad enclosure to comply with Amendment 4 to BS 7671:2008 (now incorporated into BS 7671:2018+A4:2026). Plastic-clad consumer units are no longer acceptable for new installations in dwellings.',
   'The four main types of domestic consumer unit are: split-load (one or two RCDs protecting groups of MCBs), high-integrity (three sections: one main switch, plus two or more RCD-protected sections to prevent total supply loss from a single RCD trip), RCBO board (each circuit has its own RCBO providing individual protection), and dual RCD board (a simpler split-load variant).',
   'Upgrade triggers include: rubber-insulated wiring present in the property, rewirable fuse carriers (fuse wire), no RCD protection on any socket or outdoor circuit, a wooden consumer unit or backboard, and an EICR outcome of Unsatisfactory where the consumer unit condition is a primary cause.',
   'A consumer unit must contain at minimum: a main switch rated to isolate the entire installation, overcurrent protective devices (MCBs or RCBOs) for each circuit, and (in most domestic installations) residual current devices providing 30mA protection for socket outlet circuits under BS 7671 Regulation 411.3.3.',
@@ -46,7 +46,7 @@ const faqs = [
   {
     question: 'Why must domestic consumer units be metal-clad?',
     answer:
-      'The requirement for metal enclosures for consumer units in domestic premises was introduced by Amendment 3 to BS 7671:2008, which took effect on 1 January 2016. The requirement is now embedded in BS 7671:2018+A4:2026. The rationale is fire containment: a plastic-clad consumer unit, if an internal arc fault develops, can propagate and spread a fire. A metal-clad enclosure contains the arc and significantly reduces the risk of fire spread. The relevant standard for the consumer unit as a product is BS EN 61439-3.',
+      'The requirement for metal enclosures for consumer units in domestic premises was introduced by Amendment 4 to BS 7671:2008, which took effect on 1 January 2016. The requirement is now embedded in BS 7671:2018+A4:2026. The rationale is fire containment: a plastic-clad consumer unit, if an internal arc fault develops, can propagate and spread a fire. A metal-clad enclosure contains the arc and significantly reduces the risk of fire spread. The relevant standard for the consumer unit as a product is BS EN 61439-3.',
   },
   {
     question: 'What is the difference between a split-load board and an RCBO board?',
@@ -207,7 +207,7 @@ const sections = [
               <span>
                 <strong>Mandatory since January 2016</strong> — all new and replacement consumer
                 units in domestic premises in England and Wales must be metal-clad. This requirement
-                derives from Amendment 3 to BS 7671:2008 and is incorporated into BS 7671:2018+A4:2026 (the 18th Edition Wiring Regulations). Plastic consumer units
+                derives from Amendment 4 to BS 7671:2008 and is incorporated into BS 7671:2018+A4:2026 (the 18th Edition Wiring Regulations). Plastic consumer units
                 installed before 2016 are not retrospectively illegal but should be replaced with a
                 metal unit when renewal work is carried out.
               </span>
@@ -236,7 +236,7 @@ const sections = [
           </ul>
         </div>
         <SEOAppBridge
-          title="Generate Electrical Installation Certificates for consumer unit replacements"
+          title="Generate Electrical Installation Certificates for consumer"
           description="Elec-Mate produces EICs, Minor Works Certificates, and EICRs on your phone at the job. PDF in seconds, stored in the cloud."
           ctaText="Start 7-day free trial"
           icon={FileCheck2}
@@ -512,10 +512,10 @@ const sections = [
 export default function ConsumerUnitTypesGuidePage() {
   return (
     <GuideTemplate
-      title="Consumer Unit Types Guide — Split-Load, RCBO, High-Integrity | Elec-Mate"
-      description="Complete UK guide to consumer unit types. Metal-clad enclosures required since 2016 under BS EN 61439-3, split-load, high-integrity, and RCBO boards explained. Upgrade triggers (rubber wiring, rewirable fuses, no RCD), what is inside a consumer unit, and costs of £300 to £900 fitted."
+      title="Consumer Unit Types Guide — Split-Load, RCBO,"
+      description="Complete UK guide to consumer unit types. Metal-clad enclosures required since 2016 under BS EN 61439-3, split-load, high-integrity…"
       datePublished="2024-07-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Guide"

@@ -642,7 +642,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Test your electrical science knowledge"
-          description="Elec-Mate mock exams cover Ohm's law, power calculations, AC theory, three-phase, and all the science topics in your Level 2 and Level 3 exams. Timed practice with instant results and explanations."
+          description="Elec-Mate mock exams cover Ohm's law, power calculations, AC theory, three-phase, and all the science topics in your Level 2 and Level 3 exams."
           icon={GraduationCap}
         />
       </>
@@ -658,9 +658,9 @@ export default function ElectricalScienceRevisionPage() {
   return (
     <GuideTemplate
       title="Electrical Science Revision | Ohm's Law to 3-Phase"
-      description="Complete electrical science revision guide for apprentices. Ohm's law, power triangle, Kirchhoff's laws, series and parallel circuits, AC theory, impedance, power factor, three-phase, transformers, and motor theory with worked examples."
+      description="Complete electrical science revision guide for apprentices. Ohm's law, power triangle, Kirchhoff's laws, series and parallel circuits, AC theory…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Revision Guide"

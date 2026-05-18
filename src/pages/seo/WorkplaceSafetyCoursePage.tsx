@@ -24,7 +24,7 @@ import {
 
 const PAGE_TITLE = 'Workplace Safety Course | Electrical Industry Health & Safety';
 const PAGE_DESCRIPTION =
-  'Comprehensive workplace safety training for UK electricians. HASAWA, risk assessment, manual handling, COSHH, fire safety, first aid, PPE, and electrical safety on site. 8 modules with video content, interactive quizzes, and AI tutor.';
+  'Workplace safety training for UK electricians: HASAWA, risk assessment, manual handling, COSHH, fire, first aid, PPE, electrical safety. 8 modules.';
 
 const breadcrumbs = [
   { label: 'Training', href: '/training' },
@@ -89,42 +89,42 @@ const modules = [
   {
     title: 'The Legal Framework: HASAWA and Key Regulations',
     description:
-      'Health and Safety at Work etc. Act 1974, Management of Health and Safety at Work Regulations 1999, employer and employee duties, the role of the HSE, and enforcement powers.',
+      'Health and Safety at Work etc. Act 1974, Management of Health and Safety at Work Regulations 1999, employer and employee duties, the role of the HSE…',
   },
   {
     title: 'Risk Assessment for Electrical Work',
     description:
-      'The five-step risk assessment process, hazard identification for electrical tasks, hierarchy of controls, recording and communicating findings, and review procedures. Task-specific vs generic assessments.',
+      'The five-step risk assessment process, hazard identification for electrical tasks, hierarchy of controls, recording and communicating findings…',
   },
   {
     title: 'Manual Handling',
     description:
-      'Manual Handling Operations Regulations 1992, TILE assessment (Task, Individual, Load, Environment), safe lifting techniques, cable drum handling, distribution board lifting, and avoiding musculoskeletal injuries.',
+      'Manual Handling Operations Regulations 1992, TILE assessment (Task, Individual, Load, Environment), safe lifting techniques, cable drum handling…',
   },
   {
     title: 'COSHH: Control of Substances Hazardous to Health',
     description:
-      'COSHH Regulations 2002, identifying hazardous substances in electrical work (solvents, adhesives, cable lubricants, asbestos), safety data sheets, exposure controls, and emergency procedures.',
+      'COSHH Regulations 2002, identifying hazardous substances in electrical work (solvents, adhesives, cable lubricants, asbestos), safety data sheets…',
   },
   {
     title: 'Fire Safety and Emergency Procedures',
     description:
-      'Regulatory Reform (Fire Safety) Order 2005, fire risk assessment, fire extinguisher types and use, evacuation procedures, electrical causes of fire, and arc flash hazards.',
+      'Regulatory Reform (Fire Safety) Order 2005, fire risk assessment, fire extinguisher types and use, evacuation procedures, electrical causes of fire…',
   },
   {
     title: 'Electrical Safety on Site',
     description:
-      'Safe isolation procedures, lock-out/tag-out, reduced low voltage systems (110V), portable appliance safety, temporary electrical installations, and working near existing live equipment.',
+      'Safe isolation procedures, lock-out/tag-out, reduced low voltage systems (110V), portable appliance safety, temporary electrical installations…',
   },
   {
     title: 'PPE and Welfare',
     description:
-      'Personal Protective Equipment at Work Regulations 1992, PPE selection for electrical work, maintenance and replacement, welfare facilities requirements, and noise and vibration exposure.',
+      'Personal Protective Equipment at Work Regulations 1992, PPE selection for electrical work, maintenance and replacement, welfare facilities requirements…',
   },
   {
     title: 'First Aid and Incident Reporting',
     description:
-      'Health and Safety (First-Aid) Regulations 1981, emergency first aid for electrical injuries, CPR for electric shock casualties, RIDDOR reporting requirements, and accident investigation.',
+      'Health and Safety (First-Aid) Regulations 1981, emergency first aid for electrical injuries, CPR for electric shock casualties…',
   },
 ];
 
@@ -133,7 +133,7 @@ const features = [
     icon: BrainCircuit,
     title: 'AI Study Assistant',
     description:
-      'Ask any health and safety question in plain English. Get detailed answers on HASAWA duties, risk assessment procedures, COSHH requirements, and PPE selection.',
+      'Ask any health and safety question in plain English. Get detailed answers on HASAWA duties, risk assessment procedures, COSHH requirements…',
   },
   {
     icon: Radio,
@@ -233,7 +233,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Study health and safety law with AI explanations"
-          description="Confused by the difference between HASAWA and the Management Regulations? Ask the Elec-Mate AI tutor any health and safety question and get clear, practical guidance."
+          description="Confused by the difference between HASAWA and the Management Regulations? Ask the Elec-Mate AI tutor any health and safety question and get clear…"
           icon={BrainCircuit}
         />
       </>
@@ -425,7 +425,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Complete workplace safety training on your phone"
-          description="Elec-Mate covers all essential workplace safety topics — HASAWA, risk assessment, manual handling, COSHH, fire safety, and first aid. Study at your own pace and earn CPD certificates."
+          description="Elec-Mate covers all essential workplace safety topics — HASAWA, risk assessment, manual handling, COSHH, fire safety, and first aid."
           icon={ShieldCheck}
         />
       </>
@@ -519,7 +519,7 @@ export default function WorkplaceSafetyCoursePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-06-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Health & Safety Training"

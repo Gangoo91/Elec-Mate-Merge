@@ -6,14 +6,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // (5th Edition).
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const cableSizeForEVChargerConfig: GeneratedGuideConfig = {
   pagePath: '/guides/cable-size-for-ev-charger',
   title:
-    'What Cable Size Do I Need for an EV Charger? (7 kW, 22 kW) | UK Sizing Guide | Elec-Mate',
+    'What Cable Size Do I Need for an EV Charger? (7 kW, 22 kW)',
   description:
-    'Cable size for UK EV chargers explained: 6 mm² for most 7 kW domestic chargers, 10 mm² or 16 mm² for 22 kW three-phase. Cable type, route, derating factors, BS 7671 reference method and Section 722 compliance.',
+    'Cable size for UK EV chargers explained: 6 mm² for most 7 kW domestic chargers, 10 mm² or 16 mm² for 22 kW three-phase.',
   datePublished: published,
   dateModified: modified,
   readingTime: 11,

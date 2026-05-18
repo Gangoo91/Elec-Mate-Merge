@@ -543,7 +543,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs faster with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -558,10 +558,10 @@ const sections = [
 export default function EICRExeterPage() {
   return (
     <GuideTemplate
-      title="EICR Exeter | Electrical Installation Condition Report Exeter"
-      description="EICR Exeter — costs, legal requirements, and what to expect from an Electrical Installation Condition Report in Exeter. Guide for landlords and electricians covering the 2020 Regulations, student HMOs, Victorian wiring, and 2026 pricing."
+      title="EICR Exeter | Electrical Installation Condition Report"
+      description="EICR Exeter — costs, legal requirements, and what to expect from an Electrical Installation Condition Report in Exeter."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

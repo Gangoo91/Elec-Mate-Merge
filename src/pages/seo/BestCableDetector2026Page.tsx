@@ -687,7 +687,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Document cable routes and installation details"
-          description="Elec-Mate's EIC certificate app records installation methods, cable routes, and protective measures as part of the Electrical Installation Certificate. Complete on site with photos and instant PDF export."
+          description="Elec-Mate's EIC certificate app records installation methods, cable routes, and protective measures as part of the Electrical Installation Certificate."
           icon={FileCheck2}
         />
       </>
@@ -703,9 +703,9 @@ export default function BestCableDetector2026Page() {
   return (
     <GuideTemplate
       title="Best Cable Detector 2026 | Pipe & Wire Finders UK"
-      description="Honest comparison of the best cable detectors for UK electricians in 2026. Radiodetection C.A.T4+, Leica DD220, Amprobe AT-3500, Fluke 2042, and budget wall scanners compared on detection depth, accuracy, modes, and price."
+      description="Honest comparison of the best cable detectors for UK electricians in 2026. Radiodetection C.A.T4+, Leica DD220, Amprobe AT-3500, Fluke 2042…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Equipment Guide"

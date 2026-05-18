@@ -547,7 +547,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Event electrical work made simple with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site inspection reporting, pre-energisation check documentation, and instant PDF export. Ideal for exhibition and event electrical work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site inspection reporting, pre-energisation check documentation, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -562,10 +562,10 @@ const sections = [
 export default function ExhibitionElectricalPage() {
   return (
     <GuideTemplate
-      title="Exhibition & Event Electrical | Temporary Installations BS 7909"
-      description="Complete guide to temporary electrical installations for exhibitions, events, and entertainment under BS 7909. Responsible person duties, temporary distribution, generator connections, RCD protection, TN-S earthing, and pre-energisation checks."
+      title="Exhibition & Event Electrical | Temporary Installations BS"
+      description="Complete guide to temporary electrical installations for exhibitions, events, and entertainment under BS 7909."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Specialist Installation"

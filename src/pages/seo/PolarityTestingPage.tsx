@@ -213,7 +213,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete polarity verification records on your phone"
-          description="Elec-Mate's EICR app captures polarity test results for all circuits and accessories, generating professional inspection records that comply with BS 7671. Used by 1,000+ UK electricians."
+          description="Elec-Mate's EICR app captures polarity test results for all circuits and accessories, generating professional inspection records that comply with BS 7671."
           icon={ClipboardCheck}
         />
       </>
@@ -445,10 +445,10 @@ const sections = [
 export default function PolarityTestingPage() {
   return (
     <GuideTemplate
-      title="Polarity Testing Guide BS 7671 | Reversed Polarity and Regulation 643.5"
-      description="Complete guide to polarity testing under BS 7671 for UK electricians. Covers visual inspection first, live polarity checks, common failures (reversed at accessories), and Regulation 643.5 requirements."
+      title="Polarity Testing Guide BS 7671 | Reversed Polarity and"
+      description="Complete guide to polarity testing under BS 7671 for UK electricians. Covers visual inspection first, live polarity checks…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

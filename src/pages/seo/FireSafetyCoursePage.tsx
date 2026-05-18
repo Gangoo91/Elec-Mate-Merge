@@ -22,7 +22,7 @@ import {
 
 const PAGE_TITLE = 'Fire Safety Course | Awareness Training for Electricians';
 const PAGE_DESCRIPTION =
-  'Fire safety awareness training for UK electricians covering fire triangle theory, extinguisher types, evacuation procedures, hot works permits, and construction site fire prevention. 4 modules with video content, interactive quizzes, and AI tutor.';
+  'Fire safety training for UK electricians: fire triangle, extinguisher types, evacuation, hot works permits, site fire prevention. 4 modules.';
 
 const breadcrumbs = [
   { label: 'Training', href: '/training' },
@@ -91,17 +91,17 @@ const modules = [
   {
     title: 'Fire Science, Classes, and Extinguisher Selection',
     description:
-      'The fire triangle (heat, fuel, oxygen), fire classes A to F, extinguisher types (water, foam, CO2, dry powder, wet chemical), colour coding, and correct selection for electrical fires.',
+      'The fire triangle (heat, fuel, oxygen), fire classes A to F, extinguisher types (water, foam, CO2, dry powder, wet chemical), colour coding…',
   },
   {
     title: 'Fire Prevention in Electrical Work',
     description:
-      'Hot works permits, managing ignition sources, cable selection and protection, circuit overload prevention, safe use of temporary electrical supplies on construction sites, and storage of flammable materials.',
+      'Hot works permits, managing ignition sources, cable selection and protection, circuit overload prevention…',
   },
   {
     title: 'Emergency Response and Evacuation',
     description:
-      'Raising the alarm, evacuation procedures, assembly points, roll call systems, fire warden duties, liaison with the fire service, and RIDDOR reporting for fire-related incidents.',
+      'Raising the alarm, evacuation procedures, assembly points, roll call systems, fire warden duties, liaison with the fire service…',
   },
 ];
 
@@ -110,7 +110,7 @@ const features = [
     icon: BrainCircuit,
     title: 'AI Study Assistant',
     description:
-      'Ask any fire safety question in plain English. Get clear answers on extinguisher selection, hot works procedures, legislation, and risk assessment requirements.',
+      'Ask any fire safety question in plain English. Get clear answers on extinguisher selection, hot works procedures, legislation…',
   },
   {
     icon: Flame,
@@ -241,7 +241,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Test your extinguisher knowledge with interactive quizzes"
-          description="Scenario-based questions present you with different fire situations and ask you to select the correct extinguisher type. Instant feedback explains why each choice is correct or dangerous."
+          description="Scenario-based questions present you with different fire situations and ask you to select the correct extinguisher type."
           icon={ClipboardCheck}
         />
       </>
@@ -409,7 +409,7 @@ export default function FireSafetyCoursePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-07-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Training"

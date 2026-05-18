@@ -582,8 +582,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Professional electrical tools for Cumbria electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the realities of rural Cumbria, nuclear-adjacent work, and industrial sites. 7-day free trial."
+          title="Consumer Unit Replacements Cumbria | Certified"
+          description="Consumer unit replacements in Cumbria. BS 7671:2018+A4:2026 compliant. Fast quotes, same-week installation, full certification included."
           icon={MapPin}
         />
       </>
@@ -600,9 +600,9 @@ export default function ElectricianCumbriaPage() {
     <GuideTemplate
       localArea="Cumbria"
       title="Electrician in Cumbria | Local Electricians 2026"
-      description="Find qualified electricians in Cumbria. Sellafield nuclear site requirements, BS 7671 and IEC 60364, Electricity North West DNO, Carlisle, Barrow, Whitehaven, Workington, and Cumbria electrician rates 2026."
+      description="Find qualified electricians in Cumbria. Sellafield nuclear site requirements, BS 7671 and IEC 60364, Electricity North West DNO, Carlisle, Barrow…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cumbria"

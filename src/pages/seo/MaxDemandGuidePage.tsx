@@ -364,7 +364,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="After Diversity Maximum Demand Calculator"
-          description="Calculate ADMD for BS 7671:2018+A4:2026 compliance. Input circuit ratings, get max demand in amps and kW in seconds. Free tool for electricians."
+          description="Calculate ADMD in seconds for BS 7671:2018+A4:2026. Input circuit ratings, get max demand in amps and kW instantly. Free for electricians."
           icon={Calculator}
         />
       </>
@@ -613,7 +613,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Try all 70+ calculators free for 7 days"
-          description="Max demand, cable sizing, voltage drop, Zs, PFC, adiabatic, conduit fill, trunking fill, power factor, diversity factor, three-phase power — all in one app, designed for UK electricians working to BS 7671."
+          description="Max demand, cable sizing, voltage drop, Zs, PFC, adiabatic, conduit fill, trunking fill, power factor, diversity factor…"
           icon={Calculator}
         />
       </>
@@ -629,9 +629,9 @@ export default function MaxDemandGuidePage() {
   return (
     <GuideTemplate
       title="Max Demand Calculation Guide | BS 7671 Method"
-      description="Complete guide to calculating max demand for electrical installations using BS 7671 diversity factors. Worked examples for domestic and commercial installations, table of typical values, and common mistakes to avoid."
+      description="Calculate max demand for UK electrical installations using BS 7671 diversity factors. Worked examples for domestic, commercial, and three-phase."
       datePublished="2025-03-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Technical Guide"

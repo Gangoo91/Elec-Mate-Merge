@@ -526,7 +526,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Issue method statements and risk assessments on site"
-          description="Elec-Mate's AI health and safety tools can generate method statements and risk assessments for complex electrical work, including safe isolation procedures, on your phone. Professional H&S documentation in minutes."
+          description="Elec-Mate's AI health and safety tools can generate method statements and risk assessments for complex electrical work…"
           icon={FileText}
         />
       </>
@@ -590,10 +590,10 @@ const sections = [
 export default function SafeIsolationProcedureGuidePage() {
   return (
     <GuideTemplate
-      title="Safe Isolation Procedure for Electricians | GS38 and EAW Regulations"
-      description="Complete safe isolation procedure guide for UK electricians. Legal basis in Electricity at Work Regulations 1989 Regulations 12 and 13, HSE GS38 requirements for test instruments, prove-isolate-secure-prove sequence, multi-lock hasps, and proving dead correctly."
+      title="7 Step Safe Isolation Procedure | GS38"
+      description="Master the 7 step safe isolation sequence for UK electrical work. Prove-isolate-secure-prove method, GS38 test instrument rules, multi-lock hasps."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Procedure Guide"

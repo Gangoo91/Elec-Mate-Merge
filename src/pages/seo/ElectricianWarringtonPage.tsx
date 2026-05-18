@@ -473,7 +473,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Warrington electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the residential and commercial electrical market in Warrington. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -490,9 +490,9 @@ export default function ElectricianWarringtonPage() {
     <GuideTemplate
       localArea="Warrington"
       title="Electrician in Warrington | Local Electricians 2026"
-      description="Find qualified electricians in Warrington. Part P compliance, NICEIC registered, EICR for landlords, commercial electrical work, consumer unit replacement, and local electrician rates for 2026."
+      description="Find qualified electricians in Warrington. Part P compliance, NICEIC registered, EICR for landlords, commercial electrical work…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Warrington"

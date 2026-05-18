@@ -525,7 +525,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Speak your MFT readings into Elec-Mate"
-          description="Probes in hand? Say 'Ring 1, R1+R2 0.32, insulation 200 meg, Zs 0.87, RCD 19 milliseconds' and the schedule of test results fills in automatically. No putting the instrument down to type."
+          description="Probes in hand? Say 'Ring 1, R1+R2 0.32, insulation 200 meg, Zs 0.87, RCD 19 milliseconds' and the schedule of test results fills in automatically."
           icon={Mic}
         />
       </>
@@ -640,7 +640,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Pair your MFT with Elec-Mate for faster certificates"
-          description="Voice-enter test results as you work. AI flags failures and suggests observation codes. Export a professional EICR or EIC certificate before you leave site. 7-day free trial."
+          description="Voice-enter test results as you work. AI flags failures and suggests observation codes. Export a professional EICR or EIC certificate before you leave…"
           icon={FileCheck2}
         />
       </>
@@ -656,9 +656,9 @@ export default function MultifunctionTesterGuidePage() {
   return (
     <GuideTemplate
       title="Multifunction Tester Guide | How to Use MFT"
-      description="Complete guide to using a multifunction tester (MFT) for electrical testing. Test modes, lead connections, calibration, common instruments (Megger, Fluke, Kewtech), and step-by-step test procedures for BS 7671 compliance."
+      description="Complete guide to using a multifunction tester (MFT) for electrical testing. Test modes, lead connections, calibration, common instruments (Megger…"
       datePublished="2025-08-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

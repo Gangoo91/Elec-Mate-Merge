@@ -17,6 +17,8 @@ import { format } from 'date-fns';
 import { generateSequentialInvoiceNumber } from '@/utils/invoice-number-generator';
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
 import { openExternalUrl } from '@/utils/open-external-url';
+import { Capacitor } from '@capacitor/core';
+import { sharePdfBytesFromUrlToWhatsAppWeb } from '@/utils/share-pdf-to-whatsapp-web';
 
 interface RecentQuotesListProps {
   quotes: Quote[];
@@ -425,7 +427,10 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
           : freshQuote.job_details;
       const jobTitle = jobDetails?.title || 'Electrical Work';
 
-      const message = `📋 *Quote ${freshQuote.quote_number}*
+      const clientPhone = clientData?.phone;
+
+      if (Capacitor.isNativePlatform()) {
+        const message = `📋 *Quote ${freshQuote.quote_number}*
 
 Dear ${clientName},
 
@@ -442,23 +447,59 @@ If you have any questions, please don't hesitate to contact us.
 Best regards,
 ${companyName}`;
 
-      const clientPhone = clientData?.phone;
-      let whatsappUrl: string;
-      if (clientPhone && (clientPhone.startsWith('+44') || clientPhone.startsWith('44'))) {
-        const cleanPhone = clientPhone.replace(/\s/g, '').replace(/^44/, '+44');
-        whatsappUrl = `https://wa.me/${cleanPhone.replace('+', '')}?text=${encodeURIComponent(message)}`;
-      } else {
-        whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+        let whatsappUrl: string;
+        if (clientPhone && (clientPhone.startsWith('+44') || clientPhone.startsWith('44'))) {
+          const cleanPhone = clientPhone.replace(/\s/g, '').replace(/^44/, '+44');
+          whatsappUrl = `https://wa.me/${cleanPhone.replace('+', '')}?text=${encodeURIComponent(message)}`;
+        } else {
+          whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+        }
+
+        await openExternalUrl(whatsappUrl);
+
+        toast({
+          title: 'Opening WhatsApp',
+          description: 'WhatsApp will open with your quote message',
+          variant: 'success',
+        });
+        return;
       }
 
-      await openExternalUrl(whatsappUrl);
+      // Web: attach the actual PDF, never a link in the body
+      const webMessage = `📋 *Quote ${freshQuote.quote_number}*
+
+Dear ${clientName},
+
+Please find your quote for ${jobTitle}
+
+💰 Total Amount: ${formatCurrency(totalAmount)}
+Valid until: ${validityDate}
+
+If you have any questions, please don't hesitate to contact us.
+
+Best regards,
+${companyName}`;
+
+      const result = await sharePdfBytesFromUrlToWhatsAppWeb({
+        pdfUrl: pdfDownloadUrl,
+        filename: `Quote-${freshQuote.quote_number || freshQuote.id}.pdf`,
+        message: webMessage,
+        recipientPhone: clientPhone,
+        title: `Quote ${freshQuote.quote_number}`,
+      });
 
       toast({
-        title: 'Opening WhatsApp',
-        description: 'WhatsApp will open with your quote message',
+        title: result.mode === 'web-share' ? 'Opening share sheet' : 'PDF downloaded',
+        description:
+          result.mode === 'web-share'
+            ? 'Pick WhatsApp to send the PDF.'
+            : 'PDF saved to your Downloads — attach it from your WhatsApp chat.',
         variant: 'success',
       });
     } catch (error: any) {
+      if (error?.name === 'AbortError') {
+        return;
+      }
       toast({
         title: 'Error',
         description: error.message || 'Failed to share via WhatsApp',

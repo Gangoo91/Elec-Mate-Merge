@@ -559,7 +559,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete SWA installation certificates on your phone"
-          description="Elec-Mate's EIC and EICR apps let you certify underground and external cable installations on site. Record test results, cable details, and route descriptions — instant PDF, no paperwork. 7-day free trial."
+          description="Elec-Mate's EIC and EICR apps let you certify underground and external cable installations on site."
           icon={FileCheck2}
         />
       </>
@@ -575,9 +575,9 @@ export default function ArmaCableInstallationPage() {
   return (
     <GuideTemplate
       title="Armoured Cable Installation UK | SWA Cable Guide"
-      description="Complete UK guide to Steel Wire Armoured (SWA) cable installation. Types, current ratings, stripping and terminating with SWA glands, underground burial depths, IP ratings, and common mistakes — fully compliant with BS 7671."
+      description="Complete UK guide to Steel Wire Armoured (SWA) cable installation. Types, current ratings, stripping and terminating with SWA glands…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

@@ -112,8 +112,8 @@ const sections = [
           , make mock exams the cornerstone of your revision.
         </p>
         <SEOAppBridge
-          title="2391 Mock Exam Multiple Choice Free"
-          description="Free 2391 mock exams with multiple choice questions. Instant marking, detailed answers, and progress tracking to pass first time."
+          title="2391 Mock Exam: Free Multiple Choice Tests"
+          description="Free 2391 mock exams with 100+ multiple choice questions. Instant marking, detailed answers, and progress tracking to pass first time."
           icon={BrainCircuit}
         />
       </>
@@ -271,7 +271,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Track your AM2 readiness"
-          description="Elec-Mate tracks your mock exam scores across the 18th Edition and inspection and testing topics that overlap with the AM2. See at a glance whether your knowledge is exam-ready."
+          description="Elec-Mate tracks your mock exam scores across the 18th Edition and inspection and testing topics that overlap with the AM2."
           icon={BarChart3}
         />
       </>
@@ -516,10 +516,10 @@ const relatedPages: RelatedPage[] = [
 export default function MockExamsElectricianPage() {
   return (
     <GuideTemplate
-      title="Mock Exams for Electricians | Practice Tests & Exam Preparation"
-      description="Free mock exams for UK electricians — 18th Edition (C&G 2382), 2391 Inspection and Testing, and AM2 preparation. AI-powered practice questions with instant marking, detailed explanations, and progress tracking."
+      title="Mock Exams for Electricians | Practice Tests & Exam"
+      description="Free mock exams for UK electricians — 18th Edition (C&G 2382), 2391 Inspection and Testing, and AM2 preparation."
       datePublished="2025-08-12"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Exam Preparation"

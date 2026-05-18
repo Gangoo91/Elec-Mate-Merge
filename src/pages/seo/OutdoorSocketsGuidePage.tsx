@@ -575,7 +575,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Complete the certificate on site"
-          description="Elec-Mate lets you complete the EIC or Minor Works Certificate on your phone. Voice test entry fills in results while you test. Export as a professional PDF and send to the homeowner instantly."
+          description="Elec-Mate lets you complete the EIC or Minor Works Certificate on your phone. Voice test entry fills in results while you test."
           icon={FileCheck2}
         />
       </>
@@ -647,7 +647,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify outdoor socket installations"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Quick jobs, professional results. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Quick jobs, professional results."
           icon={Sun}
         />
       </>
@@ -663,9 +663,9 @@ export default function OutdoorSocketsGuidePage() {
   return (
     <GuideTemplate
       title="Outdoor Sockets Regulations | IP Rating & RCD Guide"
-      description="Complete guide to outdoor socket regulations in the UK. IP65/IP66 requirements, 30mA RCD protection, cable burial depth, special locations under BS 7671 Part 7, weatherproof accessories, and certification requirements."
+      description="Complete guide to outdoor socket regulations in the UK. IP65/IP66 requirements, 30mA RCD protection, cable burial depth…"
       datePublished="2025-10-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

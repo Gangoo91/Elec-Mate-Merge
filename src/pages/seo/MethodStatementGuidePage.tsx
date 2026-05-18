@@ -431,7 +431,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Generate method statements for any electrical task"
-          description="Elec-Mate's RAMS generator creates complete method statements for consumer unit changes, rewires, fault finding, EV charger installations, and any other electrical task. Describe the job, get a professional document in minutes."
+          description="Elec-Mate's RAMS generator creates complete method statements for consumer unit changes, rewires, fault finding, EV charger installations…"
           icon={FileCheck2}
         />
       </>
@@ -625,7 +625,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Complete RAMS in minutes, not hours"
-          description="Elec-Mate's RAMS generator creates risk assessments and method statements tailored to your specific job. Describe the work, get professional RAMS documentation ready for site. Used by 1,000+ UK electricians."
+          description="Elec-Mate's RAMS generator creates risk assessments and method statements tailored to your specific job."
           icon={Brain}
         />
       </>
@@ -641,9 +641,9 @@ export default function MethodStatementGuidePage() {
   return (
     <GuideTemplate
       title="Method Statement for Electricians | Template Guide"
-      description="Complete guide to writing method statements for electrical work. Template structure, sections explained, consumer unit change and rewire examples, RAMS package, and how to generate method statements with AI."
+      description="Complete guide to writing method statements for electrical work. Template structure, sections explained, consumer unit change and rewire examples…"
       datePublished="2025-05-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

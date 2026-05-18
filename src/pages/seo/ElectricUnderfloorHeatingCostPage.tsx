@@ -238,7 +238,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Price underfloor heating installations accurately"
-          description="Use Elec-Mate's quoting app to price UFH installations with element area, thermostat, circuit, and Part P notification as separate line items. Professional PDF quotes from your phone."
+          description="Use Elec-Mate's quoting app to price UFH installations with element area, thermostat, circuit, and Part P notification as separate line items."
           icon={Thermometer}
         />
       </>
@@ -435,7 +435,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify UFH installations on your phone"
-          description="Join 1,000+ UK electricians using Elec-Mate for underfloor heating installation quotes, element testing records, and EIC certification. Complete the certificate on site and issue the PDF immediately. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for underfloor heating installation quotes, element testing records, and EIC certification."
           icon={Thermometer}
         />
       </>
@@ -450,10 +450,10 @@ const sections = [
 export default function ElectricUnderfloorHeatingCostPage() {
   return (
     <GuideTemplate
-      title="Electric Underfloor Heating Cost UK | Installation, Running Costs and Circuits"
-      description="Complete guide to electric underfloor heating installation cost in the UK. Mat vs loose element systems, installation costs £800–£2,500 per room, running cost calculations, thermostat options, and Part P electrical requirements."
+      title="Electric Underfloor Heating Cost UK | Installation, Running"
+      description="Complete guide to electric underfloor heating installation cost in the UK. Mat vs loose element systems, installation costs £800–£2,500 per room…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

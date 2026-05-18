@@ -21,7 +21,7 @@ import {
   ArrowRight,
 } from 'lucide-react';
 
-const PAGE_TITLE = 'Elec-Mate vs iCertifi 2026 | Feature Comparison | Which Is Better?';
+const PAGE_TITLE = 'Elec-Mate vs iCertifi 2026 | Feature Comparison';
 const PAGE_DESCRIPTION =
   'Detailed comparison of Elec-Mate and iCertifi for UK electricians. Compare certificates, calculators, AI tools, pricing, and features side by side.';
 
@@ -63,7 +63,7 @@ const features = [
     icon: FileCheck2,
     title: '16 Certificate Types',
     description:
-      'EICR, EIC, Minor Works, EV Charger, Solar PV, Fire Alarm, Emergency Lighting, and PAT Testing. Elec-Mate covers specialist certificates that iCertifi does not include.',
+      'EICR, EIC, Minor Works, EV Charger, Solar PV, Fire Alarm, Emergency Lighting, and PAT Testing.',
   },
   {
     icon: Calculator,
@@ -75,25 +75,25 @@ const features = [
     icon: Brain,
     title: '8 Elec-AI Specialist Tools',
     description:
-      '8 AI specialist agents and 12 AI-powered tools — including Circuit Designer, Cost Engineer, Installation Guide, Commissioning Specialist, Maintenance Agent, Health & Safety, Fault Finder, and Regulation Lookup. AI capabilities that no certificate-only app can match.',
+      '8 AI specialist agents and 12 AI-powered tools — including Circuit Designer, Cost Engineer, Installation Guide, Commissioning Specialist…',
   },
   {
     icon: GraduationCap,
     title: 'Full Training Platform',
     description:
-      '18th Edition, Level 2/3 Electrical Installation, AM2 preparation, and EPA simulator. iCertifi does not include any training — Elec-Mate has complete courses built in.',
+      '18th Edition, Level 2/3 Electrical Installation, AM2 preparation, and EPA simulator. iCertifi does not include any training — Elec-Mate has complete…',
   },
   {
     icon: Briefcase,
     title: 'Business Management',
     description:
-      'Job scheduling, quoting, invoicing, Stripe payment collection, and Xero accounting integration. Manage your entire electrical business without switching between apps.',
+      'Job scheduling, quoting, invoicing, Stripe payment collection, and Xero accounting integration.',
   },
   {
     icon: WifiOff,
     title: 'Full Offline Support',
     description:
-      'Auto-saves locally every 10 seconds and syncs to the cloud every 30 seconds when connectivity returns. Complete certificates in basements and plant rooms without signal.',
+      'Auto-saves locally every 10 seconds and syncs to the cloud every 30 seconds when connectivity returns.',
   },
 ];
 
@@ -134,7 +134,7 @@ const faqSchema = {
 
 export default function ElecMateVsICertifiPage() {
   useSEO({
-    title: 'Elec-Mate vs iCertifi 2026 | Feature Comparison | Which Is Better?',
+    title: 'Elec-Mate vs iCertifi 2026 | Feature Comparison | Which Is',
     description: PAGE_DESCRIPTION,
     schema: softwareAppSchema,
   });
@@ -668,7 +668,7 @@ export default function ElecMateVsICertifiPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="More Than Just Certificates — Try Elec-Mate Free"
-            description="Unlimited certificates, 70+ BS 7671 calculators, 8 Elec-AI specialist tools, full training courses, and business management. Everything iCertifi offers, and much more — from £5.99/month."
+            description="Unlimited certificates, 70+ BS 7671 calculators, 8 Elec-AI specialist tools, full training courses, and business management."
             ctaText="Try Elec-Mate free for 7 days"
             ctaHref="/auth/signup"
           />

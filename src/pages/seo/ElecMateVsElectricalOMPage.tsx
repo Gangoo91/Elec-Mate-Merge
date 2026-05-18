@@ -22,9 +22,9 @@ export default function ElecMateVsElectricalOMPage() {
   return (
     <ComparisonTemplate
       title="Elec-Mate vs Electrical OM | Feature Comparison"
-      description="Detailed comparison of Elec-Mate and Electrical OM for UK electricians. Compare certificates, calculators, AI tools, pricing, training, and business management features side by side."
+      description="Detailed comparison of Elec-Mate and Electrical OM for UK electricians. Compare certificates, calculators, AI tools, pricing, training…"
       datePublished="2026-02-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Comparisons', href: '/compare' },
         {
@@ -193,13 +193,13 @@ export default function ElecMateVsElectricalOMPage() {
           icon: Brain,
           title: '8 Elec-AI Specialist Tools',
           description:
-            'Circuit Designer, Cost Engineer, Installation Guide, Commissioning Specialist, Maintenance Agent, Health & Safety, Fault Finder, and Regulation Lookup. AI built for electricians, not generic chatbots.',
+            'Circuit Designer, Cost Engineer, Installation Guide, Commissioning Specialist, Maintenance Agent, Health & Safety, Fault Finder, and Regulation Lookup.',
         },
         {
           icon: Calculator,
           title: '70+ BS 7671 Calculators',
           description:
-            'Cable sizing, voltage drop, maximum demand, diversity, conduit fill, trunking fill, Zs verification, disconnection times, adiabatic equation, and dozens more.',
+            'Cable sizing, voltage drop, maximum demand, diversity, conduit fill, trunking fill, Zs verification, disconnection times, adiabatic equation…',
         },
         {
           icon: GraduationCap,

@@ -480,7 +480,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Aberdeen electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for Scottish Building Standards compliance and granite property challenges. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -497,9 +497,9 @@ export default function ElectricianAberdeenPage() {
     <GuideTemplate
       localArea="Aberdeen"
       title="Electrician in Aberdeen | Local Electricians 2026"
-      description="Find qualified electricians in Aberdeen. Scottish Building Standards, SSEN DNO, SELECT registration, granite property rewiring, CompEx certification for oil and gas, and Aberdeen electrician rates for 2026."
+      description="Find qualified electricians in Aberdeen. Scottish Building Standards, SSEN DNO, SELECT registration, granite property rewiring…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Aberdeen"

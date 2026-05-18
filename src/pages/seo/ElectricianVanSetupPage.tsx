@@ -259,7 +259,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Tool and Equipment Tracking"
-          description="Track your complete tool inventory, calibration dates, replacement costs, and insurance values. Get reminders when calibration is due. Know exactly what you own and what it is worth."
+          description="Track your complete tool inventory, calibration dates, replacement costs, and insurance values. Get reminders when calibration is due."
           icon={Wrench}
         />
       </>
@@ -550,7 +550,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Van and Equipment Cost Tracking"
-          description="Track every van-related expense -- fuel, insurance, servicing, racking, security. See your true monthly vehicle cost. Compare mileage rates versus actual costs for the best tax deduction."
+          description="Track every van-related expense -- fuel, insurance, servicing, racking, security. See your true monthly vehicle cost."
           icon={Car}
         />
       </>
@@ -607,9 +607,9 @@ export default function ElectricianVanSetupPage() {
   return (
     <GuideTemplate
       title="Electrician Van Setup | Racking, Tools & Organisation"
-      description="Complete guide to setting up an electrician van in the UK. Best vans, racking systems, tool organisation, stock management, security, and running costs. Make your mobile workshop work for you."
+      description="Complete guide to setting up an electrician van in the UK. Best vans, racking systems, tool organisation, stock management, security, and running costs."
       datePublished="2025-01-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

@@ -168,7 +168,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Measure, record, and verify PFC"
-          description="Elec-Mate records PFC at the origin as part of the EICR and EIC forms, and automatically checks whether the protective device breaking capacity is adequate. Plus 70+ calculators for cable sizing, Zs, voltage drop, and more."
+          description="Elec-Mate records PFC at the origin as part of the EICR and EIC forms, and automatically checks whether the protective device breaking capacity is…"
           icon={Gauge}
         />
       </>
@@ -490,7 +490,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="PFC, adiabatic, and 50+ more calculators"
-          description="Elec-Mate includes a PFC calculator, adiabatic equation verifier, cable sizing calculator with fault current checking, Zs calculator, voltage drop, max demand, conduit fill, trunking fill, power factor, and three-phase power. 7-day free trial."
+          description="Elec-Mate includes a PFC calculator, adiabatic equation verifier, cable sizing calculator with fault current checking, Zs calculator, voltage drop…"
           icon={Calculator}
         />
       </>
@@ -582,9 +582,9 @@ export default function PFCExplainedPage() {
   return (
     <GuideTemplate
       title="Prospective Fault Current Explained | PFC Guide"
-      description="Complete guide to prospective fault current (PFC) for UK electricians. What PFC is, why it matters, how to measure it on site, maximum values for domestic and commercial supplies, switchgear breaking capacity ratings, and the adiabatic equation."
+      description="Complete guide to prospective fault current (PFC) for UK electricians. What PFC is, why it matters, how to measure it on site…"
       datePublished="2025-05-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Technical Guide"

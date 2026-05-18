@@ -20,7 +20,7 @@ import {
 
 const PAGE_TITLE = 'EV Charger Installation Course | IET Code of Practice';
 const PAGE_DESCRIPTION =
-  'Complete EV charger installation training for UK electricians. IET Code of Practice, Mode 1-4 charging, earthing requirements, PME restrictions, load management, and BS 7671 compliance. 7 modules with video content, quizzes, and AI tutor.';
+  'EV charger installation training: IET Code of Practice, Mode 1-4 charging, earthing, PME restrictions, load management, BS 7671. 7 modules.';
 
 const breadcrumbs = [
   { label: 'Training', href: '/training' },
@@ -90,32 +90,32 @@ const modules = [
   {
     title: 'The IET Code of Practice',
     description:
-      'Detailed coverage of the IET Code of Practice for EV Charging Equipment Installation (4th Edition). Scope, definitions, assessment of supply characteristics, and design considerations.',
+      'Detailed coverage of the IET Code of Practice for EV Charging Equipment Installation (4th Edition).',
   },
   {
     title: 'Earthing Arrangements and PME Restrictions',
     description:
-      'TN-S, TN-C-S (PME), and TT earthing systems. The PME risk for EV charging, earth electrode installation, PEN fault detection devices, and protective measures for each earthing arrangement.',
+      'TN-S, TN-C-S (PME), and TT earthing systems. The PME risk for EV charging, earth electrode installation, PEN fault detection devices…',
   },
   {
     title: 'Circuit Design and Cable Sizing',
     description:
-      'Dedicated circuit requirements, cable selection and sizing for EV circuits, voltage drop calculations, protective device selection (MCB, RCBO, Type A or Type B RCD requirements), and cable routing.',
+      'Dedicated circuit requirements, cable selection and sizing for EV circuits, voltage drop calculations, protective device selection (MCB, RCBO…',
   },
   {
     title: 'Load Management and DNO Requirements',
     description:
-      'Static and dynamic load management systems, CT clamp installation, communication protocols (OCPP), DNO notification requirements, ESQCR regulations, and supply capacity assessment.',
+      'Static and dynamic load management systems, CT clamp installation, communication protocols (OCPP), DNO notification requirements, ESQCR regulations…',
   },
   {
     title: 'Smart Charging and Regulations',
     description:
-      'Electric Vehicles (Smart Charge Points) Regulations 2021, OZEV grant requirements, smart functionality (off-peak scheduling, solar integration), OCPP compliance, and cybersecurity considerations.',
+      'Electric Vehicles (Smart Charge Points) Regulations 2021, OZEV grant requirements, smart functionality (off-peak scheduling, solar integration)…',
   },
   {
     title: 'Installation, Commissioning, and Certification',
     description:
-      'Site survey procedures, physical installation steps, BS 7671 testing sequence for EV circuits, commissioning checks, completing the EIC, manufacturer registration, and customer handover.',
+      'Site survey procedures, physical installation steps, BS 7671 testing sequence for EV circuits, commissioning checks, completing the EIC…',
   },
 ];
 
@@ -124,37 +124,37 @@ const features = [
     icon: BrainCircuit,
     title: 'AI Study Assistant',
     description:
-      'Ask any EV charging question in plain English. Get instant answers on PME restrictions, cable sizing, load management calculations, and IET Code of Practice requirements.',
+      'Ask any EV charging question in plain English. Get instant answers on PME restrictions, cable sizing, load management calculations…',
   },
   {
     icon: PlugZap,
     title: 'Video Content',
     description:
-      'Step-by-step installation videos covering earth electrode installation, CT clamp fitting, cable routing, and commissioning procedures for popular UK charger brands.',
+      'Step-by-step installation videos covering earth electrode installation, CT clamp fitting, cable routing…',
   },
   {
     icon: ClipboardCheck,
     title: 'Interactive Quizzes',
     description:
-      'Scenario-based questions after every module. Calculate cable sizes, identify earthing requirements, and select the correct protective devices for real-world installations.',
+      'Scenario-based questions after every module. Calculate cable sizes, identify earthing requirements…',
   },
   {
     icon: Clock,
     title: 'Study Planner',
     description:
-      'Set a target date for completing the course and Elec-Mate creates your personal study schedule. Daily progress tracking and reminder notifications keep you on track.',
+      'Set a target date for completing the course and Elec-Mate creates your personal study schedule.',
   },
   {
     icon: Layers,
     title: 'Flashcard Decks',
     description:
-      'Spaced repetition flashcards on charging modes, connector types, earthing arrangements, IET Code of Practice key requirements, and BS 7671 regulations for EV circuits.',
+      'Spaced repetition flashcards on charging modes, connector types, earthing arrangements, IET Code of Practice key requirements…',
   },
   {
     icon: FileCheck2,
     title: 'Mock Exams',
     description:
-      'Full-length mock examinations across all seven modules. Instant marking, detailed explanations, and a readiness score that shows when you are fully prepared.',
+      'Full-length mock examinations across all seven modules. Instant marking, detailed explanations…',
   },
 ];
 
@@ -291,7 +291,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Master the IET Code of Practice with AI-powered explanations"
-          description="Not sure about the PME earthing requirements? Need help with a maximum demand calculation for an EV circuit? Ask the Elec-Mate AI tutor any question about the IET Code of Practice and get a clear, referenced answer."
+          description="Not sure about the PME earthing requirements? Need help with a maximum demand calculation for an EV circuit?"
           icon={BrainCircuit}
         />
       </>
@@ -367,7 +367,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="46+ structured courses including EV charging"
-          description="Elec-Mate provides 46+ structured courses with video content, interactive quizzes, progress tracking, and an AI tutor. Study EV charging installation alongside BS 7671, inspection and testing, and dozens more topics — all for one subscription."
+          description="Elec-Mate provides 46+ structured courses with video content, interactive quizzes, progress tracking, and an AI tutor."
           icon={GraduationCap}
         />
       </>
@@ -511,7 +511,7 @@ export default function EVChargingCoursePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-05-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EV Charging Training"

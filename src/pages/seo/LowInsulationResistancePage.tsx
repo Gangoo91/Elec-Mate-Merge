@@ -24,7 +24,7 @@ import {
 
 const PAGE_TITLE = 'Low Insulation Resistance | Causes & Solutions';
 const PAGE_DESCRIPTION =
-  'Why is your insulation resistance low? Complete guide covering BS 7671 minimum values (1 MΩ), what counts as concerning (below 2 MΩ), causes including moisture, damaged cable, aged insulation, carbonised insulation, rodent damage, how to diagnose and fix, temperature effects, and three-phase considerations.';
+  'Why insulation resistance is low: BS 7671 1 MΩ floor, when <2 MΩ is concerning, common causes, how to diagnose + fix, temperature, three-phase.';
 
 const breadcrumbs = [
   { label: 'Troubleshooting', href: '/guides/troubleshooting' },
@@ -342,7 +342,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Schedule of Tests with Auto-Validation"
-          description="Enter insulation resistance readings into Elec-Mate's schedule of test results and the app instantly validates every value against the BS 7671 Table 61 minimum of 1 MΩ. Failures are flagged in red, borderline readings are highlighted, and the app suggests the appropriate EICR observation code."
+          description="Enter insulation resistance readings into Elec-Mate's schedule of test results and the app instantly validates every value against the BS 7671 Table 61…"
           icon={ClipboardCheck}
         />
       </>
@@ -536,12 +536,12 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Auto-validated Schedule of Tests"
-          description="Enter insulation resistance readings into the schedule of test results and Elec-Mate instantly validates every value against the BS 7671 Table 61 minimum of 1 MΩ. Failures are flagged automatically and the app suggests the appropriate EICR observation code (C1, C2, or C3) based on the severity."
+          description="Enter insulation resistance readings into the schedule of test results and Elec-Mate instantly validates every value against the BS 7671 Table 61 minimum…"
           icon={ClipboardCheck}
         />
         <SEOAppBridge
           title="Voice to Test Results"
-          description="On site with probes in one hand and your test instrument in the other? Just speak: 'Ring 1, insulation resistance, 200 meg.' Elec-Mate fills in the schedule for you. Hands-free data entry designed for how electricians actually work."
+          description="On site with probes in one hand and your test instrument in the other? Just speak: 'Ring 1, insulation resistance…"
           icon={Mic}
         />
         <p>
@@ -615,7 +615,7 @@ export default function LowInsulationResistancePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-09-05"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting"

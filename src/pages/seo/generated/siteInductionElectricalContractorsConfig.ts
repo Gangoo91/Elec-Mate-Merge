@@ -6,14 +6,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Control of Asbestos Regulations 2012.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const siteInductionElectricalContractorsConfig: GeneratedGuideConfig = {
   pagePath: '/guides/site-induction-electrical-contractors',
   title:
-    'Site Induction Checklist for Electrical Contractors (UK) | Elec-Mate',
+    'Site Induction Checklist for Electrical Contractors (UK)',
   description:
-    'Site induction checklist for UK electrical contractors. CDM 2015 duties, isolation arrangements, asbestos awareness, RIDDOR, lone working and welfare arrangements — with a downloadable checklist pattern aligned to HSE INDG163 and ACOP L153.',
+    'Site induction checklist for UK electrical contractors. CDM 2015 duties, isolation arrangements, asbestos awareness, RIDDOR…',
   datePublished: published,
   dateModified: modified,
   readingTime: 11,
@@ -308,7 +308,7 @@ export const siteInductionElectricalContractorsConfig: GeneratedGuideConfig = {
       href: '/tools/rams-generator',
       title: 'RAMS Generator',
       description:
-        'Generate electrical Risk Assessments and Method Statements with site induction appendix in minutes. Aligned to CDM 2015, EAWR 1989 and BS 7671:2018+A4:2026.',
+        'Generate electrical Risk Assessments and Method Statements with site induction appendix in minutes.',
       icon: 'FileText',
       category: 'Tool',
     },
@@ -316,7 +316,7 @@ export const siteInductionElectricalContractorsConfig: GeneratedGuideConfig = {
       href: '/guides/cdm-2015-for-electricians',
       title: 'CDM 2015 for Electricians',
       description:
-        'Full duty-holder map under the Construction (Design and Management) Regulations 2015 — client, principal designer, principal contractor and contractor roles explained.',
+        'Full duty-holder map under the Construction (Design and Management) Regulations 2015 — client, principal designer…',
       icon: 'BookOpen',
       category: 'Guide',
     },

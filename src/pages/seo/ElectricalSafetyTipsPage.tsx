@@ -573,7 +573,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete safety inspections faster"
-          description="AI board scanning, voice test entry, automated defect classification, and instant PDF delivery. Join 1,000+ UK electricians using Elec-Mate for every inspection. 7-day free trial."
+          description="AI board scanning, voice test entry, automated defect classification, and instant PDF delivery."
           icon={Shield}
         />
       </>
@@ -588,10 +588,10 @@ const sections = [
 export default function ElectricalSafetyTipsPage() {
   return (
     <GuideTemplate
-      title="Electrical Safety Tips | 15 Things Every Homeowner Should Know"
-      description="15 essential electrical safety tips for UK homeowners. Socket safety, RCD testing, cable checks, kitchen and bathroom rules, children's safety, outdoor electrics, and warning signs of electrical faults."
+      title="Electrical Safety Tips | 15 Things Every Homeowner Should"
+      description="15 essential electrical safety tips for UK homeowners. Socket safety, RCD testing, cable checks, kitchen and bathroom rules, children's safety…"
       datePublished="2026-01-12"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

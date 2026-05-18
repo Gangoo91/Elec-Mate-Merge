@@ -373,7 +373,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Understand Zs with the AI tutor"
-          description="Struggling with earth fault loop impedance? Ask the Elec-Mate AI tutor. Get step-by-step explanations with worked examples, regulation references, and maximum Zs tables. Available 24/7 on your phone."
+          description="Struggling with earth fault loop impedance? Ask the Elec-Mate AI tutor. Get step-by-step explanations with worked examples, regulation references…"
           icon={Brain}
         />
       </>
@@ -619,7 +619,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Master testing procedures with Elec-Mate"
-          description="46+ courses, flashcards, mock exams, EPA simulator, and AI tutor covering every test in the apprenticeship standard. Build confidence before you pick up the test leads. 7-day free trial."
+          description="46+ courses, flashcards, mock exams, EPA simulator, and AI tutor covering every test in the apprenticeship standard."
           icon={Gauge}
         />
       </>
@@ -634,18 +634,18 @@ const sections = [
 export default function Year2ElectricalApprenticePage() {
   return (
     <GuideTemplate
-      title="Testing Procedures for Apprentices | Beginner Guide"
-      description="Beginner-friendly guide to electrical testing procedures for UK apprentices. Continuity, insulation resistance, polarity, earth loop impedance, and RCD testing explained step by step in simple terms."
+      title="Year 2 Apprentice Testing Guide | Continuity, IR, EFLI, RCD"
+      description="Year 2 testing walkthrough for UK electrical apprentices. Continuity, insulation resistance, polarity, earth fault loop impedance, and RCD — every test, every step."
       datePublished="2025-10-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"
       badgeIcon={Gauge}
       heroTitle={
         <>
-          Testing Procedures for Apprentices:{' '}
-          <span className="text-yellow-400">Every Test Explained in Plain English</span>
+          Year 2 Apprentice Testing:{' '}
+          <span className="text-yellow-400">Every Core Test, Every Step, Plain English</span>
         </>
       }
       heroSubtitle="Testing is the skill that separates a competent electrician from someone who just wires things up. This guide explains every core test — continuity, insulation resistance, polarity, earth loop impedance, and RCD — in apprentice-friendly language with no jargon left unexplained."

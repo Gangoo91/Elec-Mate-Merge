@@ -506,9 +506,9 @@ export default function LoftConversionElectricalGuidePage() {
   return (
     <GuideTemplate
       title="Loft Conversion Electrical Guide UK | Wiring Your Loft"
-      description="Complete guide to electrical work in a loft conversion. Circuit planning for bedroom, office, and en-suite use, smoke detection requirements under BS 5839-6, escape route lighting, Part P notification, and EIC certificate requirements."
+      description="Complete guide to electrical work in a loft conversion. Circuit planning for bedroom, office, and en-suite use…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Conversion Guide"

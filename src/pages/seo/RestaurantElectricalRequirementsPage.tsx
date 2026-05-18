@@ -570,8 +570,8 @@ const sections = [
           licence.
         </p>
         <SEOAppBridge
-          title="Commercial EICR certificates on your phone"
-          description="Complete the full EICR for commercial premises on site with Elec-Mate. AI board scanner handles three-phase distribution boards, voice test entry captures readings hands-free, and the finished certificate exports as a professional PDF for the restaurant owner."
+          title="Commercial kitchen electrical requirements"
+          description="BS 7671:2018+A4:2026 compliance for restaurant kitchens. Calculate load demands, design circuits, and issue certificates. Free guide for electricians."
           icon={Camera}
         />
       </>
@@ -709,7 +709,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="All restaurant certificates in one app"
-          description="EICR, EIC, Fire Alarm, Emergency Lighting, PAT Testing — complete every certificate a restaurant needs on your phone. AI board scanner, voice test entry, instant PDF delivery. Join 1,000+ UK electricians using Elec-Mate."
+          description="EICR, EIC, Fire Alarm, Emergency Lighting, PAT Testing — complete every certificate a restaurant needs on your phone."
           icon={Building}
         />
       </>
@@ -724,10 +724,10 @@ const sections = [
 export default function RestaurantElectricalRequirementsPage() {
   return (
     <GuideTemplate
-      title="Restaurant Electrical Requirements | Commercial Kitchen Electrics"
-      description="Complete guide to restaurant electrical requirements in the UK. Three-phase supply, extract fan interlocks, commercial kitchen equipment, emergency lighting BS 5266, fire alarm BS 5839, and EICR inspection intervals for commercial food premises."
+      title="Restaurant Electrical Requirements | Commercial Kitchen"
+      description="Complete guide to restaurant electrical requirements in the UK. Three-phase supply, extract fan interlocks, commercial kitchen equipment…"
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Commercial Guide"

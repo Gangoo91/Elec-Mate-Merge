@@ -20,9 +20,9 @@ export default function AFDDGuidePage() {
   return (
     <GuideTemplate
       title="AFDD Guide | Arc Fault Detection Devices BS 7671"
-      description="Complete guide to Arc Fault Detection Devices (AFDDs). BS 7671 Regulation 421.1.6, where AFDDs are required (HMOs, buildings over 4 storeys, care homes, student accommodation), how they work, AFDD vs RCBO, installation requirements, manufacturers, and Amendment 2 changes."
+      description="Complete guide to Arc Fault Detection Devices (AFDDs). BS 7671 Regulation 421.1.6, where AFDDs are required (HMOs, buildings over 4 storeys, care homes…"
       datePublished="2025-05-01"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'AFDD Arc Fault Detection', href: '/guides/afdd-arc-fault-detection' },
@@ -411,7 +411,7 @@ export default function AFDDGuidePage() {
               </ul>
               <SEOAppBridge
                 title="Certificate Forms Include AFDD Fields"
-                description="Elec-Mate's EIC and EICR forms include dedicated fields for recording AFDD protection on each circuit. The schedule of circuit details captures the device manufacturer, type, and rating, and the schedule of test results records the AFDD test button operation."
+                description="Elec-Mate's EIC and EICR forms include dedicated fields for recording AFDD protection on each circuit."
                 icon={FileText}
               />
             </>
@@ -547,7 +547,7 @@ export default function AFDDGuidePage() {
               </p>
               <SEOAppBridge
                 title="AI Regulations Lookup for AFDD Requirements"
-                description="Not sure if AFDDs are needed on your current job? Ask Elec-Mate's AI regulations agent. Describe the premises type and the AI will explain exactly which regulations apply, whether AFDDs are recommended, and which circuits should be protected. Get regulation-referenced answers in seconds."
+                description="Not sure if AFDDs are needed on your current job? Ask Elec-Mate's AI regulations agent. Describe the premises type and the AI will explain exactly which…"
                 icon={Brain}
               />
             </>
@@ -590,7 +590,7 @@ export default function AFDDGuidePage() {
         {
           href: '/guides/consumer-unit-regulations',
           title: 'Consumer Unit Regulations',
-          description: 'Metal CU requirements, RCD protection, and Amendment 3.',
+          description: 'Metal CU requirements, RCD protection, and Amendment 4.',
           icon: ShieldCheck,
           category: 'Regulations',
         },

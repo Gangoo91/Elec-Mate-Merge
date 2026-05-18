@@ -168,7 +168,7 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          (the IET Wiring Regulations, 18th Edition with Amendment 3). Cable sizing, circuit
+          (the IET Wiring Regulations, 18th Edition with Amendment 4). Cable sizing, circuit
           protection, earthing, bonding, and RCD selection must all be calculated and specified
           correctly. Cables running through loft insulation require derating factors that
           significantly affect the conductor size needed.
@@ -285,7 +285,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Size every cable on site in seconds"
-          description="Elec-Mate's cable sizing calculator applies derating factors for thermal insulation, grouping, and ambient temperature automatically. Enter the circuit details, get the correct cable size with a full voltage drop check — compliant with BS 7671 Appendix 4."
+          description="Elec-Mate's cable sizing calculator applies derating factors for thermal insulation, grouping, and ambient temperature automatically."
           icon={Calculator}
         />
       </>
@@ -640,7 +640,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify loft conversions faster"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, EIC certificates, and professional quoting. Everything you need for loft conversion electrics in one app. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, EIC certificates, and professional quoting."
           icon={Home}
         />
       </>
@@ -656,9 +656,9 @@ export default function LoftConversionElectricsPage() {
   return (
     <GuideTemplate
       title="Loft Conversion Electrics | Wiring Requirements UK"
-      description="Complete guide to loft conversion electrics in the UK. Part P notification, new circuits, lighting design, smoke alarms, fire detection, Part B compliance, cable sizing with insulation derating, and EIC certification requirements."
+      description="Complete guide to loft conversion electrics in the UK. Part P notification, new circuits, lighting design, smoke alarms, fire detection…"
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

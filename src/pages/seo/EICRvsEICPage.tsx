@@ -142,7 +142,7 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          (the IET Wiring Regulations, 18th Edition with Amendment 3) and follow the model forms in
+          (the IET Wiring Regulations, 18th Edition with Amendment 4) and follow the model forms in
           Appendix 6 of the standard. Both require the person signing to be competent — holding the
           appropriate qualifications and having sufficient experience for the type of work or
           inspection being carried out.
@@ -196,7 +196,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Create EIC Certificates on Your Phone"
-          description="Elec-Mate has the full EIC form with all three signature blocks, schedule of inspections, and schedule of test results. Auto-validates results against BS 7671 limits as you enter them."
+          description="Elec-Mate has the full EIC form with all three signature blocks, schedule of inspections, and schedule of test results."
           icon={FileText}
         />
       </>
@@ -253,7 +253,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="EICR with Auto Overall Assessment"
-          description="Elec-Mate automatically determines whether the EICR is Satisfactory or Unsatisfactory based on the observation codes you enter. The moment a C1 or C2 is added, it flips to Unsatisfactory — no manual tracking needed."
+          description="Elec-Mate automatically determines whether the EICR is Satisfactory or Unsatisfactory based on the observation codes you enter."
           icon={FileCheck2}
         />
       </>
@@ -507,7 +507,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="16 Certificate Types in One App"
-          description="Stop carrying multiple paper pads or paying for separate software for each certificate type. Elec-Mate has EIC, EICR, Minor Works, and 5 more — all with digital signatures, auto-validation, and PDF export. Switch between them in seconds."
+          description="Stop carrying multiple paper pads or paying for separate software for each certificate type. Elec-Mate has EIC, EICR, Minor Works…"
           icon={ClipboardCheck}
         />
       </>
@@ -519,9 +519,9 @@ export default function EICRvsEICPage() {
   return (
     <GuideTemplate
       title="EICR vs EIC | What Is the Difference? | Elec-Mate"
-      description="Clear comparison of EICR vs EIC certificates. When each is required, who signs them, what sections differ, and common confusion points. For UK electricians."
+      description="Clear comparison of EICR vs EIC certificates. When each is required, who signs them, what sections differ, and common confusion points."
       datePublished="2025-03-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Guide"

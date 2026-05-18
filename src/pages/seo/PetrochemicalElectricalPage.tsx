@@ -606,8 +606,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Manage your CompEx and petrochemical certifications with Elec-Mate"
-          description="Track CompEx, 18th Edition, and all petrochemical certifications with renewal reminders. Produce professional inspection records. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial."
+          title="Manage your CompEx and petrochemical certifications with"
+          description="Track CompEx, 18th Edition, and all petrochemical certifications with renewal reminders. Produce professional inspection records."
           icon={ShieldCheck}
         />
       </>
@@ -622,10 +622,10 @@ const sections = [
 export default function PetrochemicalElectricalPage() {
   return (
     <GuideTemplate
-      title="Petrochemical Electrical Installation UK | Refinery & Chemical Plant"
-      description="Complete guide to petrochemical electrical installation in the UK — ATEX/DSEAR zone classification, Ex d/e/i/m/n protection concepts, BS EN 60079-17 inspection, CompEx qualification, area classification drawings, and permit to work systems."
+      title="Petrochemical Electrical Installation UK | Refinery &"
+      description="Complete guide to petrochemical electrical installation in the UK — ATEX/DSEAR zone classification, Ex d/e/i/m/n protection concepts…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Specialist Sector"

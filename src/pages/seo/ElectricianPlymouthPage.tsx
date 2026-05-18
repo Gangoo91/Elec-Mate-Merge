@@ -559,7 +559,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Plymouth electrical business from your phone"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs…"
           icon={MapPin}
         />
       </>
@@ -576,9 +576,9 @@ export default function ElectricianPlymouthPage() {
     <GuideTemplate
       localArea="Plymouth"
       title="Electrician in Plymouth | Find Qualified Electricians 2026"
-      description="Find qualified, registered electricians in Plymouth. Realistic 2026 pricing, how to verify NICEIC/NAPIT registration, post-war rewiring, NGED connections, dockyard work, marine corrosion protection, and Barbican conservation requirements."
+      description="Find qualified, registered electricians in Plymouth. Realistic 2026 pricing, how to verify NICEIC/NAPIT registration, post-war rewiring…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Find an Electrician"

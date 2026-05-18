@@ -416,8 +416,8 @@ const sections = [
           detailed feedback.
         </p>
         <SEOAppBridge
-          title="AM2 Fault Finding Tips — Pass First Time"
-          description="Master AM2 fault finding with 50+ realistic scenarios. Identify faults faster, boost your pass rate, and get instant feedback on every diagnostic decision you make."
+          title="AM2 Fault Finding Tips — 2026 Pass Guide"
+          description="AM2 fault finding holding you back? Learn 50+ diagnostic scenarios to spot faults faster and pass first time. Real exam conditions, instant feedback."
           icon={Target}
         />
       </>
@@ -513,7 +513,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Practise the AM2 Before the Real Thing"
-          description="Timed exercises, AI feedback, safe isolation simulations, and full mock assessments — all replicating the real AM2 format. Join 1,000+ UK apprentices preparing with Elec-Mate. 7-day free trial."
+          description="Timed exercises, AI feedback, safe isolation simulations, and full mock assessments — all replicating the real AM2 format."
           icon={Target}
         />
       </>
@@ -525,9 +525,9 @@ export default function AM2ExamTipsPage() {
   return (
     <GuideTemplate
       title="AM2 Exam Tips 2026 | What to Expect & How to Pass"
-      description="Complete guide to the AM2 practical assessment for UK electricians in 2026. What the AM2 tests, common failures, how to prepare, what to bring, day-of tips, and Elec-Mate AM2 Simulator."
+      description="Complete guide to the AM2 practical assessment for UK electricians in 2026. What the AM2 tests, common failures, how to prepare, what to bring…"
       datePublished="2025-06-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Exam Guide"

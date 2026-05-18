@@ -432,7 +432,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="AI Cost Engineer for Birmingham Rewire Quotes"
-          description="Electricians: describe the job and get a detailed rewire quote with materials breakdown, cable quantities, labour hours, and profit margin calculated from real UK trade pricing data."
+          description="Electricians: describe the job and get a detailed rewire quote with materials breakdown, cable quantities, labour hours…"
           icon={Brain}
         />
       </>
@@ -483,7 +483,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage Birmingham rewire projects with Elec-Mate"
-          description="Electricians: quote rewires with AI cost engineering, manage projects with task tracking, complete EIC certificates on your phone, and send professional invoices. 7-day free trial."
+          description="Electricians: quote rewires with AI cost engineering, manage projects with task tracking, complete EIC certificates on your phone…"
           icon={Wrench}
         />
       </>
@@ -498,10 +498,10 @@ const sections = [
 export default function RewireCostBirminghamPage() {
   return (
     <GuideTemplate
-      title="Rewire Cost Birmingham 2026 | House Rewire Prices West Midlands"
-      description="How much does a house rewire cost in Birmingham in 2026? Complete pricing guide for 2-bed, 3-bed, and 4-bed properties in Birmingham and the West Midlands, covering Victorian terraces, 1930s semis, Part P notification, and finding a qualified electrician."
+      title="Rewire Cost Birmingham 2026 | House Rewire Prices West"
+      description="House rewire cost in Birmingham 2026: 2-bed £3,200–£4,500, 3-bed £4,200–£6,000, 4-bed £5,500–£8,000. Includes Part P notification + EIC."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

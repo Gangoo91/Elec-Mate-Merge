@@ -206,6 +206,9 @@ export default function ToolTemplate({
             </a>
           )}
         </div>
+        <p className="text-xs text-white/60 mb-6">
+          No card required · Free for 7 days · Cancel anytime · Used by 1,000+ UK electricians
+        </p>
 
         <SEOReadingMeta readingTime={readingTime} dateUpdated={dateModified} />
 

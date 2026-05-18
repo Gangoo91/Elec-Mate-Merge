@@ -516,7 +516,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Liverpool electrical business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting. Eliminate paperwork and complete more jobs per day. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting."
           icon={FileCheck2}
         />
       </>
@@ -531,10 +531,10 @@ const sections = [
 export default function ConsumerUnitReplacementLiverpoolPage() {
   return (
     <GuideTemplate
-      title="Consumer Unit Replacement Liverpool | Fuse Box Upgrade Liverpool"
-      description="Consumer unit replacement in Liverpool — metal enclosure rules since 2016, costs £400–750, BS EN 61439, Part P Building Regulations, NICEIC electricians on Merseyside. Complete guide 2026."
+      title="Consumer Unit Replacement Liverpool | Fuse Box Upgrade"
+      description="Consumer unit replacement in Liverpool — metal enclosure rules since 2016, costs £400–750, BS EN 61439, Part P Building Regulations…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Electrical Guide"

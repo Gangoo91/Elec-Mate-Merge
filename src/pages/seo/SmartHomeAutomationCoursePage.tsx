@@ -22,7 +22,7 @@ import {
 
 const PAGE_TITLE = 'Smart Home Automation Course | KNX & IoT Training';
 const PAGE_DESCRIPTION =
-  'Comprehensive smart home automation training for UK electricians. KNX protocol, IoT devices, lighting control, HVAC integration, security systems, and voice assistant setup. 9 modules with video content, interactive quizzes, and AI tutor.';
+  'Smart home automation training for UK electricians: KNX protocol, IoT, lighting control, HVAC integration, security, voice assistants. 9 modules.';
 
 const breadcrumbs = [
   { label: 'Training', href: '/training' },
@@ -87,12 +87,12 @@ const modules = [
   {
     title: 'Introduction to Smart Home Technology',
     description:
-      'Overview of the smart home market in the UK, key protocols (KNX, Zigbee, Z-Wave, Matter, Wi-Fi), wired versus wireless approaches, and the business opportunity for electricians.',
+      'Overview of the smart home market in the UK, key protocols (KNX, Zigbee, Z-Wave, Matter, Wi-Fi), wired versus wireless approaches…',
   },
   {
     title: 'KNX Fundamentals',
     description:
-      'KNX bus topology, twisted-pair cabling, device addressing, actuators, sensors, and the ETS programming software. Hands-on exercises with virtual KNX configurations.',
+      'KNX bus topology, twisted-pair cabling, device addressing, actuators, sensors, and the ETS programming software.',
   },
   {
     title: 'Network Infrastructure for Smart Homes',
@@ -102,22 +102,22 @@ const modules = [
   {
     title: 'Lighting Control Systems',
     description:
-      'DALI, DMX, and wireless dimming protocols. Scene programming, circadian lighting, occupancy sensing, daylight harvesting, and integration with voice assistants.',
+      'DALI, DMX, and wireless dimming protocols. Scene programming, circadian lighting, occupancy sensing, daylight harvesting…',
   },
   {
     title: 'HVAC and Climate Control Integration',
     description:
-      'Smart thermostats, underfloor heating zone control, heat pump integration, ventilation systems, and building energy management. OpenTherm and Modbus protocols.',
+      'Smart thermostats, underfloor heating zone control, heat pump integration, ventilation systems, and building energy management.',
   },
   {
     title: 'Security and Access Control',
     description:
-      'IP camera systems, video doorbells, smart locks, alarm panel integration, intercom systems, and remote monitoring. GDPR considerations for CCTV installations.',
+      'IP camera systems, video doorbells, smart locks, alarm panel integration, intercom systems, and remote monitoring.',
   },
   {
     title: 'Audio-Visual and Multiroom Systems',
     description:
-      'Multiroom audio distribution, HDMI matrix switching, structured AV cabling, in-ceiling and in-wall speaker installation, and streaming platform integration.',
+      'Multiroom audio distribution, HDMI matrix switching, structured AV cabling, in-ceiling and in-wall speaker installation…',
   },
   {
     title: 'Voice Assistants and App Integration',
@@ -127,7 +127,7 @@ const modules = [
   {
     title: 'Design, Commissioning, and Handover',
     description:
-      'Client consultation and scope definition, system design documentation, commissioning procedures, client training, ongoing support contracts, and troubleshooting common issues.',
+      'Client consultation and scope definition, system design documentation, commissioning procedures, client training, ongoing support contracts…',
   },
 ];
 
@@ -229,7 +229,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Learn KNX programming with AI-guided tutorials"
-          description="Struggling with group addresses and parameter settings? Ask the Elec-Mate AI tutor any KNX question and get step-by-step explanations with practical examples from real installations."
+          description="Struggling with group addresses and parameter settings? Ask the Elec-Mate AI tutor any KNX question and get step-by-step explanations with practical…"
           icon={BrainCircuit}
         />
       </>
@@ -329,7 +329,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Study HVAC integration with interactive scenarios"
-          description="Practice designing climate control systems for different building types. Configure zone controllers, set schedules, and troubleshoot common integration issues with Elec-Mate's interactive exercises."
+          description="Practice designing climate control systems for different building types. Configure zone controllers, set schedules…"
           icon={Settings}
         />
       </>
@@ -454,7 +454,7 @@ export default function SmartHomeAutomationCoursePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-09-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Smart Home Training"

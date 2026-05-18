@@ -241,7 +241,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Document your work professionally at every stage"
-          description="Elec-Mate helps UK electricians produce professional EIC certificates, EICRs, and installation records — the documentation that builds a verifiable portfolio of competent work."
+          description="Elec-Mate helps UK electricians produce professional EIC certificates, EICRs, and installation records — the documentation that builds a verifiable…"
           icon={Star}
         />
       </>
@@ -422,10 +422,10 @@ const sections = [
 export default function MasterElectricianUKPage() {
   return (
     <GuideTemplate
-      title="Master Electrician UK | What It Means and How to Demonstrate Mastery"
-      description="There is no formal Master Electrician title in the UK. This guide explains what mastery means in the UK context — NVQ Level 4, 2391, 2396 design, CEng, and scheme membership — and compares the UK to European and US master electrician systems."
+      title="Master Electrician UK | What It Means and How to"
+      description="There is no formal Master Electrician title in the UK. This guide explains what mastery means in the UK context — NVQ Level 4, 2391, 2396 design, CEng…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

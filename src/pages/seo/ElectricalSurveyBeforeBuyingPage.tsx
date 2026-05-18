@@ -198,7 +198,7 @@ const sections = [
       <>
         <p>
           The 18th Edition of BS 7671 (the Wiring Regulations) was published in 2018 and updated in
-          2022 (Amendment 2) and 2024 (Amendment 3). Properties wired before 2000 were designed to
+          2022 (Amendment 2) and 2024 (Amendment 4). Properties wired before 2000 were designed to
           earlier standards and may not comply with current requirements in several important ways.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -624,7 +624,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete house purchase EICRs faster with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. Send reports to buyers before you leave the property. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -639,10 +639,10 @@ const sections = [
 export default function ElectricalSurveyBeforeBuyingPage() {
   return (
     <GuideTemplate
-      title="Electrical Survey When Buying a House UK | EICR for House Purchase"
-      description="Do you need an EICR when buying a house? Not legally required but strongly recommended for properties over 25 years old. Cost £150-400, what it reveals, C1 and C2 observations explained, and how to negotiate on results."
+      title="Electrical Survey When Buying a House UK | EICR for House"
+      description="Do you need an EICR when buying a house? Not legally required but strongly recommended for properties over 25 years old."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Buyer's Guide"

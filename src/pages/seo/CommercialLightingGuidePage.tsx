@@ -359,7 +359,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Quote LED retrofit projects professionally"
-          description="Build detailed LED retrofit quotes with materials, labour, energy savings calculations, and payback analysis. Send professional PDF quotes from your phone — before you leave the survey. Elec-Mate quoting tools, 7-day free trial."
+          description="Build detailed LED retrofit quotes with materials, labour, energy savings calculations, and payback analysis."
           icon={Lightbulb}
         />
       </>
@@ -609,7 +609,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Design, certify, and quote commercial lighting on your phone"
-          description="Cable sizing, voltage drop, EIC and emergency lighting certificates, quoting, and invoicing — all in one app. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial."
+          description="Cable sizing, voltage drop, EIC and emergency lighting certificates, quoting, and invoicing — all in one app. Join 1,000+ UK electricians using Elec-Mate."
           icon={Lightbulb}
         />
       </>
@@ -625,9 +625,9 @@ export default function CommercialLightingGuidePage() {
   return (
     <GuideTemplate
       title="Commercial Lighting Installation | Design & Compliance"
-      description="Complete guide to commercial lighting installation for UK electricians. CIBSE LG7 lux levels, emergency lighting BS 5266, LED retrofit projects, DALI lighting controls, Part L compliance, and certification requirements."
+      description="Complete guide to commercial lighting installation for UK electricians. CIBSE LG7 lux levels, emergency lighting BS 5266, LED retrofit projects…"
       datePublished="2025-09-05"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

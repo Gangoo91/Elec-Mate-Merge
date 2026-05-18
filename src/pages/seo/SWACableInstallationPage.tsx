@@ -20,9 +20,9 @@ export default function SWACableInstallationPage() {
   return (
     <GuideTemplate
       title="SWA Cable Installation | Armoured Cable Guide UK"
-      description="Complete guide to SWA (Steel Wire Armoured) cable installation in the UK. Cable selection, burial depth requirements, gland types, bonding the armour, underground and outdoor runs, testing procedures, and BS 7671 compliance for domestic and commercial installations."
+      description="Complete guide to SWA (Steel Wire Armoured) cable installation in the UK. Cable selection, burial depth requirements, gland types, bonding the armour…"
       datePublished="2025-06-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Installation', href: '/guides' },
         { label: 'SWA Cable', href: '/guides/swa-cable-installation' },
@@ -160,7 +160,7 @@ export default function SWACableInstallationPage() {
               </div>
               <SEOAppBridge
                 title="SWA Cable Sizing Calculator"
-                description="Elec-Mate's cable sizing calculator includes all BS 7671 Appendix 4 tables for SWA cable — PVC and XLPE insulation, all installation methods, correction factors for ground temperature and soil resistivity, voltage drop verification, and armour CPC check. Size SWA cables in seconds."
+                description="Elec-Mate's cable sizing calculator includes all BS 7671 Appendix 4 tables for SWA cable — PVC and XLPE insulation, all installation methods…"
                 icon={Calculator}
               />
             </>
@@ -465,7 +465,7 @@ export default function SWACableInstallationPage() {
               </p>
               <SEOAppBridge
                 title="AI Installation Guide for SWA Cable"
-                description="Elec-Mate's AI installer agent provides step-by-step guidance for SWA cable installations. Describe your job — garage supply, garden office, EV charger, external lighting — and get tailored installation guidance including cable size, gland type, burial requirements, and testing procedures."
+                description="Elec-Mate's AI installer agent provides step-by-step guidance for SWA cable installations. Describe your job — garage supply, garden office, EV charger…"
                 icon={Brain}
               />
             </>
@@ -539,7 +539,7 @@ export default function SWACableInstallationPage() {
               </p>
               <SEOAppBridge
                 title="Digital Test Result Recording"
-                description="Record SWA cable test results directly into Elec-Mate's digital certificate forms. The app validates readings against BS 7671 limits, flags any values outside tolerance, and generates professional PDF certificates for your client."
+                description="Record SWA cable test results directly into Elec-Mate's digital certificate forms. The app validates readings against BS 7671 limits…"
                 icon={ClipboardCheck}
               />
             </>

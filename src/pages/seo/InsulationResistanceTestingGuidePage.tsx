@@ -121,7 +121,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Overview of the wiring regulations and key changes in Amendment 3.',
+    description: 'Overview of the wiring regulations and key changes in Amendment 4.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
@@ -565,7 +565,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Record test results on site with Elec-Mate"
-          description="The Elec-Mate testing app lets you enter IR results, continuity, loop impedance, and RCD test data directly on your phone. Auto-populates the schedule of test results and exports a compliant PDF instantly. 7-day free trial."
+          description="The Elec-Mate testing app lets you enter IR results, continuity, loop impedance, and RCD test data directly on your phone."
           icon={FileCheck2}
         />
       </>
@@ -626,9 +626,9 @@ export default function InsulationResistanceTestingGuidePage() {
   return (
     <GuideTemplate
       title="Insulation Resistance Testing Guide | IR Testing BS 7671"
-      description="Complete guide to insulation resistance (IR) testing. Test voltages per BS 7671 Table 61, minimum values, disconnecting electronic components, interpreting results, and common failures."
+      description="Complete guide to insulation resistance (IR) testing. Test voltages per BS 7671 Table 61, minimum values, disconnecting electronic components…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

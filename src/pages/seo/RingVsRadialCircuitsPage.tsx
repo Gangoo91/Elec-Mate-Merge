@@ -100,7 +100,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Full guide to the 18th Edition Wiring Regulations and Amendment 3.',
+    description: 'Full guide to the 18th Edition Wiring Regulations and Amendment 4.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -277,7 +277,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Check your circuit design with AI"
-          description="Elec-Mate's AI circuit designer can verify ring and radial circuit designs against BS 7671 requirements, calculate load diversity, and check earth fault loop impedance compliance."
+          description="Elec-Mate's AI circuit designer can verify ring and radial circuit designs against BS 7671 requirements, calculate load diversity…"
           icon={Zap}
         />
       </>
@@ -441,7 +441,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Record ring continuity test results on your phone"
-          description="Elec-Mate's EIC and EICR certificate apps include a full schedule of test results with fields for r1, r2, r1+r2, and (r1+r2)/4 for each ring circuit. Complete on site and generate a professional PDF instantly."
+          description="Elec-Mate's EIC and EICR certificate apps include a full schedule of test results with fields for r1, r2, r1+r2, and (r1+r2)/4 for each ring circuit."
           icon={ClipboardCheck}
         />
       </>
@@ -456,10 +456,10 @@ const sections = [
 export default function RingVsRadialCircuitsPage() {
   return (
     <GuideTemplate
-      title="32A Ring Circuit Design | BS 7671:2018+A4:2026"
-      description="Design 32A ring circuits to BS 7671:2018+A4:2026. Learn r1+r2/4 testing, load limits, and when radial beats ring. Compliance checklist included."
+      title="32A Ring Circuit Design & Testing Guide"
+      description="Design and test 32A ring circuits to BS 7671:2018+A4:2026. Master r1+r2 calculations, load limits, and compliance checks for domestic installations."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Circuit Design Guide"

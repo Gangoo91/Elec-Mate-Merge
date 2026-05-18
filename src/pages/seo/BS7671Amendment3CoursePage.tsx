@@ -24,7 +24,7 @@ import {
 
 const PAGE_TITLE = 'BS 7671 Amendment 3 Course | A3:2024 Update Training';
 const PAGE_DESCRIPTION =
-  'Comprehensive BS 7671 Amendment 3 (A3:2024) training for UK electricians. Bidirectional and unidirectional device requirements, updated Section 530 rules, and practical implications. 6 modules with video content, interactive quizzes, and AI tutor.';
+  'BS 7671 Amendment 3 (A3:2024) training: bidirectional/unidirectional devices, Section 530 updates, site implications. 6 modules, quizzes, AI tutor.';
 
 const breadcrumbs = [
   { label: 'Training', href: '/training' },
@@ -89,32 +89,32 @@ const modules = [
   {
     title: 'Amendment 3 Overview and Context',
     description:
-      'What A3:2024 is, when it was published, how it relates to the 18th Edition brown book and previous amendments (A1:2020, A2:2022). The regulatory timeline from the 17th to 18th Edition and beyond.',
+      'What A3:2024 is, when it was published, how it relates to the 18th Edition brown book and previous amendments (A1:2020, A2:2022).',
   },
   {
     title: 'A3:2024 Section 530 Requirement in Detail',
     description:
-      'Full analysis of the Amendment 3 bidirectional device requirement — its wording, its scope, and its practical implications. What constitutes a switching device, a control device, and bidirectional power flow under the requirement.',
+      'Full analysis of the Amendment 3 bidirectional device requirement — its wording, its scope, and its practical implications.',
   },
   {
     title: 'Bidirectional vs Unidirectional Devices',
     description:
-      'How to identify whether an MCB, RCBO, RCD, isolator, or contactor is suitable for bidirectional operation. Manufacturer marking, data sheet interpretation, and practical identification techniques.',
+      'How to identify whether an MCB, RCBO, RCD, isolator, or contactor is suitable for bidirectional operation.',
   },
   {
     title: 'Installations With Bidirectional Power Flow',
     description:
-      'Solar PV systems, battery energy storage systems (BESS), vehicle-to-grid (V2G) chargers, micro-CHP, and wind turbines. How bidirectional power flow occurs in each installation type and where the A3:2024 Section 530 requirement applies.',
+      'Solar PV systems, battery energy storage systems (BESS), vehicle-to-grid (V2G) chargers, micro-CHP, and wind turbines.',
   },
   {
     title: 'Design and Installation Considerations',
     description:
-      'Selecting appropriate devices for new installations with bidirectional power flow. Retrofitting existing installations — assessing current devices and replacing where necessary. Circuit protection coordination and isolation requirements.',
+      'Selecting appropriate devices for new installations with bidirectional power flow. Retrofitting existing installations — assessing current devices and…',
   },
   {
     title: 'Verification, Testing, and Documentation',
     description:
-      'How to verify compliance with the A3:2024 Section 530 requirement during initial verification and periodic inspection. Documentation requirements for EICs and EICRs. Observation codes for non-compliant installations.',
+      'How to verify compliance with the A3:2024 Section 530 requirement during initial verification and periodic inspection.',
   },
 ];
 
@@ -123,7 +123,7 @@ const features = [
     icon: BrainCircuit,
     title: 'AI Study Assistant',
     description:
-      'Ask any question about Amendment 3 in plain English. Get detailed answers on the A3:2024 Section 530 requirement, bidirectional devices, and practical installation scenarios.',
+      'Ask any question about Amendment 3 in plain English. Get detailed answers on the A3:2024 Section 530 requirement, bidirectional devices…',
   },
   {
     icon: Radio,
@@ -135,7 +135,7 @@ const features = [
     icon: ClipboardCheck,
     title: 'Interactive Quizzes',
     description:
-      'Test your understanding of Amendment 3 with scenario-based questions. Identify bidirectional circuits, select suitable devices, and apply the A3:2024 Section 530 requirement correctly.',
+      'Test your understanding of Amendment 3 with scenario-based questions. Identify bidirectional circuits, select suitable devices…',
   },
   {
     icon: Clock,
@@ -153,7 +153,7 @@ const features = [
     icon: FileCheck2,
     title: 'Updated Mock Exams',
     description:
-      'All 18th Edition mock exams updated to include A3:2024 content. Practise with questions covering the A3:2024 Section 530 requirement and bidirectional power flow scenarios.',
+      'All 18th Edition mock exams updated to include A3:2024 content. Practise with questions covering the A3:2024 Section 530 requirement and bidirectional…',
   },
 ];
 
@@ -226,8 +226,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Understand the A3:2024 bidirectional device requirement with AI explanations"
-          description="Not sure whether your installation needs bidirectional devices? Ask the Elec-Mate AI tutor about specific scenarios — solar PV, battery storage, V2G chargers — and get clear guidance on Amendment 3 Section 530 compliance."
+          title="Understand the A3:2024 bidirectional device requirement"
+          description="Not sure whether your installation needs bidirectional devices? Ask the Elec-Mate AI tutor about specific scenarios — solar PV, battery storage…"
           icon={BrainCircuit}
         />
       </>
@@ -378,7 +378,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Complete your Amendment 3 CPD in one session"
-          description="Study the new regulation, test your understanding with scenario-based quizzes, and earn a CPD certificate — all within the Elec-Mate app. Perfect for fitting around site work."
+          description="Study the new regulation, test your understanding with scenario-based quizzes, and earn a CPD certificate — all within the Elec-Mate app."
           icon={GraduationCap}
         />
       </>
@@ -556,7 +556,7 @@ export default function BS7671Amendment3CoursePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-09-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulation Update"

@@ -321,9 +321,9 @@ export default function FireRiskAssessmentPage() {
   return (
     <GuideTemplate
       title="Fire Risk Assessment Guide for Electricians"
-      description="Understand what a fire risk assessment covers, where electricians fit in, common electrical fire hazards, and how to turn findings into documented remedial action."
+      description="What a fire risk assessment covers, where UK electricians fit in, common electrical fire hazards, and how to document findings for the responsible person."
       datePublished="2026-04-12"
-      dateModified="2026-04-12"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

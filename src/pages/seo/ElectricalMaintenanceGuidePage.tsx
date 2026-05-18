@@ -338,7 +338,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Complete EICR certificates on site"
-          description="Elec-Mate lets you complete the full EICR digitally — board scan, test results, observations, and professional PDF export. Send the report to the building owner before you leave. No desk time, no paperwork backlog."
+          description="Elec-Mate lets you complete the full EICR digitally — board scan, test results, observations, and professional PDF export."
           icon={FileCheck2}
         />
       </>
@@ -591,7 +591,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Impress clients with professional digital reports"
-          description="Elec-Mate generates professional PDF certificates and reports that you can send to building owners and facilities managers instantly. Board scan, test results, observations, and a polished layout that builds client confidence."
+          description="Elec-Mate generates professional PDF certificates and reports that you can send to building owners and facilities managers instantly."
           icon={FileCheck2}
         />
       </>
@@ -607,9 +607,9 @@ export default function ElectricalMaintenanceGuidePage() {
   return (
     <GuideTemplate
       title="Electrical Maintenance Guide | Planned & Reactive UK"
-      description="Complete guide to electrical maintenance in the UK. PPM vs reactive maintenance, testing intervals from BS 7671 and GN3, documentation requirements, compliance with Electricity at Work Regulations 1989, and how to win maintenance contracts."
+      description="Complete guide to electrical maintenance in the UK. PPM vs reactive maintenance, testing intervals from BS 7671 and GN3, documentation requirements…"
       datePublished="2025-04-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Maintenance Guide"

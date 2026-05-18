@@ -30,7 +30,7 @@ All tools, certificates, training content and calculators on Elec-Mate are align
 ### Electrical calculators (free to use, no signup)
 
 - [Adiabatic Equation Calculator](https://www.elec-mate.com/adiabatic-equation-calculator) — Adiabatic Equation Calculator
-- [Battery Backup Calculator](https://www.elec-mate.com/tools/battery-backup-calculator) — Battery Backup Calculator
+- [Battery Backup Calculator](https://www.elec-mate.com/tools/battery-backup-calculator) — Battery Backup Calculation Tool
 - [Cable Derating Calculator](https://www.elec-mate.com/tools/cable-derating-calculator) — Cable Derating Calculator
 - [Circuit Breaker Sizing Calculator](https://www.elec-mate.com/tools/circuit-breaker-sizing-calculator) — Circuit Breaker Sizing Calculator
 - [Ev Charger Load Calculator](https://www.elec-mate.com/tools/ev-charger-load-calculator) — EV Charger Load Calculator
@@ -48,14 +48,14 @@ All tools, certificates, training content and calculators on Elec-Mate are align
 - [Trunking Fill Calculator](https://www.elec-mate.com/trunking-fill-calculator)
 - [Voltage Drop Calculator](https://www.elec-mate.com/voltage-drop-calculator)
 - [Break Even Calculator](https://www.elec-mate.com/tools/break-even-calculator) — Break-Even Calculator for Electricians
-- [Busbar Sizing Calculator](https://www.elec-mate.com/tools/busbar-sizing-calculator) — Busbar Sizing Calculator
+- [Busbar Sizing Calculator](https://www.elec-mate.com/tools/busbar-sizing-calculator) — Busbar Calculator
 - [Cable Tray Sizing Calculator](https://www.elec-mate.com/tools/cable-tray-sizing-calculator) — Cable Tray Sizing Calculator
 - [Capacity Planning Calculator](https://www.elec-mate.com/tools/capacity-planning-calculator) — Capacity Planning Calculator for Electricians
 - [Disconnection Time Calculator](https://www.elec-mate.com/tools/disconnection-time-calculator) — Disconnection Time Calculator
-- [Earth Rod Resistance Calculator](https://www.elec-mate.com/tools/earth-rod-resistance-calculator) — Earth Rod Resistance Calculator
+- [Earth Rod Resistance Calculator](https://www.elec-mate.com/tools/earth-rod-resistance-calculator) — Ra x Iδn ≤ 50V Calculator
 - [Equipment Roi Calculator](https://www.elec-mate.com/tools/equipment-roi-calculator) — Equipment ROI Calculator
 - [Job Profitability Calculator](https://www.elec-mate.com/job-profitability-calculator)
-- [Lighting Lux Calculator](https://www.elec-mate.com/tools/lighting-lux-calculator) — Lighting Lux Level Calculator
+- [Lighting Lux Calculator](https://www.elec-mate.com/tools/lighting-lux-calculator) — Lux Level Calculation Tool
 - [Minimum Charge Calculator](https://www.elec-mate.com/tools/minimum-charge-calculator) — Minimum Charge Calculator for Electricians
 - [Power Consumption Calculator](https://www.elec-mate.com/tools/power-consumption-calculator) — Power Consumption Calculator
 - [Solar Panel Sizing Calculator](https://www.elec-mate.com/tools/solar-panel-sizing-calculator) — Solar Panel Sizing Calculator UK
@@ -77,7 +77,7 @@ All tools, certificates, training content and calculators on Elec-Mate are align
 - [Bs 7671 Section 710 Medical Locations](https://www.elec-mate.com/guides/bs-7671-section-710-medical-locations)
 - [Bs 7671 Section 714 Outdoor Lighting](https://www.elec-mate.com/guides/bs-7671-section-714-outdoor-lighting)
 - [Bathroom Electrical Regulations](https://www.elec-mate.com/guides/bathroom-electrical-regulations) — Bathroom Electrical Regulations UK
-- [Bathroom Electrical Zones Bs7671](https://www.elec-mate.com/guides/bathroom-electrical-zones-bs7671) — Bathroom Electrical Zones BS 7671
+- [Bathroom Electrical Zones Bs7671](https://www.elec-mate.com/guides/bathroom-electrical-zones-bs7671) — Bathroom Electric Zones: BS 7671:2018+A4:2026
 - [Building Regulations Electrical](https://www.elec-mate.com/guides/building-regulations-electrical) — Building Regulations Part P Electrical
 - [Cable Sizing Guide Bs 7671](https://www.elec-mate.com/guides/cable-sizing-guide-bs-7671) — Cable Sizing Guide BS 7671
 - [Correction Factors Bs 7671](https://www.elec-mate.com/guides/correction-factors-bs-7671) — BS 7671 Correction Factors
@@ -164,7 +164,7 @@ All tools, certificates, training content and calculators on Elec-Mate are align
 
 ### Comparison and "best of" content
 
-- [Best Ai Tool Electricians](https://www.elec-mate.com/compare/best-ai-tool-electricians) — Best AI Tool for Electricians 2026
+- [Best Ai Tool Electricians](https://www.elec-mate.com/compare/best-ai-tool-electricians) — AI for Electricians: 5 Tools Tested 2026
 - [Best Apprentice App](https://www.elec-mate.com/compare/best-apprentice-app) — Best Apprentice App 2026
 - [Best Cable Sizing App](https://www.elec-mate.com/compare/best-cable-sizing-app) — Best Cable Sizing App 2026
 - [Best Invoice App Electricians](https://www.elec-mate.com/compare/best-invoice-app-electricians) — Best Invoice App for Electricians 2026
@@ -173,7 +173,7 @@ All tools, certificates, training content and calculators on Elec-Mate are align
 - [Elec Mate Vs Easy Eicr](https://www.elec-mate.com/compare/elec-mate-vs-easy-eicr) — Elec-Mate vs Easy EICR 2026
 - [Elec Mate Vs Electrical Om](https://www.elec-mate.com/compare/elec-mate-vs-electrical-om) — Elec-Mate vs Electrical OM
 - [Elec Mate Vs Simply Eicr](https://www.elec-mate.com/compare/elec-mate-vs-simply-eicr) — Elec-Mate vs SimplyEICR
-- [Electrician App Android](https://www.elec-mate.com/compare/electrician-app-android) — Best Electrician App for Android 2026
+- [Electrician App Android](https://www.elec-mate.com/compare/electrician-app-android) — Android Electrician Apps: 4 Tools Compared 2026
 - [Niceic Vs Napit Comparison](https://www.elec-mate.com/niceic-vs-napit-comparison) — NICEIC vs NAPIT
 - [Solar Pv System Design](https://www.elec-mate.com/solar-pv-system-design) — Solar PV System Design UK
 - [Solar Pv System Sizing](https://www.elec-mate.com/solar-pv-system-sizing) — Solar PV System Sizing — UK Guide 2024

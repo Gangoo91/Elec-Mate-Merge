@@ -598,7 +598,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Document fault finding with professional certificates"
-          description="Elec-Mate's certificate apps let you complete Minor Works Certificates and EICRs on your phone with test results, observation codes, and instant PDF export. Join 1,000+ UK electricians."
+          description="Elec-Mate's certificate apps let you complete Minor Works Certificates and EICRs on your phone with test results, observation codes…"
           icon={FileCheck2}
         />
       </>
@@ -614,9 +614,9 @@ export default function FuseKeepsBlowingPage() {
   return (
     <GuideTemplate
       title="Fuse Keeps Blowing | Causes & What to Do"
-      description="Why does your fuse keep blowing? Learn the common causes — overloaded circuits, short circuits, faulty appliances — what to do step by step, and when to call an electrician. UK safety guide for homeowners and electricians."
+      description="Why does your fuse keep blowing? Learn the common causes — overloaded circuits, short circuits, faulty appliances — what to do step by step…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting"

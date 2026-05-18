@@ -454,7 +454,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Remedial estimator for emergency lighting defects"
-          description="Found faulty emergency luminaires during testing? Elec-Mate's remedial works estimator prices each replacement — luminaire cost, labour, and margin — and generates a professional quote. Hand the client the test report and the quote in the same visit."
+          description="Found faulty emergency luminaires during testing? Elec-Mate's remedial works estimator prices each replacement — luminaire cost, labour…"
           icon={Receipt}
         />
       </>
@@ -590,7 +590,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Emergency lighting testing made efficient"
-          description="Elec-Mate streamlines the entire emergency lighting workflow — testing, certification, defect reporting, quoting, and invoicing. All from your phone, all on site. Plus AI agents, 70+ calculators, and 46+ training courses. 7-day free trial."
+          description="Elec-Mate streamlines the entire emergency lighting workflow — testing, certification, defect reporting, quoting, and invoicing."
           icon={Lightbulb}
         />
       </>
@@ -606,9 +606,9 @@ export default function BS5266EmergencyLightingStandardPage() {
   return (
     <GuideTemplate
       title="BS 5266 Emergency Lighting Standard | UK Guide"
-      description="Complete guide to BS 5266 emergency lighting standard. Escape routes, open areas, high-risk task areas, standby lighting, testing intervals (daily, monthly, annual), and certification requirements for UK electricians."
+      description="Complete guide to BS 5266 emergency lighting standard. Escape routes, open areas, high-risk task areas, standby lighting, testing intervals (daily…"
       datePublished="2025-06-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations"

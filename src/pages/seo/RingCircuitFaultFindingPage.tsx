@@ -376,8 +376,8 @@ const sections = [
           interconnection and reconnecting them to the correct circuit.
         </p>
         <SEOAppBridge
-          title="Record ring circuit test results by voice"
-          description="Testing a ring circuit? Speak your R1, R2, and R1+R2 readings and Elec-Mate fills in the schedule of test results while your hands stay on the probes. Test faster, document everything, and spot faults from the data patterns."
+          title="R1 R2 Calculation Ring Circuit Testing"
+          description="R1 R2 calculation for ring circuits: record resistance readings in seconds, spot faults faster, comply with BS 7671:2018+A4:2026. Voice-logged test data."
           icon={Brain}
         />
       </>
@@ -495,7 +495,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="EICR certificate with ring circuit results"
-          description="Elec-Mate's EICR app includes the complete schedule of test results with dedicated fields for ring circuit R1, R2, R1+R2, and Zs values. Record by voice, verify with calculators, and export as a professional PDF."
+          description="Elec-Mate's EICR app includes the complete schedule of test results with dedicated fields for ring circuit R1, R2, R1+R2, and Zs values."
           icon={FileCheck2}
         />
       </>
@@ -577,9 +577,9 @@ export default function RingCircuitFaultFindingPage() {
   return (
     <GuideTemplate
       title="Ring Circuit Fault Finding | Step-by-Step Guide"
-      description="Step-by-step guide to ring circuit fault finding. Covers open rings, bridged rings, borrowed neutrals, interconnected rings, and how to analyse R1, R2, and R1+R2 test results to locate faults."
+      description="Step-by-step guide to ring circuit fault finding. Covers open rings, bridged rings, borrowed neutrals, interconnected rings, and how to analyse R1, R2…"
       datePublished="2025-10-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

@@ -262,7 +262,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Track Your 20% Off-the-Job Hours Automatically"
-          description="Elec-Mate logs every minute of study on the platform towards your OJT hour target of 400 hours. No manual timesheets. See your progress, identify gaps, and prove compliance at your EPA gateway review."
+          description="Elec-Mate logs every minute of study on the platform towards your OJT hour target of 400 hours. No manual timesheets."
           icon={Clock}
         />
       </>
@@ -360,7 +360,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="2,000+ Practice Questions for Level 2 and Level 3"
-          description="Elec-Mate has over 2,000 practice questions covering every topic in the Level 2 and Level 3 diplomas. Flashcards with spaced repetition, mock exams, and an AI study assistant that explains answers in plain English."
+          description="Elec-Mate has over 2,000 practice questions covering every topic in the Level 2 and Level 3 diplomas."
           icon={Brain}
         />
       </>
@@ -407,7 +407,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="EPA Simulator with AI Grading"
-          description="Elec-Mate's EPA simulator replicates all three components of the End Point Assessment. The AI grades your responses against the ST0215 marking criteria and identifies weak areas before the real assessment. Practise the professional discussion until it feels like a comfortable conversation."
+          description="Elec-Mate's EPA simulator replicates all three components of the End Point Assessment. The AI grades your responses against the ST0215 marking criteria…"
           icon={Target}
         />
       </>
@@ -521,7 +521,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="The Complete Apprentice Toolkit"
-          description="Flashcards, mock exams, EPA simulator, AM2 simulator, OJT tracker, portfolio builder, site diary, and BS 7671 run-through — all in one app. Join 1,000+ UK apprentices studying with Elec-Mate."
+          description="Flashcards, mock exams, EPA simulator, AM2 simulator, OJT tracker, portfolio builder, site diary, and BS 7671 run-through — all in one app."
           icon={GraduationCap}
         />
       </>
@@ -533,9 +533,9 @@ export default function ElectricalApprenticeshipGuidePage() {
   return (
     <GuideTemplate
       title="Electrical Apprenticeship UK 2026 | Complete Guide"
-      description="Complete guide to electrical apprenticeships in the UK for 2026. How to find one, what to expect, pay rates, qualifications earned, EPA preparation, and career pathways after qualification."
+      description="Complete guide to electrical apprenticeships in the UK for 2026. How to find one, what to expect, pay rates, qualifications earned, EPA preparation…"
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Hub Guide"

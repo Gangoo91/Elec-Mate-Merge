@@ -478,7 +478,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Set Yourself Up for Success from Day One"
-          description="Elec-Mate gives you the tools to make the most of every day of your apprenticeship. 46+ training courses, flashcards, mock exams, AI tutor, site diary, and OJT tracker. Start your 7-day free trial."
+          description="Elec-Mate gives you the tools to make the most of every day of your apprenticeship. 46+ training courses, flashcards, mock exams, AI tutor, site diary…"
           icon={GraduationCap}
         />
       </>
@@ -623,7 +623,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Start Your Apprenticeship Journey"
-          description="Elec-Mate gives every apprentice the tools to succeed — 46+ courses, flashcards, mock exams, AM2 Simulator, EPA Simulator, AI tutor, site diary, OJT tracker, portfolio builder, and study planner. 7-day free trial."
+          description="Elec-Mate gives every apprentice the tools to succeed — 46+ courses, flashcards, mock exams, AM2 Simulator, EPA Simulator, AI tutor, site diary…"
           icon={GraduationCap}
         />
       </>
@@ -639,9 +639,9 @@ export default function WhatToExpectAsApprenticePage() {
   return (
     <GuideTemplate
       title="What to Expect as an Electrical Apprentice | Honest Guide"
-      description="The honest guide to life as an electrical apprentice in the UK. Day-to-day reality, early starts, physical demands, site culture, the hard parts, the rewards, career progression, and how Elec-Mate supports your journey."
+      description="The honest guide to life as an electrical apprentice in the UK. Day-to-day reality, early starts, physical demands, site culture, the hard parts…"
       datePublished="2025-12-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

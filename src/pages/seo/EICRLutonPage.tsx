@@ -549,7 +549,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Luton EICR business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -565,9 +565,9 @@ export default function EICRLutonPage() {
   return (
     <GuideTemplate
       title="EICR Luton | Electrical Installation Condition Report Luton"
-      description="EICR Luton — costs, legal requirements, and what to expect from an Electrical Installation Condition Report in Luton. Guide for landlords, homeowners, and electricians covering the 2020 Regulations, inter-war property wiring, HMO requirements, and 2026 pricing."
+      description="EICR Luton — costs, legal requirements, and what to expect from an Electrical Installation Condition Report in Luton."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

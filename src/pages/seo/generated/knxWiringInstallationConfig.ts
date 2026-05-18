@@ -5,14 +5,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // published 15 April 2026) and the IET On-Site Guide.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const knxWiringInstallationConfig: GeneratedGuideConfig = {
   pagePath: '/guides/knx-wiring-installation-guide-uk',
   title:
-    'KNX Wiring Installation Guide for UK Electricians — Bus Topology, Cabling & ETS | Elec-Mate',
+    'KNX Wiring Installation Guide for UK Electricians — Bus',
   description:
-    'KNX wiring installation guide for UK electricians — TP1 bus topology, J-Y(St)Y cable selection, line/area/backbone architecture, power supply sizing, Section 528 segregation under BS 7671:2018+A4:2026, ETS commissioning workflow, and how KNX compares with DALI, BACnet and Modbus on lighting, HVAC and blinds integration projects.',
+    'KNX wiring installation guide for UK electricians — TP1 bus topology, J-Y(St)Y cable selection, line/area/backbone architecture, power supply sizing…',
   datePublished: published,
   dateModified: modified,
   readingTime: 18,
@@ -333,7 +333,7 @@ export const knxWiringInstallationConfig: GeneratedGuideConfig = {
         {
           type: 'callout',
           tone: 'info',
-          title: 'ETS is a structured engineering tool, not a configuration wizard',
+          title: 'ETS is a structured engineering tool, not a configuration',
           text:
             'ETS rewards rigorous group address schemes, structured project trees, and disciplined notes. Disorganised projects are unmaintainable by the next engineer — and KNX projects routinely outlive their original installer.',
         },

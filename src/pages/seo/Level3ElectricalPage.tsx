@@ -20,9 +20,9 @@ import {
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
-const PAGE_TITLE = 'Level 3 Electrical Installation Course Online | Advanced Diploma | Elec-Mate';
+const PAGE_TITLE = 'Level 3 Electrical Installation | C&G Advanced Diploma';
 const PAGE_DESCRIPTION =
-  'Study for the City & Guilds 2365-03 Level 3 Advanced Diploma in Electrical Installation online. Circuit design, inspection and testing, fault diagnosis, BS 7671 special locations. AI study assistant. From £5.99/mo.';
+  'Study C&G 2365-03 Level 3 Advanced Diploma online: circuit design, inspection + testing, fault diagnosis, BS 7671 special locations. From £5.99/mo.';
 
 const faqs = [
   {
@@ -62,25 +62,25 @@ const features = [
     icon: Brain,
     title: 'AI Design Assistant',
     description:
-      'Input a circuit scenario and receive step-by-step design calculations. The AI applies correction factors, selects cables from BS 7671 tables, and verifies compliance.',
+      'Input a circuit scenario and receive step-by-step design calculations. The AI applies correction factors, selects cables from BS 7671 tables…',
   },
   {
     icon: Search,
     title: 'Fault Diagnosis Training',
     description:
-      'Systematic fault-finding exercises using the half-split method, symptom analysis, and logical elimination. Real-world scenarios covering open circuits, short circuits, and earth faults.',
+      'Systematic fault-finding exercises using the half-split method, symptom analysis, and logical elimination.',
   },
   {
     icon: ClipboardCheck,
     title: 'Inspection & Testing',
     description:
-      'Full coverage of the GN3 testing sequence with interactive walkthroughs. Learn initial verification and periodic inspection procedures with certification practice.',
+      'Full coverage of the GN3 testing sequence with interactive walkthroughs. Learn initial verification and periodic inspection procedures with certification…',
   },
   {
     icon: BookOpen,
     title: 'BS 7671 Part 7 Modules',
     description:
-      'Dedicated modules for every Part 7 special installation: bathrooms, swimming pools, construction sites, agricultural premises, solar PV, EV charging, and more.',
+      'Dedicated modules for every Part 7 special installation: bathrooms, swimming pools, construction sites, agricultural premises, solar PV, EV charging…',
   },
   {
     icon: Target,
@@ -161,7 +161,7 @@ const breadcrumbSchema = {
 
 export default function Level3ElectricalPage() {
   useSEO({
-    title: 'Level 3 Electrical Installation Course Online | Advanced Diploma',
+    title: 'Level 3 Electrical Installation Course Online | Advanced',
     description: PAGE_DESCRIPTION,
     schema: courseSchema,
   });
@@ -420,25 +420,25 @@ export default function Level3ElectricalPage() {
                 step: '701',
                 title: 'Locations Containing a Bath or Shower',
                 description:
-                  'Defines three zones (Zone 0, Zone 1, Zone 2) around baths and showers with specific IP rating requirements and restrictions on equipment installation. Covers supplementary bonding requirements (where still applicable), SELV limitations, and 30mA RCD protection for all circuits serving the location.',
+                  'Defines three zones (Zone 0, Zone 1, Zone 2) around baths and showers with specific IP rating requirements and restrictions on equipment installation.',
               },
               {
                 step: '704',
                 title: 'Construction and Demolition Site Installations',
                 description:
-                  'Covers requirements for temporary installations on building sites including reduced low voltage (110V centre-tapped to earth), RCD protection, portable equipment requirements, and distribution assembly standards.',
+                  'Covers requirements for temporary installations on building sites including reduced low voltage (110V centre-tapped to earth), RCD protection…',
               },
               {
                 step: '712',
                 title: 'Solar Photovoltaic (PV) Power Supply Systems',
                 description:
-                  'Covers the installation of solar PV systems including DC circuit protection, string isolation, inverter requirements, earthing of PV arrays, and labelling requirements. Amendment 3 (A4:2026) adds new Section 530 requirements covering bidirectional and unidirectional protective devices.',
+                  'Covers the installation of solar PV systems including DC circuit protection, string isolation, inverter requirements, earthing of PV arrays…',
               },
               {
                 step: '722',
                 title: 'Electric Vehicle Charging Installations',
                 description:
-                  'Covers the requirements for EV charging points including dedicated circuit requirements, PME earthing considerations (TT earthing may be required for outdoor charging points), RCD protection, cable sizing for continuous load, and smart charging protocol considerations.',
+                  'Covers the requirements for EV charging points including dedicated circuit requirements…',
               },
             ].map((item) => (
               <div
@@ -534,7 +534,7 @@ export default function Level3ElectricalPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Study Level 3 Electrical Installation with Elec-Mate"
-            description="Elec-Mate's Study Centre has revision materials, exam prep, and on-the-job reference guides for the C&G 2365-03 Advanced Diploma, circuit design, and BS 7671 special locations."
+            description="Elec-Mate's Study Centre has revision materials, exam prep, and on-the-job reference guides for the C&G 2365-03 Advanced Diploma, circuit design…"
             ctaText="Try Elec-Mate free"
             ctaHref="/auth/signup"
             icon={GraduationCap}

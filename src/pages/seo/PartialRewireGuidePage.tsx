@@ -108,7 +108,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
-      'Current regulations for consumer unit replacement including Amendment 3 requirements.',
+      'Current regulations for consumer unit replacement including Amendment 4 requirements.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -266,7 +266,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Price partial rewires accurately"
-          description="Elec-Mate's AI Cost Engineer analyses the EICR defects, calculates materials and labour for each circuit, and generates a detailed quote. Stop guessing — price every partial rewire for profit."
+          description="Elec-Mate's AI Cost Engineer analyses the EICR defects, calculates materials and labour for each circuit, and generates a detailed quote."
           icon={Calculator}
         />
       </>
@@ -524,7 +524,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify partial rewires from your phone"
-          description="Join 1,000+ UK electricians using Elec-Mate to turn EICR defects into priced quotes, complete EIC certificates on site, and send everything to the client instantly. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to turn EICR defects into priced quotes, complete EIC certificates on site…"
           icon={FileCheck2}
         />
       </>
@@ -540,9 +540,9 @@ export default function PartialRewireGuidePage() {
   return (
     <GuideTemplate
       title="Partial Rewire Guide | When Full Rewire Isn't Needed"
-      description="Complete guide to partial rewires in the UK. When a partial rewire is appropriate vs a full rewire, cost comparison, connecting old and new wiring, testing requirements, Part P certification, and common scenarios."
+      description="Complete guide to partial rewires in the UK. When a partial rewire is appropriate vs a full rewire, cost comparison, connecting old and new wiring…"
       datePublished="2025-08-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

@@ -449,7 +449,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Size cables correctly in seconds"
-          description="Select your cable type, reference method, and installation conditions. Elec-Mate applies the correct Appendix 4 table and all correction factors automatically, giving you the right cable size every time."
+          description="Select your cable type, reference method, and installation conditions. Elec-Mate applies the correct Appendix 4 table and all correction factors…"
           icon={Calculator}
         />
       </>
@@ -588,7 +588,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="All Appendix 4 tables in your pocket"
-          description="Stop flipping through BS 7671 on site. Elec-Mate's cable sizing calculator applies the correct Appendix 4 table and correction factors automatically. Plus 50+ other calculators for UK electricians. 7-day free trial."
+          description="Stop flipping through BS 7671 on site. Elec-Mate's cable sizing calculator applies the correct Appendix 4 table and correction factors automatically."
           icon={BookOpen}
         />
       </>
@@ -604,9 +604,9 @@ export default function AppendixFourTablesGuidePage() {
   return (
     <GuideTemplate
       title="Appendix 4 Tables BS 7671 | How to Use Them"
-      description="Complete guide to using the Appendix 4 current-carrying capacity tables in BS 7671. Table-by-table overview, reference methods, correction factors for ambient temperature, grouping, and thermal insulation, with worked examples."
+      description="Complete guide to using the Appendix 4 current-carrying capacity tables in BS 7671. Table-by-table overview, reference methods…"
       datePublished="2025-04-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Technical Guide"

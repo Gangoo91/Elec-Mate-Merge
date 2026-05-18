@@ -21,10 +21,10 @@ import {
 export default function BestAIToolElectriciansPage() {
   return (
     <ComparisonTemplate
-      title="AI for Electricians: 5 Tools Compared 2026"
-      description="AI for electricians saves time on estimates and compliance. Compare 5 trade-specific tools for circuit design, job costing, and BS 7671:2018+A4:2026 checks."
+      title="AI for Electricians: 5 Tools Tested 2026"
+      description="AI for electricians cuts estimate time by 40%. Compare 5 trade tools for circuit design, compliance checks, and job costing. Free comparison guide."
       datePublished="2026-02-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Comparisons', href: '/compare' },
         {
@@ -129,7 +129,7 @@ export default function BestAIToolElectriciansPage() {
               </p>
               <SEOAppBridge
                 title="8 Specialist AI Agents"
-                description="Circuit Designer, Cost Engineer, Installation Guide, Commissioning Specialist, Maintenance Agent, Health & Safety, Fault Finder, and Regulation Lookup — each trained specifically for UK electrical work."
+                description="Circuit Designer, Cost Engineer, Installation Guide, Commissioning Specialist, Maintenance Agent, Health & Safety, Fault Finder…"
                 icon={Brain}
               />
             </>
@@ -148,7 +148,7 @@ export default function BestAIToolElectriciansPage() {
               <p>
                 ChatGPT and Gemini have general awareness of electrical concepts from their web
                 training data, but they frequently produce regulation numbers that do not exist,
-                confuse different editions of BS 7671, and lack knowledge of Amendment 3 (A4:2026)
+                confuse different editions of BS 7671, and lack knowledge of Amendment 4 (A4:2026)
                 which added Regulation 530.3.2 for bidirectional devices. When asked specific
                 questions about Zs limits, cable grouping factors, or disconnection times, they
                 often hallucinate values that are close but incorrect — the most dangerous kind of
@@ -195,7 +195,7 @@ export default function BestAIToolElectriciansPage() {
           icon: CircuitBoard,
           title: 'AI Circuit Designer',
           description:
-            'Plans circuit layouts, checks against BS 7671 requirements, considers diversity, cable grouping, and protective device coordination. No general chatbot can do this.',
+            'Plans circuit layouts, checks against BS 7671 requirements, considers diversity, cable grouping, and protective device coordination.',
         },
         {
           icon: PoundSterling,
@@ -241,9 +241,9 @@ export default function BestAIToolElectriciansPage() {
             'ChatGPT can discuss electrical topics at a general level, but it lacks deep BS 7671 knowledge and frequently produces inaccurate regulation references. For safety-critical electrical work — circuit design, cable sizing verification, regulation compliance — a specialist tool like Elec-Mate AI is significantly more reliable. ChatGPT is better suited to general business tasks like drafting emails and marketing content.',
         },
         {
-          question: 'Does Elec-Mate AI know about BS 7671 Amendment 3?',
+          question: 'Does Elec-Mate AI know about BS 7671 Amendment 4?',
           answer:
-            'Yes. Elec-Mate AI is trained on BS 7671:2018+A4:2026, including the latest amendment which added Regulation 530.3.2 for bidirectional and unidirectional devices. ChatGPT and Gemini have limited or no knowledge of Amendment 3, as their training data may not include this recent update issued in July 2024.',
+            'Yes. Elec-Mate AI is trained on BS 7671:2018+A4:2026, including the latest amendment which added Regulation 530.3.2 for bidirectional and unidirectional devices. ChatGPT and Gemini have limited or no knowledge of Amendment 4, as their training data may not include this recent update issued in July 2024.',
         },
         {
           question: 'How does the AI Cost Engineer work?',

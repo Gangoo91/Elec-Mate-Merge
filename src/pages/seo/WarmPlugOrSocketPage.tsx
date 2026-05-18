@@ -423,7 +423,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Check circuit loads with AI"
-          description="Elec-Mate's AI circuit designer can model your circuit loads, identify overloaded circuits, and recommend redistribution. Prevent overheating by designing circuits correctly from the start."
+          description="Elec-Mate's AI circuit designer can model your circuit loads, identify overloaded circuits, and recommend redistribution."
           icon={Zap}
         />
       </>
@@ -453,7 +453,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Metal consumer units</strong> — since Amendment 3 to BS 7671 (January 2016),
+                <strong>Metal consumer units</strong> — since Amendment 4 to BS 7671 (January 2016),
                 new consumer units in domestic premises must be enclosed in a non-combustible
                 material (metal). This provides fire containment at the consumer unit. If your
                 consumer unit is still plastic, a{' '}
@@ -677,7 +677,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Document socket faults with professional certificates"
-          description="Elec-Mate's certificate apps let you complete EICRs and Minor Works Certificates on your phone with thermal image attachments, observation codes, and instant PDF export. Join 1,000+ UK electricians."
+          description="Elec-Mate's certificate apps let you complete EICRs and Minor Works Certificates on your phone with thermal image attachments, observation codes…"
           icon={FileCheck2}
         />
       </>
@@ -693,9 +693,9 @@ export default function WarmPlugOrSocketPage() {
   return (
     <GuideTemplate
       title="Warm Plug or Socket | Causes & What to Do"
-      description="Why is your plug or socket warm? Learn the causes — loose connections, overloaded sockets, worn contacts — the fire risk, what to do immediately, and when to call an electrician. Safety-critical guide for UK homeowners and electricians."
+      description="Why is your plug or socket warm? Learn the causes — loose connections, overloaded sockets, worn contacts — the fire risk, what to do immediately…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Alert"

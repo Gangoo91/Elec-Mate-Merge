@@ -294,7 +294,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Practise the practical assessment with the EPA simulator"
-          description="Elec-Mate's EPA simulator walks you through a simulated inspection and testing practical — safe isolation, test sequence, result recording, and certification completion. Practise until you can do it in your sleep."
+          description="Elec-Mate's EPA simulator walks you through a simulated inspection and testing practical — safe isolation, test sequence, result recording…"
           icon={Wrench}
         />
       </>
@@ -491,7 +491,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Study for the 2391 with Elec-Mate"
-          description="Elec-Mate's inspection and testing course covers every topic on the 2391 syllabus. Flashcards for regulation recall, mock exams for the written paper, and the EPA simulator for practical preparation. Track your progress and know when you are ready."
+          description="Elec-Mate's inspection and testing course covers every topic on the 2391 syllabus. Flashcards for regulation recall, mock exams for the written paper…"
           icon={GraduationCap}
         />
       </>
@@ -558,9 +558,9 @@ export default function CityGuilds2391ExamTipsPage() {
   return (
     <GuideTemplate
       title="2391 Exam Tips | Inspection & Testing Exam Guide"
-      description="How to pass the C&G 2391 Inspection and Testing exam. Covers written exam format, practical assessment, test sequence, common pitfalls, and preparation strategy. Includes tips for both the 2391-51 and 2391-52."
+      description="How to pass the C&G 2391 Inspection and Testing exam. Covers written exam format, practical assessment, test sequence, common pitfalls…"
       datePublished="2025-04-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Exam Guide"

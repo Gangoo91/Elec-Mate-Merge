@@ -492,7 +492,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Learn to use your tools properly"
-          description="Elec-Mate's 46+ courses include hands-on installation and testing modules that teach you the correct techniques for every tool in your kit. From cable stripping to multifunction tester operation, learn the right way from the start."
+          description="Elec-Mate's 46+ courses include hands-on installation and testing modules that teach you the correct techniques for every tool in your kit."
           icon={Wrench}
         />
       </>
@@ -611,7 +611,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Master your tools with Elec-Mate"
-          description="46+ courses covering every tool and technique in the apprenticeship standard. Flashcards, mock exams, EPA simulator, AM2 simulator, and AI tutor. Build competence and confidence. 7-day free trial."
+          description="46+ courses covering every tool and technique in the apprenticeship standard. Flashcards, mock exams, EPA simulator, AM2 simulator, and AI tutor."
           icon={GraduationCap}
         />
       </>
@@ -627,9 +627,9 @@ export default function ApprenticeToolboxGuidePage() {
   return (
     <GuideTemplate
       title="Apprentice Toolbox Guide | Essential Tools List UK"
-      description="Complete guide to essential tools for UK electrical apprentices. Hand tools, VDE insulated tools, test equipment, tool bag vs tool box, budget guide, and tool maintenance. Build your kit without breaking the bank."
+      description="Complete guide to essential tools for UK electrical apprentices. Hand tools, VDE insulated tools, test equipment, tool bag vs tool box, budget guide…"
       datePublished="2025-09-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

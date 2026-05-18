@@ -22,7 +22,7 @@ import {
 
 const PAGE_TITLE = 'First Aid Course for Electricians | Emergency Response';
 const PAGE_DESCRIPTION =
-  'Essential first aid training for UK electricians covering electric shock response, CPR, burns treatment, working at height injuries, and workplace emergency procedures. 5 modules with video demonstrations, interactive quizzes, and AI tutor.';
+  'First aid training for UK electricians: shock response, CPR, burns, height injuries, workplace emergencies. 5 video modules + AI tutor.';
 
 const breadcrumbs = [
   { label: 'Training', href: '/training' },
@@ -86,27 +86,27 @@ const modules = [
   {
     title: "First Aid Legislation and the Electrician's Duty",
     description:
-      'Health and Safety (First-Aid) Regulations 1981, Electricity at Work Regulations 1989, employer obligations, risk assessment for first aid provision, and the role of the appointed person.',
+      'Health and Safety (First-Aid) Regulations 1981, Electricity at Work Regulations 1989, employer obligations, risk assessment for first aid provision…',
   },
   {
     title: 'Electric Shock Response and Safe Rescue',
     description:
-      'Recognising electric shock symptoms, safe disconnection procedures, rescue from live conductors, primary and secondary survey, and when to call emergency services. Low voltage and high voltage scenarios.',
+      'Recognising electric shock symptoms, safe disconnection procedures, rescue from live conductors, primary and secondary survey…',
   },
   {
     title: 'CPR, AED Use, and Cardiac Emergencies',
     description:
-      'Adult CPR technique (30:2 compression-to-breath ratio), AED operation and pad placement, recovery position, choking response, and recognising cardiac arrest versus other causes of collapse.',
+      'Adult CPR technique (30:2 compression-to-breath ratio), AED operation and pad placement, recovery position, choking response…',
   },
   {
     title: 'Burns, Bleeding, and Trauma Management',
     description:
-      'Electrical burns (entry and exit wounds), thermal burns from arc flash, chemical burns from battery acid, severe bleeding control, fractures from falls, and head injury assessment.',
+      'Electrical burns (entry and exit wounds), thermal burns from arc flash, chemical burns from battery acid, severe bleeding control, fractures from falls…',
   },
   {
     title: 'Site Emergency Procedures and Reporting',
     description:
-      'Emergency action plans, casualty handover to paramedics, RIDDOR reporting requirements, incident documentation, psychological first aid for witnesses, and post-incident review.',
+      'Emergency action plans, casualty handover to paramedics, RIDDOR reporting requirements, incident documentation, psychological first aid for witnesses…',
   },
 ];
 
@@ -213,7 +213,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Practice electric shock response scenarios"
-          description="Interactive scenario-based exercises walk you through the correct response sequence for low voltage and high voltage electric shock incidents. Test your decision-making under pressure with timed exercises."
+          description="Interactive scenario-based exercises walk you through the correct response sequence for low voltage and high voltage electric shock incidents."
           icon={Zap}
         />
       </>
@@ -401,7 +401,7 @@ export default function FirstAidCoursePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-08-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Training"

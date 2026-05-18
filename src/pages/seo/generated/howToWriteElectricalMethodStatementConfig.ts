@@ -5,14 +5,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // CDM 2015 statutory framework and the Electricity at Work Regulations 1989.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const howToWriteElectricalMethodStatementConfig: GeneratedGuideConfig = {
   pagePath: '/guides/how-to-write-electrical-method-statement',
   title:
-    'How to Write an Electrical Method Statement (UK Guide) | Elec-Mate',
+    'How to Write an Electrical Method Statement (UK Guide)',
   description:
-    'Step-by-step UK guide to writing a compliant electrical method statement: scope, hazards, control measures, sequence of operations, safe isolation, PPE, emergency procedures and sign-off chain. Aligned to BS 7671:2018+A4:2026, EAWR 1989 and CDM 2015.',
+    'Step-by-step UK guide to writing a compliant electrical method statement: scope, hazards, control measures, sequence of operations, safe isolation, PPE…',
   datePublished: published,
   dateModified: modified,
   readingTime: 12,
@@ -331,7 +331,7 @@ export const howToWriteElectricalMethodStatementConfig: GeneratedGuideConfig = {
     {
       href: '/tools/rams-generator',
       title: 'RAMS Generator',
-      description: 'Produce a compliant method statement and risk assessment in under two minutes — fully structured, BS 7671:2018+A4:2026 referenced, ready to brief and sign off.',
+      description: 'Produce a compliant method statement and risk assessment in under two minutes — fully structured, BS 7671:2018+A4:2026 referenced…',
       icon: 'FileText',
       category: 'Tool',
     },

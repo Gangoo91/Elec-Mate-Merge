@@ -521,8 +521,8 @@ const sections = [
           </ul>
         </div>
         <SEOAppBridge
-          title="Acceptable Continuity Test Results | BS 7671"
-          description="Acceptable continuity test results for ring finals, r1+rn, r1+r2 under BS 7671:2018+A4:2026. Pass/fail thresholds, test methods, and compliant PDF export."
+          title="Acceptable Continuity Test Results BS 7671"
+          description="Acceptable continuity test results for ring finals and protective conductors under BS 7671:2018+A4:2026."
           icon={FileCheck2}
         />
       </>
@@ -582,10 +582,10 @@ const sections = [
 export default function ContinuityTestingGuidePage() {
   return (
     <GuideTemplate
-      title="Continuity Testing Guide UK | Ring Final Circuit & CPC Testing"
-      description="Complete guide to continuity testing for UK electricians. Ring final circuit end-to-end and cross-connected tests, r1+rn and r2 values, CPC continuity, bonding conductor testing, and recording results."
+      title="Continuity Testing Guide UK | Ring Final Circuit & CPC"
+      description="Complete guide to continuity testing for UK electricians. Ring final circuit end-to-end and cross-connected tests, r1+rn and r2 values, CPC continuity…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

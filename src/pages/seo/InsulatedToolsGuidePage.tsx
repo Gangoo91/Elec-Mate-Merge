@@ -563,7 +563,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional H&S documentation for electrical contractors"
-          description="Join 1,000+ UK electricians using Elec-Mate for RAMS generation, site safety documentation, and health and safety compliance. AI-generated, site-specific documents ready in minutes. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for RAMS generation, site safety documentation, and health and safety compliance."
           icon={HardHat}
         />
       </>
@@ -578,10 +578,10 @@ const sections = [
 export default function InsulatedToolsGuidePage() {
   return (
     <GuideTemplate
-      title="Insulated Tools for Electricians UK | 1000V Rated Tools Guide"
-      description="Complete UK guide to IEC 60900 insulated tools for electricians. VDE-rated tools explained, when insulated tools are legally required, brands including Knipex, Wiha, Wera and Bahco, and testing and inspection requirements."
+      title="Insulated Tools for Electricians UK | 1000V Rated Tools"
+      description="Complete UK guide to IEC 60900 insulated tools for electricians. VDE-rated tools explained, when insulated tools are legally required…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Tools Guide"

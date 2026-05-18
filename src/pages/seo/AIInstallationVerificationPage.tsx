@@ -17,10 +17,10 @@ import {
 export default function AIInstallationVerificationPage() {
   return (
     <ToolTemplate
-      title="AI Installation Verification | Quality Check Tool | Elec-Mate"
-      description="Automated checking of electrical installations against BS 7671:2018+A4:2026. AI-powered verification checklists, compliance reporting, observation code assignment, and certificate-ready documentation for EIC and EICR."
+      title="AI Installation Verification | Quality Check Tool"
+      description="Automated checking of electrical installations against BS 7671:2018+A4:2026. AI-powered verification checklists, compliance reporting…"
       datePublished="2026-01-22"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       toolPath="/tools/ai-installation-verification"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
@@ -107,7 +107,7 @@ export default function AIInstallationVerificationPage() {
           appBridge: {
             title: 'AI Installation Verification — Built Into Elec-Mate',
             description:
-              'Automatic BS 7671 compliance checking for every circuit. Enter your test results and installation data, and the AI flags non-compliances with regulation references and recommended actions.',
+              'Automatic BS 7671 compliance checking for every circuit. Enter your test results and installation data…',
             icon: ClipboardCheck,
           },
         },
@@ -158,7 +158,7 @@ export default function AIInstallationVerificationPage() {
                   installation. Type and location of SPD verified against Regulation 443.4.
                 </li>
                 <li>
-                  <span className="font-semibold text-white">Amendment 3:2024 requirements</span> —
+                  <span className="font-semibold text-white">Amendment 4:2024 requirements</span> —
                   Regulation 530.3.2 checked for installations with bidirectional power flow (solar
                   PV, battery storage). Correct protective device directionality verified.
                 </li>
@@ -308,7 +308,7 @@ export default function AIInstallationVerificationPage() {
               </p>
               <SEOAppBridge
                 title="From Inspection to Report in Minutes"
-                description="Enter your test results and inspection findings, and the AI generates a complete compliance report with observation codes, regulation references, and optional remedial cost estimates. Export as a branded PDF."
+                description="Enter your test results and inspection findings, and the AI generates a complete compliance report with observation codes, regulation references…"
                 icon={FileCheck}
               />
             </>
@@ -344,19 +344,19 @@ export default function AIInstallationVerificationPage() {
           icon: ShieldCheck,
           title: '200+ BS 7671 Checks',
           description:
-            'Systematic verification against over 200 specific BS 7671 requirements covering protection, cable sizing, voltage drop, earthing, bonding, and special locations.',
+            'Systematic verification against over 200 specific BS 7671 requirements covering protection, cable sizing, voltage drop, earthing, bonding…',
         },
         {
           icon: ListChecks,
           title: 'Dynamic Checklists',
           description:
-            'Checklists adapt to the installation type — domestic, commercial, industrial, and special locations. Only relevant checks are included for each specific installation.',
+            'Checklists adapt to the installation type — domestic, commercial, industrial, and special locations.',
         },
         {
           icon: AlertTriangle,
           title: 'Auto Observation Codes',
           description:
-            'Non-compliances are automatically classified as C1, C2, C3, or FI with the specific BS 7671 regulation reference and professionally worded observation text.',
+            'Non-compliances are automatically classified as C1, C2, C3, or FI with the specific BS 7671 regulation reference and professionally worded observation…',
         },
         {
           icon: FileCheck,
@@ -372,9 +372,9 @@ export default function AIInstallationVerificationPage() {
         },
         {
           icon: ClipboardCheck,
-          title: 'Amendment 3:2024 Ready',
+          title: 'Amendment 4:2024 Ready',
           description:
-            'Includes checks for BS 7671 Amendment 3:2024 requirements including Regulation 530.3.2 for bidirectional and unidirectional protective devices.',
+            'Includes checks for BS 7671 Amendment 4:2024 requirements including Regulation 530.3.2 for bidirectional and unidirectional protective devices.',
         },
       ]}
       featuresHeading="Verification Features"
@@ -409,7 +409,7 @@ export default function AIInstallationVerificationPage() {
         {
           question: 'Can it verify installations with solar PV or battery storage?',
           answer:
-            'Yes. The verification engine includes specific checks for installations with distributed energy resources including solar PV, battery energy storage systems (BESS), wind turbines, and EV chargers with vehicle-to-grid (V2G) capability. These checks cover the requirements of BS 7671 Amendment 3:2024, particularly the new Regulation 530.3.2 regarding bidirectional and unidirectional protective devices. The AI verifies that the correct RCD type is installed (Type B for systems with DC fault current), that protective devices are suitable for bidirectional power flow, that the earthing arrangement is correct for the generation source, and that G98/G99 connection requirements are addressed. For solar PV installations, it also checks DC isolator provision and labelling requirements.',
+            'Yes. The verification engine includes specific checks for installations with distributed energy resources including solar PV, battery energy storage systems (BESS), wind turbines, and EV chargers with vehicle-to-grid (V2G) capability. These checks cover the requirements of BS 7671 Amendment 4:2024, particularly the new Regulation 530.3.2 regarding bidirectional and unidirectional protective devices. The AI verifies that the correct RCD type is installed (Type B for systems with DC fault current), that protective devices are suitable for bidirectional power flow, that the earthing arrangement is correct for the generation source, and that G98/G99 connection requirements are addressed. For solar PV installations, it also checks DC isolator provision and labelling requirements.',
         },
         {
           question: 'How does the verification handle special locations under BS 7671 Part 7?',

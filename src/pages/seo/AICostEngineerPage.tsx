@@ -25,7 +25,7 @@ import { Link } from 'react-router-dom';
 
 const PAGE_TITLE = 'AI Cost Engineer | Electrical Job Estimator | Elec-Mate';
 const PAGE_DESCRIPTION =
-  'Get accurate electrical job cost estimates with AI trained specifically for UK electrical work. Itemised materials, labour rates, regional pricing adjustments, and BS 7671 compliant specifications.';
+  'Accurate UK electrical job cost estimates from AI. Itemised materials, labour rates, regional adjustments, BS 7671 compliant specifications.';
 
 const faqs = [
   {
@@ -88,7 +88,7 @@ const features = [
     icon: Receipt,
     title: 'VAT and CIS Handling',
     description:
-      'Correct VAT treatment for domestic and commercial work including reduced rates for qualifying energy-saving installations. CIS deduction calculations included.',
+      'Correct VAT treatment for domestic and commercial work including reduced rates for qualifying energy-saving installations.',
   },
   {
     icon: ClipboardList,
@@ -145,7 +145,7 @@ export default function AICostEngineerPage() {
       { name: 'Home', url: '/' },
       { name: 'AI Cost Engineer', url: '/ai-cost-engineer' },
     ],
-    dateModified: '2026-04-12',
+    dateModified: '2026-05-18',
     author: 'Elec-Mate Technical Team',
   });
 
@@ -460,7 +460,7 @@ export default function AICostEngineerPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="AI Quoting + Invoicing in One App"
-            description="Generate accurate electrical quotes with AI cost analysis, then convert them to invoices and certificates — all in Elec-Mate. Xero and QuickBooks integration included. Start free for 7 days."
+            description="Generate accurate electrical quotes with AI cost analysis, then convert them to invoices and certificates — all in Elec-Mate."
             icon={PoundSterling}
           />
           <p className="text-white mt-4 text-sm">

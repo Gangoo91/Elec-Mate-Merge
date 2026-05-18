@@ -270,8 +270,8 @@ const sections = [
           </ol>
         </div>
         <SEOAppBridge
-          title="Document jobs and generate certificates for portfolio evidence"
-          description="Elec-Mate generates EIC and EICR certificates that become immediate portfolio product evidence. Use the AI to draft written accounts from your job notes. Build portfolio evidence as you work."
+          title="Document jobs and generate certificates for portfolio"
+          description="Elec-Mate generates EIC and EICR certificates that become immediate portfolio product evidence. Use the AI to draft written accounts from your job notes."
           icon={FolderOpen}
         />
       </>
@@ -414,7 +414,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Build portfolio evidence as you work with Elec-Mate"
-          description="Generate EIC and EICR certificates, record test results, and use AI to draft written accounts from your job notes. Every certificate and test record is immediately usable as portfolio product evidence."
+          description="Generate EIC and EICR certificates, record test results, and use AI to draft written accounts from your job notes."
           icon={GraduationCap}
         />
       </>
@@ -429,10 +429,10 @@ const sections = [
 export default function ApprenticePortfolioBuildingPage() {
   return (
     <GuideTemplate
-      title="Electrical Apprentice Portfolio Building Tips UK | NVQ Evidence Guide"
-      description="Complete guide to building a strong electrical apprentice NVQ portfolio. Evidence types, how to document jobs professionally, photography tips, witness testimonies, organisation, and common mistakes to avoid. For City & Guilds 2365 apprentices."
+      title="Electrical Apprentice Portfolio Building Tips UK | NVQ"
+      description="Complete guide to building a strong electrical apprentice NVQ portfolio. Evidence types, how to document jobs professionally, photography tips…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

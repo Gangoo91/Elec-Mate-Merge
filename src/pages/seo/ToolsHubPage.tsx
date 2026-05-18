@@ -15,9 +15,9 @@ import {
   Wrench,
 } from 'lucide-react';
 
-const PAGE_TITLE = 'Electrical Tools Hub | Certificates, Calculators, AI and Business Tools';
+const PAGE_TITLE = 'Electrical Tools | Certificates, Calculators, AI, Business';
 const PAGE_DESCRIPTION =
-  'Explore Elec-Mate electrical tools for UK electricians: digital certificates, BS 7671 calculators, AI tools, quoting, invoicing, RAMS, training, and employer oversight.';
+  'Elec-Mate tools for UK electricians: digital certificates, BS 7671 calculators, AI specialists, quoting, invoicing, RAMS, training, oversight.';
 
 const features = [
   {
@@ -135,7 +135,7 @@ export default function ToolsHubPage() {
       { name: 'Home', url: '/' },
       { name: 'Tools', url: '/tools' },
     ],
-    dateModified: '2026-04-12',
+    dateModified: '2026-05-18',
     author: 'Elec-Mate Technical Team',
   });
 

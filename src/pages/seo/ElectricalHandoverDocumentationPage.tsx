@@ -221,7 +221,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Digital EIC and Minor Works"
-          description="Complete the EIC or Minor Works Certificate on your phone with full test results, schedule of inspections, and circuit details. AI-assisted data entry catches errors before you issue the certificate. Send as a professional PDF."
+          description="Complete the EIC or Minor Works Certificate on your phone with full test results, schedule of inspections, and circuit details."
           icon={FileCheck2}
         />
       </>
@@ -648,7 +648,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Professional Handover Documentation"
-          description="EIC, MEIWC, test results, and circuit schedules completed on your phone. Send the complete handover package to the client from site. Professional PDFs that satisfy scheme assessors and clients alike."
+          description="EIC, MEIWC, test results, and circuit schedules completed on your phone. Send the complete handover package to the client from site."
           icon={FileText}
         />
       </>
@@ -664,9 +664,9 @@ export default function ElectricalHandoverDocumentationPage() {
   return (
     <GuideTemplate
       title="Electrical Handover Documentation | What to Provide"
-      description="Complete guide to electrical handover documentation. EIC, test results, O&M manual, as-built drawings, cable schedules, warranty info, and Building Regulations compliance. Professional handover with Elec-Mate."
+      description="Complete guide to electrical handover documentation. EIC, test results, O&M manual, as-built drawings, cable schedules, warranty info…"
       datePublished="2026-01-18"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Guide"

@@ -516,7 +516,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Certificate solar PV installations with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for electrical certification. Complete MCS installation certificates, EICRs, and Electrical Installation Certificates on your phone with instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for electrical certification. Complete MCS installation certificates, EICRs…"
           icon={Sun}
         />
       </>
@@ -532,9 +532,9 @@ export default function SolarPVSystemDesignPage() {
   return (
     <GuideTemplate
       title="Solar PV System Design UK | Designing a Solar Panel System"
-      description="Complete guide to solar PV system design in the UK. kWp calculation, string design, inverter sizing, DC cable sizing, AC connection, G99/G98 DNO notification, and MCS 001 design requirements."
+      description="Complete guide to solar PV system design in the UK. kWp calculation, string design, inverter sizing, DC cable sizing, AC connection…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Solar PV Guide"

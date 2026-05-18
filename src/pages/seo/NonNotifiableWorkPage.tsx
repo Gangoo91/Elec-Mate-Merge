@@ -21,7 +21,7 @@ import {
 
 const PAGE_TITLE = "Non-Notifiable Electrical Work | What Doesn't Need Part P";
 const PAGE_DESCRIPTION =
-  "Complete guide to non-notifiable electrical work under Part P of the Building Regulations. What doesn't need notification, like-for-like replacements, adding sockets in non-special locations, work outside kitchens and bathrooms. For UK electricians and homeowners.";
+  "Non-notifiable electrical work under Part P: like-for-like replacements, adding sockets outside special locations, what doesn't need notification.";
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -484,7 +484,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Minor Works certificates in under 5 minutes"
-          description="Elec-Mate generates professional Minor Works certificates for non-notifiable work. Enter the circuit details, test results, and description of work — the app auto-validates every value and generates a signed PDF certificate. Perfect for socket additions, accessory replacements, and minor alterations."
+          description="Elec-Mate generates professional Minor Works certificates for non-notifiable work. Enter the circuit details, test results…"
           icon={FileCheck2}
         />
       </>
@@ -575,7 +575,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Professional certificates for every job"
-          description="Issue a Minor Works certificate for every non-notifiable job — socket additions, accessory replacements, and minor alterations. Elec-Mate generates a signed PDF in under 5 minutes. Your customers get professional documentation; you get legal protection."
+          description="Issue a Minor Works certificate for every non-notifiable job — socket additions, accessory replacements, and minor alterations."
           icon={ClipboardCheck}
         />
         <p>
@@ -656,7 +656,7 @@ export default function NonNotifiableWorkPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-08-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations Guide"

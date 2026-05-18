@@ -485,7 +485,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Manage your Leeds electrical business from one app"
-          description="Elec-Mate helps Leeds electricians quote, schedule, and certify jobs across domestic and commercial work. Professional certificates completed on site, instant PDF delivery to clients."
+          description="Elec-Mate helps Leeds electricians quote, schedule, and certify jobs across domestic and commercial work."
           icon={Building2}
         />
       </>
@@ -538,7 +538,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Leeds electrical business"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Complete EICRs and EICs on site, send instant PDFs to Leeds letting agents and landlords. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Complete EICRs and EICs on site…"
           icon={MapPin}
         />
       </>
@@ -555,9 +555,9 @@ export default function ElectricianLeedsPage() {
     <GuideTemplate
       localArea="Leeds"
       title="Electrician in Leeds | Local Electricians 2026"
-      description="Find qualified, registered electricians in Leeds. 2026 pricing guide, NICEIC/NAPIT verification, Yorkshire stone terrace rewiring, Northern Powergrid connections, student HMO compliance in Headingley and Hyde Park."
+      description="Find qualified, registered electricians in Leeds. 2026 pricing guide, NICEIC/NAPIT verification, Yorkshire stone terrace rewiring…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Find an Electrician"

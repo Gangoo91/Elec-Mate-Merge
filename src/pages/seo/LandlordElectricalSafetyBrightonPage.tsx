@@ -642,7 +642,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Brighton landlord EICR business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more Brighton EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -657,10 +657,10 @@ const sections = [
 export default function LandlordElectricalSafetyBrightonPage() {
   return (
     <GuideTemplate
-      title="Landlord Electrical Safety Brighton | EICR Landlords Brighton"
-      description="Landlord electrical safety requirements in Brighton and Hove. 2020 Regulations, Brighton City Council enforcement, HMO licensing, penalties up to £30,000, converted property EICR challenges, and 2026 costs."
+      title="Landlord Electrical Safety Brighton | EICR Landlords"
+      description="Landlord electrical safety requirements in Brighton and Hove. 2020 Regulations, Brighton City Council enforcement, HMO licensing…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Landlord Guide"

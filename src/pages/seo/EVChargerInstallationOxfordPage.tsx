@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Full guide to the IET Wiring Regulations including Amendment 3:2024.',
+    description: 'Full guide to the IET Wiring Regulations including Amendment 4:2024.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
@@ -600,7 +600,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your EV charger installation business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EV certification, instant PDF export, and professional quoting. Complete more EV installations per day. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EV certification, instant PDF export, and professional quoting."
           icon={Zap}
         />
       </>
@@ -616,9 +616,9 @@ export default function EVChargerInstallationOxfordPage() {
   return (
     <GuideTemplate
       title="EV Charger Installation Oxford | Home EV Charging Oxford"
-      description="EV charger installation in Oxford. OZEV grants up to £350, installation costs £800–£1,200 for 7kW, BS 7671 Section 722 compliance, NICEIC and NAPIT approved installers, and the Oxford Zero Emission Zone explained."
+      description="EV charger installation in Oxford. OZEV grants up to £350, installation costs £800–£1,200 for 7kW, BS 7671 Section 722 compliance…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EV Charging Guide"

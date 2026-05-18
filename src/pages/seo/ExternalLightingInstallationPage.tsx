@@ -587,7 +587,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certify external lighting installations with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate to issue Electrical Installation Certificates and Minor Works Certificates on site. Instant PDF export and automatic notification to competent person schemes. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to issue Electrical Installation Certificates and Minor Works Certificates on site."
           icon={FileCheck2}
         />
       </>
@@ -602,10 +602,10 @@ const sections = [
 export default function ExternalLightingInstallationPage() {
   return (
     <GuideTemplate
-      title="External Lighting Installation UK | Outdoor Electrical Wiring Guide"
-      description="Complete UK guide to external lighting installation. Cable requirements, IP ratings (IP44 minimum), RCD protection, underground SWA cable depth, PIR and dusk-to-dawn controls, planning permission, light pollution, and certification under Part P."
+      title="External Lighting Installation UK | Outdoor Electrical"
+      description="Complete UK guide to external lighting installation. Cable requirements, IP ratings (IP44 minimum), RCD protection, underground SWA cable depth…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

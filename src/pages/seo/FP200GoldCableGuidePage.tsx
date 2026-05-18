@@ -491,7 +491,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certify fire alarm wiring installations on your phone"
-          description="Elec-Mate's certificate app lets you complete EICs and fire alarm installation certificates on site. Record FP200 Gold cable details, test results, and BS 5839-1 compliance — instant PDF. 7-day free trial."
+          description="Elec-Mate's certificate app lets you complete EICs and fire alarm installation certificates on site."
           icon={FileCheck2}
         />
       </>
@@ -507,9 +507,9 @@ export default function FP200GoldCableGuidePage() {
   return (
     <GuideTemplate
       title="FP200 Gold Fire Resistant Cable UK | Installation Guide"
-      description="Complete UK guide to FP200 Gold fire-resistant cable. BS 7629-1 compliance, 105°C temperature rating, installation requirements, clipping and support, comparison with MICC cable, and BS 5839 / BS 5266 requirements for fire alarms and emergency lighting."
+      description="Complete UK guide to FP200 Gold fire-resistant cable. BS 7629-1 compliance, 105°C temperature rating, installation requirements, clipping and support…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

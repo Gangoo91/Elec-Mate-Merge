@@ -626,7 +626,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage restaurant contracts with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate to quote, certificate, and manage commercial fit-out projects. AI-assisted EIC completion, instant PDF export, and client portal. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to quote, certificate, and manage commercial fit-out projects."
           icon={FileCheck2}
         />
       </>
@@ -641,10 +641,10 @@ const sections = [
 export default function RestaurantElectricalCostPage() {
   return (
     <GuideTemplate
-      title="Restaurant Electrical Installation Cost UK 2025 | Catering Electrical"
-      description="Restaurant electrical installation costs UK 2025. 3-phase supply for commercial catering, gas interlock wiring, emergency lighting to BS 5266-1, fire suppression interlocks, CCTV. Typical fit-out £8,000–£25,000."
+      title="Restaurant Electrical Installation Cost UK 2025 | Catering"
+      description="Restaurant electrical installation costs UK 2025. 3-phase supply for commercial catering, gas interlock wiring, emergency lighting to BS 5266-1…"
       datePublished="2025-01-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Commercial Cost Guide"

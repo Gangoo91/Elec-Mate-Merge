@@ -548,7 +548,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Reduce exam anxiety with structured study"
-          description="Elec-Mate's 46+ courses, flashcards, and mock exams break the apprenticeship syllabus into manageable daily sessions. See your progress build over time. Feel prepared, not overwhelmed."
+          description="Elec-Mate's 46+ courses, flashcards, and mock exams break the apprenticeship syllabus into manageable daily sessions. See your progress build over time."
           icon={Brain}
         />
       </>
@@ -634,7 +634,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Study tools that work around your life"
-          description="Elec-Mate's apprentice hub gives you 46+ courses, flashcards, mock exams, EPA and AM2 simulators, site diary, OJT tracker, and an AI tutor. Study in short sessions on your phone. Build confidence one step at a time."
+          description="Elec-Mate's apprentice hub gives you 46+ courses, flashcards, mock exams, EPA and AM2 simulators, site diary, OJT tracker, and an AI tutor."
           icon={GraduationCap}
         />
       </>
@@ -650,9 +650,9 @@ export default function ApprenticeMentalHealthPage() {
   return (
     <GuideTemplate
       title="Mental Health for Electrical Apprentices | Support Guide"
-      description="Mental health support guide for UK electrical apprentices. Common pressures, recognising the signs, site culture, employer duties, building resilience, and specialist resources including the Electrical Industries Charity."
+      description="Mental health support guide for UK electrical apprentices. Common pressures, recognising the signs, site culture, employer duties, building resilience…"
       datePublished="2025-08-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Wellbeing Guide"

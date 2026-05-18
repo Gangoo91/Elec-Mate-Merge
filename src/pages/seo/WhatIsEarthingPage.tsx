@@ -351,7 +351,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Record earthing arrangements on your EICR"
-          description="Elec-Mate's EICR form captures the earthing arrangement, Ze reading, main bonding conductor sizes, and electrode details. The AI assistant helps identify the arrangement from your site observations."
+          description="Elec-Mate's EICR form captures the earthing arrangement, Ze reading, main bonding conductor sizes, and electrode details."
           icon={Brain}
         />
       </>
@@ -535,7 +535,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Complete EICR certificates on your phone"
-          description="Elec-Mate records all earthing details — earthing arrangement, Ze, Zs, R1+R2, bonding sizes, electrode resistance — directly into the EICR. Voice entry, AI assistance, and instant PDF export. 7-day free trial."
+          description="Elec-Mate records all earthing details — earthing arrangement, Ze, Zs, R1+R2, bonding sizes, electrode resistance — directly into the EICR."
           icon={FileCheck2}
         />
       </>
@@ -551,9 +551,9 @@ export default function WhatIsEarthingPage() {
   return (
     <GuideTemplate
       title="What Is Earthing? | Why Electrical Earthing Matters"
-      description="Plain English guide to electrical earthing. Why earthing matters for safety, how it works, TN-S, TN-C-S (PME), and TT earthing arrangements explained, main and supplementary bonding, and what gets tested during an EICR."
+      description="Plain English guide to electrical earthing. Why earthing matters for safety, how it works, TN-S, TN-C-S (PME), and TT earthing arrangements explained…"
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Electrical Basics"

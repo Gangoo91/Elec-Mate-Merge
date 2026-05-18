@@ -621,8 +621,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Certificate home office and garden office work with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and same-day quoting. Issue the certificate and quote the next job before you leave. 7-day free trial."
+          title="Certificate home office and garden office work with"
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and same-day quoting."
           icon={FileCheck2}
         />
       </>
@@ -637,10 +637,10 @@ const sections = [
 export default function HomeOfficeElectricalGuidePage() {
   return (
     <GuideTemplate
-      title="Home Office Electrical Guide UK | Wiring for Working from Home"
-      description="Complete electrical guide for home offices in the UK. Dedicated circuits, data point installation, lighting design, EV charging, garden office power supply, planning permission, UPS protection, and expense claims for electrical work."
+      title="Home Office Electrical Guide UK | Wiring for Working from"
+      description="Complete electrical guide for home offices in the UK. Dedicated circuits, data point installation, lighting design, EV charging…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Home Office Guide"

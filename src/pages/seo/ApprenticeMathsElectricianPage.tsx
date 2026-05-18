@@ -526,7 +526,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Practice electrical maths with Elec-Mate"
-          description="The Elec-Mate Study Centre includes calculation drills, worked examples, and AI-powered step-by-step explanations for every formula you need as an electrical apprentice. 7-day free trial."
+          description="The Elec-Mate Study Centre includes calculation drills, worked examples, and AI-powered step-by-step explanations for every formula you need as an…"
           icon={Calculator}
         />
       </>
@@ -541,10 +541,10 @@ const sections = [
 export default function ApprenticeMathsElectricianPage() {
   return (
     <GuideTemplate
-      title="Maths for Electrical Apprentices | Essential Electrical Calculations"
-      description="Essential electrical maths for apprentices. Ohm's Law calculations, power triangle (P=IV), voltage drop formula, percentage voltage drop, transposition of formulae, Pythagoras for AC circuits, scientific notation, and practical worked examples."
+      title="Maths for Electrical Apprentices | Essential Electrical"
+      description="Essential electrical maths for apprentices. Ohm's Law calculations, power triangle (P=IV), voltage drop formula, percentage voltage drop…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Maths Guide"

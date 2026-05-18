@@ -652,10 +652,10 @@ const sections = [
 export default function GeneratorInstallationGuidePage() {
   return (
     <GuideTemplate
-      title="Generator Installation Guide UK | Standby Generator Electrical"
-      description="Complete guide to standby generator installation in the UK. ATS and manual changeover switches, G99 DNO requirements, generator earthing, fuel storage regulations, testing schedules, and load bank testing for commercial and industrial generators."
+      title="Generator Installation Guide UK | Standby Generator"
+      description="Complete guide to standby generator installation in the UK. ATS and manual changeover switches, G99 DNO requirements, generator earthing…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Industrial Guide"

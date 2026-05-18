@@ -383,7 +383,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Verify bonding requirements with AI"
-          description="Describe the installation to Elec-Mate's AI regulations assistant — supply type, services present, pipe materials — and get a clear answer on what needs bonding, conductor sizes, and clamp positions. No more guesswork."
+          description="Describe the installation to Elec-Mate's AI regulations assistant — supply type, services present…"
           icon={Brain}
         />
       </>
@@ -618,8 +618,8 @@ const sections = [
           earthing/bonding, and C3 for missing earth sleeving or recommendations for improvement.
         </p>
         <SEOAppBridge
-          title="BS 7671 Table 54.7 | Earth Fault Loop Impedance"
-          description="BS 7671:2018+A4:2026 Table 54.7 sets maximum Ze and Zs values for circuit protection. Learn how to measure, record and comply with the wiring regs on every EICR."
+          title="BS 7671 Table 54.7 | Ze & Zs Limits 2026"
+          description="BS 7671 Table 54.7 sets maximum earth fault loop impedance values for circuit protection. Measure Ze and Zs correctly to pass EICR compliance under…"
           icon={Brain}
         />
       </>
@@ -635,9 +635,9 @@ export default function ProtectiveEarthingBondingPage() {
   return (
     <GuideTemplate
       title="Protective Earthing & Bonding | BS 7671 Guide"
-      description="Complete guide to protective earthing and bonding under BS 7671. Covers the main earthing terminal, main bonding conductors, 10mm and 6mm requirements, extraneous-conductive-parts, earthing arrangements, and testing methods."
+      description="Complete guide to protective earthing and bonding under BS 7671. Covers the main earthing terminal, main bonding conductors, 10mm and 6mm requirements…"
       datePublished="2025-05-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations Guide"

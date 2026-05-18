@@ -5,14 +5,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // and BS EN 61643 (Low-voltage surge protective devices).
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const spdChapter443A4Config: GeneratedGuideConfig = {
   pagePath: '/guides/spd-chapter-443-a4-2026',
   title:
-    'Surge Protective Devices — Chapter 443 under BS 7671:2018+A4:2026 | Elec-Mate',
+    'Surge Protective Devices — Chapter 443 under BS',
   description:
-    'Chapter 443 of BS 7671:2018+A4:2026 explained for UK electricians — the new Calculated Risk Level (CRL) methodology, when SPDs are mandatory, Type 1, Type 2 and Type 3 selection, Section 534 installation rules, AC and DC coordination for solar PV and battery storage, and EICR coding for missing or failed surge protective devices.',
+    'Chapter 443 of BS 7671:2018+A4:2026 explained for UK electricians — the new Calculated Risk Level (CRL) methodology, when SPDs are mandatory, Type 1…',
   datePublished: published,
   dateModified: modified,
   readingTime: 18,
@@ -543,7 +543,7 @@ export const spdChapter443A4Config: GeneratedGuideConfig = {
       href: '/guides/bs-7671-a4-2026-summary',
       title: 'BS 7671 A4:2026 Summary',
       description:
-        'The full A4:2026 picture — AFDD changes, TN-C-S (PNB) earthing updates, new schedule columns, model form changes, and the Chapter 443 CRL methodology in context.',
+        'The full A4:2026 picture — AFDD changes, TN-C-S (PNB) earthing updates, new schedule columns, model form changes…',
       icon: 'BookOpen',
       category: 'Guide',
     },
@@ -583,7 +583,7 @@ export const spdChapter443A4Config: GeneratedGuideConfig = {
       href: '/guides/chapter-44-overvoltage-protection',
       title: 'Chapter 44 Overvoltage Protection',
       description:
-        'The parent chapter to 443 — the full overvoltage protection framework in Part 4 of BS 7671, including 441 (general), 442 (faults between systems) and 443 (transient overvoltages).',
+        'The parent chapter to 443 — the full overvoltage protection framework in Part 4 of BS 7671, including 441 (general)…',
       icon: 'BookOpen',
       category: 'Guide',
     },

@@ -310,7 +310,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Study for your apprenticeship on your phone"
-          description="Elec-Mate's Study Centre covers everything you need for Level 2 and Level 3 — electrical theory, BS 7671 regulations, practical guidance, and exam preparation. Short, focused sections you can study between jobs."
+          description="Elec-Mate's Study Centre covers everything you need for Level 2 and Level 3 — electrical theory, BS 7671 regulations, practical guidance…"
           icon={GraduationCap}
         />
       </>
@@ -590,7 +590,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Start studying before your apprenticeship begins"
-          description="Get ahead with Elec-Mate's Study Centre. Cover the basics of electrical theory, health and safety, and BS 7671 before your first day on site. Structured courses, AI tutor, and practice questions — all on your phone."
+          description="Get ahead with Elec-Mate's Study Centre. Cover the basics of electrical theory, health and safety, and BS 7671 before your first day on site."
           icon={Brain}
         />
       </>
@@ -606,9 +606,9 @@ export default function ElectricalCareersForSchoolLeaversPage() {
   return (
     <GuideTemplate
       title="Electrical Careers for School Leavers | How to Start"
-      description="Complete guide to starting an electrical career from school. GCSE requirements, how to apply for an apprenticeship, what the job involves, earning potential from apprentice to self-employed, and career progression routes."
+      description="Complete guide to starting an electrical career from school. GCSE requirements, how to apply for an apprenticeship, what the job involves…"
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

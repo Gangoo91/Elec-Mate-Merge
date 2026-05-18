@@ -23,9 +23,9 @@ export default function BestApprenticeAppPage() {
   return (
     <ComparisonTemplate
       title="Best Apprentice App 2026 | Electrical Training Compared"
-      description="Compare the best apprentice training apps for electrical students in 2026. Elec-Mate vs eCertificates vs Electrician's Guide — Level 2/3 courses, AM2 prep, EPA simulator, flashcards, and mock exams compared."
+      description="Compare the best apprentice training apps for electrical students in 2026. Elec-Mate vs eCertificates vs Electrician's Guide — Level 2/3 courses…"
       datePublished="2026-02-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Comparisons', href: '/compare' },
         { label: 'Best Apprentice App', href: '/compare/best-apprentice-app' },
@@ -128,7 +128,7 @@ export default function BestApprenticeAppPage() {
               </p>
               <SEOAppBridge
                 title="Apprentice Learning Hub — Study Anywhere"
-                description="46+ structured courses with 2,000+ practice questions, flashcards with spaced repetition, AM2 preparation, and an EPA simulator. Revise on the commute, at lunch, or between jobs. Works offline."
+                description="46+ structured courses with 2,000+ practice questions, flashcards with spaced repetition, AM2 preparation, and an EPA simulator."
                 icon={GraduationCap}
               />
             </>
@@ -146,7 +146,7 @@ export default function BestApprenticeAppPage() {
               <p>
                 <strong>Core qualification courses:</strong> City and Guilds Level 2 Electrical
                 Installation (all units), City and Guilds Level 3 Electrical Installation (all
-                units), 18th Edition BS 7671:2018+A4:2026 (including Amendment 3 changes).
+                units), 18th Edition BS 7671:2018+A4:2026 (including Amendment 4 changes).
               </p>
               <p>
                 <strong>Assessment preparation:</strong> AM2 practical assessment preparation with
@@ -191,7 +191,7 @@ export default function BestApprenticeAppPage() {
               </p>
               <SEOAppBridge
                 title="From Apprentice to Business Owner — One App"
-                description="Start with training courses and exam prep. Graduate to certificates and calculators. Grow into quoting, invoicing, and payments. Elec-Mate supports every stage of your electrical career."
+                description="Start with training courses and exam prep. Graduate to certificates and calculators. Grow into quoting, invoicing, and payments."
                 icon={Trophy}
               />
             </>

@@ -509,7 +509,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Keep your accounts in order with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate to manage quotes, invoices, and job records on their phone. Professional invoices, payment tracking, and a full income record for your accountant. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to manage quotes, invoices, and job records on their phone."
           icon={FileText}
         />
       </>
@@ -524,10 +524,10 @@ const sections = [
 export default function UTRNumberElectricianPage() {
   return (
     <GuideTemplate
-      title="UTR Number for Electricians UK | Self-Assessment Registration Guide"
-      description="Everything UK electricians need to know about UTR numbers — what a Unique Taxpayer Reference is, how to register for self-assessment with HMRC, when you need one, the 10-working-day timeline, and how UTR numbers work under CIS."
+      title="UTR Number for Electricians UK | Self-Assessment"
+      description="Everything UK electricians need to know about UTR numbers — what a Unique Taxpayer Reference is, how to register for self-assessment with HMRC…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Finance Guide"

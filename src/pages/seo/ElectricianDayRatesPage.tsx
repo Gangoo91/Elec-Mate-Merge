@@ -474,8 +474,8 @@ const sections = [
           are either undercharging or your costs are lower than average.
         </p>
         <SEOAppBridge
-          title="Average Electrician Day Rate UK 2026"
-          description="UK electrician day rates vary by region and experience. See 2026 benchmarks, calculate your profitable rate, and compare London vs national averages."
+          title="Electrician Day Rate UK 2026 | Benchmark"
+          description="Electrician day rates in 2026 range £150–£400+. Compare regional rates, calculate your profitable daily charge, and undercut competitors with live data."
           icon={Calculator}
         />
       </>
@@ -530,7 +530,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional quotes and invoices in minutes"
-          description="Elec-Mate quoting app creates branded, professional quotes from your phone. Convert quotes to invoices with one tap. Look professional, get paid faster. 7-day free trial."
+          description="Elec-Mate quoting app creates branded, professional quotes from your phone. Convert quotes to invoices with one tap. Look professional, get paid faster."
           icon={Receipt}
         />
       </>
@@ -598,9 +598,9 @@ export default function ElectricianDayRatesPage() {
     <GuideTemplate
       localArea="Day Rates Uk"
       title="Electrician Day Rates UK 2026 | What to Charge"
-      description="Complete guide to electrician day rates in the UK in 2026. Average rates by region, domestic vs commercial, experience levels, specialist premiums, and how to calculate and negotiate your day rate."
+      description="Complete guide to electrician day rates in the UK in 2026. Average rates by region, domestic vs commercial, experience levels, specialist premiums…"
       datePublished="2025-07-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

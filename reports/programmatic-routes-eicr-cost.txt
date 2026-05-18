@@ -1,0 +1,275 @@
+// Paste lazy imports near the top of SEORoutes.tsx (after the existing lazy imports):
+
+const EICRCostManchesterPage = lazy(() => import('@/pages/seo/EICRCostManchesterPage'));
+const EICRCostBirminghamPage = lazy(() => import('@/pages/seo/EICRCostBirminghamPage'));
+const EICRCostLeedsPage = lazy(() => import('@/pages/seo/EICRCostLeedsPage'));
+const EICRCostLiverpoolPage = lazy(() => import('@/pages/seo/EICRCostLiverpoolPage'));
+const EICRCostSheffieldPage = lazy(() => import('@/pages/seo/EICRCostSheffieldPage'));
+const EICRCostBristolPage = lazy(() => import('@/pages/seo/EICRCostBristolPage'));
+const EICRCostNewcastlePage = lazy(() => import('@/pages/seo/EICRCostNewcastlePage'));
+const EICRCostNottinghamPage = lazy(() => import('@/pages/seo/EICRCostNottinghamPage'));
+const EICRCostSouthamptonPage = lazy(() => import('@/pages/seo/EICRCostSouthamptonPage'));
+const EICRCostPortsmouthPage = lazy(() => import('@/pages/seo/EICRCostPortsmouthPage'));
+const EICRCostBrightonPage = lazy(() => import('@/pages/seo/EICRCostBrightonPage'));
+const EICRCostCambridgePage = lazy(() => import('@/pages/seo/EICRCostCambridgePage'));
+const EICRCostOxfordPage = lazy(() => import('@/pages/seo/EICRCostOxfordPage'));
+const EICRCostYorkPage = lazy(() => import('@/pages/seo/EICRCostYorkPage'));
+const EICRCostHullPage = lazy(() => import('@/pages/seo/EICRCostHullPage'));
+const EICRCostStokePage = lazy(() => import('@/pages/seo/EICRCostStokePage'));
+const EICRCostPlymouthPage = lazy(() => import('@/pages/seo/EICRCostPlymouthPage'));
+const EICRCostExeterPage = lazy(() => import('@/pages/seo/EICRCostExeterPage'));
+const EICRCostNorwichPage = lazy(() => import('@/pages/seo/EICRCostNorwichPage'));
+const EICRCostEdinburghPage = lazy(() => import('@/pages/seo/EICRCostEdinburghPage'));
+const EICRCostGlasgowPage = lazy(() => import('@/pages/seo/EICRCostGlasgowPage'));
+const EICRCostAberdeenPage = lazy(() => import('@/pages/seo/EICRCostAberdeenPage'));
+const EICRCostDundeePage = lazy(() => import('@/pages/seo/EICRCostDundeePage'));
+const EICRCostCardiffPage = lazy(() => import('@/pages/seo/EICRCostCardiffPage'));
+const EICRCostSwanseaPage = lazy(() => import('@/pages/seo/EICRCostSwanseaPage'));
+const EICRCostBelfastPage = lazy(() => import('@/pages/seo/EICRCostBelfastPage'));
+const EICRCostMiltonKeynesPage = lazy(() => import('@/pages/seo/EICRCostMiltonKeynesPage'));
+const EICRCostReadingPage = lazy(() => import('@/pages/seo/EICRCostReadingPage'));
+const EICRCostLutonPage = lazy(() => import('@/pages/seo/EICRCostLutonPage'));
+const EICRCostSwindonPage = lazy(() => import('@/pages/seo/EICRCostSwindonPage'));
+
+// Paste Route elements before the closing </> at the bottom of SEORoutes.tsx:
+
+      <Route
+        path="/guides/eicr-cost-manchester"
+        element={
+          <LazyRoute>
+            <EICRCostManchesterPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-birmingham"
+        element={
+          <LazyRoute>
+            <EICRCostBirminghamPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-leeds"
+        element={
+          <LazyRoute>
+            <EICRCostLeedsPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-liverpool"
+        element={
+          <LazyRoute>
+            <EICRCostLiverpoolPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-sheffield"
+        element={
+          <LazyRoute>
+            <EICRCostSheffieldPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-bristol"
+        element={
+          <LazyRoute>
+            <EICRCostBristolPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-newcastle"
+        element={
+          <LazyRoute>
+            <EICRCostNewcastlePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-nottingham"
+        element={
+          <LazyRoute>
+            <EICRCostNottinghamPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-southampton"
+        element={
+          <LazyRoute>
+            <EICRCostSouthamptonPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-portsmouth"
+        element={
+          <LazyRoute>
+            <EICRCostPortsmouthPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-brighton"
+        element={
+          <LazyRoute>
+            <EICRCostBrightonPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-cambridge"
+        element={
+          <LazyRoute>
+            <EICRCostCambridgePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-oxford"
+        element={
+          <LazyRoute>
+            <EICRCostOxfordPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-york"
+        element={
+          <LazyRoute>
+            <EICRCostYorkPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-hull"
+        element={
+          <LazyRoute>
+            <EICRCostHullPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-stoke"
+        element={
+          <LazyRoute>
+            <EICRCostStokePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-plymouth"
+        element={
+          <LazyRoute>
+            <EICRCostPlymouthPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-exeter"
+        element={
+          <LazyRoute>
+            <EICRCostExeterPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-norwich"
+        element={
+          <LazyRoute>
+            <EICRCostNorwichPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-edinburgh"
+        element={
+          <LazyRoute>
+            <EICRCostEdinburghPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-glasgow"
+        element={
+          <LazyRoute>
+            <EICRCostGlasgowPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-aberdeen"
+        element={
+          <LazyRoute>
+            <EICRCostAberdeenPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-dundee"
+        element={
+          <LazyRoute>
+            <EICRCostDundeePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-cardiff"
+        element={
+          <LazyRoute>
+            <EICRCostCardiffPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-swansea"
+        element={
+          <LazyRoute>
+            <EICRCostSwanseaPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-belfast"
+        element={
+          <LazyRoute>
+            <EICRCostBelfastPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-milton-keynes"
+        element={
+          <LazyRoute>
+            <EICRCostMiltonKeynesPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-reading"
+        element={
+          <LazyRoute>
+            <EICRCostReadingPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-luton"
+        element={
+          <LazyRoute>
+            <EICRCostLutonPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-swindon"
+        element={
+          <LazyRoute>
+            <EICRCostSwindonPage />
+          </LazyRoute>
+        }
+      />

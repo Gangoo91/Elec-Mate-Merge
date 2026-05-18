@@ -485,7 +485,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote accurately for installation labour and materials"
-          description="Use Elec-Mate's AI to generate accurate quotes for first-fix and second-fix electrical work — including labour for drilling, chasing, containment installation, and wiring. Professional PDF quotes from your phone."
+          description="Use Elec-Mate's AI to generate accurate quotes for first-fix and second-fix electrical work — including labour for drilling, chasing…"
           icon={Wrench}
         />
       </>
@@ -542,7 +542,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Document drilling locations and cable routes on site"
-          description="Use Elec-Mate's AI to photograph and record cable route photographs, containment penetration locations, and fire stopping evidence for your EIC documentation package."
+          description="Use Elec-Mate's AI to photograph and record cable route photographs, containment penetration locations…"
           icon={ClipboardCheck}
         />
       </>
@@ -557,10 +557,10 @@ const sections = [
 export default function DrillGuideElectriciansPage() {
   return (
     <GuideTemplate
-      title="Drill Guide for Electricians 2026 | SDS Plus, Cordless, Hole Saws UK"
-      description="Complete drill guide for UK electricians. SDS Plus vs SDS Max vs standard combi drills, 18V vs 54V cordless platforms, hole saw sets for back boxes and cable entries, core drilling, and the best drills in 2026 — Makita DHR171, DeWalt DCH273, Milwaukee M18FHX."
+      title="Drill Guide for Electricians 2026 | SDS Plus, Cordless,"
+      description="Complete drill guide for UK electricians. SDS Plus vs SDS Max vs standard combi drills, 18V vs 54V cordless platforms…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Tools & Equipment Guide"

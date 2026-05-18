@@ -565,7 +565,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Size shower cables accurately"
-          description="Use Elec-Mate's cable sizing calculator to determine the correct cable size for electric shower circuits, accounting for installation method, grouping, and voltage drop."
+          description="Use Elec-Mate's cable sizing calculator to determine the correct cable size for electric shower circuits, accounting for installation method, grouping…"
           icon={Calculator}
         />
       </>
@@ -666,7 +666,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete bathroom certificates on site"
-          description="Elec-Mate's digital certificates include bathroom-specific fields and zone diagrams. Complete your EIC or Minor Works on your phone immediately after testing."
+          description="Elec-Mate's digital certificates include bathroom-specific fields and zone diagrams. Complete your EIC or Minor Works on your phone immediately after…"
           icon={FileCheck2}
         />
       </>
@@ -682,9 +682,9 @@ export default function Section701BathroomsGuidePage() {
   return (
     <GuideTemplate
       title="Section 701 Bathrooms | BS 7671 Bathroom Regulations Guide"
-      description="Complete guide to Section 701 of BS 7671 — bathroom zones 0, 1, 2, IP ratings, supplementary bonding (701.415.2), RCD protection, SELV, and electric shower circuits for UK electricians."
+      description="Complete guide to Section 701 of BS 7671 — bathroom zones 0, 1, 2, IP ratings, supplementary bonding (701.415.2), RCD protection, SELV…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulation Guide"

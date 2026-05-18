@@ -37,7 +37,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Consumer unit replacement (fuse box upgrade) in Hull typically costs £400 to £750, reflecting competitive Yorkshire labour rates. Standard domestic replacement includes the metal consumer unit, labour, testing, and Electrical Installation Certificate.',
-  'Metal consumer unit enclosures have been mandatory for all domestic replacements since January 2016 under Amendment 3 to BS 7671 — plastic consumer units cannot be used in new or replacement domestic installations.',
+  'Metal consumer unit enclosures have been mandatory for all domestic replacements since January 2016 under Amendment 4 to BS 7671 — plastic consumer units cannot be used in new or replacement domestic installations.',
   'Hull has significant pre-1960s terraced housing in areas such as Hessle Road, Beverley Road, and Holderness Road where rewireable fuse boards and absent RCD protection are common EICR findings.',
   'Consumer unit replacement is Part P notifiable electrical work requiring either a registered competent person (NICEIC/NAPIT/ELECSA) or prior notification to Hull City Council Building Control.',
   'RCD protection on all socket-outlet circuits rated up to 32 A is mandatory under Regulation 411.3.3 of BS 7671:2018+A4:2026. Absence of this protection is a C2 EICR finding requiring remedial action within 28 days.',
@@ -58,7 +58,7 @@ const faqs = [
   {
     question: 'Is a metal consumer unit required for my Hull property?',
     answer:
-      'Yes. Since January 2016, Regulation 421.1.201 of BS 7671 (introduced by Amendment 3) requires that consumer units and similar switchgear in domestic premises have a non-combustible (metal) enclosure. This requirement was carried forward into BS 7671:2018 (18th Edition) and remains current in BS 7671:2018+A4:2026. Any replacement in Hull must use a metal consumer unit. If your electrician proposes fitting a plastic unit, do not proceed.',
+      'Yes. Since January 2016, Regulation 421.1.201 of BS 7671 (introduced by Amendment 4) requires that consumer units and similar switchgear in domestic premises have a non-combustible (metal) enclosure. This requirement was carried forward into BS 7671:2018 (18th Edition) and remains current in BS 7671:2018+A4:2026. Any replacement in Hull must use a metal consumer unit. If your electrician proposes fitting a plastic unit, do not proceed.',
   },
   {
     question: 'My Hull terrace still has rewireable fuses — what does this mean?',
@@ -272,7 +272,7 @@ const sections = [
     content: (
       <>
         <p>
-          Amendment 3 to BS 7671:2008, effective from 1 January 2016, added Regulation 421.1.201
+          Amendment 4 to BS 7671:2008, effective from 1 January 2016, added Regulation 421.1.201
           requiring that all consumer units and similar switchgear assemblies in domestic premises
           have an enclosure of non-combustible material. A metal enclosure is the standard compliant
           solution. This requirement is unchanged in BS 7671:2018+A4:2026.
@@ -446,7 +446,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Hull electrical business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and professional certificate management. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and professional certificate management."
           icon={FileCheck2}
         />
       </>
@@ -461,10 +461,10 @@ const sections = [
 export default function ConsumerUnitReplacementHullPage() {
   return (
     <GuideTemplate
-      title="Consumer Unit Replacement Hull | Fuse Box Hull — Costs &amp; Regulations 2026"
-      description="Consumer unit replacement in Hull — typical cost £400–£750, metal enclosures mandatory since 2016, Part P notification required. Find a registered electrician in the HU postcodes and understand the full process."
+      title="Consumer Unit Replacement Hull | Fuse Box Hull — Costs"
+      description="Consumer unit replacement in Hull — typical cost £400–£750, metal enclosures mandatory since 2016, Part P notification required."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Electrician Guide"

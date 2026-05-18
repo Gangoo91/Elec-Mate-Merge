@@ -565,9 +565,9 @@ export default function ElectricalSafetyAtHomePage() {
   return (
     <GuideTemplate
       title="Electrical Safety at Home UK | Home Electrical Safety Guide"
-      description="Complete guide to electrical safety at home in the UK. Common hazards, how to test RCDs monthly, DIY wiring rules, socket covers for children (RoSPA advice), Christmas light safety, and when to call an electrician."
+      description="Complete guide to electrical safety at home in the UK. Common hazards, how to test RCDs monthly, DIY wiring rules…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

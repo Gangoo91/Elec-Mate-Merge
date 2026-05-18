@@ -308,7 +308,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AI identifies bonding defects from your EICR observations"
-          description="Describe the bonding situation — Elec-Mate AI returns the correct observation code, the BS 7671 regulation reference, and whether it is a C1, C2, or C3 classification. No second-guessing."
+          description="Describe the bonding situation — Elec-Mate AI returns the correct observation code, the BS 7671 regulation reference, and whether it is a C1, C2…"
           icon={Brain}
         />
       </>
@@ -510,7 +510,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AI fault diagnosis for shock from metalwork"
-          description="Enter the symptoms and test results into Elec-Mate AI — it identifies the most likely cause, suggests the next test, and generates the correct BS 7671 observation code for your EICR. Faster, more accurate diagnosis."
+          description="Enter the symptoms and test results into Elec-Mate AI — it identifies the most likely cause, suggests the next test…"
           icon={Brain}
         />
       </>
@@ -588,9 +588,9 @@ export default function ElectricShockFromTapPage() {
   return (
     <GuideTemplate
       title="Electric Shock from Tap | Causes & Emergency Response"
-      description="Getting an electric shock from a tap? Expert guide covering immersion heater faults, bonding failures, PME earthing problems, and what to do immediately. Includes diagnostic steps for electricians."
+      description="Getting an electric shock from a tap? Expert guide covering immersion heater faults, bonding failures, PME earthing problems, and what to do immediately."
       datePublished="2025-04-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting"

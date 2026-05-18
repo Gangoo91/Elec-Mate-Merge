@@ -339,7 +339,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Cable sizing made simple"
-          description="Use the Elec-Mate cable sizing calculator to check current capacity, correction factors, voltage drop, and Zs in seconds. Or ask the AI tutor to walk you through a cable sizing problem step by step."
+          description="Use the Elec-Mate cable sizing calculator to check current capacity, correction factors, voltage drop, and Zs in seconds."
           icon={Calculator}
         />
       </>
@@ -629,7 +629,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Master calculations with Elec-Mate"
-          description="46+ courses, flashcards, mock exams, built-in calculators, and an AI tutor that walks you through every calculation step by step. Build confidence one equation at a time. 7-day free trial."
+          description="46+ courses, flashcards, mock exams, built-in calculators, and an AI tutor that walks you through every calculation step by step."
           icon={Calculator}
         />
       </>
@@ -645,9 +645,9 @@ export default function CalculationsForApprenticesPage() {
   return (
     <GuideTemplate
       title="Electrical Calculations for Apprentices | Easy Guide"
-      description="Beginner-friendly guide to electrical calculations for UK apprentices. Ohm's law, power triangle, cable sizing, voltage drop, diversity, and prospective fault current explained in simple terms with worked examples."
+      description="Beginner-friendly guide to electrical calculations for UK apprentices. Ohm's law, power triangle, cable sizing, voltage drop, diversity…"
       datePublished="2025-11-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

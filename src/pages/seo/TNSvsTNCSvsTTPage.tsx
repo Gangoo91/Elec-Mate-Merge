@@ -203,7 +203,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Record earthing system details on your certificates"
-          description="Elec-Mate's EIC and EICR certificate apps include fields for earthing system type, Ze measurement, MET details, and supplementary bonding. Complete compliant certificates on site."
+          description="Elec-Mate's EIC and EICR certificate apps include fields for earthing system type, Ze measurement, MET details, and supplementary bonding."
           icon={ShieldCheck}
         />
       </>
@@ -405,7 +405,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Record earthing details on EIC and EICR certificates"
-          description="Elec-Mate's EIC and EICR apps include fields for earthing system type, Ze, Ra (earth electrode resistance), and supplementary bonding details. Record everything correctly on site and generate professional PDF certificates instantly."
+          description="Elec-Mate's EIC and EICR apps include fields for earthing system type, Ze, Ra (earth electrode resistance), and supplementary bonding details."
           icon={Zap}
         />
       </>
@@ -421,9 +421,9 @@ export default function TNSvsTNCSvsTTPage() {
   return (
     <GuideTemplate
       title="Earthing Systems Explained: TN-S, TN-C-S and TT | UK Guide"
-      description="Complete guide to UK earthing systems: TN-S, TN-C-S (PME) and TT. Zs differences, PME risks, Regulation 8 of the ESQCR 2002, when each system is used, and how to identify the earthing system on site."
+      description="Complete guide to UK earthing systems: TN-S, TN-C-S (PME) and TT. Zs differences, PME risks, Regulation 8 of the ESQCR 2002, when each system is used…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Earthing Systems Guide"

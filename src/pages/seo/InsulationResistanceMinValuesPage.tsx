@@ -273,7 +273,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Auto-Validated IR Readings"
-          description="Enter your insulation resistance readings into Elec-Mate and the app instantly compares them against BS 7671 Table 61 minimum values. Values below the minimum are highlighted in red with the relevant regulation reference. Values approaching the minimum are flagged as amber for investigation."
+          description="Enter your insulation resistance readings into Elec-Mate and the app instantly compares them against BS 7671 Table 61 minimum values."
           icon={Calculator}
         />
       </>
@@ -467,7 +467,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Insulation Resistance Auto-Validation"
-          description="Elec-Mate validates every insulation resistance reading against BS 7671 Table 61 as you enter it. The app compares your reading to the minimum value for the test voltage selected, flags readings below minimum in red, and auto-generates the observation code and regulation reference for the EICR."
+          description="Elec-Mate validates every insulation resistance reading against BS 7671 Table 61 as you enter it."
           icon={FileCheck2}
         />
       </>
@@ -542,10 +542,10 @@ const sections = [
 export default function InsulationResistanceMinValuesPage() {
   return (
     <GuideTemplate
-      title="Insulation Resistance Minimum Values BS 7671 | Complete Reference"
-      description="Complete reference for insulation resistance minimum values under BS 7671 Table 61. Test voltages by circuit type (250V, 500V, 1000V DC), minimum megohm values, what to do when values are too low, recording IR results on EIC and EICR schedules. UK electrician guide."
+      title="Insulation Resistance Minimum Values BS 7671 | Complete"
+      description="Complete reference for insulation resistance minimum values under BS 7671 Table 61. Test voltages by circuit type (250V, 500V, 1000V DC)…"
       datePublished="2025-07-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Essential Reference"

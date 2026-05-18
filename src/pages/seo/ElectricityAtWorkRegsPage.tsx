@@ -357,7 +357,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Safe isolation training and procedures"
-          description="Elec-Mate's training courses include detailed safe isolation procedure modules covering GS38 test equipment, lock-off requirements, and the prove-dead sequence. Plus the AI H&S agent generates risk assessments and method statements for every job."
+          description="Elec-Mate's training courses include detailed safe isolation procedure modules covering GS38 test equipment, lock-off requirements…"
           icon={Lock}
         />
       </>
@@ -619,7 +619,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Compliance made simple"
-          description="Elec-Mate's AI agents generate risk assessments and method statements. Digital certificates document Regulation 4 compliance. Training courses keep your Regulation 16 competence current. 7-day free trial, cancel anytime."
+          description="Elec-Mate's AI agents generate risk assessments and method statements. Digital certificates document Regulation 4 compliance."
           icon={ShieldCheck}
         />
       </>
@@ -635,9 +635,9 @@ export default function ElectricityAtWorkRegsPage() {
   return (
     <GuideTemplate
       title="Electricity at Work Regulations 1989 | Employer Guide"
-      description="Complete guide to the Electricity at Work Regulations 1989. Regulation 4 (systems), Regulation 12 (safe isolation), Regulation 14 (live working), Regulation 16 (competence). HSE enforcement, penalties, and how to comply."
+      description="Complete guide to the Electricity at Work Regulations 1989. Regulation 4 (systems), Regulation 12 (safe isolation), Regulation 14 (live working)…"
       datePublished="2025-04-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations"

@@ -393,7 +393,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Design and quote garden lighting schemes"
-          description="Elec-Mate's quoting app helps you build detailed, itemised quotes for garden lighting projects. Cable sizing, material costs, labour, and professional PDF quotes — all from your phone."
+          description="Elec-Mate's quoting app helps you build detailed, itemised quotes for garden lighting projects."
           icon={TreePine}
         />
       </>
@@ -581,7 +581,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote garden lighting and outdoor electrical work"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification. Win more garden lighting jobs with itemised, professional quotes. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification."
           icon={TreePine}
         />
       </>
@@ -597,9 +597,9 @@ export default function GardenLightingCostPage() {
   return (
     <GuideTemplate
       title="Garden Lighting Installation Cost UK 2026 | Pricing Guide"
-      description="How much does garden lighting installation cost in the UK in 2026? Complete pricing guide covering LED path lights, deck lights, uplights, security lighting, SWA cable costs, IP ratings, and Section 714 outdoor lighting regulations."
+      description="How much does garden lighting installation cost in the UK in 2026? Complete pricing guide covering LED path lights, deck lights, uplights…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

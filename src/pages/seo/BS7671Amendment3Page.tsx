@@ -484,7 +484,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="AI circuit designer for solar PV installations"
-          description="Elec-Mate's AI circuit designer handles bidirectional device selection automatically. Describe the installation — solar PV capacity, battery storage, EV charger — and the AI designs the circuit with the correct protective devices, cable sizes, and A3:2024 compliance built in."
+          description="Elec-Mate's AI circuit designer handles bidirectional device selection automatically. Describe the installation — solar PV capacity, battery storage…"
           icon={Brain}
         />
       </>
@@ -620,7 +620,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Stay ahead of regulation changes"
-          description="Elec-Mate updates its regulation references, AI agents, and training content with every BS 7671 amendment. Stop worrying about missing changes — the app keeps you compliant. 7-day free trial, cancel anytime."
+          description="Elec-Mate updates its regulation references, AI agents, and training content with every BS 7671 amendment."
           icon={BookOpen}
         />
       </>
@@ -636,9 +636,9 @@ export default function BS7671Amendment3Page() {
   return (
     <GuideTemplate
       title="BS 7671 Amendment 3 (A3:2024) | Changes Explained"
-      description="Complete guide to BS 7671:2018+A3:2024 Amendment 3 changes. Bidirectional and unidirectional device requirements explained — solar PV and battery storage implications, issued 31 July 2024 as a free PDF supplement."
+      description="Complete guide to BS 7671:2018+A3:2024 Amendment 3 changes. Bidirectional and unidirectional device requirements explained — solar PV and battery storage…"
       datePublished="2025-08-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations"

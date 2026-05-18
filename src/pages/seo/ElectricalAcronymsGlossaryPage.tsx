@@ -329,7 +329,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Record test results by voice"
-          description="Elec-Mate's voice entry feature lets you speak your test results — 'Ring 1, R1+R2 0.32, Zs 0.89, IR 200 megohms' — and the app fills in the schedule of test results while you keep your hands on the probes."
+          description="Elec-Mate's voice entry feature lets you speak your test results — 'Ring 1, R1+R2 0.32, Zs 0.89…"
           icon={Activity}
         />
       </>
@@ -439,7 +439,7 @@ const sections = [
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                   BS 7671:2018+A4:2026
                 </SEOInternalLink>{' '}
-                (18th Edition with Amendment 3). Covers design, installation, inspection, and
+                (18th Edition with Amendment 4). Covers design, installation, inspection, and
                 testing.
               </span>
             </li>
@@ -523,7 +523,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="AI board scanner reads your consumer unit"
-          description="Point your phone camera at the distribution board and Elec-Mate reads the MCB ratings, circuit details, and board layout from the photo. Half the EICR data is filled in before you pick up the test leads."
+          description="Point your phone camera at the distribution board and Elec-Mate reads the MCB ratings, circuit details, and board layout from the photo."
           icon={Brain}
         />
       </>
@@ -606,9 +606,9 @@ export default function ElectricalAcronymsGlossaryPage() {
   return (
     <GuideTemplate
       title="Electrical Acronyms & Glossary | A-Z Reference"
-      description="Complete A-Z glossary of electrical acronyms and abbreviations used in UK installation work. MCB, RCD, RCBO, AFDD, SPD, PFC, Ze, Zs, CPC, PME, TN-S, TN-C-S, TT — all explained in plain English."
+      description="Complete A-Z glossary of electrical acronyms and abbreviations used in UK installation work. MCB, RCD, RCBO, AFDD, SPD, PFC, Ze, Zs, CPC, PME, TN-S…"
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Reference"

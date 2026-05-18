@@ -16,9 +16,9 @@ export default function AIElectricalFaultFindingPage() {
   return (
     <GuideTemplate
       title="AI Electrical Fault Finding | How It Works | Elec-Mate"
-      description="How AI analyses electrical fault symptoms, matches them against known fault patterns, suggests probable causes ranked by likelihood, and recommends diagnostic test sequences. Covers RCD tripping, insulation resistance failures, earth faults, and intermittent faults."
+      description="How AI analyses electrical fault symptoms, matches them against known fault patterns, suggests probable causes ranked by likelihood…"
       datePublished="2026-01-28"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'AI Electrical Fault Finding', href: '/guides/ai-electrical-fault-finding' },
@@ -141,7 +141,7 @@ export default function AIElectricalFaultFindingPage() {
               </ul>
               <SEOAppBridge
                 title="AI Fault Diagnosis — Built Into Elec-Mate"
-                description="Describe fault symptoms in plain English and the AI suggests probable causes ranked by likelihood, with diagnostic test sequences for each. A second opinion from a database of thousands of real-world electrical faults."
+                description="Describe fault symptoms in plain English and the AI suggests probable causes ranked by likelihood, with diagnostic test sequences for each."
                 icon={Zap}
               />
             </>
@@ -429,7 +429,7 @@ export default function AIElectricalFaultFindingPage() {
               </p>
               <SEOAppBridge
                 title="AI Fault Diagnosis + Client Explainer"
-                description="Diagnose the fault with AI assistance, then generate a clear, plain-English explanation for the client. Both features are built into Elec-Mate at no extra cost."
+                description="Diagnose the fault with AI assistance, then generate a clear, plain-English explanation for the client."
                 icon={Brain}
               />
             </>

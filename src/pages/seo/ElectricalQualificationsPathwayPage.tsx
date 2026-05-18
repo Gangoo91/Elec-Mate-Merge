@@ -236,7 +236,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Level 2 Study Materials in Elec-Mate"
-          description="Flashcards, practice questions, and mock exams covering every Level 2 topic. The AI study assistant explains electrical science concepts in plain English. Spaced repetition ensures long-term retention."
+          description="Flashcards, practice questions, and mock exams covering every Level 2 topic. The AI study assistant explains electrical science concepts in plain English."
           icon={BookOpen}
         />
       </>
@@ -311,7 +311,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AM2 Simulator in Elec-Mate"
-          description="Timed exercises replicating every AM2 task: consumer unit build, ring final, lighting circuit, and fault finding. AI feedback identifies your weak areas before the real assessment. Candidates who complete 3+ mock assessments report significantly higher pass rates."
+          description="Timed exercises replicating every AM2 task: consumer unit build, ring final, lighting circuit, and fault finding."
           icon={Target}
         />
       </>
@@ -648,7 +648,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="One Platform from Apprentice to Master"
-          description="Flashcards, mock exams, AM2 simulator, EPA simulator, OJT tracker, 18th Edition course, Inspection and Testing course, EV charging, solar PV, fire alarm, and 30+ more courses. Every stage covered. Every CPD hour tracked."
+          description="Flashcards, mock exams, AM2 simulator, EPA simulator, OJT tracker, 18th Edition course, Inspection and Testing course, EV charging, solar PV, fire alarm…"
           icon={Award}
         />
       </>
@@ -659,10 +659,10 @@ const sections = [
 export default function ElectricalQualificationsPathwayPage() {
   return (
     <GuideTemplate
-      title="Electrical Qualifications Pathway UK | From Apprentice to Master"
-      description="Complete map of UK electrical qualifications from Level 1 to specialist certifications. Level 2, Level 3, AM2, 18th Edition, C&G 2391, C&G 2396, EV, solar PV, fire alarm, and career progression routes."
+      title="Electrical Qualifications Pathway UK | From Apprentice to"
+      description="Complete map of UK electrical qualifications from Level 1 to specialist certifications. Level 2, Level 3, AM2, 18th Edition, C&G 2391, C&G 2396, EV…"
       datePublished="2025-07-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Hub Guide"

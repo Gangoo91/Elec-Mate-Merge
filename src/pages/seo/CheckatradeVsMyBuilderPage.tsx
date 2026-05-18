@@ -515,8 +515,8 @@ const sections = [
           you there — not the destination.
         </p>
         <SEOAppBridge
-          title="Win more jobs with professional quotes and certificates"
-          description="Elec-Mate helps you convert leads into customers with professional PDF quotes, on-site certification, and AI-powered job management. Stand out from the competition on any platform. 7-day free trial."
+          title="Checkatrade Alternative 2026 | Elec-Mate"
+          description="Switch from Checkatrade in 2026. Elec-Mate cuts admin by 60%, automates quotes and certs, keeps you compliant with BS 7671:2018+A4:2026. No platform fees."
           icon={TrendingUp}
         />
       </>
@@ -531,10 +531,10 @@ const sections = [
 export default function CheckatradeVsMyBuilderPage() {
   return (
     <GuideTemplate
-      title="Checkatrade vs MyBuilder vs Bark 2026 | Best for Electricians"
-      description="Honest comparison of Checkatrade, MyBuilder, and Bark for UK electricians. Costs per lead, lead quality, vetting process, reviews, and which platform suits your electrical business."
+      title="Checkatrade vs MyBuilder vs Bark 2026 | Best for"
+      description="Honest comparison of Checkatrade, MyBuilder, and Bark for UK electricians. Costs per lead, lead quality, vetting process, reviews…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Comparison"

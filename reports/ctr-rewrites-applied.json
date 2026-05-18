@@ -3,16 +3,16 @@
     "slug": "/guides/smart-home-wiring-cost",
     "file": "src/pages/seo/SmartHomeWiringCostPage.tsx",
     "applied": {
-      "title": "Smart Home Wiring Cost 2026 | UK Guide",
-      "description": "Smart home wiring costs £800–£3,500 depending on property size. Learn labour rates, cable grades, and how to quote jobs to BS 7671:2018+A4:2026 compliance."
+      "title": "Smart Home Wiring Cost UK 2026 | Labour & Materials",
+      "description": "Smart home wiring costs £800–£3,500 installed. Compare labour rates, cable specifications, and BS 7671:2018+A4:2026 compliance for accurate project quotes."
     }
   },
   {
     "slug": "/guides/electrical-symbols-chart",
     "file": "src/pages/seo/ElectricalSymbolsChartPage.tsx",
     "applied": {
-      "title": "BS EN 60617 Electrical Symbols Chart",
-      "description": "BS EN 60617 symbols guide for UK electricians. 2026-compliant chart with 150+ standard symbols, instant PDF download, and certification support."
+      "title": "BS EN 60617 Symbols Chart – 150+ Electrical",
+      "description": "BS EN 60617 symbols explained for UK electricians. 150+ standard symbols, 2026-compliant, downloadable chart, and quick reference guide."
     }
   },
   {
@@ -20,7 +20,7 @@
     "file": "src/pages/seo/ZeValuesUKPage.tsx",
     "applied": {
       "title": "Ze Value Calculator | BS 7671:2018+A4:2026",
-      "description": "Ze value checker for TN-S, TN-C-S, TT earthing. Validate measured impedance against 2026 limits in seconds. EICR testing made faster."
+      "description": "Ze value calculator for TN-S, TN-C-S, TT systems. Check earth loop impedance against 2026 limits in seconds. EICR testing tool."
     }
   },
   {
@@ -28,7 +28,7 @@
     "file": "src/pages/seo/ApprenticeSalaryPage.tsx",
     "applied": {
       "title": "2nd Year Apprentice Electrician Wages 2026",
-      "description": "What do 2nd year apprentices earn in 2026? Find current wage rates, pay scales, and progression benchmarks for UK electrical apprenticeships."
+      "description": "2nd year apprentice electrician wages in 2026: current rates, pay scales, and progression benchmarks. Know your earning potential."
     }
   },
   {
@@ -36,7 +36,7 @@
     "file": "src/pages/seo/AppendixFourTablesPage.tsx",
     "applied": {
       "title": "BS 7671 Appendix 4 Tables | A4:2026",
-      "description": "BS 7671 Appendix 4 current-carrying capacity tables for all cable types and reference methods. Updated A4:2026. Instant lookup — no guesswork on site."
+      "description": "BS 7671 Appendix 4 current-carrying capacity tables for 16 cable types and all reference methods. Updated A4:2026. Find your rating in seconds."
     }
   },
   {
@@ -44,7 +44,7 @@
     "file": "src/pages/seo/MaxDemandGuidePage.tsx",
     "applied": {
       "title": "After Diversity Maximum Demand Calculator",
-      "description": "Calculate ADMD for BS 7671:2018+A4:2026 compliance. Input circuit ratings, get max demand in amps and kW in seconds. Free tool for electricians."
+      "description": "Calculate ADMD in seconds for BS 7671:2018+A4:2026. Input circuit ratings, get max demand in amps and kW instantly. Free for electricians."
     }
   },
   {
@@ -52,7 +52,7 @@
     "file": "src/pages/seo/CableVoltDropThreePhasePage.tsx",
     "applied": {
       "title": "Three Phase Calculation Tool | BS 7671:2026",
-      "description": "Three phase voltage drop calculator for BS 7671:2026. Instant mV/A/m results, no manual tables. Pass/fail compliance check in seconds."
+      "description": "Three phase voltage drop calculator built for BS 7671:2026. Get mV/A/m results instantly—no tables, no guesswork. Compliance check in seconds."
     }
   },
   {
@@ -60,239 +60,111 @@
     "file": "src/pages/seo/LoopImpedanceTestingGuidePage.tsx",
     "applied": {
       "title": "Loop Impedance Test Results | BS 7671:2026",
-      "description": "Record loop impedance test results on site in seconds. Auto-flags Zs values against BS 7671:2018+A4:2026 limits and generates compliant test schedules instantly."
+      "description": "Record loop impedance test results on site instantly. Auto-flags Zs values against BS 7671:2018+A4:2026 limits and generates compliant test schedules."
     }
   },
   {
     "slug": "/guides/ring-vs-radial-circuits",
     "file": "src/pages/seo/RingVsRadialCircuitsPage.tsx",
     "applied": {
-      "title": "32A Ring Circuit Design | BS 7671:2018+A4:2026",
-      "description": "Design 32A ring circuits to BS 7671:2018+A4:2026. Learn r1+r2/4 testing, load limits, and when radial beats ring. Compliance checklist included."
+      "title": "32A Ring Circuit Design & Testing Guide",
+      "description": "Design and test 32A ring circuits to BS 7671:2018+A4:2026. Master r1+r2 calculations, load limits, and compliance checks for domestic installations."
     }
   },
   {
     "slug": "/tools/busbar-sizing-calculator",
     "file": "src/pages/seo/BusbarSizingCalculatorPage.tsx",
     "applied": {
-      "title": "Busbar Calculator | Free Sizing Tool",
-      "description": "Free busbar calculator for copper and aluminium. Size conductors to BS 7671:2018+A4:2026, check current rating, voltage drop and temperature rise in seconds."
+      "title": "Busbar Calculator | BS 7671:2018+A4:2026",
+      "description": "Busbar calculator for copper and aluminium sizing to BS 7671:2018+A4:2026. Calculate current rating, voltage drop and temperature rise in seconds."
+    }
+  },
+  {
+    "slug": "/guides/special-locations-part-7-bs-7671",
+    "file": "src/pages/seo/SpecialLocationsPart7Page.tsx",
+    "applied": {
+      "title": "Special Locations BS 7671:2018+A4:2026",
+      "description": "Special Locations guidance for BS 7671:2018+A4:2026. Section 701–753 rules for bathrooms, saunas, pools, hazardous areas. Instant lookup, no guesswork."
+    }
+  },
+  {
+    "slug": "/guides/bathroom-electrical-zones-bs7671",
+    "file": "src/pages/seo/BathroomZoneElectricalPage.tsx",
+    "applied": {
+      "title": "Bathroom Electric Zones: BS 7671:2018+A4:2026",
+      "description": "Bathroom electric zones explained: Zone 0, 1, 2 boundaries, IP ratings (IPX7/IPX4), switch placement rules. Comply with BS 7671 Section 701 safely."
     }
   },
   {
     "slug": "/polarity-test-guide",
     "file": "src/pages/seo/PolarityTestGuidePage.tsx",
     "applied": {
-      "title": "Polarity Test Electrical: BS 7671:2026",
-      "description": "Polarity test electrical circuits per BS 7671:2018+A4:2026. Record results, generate compliant EICR reports in minutes. Free tool for electricians."
+      "title": "Polarity Test Electrical: BS 7671 Guide",
+      "description": "Polarity test electrical circuits correctly under BS 7671:2018+A4:2026. Step-by-step method, record results, generate EICR reports. Free for electricians."
     }
   },
   {
     "slug": "/guides/radial-circuit-explained",
     "file": "src/pages/seo/RadialCircuitGuidePage.tsx",
     "applied": {
-      "title": "Radial Circuit: BS 7671:2018+A4:2026 Rules",
-      "description": "Radial circuits handle 32A loads safely. Master cable sizing, MCB protection, and design rules under 2026 regs—plus when to use radials over rings."
+      "title": "Radial Circuit: Cable Size & MCB Rules 2026",
+      "description": "Radial circuits protect 32A loads safely. Learn cable sizing, MCB selection, and BS 7671:2018+A4:2026 design rules for domestic and commercial installs."
     }
   },
   {
     "slug": "/continuity-testing-guide",
     "file": "src/pages/seo/ContinuityTestingGuidePage.tsx",
     "applied": {
-      "title": "Acceptable Continuity Test Results | BS 7671",
-      "description": "Acceptable continuity test results for ring finals, r1+rn, r1+r2 under BS 7671:2018+A4:2026. Pass/fail thresholds, test methods, and compliant PDF export."
+      "title": "Acceptable Continuity Test Results BS 7671",
+      "description": "Acceptable continuity test results for ring finals and protective conductors under BS 7671:2018+A4:2026. Pass/fail thresholds, test methods, compliance checklist."
     }
   },
   {
     "slug": "/tools/lighting-lux-calculator",
     "file": "src/pages/seo/LightingLuxCalculatorPage.tsx",
     "applied": {
-      "title": "Lux Level Calculation Tool | 20+ Room Types",
-      "description": "Calculate lux levels for offices, warehouses and retail spaces using BS EN 12464-1. Free tool with instant illuminance values for 20+ room types."
+      "title": "Lux Level Calculation Tool | Free",
+      "description": "Calculate lux levels for 20+ room types instantly. BS EN 12464-1 compliant illuminance values for offices, warehouses, retail. No signup required."
     }
   },
   {
     "slug": "/compare/best-ai-tool-electricians",
     "file": "src/pages/seo/BestAIToolElectriciansPage.tsx",
     "applied": {
-      "title": "AI for Electricians: 5 Tools Compared 2026",
-      "description": "AI for electricians saves time on estimates and compliance. Compare 5 trade-specific tools for circuit design, job costing, and BS 7671:2018+A4:2026 checks."
+      "title": "AI for Electricians: 5 Tools Tested 2026",
+      "description": "AI for electricians cuts estimate time by 40%. Compare 5 trade tools for circuit design, compliance checks, and job costing. Free comparison guide."
     }
   },
   {
     "slug": "/guides/reference-methods-cable-installation",
     "file": "src/pages/seo/ReferenceMethodsGuidePage.tsx",
     "applied": {
-      "title": "BS 7671 Reference Method C Cable Install",
-      "description": "Reference Method C clipped direct to surface — find correct current capacity in Appendix 4:2026. Fast lookup, no table confusion."
-    }
-  },
-  {
-    "slug": "/guides/section-722-ev-charging-complete-guide",
-    "file": "src/pages/seo/Section722EVChargingGuidePage.tsx",
-    "applied": {
-      "title": "722.411.4.1 EV charging PME supply rules",
-      "description": "Section 722.411.4.1 BS 7671:2018+A4:2026 — four provisions for PME-supplied EV chargers. Verify compliance, size cables, certify installations."
+      "title": "BS 7671 Reference Method C: Current Capacity",
+      "description": "BS 7671 Reference Method C for cables clipped direct to surface. Check Appendix 4:2026 current ratings in seconds. Avoid undersizing on site."
     }
   },
   {
     "slug": "/guides/am2-exam-tips",
     "file": "src/pages/seo/AM2ExamTipsPage.tsx",
     "applied": {
-      "title": "AM2 Fault Finding Tips — Pass First Time",
-      "description": "Master AM2 fault finding with 50+ realistic scenarios. Identify faults faster, boost your pass rate, and get instant feedback on every diagnostic decision you make."
+      "title": "AM2 Fault Finding Tips — 2026 Pass Guide",
+      "description": "AM2 fault finding holding you back? Learn 50+ diagnostic scenarios to spot faults faster and pass first time. Real exam conditions, instant feedback."
     }
   },
   {
     "slug": "/ev-charging-legislation",
     "file": "src/pages/seo/EVChargingLegislationUKPage.tsx",
     "applied": {
-      "title": "Building Code EV Charging 2026 Compliance",
-      "description": "Building Regulations for EV charging installations updated 2026. Understand Part S requirements, certification, and inspection standards for UK electricians."
+      "title": "Building Code Electric Vehicle Charging 2026",
+      "description": "Building code EV charging requirements updated for 2026. Part S compliance, certification, and inspection procedures for UK electricians installing charge points."
     }
   },
   {
     "slug": "/guides/pricing-electrical-work-per-point",
     "file": "src/pages/seo/PricingPerPointGuidePage.tsx",
     "applied": {
-      "title": "Price per point electrical installation UK",
-      "description": "Set your rate per point, quote faster, and win more jobs in 2026. Elec-Mate's per-point pricing cuts quoting time by 70%. Start free today."
-    }
-  },
-  {
-    "slug": "/guides/caravan-park-electrical",
-    "file": "src/pages/seo/CaravanParkElectricalPage.tsx",
-    "applied": {
-      "title": "10th Edition Caravan Park EICR Inspections",
-      "description": "BS 7671:2018+A4:2026 compliant EICR software for caravan parks. Record test results, generate reports in minutes. Used by 1,000+ UK electricians."
-    }
-  },
-  {
-    "slug": "/tools/battery-backup-calculator",
-    "file": "src/pages/seo/BatteryBackupCalculatorPage.tsx",
-    "applied": {
-      "title": "Battery Backup Calculation Tool | Elec-Mate",
-      "description": "Calculate battery backup capacity in minutes. Size UPS systems, assess load demand, and determine Ah requirements for emergency power. Free tool for UK electricians."
-    }
-  },
-  {
-    "slug": "/electrical-salary-benchmarking",
-    "file": "src/pages/seo/ElectricalSalaryBenchmarkingPage.tsx",
-    "applied": {
-      "title": "2026 JIB rates for UK electricians",
-      "description": "Current JIB rates 2026: benchmark your labour costs against industry standards. Track approved electrician pay scales and margins in real time with Elec-Mate."
-    }
-  },
-  {
-    "slug": "/extension-lead-safety",
-    "file": "src/pages/seo/ExtensionLeadSafetyPage.tsx",
-    "applied": {
-      "title": "1m Extension Lead 1 Socket | Safety Tested",
-      "description": "1m single socket extension leads tested to BS 7671:2018+A4:2026. Heavy-duty rated for site use. Order online with next-day delivery."
-    }
-  },
-  {
-    "slug": "/guides/electrician-day-rates-uk",
-    "file": "src/pages/seo/ElectricianDayRatesPage.tsx",
-    "applied": {
-      "title": "Average Electrician Day Rate UK 2026",
-      "description": "UK electrician day rates vary by region and experience. See 2026 benchmarks, calculate your profitable rate, and compare London vs national averages."
-    }
-  },
-  {
-    "slug": "/guides/mock-exams-electrician",
-    "file": "src/pages/seo/MockExamsElectricianPage.tsx",
-    "applied": {
-      "title": "2391 Mock Exam Multiple Choice Free",
-      "description": "Free 2391 mock exams with multiple choice questions. Instant marking, detailed answers, and progress tracking to pass first time."
-    }
-  },
-  {
-    "slug": "/niceic-vs-napit-comparison",
-    "file": "src/pages/seo/NICEICvsNAPITComparisonPage.tsx",
-    "applied": {
-      "title": "NAPIT Registration Cost 2026 | UK Electrician",
-      "description": "NAPIT registration fees explained for 2026. Compare costs, renewal rates, and what you get with NAPIT vs NICEIC. Full breakdown for UK electricians."
-    }
-  },
-  {
-    "slug": "/guides/protective-earthing-bonding",
-    "file": "src/pages/seo/ProtectiveEarthingBondingPage.tsx",
-    "applied": {
-      "title": "BS 7671 Table 54.7 | Earth Fault Loop Impedance",
-      "description": "BS 7671:2018+A4:2026 Table 54.7 sets maximum Ze and Zs values for circuit protection. Learn how to measure, record and comply with the wiring regs on every EICR."
-    }
-  },
-  {
-    "slug": "/guides/cable-colour-codes-uk",
-    "file": "src/pages/seo/CableColourCodesPage.tsx",
-    "applied": {
-      "title": "20 Pair Colour Code UK Cable Guide",
-      "description": "20 pair cable colour codes explained for UK electricians. BS 7671:2018+A4:2026 compliant identification. Quick reference chart and installation rules."
-    }
-  },
-  {
-    "slug": "/guides/gold-card-requirements-electrician",
-    "file": "src/pages/seo/GoldCardRequirementsPage.tsx",
-    "applied": {
-      "title": "18th Edition Amendment 4:2026 Release",
-      "description": "BS 7671:2018+A4:2026 now live. Check compliance dates, cable sizing updates, and what changed for your installations. Free guide."
-    }
-  },
-  {
-    "slug": "/holiday-let-electrical",
-    "file": "src/pages/seo/HolidayLetElectricalPage.tsx",
-    "applied": {
-      "title": "Do holiday lets need an EICR? 2026 rules",
-      "description": "Holiday let EICR requirements explained for UK landlords. Mandatory every 5 years under current regs. Get compliant fast with Elec-Mate's on-site testing."
-    }
-  },
-  {
-    "slug": "/tools/earth-rod-resistance-calculator",
-    "file": "src/pages/seo/EarthRodResistanceCalculatorPage.tsx",
-    "applied": {
-      "title": "Ra x Iδn ≤ 50V Calculator | BS 7671:2018+A4:2026",
-      "description": "Calculate Ra x Iδn ≤ 50V compliance for TT systems under BS 7671:2018+A4:2026. Instant earth electrode resistance results for safe touch voltage limits."
-    }
-  },
-  {
-    "slug": "/guides/electrical-regulations-timeline-uk",
-    "file": "src/pages/seo/ElectricalRegulationsTimelinePage.tsx",
-    "applied": {
-      "title": "14th Edition Wiring Regulations Timeline",
-      "description": "14th Edition replaced in 2008. Understand the full UK electrical regulations timeline, key dates, and what changed. Stay compliant with current standards."
-    }
-  },
-  {
-    "slug": "/guides/iet-code-of-practice-ev",
-    "file": "src/pages/seo/IETCodeOfPracticeEVPage.tsx",
-    "applied": {
-      "title": "IET Code of Practice EV Installation 5th Ed",
-      "description": "IET CoP 5th edition guidance for EV charger installations. BS 7671:2018+A4:2026 compliant cable sizing, load assessment, and instant PDF certificates. Free trial."
-    }
-  },
-  {
-    "slug": "/electric-boiler-installation",
-    "file": "src/pages/seo/ElectricBoilerInstallationPage.tsx",
-    "applied": {
-      "title": "12kW Shower Cable Size & Installation",
-      "description": "12kW shower requires 10mm² cable minimum under BS 7671:2018+A4:2026. Learn correct sizing, earthing, and Part P compliance for safe high-load circuits."
-    }
-  },
-  {
-    "slug": "/guides/mock-exams-electrical",
-    "file": "src/pages/seo/MockExamsElectricalPage.tsx",
-    "applied": {
-      "title": "2391 Mock Exam | Free Practice Tests",
-      "description": "2391 mock exam with 200+ questions aligned to BS 7671:2018+A4:2026. Identify weak areas, track scores, study offline. Start free today."
-    }
-  },
-  {
-    "slug": "/guides/first-fix-electrical",
-    "file": "src/pages/seo/FirstFixElectricalPage.tsx",
-    "applied": {
-      "title": "1st and 2nd fix electrical: stage guide",
-      "description": "1st and 2nd fix electrical stages explained for UK electricians. Learn timing, testing, and BS 7671:2018+A4:2026 compliance for each phase."
+      "title": "Price Per Point Electrical UK 2026 | Rates",
+      "description": "Per-point pricing for electrical work: £80–£150 per outlet/switch. Learn what counts, regional variation, supply-and-fix vs labour-only, and when to quote this way."
     }
   },
   {
@@ -300,7 +172,359 @@
     "file": "src/pages/seo/ProspectiveFaultCurrentGuidePage.tsx",
     "applied": {
       "title": "APCS Calculator | BS 7671:2018+A4:2026",
-      "description": "Calculate APCS (prospective fault current) in seconds. Verify Ze values against BS 7671:2018+A4:2026 breaking capacities. Free offline tool for EICR compliance."
+      "description": "APCS calculator for prospective fault current testing. Verify Ze values and breaking capacities against BS 7671:2018+A4:2026 in seconds. Free tool."
+    }
+  },
+  {
+    "slug": "/guides/caravan-park-electrical",
+    "file": "src/pages/seo/CaravanParkElectricalPage.tsx",
+    "applied": {
+      "title": "10th Edition EICR for Caravan Parks",
+      "description": "10th Edition BS 7671:2018+A4:2026 EICR inspections for caravan sites. Complete test recording, reporting, and compliance tracking. Used by 1,000+ electricians."
+    }
+  },
+  {
+    "slug": "/tools/battery-backup-calculator",
+    "file": "src/pages/seo/BatteryBackupCalculatorPage.tsx",
+    "applied": {
+      "title": "Battery Backup Calculation Tool | Elec-Mate",
+      "description": "Calculate battery backup runtime in minutes. Size UPS capacity, assess load demand, and determine Ah requirements. Free tool for UK electricians."
+    }
+  },
+  {
+    "slug": "/electrical-salary-benchmarking",
+    "file": "src/pages/seo/ElectricalSalaryBenchmarkingPage.tsx",
+    "applied": {
+      "title": "2026 JIB rates for electricians — live",
+      "description": "2026 JIB rates updated monthly. Compare approved labour costs, hourly scales and grade benchmarks against your current pay structure."
+    }
+  },
+  {
+    "slug": "/extension-lead-safety",
+    "file": "src/pages/seo/ExtensionLeadSafetyPage.tsx",
+    "applied": {
+      "title": "1m 1 Socket Extension Lead | BS 7671:2018+A4:2026",
+      "description": "1m single socket extension lead rated 1300W. BS 7671:2018+A4:2026 compliant, heavy-duty construction for site and workshop use. Next-day delivery available."
+    }
+  },
+  {
+    "slug": "/guides/electrician-day-rates-uk",
+    "file": "src/pages/seo/ElectricianDayRatesPage.tsx",
+    "applied": {
+      "title": "Electrician Day Rate UK 2026 | Benchmark",
+      "description": "Electrician day rates in 2026 range £150–£400+. Compare regional rates, calculate your profitable daily charge, and undercut competitors with live data."
+    }
+  },
+  {
+    "slug": "/guides/mock-exams-electrician",
+    "file": "src/pages/seo/MockExamsElectricianPage.tsx",
+    "applied": {
+      "title": "2391 Mock Exam: Free Multiple Choice Tests",
+      "description": "Free 2391 mock exams with 100+ multiple choice questions. Instant marking, detailed answers, and progress tracking to pass first time."
+    }
+  },
+  {
+    "slug": "/niceic-vs-napit-comparison",
+    "file": "src/pages/seo/NICEICvsNAPITComparisonPage.tsx",
+    "applied": {
+      "title": "NAPIT Registration Cost 2026 | Full Breakdown",
+      "description": "NAPIT registration costs rising in 2026? See exact fees, renewal rates, and hidden charges. Compare NAPIT vs NICEIC to pick the right scheme for your business."
+    }
+  },
+  {
+    "slug": "/guides/protective-earthing-bonding",
+    "file": "src/pages/seo/ProtectiveEarthingBondingPage.tsx",
+    "applied": {
+      "title": "BS 7671 Table 54.7 | Ze & Zs Limits 2026",
+      "description": "BS 7671 Table 54.7 sets maximum earth fault loop impedance values for circuit protection. Measure Ze and Zs correctly to pass EICR compliance under A4:2026."
+    }
+  },
+  {
+    "slug": "/guides/gold-card-requirements-electrician",
+    "file": "src/pages/seo/GoldCardRequirementsPage.tsx",
+    "applied": {
+      "title": "18th Edition Amendment 4 Release Date 2026",
+      "description": "18th Edition Amendment 4:2026 is now live. Learn the compliance deadline, cable sizing changes, and installation updates you need to know."
+    }
+  },
+  {
+    "slug": "/guides/safe-isolation-procedure-electricians",
+    "file": "src/pages/seo/SafeIsolationProcedureGuidePage.tsx",
+    "applied": {
+      "title": "7 Step Safe Isolation Procedure | GS38",
+      "description": "Master the 7 step safe isolation sequence for UK electrical work. Prove-isolate-secure-prove method, GS38 test instrument rules, multi-lock hasps. HSE compliant."
+    }
+  },
+  {
+    "slug": "/tools/earth-rod-resistance-calculator",
+    "file": "src/pages/seo/EarthRodResistanceCalculatorPage.tsx",
+    "applied": {
+      "title": "Ra x Iδn ≤ 50V Calculator | BS 7671:2026",
+      "description": "Calculate Ra x Iδn ≤ 50V touch voltage limits for TT earthing systems. Instant earth rod resistance results compliant with BS 7671:2018+A4:2026."
+    }
+  },
+  {
+    "slug": "/guides/electrical-regulations-timeline-uk",
+    "file": "src/pages/seo/ElectricalRegulationsTimelinePage.tsx",
+    "applied": {
+      "title": "14th Edition Electrical Regulations: 2008 Replaced",
+      "description": "14th Edition ended in 2008. Track every UK wiring regulations update from 1st to current BS 7671:2018+A4:2026. Compliance timeline for electricians."
+    }
+  },
+  {
+    "slug": "/guides/iet-code-of-practice-ev",
+    "file": "src/pages/seo/IETCodeOfPracticeEVPage.tsx",
+    "applied": {
+      "title": "Code of Practice EV Charging 5th Ed PDF",
+      "description": "5th edition CoP for EV charging installations. BS 7671:2018+A4:2026 compliant guidance on cable sizing, load assessment, and earthing. Download now."
+    }
+  },
+  {
+    "slug": "/electric-boiler-installation",
+    "file": "src/pages/seo/ElectricBoilerInstallationPage.tsx",
+    "applied": {
+      "title": "12kW Shower Cable Size: 10mm² Guide",
+      "description": "12kW shower needs 10mm² cable minimum under BS 7671:2018+A4:2026. Verify sizing, earthing, and circuit protection for safe installation."
+    }
+  },
+  {
+    "slug": "/guides/napit-certificate-guide",
+    "file": "src/pages/seo/NAPICertificateGuidePage.tsx",
+    "applied": {
+      "title": "NAPIT Certificate Guide – Auto-Validate in 2026",
+      "description": "Create NAPIT certificates that auto-validate against BS 7671:2018+A4:2026. Reduce errors by 100%, complete mandatory fields automatically, store securely in cloud."
+    }
+  },
+  {
+    "slug": "/guides/mock-exams-electrical",
+    "file": "src/pages/seo/MockExamsElectricalPage.tsx",
+    "applied": {
+      "title": "2391 Mock Exam – 200+ Practice Questions",
+      "description": "2391 mock exam with 200+ questions mapped to BS 7671:2018+A4:2026. Track progress, identify gaps, pass first time. Free access."
+    }
+  },
+  {
+    "slug": "/guides/first-fix-electrical",
+    "file": "src/pages/seo/FirstFixElectricalPage.tsx",
+    "applied": {
+      "title": "1st and 2nd Fix Electrical: Stage Guide 2026",
+      "description": "Master 1st and 2nd fix electrical stages. Step-by-step guide covering 8 key phases, BS 7671:2018+A4:2026 compliance, and site sequencing for electricians."
+    }
+  },
+  {
+    "slug": "/guides/prospective-fault-current-explained",
+    "file": "src/pages/seo/ProspectiveFaultCurrentGuidePage.tsx",
+    "applied": {
+      "title": "APCS Calculator | BS 7671:2018+A4:2026",
+      "description": "APCS calculator for prospective fault current testing. Verify Ze values and breaking capacities in seconds. BS 7671:2018+A4:2026 compliant EICR tool."
+    }
+  },
+  {
+    "slug": "/guides/apprentice-electrician-salary",
+    "file": "src/pages/seo/ApprenticeSalaryPage.tsx",
+    "applied": {
+      "title": "2nd Year Apprentice Electrician Wages 2026",
+      "description": "2nd year apprentice electrician wages in 2026: current rates, pay scales, and progression. See what you should earn and benchmark against industry standards."
+    }
+  },
+  {
+    "slug": "/electricians/whitehaven",
+    "file": "src/pages/seo/ElectricianWhitehavenPage.tsx",
+    "applied": {
+      "title": "EICR in Sellafield | BS 7671:2018+A4:2026",
+      "description": "EICR inspections for Sellafield nuclear contractors. BS 7671 compliant reports, 5-day turnaround, Electricity North West certified. Book now."
+    }
+  },
+  {
+    "slug": "/electricians/cumbria",
+    "file": "src/pages/seo/ElectricianCumbriaPage.tsx",
+    "applied": {
+      "title": "Consumer Unit Replacements Cumbria | Certified",
+      "description": "Consumer unit replacements in Cumbria. BS 7671:2018+A4:2026 compliant. Fast quotes, same-week installation, full certification included."
+    }
+  },
+  {
+    "slug": "/guides/electric-shower-installation",
+    "file": "src/pages/seo/ElectricShowerInstallationPage.tsx",
+    "applied": {
+      "title": "7.5kW Shower Cable Size: BS 7671:2018+A4:2026",
+      "description": "7.5kW shower needs 10mm² cable minimum. Calculate exact sizing, earthing, and MCB ratings for safe installation to regs."
+    }
+  },
+  {
+    "slug": "/guides/section-722-ev-charging-complete-guide",
+    "file": "src/pages/seo/Section722EVChargingGuidePage.tsx",
+    "applied": {
+      "title": "722.411.4.1 PME EV Charging — 4 Provisions",
+      "description": "Section 722.411.4.1 BS 7671:2018+A4:2026 sets out four provisions for PME-supplied EV chargers. Learn cable sizing, earthing rules, and compliance checks."
+    }
+  },
+  {
+    "slug": "/guides/ai-tools-for-electricians",
+    "file": "src/pages/seo/AIToolsForElectriciansPage.tsx",
+    "applied": {
+      "title": "AI for Electricians: 7 Tools 2026",
+      "description": "AI for electricians cuts survey time by 40%. Board scanning, fault diagnosis, cost estimation. See which tools pass accuracy tests and protect your data."
+    }
+  },
+  {
+    "slug": "/compare/checkatrade-vs-mybuilder-vs-bark",
+    "file": "src/pages/seo/CheckatradeVsMyBuilderPage.tsx",
+    "applied": {
+      "title": "Checkatrade Alternative 2026 | Elec-Mate",
+      "description": "Switch from Checkatrade in 2026. Elec-Mate cuts admin by 60%, automates quotes and certs, keeps you compliant with BS 7671:2018+A4:2026. No platform fees."
+    }
+  },
+  {
+    "slug": "/part-p-self-certification",
+    "file": "src/pages/seo/PartPSelfCertificationPage.tsx",
+    "applied": {
+      "title": "Part P Competent Person Scheme | Elec-Mate",
+      "description": "Register as a Part P competent person and issue Building Regs certificates. Manage EICRs, Minor Works, and Installation Certs in one platform. Start free."
+    }
+  },
+  {
+    "slug": "/guides/safe-isolation-procedure",
+    "file": "src/pages/seo/SafeIsolationProcedurePage.tsx",
+    "applied": {
+      "title": "10 Step Safe Isolation Procedure | Elec-Mate",
+      "description": "Master the 10-step safe isolation procedure required by BS 7671:2018+A4:2026. Reduce risk, comply with regs, protect your team on every job."
+    }
+  },
+  {
+    "slug": "/guides/bonding-in-bathroom",
+    "file": "src/pages/seo/BondingInBathroomPage.tsx",
+    "applied": {
+      "title": "701.415.2 Bathroom Bonding | BS 7671:2018+A4:2026",
+      "description": "701.415.2 supplementary bonding in bathrooms: meet BS 7671:2018+A4:2026 requirements. Instant compliance checks, observation coding, remedial quotes — all on-site."
+    }
+  },
+  {
+    "slug": "/guides/ppe-for-electricians",
+    "file": "src/pages/seo/PPEForElectriciansPage.tsx",
+    "applied": {
+      "title": "Electrical Clothing Requirements 2026",
+      "description": "Electrical clothing requirements for site work: insulated gloves, arc flash suits, safety boots. Meet PPE Regulations 2022 and BS 7671:2018+A4:2026 compliance."
+    }
+  },
+  {
+    "slug": "/guides/hmo-electrical-requirements",
+    "file": "src/pages/seo/HMOElectricalRequirementsPage.tsx",
+    "applied": {
+      "title": "EICR frequency for HMO UK 2026",
+      "description": "HMO landlords must test every 5 years under BS 7671:2018+A4:2026. Learn legal EICR intervals, what fails cost, and how to comply."
+    }
+  },
+  {
+    "slug": "/guides/restaurant-electrical-requirements",
+    "file": "src/pages/seo/RestaurantElectricalRequirementsPage.tsx",
+    "applied": {
+      "title": "Commercial kitchen electrical requirements",
+      "description": "BS 7671:2018+A4:2026 compliance for restaurant kitchens. Calculate load demands, design circuits, and issue certificates. Free guide for electricians."
+    }
+  },
+  {
+    "slug": "/guides/new-build-electrical-cost-per-m2",
+    "file": "src/pages/seo/NewBuildElectricalCostPage.tsx",
+    "applied": {
+      "title": "Average Cost Wiring New House 2026 | UK",
+      "description": "What's the real cost to wire a new house in 2026? Breakdown of first fix, second fix, and labour rates per m². Get accurate pricing from £35–£85/m²."
+    }
+  },
+  {
+    "slug": "/electric-shower-fault-finding",
+    "file": "src/pages/seo/ElectricShowerFaultFindingPage.tsx",
+    "applied": {
+      "title": "Electric Shower Broken? Fault-Find in 2026",
+      "description": "Electric shower not working? Diagnose 8 common faults fast. Step-by-step guides for electricians. Get your shower back online today."
+    }
+  },
+  {
+    "slug": "/guides/swimming-pool-electrical-regulations",
+    "file": "src/pages/seo/SwimmingPoolElectricalPage.tsx",
+    "applied": {
+      "title": "Swimming pool electrical wiring UK regs",
+      "description": "Swimming pool wiring must comply with BS 7671:2018+A4:2026 zones. Learn earthing, IP ratings, RCD protection & safe distances from Elec-Mate's technical guides."
+    }
+  },
+  {
+    "slug": "/guides/city-guilds-2365-electrical",
+    "file": "src/pages/seo/CityGuilds2365GuidePage.tsx",
+    "applied": {
+      "title": "City & Guilds 2365 Mock Exams & Revision",
+      "description": "City & Guilds 2365 revision with 200+ mock exam questions, flashcards, and BS 7671:2018+A4:2026 guides. Pass first time with structured study plans."
+    }
+  },
+  {
+    "slug": "/guides/ring-circuit-fault-finding",
+    "file": "src/pages/seo/RingCircuitFaultFindingPage.tsx",
+    "applied": {
+      "title": "R1 R2 Calculation Ring Circuit Testing",
+      "description": "R1 R2 calculation for ring circuits: record resistance readings in seconds, spot faults faster, comply with BS 7671:2018+A4:2026. Voice-logged test data."
+    }
+  },
+  {
+    "slug": "/guides/minor-works-vs-eic",
+    "file": "src/pages/seo/MinorWorksVsEICPage.tsx",
+    "applied": {
+      "title": "EIC Form: Minor Works vs Full Certificate",
+      "description": "EIC form confusion costs time on site. Compare minor works certificates against full EICs under BS 7671:2018+A4:2026. Know which form you need in 2 minutes."
+    }
+  },
+  {
+    "slug": "/compare/electrician-app-android",
+    "file": "src/pages/seo/ElectricianAppForAndroidPage.tsx",
+    "applied": {
+      "title": "Android Electrician Apps: 4 Tools Compared 2026",
+      "description": "Compare 4 Android electrician apps for certificates, EICR reports, and offline access. Elec-Mate, iCertifi, CertsApp, Easy EICR — find the right fit for your van."
+    }
+  },
+  {
+    "slug": "/guides/underfloor-heating-electrical",
+    "file": "src/pages/seo/UnderfloorHeatingElectricalPage.tsx",
+    "applied": {
+      "title": "Dedicated circuit for underfloor heating",
+      "description": "Does electric UFH need its own circuit? Yes — BS 7671:2018+A4:2026 requires separate protection. Design yours in minutes with Elec-Mate."
+    }
+  },
+  {
+    "slug": "/guides/construction-site-temporary-supply",
+    "file": "src/pages/seo/ConstructionSiteTemporarySupplyPage.tsx",
+    "applied": {
+      "title": "Construction site electrics: temporary supply",
+      "description": "BS 7671:2018+A4:2026 compliant temporary electrical distribution for site. Scan boards, auto-populate EICR schedules in minutes. Reduce paperwork by 80%."
+    }
+  },
+  {
+    "slug": "/guides/jib-grading-explained",
+    "file": "src/pages/seo/JIBGradingExplainedPage.tsx",
+    "applied": {
+      "title": "ECS Grading: 2026 Pay Rates & Progression",
+      "description": "ECS grading structure for UK electricians: 5 grades, 2026 pay scales, and clear progression from Approved to Senior Technician. Get certified today."
+    }
+  },
+  {
+    "slug": "/guides/commercial-rewire-cost",
+    "file": "src/pages/seo/CommercialRewireCostPage.tsx",
+    "applied": {
+      "title": "1000 sqft Commercial Rewire Cost 2026",
+      "description": "1000 sqft commercial rewire costs £3,000–8,000 in 2026. Get exact pricing for distribution, containment, data cabling, fire alarm, and emergency lighting per m²."
+    }
+  },
+  {
+    "slug": "/loop-impedance-testing-guide",
+    "file": "src/pages/seo/LoopImpedanceTestingGuidePage.tsx",
+    "applied": {
+      "title": "Loop Impedance Test Results | BS 7671:2026",
+      "description": "Record loop impedance test results on site instantly. Auto-flags Zs values against BS 7671:2018+A4:2026 limits and generates compliant test schedules for your EICR."
+    }
+  },
+  {
+    "slug": "/guides/outbuilding-electrical-supply-guide",
+    "file": "src/pages/seo/OutbuildingElectricalSupplyPage.tsx",
+    "applied": {
+      "title": "Overhead Cable to Outbuilding: 3.5m Min Height",
+      "description": "Overhead cable installation for garages, sheds, workshops. BS 7671:2018+A4:2026 clearance rules, SWA vs overhead, RCD protection, TT earthing setup."
     }
   }
 ]

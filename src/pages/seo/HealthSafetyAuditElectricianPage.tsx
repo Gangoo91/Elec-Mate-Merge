@@ -589,7 +589,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Build professional H&S documentation with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for AI-generated RAMS, H&S policy templates, and business management tools. Win more commercial work with better documentation. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for AI-generated RAMS, H&S policy templates, and business management tools."
           icon={ShieldCheck}
         />
       </>
@@ -604,10 +604,10 @@ const sections = [
 export default function HealthSafetyAuditElectricianPage() {
   return (
     <GuideTemplate
-      title="Health & Safety Audit for Electrical Contractors | H&S Documentation"
-      description="CDM 2015 duties for electricians, RAMS (Risk Assessment and Method Statement), Permit to Work systems, CHAS accreditation, Safe Contractor, ISO 45001, health and safety policy, and RIDDOR reporting for UK electrical contractors."
+      title="Health & Safety Audit for Electrical Contractors | H&S"
+      description="CDM 2015 duties for electricians, RAMS (Risk Assessment and Method Statement), Permit to Work systems, CHAS accreditation, Safe Contractor, ISO 45001…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="H&S Guide"

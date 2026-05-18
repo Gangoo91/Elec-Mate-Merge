@@ -593,7 +593,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage data cabling and low-voltage projects with Elec-Mate"
-          description="Quote, invoice, and track data cabling installations alongside your electrical work. Professional PDF quotes in minutes. Join UK electricians using Elec-Mate. 7-day free trial."
+          description="Quote, invoice, and track data cabling installations alongside your electrical work. Professional PDF quotes in minutes."
           icon={FileCheck2}
         />
       </>
@@ -609,9 +609,9 @@ export default function DataCablingInstallationPage() {
   return (
     <GuideTemplate
       title="Data Cabling Installation UK | CAT6 & Network Wiring Guide"
-      description="Data cabling installation guide for the UK. CAT5e vs CAT6 vs CAT6A explained, FLUKE cable certification, patch panel installation, ISO/IEC 11801 structured cabling standards, server room cabling, cable tray management, and costs per point (£60–£150)."
+      description="Data cabling installation guide for the UK. CAT5e vs CAT6 vs CAT6A explained, FLUKE cable certification, patch panel installation…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Data & Network Guide"

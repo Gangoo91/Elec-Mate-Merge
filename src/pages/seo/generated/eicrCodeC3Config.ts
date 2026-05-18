@@ -5,14 +5,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // C1/C2/C3/FI classification rules and procedures match GN3 Section 3.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const eicrCodeC3Config: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-code-c3-improvement-recommended',
   title:
-    'EICR Code C3 — Improvement Recommended | When (and When Not) to Use It | Elec-Mate',
+    'EICR Code C3 — Improvement Recommended | When (and When',
   description:
-    'EICR code C3 explained: when "improvement recommended" is the right classification, when it would actually be a C2 in disguise, and why C3 observations do NOT make the report unsatisfactory. BS 7671:2018+A4:2026 and IET GN3 aligned.',
+    'EICR code C3 explained: when "improvement recommended" is the right classification, when it would actually be a C2 in disguise…',
   datePublished: published,
   dateModified: modified,
   readingTime: 9,

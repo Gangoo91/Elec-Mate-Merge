@@ -437,7 +437,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Assess arc flash PPE requirements with AI"
-          description="Elec-Mate's AI Health and Safety agent helps you determine the correct arc flash PPE category for your specific installation. Describe the switchgear type, fault level, and working conditions, and get a tailored arc flash risk assessment with PPE recommendations."
+          description="Elec-Mate's AI Health and Safety agent helps you determine the correct arc flash PPE category for your specific installation."
           icon={Shield}
         />
       </>
@@ -588,7 +588,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Generate arc flash risk assessments with AI"
-          description="Elec-Mate's AI Health and Safety agent creates arc flash risk assessments tailored to your specific installation. Input the equipment type, fault level, and protective devices, and get a complete assessment with incident energy estimation, PPE category selection, boundary distances, and control measures."
+          description="Elec-Mate's AI Health and Safety agent creates arc flash risk assessments tailored to your specific installation."
           icon={Brain}
         />
       </>
@@ -784,9 +784,9 @@ export default function ArcFlashProtectionPage() {
   return (
     <GuideTemplate
       title="Arc Flash Protection | Risk Assessment & PPE Guide"
-      description="Complete guide to arc flash protection for electricians. What causes arc flash, incident energy levels, PPE categories (Category 1 to 4), boundary distances, arc flash risk assessment, UK legal requirements, and prevention measures. Covers IEEE 1584, IEC 61482, and Electricity at Work Regulations 1989."
+      description="Complete guide to arc flash protection for electricians. What causes arc flash, incident energy levels, PPE categories (Category 1 to 4)…"
       datePublished="2025-04-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

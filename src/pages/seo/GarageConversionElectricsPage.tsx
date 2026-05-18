@@ -700,7 +700,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify garage conversion electrics"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification. Everything you need for garage conversion electrical packages. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification."
           icon={Warehouse}
         />
       </>
@@ -716,9 +716,9 @@ export default function GarageConversionElectricsPage() {
   return (
     <GuideTemplate
       title="Garage Conversion Electrics | Electrical Guide UK 2026"
-      description="Complete guide to garage conversion electrics in the UK. Building regulations, consumer unit design, lighting, socket layout, heating circuits, ventilation, fire safety, and Part P certification with 2026 pricing."
+      description="Complete guide to garage conversion electrics in the UK. Building regulations, consumer unit design, lighting, socket layout, heating circuits…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

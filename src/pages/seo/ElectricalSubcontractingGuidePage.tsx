@@ -19,10 +19,10 @@ import {
 export default function ElectricalSubcontractingGuidePage() {
   return (
     <GuideTemplate
-      title="Electrical Subcontracting Guide | Working for Main Contractors"
-      description="Complete guide to electrical subcontracting in the UK. Covers finding subcontract work, pricing subcontract jobs, CIS obligations, payment terms, contracts, day rates vs fixed price, and how to protect yourself when working for main contractors."
+      title="Electrical Subcontracting Guide | Working for Main"
+      description="Complete guide to electrical subcontracting in the UK. Covers finding subcontract work, pricing subcontract jobs, CIS obligations, payment terms…"
       datePublished="2026-01-05"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Business', href: '/guides' },
         { label: 'Subcontracting', href: '/guides/electrical-subcontracting' },
@@ -277,7 +277,7 @@ export default function ElectricalSubcontractingGuidePage() {
               </div>
               <SEOAppBridge
                 title="AI Cost Engineer for Accurate Pricing"
-                description="Elec-Mate's AI Cost Engineer generates detailed cost breakdowns for any electrical job — labour hours, material quantities, overheads, and profit margin. Get accurate fixed prices for subcontract work based on real trade data, not guesswork."
+                description="Elec-Mate's AI Cost Engineer generates detailed cost breakdowns for any electrical job — labour hours, material quantities, overheads, and profit margin."
                 icon={Calculator}
               />
             </>
@@ -427,7 +427,7 @@ export default function ElectricalSubcontractingGuidePage() {
               </div>
               <SEOAppBridge
                 title="Invoicing and Cash Flow Tools"
-                description="Elec-Mate's invoicing tools generate professional invoices on site — on completion of each job or at weekly intervals for day-rate work. Track payment status, send reminders, and use the cash flow planner to forecast your income across multiple subcontract projects."
+                description="Elec-Mate's invoicing tools generate professional invoices on site — on completion of each job or at weekly intervals for day-rate work."
                 icon={Receipt}
               />
             </>

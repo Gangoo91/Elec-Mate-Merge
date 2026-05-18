@@ -597,7 +597,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Produce GMP-quality electrical records with Elec-Mate"
-          description="Create professional test records, inspection reports, and certificates that meet pharmaceutical QA documentation standards. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial."
+          description="Create professional test records, inspection reports, and certificates that meet pharmaceutical QA documentation standards."
           icon={ShieldCheck}
         />
       </>
@@ -612,10 +612,10 @@ const sections = [
 export default function PharmaceuticalElectricalPage() {
   return (
     <GuideTemplate
-      title="Pharmaceutical Electrical Installation UK | GMP Clean Room Wiring"
-      description="Complete guide to pharmaceutical electrical installation in the UK — GMP requirements, cleanroom wiring (no exposed conduit fittings), ISO 5-8 classifications, HVAC integration, isolation transformers, IQ/OQ/PQ validation, and FDA 21 CFR Part 11."
+      title="Pharmaceutical Electrical Installation UK | GMP Clean Room"
+      description="Complete guide to pharmaceutical electrical installation in the UK — GMP requirements, cleanroom wiring (no exposed conduit fittings)…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Specialist Sector"

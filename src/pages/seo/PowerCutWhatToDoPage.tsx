@@ -611,7 +611,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Handle callouts faster with Elec-Mate"
-          description="Diagnose faults, record test results, generate certificates, and invoice the customer — all from your phone, all in one visit. Join 1,000+ UK electricians. 7-day free trial."
+          description="Diagnose faults, record test results, generate certificates, and invoice the customer — all from your phone, all in one visit."
           icon={Power}
         />
       </>
@@ -627,9 +627,9 @@ export default function PowerCutWhatToDoPage() {
   return (
     <GuideTemplate
       title="Power Cut | What to Do & Who to Call UK"
-      description="Complete guide to power cuts in the UK. What to check first, how to use your consumer unit, when to call 105, DNO vs internal faults, emergency procedures, and when you need a qualified electrician."
+      description="Complete guide to power cuts in the UK. What to check first, how to use your consumer unit, when to call 105, DNO vs internal faults…"
       datePublished="2026-01-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Homeowner Guide"

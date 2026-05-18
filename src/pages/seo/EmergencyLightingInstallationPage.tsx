@@ -594,7 +594,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage emergency lighting certificates with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate to issue electrical certificates on site. BS 5266-1 emergency lighting certificates, EICR reports, and minor works notices — all on your phone with instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to issue electrical certificates on site. BS 5266-1 emergency lighting certificates, EICR reports…"
           icon={FileCheck2}
         />
       </>
@@ -610,9 +610,9 @@ export default function EmergencyLightingInstallationPage() {
   return (
     <GuideTemplate
       title="Emergency Lighting Installation UK | BS 5266 Guide"
-      description="Complete guide to emergency lighting installation in the UK. BS 5266 Part 1 standard explained — escape route lighting (1 lux), anti-panic lighting (0.5 lux), high-risk task areas, maintained vs non-maintained, self-contained vs central battery, and certification."
+      description="Complete guide to emergency lighting installation in the UK. BS 5266 Part 1 standard explained — escape route lighting (1 lux)…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

@@ -148,7 +148,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AI Cost Engineer for Rewire Quotes"
-          description="Electricians: describe the rewire job and the AI Cost Engineer generates a detailed quote with materials breakdown, labour hours, cable quantities, and profit margin. Uses real UK trade pricing data. Stop underquoting and start making proper money on rewires."
+          description="Electricians: describe the rewire job and the AI Cost Engineer generates a detailed quote with materials breakdown, labour hours, cable quantities…"
           icon={Brain}
         />
       </>
@@ -315,7 +315,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="EIC Certificate in the App"
-          description="Electricians: complete the Electrical Installation Certificate for a rewire directly on your phone. Enter test results on site, capture digital signatures, and export a professional PDF — all before you leave. No going home to type it up."
+          description="Electricians: complete the Electrical Installation Certificate for a rewire directly on your phone."
           icon={FileCheck2}
         />
       </>
@@ -544,7 +544,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="EIC Certificate Built Into the App"
-          description="Electricians: the full Electrical Installation Certificate form is built into Elec-Mate. Enter circuit details, record test results, capture signatures, and export a professional PDF — all from your phone on site. Notify your scheme provider and send the certificate to the homeowner before you leave."
+          description="Electricians: the full Electrical Installation Certificate form is built into Elec-Mate. Enter circuit details, record test results, capture signatures…"
           icon={FileCheck2}
         />
       </>
@@ -707,13 +707,13 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AI Cost Engineer Prices Rewires for You"
-          description="Describe the property and the specification, and the AI Cost Engineer generates a detailed quote — every cable, every accessory, every hour of labour, with real UK trade pricing. Adjust the specification, tweak the margin, and send a professional quote from your phone. Stop guessing and start earning what you deserve."
+          description="Describe the property and the specification, and the AI Cost Engineer generates a detailed quote — every cable, every accessory, every hour of labour…"
           icon={Brain}
         />
         <div className="mt-6">
           <SEOAppBridge
             title="Cable Sizing and Voltage Drop Calculators"
-            description="Design the rewire properly with Elec-Mate's 70+ built-in calculators. Cable sizing calculator ensures every circuit uses the correct cable for the load, installation method, and grouping factors. Voltage drop calculator verifies compliance with BS 7671 Regulation 525. Maximum demand calculator sizes the main supply correctly."
+            description="Design the rewire properly with Elec-Mate's 70+ built-in calculators. Cable sizing calculator ensures every circuit uses the correct cable for the load…"
             icon={Calculator}
           />
         </div>
@@ -733,7 +733,7 @@ const relatedPages = [
   {
     href: '/guides/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
-    description: 'Current BS 7671 requirements for consumer units including Amendment 3.',
+    description: 'Current BS 7671 requirements for consumer units including Amendment 4.',
     icon: ShieldCheck,
     category: 'Regulations',
   },
@@ -773,9 +773,9 @@ export default function RewireCostUKPage() {
   return (
     <GuideTemplate
       title="Rewire Cost UK 2026 | How Much Does a House Rewire Cost?"
-      description="Complete guide to house rewire costs in the UK for 2026. Average prices by property size (1-bed flat to 5-bed house), what affects the cost, what is included, first fix vs second fix, how long it takes, Part P requirements, and EIC certification."
+      description="Complete guide to house rewire costs in the UK for 2026. Average prices by property size (1-bed flat to 5-bed house), what affects the cost…"
       datePublished="2024-07-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

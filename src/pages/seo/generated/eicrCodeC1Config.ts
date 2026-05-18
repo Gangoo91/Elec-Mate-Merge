@@ -5,14 +5,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // C1/C2/C3/FI classification rules and procedures match GN3 Section 3.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const eicrCodeC1Config: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-code-c1-danger-present',
   title:
-    'EICR Code C1 — Danger Present | Immediate Remedial Action | Elec-Mate',
+    'EICR Code C1 — Danger Present | Immediate Remedial Action',
   description:
-    'EICR code C1 explained: when to use it, real-world examples, what happens to the overall report assessment, and what the responsible person must do next. BS 7671:2018+A4:2026 and IET GN3 aligned.',
+    'EICR code C1 explained: when to use it, real-world examples, what happens to the overall report assessment, and what the responsible person must do next.',
   datePublished: published,
   dateModified: modified,
   readingTime: 10,

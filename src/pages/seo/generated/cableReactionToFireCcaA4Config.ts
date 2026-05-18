@@ -5,14 +5,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // (EU) 305/2011 (retained UK law), and Regulatory Reform (Fire Safety) Order 2005.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const cableReactionToFireCcaA4Config: GeneratedGuideConfig = {
   pagePath: '/guides/cable-reaction-to-fire-cca-a4-2026',
   title:
-    'Cable Reaction-to-Fire Classification (Cca) — BS 7671:2018+A4:2026 & CPR Guide | Elec-Mate',
+    'Cable Reaction-to-Fire Classification (Cca) — BS',
   description:
-    'Complete UK guide to Euroclass cable reaction-to-fire classification (Aca, B1ca, B2ca, Cca, Dca, Eca, Fca) under BS EN 50575, the Construction Products Regulation, and BS 7671:2018+A4:2026. Where each class is required, smoke/droplet/acidity subclasses, LSZH vs Cca, high-rise duties under the Building Safety Act 2022, and EICR coding for non-CPR cable.',
+    'Complete UK guide to Euroclass cable reaction-to-fire classification (Aca, B1ca, B2ca, Cca, Dca, Eca, Fca) under BS EN 50575…',
   datePublished: published,
   dateModified: modified,
   readingTime: 19,
@@ -450,7 +450,7 @@ export const cableReactionToFireCcaA4Config: GeneratedGuideConfig = {
     {
       href: '/guides/bs-7671-a4-2026-summary',
       title: 'BS 7671:2018+A4:2026 Summary',
-      description: 'Full chapter-by-chapter walk-through of the A4:2026 amendment — AFDD, TN-C-S (PNB), new schedule columns and the cable selection updates that touch reaction-to-fire.',
+      description: 'Full chapter-by-chapter walk-through of the A4:2026 amendment — AFDD, TN-C-S (PNB)…',
       icon: 'BookOpen',
       category: 'Guide',
     },

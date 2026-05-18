@@ -542,8 +542,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Manage your apprentice alongside your business with Elec-Mate"
-          description="Scheduling, job management, certificates, and invoicing in one app. Join 1,000+ UK electricians using Elec-Mate to run their business more efficiently. 7-day free trial."
+          title="Manage your apprentice alongside your business with"
+          description="Scheduling, job management, certificates, and invoicing in one app. Join 1,000+ UK electricians using Elec-Mate to run their business more efficiently."
           icon={GraduationCap}
         />
       </>
@@ -558,10 +558,10 @@ const sections = [
 export default function HiringElectricianApprenticesPage() {
   return (
     <GuideTemplate
-      title="Hiring Electrical Apprentices UK | Employer Guide to Apprenticeships"
-      description="Complete employer guide to hiring electrical apprentices in the UK. ESFA funding explained (up to 95–100% of training costs), levy vs non-levy employers, JIB registration, apprentice wages, choosing a training provider, and mentoring responsibilities."
+      title="Hiring Electrical Apprentices UK | Employer Guide to"
+      description="Complete employer guide to hiring electrical apprentices in the UK. ESFA funding explained (up to 95–100% of training costs), levy vs non-levy employers…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Employer Guide"

@@ -6,14 +6,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Regulations 1989.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const workingAtHeightElectriciansConfig: GeneratedGuideConfig = {
   pagePath: '/guides/working-at-height-electricians',
   title:
-    'Working at Height for UK Electricians — Procedure & Compliance | Elec-Mate',
+    'Working at Height for UK Electricians — Procedure &',
   description:
-    'Working at height guide for UK electricians: hierarchy of control, ladders, towers, MEWPs, harnesses, PASMA / IPAF training, and the Work at Height Regulations 2005. Practical procedure for high-bay luminaires, loft and roof work, solar PV and HV switchroom access.',
+    'Working at height guide for UK electricians: hierarchy of control, ladders, towers, MEWPs, harnesses, PASMA / IPAF training…',
   datePublished: published,
   dateModified: modified,
   readingTime: 12,

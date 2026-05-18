@@ -21,7 +21,7 @@ import {
 
 const PAGE_TITLE = 'Three Phase Calculations | Power, Current & Voltage';
 const PAGE_DESCRIPTION =
-  'Complete guide to three-phase electrical calculations. Three-phase power formula (P = root 3 x VL x IL x cos phi), line vs phase values, star vs delta, calculating line current, power factor, phase balancing, three-phase voltage drop, and cable sizing with worked examples.';
+  'Three-phase electrical calculations: power formula (P = √3·VL·IL·cosφ), line vs phase, star vs delta, current, PF, balancing, VD, cable sizing.';
 
 const breadcrumbs = [
   { label: 'Calculators', href: '/electrical-testing-calculators' },
@@ -182,7 +182,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Three-phase power calculator"
-          description="Enter total power and power factor. Elec-Mate calculates line current, apparent power, and reactive power instantly. Switch between star and delta configurations. Works offline."
+          description="Enter total power and power factor. Elec-Mate calculates line current, apparent power, and reactive power instantly."
           icon={Calculator}
         />
       </>
@@ -339,7 +339,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Star-delta calculator"
-          description="Elec-Mate's star-delta calculator computes line and phase currents for both configurations, calculates the current reduction from star starting, and helps size the cable and protective device."
+          description="Elec-Mate's star-delta calculator computes line and phase currents for both configurations, calculates the current reduction from star starting…"
           icon={Calculator}
         />
       </>
@@ -524,7 +524,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Phase balancing built into the circuit schedule"
-          description="Elec-Mate's EIC circuit schedule lets you assign each circuit to a phase (L1, L2, L3) and automatically calculates the load per phase, showing the balance percentage. Helps you achieve the best distribution."
+          description="Elec-Mate's EIC circuit schedule lets you assign each circuit to a phase (L1, L2, L3) and automatically calculates the load per phase…"
           icon={BarChart3}
         />
       </>
@@ -648,7 +648,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Three-phase cable sizing calculator"
-          description="Elec-Mate's cable sizing calculator has a three-phase mode. Enter the total load, power factor, and cable route details. The calculator uses the correct three-phase tables for capacity and voltage drop. Works offline."
+          description="Elec-Mate's cable sizing calculator has a three-phase mode. Enter the total load, power factor, and cable route details."
           icon={Cable}
         />
       </>
@@ -828,7 +828,7 @@ export default function ThreePhaseCalculationsPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-06-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Electrical Calculations"

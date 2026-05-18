@@ -23,9 +23,9 @@ export default function CustomerManagementElectricianPage() {
   return (
     <BusinessTemplate
       title="Customer Management for Electricians | CRM Tool"
-      description="Manage your customers, job history, certificate records, and follow-ups with a CRM built for UK electricians. Automate repeat work reminders, track referrals, and build lasting client relationships."
+      description="Manage customers, job history, certificate records, and follow-ups with a CRM built for UK electricians. Linked to your EICR + invoice flow."
       datePublished="2025-09-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Business Tools', href: '/tools' },
         { label: 'Customer Management', href: PAGE_PATH },
@@ -277,7 +277,7 @@ export default function CustomerManagementElectricianPage() {
           appBridge: {
             title: 'Never Forget a Follow-Up Again',
             description:
-              'Elec-Mate automates post-job feedback requests, review invitations, certificate renewal reminders, and quote follow-ups. Build your reputation on autopilot.',
+              'Elec-Mate automates post-job feedback requests, review invitations, certificate renewal reminders, and quote follow-ups.',
             icon: Bell,
           },
         },
@@ -457,7 +457,7 @@ export default function CustomerManagementElectricianPage() {
           applicationCategory: 'BusinessApplication',
           operatingSystem: 'Web, iOS, Android',
           description:
-            'Customer management system for UK electricians. Client database, job history, certificate tracking, automated follow-ups, and repeat work management in one mobile-first CRM.',
+            'Customer management system for UK electricians. Client database, job history, certificate tracking, automated follow-ups…',
           url: 'https://www.elec-mate.com/tools/customer-management-electrician',
           offers: {
             '@type': 'Offer',

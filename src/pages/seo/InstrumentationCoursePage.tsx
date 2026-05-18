@@ -22,9 +22,9 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Instrumentation Course for Electricians | Process Control Training';
+const PAGE_TITLE = 'Instrumentation Course | Process Control for Electricians';
 const PAGE_DESCRIPTION =
-  'Comprehensive instrumentation training for UK electricians. Process control, sensors, PLCs, SCADA, 4-20mA current loops, calibration techniques, and industrial measurement. 8 modules with video content, interactive quizzes, and AI tutor.';
+  'Instrumentation training for UK electricians: process control, sensors, PLCs, SCADA, 4-20mA loops, calibration, industrial measurement. 8 modules.';
 
 const breadcrumbs = [
   { label: 'Training', href: '/training' },
@@ -89,42 +89,42 @@ const modules = [
   {
     title: 'Introduction to Instrumentation and Process Control',
     description:
-      'What instrumentation is, where it is used, the role of the instrumentation engineer, and how instrumentation relates to electrical installation work. Overview of process variables: pressure, temperature, flow, level, and analytical measurements.',
+      'What instrumentation is, where it is used, the role of the instrumentation engineer, and how instrumentation relates to electrical installation work.',
   },
   {
     title: 'Sensors and Transducers',
     description:
-      'Types of sensors for each process variable — thermocouples, RTDs, pressure diaphragms, differential pressure cells, ultrasonic level sensors, magnetic flow meters, Coriolis meters, and pH probes. Selection criteria, mounting, and environmental considerations.',
+      'Types of sensors for each process variable — thermocouples, RTDs, pressure diaphragms, differential pressure cells, ultrasonic level sensors…',
   },
   {
     title: '4-20mA Current Loops and Signal Wiring',
     description:
-      'How 4-20mA loops work, two-wire vs four-wire transmitters, loop-powered devices, signal isolation, intrinsic safety barriers, cable selection (instrument cable vs armoured), earthing and screening, and troubleshooting common loop faults.',
+      'How 4-20mA loops work, two-wire vs four-wire transmitters, loop-powered devices, signal isolation, intrinsic safety barriers…',
   },
   {
     title: 'PLCs: Programmable Logic Controllers',
     description:
-      'PLC hardware architecture — CPU, power supply, I/O modules (digital and analogue). Input and output wiring, sourcing vs sinking, analogue scaling, ladder logic fundamentals, and reading PLC diagnostic information for fault finding.',
+      'PLC hardware architecture — CPU, power supply, I/O modules (digital and analogue). Input and output wiring, sourcing vs sinking, analogue scaling…',
   },
   {
     title: 'SCADA and Communication Protocols',
     description:
-      'SCADA system architecture — field devices, RTUs, communication networks, and central servers. Protocols: Modbus RTU, Modbus TCP, Profibus DP, HART, and Ethernet/IP. Basic network configuration and signal path troubleshooting.',
+      'SCADA system architecture — field devices, RTUs, communication networks, and central servers.',
   },
   {
     title: 'Calibration Principles and Practice',
     description:
-      'Why calibration matters, traceability to national standards, calibration certificates, as-found and as-left readings, acceptable tolerances. Hands-on procedures for pressure, temperature, flow, and level transmitters.',
+      'Why calibration matters, traceability to national standards, calibration certificates, as-found and as-left readings, acceptable tolerances.',
   },
   {
     title: 'Control Theory and Loop Tuning',
     description:
-      'Feedback control, PID (Proportional-Integral-Derivative) control, open-loop vs closed-loop systems, set points, process variables, controller output. Basic loop tuning concepts: proportional band, integral time, derivative time.',
+      'Feedback control, PID (Proportional-Integral-Derivative) control, open-loop vs closed-loop systems, set points, process variables, controller output.',
   },
   {
     title: 'Safety Instrumented Systems and Hazardous Areas',
     description:
-      'Safety Integrity Levels (SIL), safety instrumented functions, emergency shutdown systems, and hazardous area classification (zones 0, 1, 2 for gas; zones 20, 21, 22 for dust). Introduction to CompEx and ATEX/IECEx certification requirements.',
+      'Safety Integrity Levels (SIL), safety instrumented functions, emergency shutdown systems, and hazardous area classification (zones 0, 1, 2 for gas…',
   },
 ];
 
@@ -133,7 +133,7 @@ const features = [
     icon: BrainCircuit,
     title: 'AI Study Assistant',
     description:
-      'Ask any instrumentation question in plain English. Get detailed answers on 4-20mA loops, PLC wiring, SCADA protocols, calibration procedures, and hazardous area requirements.',
+      'Ask any instrumentation question in plain English. Get detailed answers on 4-20mA loops, PLC wiring, SCADA protocols, calibration procedures…',
   },
   {
     icon: Radio,
@@ -145,7 +145,7 @@ const features = [
     icon: ClipboardCheck,
     title: 'Interactive Quizzes',
     description:
-      'Test your knowledge after every module with scenario-based questions. Identify sensor types, calculate loop currents, interpret PLC ladder logic, and troubleshoot faults.',
+      'Test your knowledge after every module with scenario-based questions. Identify sensor types, calculate loop currents, interpret PLC ladder logic…',
   },
   {
     icon: Clock,
@@ -157,13 +157,13 @@ const features = [
     icon: Layers,
     title: 'Flashcard Decks',
     description:
-      'Spaced repetition flashcards covering instrument types, signal standards, PLC instructions, protocol specifications, and calibration procedures. Study during breaks on site.',
+      'Spaced repetition flashcards covering instrument types, signal standards, PLC instructions, protocol specifications, and calibration procedures.',
   },
   {
     icon: FileCheck2,
     title: 'Mock Exams',
     description:
-      'Full-length mock examinations covering all eight modules. Instant marking with detailed explanations for every answer. Track your readiness score over time.',
+      'Full-length mock examinations covering all eight modules. Instant marking with detailed explanations for every answer.',
   },
 ];
 
@@ -234,7 +234,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Master control theory with interactive simulations"
-          description="Struggling with PID tuning or feedback loops? The Elec-Mate AI tutor explains control concepts in plain English with interactive examples. Ask any question about proportional band, integral time, or derivative action."
+          description="Struggling with PID tuning or feedback loops? The Elec-Mate AI tutor explains control concepts in plain English with interactive examples."
           icon={BrainCircuit}
         />
       </>
@@ -363,7 +363,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Interactive PLC wiring diagrams and exercises"
-          description="Practice wiring sensors to PLC inputs and outputs to actuators with interactive exercises. Understand sourcing vs sinking, analogue scaling, and I/O addressing — all explained by the Elec-Mate AI tutor."
+          description="Practice wiring sensors to PLC inputs and outputs to actuators with interactive exercises. Understand sourcing vs sinking, analogue scaling…"
           icon={Cpu}
         />
       </>
@@ -503,7 +503,7 @@ export default function InstrumentationCoursePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-08-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Instrumentation Training"

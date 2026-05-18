@@ -1,0 +1,11 @@
+// Lazy:
+const ElectricalApprenticeYear1RevisionPlanPage = lazy(() => import('@/pages/seo/ElectricalApprenticeYear1RevisionPlanPage'));
+const ElectricalApprenticeYear2RevisionPlanPage = lazy(() => import('@/pages/seo/ElectricalApprenticeYear2RevisionPlanPage'));
+const ElectricalApprenticeYear3RevisionPlanPage = lazy(() => import('@/pages/seo/ElectricalApprenticeYear3RevisionPlanPage'));
+const ElectricalApprenticeYear4RevisionPlanPage = lazy(() => import('@/pages/seo/ElectricalApprenticeYear4RevisionPlanPage'));
+
+// Routes:
+      <Route path="/guides/electrical-apprentice-year-1-revision-plan" element={<LazyRoute><ElectricalApprenticeYear1RevisionPlanPage /></LazyRoute>} />
+      <Route path="/guides/electrical-apprentice-year-2-revision-plan" element={<LazyRoute><ElectricalApprenticeYear2RevisionPlanPage /></LazyRoute>} />
+      <Route path="/guides/electrical-apprentice-year-3-revision-plan" element={<LazyRoute><ElectricalApprenticeYear3RevisionPlanPage /></LazyRoute>} />
+      <Route path="/guides/electrical-apprentice-year-4-revision-plan" element={<LazyRoute><ElectricalApprenticeYear4RevisionPlanPage /></LazyRoute>} />

@@ -99,7 +99,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/consumer-unit-regulations',
     title: 'Consumer Unit Regulations UK',
     description:
-      'Detailed guide to the regulations governing consumer units including Amendment 3.',
+      'Detailed guide to the regulations governing consumer units including Amendment 4.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -462,10 +462,10 @@ const sections = [
 export default function ConsumerUnitReplacementManchesterPage() {
   return (
     <GuideTemplate
-      title="Consumer Unit Replacement Manchester | Fuse Board Upgrade Cost 2026"
-      description="How much does a consumer unit replacement cost in Manchester in 2026? Local pricing for fuse board upgrades across Greater Manchester, Part P notification, and how to choose a registered electrician."
+      title="Consumer Unit Replacement Manchester | Fuse Board Upgrade"
+      description="How much does a consumer unit replacement cost in Manchester in 2026? Local pricing for fuse board upgrades across Greater Manchester…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Manchester Price Guide"

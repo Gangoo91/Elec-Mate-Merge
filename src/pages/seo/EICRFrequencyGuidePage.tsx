@@ -554,7 +554,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Track EICR due dates for all your landlord clients"
-          description="Join 1,000+ UK electricians using Elec-Mate to complete on-site EICRs and track reinspection schedules. Never let a landlord client lapse into non-compliance. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to complete on-site EICRs and track reinspection schedules."
           icon={FileCheck2}
         />
       </>
@@ -570,9 +570,9 @@ export default function EICRFrequencyGuidePage() {
   return (
     <GuideTemplate
       title="How Often Do You Need an EICR? | EICR Frequency Guide UK"
-      description="EICR frequency guide for all property types. Owner-occupied homes every 10 years, rental properties every 5 years (legally required), HMOs every 3–5 years, commercial every 3–5 years, swimming pools and caravan parks annually."
+      description="EICR frequency guide for all property types. Owner-occupied homes every 10 years, rental properties every 5 years (legally required)…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Frequency Guide"

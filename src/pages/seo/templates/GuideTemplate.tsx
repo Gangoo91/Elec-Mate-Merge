@@ -6,6 +6,7 @@ import { SEOFAQAccordion } from '@/components/seo/SEOFAQAccordion';
 import { SEORelatedPages, type RelatedPage } from '@/components/seo/SEORelatedPages';
 import { RecentReviews } from '@/components/seo/RecentReviews';
 import { SEOStickyMobileCTA } from '@/components/seo/SEOStickyMobileCTA';
+import { SEOInlineLeadMagnet } from '@/components/seo/SEOInlineLeadMagnet';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOSocialShare } from '@/components/seo/SEOSocialShare';
 import { SEOSocialFollow } from '@/components/seo/SEOSocialFollow';
@@ -200,7 +201,7 @@ export default function GuideTemplate({
 
         <p className="text-lg text-white leading-relaxed mb-6">{heroSubtitle}</p>
 
-        <div className="flex flex-wrap gap-3 mb-6">
+        <div className="flex flex-wrap gap-3 mb-3">
           <a
             href="/auth/signup"
             className="inline-flex items-center justify-center gap-2 w-full sm:w-auto h-14 px-8 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold rounded-xl touch-manipulation transition-colors"
@@ -208,6 +209,9 @@ export default function GuideTemplate({
             Start 7-Day Free Trial <ArrowRight className="w-4 h-4" />
           </a>
         </div>
+        <p className="text-xs text-white/60 mb-6">
+          No card required · Free for 7 days · Cancel anytime · Used by 1,000+ UK electricians
+        </p>
 
         <SEOReadingMeta readingTime={readingTime} dateUpdated={dateModified} />
 
@@ -242,6 +246,11 @@ export default function GuideTemplate({
             <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">{section.heading}</h2>
             <div className="space-y-4 text-white leading-relaxed">{section.content}</div>
           </section>
+
+          {/* Lead magnet email capture — after the first section, only on
+              longer guides (5+ sections) where readers are committed enough
+              to give an email. */}
+          {index === 0 && sections.length >= 5 && <SEOInlineLeadMagnet />}
 
           {/* Insert mid-content CTA after every 2nd section (but not the last) */}
           {(index + 1) % 2 === 0 && index < sections.length - 1 && (

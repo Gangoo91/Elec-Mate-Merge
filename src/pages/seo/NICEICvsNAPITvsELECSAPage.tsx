@@ -600,7 +600,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional certificates for any scheme"
-          description="Elec-Mate's EIC, EICR, and minor works certificate apps produce professional documentation that meets the assessment standards of NICEIC, NAPIT, ELECSA, and STROMA. AI board scanning and instant PDF export."
+          description="Elec-Mate's EIC, EICR, and minor works certificate apps produce professional documentation that meets the assessment standards of NICEIC, NAPIT, ELECSA…"
           icon={ShieldCheck}
         />
       </>
@@ -615,10 +615,10 @@ const sections = [
 export default function NICEICvsNAPITvsELECSAPage() {
   return (
     <GuideTemplate
-      title="NICEIC vs NAPIT vs ELECSA vs STROMA | Honest Comparison for Electricians 2026"
-      description="Honest comparison of NICEIC, NAPIT, ELECSA, and STROMA competent person schemes for UK electricians. Costs, assessment frequency, brand reputation, commercial credibility, and which to choose for your business."
+      title="NICEIC vs NAPIT vs ELECSA vs STROMA | Honest Comparison for"
+      description="NICEIC vs NAPIT vs ELECSA vs STROMA — honest comparison of UK competent person schemes on cost, assessment, support, brand recognition."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

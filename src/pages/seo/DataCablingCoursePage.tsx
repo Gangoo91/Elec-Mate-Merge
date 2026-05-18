@@ -22,7 +22,7 @@ import {
 
 const PAGE_TITLE = 'Data Cabling Course | Cat 6 & Fibre Optic Training';
 const PAGE_DESCRIPTION =
-  'Comprehensive data cabling training for UK electricians. Cat 5e, Cat 6, Cat 6A copper cabling, single-mode and multimode fibre optics, structured cabling standards, termination, testing, and certification. 8 modules with video content, interactive quizzes, and AI tutor.';
+  'Data cabling training for UK electricians: Cat 5e/6/6A copper, single-mode + multimode fibre, termination, testing. 8 modules + AI tutor.';
 
 const breadcrumbs = [
   { label: 'Training', href: '/training' },
@@ -87,42 +87,42 @@ const modules = [
   {
     title: 'Introduction to Data Cabling',
     description:
-      'Overview of the data cabling industry, career opportunities for electricians, relevant standards (EN 50173, ISO 11801, TIA-568), and the structured cabling model.',
+      'Overview of the data cabling industry, career opportunities for electricians, relevant standards (EN 50173, ISO 11801, TIA-568)…',
   },
   {
     title: 'Copper Cable Types and Specifications',
     description:
-      'Cat 5e, Cat 6, Cat 6A, and Cat 8 cable construction. UTP, FTP, S/FTP shielding configurations. Performance parameters: bandwidth, insertion loss, crosstalk, return loss.',
+      'Cat 5e, Cat 6, Cat 6A, and Cat 8 cable construction. UTP, FTP, S/FTP shielding configurations.',
   },
   {
     title: 'Fibre Optic Fundamentals',
     description:
-      'Light transmission principles, single-mode (OS1/OS2) and multimode (OM1-OM5) fibres, connector types (LC, SC, MTP/MPO), cable construction, and bend radius requirements.',
+      'Light transmission principles, single-mode (OS1/OS2) and multimode (OM1-OM5) fibres, connector types (LC, SC, MTP/MPO), cable construction…',
   },
   {
     title: 'Structured Cabling Design',
     description:
-      'Star topology architecture, horizontal and backbone subsystems, telecommunications rooms, equipment rooms, entrance facilities, and pathway sizing calculations.',
+      'Star topology architecture, horizontal and backbone subsystems, telecommunications rooms, equipment rooms, entrance facilities…',
   },
   {
     title: 'Copper Termination Techniques',
     description:
-      'RJ45 jack termination (T568A and T568B wiring), patch panel punchdown, cable preparation and pair management, maintaining twist rates, and shielded termination.',
+      'RJ45 jack termination (T568A and T568B wiring), patch panel punchdown, cable preparation and pair management, maintaining twist rates…',
   },
   {
     title: 'Fibre Optic Termination and Splicing',
     description:
-      'Fusion splicing principles and equipment, mechanical splicing, pre-terminated assemblies, fibre preparation and cleaving, splice enclosures, and patch panel management.',
+      'Fusion splicing principles and equipment, mechanical splicing, pre-terminated assemblies, fibre preparation and cleaving, splice enclosures…',
   },
   {
     title: 'Testing, Certification, and Documentation',
     description:
-      'Field tester operation (Fluke DSX, VIAVI), permanent link versus channel testing, interpreting test results, pass/fail criteria, certification reports, and as-built documentation.',
+      'Field tester operation (Fluke DSX, VIAVI), permanent link versus channel testing, interpreting test results, pass/fail criteria, certification reports…',
   },
   {
     title: 'PoE, Wi-Fi, and Active Equipment',
     description:
-      'Power over Ethernet standards (802.3af/at/bt), PoE switch selection, Wi-Fi access point placement, IP camera cabling, VoIP deployments, and network rack/cabinet installation.',
+      'Power over Ethernet standards (802.3af/at/bt), PoE switch selection, Wi-Fi access point placement, IP camera cabling, VoIP deployments…',
   },
 ];
 
@@ -131,7 +131,7 @@ const features = [
     icon: BrainCircuit,
     title: 'AI Study Assistant',
     description:
-      'Ask any data cabling question in plain English. Get clear answers on cable specifications, termination techniques, testing parameters, and structured cabling standards.',
+      'Ask any data cabling question in plain English. Get clear answers on cable specifications, termination techniques, testing parameters…',
   },
   {
     icon: Network,
@@ -231,7 +231,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Learn cable specifications with AI-powered explanations"
-          description="Not sure whether to specify Cat 6 or Cat 6A for your project? Confused about shielding types? Ask the Elec-Mate AI tutor and get clear, practical guidance with standards references."
+          description="Not sure whether to specify Cat 6 or Cat 6A for your project? Confused about shielding types?"
           icon={BrainCircuit}
         />
       </>
@@ -376,7 +376,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Calculate PoE power budgets with interactive tools"
-          description="Use the Elec-Mate PoE calculator to plan switch power budgets, estimate cable temperature rise in bundles, and verify that your cabling infrastructure supports the required power delivery."
+          description="Use the Elec-Mate PoE calculator to plan switch power budgets, estimate cable temperature rise in bundles…"
           icon={Network}
         />
       </>
@@ -472,7 +472,7 @@ export default function DataCablingCoursePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-08-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Specialist Training"

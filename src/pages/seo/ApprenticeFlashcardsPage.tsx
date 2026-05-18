@@ -393,7 +393,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Start building your electrical knowledge today"
-          description="800+ flashcards covering every key topic for Level 2 and Level 3 apprentices. Spaced repetition, offline access, and progress tracking. 15 minutes a day is all it takes. 7-day free trial."
+          description="800+ flashcards covering every key topic for Level 2 and Level 3 apprentices. Spaced repetition, offline access, and progress tracking."
           icon={Brain}
         />
       </>
@@ -500,7 +500,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Your complete apprentice study toolkit"
-          description="Flashcards, AM2 simulator, structured courses, AI revision assistant, and portfolio builder — all in one app. Everything an apprentice electrician needs to pass their qualifications. 7-day free trial."
+          description="Flashcards, AM2 simulator, structured courses, AI revision assistant, and portfolio builder — all in one app."
           icon={GraduationCap}
         />
       </>
@@ -516,9 +516,9 @@ export default function ApprenticeFlashcardsPage() {
   return (
     <GuideTemplate
       title="Apprentice Flashcards Tool | Electrical Revision"
-      description="Electrical apprentice flashcards using active recall and spaced repetition. 800+ cards covering BS 7671, testing procedures, earthing, protection, and circuit theory. Offline access. Free 7-day trial."
+      description="Electrical apprentice flashcards using active recall and spaced repetition. 800+ cards covering BS 7671, testing procedures, earthing, protection…"
       datePublished="2025-07-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Tool"

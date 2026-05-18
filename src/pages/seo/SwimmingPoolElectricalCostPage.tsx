@@ -437,7 +437,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Price your swimming pool electrical installation"
-          description="Use Elec-Mate's quoting app to itemise pool electrical packages: SELV lighting, filtration circuits, bonding, heat pump supply, and Section 702 compliance. Professional quotes from the survey."
+          description="Use Elec-Mate's quoting app to itemise pool electrical packages: SELV lighting, filtration circuits, bonding, heat pump supply…"
           icon={Droplets}
         />
       </>
@@ -487,7 +487,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certify swimming pool electrical installations on your phone"
-          description="Elec-Mate's EIC Certificate app handles specialist installations including Section 702 pools. Complete the certificate on site, add notes on zone compliance and bonding, and issue the PDF before you leave."
+          description="Elec-Mate's EIC Certificate app handles specialist installations including Section 702 pools."
           icon={Droplets}
         />
       </>
@@ -502,10 +502,10 @@ const sections = [
 export default function SwimmingPoolElectricalCostPage() {
   return (
     <GuideTemplate
-      title="Swimming Pool Electrical Installation UK | BS 7671 Section 702 Guide"
-      description="Complete guide to swimming pool electrical installation in the UK. BS 7671 Section 702 zones, SELV lighting, supplementary bonding, RCD protection, filtration and heat pump circuits. Typical costs £2,500–£8,000."
+      title="Swimming Pool Electrical Installation UK | BS 7671 Section"
+      description="Complete guide to swimming pool electrical installation in the UK. BS 7671 Section 702 zones, SELV lighting, supplementary bonding, RCD protection…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

@@ -527,7 +527,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your EV charging installation business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for EV charging certificates, quoting, and job management. Complete certificates on site, win more work, and get paid faster. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for EV charging certificates, quoting, and job management."
           icon={FileCheck2}
         />
       </>
@@ -543,9 +543,9 @@ export default function SmartEVChargingPage() {
   return (
     <GuideTemplate
       title="Smart EV Charging UK | Smart Charge Points Guide 2025"
-      description="Complete guide to smart EV charging in the UK. Electric Vehicles (Smart Charge Points) Regulations 2021 explained, off-peak tariffs, solar PV integration, demand response, load management, and OZEV grant requirements for smart chargers."
+      description="Complete guide to smart EV charging in the UK. Electric Vehicles (Smart Charge Points) Regulations 2021 explained, off-peak tariffs…"
       datePublished="2025-01-01"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EV Charging Guide"

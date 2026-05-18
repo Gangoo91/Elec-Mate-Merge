@@ -551,7 +551,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Keep your NICEIC assessment hassle-free"
-          description="Join 1,000+ UK electricians creating assessment-ready certificates with Elec-Mate. AI board scanner, voice test entry, BS 7671 validation, and cloud-stored records. 7-day free trial."
+          description="Join 1,000+ UK electricians creating assessment-ready certificates with Elec-Mate. AI board scanner, voice test entry, BS 7671 validation…"
           icon={ShieldCheck}
         />
       </>
@@ -567,9 +567,9 @@ export default function WhyChooseNICEICPage() {
   return (
     <GuideTemplate
       title="Why Choose a NICEIC Electrician | Consumer Guide"
-      description="Complete guide to NICEIC registration for consumers. What NICEIC registration means, the Platinum Promise guarantee, complaints procedure, how assessment works, and how to find a registered electrician in your area."
+      description="Complete guide to NICEIC registration for consumers. What NICEIC registration means, the Platinum Promise guarantee, complaints procedure…"
       datePublished="2025-07-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Consumer Guide"

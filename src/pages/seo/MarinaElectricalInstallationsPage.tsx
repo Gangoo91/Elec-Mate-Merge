@@ -366,7 +366,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Design marina distribution with Elec-Mate calculators"
-          description="Cable sizing, voltage drop, maximum demand, and prospective fault current — all the calculations you need for marina distribution design, on your phone. Follows BS 7671:2018+A4:2026."
+          description="Cable sizing, voltage drop, maximum demand, and prospective fault current — all the calculations you need for marina distribution design, on your phone."
           icon={Calculator}
         />
       </>
@@ -601,7 +601,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Complete marina EICRs on your phone"
-          description="Elec-Mate handles special installations including Section 709 marinas. AI board scanner, voice test entry, automatic observation code classification, and instant PDF delivery. 7-day free trial."
+          description="Elec-Mate handles special installations including Section 709 marinas. AI board scanner, voice test entry, automatic observation code classification…"
           icon={FileCheck2}
         />
       </>
@@ -617,9 +617,9 @@ export default function MarinaElectricalInstallationsPage() {
   return (
     <GuideTemplate
       title="Marina Electrical Installations | BS 7671 Section 709"
-      description="Complete guide to marina electrical installations under BS 7671 Section 709. Covers shore supply distribution, TT earthing requirements, individual RCD protection, IP ratings, cable management, and annual inspection requirements."
+      description="Complete guide to marina electrical installations under BS 7671 Section 709. Covers shore supply distribution, TT earthing requirements…"
       datePublished="2025-07-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Special Installation"

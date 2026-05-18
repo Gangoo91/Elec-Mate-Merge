@@ -576,7 +576,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete consumer unit certificates on your phone"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion with AI board scanning, test result recording, and instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion with AI board scanning, test result recording, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -592,9 +592,9 @@ export default function CircuitBreakerTypesPage() {
   return (
     <GuideTemplate
       title="Types of Circuit Breakers UK | MCB, MCCB, RCCB Guide"
-      description="Complete guide to circuit breaker types used in UK electrical installations. MCB, MCCB, RCCB and RCBO explained with curve types, breaking capacity, BS 7671 requirements and selection guidance."
+      description="Complete guide to circuit breaker types used in UK electrical installations. MCB, MCCB, RCCB and RCBO explained with curve types, breaking capacity…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Wiring Guide"

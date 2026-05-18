@@ -20,9 +20,9 @@ export default function UPSInstallationGuidePage() {
   return (
     <GuideTemplate
       title="UPS Installation Guide | Uninterruptible Power Supply"
-      description="Complete guide to UPS installation for electricians. Covers online, offline, and line-interactive UPS types, sizing calculations, installation requirements, earthing, bypass switching, battery maintenance, and BS 7671 compliance for single-phase and three-phase UPS systems."
+      description="Complete guide to UPS installation for electricians. Covers online, offline, and line-interactive UPS types, sizing calculations…"
       datePublished="2025-09-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Installation', href: '/guides' },
         { label: 'UPS Installation', href: '/guides/ups-installation-guide' },
@@ -246,7 +246,7 @@ export default function UPSInstallationGuidePage() {
               </div>
               <SEOAppBridge
                 title="Max Demand Calculator"
-                description="Elec-Mate's max demand calculator helps size the electrical supply for UPS installations, accounting for diversity, power factor, and future expansion. Calculate the total load before specifying UPS capacity."
+                description="Elec-Mate's max demand calculator helps size the electrical supply for UPS installations, accounting for diversity, power factor, and future expansion."
                 icon={Calculator}
               />
             </>
@@ -549,7 +549,7 @@ export default function UPSInstallationGuidePage() {
               </div>
               <SEOAppBridge
                 title="EIC for UPS Installations"
-                description="Elec-Mate's digital EIC form handles UPS installation certification including supply characteristics, circuit details, and all test results. Record the complete commissioning data on site and generate a professional certificate immediately."
+                description="Elec-Mate's digital EIC form handles UPS installation certification including supply characteristics, circuit details, and all test results."
                 icon={FileText}
               />
             </>

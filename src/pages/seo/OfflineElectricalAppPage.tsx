@@ -22,9 +22,9 @@ export default function OfflineElectricalAppPage() {
   return (
     <ToolTemplate
       title="Offline Electrical App | Work Without Signal"
-      description="Elec-Mate works fully offline. Complete EICR, EIC, and Minor Works certificates, use 70+ BS 7671 calculators, and access training courses without any internet connection. Auto-saves locally every 10 seconds. Syncs to the cloud when you are back online."
+      description="Elec-Mate works fully offline: complete EICR, EIC, and Minor Works certificates, use 70+ BS 7671 calculators in basements + remote sites."
       datePublished="2026-01-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Offline Electrical App', href: '/tools/offline-electrical-app' },
@@ -212,7 +212,7 @@ export default function OfflineElectricalAppPage() {
           appBridge: {
             title: 'Download Courses for Offline Study',
             description:
-              'Access 46+ electrical courses offline. Video lessons, quizzes, flashcards, and mock exams all work without an internet connection. Progress syncs when you are back online.',
+              'Access 46+ electrical courses offline. Video lessons, quizzes, flashcards, and mock exams all work without an internet connection.',
             icon: Download,
           },
         },

@@ -321,7 +321,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Ring circuit calculator for fault diagnosis"
-          description="Enter your R1, Rn, and R2 values into Elec-Mate's ring circuit calculator. The app validates the ring integrity, flags any anomalies, and calculates the expected r1+r2 at each socket position. A broken ring or incorrect routing shows up immediately."
+          description="Enter your R1, Rn, and R2 values into Elec-Mate's ring circuit calculator. The app validates the ring integrity, flags any anomalies…"
           icon={Calculator}
         />
       </>
@@ -521,7 +521,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="AI-guided fault diagnosis"
-          description="Describe the dead socket symptoms to Elec-Mate's AI fault diagnosis tool — how many sockets are affected, which rooms, whether the MCB has tripped — and the AI guides you through the most efficient diagnostic sequence. It prioritises the most likely causes based on the symptom pattern."
+          description="Describe the dead socket symptoms to Elec-Mate's AI fault diagnosis tool — how many sockets are affected, which rooms…"
           icon={Search}
         />
       </>
@@ -595,7 +595,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Complete certificates on site — send before you leave"
-          description="Elec-Mate's digital EICR and Minor Works certificates capture test results by voice, suggest defect codes with AI, and export as professional PDFs. Send the certificate, remedial quote, and invoice to the customer by email or WhatsApp before you leave the property."
+          description="Elec-Mate's digital EICR and Minor Works certificates capture test results by voice, suggest defect codes with AI, and export as professional PDFs."
           icon={FileCheck2}
         />
       </>
@@ -611,9 +611,9 @@ export default function NoPowerToSocketsPage() {
   return (
     <GuideTemplate
       title="No Power to Sockets | Troubleshooting Guide"
-      description="Complete guide to diagnosing dead sockets. Covers tripped MCBs and RCDs, broken ring circuits, loose connections, spur faults, and a systematic diagnosis approach for UK homeowners and electricians."
+      description="Complete guide to diagnosing dead sockets. Covers tripped MCBs and RCDs, broken ring circuits, loose connections, spur faults…"
       datePublished="2025-07-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting"

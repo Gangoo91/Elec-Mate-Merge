@@ -389,7 +389,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Automatic OJT Hour Tracking"
-          description="Elec-Mate OJT Tracker logs your off-the-job hours automatically. Every study session on the platform is recorded. Add manual entries for off-platform activities in seconds. See your total, weekly average, and compliance percentage at a glance."
+          description="Elec-Mate OJT Tracker logs your off-the-job hours automatically. Every study session on the platform is recorded."
           icon={Clock}
         />
       </>
@@ -580,7 +580,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Never Fall Behind on OJT Hours"
-          description="Elec-Mate OJT Tracker automatically logs on-platform study time, categorises activities, tracks compliance against the 400-hour target in real time, and generates Ofsted-ready records. 7-day free trial."
+          description="Elec-Mate OJT Tracker automatically logs on-platform study time, categorises activities, tracks compliance against the 400-hour target in real time…"
           icon={BarChart3}
         />
       </>
@@ -592,9 +592,9 @@ export default function OffJobTrainingHoursPage() {
   return (
     <GuideTemplate
       title="Off-the-Job Training Hours | 20% Requirement Explained"
-      description="Complete guide to the 20% off-the-job training hours requirement for UK electrical apprentices. What counts, what does not, how to calculate hours, recording evidence, Ofsted requirements, and automatic tracking with Elec-Mate OJT Tracker."
+      description="20% off-the-job training hours requirement for UK electrical apprentices: what counts, what doesn't, how to log evidence, employer obligations."
       datePublished="2025-10-15"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

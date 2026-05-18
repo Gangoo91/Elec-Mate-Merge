@@ -290,8 +290,8 @@ const sections = [
           IEC 61340-5-1 (Protection of electronic devices from electrostatic phenomena).
         </p>
         <SEOAppBridge
-          title="Document clean room electrical installations for GMP validation"
-          description="Elec-Mate's EIC and test record tools produce the professional documentation required for pharmaceutical GMP Installation Qualification (IQ) packages. Complete test records on site, export PDF for the validation dossier."
+          title="Document clean room electrical installations for GMP"
+          description="Elec-Mate's EIC and test record tools produce the professional documentation required for pharmaceutical GMP Installation Qualification (IQ) packages."
           icon={FileCheck2}
         />
       </>
@@ -411,10 +411,10 @@ const sections = [
 export default function CleanRoomElectricalInstallationPage() {
   return (
     <GuideTemplate
-      title="Clean Room Electrical Installation UK | ISO 14644-1, GMP, ESD"
-      description="Complete guide to clean room electrical installation for UK electricians. ISO 14644-1 classifications (Class 1–9), pharmaceutical GMP requirements, flush-mounted conduit, ESD earthing, HEPA FFU power, and IQ/OQ/PQ validation documentation."
+      title="Clean Room Electrical Installation UK | ISO 14644-1, GMP,"
+      description="Complete guide to clean room electrical installation for UK electricians. ISO 14644-1 classifications (Class 1–9), pharmaceutical GMP requirements…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Specialist Guide"

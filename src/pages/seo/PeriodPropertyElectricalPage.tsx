@@ -616,7 +616,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete period property EICRs professionally with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, photographic documentation, and professional quoting. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, photographic documentation, and professional quoting."
           icon={FileCheck2}
         />
       </>
@@ -631,10 +631,10 @@ const sections = [
 export default function PeriodPropertyElectricalPage() {
   return (
     <GuideTemplate
-      title="Period Property Electrical Guide | Old House Electrical Safety UK"
-      description="Complete guide to electrical safety in period properties — all pre-1966 homes. What to look for at survey, EICR importance, common C2 and C3 observations, buying due diligence, and upgrade costs from £450 to £12,000+."
+      title="Period Property Electrical Guide | Old House Electrical"
+      description="Complete guide to electrical safety in period properties — all pre-1966 homes. What to look for at survey, EICR importance…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Property Guide"

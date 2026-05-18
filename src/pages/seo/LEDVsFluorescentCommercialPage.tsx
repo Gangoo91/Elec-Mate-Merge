@@ -197,7 +197,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Calculate LED upgrade savings and payback with AI"
-          description="Elec-Mate's AI can calculate the energy savings, carbon reduction, and financial payback period for a commercial LED lighting upgrade. Help clients make the business case for LED installation."
+          description="Elec-Mate's AI can calculate the energy savings, carbon reduction, and financial payback period for a commercial LED lighting upgrade."
           icon={Lightbulb}
         />
       </>
@@ -388,7 +388,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Quote and certify commercial LED projects on your phone"
-          description="Elec-Mate's quoting app generates professional LED upgrade proposals with energy savings calculations. The EIC and Minor Works certificate apps handle the certification after installation. 7-day free trial."
+          description="Elec-Mate's quoting app generates professional LED upgrade proposals with energy savings calculations."
           icon={Lightbulb}
         />
       </>
@@ -403,10 +403,10 @@ const sections = [
 export default function LEDVsFluorescentCommercialPage() {
   return (
     <GuideTemplate
-      title="LED vs Fluorescent Commercial Lighting | UK Electrician's Guide"
-      description="Complete guide to LED vs fluorescent commercial lighting for UK electricians. Energy savings (50–70%), lifespan comparisons, dimming and DALI controls, power factor, and replacing T8 fluorescent with LED — including WEEE disposal requirements."
+      title="LED vs Fluorescent Commercial Lighting | UK Electrician's"
+      description="Complete guide to LED vs fluorescent commercial lighting for UK electricians. Energy savings (50–70%), lifespan comparisons, dimming and DALI controls…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Commercial Lighting Guide"

@@ -59,19 +59,19 @@ const features = [
     icon: Calculator,
     title: 'Complete Cost Breakdown',
     description:
-      'Enter materials, labour hours, travel, waste, and overheads. The calculator totals every cost so nothing is missed — no more "I forgot to include the fixings" moments.',
+      'Enter materials, labour hours, travel, waste, and overheads. The calculator totals every cost so nothing is missed — no more "I forgot to include the…',
   },
   {
     icon: PoundSterling,
     title: 'Markup & Margin Calculator',
     description:
-      'Set your desired markup percentage or target margin. The calculator shows the difference between the two and helps you price to hit your profit target every time.',
+      'Set your desired markup percentage or target margin. The calculator shows the difference between the two and helps you price to hit your profit target…',
   },
   {
     icon: Clock,
     title: 'Profit Per Hour Worked',
     description:
-      'See your actual profit per hour of time invested — including travel, admin, quoting, and snagging. Compare jobs to find which types deliver the best return on your time.',
+      'See your actual profit per hour of time invested — including travel, admin, quoting, and snagging.',
   },
   {
     icon: TrendingUp,
@@ -83,13 +83,13 @@ const features = [
     icon: BarChart3,
     title: 'Job Type Profitability Trends',
     description:
-      'Track profitability across different job types — rewires, board changes, testing, EV chargers. See which work generates the highest margin and focus your marketing there.',
+      'Track profitability across different job types — rewires, board changes, testing, EV chargers.',
   },
   {
     icon: AlertTriangle,
     title: 'Hidden Cost Alerts',
     description:
-      'The calculator flags common hidden costs that electricians forget — travel time, call-back allowance, certification time, waste percentage, and overhead allocation.',
+      'The calculator flags common hidden costs that electricians forget — travel time, call-back allowance, certification time, waste percentage…',
   },
 ];
 
@@ -99,7 +99,7 @@ const softwareAppSchema = {
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'Web, iOS, Android',
   description:
-    'Calculate profit margins on every electrical job. Track material costs, labour hours, overheads, and actual vs quoted prices. Part of 14 business calculators for UK electricians.',
+    'Calculate profit margins on every electrical job. Track material costs, labour hours, overheads, and actual vs quoted prices.',
   url: 'https://www.elec-mate.com/tools/job-profitability-calculator',
   offers: {
     '@type': 'Offer',
@@ -131,7 +131,7 @@ export default function JobProfitabilityCalculatorPage() {
   useSEO({
     title: 'Job Profitability Calculator for Electricians',
     description:
-      'Calculate profit margins on every electrical job. Track material costs, labour hours, overheads, and actual vs quoted prices. Make every job profitable. Part of 14 business calculators.',
+      'Calculate profit margins on every electrical job. Track material costs, labour hours, overheads, and actual vs quoted prices. Make every job profitable.',
   });
 
   return (
@@ -435,7 +435,7 @@ export default function JobProfitabilityCalculatorPage() {
             </p>
             <p>
               Compliance is built in: all calculations reference BS 7671:2018+A4:2026 (the 18th
-              Edition with Amendment 3, issued July 2024) where relevant, and the platform is fully
+              Edition with Amendment 4, issued July 2024) where relevant, and the platform is fully
               GDPR compliant. Your financial data is encrypted in transit and at rest, stored
               securely on UK-region servers, and never shared with third parties.
             </p>
@@ -448,7 +448,7 @@ export default function JobProfitabilityCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Track Every Job's Profit — Built for UK Electricians"
-            description="Elec-Mate's Job Profitability Calculator is part of the complete business hub. Quote, invoice, track profits, and run your electrical business from one app."
+            description="Elec-Mate's Job Profitability Calculator is part of the complete business hub. Quote, invoice, track profits…"
             ctaText="Try Elec-Mate free"
             ctaHref="/auth/signup"
             icon={TrendingUp}

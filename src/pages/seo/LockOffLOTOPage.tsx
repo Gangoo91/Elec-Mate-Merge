@@ -408,7 +408,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Generate LOTO method statements with AI"
-          description="Elec-Mate's AI Health and Safety agent creates step-by-step LOTO method statements tailored to your specific job. Describe the installation and task, and get a complete safe isolation procedure with the correct lock off devices, proving dead sequence, and permit to work documentation."
+          description="Elec-Mate's AI Health and Safety agent creates step-by-step LOTO method statements tailored to your specific job."
           icon={Lock}
         />
       </>
@@ -788,7 +788,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Generate RAMS with built-in LOTO procedures"
-          description="Elec-Mate's AI Health and Safety agent creates complete RAMS packages with detailed safe isolation and lock off/tagout procedures. Describe your job and get a professional document covering all hazards, control measures, and step-by-step LOTO instructions. Used by 1,000+ UK electricians."
+          description="Elec-Mate's AI Health and Safety agent creates complete RAMS packages with detailed safe isolation and lock off/tagout procedures."
           icon={Brain}
         />
       </>
@@ -804,9 +804,9 @@ export default function LockOffLOTOPage() {
   return (
     <GuideTemplate
       title="Lock Off / LOTO Procedure for Electricians | Complete Guide"
-      description="Complete guide to lockout/tagout (LOTO) for electricians. Step-by-step lock off procedure, MCB lock off devices, distribution board isolation, multi-lock hasps, legal requirements under the Electricity at Work Regulations 1989, and common LOTO mistakes to avoid."
+      description="Complete guide to lockout/tagout (LOTO) for electricians. Step-by-step lock off procedure, MCB lock off devices, distribution board isolation…"
       datePublished="2025-04-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

@@ -22,9 +22,9 @@ export default function BoardScannerToolPage() {
   return (
     <ToolTemplate
       title="AI Board Scanner | Consumer Unit Photo Recognition"
-      description="Elec-Mate's AI Board Scanner photographs consumer units and automatically identifies MCBs, RCBOs, RCDs, circuit details, and board layout. Auto-fills EICR and EIC certificates in seconds. Works with all major UK manufacturers including Hager, Wylex, Schneider, MK, and Contactum."
+      description="Elec-Mate's AI Board Scanner photographs consumer units and automatically identifies MCBs, RCBOs, RCDs, circuit details, and board layout."
       datePublished="2026-01-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'AI Board Scanner', href: '/tools/board-scanner' },
@@ -97,7 +97,7 @@ export default function BoardScannerToolPage() {
           appBridge: {
             title: 'Try the AI Board Scanner',
             description:
-              'Photograph any consumer unit. The AI extracts circuit data, device ratings, and board layout in seconds. Review, edit, and it flows straight into your certificate.',
+              'Photograph any consumer unit. The AI extracts circuit data, device ratings, and board layout in seconds.',
             icon: Camera,
           },
         },
@@ -238,7 +238,7 @@ export default function BoardScannerToolPage() {
           appBridge: {
             title: 'From Photo to Filled Certificate in Seconds',
             description:
-              'The AI Board Scanner eliminates manual data entry. Photograph the board, review the extracted data, and your certificate schedule is ready. Included in all Elec-Mate plans.',
+              'The AI Board Scanner eliminates manual data entry. Photograph the board, review the extracted data, and your certificate schedule is ready.',
             icon: FileCheck2,
           },
         },

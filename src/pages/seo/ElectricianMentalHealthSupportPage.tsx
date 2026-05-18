@@ -401,7 +401,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Take the admin stress out of your electrical business"
-          description="Elec-Mate reduces the administrative burden of running an electrical business — faster quoting, automated certification, and clear job management to give you more mental space."
+          description="Elec-Mate reduces the administrative burden of running an electrical business — faster quoting, automated certification…"
           icon={Heart}
         />
       </>
@@ -511,10 +511,10 @@ export default function ElectricianMentalHealthSupportPage() {
   return (
     <GuideTemplate
       localArea="Mental Health Support"
-      title="Electrician Mental Health Support UK | Construction Industry Resources"
-      description="Mental health support for UK electricians and trades workers — Construction Industry Helpline (0345 605 1956), Lighthouse Club, Mates in Mind, CALM, and Samaritans. Self-employed pressures, site culture, and employer duties."
+      title="Electrician Mental Health Support UK | Construction"
+      description="Mental health support for UK electricians and trades workers — Construction Industry Helpline (0345 605 1956), Lighthouse Club, Mates in Mind, CALM…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Health and Wellbeing"

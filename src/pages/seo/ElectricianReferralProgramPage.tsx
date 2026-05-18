@@ -563,7 +563,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional tools for a referral-worthy electrical business"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, invoicing, job management, and certification. Run the kind of professional operation that agents and builders are proud to refer. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, invoicing, job management, and certification."
           icon={Users}
         />
       </>
@@ -578,10 +578,10 @@ const sections = [
 export default function ElectricianReferralProgramPage() {
   return (
     <GuideTemplate
-      title="Electrician Referral Programme UK | Building a Referral Network"
-      description="How to build a referral network as a UK electrician — relationships with builders, plumbers, kitchen fitters, and estate agents; referral fee structures; reciprocal networks; and tracking referral jobs."
+      title="Electrician Referral Programme UK | Building a Referral"
+      description="How to build a referral network as a UK electrician — relationships with builders, plumbers, kitchen fitters, and estate agents; referral fee structures…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Business Guide"

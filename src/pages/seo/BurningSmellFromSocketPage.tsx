@@ -355,7 +355,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AI fault diagnosis for arcing and overheating"
-          description="Describe the symptoms — burning smell, discolouration, intermittent tripping — and Elec-Mate's AI fault diagnosis tool identifies probable causes, suggests test procedures, and generates the correct observation code for your EICR."
+          description="Describe the symptoms — burning smell, discolouration, intermittent tripping — and Elec-Mate's AI fault diagnosis tool identifies probable causes…"
           icon={Brain}
         />
       </>
@@ -520,7 +520,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Generate remedial quotes on site"
-          description="Found a burnt socket? Elec-Mate's remedial works estimator prices the fix — socket replacement, cable repair, circuit rewire — and generates a professional quote before you leave. No desk time, no second visit."
+          description="Found a burnt socket? Elec-Mate's remedial works estimator prices the fix — socket replacement, cable repair…"
           icon={Calculator}
         />
       </>
@@ -600,9 +600,9 @@ export default function BurningSmellFromSocketPage() {
   return (
     <GuideTemplate
       title="Burning Smell from Socket | Causes & What to Do"
-      description="Burning smell from an electrical socket? Expert guide covering loose connections, overloaded circuits, arcing faults, when to isolate, and when to call an emergency electrician. Immediate safety actions and prevention tips."
+      description="Burning smell from an electrical socket? Expert guide covering loose connections, overloaded circuits, arcing faults, when to isolate…"
       datePublished="2025-08-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

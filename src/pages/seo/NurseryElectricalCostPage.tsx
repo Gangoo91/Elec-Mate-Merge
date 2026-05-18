@@ -402,7 +402,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote nursery electrical with fire safety provisions"
-          description="Elec-Mate's quoting app handles fire alarm systems, emergency lighting, LST heating, and Ofsted-compliant electrical specifications. Professional PDF quotes for nursery fit-outs."
+          description="Elec-Mate's quoting app handles fire alarm systems, emergency lighting, LST heating, and Ofsted-compliant electrical specifications."
           icon={Calculator}
         />
       </>
@@ -512,7 +512,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote nursery fit-outs with Ofsted compliance"
-          description="Elec-Mate's quoting app handles nursery electrical work with fire alarm, emergency lighting, LST heating, and Ofsted-compliant documentation. 7-day free trial."
+          description="Elec-Mate's quoting app handles nursery electrical work with fire alarm, emergency lighting, LST heating, and Ofsted-compliant documentation."
           icon={Calculator}
         />
       </>
@@ -528,9 +528,9 @@ export default function NurseryElectricalCostPage() {
   return (
     <GuideTemplate
       title="Nursery Electrical Cost 2026 | UK Childcare Premises Guide"
-      description="How much does nursery electrical installation cost in 2026? UK guide covering child safety, fire alarm, emergency lighting, LST heating, Ofsted requirements, and realistic costs from £5,000 to £18,000."
+      description="How much does nursery electrical installation cost in 2026? UK guide covering child safety, fire alarm, emergency lighting, LST heating…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

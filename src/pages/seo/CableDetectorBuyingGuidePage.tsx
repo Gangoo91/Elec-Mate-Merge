@@ -406,7 +406,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Document site conditions and services before work starts"
-          description="Use Elec-Mate's AI to generate method statements and risk assessments for excavation and cable work — including buried service identification procedures and toolbox talk records."
+          description="Use Elec-Mate's AI to generate method statements and risk assessments for excavation and cable work — including buried service identification procedures…"
           icon={ShieldCheck}
         />
       </>
@@ -525,7 +525,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Generate pre-work risk assessments and method statements"
-          description="Elec-Mate's AI generates site-specific method statements for drilling, chasing, and excavation work — including buried services identification, PPE requirements, and emergency procedures. Professional PDF output."
+          description="Elec-Mate's AI generates site-specific method statements for drilling, chasing, and excavation work — including buried services identification…"
           icon={Search}
         />
       </>
@@ -540,10 +540,10 @@ const sections = [
 export default function CableDetectorBuyingGuidePage() {
   return (
     <GuideTemplate
-      title="Cable Detector Buying Guide UK 2026 | CAT & Genny for Electricians"
-      description="Complete cable detector buying guide for UK electricians and contractors. How CAT and Genny systems work, signal generator vs passive detection, depth indication, common errors, and the best cable detectors in 2026 — Radiodetection CAT4+, Leica DD130, Ridgid Scout 100."
+      title="Cable Detector Buying Guide UK 2026 | CAT & Genny for"
+      description="Complete cable detector buying guide for UK electricians and contractors. How CAT and Genny systems work, signal generator vs passive detection…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Tools & Equipment Guide"

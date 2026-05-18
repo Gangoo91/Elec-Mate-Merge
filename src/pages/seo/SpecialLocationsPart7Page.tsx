@@ -82,9 +82,9 @@ const faqs = [
       'Section 712 covers safety requirements for the electrical installation of solar photovoltaic (PV) power supply systems. Key requirements include: DC isolator switches must be installed between the PV array and the inverter, accessible and clearly labelled. String overcurrent protection must be provided where multiple strings are connected in parallel. The installation must include warning labels at the consumer unit, meter position, and inverter location indicating the presence of a dual supply. All DC cables must be adequately protected against mechanical damage and be of the double-insulated type. Fire safety considerations require that PV cables on or within a building use cables with reduced fire propagation. Earthing and bonding of the PV array frame must comply with the general requirements and any manufacturer instructions. The inverter must disconnect automatically if the mains supply fails (G98/G99 compliance).',
   },
   {
-    question: 'How does Amendment 3 (A4:2026) affect special locations?',
+    question: 'How does Amendment 4 (A4:2026) affect special locations?',
     answer:
-      'Amendment 3 to BS 7671:2018 (published 31 July 2024) primarily introduces new requirements in Section 530 addressing bidirectional and unidirectional protective devices. While A4:2026 does not make sweeping changes to Part 7 itself, it affects special locations indirectly. For solar PV installations (712), the clarification around bidirectional devices is particularly relevant because PV systems export power back through the consumer unit. Electricians working on special locations should ensure they have access to the full text of BS 7671:2018+A2:2022+A4:2026 and are aware of the new A4:2026 requirements. Elec-Mate AI regulations lookup always references the latest edition including all amendments.',
+      'Amendment 4 to BS 7671:2018 (published 31 July 2024) primarily introduces new requirements in Section 530 addressing bidirectional and unidirectional protective devices. While A4:2026 does not make sweeping changes to Part 7 itself, it affects special locations indirectly. For solar PV installations (712), the clarification around bidirectional devices is particularly relevant because PV systems export power back through the consumer unit. Electricians working on special locations should ensure they have access to the full text of BS 7671:2018+A2:2022+A4:2026 and are aware of the new A4:2026 requirements. Elec-Mate AI regulations lookup always references the latest edition including all amendments.',
   },
 ];
 
@@ -712,14 +712,14 @@ const sections = [
           </ul>
         </div>
         <p>
-          Amendment 3 (A4:2026) introduces new requirements in Section 530 regarding bidirectional protective
+          Amendment 4 (A4:2026) introduces new requirements in Section 530 regarding bidirectional protective
           devices, which is directly relevant to PV installations where power flows both into and
           out of the consumer unit. Electricians installing or inspecting PV systems must be aware
           of this A4:2026 addition.
         </p>
         <SEOAppBridge
-          title="Look up any PV regulation instantly"
-          description="Elec-Mate AI regulations lookup covers every Section 712 regulation, every amendment, and every guidance note. Type your question and get the exact regulation number, requirement, and practical guidance — on site, in seconds."
+          title="Special Locations BS 7671:2018+A4:2026"
+          description="Special Locations guidance for BS 7671:2018+A4:2026. Section 701–753 rules for bathrooms, saunas, pools, hazardous areas. Instant lookup, no guesswork."
           icon={Brain}
         />
       </>
@@ -793,7 +793,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Master Part 7 with Elec-Mate"
-          description="AI regulations lookup, 50+ training courses, and professional calculators — all built for UK electricians. Study for exams, look up regs on site, and complete certificates faster. 7-day free trial."
+          description="AI regulations lookup, 50+ training courses, and professional calculators — all built for UK electricians."
           icon={BookOpen}
         />
       </>
@@ -809,9 +809,9 @@ export default function SpecialLocationsPart7Page() {
   return (
     <GuideTemplate
       title="Special Locations Part 7 BS 7671 | Complete Guide"
-      description="Complete guide to Part 7 of BS 7671 — special locations including bathrooms (701), swimming pools (702), saunas (703), construction sites (704), agricultural premises (705), restrictive locations (706), caravan parks (708), marinas (709), exhibitions (711), and solar PV (712)."
+      description="Complete guide to Part 7 of BS 7671 — special locations including bathrooms (701), swimming pools (702), saunas (703), construction sites (704)…"
       datePublished="2025-03-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations Guide"

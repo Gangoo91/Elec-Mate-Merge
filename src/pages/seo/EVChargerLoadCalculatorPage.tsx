@@ -21,9 +21,9 @@ export default function EVChargerLoadCalculatorPage() {
   return (
     <ToolTemplate
       title="EV Charger Load Calculator | Demand Assessment"
-      description="Calculate EV charger electrical load for single and three-phase installations. Assess demand, apply diversity for multiple chargers, check PME earthing considerations, and verify supply capacity to BS 7671 and IET guidance. Part of 50+ free electrical calculators."
+      description="Calculate EV charger electrical load for single and three-phase installations. Assess demand, apply diversity for multiple chargers…"
       datePublished="2026-01-28"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'EV Charger Load Calculator', href: '/tools/ev-charger-load-calculator' },
@@ -107,7 +107,7 @@ export default function EVChargerLoadCalculatorPage() {
           appBridge: {
             title: 'Calculate EV Charger Load Instantly',
             description:
-              'Enter the charger rating, supply type, and number of units. The calculator determines the total demand, recommends cable sizes, and checks supply capacity in seconds.',
+              'Enter the charger rating, supply type, and number of units. The calculator determines the total demand, recommends cable sizes…',
             icon: Car,
           },
         },

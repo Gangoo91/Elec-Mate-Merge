@@ -90,19 +90,19 @@ const features = [
     icon: Layers,
     title: 'Mixed Cable Sizes',
     description:
-      'Handles any combination of cable sizes in the same conduit. Add 1.0 mm² through to 16 mm² singles in any quantity, and the total cable factor is calculated automatically.',
+      'Handles any combination of cable sizes in the same conduit. Add 1.0 mm² through to 16 mm² singles in any quantity…',
   },
   {
     icon: Ruler,
     title: 'Bend Adjustment',
     description:
-      'Specify the number of bends in the conduit run, and the calculator reduces the conduit factor accordingly. Flags runs that need draw-in boxes to remain practical.',
+      'Specify the number of bends in the conduit run, and the calculator reduces the conduit factor accordingly.',
   },
   {
     icon: BarChart3,
     title: 'Fill Percentage Display',
     description:
-      'Shows the fill percentage as a visual gauge. Colour-coded: green for comfortable fill, amber for approaching the limit, red for exceeding the conduit factor.',
+      'Shows the fill percentage as a visual gauge. Colour-coded: green for comfortable fill, amber for approaching the limit…',
   },
   {
     icon: Thermometer,
@@ -693,7 +693,7 @@ export default function ConduitFillCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Conduit Fill Calculator — Always in Your Pocket"
-            description="Use Elec-Mate's built-in calculators on any job site — conduit fill, cable sizing, voltage drop and more. All BS 7671 cable factor tables included, works offline."
+            description="Use Elec-Mate's built-in calculators on any job site — conduit fill, cable sizing, voltage drop and more."
             ctaText="Try Elec-Mate free"
             ctaHref="/auth/signup"
           />
@@ -733,6 +733,25 @@ export default function ConduitFillCalculatorPage() {
       <section className="px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <RecentReviews />
+        </div>
+      </section>
+
+      
+
+      {/* Related calculators — peer surface for internal-link health.
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical calculators</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/conduit-installation-guide">Conduit Installation Guide UK</SEOInternalLink>
+            <SEOInternalLink href="/guides/electrical-conduit-guide">Electrical Conduit Guide</SEOInternalLink>
+            <SEOInternalLink href="/trunking-fill-calculator">/trunking-fill-calculator</SEOInternalLink>
+            <SEOInternalLink href="/electrical-installation-conduit">Electrical Installation Conduit Guide — Steel, PVC, Fill Calculations & Earthing</SEOInternalLink>
+            <SEOInternalLink href="/how-to-fill-in-eicr">How to Fill In an EICR Form</SEOInternalLink>
+            <SEOInternalLink href="/guides/how-to-fill-in-minor-works">How to Fill In a Minor Works Certificate</SEOInternalLink>
+            <SEOInternalLink href="/guides/minor-works-certificate-how-to-fill-in">/guides/minor-works-certificate-how-to-fill-in</SEOInternalLink>
+          </div>
         </div>
       </section>
 

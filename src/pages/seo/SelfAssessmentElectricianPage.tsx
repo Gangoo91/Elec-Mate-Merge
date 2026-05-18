@@ -528,7 +528,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your electrical business finances with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, invoicing, and job records. Give your accountant a clean income record at self-assessment time. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, invoicing, and job records."
           icon={FileText}
         />
       </>
@@ -543,10 +543,10 @@ const sections = [
 export default function SelfAssessmentElectricianPage() {
   return (
     <GuideTemplate
-      title="Self-Assessment Tax Return for Electricians UK | Complete Guide"
-      description="Complete guide to self-assessment tax returns for UK electricians — what to include, allowable expenses (tools, van, PPE, training, subscriptions), the 31 January deadline, late filing penalties, payments on account, and when to hire an accountant."
+      title="Self-Assessment Tax Return for Electricians UK | Complete"
+      description="Complete guide to self-assessment tax returns for UK electricians — what to include, allowable expenses (tools, van, PPE, training, subscriptions)…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Finance Guide"

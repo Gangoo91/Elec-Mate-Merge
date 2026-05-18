@@ -694,7 +694,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify home office electrical work"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting and on-site certification. Quick, clean documentation for domestic electrical upgrades. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting and on-site certification."
           icon={Monitor}
         />
       </>
@@ -710,9 +710,9 @@ export default function HomeOfficeElectricalPage() {
   return (
     <GuideTemplate
       title="Home Office Electrical Setup | Wiring & Power Guide"
-      description="Complete guide to home office electrical setup in the UK. Dedicated circuits, ergonomic socket placement, Cat6/Cat6a data cabling, USB-C charging points, smart lighting, UPS considerations, and broadband backup power with 2026 pricing."
+      description="Complete guide to home office electrical setup in the UK. Dedicated circuits, ergonomic socket placement, Cat6/Cat6a data cabling, USB-C charging points…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

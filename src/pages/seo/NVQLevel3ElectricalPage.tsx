@@ -593,7 +593,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Start your electrical business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site certifying, professional quoting, and business management from their phone. 7-day free trial, no credit card required."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site certifying, professional quoting, and business management from their phone."
           icon={Zap}
         />
       </>
@@ -608,10 +608,10 @@ const sections = [
 export default function NVQLevel3ElectricalPage() {
   return (
     <GuideTemplate
-      title="NVQ Level 3 Electrical Installation UK | Qualification Guide 2026"
-      description="Complete guide to the NVQ Level 3 Electrotechnical Installation qualification. What it is, how it differs from City and Guilds 2365, who needs it, EAL vs C&G providers, AM2 assessment, costs (£800–£2,500), and timescales (6–24 months)."
+      title="NVQ Level 3 Electrical Installation UK | Qualification"
+      description="Complete guide to the NVQ Level 3 Electrotechnical Installation qualification. What it is, how it differs from City and Guilds 2365, who needs it…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Qualification Guide"

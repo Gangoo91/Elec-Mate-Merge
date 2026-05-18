@@ -545,7 +545,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your EICR business in Bradford with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate to complete EICRs on site, scan boards with AI, and export instant PDFs. Complete more inspections per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to complete EICRs on site, scan boards with AI, and export instant PDFs."
           icon={FileCheck2}
         />
       </>
@@ -560,10 +560,10 @@ const sections = [
 export default function EICRBradfordPage() {
   return (
     <GuideTemplate
-      title="EICR Bradford | Electrical Installation Condition Report Bradford"
-      description="EICR requirements for Bradford landlords and homeowners. Legal obligations under the 2020 Regulations, Bradford Council enforcement, costs £150–300, HMO requirements, common findings in Bradford's Victorian housing stock, and finding qualified electricians."
+      title="EICR Bradford | Electrical Installation Condition Report"
+      description="EICR requirements for Bradford landlords and homeowners. Legal obligations under the 2020 Regulations, Bradford Council enforcement, costs £150–300…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

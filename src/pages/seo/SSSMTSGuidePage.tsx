@@ -464,7 +464,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Health and safety documentation on your phone"
-          description="Elec-Mate's AI health and safety tools help you create risk assessments, method statements, and site safety documentation. Professional RAMS generated in minutes, not hours."
+          description="Elec-Mate's AI health and safety tools help you create risk assessments, method statements, and site safety documentation."
           icon={HardHat}
         />
       </>
@@ -479,10 +479,10 @@ const sections = [
 export default function SSSMTSGuidePage() {
   return (
     <GuideTemplate
-      title="SSSTS vs SMSTS Guide | Site Supervisor Training for Electricians UK"
-      description="Complete guide to SSSTS and SMSTS for UK electricians. Course content, costs, who needs which, renewal process, and how site safety qualifications boost your career. Updated 2026."
+      title="SSSTS vs SMSTS Guide | Site Supervisor Training for"
+      description="Complete guide to SSSTS and SMSTS for UK electricians. Course content, costs, who needs which, renewal process…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Training Guide"

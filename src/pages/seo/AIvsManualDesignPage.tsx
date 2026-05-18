@@ -16,9 +16,9 @@ export default function AIvsManualDesignPage() {
   return (
     <GuideTemplate
       title="AI vs Manual Electrical Design | Comparison | Elec-Mate"
-      description="Compare AI-powered and manual electrical design for speed, accuracy, BS 7671 compliance, cost savings, and practical application. When to use AI, when human expertise is essential, and how the two work together."
+      description="Compare AI-powered and manual electrical design for speed, accuracy, BS 7671 compliance, cost savings, and practical application."
       datePublished="2026-01-25"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         {
@@ -226,7 +226,7 @@ export default function AIvsManualDesignPage() {
                   limits for lighting (3%) and other circuits (5%).
                 </li>
                 <li>
-                  <span className="font-semibold text-white">Amendment 3:2024</span> — Regulation
+                  <span className="font-semibold text-white">Amendment 4:2024</span> — Regulation
                   530.3.2 for bidirectional protective devices in installations with solar PV,
                   battery storage, or V2G capability.
                 </li>
@@ -284,7 +284,7 @@ export default function AIvsManualDesignPage() {
               </p>
               <SEOAppBridge
                 title="AI Circuit Designer — Included in Elec-Mate"
-                description="Complete consumer unit schedules with cable sizes, protective devices, voltage drop verification, and earth fault loop impedance checks — all to BS 7671:2018+A4:2026. Part of the standard subscription alongside 70+ calculators and 8 AI agents."
+                description="Complete consumer unit schedules with cable sizes, protective devices, voltage drop verification…"
                 icon={CircuitBoard}
               />
             </>
@@ -396,7 +396,7 @@ export default function AIvsManualDesignPage() {
               </p>
               <SEOAppBridge
                 title="Design, Verify, Quote — One Platform"
-                description="Use the AI Circuit Designer for the calculations, the Installation Verification tool for compliance checking, and the Cost Engineer for pricing — all integrated in Elec-Mate. The hybrid workflow that saves hours every week."
+                description="Use the AI Circuit Designer for the calculations, the Installation Verification tool for compliance checking…"
                 icon={Brain}
               />
             </>

@@ -20,9 +20,9 @@ import {
   FileCheck2,
 } from 'lucide-react';
 
-const PAGE_TITLE = 'Electrical EPA Preparation | End Point Assessment Simulator | Elec-Mate';
+const PAGE_TITLE = 'Electrical EPA Prep | End Point Assessment Simulator';
 const PAGE_DESCRIPTION =
-  'Prepare for the electrical apprenticeship End Point Assessment with AI-graded simulators. Practice knowledge tests, practical assessments, and professional discussions. ST0215 standard. From £5.99/mo.';
+  'EPA prep with AI-graded simulators: knowledge tests, practical assessments, professional discussions. ST0215 standard. From £5.99/mo.';
 
 const faqs = [
   {
@@ -62,37 +62,37 @@ const features = [
     icon: ClipboardCheck,
     title: 'Practical Assessment Simulator',
     description:
-      'Timed practical scenarios mirroring the real EPA format. Install, test, and commission circuits under assessment conditions with AI grading against the ST0215 marking criteria.',
+      'Timed practical scenarios mirroring the real EPA format. Install, test, and commission circuits under assessment conditions with AI grading against the…',
   },
   {
     icon: Brain,
     title: 'Knowledge Test Practice',
     description:
-      'Hundreds of practice questions covering BS 7671, electrical science, installation design, health and safety, and inspection and testing. Timed mock tests simulate the real exam.',
+      'Hundreds of practice questions covering BS 7671, electrical science, installation design, health and safety, and inspection and testing.',
   },
   {
     icon: MessageSquare,
     title: 'Professional Discussion Prep',
     description:
-      'AI-powered professional discussion simulator. The AI asks portfolio-based questions, evaluates your responses, and coaches you to articulate competence clearly and confidently.',
+      'AI-powered professional discussion simulator. The AI asks portfolio-based questions, evaluates your responses…',
   },
   {
     icon: FileCheck2,
     title: 'Portfolio Review',
     description:
-      'The AI reviews your portfolio entries against the apprenticeship standard criteria, identifies gaps in evidence coverage, and suggests additional entries to strengthen your submission.',
+      'The AI reviews your portfolio entries against the apprenticeship standard criteria, identifies gaps in evidence coverage…',
   },
   {
     icon: Target,
     title: 'Distinction Criteria Guide',
     description:
-      'Clear breakdown of what separates a Pass from a Distinction in each EPA component. Targeted advice on demonstrating the deeper knowledge and behaviours assessors look for.',
+      'Clear breakdown of what separates a Pass from a Distinction in each EPA component. Targeted advice on demonstrating the deeper knowledge and behaviours…',
   },
   {
     icon: BarChart3,
     title: 'Readiness Dashboard',
     description:
-      'Visual tracker showing your readiness across all three EPA components and all gateway requirements. Know exactly when you are ready to book your assessment.',
+      'Visual tracker showing your readiness across all three EPA components and all gateway requirements.',
   },
 ];
 
@@ -471,19 +471,19 @@ export default function EPAPreparationPage() {
                 step: '4',
                 title: 'Portfolio of Evidence',
                 description:
-                  'A comprehensive portfolio mapping your on-the-job experience to the apprenticeship standard criteria. Must demonstrate breadth and depth across all knowledge, skills, and behaviour requirements.',
+                  'A comprehensive portfolio mapping your on-the-job experience to the apprenticeship standard criteria.',
               },
               {
                 step: '5',
                 title: '20% Off-the-Job Training Hours',
                 description:
-                  'Documented evidence that you have met the minimum 20% off-the-job training requirement throughout your apprenticeship, as required by the ESFA funding rules.',
+                  'Documented evidence that you have met the minimum 20% off-the-job training requirement throughout your apprenticeship…',
               },
               {
                 step: '6',
                 title: 'Employer and Training Provider Agreement',
                 description:
-                  'Both your employer and training provider must confirm that you are working at or above the level required by the apprenticeship standard and are ready for the EPA.',
+                  'Both your employer and training provider must confirm that you are working at or above the level required by the apprenticeship standard and are ready…',
               },
             ].map((item) => (
               <div
@@ -545,7 +545,7 @@ export default function EPAPreparationPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Prepare for Your EPA with Elec-Mate"
-            description="AI-graded simulators for all three EPA components — practical assessment, knowledge test, and professional discussion. Track your gateway readiness and prepare to achieve a Distinction."
+            description="AI-graded simulators for all three EPA components — practical assessment, knowledge test, and professional discussion."
             ctaText="Start 7-day free trial"
             ctaHref="/auth/signup"
           />

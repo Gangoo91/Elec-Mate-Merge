@@ -18,10 +18,10 @@ import {
 export default function HowToFillInMinorWorksPage() {
   return (
     <GuideTemplate
-      title="How to Fill In a Minor Works Certificate | Step by Step | Elec-Mate"
-      description="Step-by-step guide to completing a Minor Works Certificate (BS 7671 Appendix 6). Every section explained — description of work, essential tests, next inspection date, and declaration. Common mistakes and real examples included."
+      title="How to Fill In a Minor Works Certificate | Step by Step"
+      description="Step-by-step guide to completing a Minor Works Certificate (BS 7671 Appendix 6). Every section explained — description of work, essential tests…"
       datePublished="2025-05-15"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         {
@@ -228,7 +228,7 @@ export default function HowToFillInMinorWorksPage() {
               </div>
               <SEOAppBridge
                 title="Auto-Fill Installation Details"
-                description="Elec-Mate remembers site details — once you enter the installation address, earthing arrangement, and supply details for a property, they auto-fill on every future certificate for that address. Save time on every job."
+                description="Elec-Mate remembers site details — once you enter the installation address, earthing arrangement, and supply details for a property…"
                 icon={Zap}
               />
             </>
@@ -329,7 +329,7 @@ export default function HowToFillInMinorWorksPage() {
               </div>
               <SEOAppBridge
                 title="Test Result Validation Against BS 7671"
-                description="Enter your test results and Elec-Mate validates every value against BS 7671 maximum permitted limits. Zs values are checked against the correct table for the MCB or RCBO type and rating. Insulation resistance is verified. RCD times are checked. Errors are flagged before you leave site."
+                description="Enter your test results and Elec-Mate validates every value against BS 7671 maximum permitted limits."
                 icon={ShieldCheck}
               />
             </>
@@ -449,7 +449,7 @@ export default function HowToFillInMinorWorksPage() {
               </p>
               <SEOAppBridge
                 title="Digital Signatures — Sign on Your Phone"
-                description="Elec-Mate captures your signature digitally on the screen of your phone or tablet. No paper, no scanning, no photographing wet signatures. The signature is embedded directly in the PDF certificate and stored securely in the cloud."
+                description="Elec-Mate captures your signature digitally on the screen of your phone or tablet. No paper, no scanning, no photographing wet signatures."
                 icon={PenTool}
               />
             </>

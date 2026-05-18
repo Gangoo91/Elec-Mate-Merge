@@ -4,14 +4,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // (Inspection & Testing, 9th Edition) and the IET On-Site Guide.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const cableSizeForElectricShowerConfig: GeneratedGuideConfig = {
   pagePath: '/guides/cable-size-for-electric-shower',
   title:
-    'Cable Size for an Electric Shower (8.5 / 9.5 / 10.8 kW) — UK Sizing Guide | Elec-Mate',
+    'Cable Size for an Electric Shower (8.5 / 9.5 / 10.8 kW)',
   description:
-    'Cable size for UK electric showers explained: 6 mm² for most 8.5 kW units, 10 mm² for 9.5 kW and most 10.5/10.8 kW units. BS 7671 Section 701 zone considerations, RCD protection, isolator selection and disconnection time.',
+    'Cable size for UK electric showers explained: 6 mm² for most 8.5 kW units, 10 mm² for 9.5 kW and most 10.5/10.8 kW units.',
   datePublished: published,
   dateModified: modified,
   readingTime: 11,

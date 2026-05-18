@@ -51,7 +51,7 @@ const faqs = [
   {
     question: 'How many questions are on the City & Guilds 2382 exam?',
     answer:
-      'The 2382-22 exam (18th Edition with Amendment 3) consists of 60 multiple-choice questions. You have 2 hours to complete the exam. The pass mark is 60% — that means you need to get at least 36 out of 60 correct. Every question has four possible answers (A, B, C, D) and only one is correct. There is no negative marking, so if you are unsure, always make your best guess rather than leaving a question blank.',
+      'The 2382-22 exam (18th Edition with Amendment 4) consists of 60 multiple-choice questions. You have 2 hours to complete the exam. The pass mark is 60% — that means you need to get at least 36 out of 60 correct. Every question has four possible answers (A, B, C, D) and only one is correct. There is no negative marking, so if you are unsure, always make your best guess rather than leaving a question blank.',
   },
   {
     question: 'Is the 2382 exam open book?',
@@ -76,7 +76,7 @@ const faqs = [
   {
     question: 'What is the difference between the 2382-22 and the old 2382-18?',
     answer:
-      'The 2382-18 covered BS 7671:2018 (the original 18th Edition). The 2382-22 covers BS 7671:2018+A4:2026, which includes all three amendments to the 18th Edition. Amendment 3 introduced significant changes including updated requirements for AFDDs (arc fault detection devices), solar PV and battery storage installations, prosumer installations, and updated Appendix 4 tables. If you passed the 2382-18, you do not need to resit the 2382-22 unless your competent person scheme requires it, but the C&G 2382-22 is the current version and is what training providers now deliver.',
+      'The 2382-18 covered BS 7671:2018 (the original 18th Edition). The 2382-22 covers BS 7671:2018+A4:2026, which includes all three amendments to the 18th Edition. Amendment 4 introduced significant changes including updated requirements for AFDDs (arc fault detection devices), solar PV and battery storage installations, prosumer installations, and updated Appendix 4 tables. If you passed the 2382-18, you do not need to resit the 2382-22 unless your competent person scheme requires it, but the C&G 2382-22 is the current version and is what training providers now deliver.',
   },
   {
     question: 'Can I take the 2382 exam online?',
@@ -163,7 +163,7 @@ const sections = [
           own work under Part P of the Building Regulations, you need it.
         </p>
         <p>
-          The current version is the 2382-22, which covers the 18th Edition including Amendment 3
+          The current version is the 2382-22, which covers the 18th Edition including Amendment 4
           (published in 2024). If you hold an older version (2382-18 or 2382-15), you may need to
           update depending on your competent person scheme requirements.
         </p>
@@ -556,7 +556,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Study smarter with Elec-Mate"
-          description="Elec-Mate's training modules cover BS 7671 regulation by regulation, with interactive quizzes, flashcards, and AI-powered explanations. Build the knowledge you need for the 2382 and beyond."
+          description="Elec-Mate's training modules cover BS 7671 regulation by regulation, with interactive quizzes, flashcards, and AI-powered explanations."
           icon={GraduationCap}
         />
       </>
@@ -572,9 +572,9 @@ export default function CityGuilds2382ExamGuidePage() {
   return (
     <GuideTemplate
       title="City & Guilds 2382 Exam Guide | 18th Edition Exam Tips UK"
-      description="Complete guide to the City & Guilds 2382 18th Edition exam. Exam format, open book rules, study tips, common fail areas, preparation timeline, and what to do after passing. Updated for BS 7671:2018+A4:2026."
+      description="Complete guide to the City & Guilds 2382 18th Edition exam. Exam format, open book rules, study tips, common fail areas, preparation timeline…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Training Guide"

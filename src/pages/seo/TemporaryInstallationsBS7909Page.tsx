@@ -410,7 +410,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete electrical certificates on your phone"
-          description="Elec-Mate lets you create EIC, EICR, and Minor Works certificates directly on site. AI board scanner reads distribution board details, voice test entry records results hands-free, and the finished certificate exports as a professional PDF."
+          description="Elec-Mate lets you create EIC, EICR, and Minor Works certificates directly on site. AI board scanner reads distribution board details…"
           icon={FileCheck2}
         />
       </>
@@ -477,7 +477,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Generate RAMS and certificates with AI"
-          description="Elec-Mate's AI Health and Safety agent generates complete RAMS documents for temporary installations, while the certificate app produces EIC, EICR, and Minor Works certificates. All the documentation you need, created on site in minutes."
+          description="Elec-Mate's AI Health and Safety agent generates complete RAMS documents for temporary installations, while the certificate app produces EIC, EICR…"
           icon={FileText}
         />
       </>
@@ -566,9 +566,9 @@ export default function TemporaryInstallationsBS7909Page() {
   return (
     <GuideTemplate
       title="Temporary Installations BS 7909 | Events & Construction"
-      description="Complete guide to temporary electrical installations under BS 7909 and BS 7671. Covers supply design, earthing, protection devices, testing, documentation, and the differences between construction and event installations."
+      description="Complete guide to temporary electrical installations under BS 7909 and BS 7671. Covers supply design, earthing, protection devices, testing…"
       datePublished="2025-09-12"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Technical Guide"

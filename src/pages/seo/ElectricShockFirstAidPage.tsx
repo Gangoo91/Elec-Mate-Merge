@@ -560,10 +560,10 @@ const sections = [
 export default function ElectricShockFirstAidPage() {
   return (
     <GuideTemplate
-      title="Electric Shock First Aid UK | What to Do if Someone Gets an Electric Shock"
-      description="Critical electric shock first aid guide for the UK. Do NOT touch the casualty — isolate supply first. Call 999, CPR if not breathing, low vs high voltage severity, why everyone must see a doctor, and delayed cardiac arrhythmia risk."
+      title="Electric Shock First Aid UK | What to Do if Someone Gets an"
+      description="Electric shock first aid for the UK: do NOT touch the casualty — isolate supply first. CPR, burns treatment, when to call 999, RIDDOR reporting."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="First Aid Guide"

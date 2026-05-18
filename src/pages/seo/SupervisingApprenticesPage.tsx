@@ -442,7 +442,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Support your apprentice with AI-powered study and site tools"
-          description="Elec-Mate gives your apprentice access to inspection and testing training modules, AI fault-finding support, and EIC certification tools — everything needed to build portfolio evidence and prepare for the AM2."
+          description="Elec-Mate gives your apprentice access to inspection and testing training modules, AI fault-finding support…"
           icon={Users}
         />
       </>
@@ -505,8 +505,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Support your apprentice with the tools qualified electricians use every day"
-          description="Join 1,000+ UK electrical contractors using Elec-Mate for quoting, certification, and AI site support. Give your apprentice access to the same professional tools — building real competence alongside real work. 7-day free trial."
+          title="Support your apprentice with the tools qualified"
+          description="Join 1,000+ UK electrical contractors using Elec-Mate for quoting, certification, and AI site support."
           icon={Users}
         />
       </>
@@ -521,10 +521,10 @@ const sections = [
 export default function SupervisingApprenticesPage() {
   return (
     <GuideTemplate
-      title="Supervising Electrical Apprentices UK | Employer Obligations, JIB Rates, AM2 Support"
-      description="Complete guide for UK electrical employers supervising apprentices. Supervision ratios, live conductor rules, JIB apprenticeship wage rates 2026, training plan structure, AM2 support, and the EPAO End Point Assessment process."
+      title="Supervising Electrical Apprentices UK | Employer"
+      description="Complete guide for UK electrical employers supervising apprentices. Supervision ratios, live conductor rules, JIB apprenticeship wage rates 2026…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Employer Guide"

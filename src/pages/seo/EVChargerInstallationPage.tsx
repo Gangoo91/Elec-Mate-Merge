@@ -20,9 +20,9 @@ export default function EVChargerInstallationPage() {
   return (
     <GuideTemplate
       title="EV Charger Installation UK 2026 | Requirements & Cost"
-      description="Complete guide to EV charger installation in the UK. Types of chargers, installation requirements, RCD and earthing regulations, IET Code of Practice, OZEV grant, DNO notification, Part P, and costs from £800 to £1,500."
+      description="Complete guide to EV charger installation in the UK. Types of chargers, installation requirements, RCD and earthing regulations, IET Code of Practice…"
       datePublished="2025-03-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'EV Charger Installation', href: '/guides/ev-charger-installation' },
@@ -196,7 +196,7 @@ export default function EVChargerInstallationPage() {
               </div>
               <SEOAppBridge
                 title="Cable Sizing Calculator for EV Circuits"
-                description="Elec-Mate's cable sizing calculator handles EV charger circuits with all the specific requirements — 32A continuous load, voltage drop calculation, derating factors for installation method, grouping, and ambient temperature. Get the right cable size first time."
+                description="Elec-Mate's cable sizing calculator handles EV charger circuits with all the specific requirements — 32A continuous load, voltage drop calculation…"
                 icon={Calculator}
               />
             </>
@@ -361,7 +361,7 @@ export default function EVChargerInstallationPage() {
               </ul>
               <SEOAppBridge
                 title="EV Charger Certificate in Elec-Mate"
-                description="Elec-Mate has a dedicated EV Charger Certificate form that follows the IET Code of Practice structure. It includes the PME assessment checklist, load management documentation, and all Section 722-specific fields — ensuring nothing is missed during certification."
+                description="Elec-Mate has a dedicated EV Charger Certificate form that follows the IET Code of Practice structure."
                 icon={FileText}
               />
             </>
@@ -428,7 +428,7 @@ export default function EVChargerInstallationPage() {
               </p>
               <SEOAppBridge
                 title="AI Cost Engineer for EV Installations"
-                description="Get an accurate quote for any EV charger installation in seconds. Elec-Mate's AI Cost Engineer factors in charger type, cable run length, earth rod requirement, consumer unit work, and your local labour rates — all backed by real trade pricing data."
+                description="Get an accurate quote for any EV charger installation in seconds. Elec-Mate's AI Cost Engineer factors in charger type, cable run length…"
                 icon={PoundSterling}
               />
             </>

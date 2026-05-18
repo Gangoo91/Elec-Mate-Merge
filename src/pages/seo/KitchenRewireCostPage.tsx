@@ -550,7 +550,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify kitchen rewires on your phone"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Price kitchen rewires accurately and deliver professional documentation. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
           icon={CookingPot}
         />
       </>
@@ -566,9 +566,9 @@ export default function KitchenRewireCostPage() {
   return (
     <GuideTemplate
       title="Kitchen Rewire Cost UK 2026 | Electrical Pricing Guide"
-      description="How much does a kitchen rewire cost in the UK? Typical prices from £800 to £2,500. Cooker circuits, ring mains, under-cabinet lighting, island power, extractor fans, and Part P requirements explained."
+      description="How much does a kitchen rewire cost in the UK? Typical prices from £800 to £2,500. Cooker circuits, ring mains, under-cabinet lighting, island power…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

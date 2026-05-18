@@ -640,7 +640,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Reading landlord EICR business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more Reading EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -655,10 +655,10 @@ const sections = [
 export default function LandlordElectricalSafetyReadingPage() {
   return (
     <GuideTemplate
-      title="Landlord Electrical Safety Reading | EICR for Landlords Reading"
-      description="Landlord electrical safety requirements in Reading. 2020 Regulations, Reading Borough Council enforcement, HMO licensing, penalties up to £30,000, post-war property EICR challenges, and 2026 costs."
+      title="Landlord Electrical Safety Reading | EICR for Landlords"
+      description="Landlord electrical safety requirements in Reading. 2020 Regulations, Reading Borough Council enforcement, HMO licensing, penalties up to £30,000…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Landlord Guide"

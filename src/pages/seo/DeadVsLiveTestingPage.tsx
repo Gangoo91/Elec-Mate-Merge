@@ -430,7 +430,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Voice-enter all your test results"
-          description="Whether you are doing dead tests or live tests, speak your readings into Elec-Mate: 'Ring 1, R1+R2 0.32, IR 200 meg, Zs 0.89, RCD 18 milliseconds.' The schedule fills in while your hands stay on the probes."
+          description="Whether you are doing dead tests or live tests, speak your readings into Elec-Mate: 'Ring 1, R1+R2 0.32, IR 200 meg, Zs 0.89…"
           icon={Mic}
         />
       </>
@@ -602,7 +602,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Elec-Mate handles the test sequence for you"
-          description="The app guides you through dead tests then live tests in the correct order. Voice-enter your readings, and the schedule of test results populates automatically. AI flags any failed values and suggests the right observation code."
+          description="The app guides you through dead tests then live tests in the correct order. Voice-enter your readings…"
           icon={ClipboardCheck}
         />
       </>
@@ -618,9 +618,9 @@ export default function DeadVsLiveTestingPage() {
   return (
     <GuideTemplate
       title="Dead Testing vs Live Testing | What's the Difference?"
-      description="Complete guide to dead testing and live testing in electrical installations. Which tests are dead, which are live, the correct sequence from BS 7671, safe isolation procedure, and how to record results on EICR and EIC certificates."
+      description="Complete guide to dead testing and live testing in electrical installations. Which tests are dead, which are live, the correct sequence from BS 7671…"
       datePublished="2025-07-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

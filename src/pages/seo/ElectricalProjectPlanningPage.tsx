@@ -25,7 +25,7 @@ import {
 
 const PAGE_TITLE = 'Electrical Project Planning | Tender to Completion';
 const PAGE_DESCRIPTION =
-  'Complete guide to electrical project planning from tender review to handover. Pricing, programming, material procurement, labour planning, site setup, testing coordination, commissioning, O&M documentation, and project close-out for UK electrical contractors.';
+  'Electrical project planning end-to-end: tender review, pricing, programming, procurement, labour, testing, commissioning, O&Ms, close-out.';
 
 const breadcrumbs = [
   { label: 'Business', href: '/guides' },
@@ -151,7 +151,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AI Cost Engineer for pricing support"
-          description="Elec-Mate's AI Cost Engineer analyses job descriptions and generates material schedules and labour estimates using real-world pricing data. Cross-check your take-offs, validate your estimates, and price with confidence."
+          description="Elec-Mate's AI Cost Engineer analyses job descriptions and generates material schedules and labour estimates using real-world pricing data."
           icon={Brain}
         />
       </>
@@ -492,7 +492,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Professional testing and certification tools"
-          description="Elec-Mate's testing tools produce BS 7671-compliant EICs, EICRs, and minor works certificates with integrated schedule of test results. Professional PDF output, digital storage, and cloud sync across all devices."
+          description="Elec-Mate's testing tools produce BS 7671-compliant EICs, EICRs, and minor works certificates with integrated schedule of test results."
           icon={FileCheck2}
         />
       </>
@@ -620,7 +620,7 @@ export default function ElectricalProjectPlanningPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-07-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Business Guide"

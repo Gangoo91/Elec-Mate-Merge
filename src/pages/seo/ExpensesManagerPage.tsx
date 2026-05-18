@@ -93,7 +93,7 @@ const features = [
     icon: Camera,
     title: 'Receipt Scanner',
     description:
-      'Snap a photo of any receipt on site and it is captured, dated, and categorised automatically. No more losing paper receipts or forgetting to record expenses.',
+      'Snap a photo of any receipt on site and it is captured, dated, and categorised automatically.',
   },
   {
     icon: Car,
@@ -105,7 +105,7 @@ const features = [
     icon: FolderOpen,
     title: 'HMRC Categories',
     description:
-      'Every expense is categorised according to HMRC allowable expense categories -- materials, tools, vehicle costs, insurance, training, and more. Ready for Self Assessment.',
+      'Every expense is categorised according to HMRC allowable expense categories -- materials, tools, vehicle costs, insurance, training, and more.',
   },
   {
     icon: TrendingUp,
@@ -243,7 +243,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Automatic Expense Categorisation"
-          description="Every expense you log is automatically categorised for HMRC. Materials, tools, vehicle, insurance, training, professional fees -- all mapped to the correct Self Assessment lines. Export directly to your accountant or sync to Xero and QuickBooks."
+          description="Every expense you log is automatically categorised for HMRC. Materials, tools, vehicle, insurance, training…"
           icon={FolderOpen}
         />
       </>
@@ -285,7 +285,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Mileage Tracker with GPS"
-          description="Log every business journey with a tap. Record manually with start and end odometer readings, or enable GPS tracking to capture routes automatically. Elec-Mate calculates your deduction at 45p or 25p per mile and compares against actual vehicle costs."
+          description="Log every business journey with a tap. Record manually with start and end odometer readings, or enable GPS tracking to capture routes automatically."
           icon={Car}
         />
       </>
@@ -493,9 +493,9 @@ export default function ExpensesManagerPage() {
   return (
     <BusinessTemplate
       title="Expenses Manager for Electricians | Track & Claim"
-      description="Track mileage, materials, tools, fuel, and receipts for your electrical business. HMRC-compliant expense categories, digital receipt capture, and real-time tax estimates. Stop missing deductible expenses."
+      description="Track mileage, materials, tools, fuel, and receipts for your electrical business. HMRC-compliant expense categories, digital receipt capture…"
       datePublished="2025-06-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Business Tools"

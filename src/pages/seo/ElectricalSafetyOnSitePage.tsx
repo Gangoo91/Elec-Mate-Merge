@@ -304,7 +304,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Generate RAMS for temporary electrical installations"
-          description="Elec-Mate's AI Health and Safety agent creates comprehensive RAMS documents for temporary supply installations — covering isolation procedures, cable routing, earthing requirements, and emergency procedures. Generated in minutes, not hours."
+          description="Elec-Mate's AI Health and Safety agent creates comprehensive RAMS documents for temporary supply installations — covering isolation procedures…"
           icon={FileText}
         />
       </>
@@ -536,7 +536,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AI-powered RAMS for every site scenario"
-          description="Elec-Mate's AI Health and Safety agent generates comprehensive RAMS documents covering temporary supplies, cable routing, tool inspections, emergency procedures, and permit to work requirements. Built specifically for electrical contractors."
+          description="Elec-Mate's AI Health and Safety agent generates comprehensive RAMS documents covering temporary supplies, cable routing, tool inspections…"
           icon={Shield}
         />
       </>
@@ -552,9 +552,9 @@ export default function ElectricalSafetyOnSitePage() {
   return (
     <GuideTemplate
       title="Electrical Safety on Site | Construction Guide UK"
-      description="Complete guide to electrical safety on UK construction sites. Covers 110V vs 230V systems, portable equipment inspections, temporary supplies, permit to work, cable routing, and emergency procedures."
+      description="Complete guide to electrical safety on UK construction sites. Covers 110V vs 230V systems, portable equipment inspections, temporary supplies…"
       datePublished="2025-05-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

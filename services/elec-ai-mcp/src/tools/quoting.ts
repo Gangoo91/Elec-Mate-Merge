@@ -45,6 +45,20 @@ export async function readQuotes(args: Record<string, unknown>, user: UserContex
 export async function generateQuote(args: Record<string, unknown>, user: UserContext) {
   const supabase = user.supabase;
 
+  // Accept `line_items` / `lineItems` as aliases for `items` (agents pass either)
+  if (args.items === undefined && (args.line_items !== undefined || args.lineItems !== undefined)) {
+    args.items = args.line_items ?? args.lineItems;
+  }
+
+  // Some LLMs / WhatsApp transports stringify the items array — parse defensively
+  if (typeof args.items === 'string') {
+    try {
+      args.items = JSON.parse(args.items);
+    } catch {
+      // leave as string; the Array.isArray check below will still reject
+    }
+  }
+
   // Normalise items — accept array OR flat fields from agents that pass them wrong
   if (!Array.isArray(args.items) || args.items.length === 0) {
     // Try to build a single item from flat fields the agent might pass

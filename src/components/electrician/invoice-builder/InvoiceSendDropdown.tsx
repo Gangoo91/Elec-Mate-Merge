@@ -28,6 +28,8 @@ import { format } from 'date-fns';
 import { useAccountingIntegrations } from '@/hooks/useAccountingIntegrations';
 import { ACCOUNTING_PROVIDERS } from '@/types/accounting';
 import { openExternalUrl } from '@/utils/open-external-url';
+import { Capacitor } from '@capacitor/core';
+import { sharePdfBytesFromUrlToWhatsAppWeb } from '@/utils/share-pdf-to-whatsapp-web';
 
 interface InvoiceSendDropdownProps {
   invoice: Quote;
@@ -348,7 +350,7 @@ export const InvoiceSendDropdown = ({
       // Step 4: Use fresh PDF URL directly (don't store - it expires)
       const cacheBustedPdfUrl = `${pdfUrl}?t=${Date.now()}`;
 
-      // Step 5: Create professional WhatsApp message with cache-busted URL
+      // Step 5: Create WhatsApp message
       const clientData =
         typeof freshInvoice.client_data === 'string'
           ? JSON.parse(freshInvoice.client_data)
@@ -360,7 +362,10 @@ export const InvoiceSendDropdown = ({
         ? format(new Date(freshInvoice.invoice_due_date), 'dd MMMM yyyy')
         : format(new Date(), 'dd MMMM yyyy');
 
-      const message = `📄 *Invoice ${freshInvoice.invoice_number}*
+      const clientPhone = clientData?.phone;
+
+      if (Capacitor.isNativePlatform()) {
+        const message = `📄 *Invoice ${freshInvoice.invoice_number}*
 
 Dear ${clientName},
 
@@ -377,29 +382,61 @@ If you have any questions, please don't hesitate to contact me.
 Best regards,
 ${companyName}`;
 
-      // Step 6: Open WhatsApp with message and fresh PDF link
-      const clientPhone = clientData?.phone;
+        let whatsappUrl: string;
+        if (clientPhone && (clientPhone.startsWith('+44') || clientPhone.startsWith('44'))) {
+          const cleanPhone = clientPhone.replace(/\s/g, '').replace(/^44/, '+44');
+          whatsappUrl = `https://wa.me/${cleanPhone.replace('+', '')}?text=${encodeURIComponent(message)}`;
+        } else {
+          whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+        }
 
-      let whatsappUrl: string;
-      if (clientPhone && (clientPhone.startsWith('+44') || clientPhone.startsWith('44'))) {
-        // UK number - direct to client
-        const cleanPhone = clientPhone.replace(/\s/g, '').replace(/^44/, '+44');
-        whatsappUrl = `https://wa.me/${cleanPhone.replace('+', '')}?text=${encodeURIComponent(message)}`;
+        await openExternalUrl(whatsappUrl);
+
+        toast({
+          title: 'Sent via WhatsApp',
+          variant: 'success',
+          duration: 3000,
+        });
       } else {
-        // No number or international - share URL only
-        whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+        // Web: attach the actual PDF, never a link in the body
+        const webMessage = `📄 *Invoice ${freshInvoice.invoice_number}*
+
+Dear ${clientName},
+
+Please find your invoice for ${formatCurrency(totalAmount)}
+Due date: ${dueDate}
+
+Payment details are included in the invoice.
+
+If you have any questions, please don't hesitate to contact me.
+
+Best regards,
+${companyName}`;
+
+        const result = await sharePdfBytesFromUrlToWhatsAppWeb({
+          pdfUrl,
+          filename: `Invoice-${freshInvoice.invoice_number || freshInvoice.id}.pdf`,
+          message: webMessage,
+          recipientPhone: clientPhone,
+          title: `Invoice ${freshInvoice.invoice_number}`,
+        });
+
+        toast({
+          title: result.mode === 'web-share' ? 'Opening share sheet' : 'PDF downloaded',
+          description:
+            result.mode === 'web-share'
+              ? 'Pick WhatsApp to send the PDF.'
+              : 'PDF saved to your Downloads — attach it from your WhatsApp chat.',
+          variant: 'success',
+          duration: 3000,
+        });
       }
-
-      await openExternalUrl(whatsappUrl);
-
-      toast({
-        title: 'Sent via WhatsApp',
-        variant: 'success',
-        duration: 3000,
-      });
 
       onSuccess?.();
     } catch (error: any) {
+      if (error?.name === 'AbortError') {
+        return;
+      }
       toast({
         title: 'Error',
         description: error.message || 'Failed to prepare invoice for WhatsApp',

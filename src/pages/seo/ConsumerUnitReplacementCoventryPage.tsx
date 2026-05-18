@@ -37,7 +37,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Consumer unit replacement in Coventry typically costs £400 to £800 for a standard domestic installation, covering labour, the new metal consumer unit, testing, and the Electrical Installation Certificate.',
-  'Metal enclosures have been mandatory for all new and replacement domestic consumer units since January 2016 under Amendment 3 to BS 7671:2008, carried forward in BS 7671:2018+A4:2026.',
+  'Metal enclosures have been mandatory for all new and replacement domestic consumer units since January 2016 under Amendment 4 to BS 7671:2008, carried forward in BS 7671:2018+A4:2026.',
   'Consumer unit replacement is notifiable Part P electrical work. In Coventry this means using a registered competent person (NICEIC, NAPIT, or ELECSA) who self-certifies, or notifying Coventry City Council Building Control.',
   'Coventry has significant post-war housing stock including 1950s and 1960s properties that may still have original wiring and rewireable fuse boards — replacement of these is strongly recommended.',
   'RCD protection on all socket-outlet circuits is required under Regulation 411.3.3 of BS 7671. A modern RCBO consumer unit provides individual RCD protection for each circuit.',
@@ -57,7 +57,7 @@ const faqs = [
   {
     question: 'Is a metal consumer unit required in Coventry?',
     answer:
-      'Yes. Amendment 3 to BS 7671:2008, in force from 1 January 2016, introduced Regulation 421.1.201 requiring metal enclosures for all consumer units and similar switchgear in domestic premises. This requirement remains in BS 7671:2018+A4:2026. Any electrician installing a plastic consumer unit in Coventry is not complying with the current edition of the wiring regulations.',
+      'Yes. Amendment 4 to BS 7671:2008, in force from 1 January 2016, introduced Regulation 421.1.201 requiring metal enclosures for all consumer units and similar switchgear in domestic premises. This requirement remains in BS 7671:2018+A4:2026. Any electrician installing a plastic consumer unit in Coventry is not complying with the current edition of the wiring regulations.',
   },
   {
     question: 'How long will the work take and will I be without power?',
@@ -240,7 +240,7 @@ const sections = [
     content: (
       <>
         <p>
-          Regulation 421.1.201, introduced by Amendment 3 to BS 7671:2008 on 1 January 2016,
+          Regulation 421.1.201, introduced by Amendment 4 to BS 7671:2008 on 1 January 2016,
           requires that consumer units and similar switchgear assemblies in domestic premises have
           an enclosure made of non-combustible material. The only practical option is a metal
           enclosure. This requirement was carried through to BS 7671:2018 and remains in BS 7671:2018+A4:2026.
@@ -481,7 +481,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Coventry electrical business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and professional certificate management. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and professional certificate management."
           icon={FileCheck2}
         />
       </>
@@ -496,10 +496,10 @@ const sections = [
 export default function ConsumerUnitReplacementCoventryPage() {
   return (
     <GuideTemplate
-      title="Consumer Unit Replacement Coventry | Fuse Box Upgrade CV Postcodes"
-      description="Consumer unit replacement in Coventry — costs £400–£800, metal enclosures mandatory since 2016, Part P notification required. Find a registered electrician in the CV postcode area and understand the full replacement process."
+      title="Consumer Unit Replacement Coventry | Fuse Box Upgrade CV"
+      description="Consumer unit replacement in Coventry — costs £400–£800, metal enclosures mandatory since 2016, Part P notification required."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Electrician Guide"

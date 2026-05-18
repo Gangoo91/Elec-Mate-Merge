@@ -386,7 +386,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Auto-Map Diary Entries to Assessment Criteria"
-          description="Elec-Mate AI analyses your site diary entries and suggests which ST0215 assessment criteria they cover. Build your portfolio naturally as part of your daily routine. See your criteria coverage at a glance."
+          description="Elec-Mate AI analyses your site diary entries and suggests which ST0215 assessment criteria they cover."
           icon={Sparkles}
         />
       </>
@@ -547,7 +547,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Start Your Digital Site Diary Today"
-          description="Mood tracking, skills tracking, AI coach insights, auto AC mapping, study streaks, and weekly summaries — all from your phone on site. Join 1,000+ UK apprentices building their evidence daily. 7-day free trial."
+          description="Mood tracking, skills tracking, AI coach insights, auto AC mapping, study streaks, and weekly summaries — all from your phone on site."
           icon={PenLine}
         />
       </>
@@ -559,9 +559,9 @@ export default function SiteDiaryApprenticeGuidePage() {
   return (
     <GuideTemplate
       title="Site Diary for Apprentices | How to Keep a Daily Log"
-      description="Complete guide to keeping an effective site diary as an electrical apprentice. What to record, tips for detailed entries, linking to assessment criteria, EPA preparation benefits, and Elec-Mate's digital site diary with mood tracking and AI coaching."
+      description="Complete guide to keeping an effective site diary as an electrical apprentice. What to record, tips for detailed entries, linking to assessment criteria…"
       datePublished="2025-11-01"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

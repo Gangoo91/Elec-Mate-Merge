@@ -361,7 +361,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Prepare for your professional discussion"
-          description="Elec-Mate includes EPA preparation tools with practice professional discussion questions mapped to the Level 3 Installation Electrician KSBs. Practise answering questions on your phone, anywhere, anytime."
+          description="Elec-Mate includes EPA preparation tools with practice professional discussion questions mapped to the Level 3 Installation Electrician KSBs."
           icon={GraduationCap}
         />
       </>
@@ -532,7 +532,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Study for your EPA on your phone"
-          description="Elec-Mate includes structured training courses, practice knowledge tests, BS 7671 revision resources, and professional discussion preparation — all on your phone. Study on the commute, on lunch breaks, and at home."
+          description="Elec-Mate includes structured training courses, practice knowledge tests, BS 7671 revision resources…"
           icon={Brain}
         />
       </>
@@ -613,9 +613,9 @@ export default function EPASimulatorGuidePage() {
   return (
     <GuideTemplate
       title="EPA Simulator | End-Point Assessment Practice Tool"
-      description="Complete guide to end-point assessment (EPA) for electrical apprentices. EPA components, synoptic project practice, professional discussion preparation, grading criteria, gateway requirements, and common reasons for failure."
+      description="Complete guide to end-point assessment (EPA) for electrical apprentices. EPA components, synoptic project practice, professional discussion preparation…"
       datePublished="2025-07-25"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

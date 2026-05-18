@@ -148,7 +148,7 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          (the IET Wiring Regulations, 18th Edition with Amendment 3). NICEIC does not impose
+          (the IET Wiring Regulations, 18th Edition with Amendment 4). NICEIC does not impose
           additional form layouts beyond what BS 7671 requires — but they do expect every required
           field to be completed fully and accurately. Incomplete or poorly completed certificates
           are one of the most common issues raised during NICEIC assessment visits.
@@ -353,7 +353,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Never miss a required field again"
-          description="Elec-Mate validates every certificate before you finalise it. Missing test results, incomplete schedules, blank declarations — the app catches them all and tells you exactly what needs completing."
+          description="Elec-Mate validates every certificate before you finalise it. Missing test results, incomplete schedules…"
           icon={Shield}
         />
       </>
@@ -592,7 +592,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Produce NICEIC-ready certificates every time"
-          description="Elec-Mate validates every field, flags missing data, and ensures your certificates are complete and accurate before you send them. 16 certificate types, AI board scanner, voice entry, and defect code AI. 7-day free trial."
+          description="Elec-Mate validates every field, flags missing data, and ensures your certificates are complete and accurate before you send them."
           icon={Shield}
         />
       </>
@@ -608,9 +608,9 @@ export default function NICEICCertificateRequirementsPage() {
   return (
     <GuideTemplate
       title="NICEIC Certificate Requirements 2026 | Guide"
-      description="Complete guide to NICEIC certificate requirements for UK electricians. What assessors check, common rejection reasons, formatting standards, and how to pass every assessment visit."
+      description="Complete guide to NICEIC certificate requirements for UK electricians. What assessors check, common rejection reasons, formatting standards…"
       datePublished="2025-04-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Scheme Compliance"

@@ -268,7 +268,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Record RCD test results on site"
-          description="Elec-Mate records RCD trip times, ramp test results, and test button confirmations directly into the EICR schedule of test results. Voice entry means you can speak the results while holding the test leads."
+          description="Elec-Mate records RCD trip times, ramp test results, and test button confirmations directly into the EICR schedule of test results."
           icon={Activity}
         />
       </>
@@ -573,7 +573,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Complete EICR certificates with AI assistance"
-          description="Elec-Mate walks you through every test, records RCD trip times by voice entry, cross-references against BS 7671 limits, and flags any non-compliant results automatically. Complete the certificate on your phone, on site."
+          description="Elec-Mate walks you through every test, records RCD trip times by voice entry, cross-references against BS 7671 limits…"
           icon={Brain}
         />
       </>
@@ -589,9 +589,9 @@ export default function WhatIsAnRCDPage() {
   return (
     <GuideTemplate
       title="What Is an RCD? | Residual Current Device Explained"
-      description="Plain English guide to RCDs (Residual Current Devices). How RCDs work, why 30mA is the trip threshold, RCD vs RCBO, RCD types explained, when RCDs are required by BS 7671, and common causes of RCD tripping."
+      description="Plain English guide to RCDs (Residual Current Devices). How RCDs work, why 30mA is the trip threshold, RCD vs RCBO, RCD types explained…"
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Electrical Basics"

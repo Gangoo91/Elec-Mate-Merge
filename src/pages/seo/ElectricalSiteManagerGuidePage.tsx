@@ -24,7 +24,7 @@ import {
 
 const PAGE_TITLE = 'Electrical Site Manager | Role & Responsibilities';
 const PAGE_DESCRIPTION =
-  'Complete guide to becoming an electrical site manager. Role responsibilities, qualifications needed, managing subcontractors, CDM 2015 duties, health and safety management, career path from electrician to site manager, and the skills you need to succeed.';
+  'How to become an electrical site manager: responsibilities, quals, managing subbies, CDM 2015 duties, H&S, and the route from spark to manager.';
 
 const breadcrumbs = [
   { label: 'Career', href: '/guides' },
@@ -197,7 +197,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="AI generates your site documentation"
-          description="Elec-Mate's RAMS Generator creates site-specific risk assessments and method statements in under 60 seconds. Describe the job, and the AI produces CDM-compliant documentation ready for the principal contractor."
+          description="Elec-Mate's RAMS Generator creates site-specific risk assessments and method statements in under 60 seconds."
           icon={Brain}
         />
       </>
@@ -328,7 +328,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Digital compliance management for your team"
-          description="Elec-Mate's certificate management system stores and tracks qualifications for your entire team. Verify subcontractor competence, track ECS card expiry dates, and maintain CDM compliance records digitally."
+          description="Elec-Mate's certificate management system stores and tracks qualifications for your entire team."
           icon={FileCheck2}
         />
       </>
@@ -599,7 +599,7 @@ export default function ElectricalSiteManagerGuidePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-07-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

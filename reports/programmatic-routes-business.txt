@@ -1,0 +1,23 @@
+// Lazy:
+const StartingAnElectricalBusinessUkPage = lazy(() => import('@/pages/seo/StartingAnElectricalBusinessUkPage'));
+const HowToHireAnElectricalApprenticePage = lazy(() => import('@/pages/seo/HowToHireAnElectricalApprenticePage'));
+const NiceicVsNapitRegistrationPage = lazy(() => import('@/pages/seo/NiceicVsNapitRegistrationPage'));
+const ElectricianInsuranceBusinessUkPage = lazy(() => import('@/pages/seo/ElectricianInsuranceBusinessUkPage'));
+const ElectricalContractorMarketingGuidePage = lazy(() => import('@/pages/seo/ElectricalContractorMarketingGuidePage'));
+const CisConstructionIndustrySchemeElectriciansPage = lazy(() => import('@/pages/seo/CisConstructionIndustrySchemeElectriciansPage'));
+const ElectricalContractorVatGuidePage = lazy(() => import('@/pages/seo/ElectricalContractorVatGuidePage'));
+const ElectricianEmployeeVsSelfEmployedDecisionPage = lazy(() => import('@/pages/seo/ElectricianEmployeeVsSelfEmployedDecisionPage'));
+const ElectricalQuoteTemplateUkPage = lazy(() => import('@/pages/seo/ElectricalQuoteTemplateUkPage'));
+const ElectricalBusinessPricingStrategyPage = lazy(() => import('@/pages/seo/ElectricalBusinessPricingStrategyPage'));
+
+// Routes:
+      <Route path="/guides/starting-an-electrical-business-uk" element={<LazyRoute><StartingAnElectricalBusinessUkPage /></LazyRoute>} />
+      <Route path="/guides/how-to-hire-an-electrical-apprentice" element={<LazyRoute><HowToHireAnElectricalApprenticePage /></LazyRoute>} />
+      <Route path="/guides/niceic-vs-napit-registration" element={<LazyRoute><NiceicVsNapitRegistrationPage /></LazyRoute>} />
+      <Route path="/guides/electrician-insurance-business-uk" element={<LazyRoute><ElectricianInsuranceBusinessUkPage /></LazyRoute>} />
+      <Route path="/guides/electrical-contractor-marketing-guide" element={<LazyRoute><ElectricalContractorMarketingGuidePage /></LazyRoute>} />
+      <Route path="/guides/cis-construction-industry-scheme-electricians" element={<LazyRoute><CisConstructionIndustrySchemeElectriciansPage /></LazyRoute>} />
+      <Route path="/guides/electrical-contractor-vat-guide" element={<LazyRoute><ElectricalContractorVatGuidePage /></LazyRoute>} />
+      <Route path="/guides/electrician-employee-vs-self-employed-decision" element={<LazyRoute><ElectricianEmployeeVsSelfEmployedDecisionPage /></LazyRoute>} />
+      <Route path="/guides/electrical-quote-template-uk" element={<LazyRoute><ElectricalQuoteTemplateUkPage /></LazyRoute>} />
+      <Route path="/guides/electrical-business-pricing-strategy" element={<LazyRoute><ElectricalBusinessPricingStrategyPage /></LazyRoute>} />

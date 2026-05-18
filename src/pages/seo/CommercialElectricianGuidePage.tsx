@@ -336,7 +336,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Commercial EICR on your phone"
-          description="Elec-Mate's EICR handles multi-board commercial installations. Board scanner works on commercial distribution boards. Schedule of tests supports unlimited circuits. Send the EICR and invoice to the building manager from site."
+          description="Elec-Mate's EICR handles multi-board commercial installations. Board scanner works on commercial distribution boards."
           icon={FileCheck2}
         />
       </>
@@ -552,7 +552,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AI Cost Engineer for commercial pricing"
-          description="Elec-Mate's AI Cost Engineer prices commercial electrical work using real trade data and measured work rates. Upload the spec, describe the scope, and get a detailed price breakdown — materials, labour, and margin — in minutes, not hours."
+          description="Elec-Mate's AI Cost Engineer prices commercial electrical work using real trade data and measured work rates."
           icon={Brain}
         />
       </>
@@ -794,9 +794,9 @@ export default function CommercialElectricianGuidePage() {
   return (
     <GuideTemplate
       title="Commercial Electrician Guide | Roles & Requirements UK"
-      description="Complete guide to working as a commercial electrician in the UK. Three-phase systems, fire alarms, emergency lighting, design work, CDM responsibilities, pricing commercial contracts, and Elec-Mate tools for commercial electricians."
+      description="Complete guide to working as a commercial electrician in the UK. Three-phase systems, fire alarms, emergency lighting, design work, CDM responsibilities…"
       datePublished="2025-06-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

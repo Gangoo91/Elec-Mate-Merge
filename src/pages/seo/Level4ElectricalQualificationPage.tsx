@@ -450,7 +450,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Advanced design tools for qualified electricians"
-          description="Elec-Mate's cable sizing calculator, voltage drop calculator, and AI circuit designer support the advanced calculations covered in Level 4 courses. Design commercial and industrial installations with confidence."
+          description="Elec-Mate's cable sizing calculator, voltage drop calculator, and AI circuit designer support the advanced calculations covered in Level 4 courses."
           icon={GraduationCap}
         />
       </>
@@ -465,10 +465,10 @@ const sections = [
 export default function Level4ElectricalQualificationPage() {
   return (
     <GuideTemplate
-      title="Level 4 Electrical Qualification | HNC Equivalent for Electricians UK"
-      description="Complete guide to Level 4 electrical qualifications for UK electricians. Course content, entry requirements, career progression, HNC comparison, study options, costs, and funding. Updated 2026."
+      title="Level 4 Electrical Qualification | HNC Equivalent for"
+      description="Complete guide to Level 4 electrical qualifications for UK electricians. Course content, entry requirements, career progression, HNC comparison…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Training Guide"

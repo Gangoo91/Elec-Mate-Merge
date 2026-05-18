@@ -23,9 +23,9 @@ export default function BestCableSizingAppPage() {
   return (
     <ComparisonTemplate
       title="Best Cable Sizing App 2026 | Top 5 Compared"
-      description="Compare the best cable sizing apps for UK electricians in 2026. Elec-Mate vs Cable Calc vs Voltimum vs Hager Specs — BS 7671 compliance, correction factors, voltage drop, and more compared side by side."
+      description="Compare the best cable sizing apps for UK electricians in 2026. Elec-Mate vs Cable Calc vs Voltimum vs Hager Specs — BS 7671 compliance…"
       datePublished="2026-01-28"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Comparisons', href: '/compare' },
         { label: 'Best Cable Sizing App', href: '/compare/best-cable-sizing-app' },
@@ -74,7 +74,7 @@ export default function BestCableSizingAppPage() {
         'Elec-Mate is the only cable sizing app that integrates calculations directly into your certificates, so cable sizing results flow straight into your EIC or Minor Works form.',
         'All four apps perform BS 7671 cable sizing, but only Elec-Mate includes the full suite of 50+ electrical calculators — maximum demand, Zs verification, disconnection times, conduit fill, and more.',
         'Cable Calc, Voltimum, and Hager Specs are free single-purpose tools. Elec-Mate is a paid all-in-one platform, but at £5.99 per month you get calculators plus certificates, AI tools, training, and business management.',
-        'Elec-Mate references BS 7671:2018+A4:2026 tables including the latest Amendment 3 changes. Verify that free tools have been updated to reflect A4:2026 before relying on them.',
+        'Elec-Mate references BS 7671:2018+A4:2026 tables including the latest Amendment 4 changes. Verify that free tools have been updated to reflect A4:2026 before relying on them.',
         'The AI Board Scanner in Elec-Mate can photograph a consumer unit and identify existing cables and circuit configurations, giving you a starting point for cable sizing calculations on existing installations.',
       ]}
       sections={[
@@ -134,7 +134,7 @@ export default function BestCableSizingAppPage() {
               </p>
               <SEOAppBridge
                 title="50+ Calculators — Not Just Cable Sizing"
-                description="Elec-Mate includes cable sizing plus maximum demand, voltage drop, Zs verification, disconnection times, conduit fill, trunking fill, diversity, and dozens more. All referencing BS 7671:2018+A4:2026."
+                description="Elec-Mate includes cable sizing plus maximum demand, voltage drop, Zs verification, disconnection times, conduit fill, trunking fill, diversity…"
                 icon={Calculator}
               />
             </>
@@ -148,7 +148,7 @@ export default function BestCableSizingAppPage() {
               <p>
                 All four apps claim BS 7671 compliance for cable sizing, but the depth varies
                 significantly. Elec-Mate references BS 7671:2018+A4:2026 — the latest version
-                including Amendment 3 issued in July 2024. This matters because A4:2026 introduced
+                including Amendment 4 issued in July 2024. This matters because A4:2026 introduced
                 changes relevant to certain installation types.
               </p>
               <p>
@@ -191,7 +191,7 @@ export default function BestCableSizingAppPage() {
               </p>
               <SEOAppBridge
                 title="Cable Sizing That Flows Into Your Certificates"
-                description="Size a cable in the calculator, then tap to insert the result directly into your EIC or Minor Works certificate. No re-typing, no copying between apps. Only Elec-Mate integrates calculations with certification."
+                description="Size a cable in the calculator, then tap to insert the result directly into your EIC or Minor Works certificate. No re-typing, no copying between apps."
                 icon={Cable}
               />
               <p>
@@ -235,7 +235,7 @@ export default function BestCableSizingAppPage() {
           icon: Calculator,
           title: '50+ BS 7671 Calculators',
           description:
-            'Cable sizing is just the start. Maximum demand, voltage drop, Zs verification, disconnection times, conduit fill, trunking fill, diversity, and dozens more.',
+            'Cable sizing is just the start. Maximum demand, voltage drop, Zs verification, disconnection times, conduit fill, trunking fill, diversity…',
         },
         {
           icon: FileCheck2,
@@ -253,7 +253,7 @@ export default function BestCableSizingAppPage() {
           icon: BookOpen,
           title: 'BS 7671:2018+A4:2026',
           description:
-            'All calculators reference the latest edition including Amendment 3. Table references displayed so you can verify compliance.',
+            'All calculators reference the latest edition including Amendment 4. Table references displayed so you can verify compliance.',
         },
         {
           icon: GraduationCap,

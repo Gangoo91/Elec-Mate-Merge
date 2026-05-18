@@ -630,7 +630,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify PoE lighting mains supply"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Position yourself in the growing PoE lighting market. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
           icon={Lightbulb}
         />
       </>
@@ -646,9 +646,9 @@ export default function PoELightingGuidePage() {
   return (
     <GuideTemplate
       title="Power over Ethernet Lighting | PoE Installation Guide"
-      description="Complete guide to Power over Ethernet (PoE) lighting installation. IEEE 802.3bt (90W), Cat6/Cat6a cabling, PoE switches, commercial applications, energy monitoring, smart building integration, and BS 7671 considerations for data cabling."
+      description="Complete guide to Power over Ethernet (PoE) lighting installation. IEEE 802.3bt (90W), Cat6/Cat6a cabling, PoE switches, commercial applications…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Emerging Technology"

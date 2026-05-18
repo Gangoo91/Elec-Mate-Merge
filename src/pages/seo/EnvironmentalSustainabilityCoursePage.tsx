@@ -24,7 +24,7 @@ import {
 
 const PAGE_TITLE = 'Environmental Sustainability Course | Electricians & Green Skills';
 const PAGE_DESCRIPTION =
-  'Environmental sustainability training for UK electricians. Energy efficiency, renewable energy, waste management, green building standards, carbon reduction, and sustainable installation practices. 8 modules with video content, interactive quizzes, and AI tutor.';
+  'Sustainability training for UK electricians: efficiency, renewables, waste, green building standards, carbon reduction, sustainable installs.';
 
 const breadcrumbs = [
   { label: 'Training', href: '/training' },
@@ -89,42 +89,42 @@ const modules = [
   {
     title: 'Introduction to Environmental Sustainability',
     description:
-      'The climate challenge, UK net zero targets, the role of the electrical industry in decarbonisation, and why sustainability is a career opportunity for electricians. Overview of key legislation and policy drivers.',
+      'The climate challenge, UK net zero targets, the role of the electrical industry in decarbonisation…',
   },
   {
     title: 'Energy Efficiency in Electrical Installations',
     description:
-      'LED lighting design, intelligent controls (presence detection, daylight dimming), power factor correction, efficient motor drives, cable sizing for minimum losses, sub-metering, and Building Regulations Part L compliance.',
+      'LED lighting design, intelligent controls (presence detection, daylight dimming), power factor correction, efficient motor drives…',
   },
   {
     title: 'Solar PV Systems',
     description:
-      'PV panel technology, system sizing, inverter selection, mounting systems, DC and AC wiring, earthing and protection, grid connection, export metering, and the MCS (Microgeneration Certification Scheme) requirements.',
+      'PV panel technology, system sizing, inverter selection, mounting systems, DC and AC wiring, earthing and protection, grid connection, export metering…',
   },
   {
     title: 'Battery Storage and Energy Management',
     description:
-      'Battery technologies (lithium-ion, LFP), sizing storage systems, hybrid inverters, AC-coupled vs DC-coupled systems, time-of-use tariffs, self-consumption optimisation, and grid services.',
+      'Battery technologies (lithium-ion, LFP), sizing storage systems, hybrid inverters, AC-coupled vs DC-coupled systems, time-of-use tariffs…',
   },
   {
     title: 'Heat Pumps and Electrification of Heating',
     description:
-      'Air-source and ground-source heat pumps, electrical supply requirements, dedicated circuits, integration with solar PV, smart controls, and the Future Homes Standard implications for electricians.',
+      'Air-source and ground-source heat pumps, electrical supply requirements, dedicated circuits, integration with solar PV, smart controls…',
   },
   {
     title: 'EV Charging Infrastructure',
     description:
-      'EV charger types (Mode 2, 3, 4), domestic and commercial installations, load management, smart charging, vehicle-to-grid (V2G) technology, and the IET Code of Practice for EV charging.',
+      'EV charger types (Mode 2, 3, 4), domestic and commercial installations, load management, smart charging, vehicle-to-grid (V2G) technology…',
   },
   {
     title: 'Waste Management and Circular Economy',
     description:
-      'WEEE Regulations, hazardous waste disposal, cable recycling, fluorescent tube disposal, site waste management plans, material efficiency, and reducing waste in electrical installation work.',
+      'WEEE Regulations, hazardous waste disposal, cable recycling, fluorescent tube disposal, site waste management plans, material efficiency…',
   },
   {
     title: 'Green Building Standards and Certification',
     description:
-      'BREEAM, LEED, and Passivhaus requirements for electrical installations. Sub-metering, renewable energy integration, lighting efficiency targets, and documentation for green building assessments.',
+      'BREEAM, LEED, and Passivhaus requirements for electrical installations. Sub-metering, renewable energy integration, lighting efficiency targets…',
   },
 ];
 
@@ -133,7 +133,7 @@ const features = [
     icon: BrainCircuit,
     title: 'AI Study Assistant',
     description:
-      'Ask any sustainability question in plain English. Get detailed answers on energy efficiency, renewable technologies, waste regulations, and green building standards.',
+      'Ask any sustainability question in plain English. Get detailed answers on energy efficiency, renewable technologies, waste regulations…',
   },
   {
     icon: Radio,
@@ -145,7 +145,7 @@ const features = [
     icon: ClipboardCheck,
     title: 'Interactive Quizzes',
     description:
-      'Test your knowledge after every module. Calculate energy savings, select appropriate renewable technologies, apply waste regulations, and design efficient lighting schemes.',
+      'Test your knowledge after every module. Calculate energy savings, select appropriate renewable technologies, apply waste regulations…',
   },
   {
     icon: Clock,
@@ -163,7 +163,7 @@ const features = [
     icon: FileCheck2,
     title: 'Energy Efficiency Tools',
     description:
-      'Elec-Mate includes LED savings calculators, cable loss calculators, and energy consumption estimators to help you design efficient installations and demonstrate savings to clients.',
+      'Elec-Mate includes LED savings calculators, cable loss calculators, and energy consumption estimators to help you design efficient installations and…',
   },
 ];
 
@@ -247,7 +247,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Calculate energy savings for your clients"
-          description="Use Elec-Mate's energy efficiency tools to demonstrate the savings from LED upgrades, motor drive installations, and power factor correction. Show clients the payback period and annual cost reduction in clear, professional reports."
+          description="Use Elec-Mate's energy efficiency tools to demonstrate the savings from LED upgrades, motor drive installations, and power factor correction."
           icon={Lightbulb}
         />
       </>
@@ -395,7 +395,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Study green building requirements with AI guidance"
-          description="Not sure how BREEAM credits affect your electrical design? Ask the Elec-Mate AI tutor about green building standards, Part L compliance, and sustainable installation practices."
+          description="Not sure how BREEAM credits affect your electrical design? Ask the Elec-Mate AI tutor about green building standards, Part L compliance…"
           icon={BrainCircuit}
         />
       </>
@@ -560,7 +560,7 @@ export default function EnvironmentalSustainabilityCoursePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-07-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Green Skills Training"

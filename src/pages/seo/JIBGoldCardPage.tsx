@@ -499,7 +499,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Professional certification tools for qualified electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate to complete EICRs, Minor Works Certificates, and Electrical Installation Certificates on their phone. AI board scanning, instant PDF generation, and automatic client delivery. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to complete EICRs, Minor Works Certificates, and Electrical Installation Certificates on their phone."
           icon={FileCheck2}
         />
       </>
@@ -514,10 +514,10 @@ const sections = [
 export default function JIBGoldCardPage() {
   return (
     <GuideTemplate
-      title="JIB Gold Card UK | Electrician's Qualified Operative Card Guide"
-      description="Complete guide to the JIB Gold Card — what it is, how to get it (AM2 + Level 3), all ECS card types explained, why employers require it, and how it compares to CSCS for UK electricians."
+      title="JIB Gold Card UK | Electrician's Qualified Operative Card"
+      description="Complete guide to the JIB Gold Card — what it is, how to get it (AM2 + Level 3), all ECS card types explained, why employers require it…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Qualifications Guide"

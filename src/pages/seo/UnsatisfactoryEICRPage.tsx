@@ -174,7 +174,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Auto Overall Assessment — No Human Error"
-          description="Elec-Mate watches your observation codes in real time. The moment you add a C1 or C2, the overall assessment flips to Unsatisfactory automatically. You cannot accidentally mark it Satisfactory when a dangerous defect is present."
+          description="Elec-Mate watches your observation codes in real time. The moment you add a C1 or C2, the overall assessment flips to Unsatisfactory automatically."
           icon={ShieldAlert}
         />
       </>
@@ -347,7 +347,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Defects to Quote in One Tap"
-          description="Every C1, C2, and FI observation feeds straight into the Elec-Mate remedial works estimator. It prices the fix — materials, labour, margin — and generates a quote on the spot. Hand the client the EICR and a quote for the remedial work before you leave."
+          description="Every C1, C2, and FI observation feeds straight into the Elec-Mate remedial works estimator. It prices the fix — materials, labour…"
           icon={Receipt}
         />
       </>
@@ -494,7 +494,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete Unsatisfactory EICR Workflow"
-          description="From AI-powered defect coding to automatic overall assessment to on-site remedial quotes — Elec-Mate handles the entire unsatisfactory EICR workflow. The client gets the report and the quote before you leave."
+          description="From AI-powered defect coding to automatic overall assessment to on-site remedial quotes — Elec-Mate handles the entire unsatisfactory EICR workflow."
           icon={FileCheck2}
         />
       </>
@@ -506,9 +506,9 @@ export default function UnsatisfactoryEICRPage() {
   return (
     <GuideTemplate
       title="Unsatisfactory EICR | What Happens Next? | Elec-Mate"
-      description="What makes an EICR unsatisfactory, landlord obligations (28-day deadline, £30,000 penalties), electrician duty of care, remedial work requirements, and insurance implications. For UK electricians."
+      description="What makes an EICR unsatisfactory, landlord obligations (28-day deadline, £30,000 penalties), electrician duty of care, remedial work requirements…"
       datePublished="2025-04-22"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Guide"

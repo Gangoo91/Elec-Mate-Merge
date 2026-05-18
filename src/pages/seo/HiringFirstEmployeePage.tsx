@@ -727,7 +727,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Scale your electrical business with professional tools"
-          description="Elec-Mate helps your team quote, certify, and manage jobs consistently. As your business grows, keep the quality that built your reputation. 7-day free trial."
+          description="Elec-Mate helps your team quote, certify, and manage jobs consistently. As your business grows, keep the quality that built your reputation."
           icon={Users}
         />
       </>
@@ -743,9 +743,9 @@ export default function HiringFirstEmployeePage() {
   return (
     <GuideTemplate
       title="Hiring Your First Employee as an Electrician | Guide"
-      description="Complete guide to hiring your first employee as a self-employed electrician. PAYE, pension auto-enrolment, employers liability insurance, apprentice vs qualified hire, CIS vs PAYE, IR35, employment contracts, and true cost analysis."
+      description="Complete guide to hiring your first employee as a self-employed electrician. PAYE, pension auto-enrolment, employers liability insurance…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Business Guide"

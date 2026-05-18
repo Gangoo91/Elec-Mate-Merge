@@ -22,9 +22,9 @@ export default function HouseRewireGuidePage() {
   return (
     <GuideTemplate
       title="House Rewire Guide UK | What's Involved & What to Expect"
-      description="Complete guide to house rewiring in the UK. Signs you need a rewire, what's involved in first fix and second fix, typical timeline for a 3-bed house, Part P notification, certificates required, and how to minimise disruption."
+      description="Complete guide to house rewiring in the UK. Signs you need a rewire, what's involved in first fix and second fix, typical timeline for a 3-bed house…"
       datePublished="2025-05-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'House Rewire Guide', href: '/guides/house-rewire-guide' },
@@ -239,7 +239,7 @@ export default function HouseRewireGuidePage() {
               </div>
               <SEOAppBridge
                 title="AI Circuit Designer for Rewire Planning"
-                description="Elec-Mate's AI Circuit Designer helps plan the complete circuit layout for a rewire — number of ring finals, radials, lighting circuits, dedicated circuits, and the consumer unit specification. Enter the property details and get a compliant circuit design in minutes."
+                description="Elec-Mate's AI Circuit Designer helps plan the complete circuit layout for a rewire — number of ring finals, radials, lighting circuits…"
                 icon={Brain}
               />
             </>
@@ -317,7 +317,7 @@ export default function HouseRewireGuidePage() {
               </p>
               <SEOAppBridge
                 title="Cable Sizing Calculator — Right First Time"
-                description="Elec-Mate's cable sizing calculator ensures every cable in the rewire is correctly specified. Enter the circuit type, load, cable length, and installation method — the calculator applies all derating factors and checks voltage drop automatically."
+                description="Elec-Mate's cable sizing calculator ensures every cable in the rewire is correctly specified."
                 icon={Calculator}
               />
             </>
@@ -402,7 +402,7 @@ export default function HouseRewireGuidePage() {
               </div>
               <SEOAppBridge
                 title="EIC Certificate for Rewire Sign-Off"
-                description="Elec-Mate's digital EIC form handles rewire certification from start to finish. Enter all test results on site, the app validates every value against BS 7671, and you generate a professional PDF certificate ready to issue before you leave."
+                description="Elec-Mate's digital EIC form handles rewire certification from start to finish. Enter all test results on site…"
                 icon={FileText}
               />
             </>
@@ -537,7 +537,7 @@ export default function HouseRewireGuidePage() {
               </ul>
               <SEOAppBridge
                 title="Board Scanner for Existing Installations"
-                description="Before starting a rewire, use Elec-Mate's Board Scanner to photograph the existing consumer unit and extract all circuit data automatically. This creates a complete digital record of the old installation and helps plan the new circuit layout."
+                description="Before starting a rewire, use Elec-Mate's Board Scanner to photograph the existing consumer unit and extract all circuit data automatically."
                 icon={Camera}
               />
             </>

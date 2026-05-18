@@ -458,7 +458,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Luton electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for Part P compliance and the realities of Luton's diverse housing stock. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -475,9 +475,9 @@ export default function ElectricianLutonPage() {
     <GuideTemplate
       localArea="Luton"
       title="Electrician in Luton | Local Electricians 2026"
-      description="Find qualified electricians in Luton. Part P compliance, NICEIC registered, EICR for landlords and HMOs, consumer unit replacement, and local electrician rates for Luton in 2026."
+      description="Find qualified electricians in Luton. Part P compliance, NICEIC registered, EICR for landlords and HMOs, consumer unit replacement…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Luton"

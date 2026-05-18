@@ -522,7 +522,7 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Grow your solar installation business in Cardiff with Elec-Mate"
+          title="Grow your solar installation business in Cardiff with"
           description="Join 1,000+ UK electricians using Elec-Mate to quote solar PV jobs, manage MCS certificates, and run their business from their phone. 7-day free trial."
           icon={Sun}
         />
@@ -539,9 +539,9 @@ export default function SolarPanelInstallationCardiffPage() {
   return (
     <GuideTemplate
       title="Solar Panel Installation Cardiff 2025 | Solar PV Wales"
-      description="Complete guide to solar panel installation in Cardiff. Welsh Government grants (Warm Homes Programme), costs, SEG payments, planning rules for conservation areas, and MCS certification requirements."
+      description="Complete guide to solar panel installation in Cardiff. Welsh Government grants (Warm Homes Programme), costs, SEG payments…"
       datePublished="2025-01-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Solar Guide"

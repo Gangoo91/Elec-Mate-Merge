@@ -644,7 +644,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win house purchase EICR work with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete the report before you leave the property. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -659,10 +659,10 @@ const sections = [
 export default function BuyingHouseElectricalGuidePage() {
   return (
     <GuideTemplate
-      title="Buying a House Electrical Checklist UK | What to Check Before Buying"
-      description="Complete guide to electrical checks when buying a house in the UK. What to look for at viewing, getting an EICR during purchase, pre-1966 wiring dangers, negotiating on electrical issues, and 2026 rewire costs."
+      title="Buying a House Electrical Checklist UK | What to Check"
+      description="Complete guide to electrical checks when buying a house in the UK. What to look for at viewing, getting an EICR during purchase, pre-1966 wiring dangers…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Buyer's Guide"

@@ -117,7 +117,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Complete reference to the current IET Wiring Regulations including Amendment 3.',
+    description: 'Complete reference to the current IET Wiring Regulations including Amendment 4.',
     icon: BookOpen,
     category: 'Guide',
   },
@@ -358,7 +358,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Document RCM devices on EV charger certificates"
-          description="Elec-Mate's EV charger certificate template includes fields for RCMU type, manufacturer, and verification status. Record the protection arrangement accurately for scheme compliance and inspection readiness."
+          description="Elec-Mate's EV charger certificate template includes fields for RCMU type, manufacturer, and verification status."
           icon={Car}
         />
       </>
@@ -618,7 +618,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Document every protection device correctly"
-          description="Elec-Mate's certificate templates include dedicated fields for RCM devices, RCMU verification, and RCD type selection. Professional documentation that satisfies assessors and inspectors. 7-day free trial."
+          description="Elec-Mate's certificate templates include dedicated fields for RCM devices, RCMU verification, and RCD type selection."
           icon={Activity}
         />
       </>
@@ -634,9 +634,9 @@ export default function ResidualCurrentMonitoringPage() {
   return (
     <GuideTemplate
       title="Residual Current Monitoring | RCM Guide UK"
-      description="Complete guide to residual current monitoring (RCM) for UK electricians. RCM vs RCD, EV charger RCMU requirements, BS 7671 regulations, Type A vs Type B monitoring, DC fault detection, and how to document RCM devices on electrical certificates."
+      description="Complete guide to residual current monitoring (RCM) for UK electricians. RCM vs RCD, EV charger RCMU requirements, BS 7671 regulations…"
       datePublished="2025-07-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Protection Guide"

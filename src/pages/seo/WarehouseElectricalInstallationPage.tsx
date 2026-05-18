@@ -589,7 +589,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage warehouse electrical projects with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. Complete EICs and EICRs on your phone with instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, quoting, and project management."
           icon={FileCheck2}
         />
       </>
@@ -604,10 +604,10 @@ const sections = [
 export default function WarehouseElectricalInstallationPage() {
   return (
     <GuideTemplate
-      title="Warehouse Electrical Installation UK | Industrial Lighting & Power"
-      description="Complete guide to warehouse electrical installation in the UK. High-bay LED lighting design, three-phase distribution, EV charging infrastructure, energy management, fire detection integration, emergency lighting, and earthing."
+      title="Warehouse Electrical Installation UK | Industrial Lighting"
+      description="Complete guide to warehouse electrical installation in the UK. High-bay LED lighting design, three-phase distribution, EV charging infrastructure…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Industrial Electrical Guide"

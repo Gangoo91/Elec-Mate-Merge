@@ -117,7 +117,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Full guide to the IET Wiring Regulations including Amendment 3:2024.',
+    description: 'Full guide to the IET Wiring Regulations including Amendment 4:2024.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
@@ -571,8 +571,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Grow your EV installation business in Norwich & Norfolk with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EV certification, instant PDF export, and professional quoting. Complete more installations per day. 7-day free trial."
+          title="Grow your EV installation business in Norwich & Norfolk"
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EV certification, instant PDF export, and professional quoting."
           icon={Zap}
         />
       </>
@@ -588,9 +588,9 @@ export default function EVChargerInstallationNorwichPage() {
   return (
     <GuideTemplate
       title="EV Charger Installation Norwich | EV Charging Norfolk"
-      description="EV charger installation in Norwich and Norfolk. OZEV grants up to £350, installation costs £800–£1,100 for 7kW, rural Norfolk TT earthing considerations, BS 7671 Section 722 compliance, and NICEIC and NAPIT approved installers."
+      description="EV charger installation in Norwich and Norfolk. OZEV grants up to £350, installation costs £800–£1,100 for 7kW, rural Norfolk TT earthing considerations…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EV Charging Guide"

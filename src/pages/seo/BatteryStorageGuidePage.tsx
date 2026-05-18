@@ -286,7 +286,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Design the right battery system with AI"
-          description="Elec-Mate's AI circuit designer can model household load profiles, solar generation patterns, and tariff structures to recommend the optimal battery size. Help your customers make informed decisions backed by data."
+          description="Elec-Mate's AI circuit designer can model household load profiles, solar generation patterns, and tariff structures to recommend the optimal battery size."
           icon={Battery}
         />
       </>
@@ -643,7 +643,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify battery storage systems"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Everything you need for battery storage installations. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
           icon={Battery}
         />
       </>
@@ -659,9 +659,9 @@ export default function BatteryStorageGuidePage() {
   return (
     <GuideTemplate
       title="Battery Storage Installation | Home Battery Guide UK"
-      description="Complete guide to home battery storage installation in the UK. AC-coupled vs DC-coupled, battery sizing, inverter selection, safety requirements, MCS certification, DNO notification, and electrical testing and certification."
+      description="Complete guide to home battery storage installation in the UK. AC-coupled vs DC-coupled, battery sizing, inverter selection, safety requirements…"
       datePublished="2025-09-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

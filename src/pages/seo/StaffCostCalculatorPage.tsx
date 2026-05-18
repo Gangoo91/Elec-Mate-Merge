@@ -21,9 +21,9 @@ export default function StaffCostCalculatorPage() {
   return (
     <BusinessTemplate
       title="Staff Cost Calculator for Electricians"
-      description="Calculate the true cost of employing an electrician, apprentice, or office staff. Employer NI, pension auto-enrolment, holiday pay, sick pay, training costs, and all hidden employment expenses — know the full picture before you hire."
+      description="Calculate the true cost of employing an electrician, apprentice, or office staff. Employer NI, pension auto-enrolment, holiday pay, sick pay…"
       datePublished="2025-09-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Business Tools', href: '/tools' },
         { label: 'Staff Cost Calculator', href: PAGE_PATH },

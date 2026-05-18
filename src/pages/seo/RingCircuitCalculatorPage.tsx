@@ -84,25 +84,25 @@ const features = [
     icon: Calculator,
     title: 'Automatic r1/rn/r2 Validation',
     description:
-      'Enter the end-to-end readings and the calculator validates the ratio between conductors. Flags mismatches that indicate wiring errors, wrong cable sizes, or mixed cable types.',
+      'Enter the end-to-end readings and the calculator validates the ratio between conductors. Flags mismatches that indicate wiring errors, wrong cable sizes…',
   },
   {
     icon: CircleDot,
     title: 'Cross-Connection Result Checker',
     description:
-      'Enter the reading at each socket and the calculator plots the expected values against your measurements. Instantly identifies spurs, breaks, and anomalies in the ring.',
+      'Enter the reading at each socket and the calculator plots the expected values against your measurements.',
   },
   {
     icon: Search,
     title: 'Spur Detection',
     description:
-      'Readings that deviate from the expected pattern are flagged automatically. The calculator identifies the likely socket where a spur branches off and estimates the spur cable length.',
+      'Readings that deviate from the expected pattern are flagged automatically. The calculator identifies the likely socket where a spur branches off and…',
   },
   {
     icon: BarChart3,
     title: 'R1+R2 and Zs Calculation',
     description:
-      'The highest cross-connection reading is automatically extracted as the R1+R2 value. Enter the Ze and the calculator computes the prospective Zs, checked against the maximum values from BS 7671.',
+      'The highest cross-connection reading is automatically extracted as the R1+R2 value. Enter the Ze and the calculator computes the prospective Zs…',
   },
   {
     icon: AlertTriangle,
@@ -114,7 +114,7 @@ const features = [
     icon: BookOpen,
     title: 'GN3 and BS 7671:2018+A4:2026 Compliant',
     description:
-      'Testing procedures and pass/fail criteria verified against GN3 (Guidance Note 3: Inspection and Testing, 9th Edition) and BS 7671:2018+A4:2026. Part of 70+ calculators in Elec-Mate.',
+      'Testing procedures and pass/fail criteria verified against GN3 (Guidance Note 3: Inspection and Testing, 9th Edition) and BS 7671:2018+A4:2026.',
   },
 ];
 
@@ -124,7 +124,7 @@ const softwareAppSchema = {
   applicationCategory: 'UtilitiesApplication',
   operatingSystem: 'Web, iOS, Android',
   description:
-    'Validate ring final circuit continuity test results. Check r1, rn, r2 readings, cross-connection results, identify spurs and faults. Built to GN3 and BS 7671:2018+A4:2026.',
+    'Validate ring final circuit continuity test results. Check r1, rn, r2 readings, cross-connection results, identify spurs and faults.',
   url: 'https://www.elec-mate.com/tools/ring-circuit-calculator',
   offers: {
     '@type': 'Offer',
@@ -620,6 +620,26 @@ export default function RingCircuitCalculatorPage() {
       <section className="px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <RecentReviews />
+        </div>
+      </section>
+
+      
+
+      {/* Related calculators — peer surface for internal-link health.
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical calculators</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/guides/ring-circuit-fault-finding">Ring Circuit Fault Finding</SEOInternalLink>
+            <SEOInternalLink href="/ai-circuit-designer">AI Circuit Designer</SEOInternalLink>
+            <SEOInternalLink href="/guides/cooker-circuit-guide">Cooker Circuit Guide</SEOInternalLink>
+            <SEOInternalLink href="/tools/circuit-breaker-sizing-calculator">Circuit Breaker Sizing Calculator</SEOInternalLink>
+            <SEOInternalLink href="/circuit-breaker-types">Types of Circuit Breakers UK</SEOInternalLink>
+            <SEOInternalLink href="/lighting-circuit-installation">Lighting Circuit Installation Guide — LED, Dimmers, Outdoor, Emergency</SEOInternalLink>
+            <SEOInternalLink href="/guides/overloaded-circuit-signs">Overloaded Circuit</SEOInternalLink>
+            <SEOInternalLink href="/guides/radial-circuit-explained">Radial Circuit: Cable Size & MCB Rules 2026</SEOInternalLink>
+          </div>
         </div>
       </section>
 

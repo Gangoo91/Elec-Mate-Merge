@@ -4,14 +4,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // (Inspection & Testing, 9th Edition) and the IET On-Site Guide.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const cableSizeForCookerCircuitConfig: GeneratedGuideConfig = {
   pagePath: '/guides/cable-size-for-cooker-circuit',
   title:
-    'Cable Size for a Cooker Circuit — UK Sizing Guide (with Diversity) | Elec-Mate',
+    'Cable Size for a Cooker Circuit — UK Sizing Guide (with',
   description:
-    'Cable size for UK cooker circuits explained: 6 mm² for most domestic single-oven + hob installations after applying BS 7671 diversity, 10 mm² for double ovens / Range / commercial-spec cookers. Diversity calculation, cooker control unit selection and RCD protection.',
+    'Cable size for UK cooker circuits explained: 6 mm² for most domestic single-oven + hob installations after applying BS 7671 diversity…',
   datePublished: published,
   dateModified: modified,
   readingTime: 11,

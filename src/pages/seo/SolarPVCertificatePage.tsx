@@ -24,9 +24,9 @@ import {
   BatteryCharging,
 } from 'lucide-react';
 
-const PAGE_TITLE = 'Solar PV Installation Certificate App | G98/G99 Compliant | Elec-Mate';
+const PAGE_TITLE = 'Solar PV Certificate App | G98/G99 Compliant';
 const PAGE_DESCRIPTION =
-  'Create solar PV installation certificates on your phone. DC and AC side testing, G98/G99 grid connection documentation, MCS compliance, DNO notification records, and BS 7671 Section 712 compliance. Start free.';
+  'Create solar PV certificates on your phone: DC + AC testing, G98/G99 grid connection, MCS, DNO notification, BS 7671 Section 712. Start free.';
 
 const faqs = [
   {
@@ -183,7 +183,7 @@ const howToSchema = {
   '@type': 'HowTo',
   name: 'How to Create a Solar PV Installation Certificate Using Elec-Mate',
   description:
-    'A step-by-step guide to completing a solar PV installation certificate using the Elec-Mate app on your phone or tablet, covering DC and AC side testing and G98/G99 documentation.',
+    'A step-by-step guide to completing a solar PV installation certificate using the Elec-Mate app on your phone or tablet…',
   step: howToSteps.map((step, index) => ({
     '@type': 'HowToStep',
     position: index + 1,

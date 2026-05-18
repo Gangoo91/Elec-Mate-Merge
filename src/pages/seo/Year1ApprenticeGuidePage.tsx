@@ -227,7 +227,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Level 2 Courses — Everything You Learn in Year 1"
-          description="Elec-Mate's Level 2 courses cover exactly what you learn at college in year 1. Electrical science, health and safety, installation technology, and BS 7671 basics. Plus flashcards, practice questions, and an electrical symbols guide."
+          description="Elec-Mate's Level 2 courses cover exactly what you learn at college in year 1. Electrical science, health and safety, installation technology…"
           icon={BookOpen}
         />
       </>
@@ -573,7 +573,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Start Learning from Day 1 with Elec-Mate"
-          description="Level 2 courses, flashcards with spaced repetition, 2,000+ practice questions, electrical symbols guide, site diary, and OJT tracker. Everything a year 1 apprentice needs from a single app. 7-day free trial."
+          description="Level 2 courses, flashcards with spaced repetition, 2,000+ practice questions, electrical symbols guide, site diary, and OJT tracker."
           icon={GraduationCap}
         />
       </>
@@ -635,7 +635,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Everything You Need for Year 1 — in One App"
-          description="Level 2 courses, flashcards, site diary, OJT tracker, electrical symbols, mental health hub, and learning videos. Join 1,000+ UK apprentices learning with Elec-Mate. 7-day free trial."
+          description="Level 2 courses, flashcards, site diary, OJT tracker, electrical symbols, mental health hub, and learning videos."
           icon={Zap}
         />
       </>
@@ -647,9 +647,9 @@ export default function Year1ApprenticeGuidePage() {
   return (
     <GuideTemplate
       title="Year 1 Electrical Apprentice | What to Expect"
-      description="Complete guide for first-year electrical apprentices in the UK. What year 1 looks like day by day, what you learn, employer expectations, dealing with nerves, essential tools, building relationships, common mistakes, and study tips."
+      description="Complete guide for first-year electrical apprentices in the UK. What year 1 looks like day by day, what you learn, employer expectations…"
       datePublished="2025-11-15"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

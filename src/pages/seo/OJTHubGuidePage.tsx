@@ -288,7 +288,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Capture OJT evidence on site with Elec-Mate"
-          description="Take photos, dictate work logs, and collect witness testimonies directly in the app. Every piece of evidence automatically maps to the apprenticeship standard criteria. Build your portfolio as you work."
+          description="Take photos, dictate work logs, and collect witness testimonies directly in the app. Every piece of evidence automatically maps to the apprenticeship…"
           icon={Camera}
         />
       </>
@@ -585,7 +585,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Start tracking your OJT today"
-          description="Join thousands of electrical apprentices using Elec-Mate to track OJT progress, build portfolios, and prepare for EPA. OJT tracker, site diary, portfolio builder, 46+ courses, flashcards, and AI tutor. 7-day free trial."
+          description="Join thousands of electrical apprentices using Elec-Mate to track OJT progress, build portfolios, and prepare for EPA."
           icon={BarChart3}
         />
       </>
@@ -601,9 +601,9 @@ export default function OJTHubGuidePage() {
   return (
     <GuideTemplate
       title="On-the-Job Training Guide | Electrical Apprentice"
-      description="Complete guide to on-the-job training for electrical apprentices. What counts as OJT, evidence types, skills sign-off process, supervisor role, tracking progress, and common mistakes to avoid."
+      description="Complete guide to on-the-job training for electrical apprentices. What counts as OJT, evidence types, skills sign-off process, supervisor role…"
       datePublished="2025-07-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

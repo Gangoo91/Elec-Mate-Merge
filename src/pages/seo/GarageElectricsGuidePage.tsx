@@ -275,7 +275,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          The sub-distribution board should be a metal enclosure (as required by Amendment 3 of BS
+          The sub-distribution board should be a metal enclosure (as required by Amendment 4 of BS
           7671 for domestic premises). It should be mounted at a height that is accessible but
           protected from accidental damage — typically 1.2m to 1.8m above floor level. The incoming
           SWA cable should enter via a properly fitted SWA gland, and the board should include a
@@ -508,7 +508,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Size the SWA cable for the full garage load"
-          description="Elec-Mate's cable sizing calculator handles SWA derating for direct burial, voltage drop on long runs, and maximum demand calculations including future EV charger load. Get the right cable size first time."
+          description="Elec-Mate's cable sizing calculator handles SWA derating for direct burial, voltage drop on long runs…"
           icon={Calculator}
         />
       </>
@@ -634,7 +634,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, wire, and certify garage electrics in one workflow"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Everything you need for garage installations. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
           icon={Building}
         />
       </>
@@ -650,9 +650,9 @@ export default function GarageElectricsGuidePage() {
   return (
     <GuideTemplate
       title="Garage Electrics | Wiring, Sockets & Lighting Guide"
-      description="Complete guide to garage electrics in the UK. SWA cable from house, sub-distribution board, IP ratings, RCD protection, sockets and lighting, EV charger preparation, and EIC certification requirements."
+      description="Complete guide to garage electrics in the UK. SWA cable from house, sub-distribution board, IP ratings, RCD protection, sockets and lighting…"
       datePublished="2025-07-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

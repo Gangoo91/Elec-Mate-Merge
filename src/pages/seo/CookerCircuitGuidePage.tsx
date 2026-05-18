@@ -225,7 +225,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Calculate cooker circuit cable size instantly"
-          description="Enter the cooker rating, cable length, and installation method. Elec-Mate's cable sizing calculator applies diversity, correction factors, and checks voltage drop against BS 7671 limits automatically."
+          description="Enter the cooker rating, cable length, and installation method. Elec-Mate's cable sizing calculator applies diversity, correction factors…"
           icon={Calculator}
         />
       </>
@@ -589,7 +589,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Design cooker circuits with confidence"
-          description="Elec-Mate's cable sizing calculator handles diversity, correction factors, voltage drop, and Zs verification for cooker circuits. Get the cable size right first time and avoid EICR defects."
+          description="Elec-Mate's cable sizing calculator handles diversity, correction factors, voltage drop, and Zs verification for cooker circuits."
           icon={Calculator}
         />
       </>
@@ -605,9 +605,9 @@ export default function CookerCircuitGuidePage() {
   return (
     <GuideTemplate
       title="Cooker Circuit Guide | Cable Size, Fuse & Wiring UK"
-      description="Complete guide to cooker circuit design and installation in the UK. Cable sizing with diversity factor, cooker control unit positioning, hob and oven on the same circuit, MCB rating, correction factors, and voltage drop calculation under BS 7671."
+      description="Complete guide to cooker circuit design and installation in the UK. Cable sizing with diversity factor, cooker control unit positioning…"
       datePublished="2025-08-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

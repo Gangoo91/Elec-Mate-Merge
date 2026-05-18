@@ -402,10 +402,10 @@ const sections = [
 export default function ElectricalDampProofingPage() {
   return (
     <GuideTemplate
-      title="Electrical Work in Damp Buildings — Rewiring After DPC & EICR Requirements"
-      description="Guide to electrical issues in damp buildings — moisture damage to wiring, EICR requirements before and after DPC injection, IP ratings under BS 7671, cable replacement, and landlord obligations."
+      title="Electrical Work in Damp Buildings — Rewiring After DPC &"
+      description="Guide to electrical issues in damp buildings — moisture damage to wiring, EICR requirements before and after DPC injection, IP ratings under BS 7671…"
       datePublished="2024-06-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Technical Guide"

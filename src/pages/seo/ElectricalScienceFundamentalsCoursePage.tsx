@@ -22,7 +22,7 @@ import {
 
 const PAGE_TITLE = 'Electrical Science Fundamentals | Theory Course';
 const PAGE_DESCRIPTION =
-  "Comprehensive electrical science theory course for UK electricians and apprentices. Ohm's law, Kirchhoff's laws, magnetism, transformers, AC theory, power factor, impedance, and three-phase systems. 12 modules with video content, interactive quizzes, and AI tutor.";
+  "Electrical science theory for UK apprentices: Ohm's law, Kirchhoff, magnetism, transformers, AC theory, power factor, three-phase. 12 modules.";
 
 const breadcrumbs = [
   { label: 'Training', href: '/training' },
@@ -88,7 +88,7 @@ const modules = [
   {
     title: 'Atoms, Charge, and Electrical Current',
     description:
-      'Atomic structure, electron flow, conventional current, electric charge (coulombs), current (amperes), potential difference (volts), resistance (ohms), and the water analogy for understanding circuit behaviour.',
+      'Atomic structure, electron flow, conventional current, electric charge (coulombs), current (amperes), potential difference (volts), resistance (ohms)…',
   },
   {
     title: "Ohm's Law and Basic Circuit Calculations",
@@ -98,7 +98,7 @@ const modules = [
   {
     title: 'Series and Parallel Circuits',
     description:
-      'Resistors in series (total resistance is the sum), resistors in parallel (reciprocal formula), voltage divider circuits, current divider circuits, and practical applications in electrical installations.',
+      'Resistors in series (total resistance is the sum), resistors in parallel (reciprocal formula), voltage divider circuits, current divider circuits…',
   },
   {
     title: "Kirchhoff's Current and Voltage Laws",
@@ -108,7 +108,7 @@ const modules = [
   {
     title: 'Capacitance and Capacitors',
     description:
-      'What capacitance is, how capacitors store charge, series and parallel capacitor combinations, time constants, capacitor applications in power factor correction and motor starting, and energy stored in a capacitor.',
+      'What capacitance is, how capacitors store charge, series and parallel capacitor combinations, time constants…',
   },
   {
     title: 'Magnetism and Electromagnetic Induction',
@@ -118,7 +118,7 @@ const modules = [
   {
     title: 'Transformers',
     description:
-      'Transformer operating principles, turns ratio, voltage and current transformation, transformer losses (copper and iron), transformer efficiency, and practical applications from distribution transformers to bell transformers.',
+      'Transformer operating principles, turns ratio, voltage and current transformation, transformer losses (copper and iron), transformer efficiency…',
   },
   {
     title: 'AC Waveforms and RMS Values',
@@ -128,22 +128,22 @@ const modules = [
   {
     title: 'Reactance and Impedance',
     description:
-      'Inductive reactance (XL = 2 pi fL), capacitive reactance (XC = 1 / 2 pi fC), impedance in RL, RC, and RLC circuits, phasor diagrams, and impedance triangle calculations.',
+      'Inductive reactance (XL = 2 pi fL), capacitive reactance (XC = 1 / 2 pi fC), impedance in RL, RC, and RLC circuits, phasor diagrams…',
   },
   {
     title: 'Power Factor and the Power Triangle',
     description:
-      'Real power (watts), reactive power (VAr), apparent power (VA), power factor (cos phi), the power triangle, power factor correction using capacitors, and electricity supply tariff implications.',
+      'Real power (watts), reactive power (VAr), apparent power (VA), power factor (cos phi), the power triangle, power factor correction using capacitors…',
   },
   {
     title: 'Three-Phase Systems',
     description:
-      'Three-phase generation, star and delta connections, line and phase voltages and currents, three-phase power calculations, balanced and unbalanced loads, and neutral current in four-wire systems.',
+      'Three-phase generation, star and delta connections, line and phase voltages and currents, three-phase power calculations, balanced and unbalanced loads…',
   },
   {
     title: 'Practical Applications and BS 7671 Calculations',
     description:
-      'Applying electrical science to BS 7671: cable sizing calculations, voltage drop, earth fault loop impedance (Zs), prospective fault current (Ipf), maximum demand, and diversity calculations.',
+      'Applying electrical science to BS 7671: cable sizing calculations, voltage drop, earth fault loop impedance (Zs), prospective fault current (Ipf)…',
   },
 ];
 
@@ -158,13 +158,13 @@ const features = [
     icon: Zap,
     title: 'Video Content',
     description:
-      'Animated video explanations of circuit behaviour, phasor diagrams, transformer operation, three-phase waveforms, and power triangle calculations — concepts that are difficult to understand from text alone.',
+      'Animated video explanations of circuit behaviour, phasor diagrams, transformer operation, three-phase waveforms…',
   },
   {
     icon: ClipboardCheck,
     title: 'Interactive Quizzes',
     description:
-      'Test your understanding after every module with calculation-based questions, circuit analysis problems, and scenario-based applications of electrical science principles.',
+      'Test your understanding after every module with calculation-based questions, circuit analysis problems…',
   },
   {
     icon: Clock,
@@ -249,7 +249,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Practice Ohm's law with interactive calculators"
-          description="Work through guided calculation exercises using real cable data and load values. The Elec-Mate AI tutor checks your working and explains each step, helping you build confidence in electrical calculations."
+          description="Work through guided calculation exercises using real cable data and load values. The Elec-Mate AI tutor checks your working and explains each step…"
           icon={Calculator}
         />
       </>
@@ -401,7 +401,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Master power factor with AI-guided calculations"
-          description="Work through power factor correction examples with the Elec-Mate AI tutor. Calculate capacitor sizes, draw power triangles, and understand the commercial implications of low power factor installations."
+          description="Work through power factor correction examples with the Elec-Mate AI tutor. Calculate capacitor sizes, draw power triangles…"
           icon={Calculator}
         />
       </>
@@ -532,7 +532,7 @@ export default function ElectricalScienceFundamentalsCoursePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-06-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Theory Course"

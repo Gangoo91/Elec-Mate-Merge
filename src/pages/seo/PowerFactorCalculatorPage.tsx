@@ -84,37 +84,37 @@ const features = [
     icon: Calculator,
     title: 'kW / kVA / kVAr Converter',
     description:
-      'Enter any two values and the calculator computes the third. Convert between real power, apparent power, and reactive power instantly with the power triangle relationships.',
+      'Enter any two values and the calculator computes the third. Convert between real power, apparent power…',
   },
   {
     icon: Gauge,
     title: 'Capacitor Bank Sizing',
     description:
-      'Calculate the exact kVAr capacity needed to correct from your existing power factor to your target. Recommends standard capacitor bank sizes available from UK suppliers.',
+      'Calculate the exact kVAr capacity needed to correct from your existing power factor to your target.',
   },
   {
     icon: PoundSterling,
     title: 'Cost Savings Estimator',
     description:
-      'Enter your electricity tariff details and the calculator shows the annual savings from power factor correction. Includes reactive power charge reduction and maximum demand savings.',
+      'Enter your electricity tariff details and the calculator shows the annual savings from power factor correction.',
   },
   {
     icon: TrendingUp,
     title: 'Power Triangle Visualisation',
     description:
-      'See the power triangle graphically — real power, reactive power, and apparent power shown to scale. Watch the triangle change as you adjust the power factor.',
+      'See the power triangle graphically — real power, reactive power, and apparent power shown to scale.',
   },
   {
     icon: BarChart3,
     title: 'Harmonic Risk Assessment',
     description:
-      'Answer a few questions about your connected loads, and the calculator flags whether harmonic resonance is a risk. Recommends detuned reactors or active filters where needed.',
+      'Answer a few questions about your connected loads, and the calculator flags whether harmonic resonance is a risk.',
   },
   {
     icon: BookOpen,
     title: 'BS 7671:2018+A4:2026 Compliant',
     description:
-      'All calculations align with BS 7671:2018+A4:2026 and the IET Code of Practice for energy efficiency. Part of 70 electrical calculators built for UK electricians.',
+      'All calculations align with BS 7671:2018+A4:2026 and the IET Code of Practice for energy efficiency.',
   },
 ];
 
@@ -150,7 +150,7 @@ const howToSchema = {
   '@type': 'HowTo',
   name: 'How to Calculate Power Factor and Size Correction Capacitors',
   description:
-    'Step-by-step guide to calculating power factor, determining capacitor bank size for PF correction, and estimating cost savings for UK electrical installations.',
+    'Step-by-step guide to calculating power factor, determining capacitor bank size for PF correction…',
   step: howToSteps.map((step, index) => ({
     '@type': 'HowToStep',
     position: index + 1,
@@ -674,6 +674,26 @@ export default function PowerFactorCalculatorPage() {
       <section className="px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <RecentReviews />
+        </div>
+      </section>
+
+      
+
+      {/* Related calculators — peer surface for internal-link health.
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical calculators</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/power-factor-correction">Power Factor Correction UK</SEOInternalLink>
+            <SEOInternalLink href="/diversity-factor-calculator">/diversity-factor-calculator</SEOInternalLink>
+            <SEOInternalLink href="/guides/no-power-to-sockets">No Power to Sockets</SEOInternalLink>
+            <SEOInternalLink href="/tools/power-consumption-calculator">Power Consumption Calculator</SEOInternalLink>
+            <SEOInternalLink href="/guides/power-cut-what-to-do">Power Cut</SEOInternalLink>
+            <SEOInternalLink href="/power-surge-protection">Power Surge Protection UK</SEOInternalLink>
+            <SEOInternalLink href="/three-phase-power-calculator">/three-phase-power-calculator</SEOInternalLink>
+            <SEOInternalLink href="/guides/kitchen-island-power-supply">Kitchen Island Power Supply</SEOInternalLink>
+          </div>
         </div>
       </section>
 

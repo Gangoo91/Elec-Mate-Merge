@@ -19,9 +19,9 @@ export default function DisconnectionTimeCalculatorPage() {
   return (
     <ToolTemplate
       title="Disconnection Time Calculator | BS 7671 Free Tool"
-      description="Calculate disconnection times for TN and TT earthing systems to BS 7671. Verify 0.4s and 5s rules, check protective device coordination, and confirm earth fault loop impedance compliance. Part of 50+ free electrical calculators."
+      description="Calculate disconnection times for TN and TT earthing systems to BS 7671. Verify 0.4s and 5s rules, check protective device coordination…"
       datePublished="2026-01-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Disconnection Time Calculator', href: '/tools/disconnection-time-calculator' },
@@ -241,7 +241,7 @@ export default function DisconnectionTimeCalculatorPage() {
           appBridge: {
             title: 'TN and TT System Calculations Built In',
             description:
-              'The disconnection time calculator handles both TN and TT earthing systems. Select your system type, enter Zs, and get instant BS 7671 compliance verification.',
+              'The disconnection time calculator handles both TN and TT earthing systems. Select your system type, enter Zs…',
             icon: Network,
           },
         },
@@ -354,7 +354,7 @@ export default function DisconnectionTimeCalculatorPage() {
           icon: Shield,
           title: '0.4s and 5s Rule Checks',
           description:
-            'Automatically applies the correct disconnection time requirement based on the circuit type — 0.4s for final circuits, 5s for distribution circuits in TN systems.',
+            'Automatically applies the correct disconnection time requirement based on the circuit type — 0.4s for final circuits…',
         },
         {
           icon: Network,
@@ -378,7 +378,7 @@ export default function DisconnectionTimeCalculatorPage() {
           icon: Gauge,
           title: 'Works Offline on Site',
           description:
-            'The calculator runs entirely on your device with no internet connection required. Verify disconnection times in meter cupboards, basements, and remote locations.',
+            'The calculator runs entirely on your device with no internet connection required. Verify disconnection times in meter cupboards, basements…',
         },
       ]}
       featuresHeading="Disconnection Time Calculator Features"

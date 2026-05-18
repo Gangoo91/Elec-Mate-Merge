@@ -5,14 +5,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // plus relevant statutory frameworks (CDM 2015, Housing Act 2004 for HMO licensing).
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const afddMandatoryHmoCareHomeA4Config: GeneratedGuideConfig = {
   pagePath: '/guides/afdd-mandatory-hmo-care-home-a4-2026',
   title:
-    'AFDD Mandatory in HMOs, Care Homes & Student Accommodation — BS 7671 A4:2026 | Elec-Mate',
+    'AFDD Mandatory in HMOs, Care Homes & Student Accommodation',
   description:
-    'AFDDs mandatory in HMOs, care homes and student accommodation under BS 7671:2018+A4:2026. Expanded scope of Regulation 421.1.7 and 421.1.7.101, retrofit triggers, EICR coding, enforcement under the Housing Act 2004 and Regulatory Reform (Fire Safety) Order 2005, plus competent installation.',
+    'AFDDs mandatory in HMOs, care homes and student accommodation under BS 7671:2018+A4:2026. Expanded scope of Regulation 421.1.7 and 421.1.7.101…',
   datePublished: published,
   dateModified: modified,
   readingTime: 14,
@@ -421,7 +421,7 @@ export const afddMandatoryHmoCareHomeA4Config: GeneratedGuideConfig = {
       href: '/guides/eicr-plastic-consumer-unit-hmo',
       title: 'EICR — Plastic Consumer Unit in an HMO',
       description:
-        'How inspectors should code a non-metallic consumer unit on an HMO EICR, the C2 reasoning, and the interaction with AFDD retrofit when the board is replaced.',
+        'How inspectors should code a non-metallic consumer unit on an HMO EICR, the C2 reasoning…',
       icon: 'AlertTriangle',
       category: 'Guide',
     },
@@ -445,7 +445,7 @@ export const afddMandatoryHmoCareHomeA4Config: GeneratedGuideConfig = {
       href: '/guides/bs-7671-a4-2026-tn-c-s-pnb-earthing',
       title: 'A4:2026 TN-C-S (PNB) Earthing',
       description:
-        'How A4 changed the recognised earthing arrangements for domestic-style installations and how the AFDD specification interacts with TN-C-S (PNB) at the origin.',
+        'How A4 changed the recognised earthing arrangements for domestic-style installations and how the AFDD specification interacts with TN-C-S (PNB) at the…',
       icon: 'Cable',
       category: 'Guide',
     },
@@ -453,7 +453,7 @@ export const afddMandatoryHmoCareHomeA4Config: GeneratedGuideConfig = {
       href: '/tools/eicr-certificate',
       title: 'EICR Certificate Tool',
       description:
-        'Produce an A4:2026 compliant EICR — item 4.23 prompts, column 30 in the schedule of test results, suggested C2 / FI coding for within-scope premises with absent AFDDs.',
+        'Produce an A4:2026 compliant EICR — item 4.23 prompts, column 30 in the schedule of test results…',
       icon: 'FileCheck2',
       category: 'Tool',
     },

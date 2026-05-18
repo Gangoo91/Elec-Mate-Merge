@@ -640,7 +640,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Cardiff electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for Cardiff's Victorian terraces, Bay regeneration, and Welsh regulatory requirements. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -657,9 +657,9 @@ export default function ElectricianCardiffPage() {
     <GuideTemplate
       localArea="Cardiff"
       title="Electrician in Cardiff | Find Electricians 2026"
-      description="Find qualified electricians in Cardiff. Welsh Building Regulations, WPD DNO, Cardiff Bay regeneration, Victorian terraces in Pontcanna and Canton, Rent Smart Wales, and local electrician rates for 2026."
+      description="Find qualified electricians in Cardiff. Welsh Building Regulations, WPD DNO, Cardiff Bay regeneration, Victorian terraces in Pontcanna and Canton…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cardiff"

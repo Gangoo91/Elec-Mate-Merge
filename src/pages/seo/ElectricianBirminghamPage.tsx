@@ -529,7 +529,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Birmingham electrical business"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Complete EICRs and EICs on site, send instant PDFs to letting agents and landlords. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Complete EICRs and EICs on site…"
           icon={MapPin}
         />
       </>
@@ -546,9 +546,9 @@ export default function ElectricianBirminghamPage() {
     <GuideTemplate
       localArea="Birmingham"
       title="Electrician in Birmingham | Find Local Electricians 2026"
-      description="Find qualified, registered electricians in Birmingham. 2026 pricing guide, NICEIC/NAPIT verification, Victorian and 1930s rewiring, National Grid Electricity Distribution connections, HMO compliance in Selly Oak and Edgbaston, and HS2 development impact."
+      description="Find qualified, registered electricians in Birmingham. 2026 pricing guide, NICEIC/NAPIT verification, Victorian and 1930s rewiring…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Find an Electrician"

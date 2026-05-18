@@ -439,7 +439,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Size EV charger cables instantly"
-          description="Elec-Mate's cable sizing calculator handles SWA and twin-and-earth for EV charger circuits. Enter the charger rating, cable run, and installation method for instant results."
+          description="Elec-Mate's cable sizing calculator handles SWA and twin-and-earth for EV charger circuits. Enter the charger rating, cable run…"
           icon={Calculator}
         />
       </>
@@ -586,8 +586,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="722.411.4.1 EV charging PME supply rules"
-          description="Section 722.411.4.1 BS 7671:2018+A4:2026 — four provisions for PME-supplied EV chargers. Verify compliance, size cables, certify installations."
+          title="722.411.4.1 PME EV Charging — 4 Provisions"
+          description="Section 722.411.4.1 BS 7671:2018+A4:2026 sets out four provisions for PME-supplied EV chargers. Learn cable sizing, earthing rules, and compliance checks."
           icon={Car}
         />
       </>
@@ -602,10 +602,10 @@ const sections = [
 export default function Section722EVChargingGuidePage() {
   return (
     <GuideTemplate
-      title="Section 722 EV Charging | BS 7671 Electric Vehicle Charging Guide"
-      description="Complete guide to Section 722 of BS 7671 — EV charger dedicated circuits, RCD types, PME earthing restrictions (722.411.4.1), earth electrodes, load management, and cable selection for UK electricians."
+      title="Section 722 EV Charging | BS 7671 Electric Vehicle Charging"
+      description="Complete guide to Section 722 of BS 7671 — EV charger dedicated circuits, RCD types, PME earthing restrictions (722.411.4.1), earth electrodes…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulation Guide"

@@ -535,7 +535,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Agricultural inspection work made simple with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, test result recording, and instant PDF export. Ideal for farm and agricultural inspections. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, test result recording, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -550,10 +550,10 @@ const sections = [
 export default function AgriculturalElectricalInstallationPage() {
   return (
     <GuideTemplate
-      title="Agricultural Electrical Installation UK | Farm Wiring BS 7671 Section 705"
-      description="Complete guide to agricultural electrical installations under BS 7671 Section 705. Livestock building requirements, IP ratings, RCD protection, damp environments, lightning protection, and farm earthing for UK electricians."
+      title="Agricultural Electrical Installation UK | Farm Wiring BS"
+      description="Complete guide to agricultural electrical installations under BS 7671 Section 705. Livestock building requirements, IP ratings, RCD protection…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Specialist Installation"

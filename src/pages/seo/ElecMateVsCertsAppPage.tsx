@@ -21,7 +21,7 @@ import {
   ArrowRight,
 } from 'lucide-react';
 
-const PAGE_TITLE = 'Elec-Mate vs CertsApp 2026 | Feature Comparison | Which Is Better?';
+const PAGE_TITLE = 'Elec-Mate vs CertsApp 2026 | Feature Comparison';
 const PAGE_DESCRIPTION =
   'Detailed comparison of Elec-Mate and CertsApp for UK electricians. Compare certificates, calculators, AI tools, pricing, and features side by side.';
 
@@ -64,37 +64,37 @@ const features = [
     icon: FileCheck2,
     title: '16 Certificate Types',
     description:
-      'EICR, EIC, Minor Works, EV Charger, Solar PV, Fire Alarm, Emergency Lighting, and PAT Testing. All with digital signatures, auto-save, and professional PDF export.',
+      'EICR, EIC, Minor Works, EV Charger, Solar PV, Fire Alarm, Emergency Lighting, and PAT Testing.',
   },
   {
     icon: Calculator,
     title: '70 BS 7671 Calculators',
     description:
-      'Cable sizing, voltage drop, maximum demand, diversity, conduit fill, trunking fill, Zs verification, disconnection times, and dozens more — all referencing 18th Edition tables.',
+      'Cable sizing, voltage drop, maximum demand, diversity, conduit fill, trunking fill, Zs verification, disconnection times…',
   },
   {
     icon: Brain,
     title: '8 Elec-AI Specialist Tools',
     description:
-      '8 AI specialist agents and 12 AI-powered tools — including Circuit Designer, Cost Engineer, Installation Guide, Commissioning Specialist, Maintenance Agent, Health & Safety, Fault Finder, and Regulation Lookup. AI capabilities that CertsApp does not offer.',
+      '8 AI specialist agents and 12 AI-powered tools — including Circuit Designer, Cost Engineer, Installation Guide, Commissioning Specialist…',
   },
   {
     icon: GraduationCap,
     title: 'Full Training Platform',
     description:
-      '18th Edition, Level 2/3 Electrical Installation, AM2 preparation, and EPA simulator. Complete courses built into the app — something CertsApp does not include.',
+      '18th Edition, Level 2/3 Electrical Installation, AM2 preparation, and EPA simulator. Complete courses built into the app — something CertsApp does not…',
   },
   {
     icon: Briefcase,
     title: 'Business Management',
     description:
-      'Job scheduling, quoting, invoicing, Stripe payment collection, and Xero accounting integration. Run your electrical business from a single app without separate software.',
+      'Job scheduling, quoting, invoicing, Stripe payment collection, and Xero accounting integration.',
   },
   {
     icon: WifiOff,
     title: 'Full Offline Support',
     description:
-      'Auto-saves locally every 10 seconds and syncs to the cloud every 30 seconds when connectivity returns. Complete certificates and calculations without mobile signal.',
+      'Auto-saves locally every 10 seconds and syncs to the cloud every 30 seconds when connectivity returns.',
   },
 ];
 
@@ -135,7 +135,7 @@ const faqSchema = {
 
 export default function ElecMateVsCertsAppPage() {
   useSEO({
-    title: 'Elec-Mate vs CertsApp 2026 | Feature Comparison | Which Is Better?',
+    title: 'Elec-Mate vs CertsApp 2026 | Feature Comparison | Which Is',
     description: PAGE_DESCRIPTION,
     schema: softwareAppSchema,
   });
@@ -739,7 +739,7 @@ export default function ElecMateVsCertsAppPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="See Why Electricians Are Switching to Elec-Mate"
-            description="Unlimited certificates, 70+ calculators, 8 Elec-AI tools, full training courses, and business management — all from £5.99/month with a 7-day free trial. No credit limits, no per-certificate fees."
+            description="Unlimited certificates, 70+ calculators, 8 Elec-AI tools, full training courses, and business management — all from £5.99/month with a 7-day free trial."
             ctaText="Try Elec-Mate free for 7 days"
             ctaHref="/auth/signup"
           />

@@ -494,7 +494,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional flood recovery documentation"
-          description="Elec-Mate gives you EICR certificates, EIC certificates, quoting, and cable sizing on your phone. Produce the professional documentation that insurance companies require. 7-day free trial."
+          description="Elec-Mate gives you EICR certificates, EIC certificates, quoting, and cable sizing on your phone."
           icon={Waves}
         />
       </>
@@ -510,9 +510,9 @@ export default function FloodDamagedElectricsPage() {
   return (
     <GuideTemplate
       title="Flood Damaged Electrics | Safety and Recovery Guide UK"
-      description="What to do when a property has been flooded. Do not enter flooded buildings, isolation procedures, drying out, mandatory rewire assessment, insurance claims, and making installations flood-resilient. Essential safety guidance."
+      description="What to do when a property has been flooded. Do not enter flooded buildings, isolation procedures, drying out, mandatory rewire assessment…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Emergency Safety Guide"

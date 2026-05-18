@@ -517,7 +517,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify Cardiff EV charger installations"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. Complete EV charger quotes and certificates from your phone — built for electricians working across Cardiff and South Wales."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification."
           icon={Car}
         />
       </>
@@ -532,10 +532,10 @@ const sections = [
 export default function EVChargerInstallationCardiffPage() {
   return (
     <GuideTemplate
-      title="EV Charger Installation Cardiff | Home EV Charging Wales 2026"
-      description="EV charger installation costs in Cardiff 2026: 7kW charger £800-1,200 installed, Welsh Government EV grants, OZEV grant up to £350, SP Manweb DNO notification, PME earthing, Part P compliance under Welsh Building Regulations."
+      title="EV Charger Installation Cardiff | Home EV Charging Wales"
+      description="EV charger installation costs in Cardiff 2026: 7kW charger £800-1,200 installed, Welsh Government EV grants, OZEV grant up to £350…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cardiff & Wales Guide"

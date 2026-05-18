@@ -527,7 +527,7 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Issue certificates on site and quote instantly with Elec-Mate"
+          title="Issue certificates on site and quote instantly with"
           description="Join 1,000+ UK electricians using Elec-Mate for on-site certificate completion, AI board scanning, and instant PDF export. Start your 7-day free trial."
           icon={FileCheck2}
         />
@@ -543,10 +543,10 @@ const sections = [
 export default function FindingEmergencyElectricianPage() {
   return (
     <GuideTemplate
-      title="Emergency Electrician UK | How to Find an Emergency Electrician"
-      description="What counts as an electrical emergency, safe steps to take first, how to find a 24/7 NICEIC or NAPIT registered electrician, typical emergency callout rates (£100–200 callout fee), and how to avoid unregistered traders."
+      title="Emergency Electrician UK | How to Find an Emergency"
+      description="What counts as an electrical emergency, safe steps to take first, how to find a 24/7 NICEIC or NAPIT registered electrician…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Emergency Guide"

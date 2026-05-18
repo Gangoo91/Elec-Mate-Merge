@@ -601,7 +601,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify commercial fit-outs"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, commercial quoting, and on-site EIC certification. Price shop fit-outs accurately with itemised professional documentation. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, commercial quoting, and on-site EIC certification."
           icon={Building2}
         />
       </>
@@ -617,9 +617,9 @@ export default function ShopFitOutElectricalCostPage() {
   return (
     <GuideTemplate
       title="Shop Fit-Out Electrical Cost UK 2026 | Commercial Pricing"
-      description="How much does a shop fit-out electrical installation cost in the UK? Typical prices from £3,000 to £15,000+. 3-phase supply, commercial lighting, emergency lighting, fire alarm, data cabling, and EICR requirements explained."
+      description="Shop fit-out electrical installation cost in the UK 2026: £3,000–£15,000+ depending on size, lighting, sockets, EPOS power, CCTV, BS 7671 EIC."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

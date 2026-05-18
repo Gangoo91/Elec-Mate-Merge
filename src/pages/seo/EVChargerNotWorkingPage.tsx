@@ -504,7 +504,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certificate EV charger installations with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate to certificate EV charger installations, complete EICRs, and generate BS 7671-compliant documentation on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to certificate EV charger installations, complete EICRs, and generate BS 7671-compliant documentation on site."
           icon={Zap}
         />
       </>
@@ -520,9 +520,9 @@ export default function EVChargerNotWorkingPage() {
   return (
     <GuideTemplate
       title="EV Charger Not Working | Home EV Charger Fault Finding UK"
-      description="Home EV charger not working? This guide explains error codes, EVSE communication faults, supply voltage issues, RCD nuisance tripping, earthing faults, and when to call an OZEV-approved installer."
+      description="Home EV charger not working? This guide explains error codes, EVSE communication faults, supply voltage issues, RCD nuisance tripping, earthing faults…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Fault Finding Guide"

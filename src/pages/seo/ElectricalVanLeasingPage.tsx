@@ -521,8 +521,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Quote and schedule jobs with Elec-Mate — built for UK electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, invoicing, job scheduling, and electrical certificates. Include van costs in every quote automatically. 7-day free trial."
+          title="Quote and schedule jobs with Elec-Mate — built for UK"
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, invoicing, job scheduling, and electrical certificates."
           icon={Truck}
         />
       </>
@@ -537,10 +537,10 @@ const sections = [
 export default function ElectricalVanLeasingPage() {
   return (
     <GuideTemplate
-      title="Electrician Van Leasing UK | Van Finance Guide for Electricians"
-      description="Complete guide to van leasing for electricians in the UK. Lease vs hire purchase vs outright purchase, 100% VAT reclaim on leasing, benefit in kind charges, popular vans (Transit Custom, Vivaro, Sprinter), typical monthly costs, maintenance packages."
+      title="Electrician Van Leasing UK | Van Finance Guide for"
+      description="Complete guide to van leasing for electricians in the UK. Lease vs hire purchase vs outright purchase, 100% VAT reclaim on leasing…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Finance Guide"

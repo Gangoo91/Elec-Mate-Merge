@@ -456,7 +456,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Your site diary builds your portfolio"
-          description="Elec-Mate site diary entries link directly to your portfolio criteria. Tag each entry, attach photos, and watch your portfolio evidence grow automatically. No last-minute scramble before the gateway."
+          description="Elec-Mate site diary entries link directly to your portfolio criteria. Tag each entry, attach photos…"
           icon={FolderOpen}
         />
       </>
@@ -577,7 +577,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Start Your Site Diary Today"
-          description="Elec-Mate site diary gives you structured daily prompts, photo attachments, portfolio linking, and OJT integration. Build the habit from day one and your evidence takes care of itself. 7-day free trial."
+          description="Elec-Mate site diary gives you structured daily prompts, photo attachments, portfolio linking, and OJT integration."
           icon={BookOpen}
         />
       </>
@@ -593,9 +593,9 @@ export default function SiteDiaryGuidePage() {
   return (
     <GuideTemplate
       title="Site Diary for Apprentices | What to Record Daily"
-      description="Complete guide to keeping a site diary as an electrical apprentice. What to record daily, skills logging, health and safety observations, portfolio evidence, and how Elec-Mate site diary automates the process."
+      description="Complete guide to keeping a site diary as an electrical apprentice. What to record daily, skills logging, health and safety observations…"
       datePublished="2025-11-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

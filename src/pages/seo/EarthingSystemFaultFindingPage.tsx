@@ -240,7 +240,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Record earthing system findings on your phone"
-          description="Elec-Mate's EICR app captures earthing system test results, Ze values, and electrode resistance measurements, and generates coded observations for any deficiencies found."
+          description="Elec-Mate's EICR app captures earthing system test results, Ze values, and electrode resistance measurements…"
           icon={ShieldCheck}
         />
       </>
@@ -512,10 +512,10 @@ const sections = [
 export default function EarthingSystemFaultFindingPage() {
   return (
     <GuideTemplate
-      title="Earthing System Fault Finding | Earth Electrode, Open Circuit Earth, PME"
-      description="Complete guide to earthing system fault finding for UK electricians. Covers open circuit earth, poor main earth connections, corroded earth electrodes, measuring electrode resistance (BS 7430 methods), and PME lost neutral dangers."
+      title="Earthing System Fault Finding | Earth Electrode, Open"
+      description="Complete guide to earthing system fault finding for UK electricians. Covers open circuit earth, poor main earth connections, corroded earth electrodes…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Fault Finding Guide"

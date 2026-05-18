@@ -532,7 +532,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Digital Test Recording with Elec-Mate"
-          description="Record test results directly into your digital certificate. Auto-validation checks results against BS 7671 maximum values. Voice entry for hands-free recording on site. Professional PDF output for clients."
+          description="Record test results directly into your digital certificate. Auto-validation checks results against BS 7671 maximum values."
           icon={ClipboardCheck}
         />
       </>
@@ -632,7 +632,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Master Testing from Beginner to AM2-Ready"
-          description="Testing procedure courses, 2,000+ practice questions, flashcards with maximum Zs values, and AI tutor support. Everything you need to build confident testing competence. 7-day free trial."
+          description="Testing procedure courses, 2,000+ practice questions, flashcards with maximum Zs values, and AI tutor support."
           icon={Gauge}
         />
       </>
@@ -644,9 +644,9 @@ export default function TestingProceduresForApprenticesPage() {
   return (
     <GuideTemplate
       title="Testing Procedures for Apprentices | Beginner Guide"
-      description="Beginner guide to electrical testing procedures for apprentices. Testing sequence, multifunction testers, continuity testing, insulation resistance, recording results, and common mistakes explained simply."
+      description="Beginner guide to electrical testing procedures for apprentices. Testing sequence, multifunction testers, continuity testing, insulation resistance…"
       datePublished="2026-01-25"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

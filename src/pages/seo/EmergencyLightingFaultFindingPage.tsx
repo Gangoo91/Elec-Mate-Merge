@@ -473,9 +473,9 @@ export default function EmergencyLightingFaultFindingPage() {
   return (
     <GuideTemplate
       title="Emergency Lighting Not Working | Fault Finding Guide UK"
-      description="Emergency lighting not working or failing tests? This guide covers battery failure, charging circuit faults, lamp failure, test mode issues, monthly self-test, and annual BS 5266 testing requirements."
+      description="Emergency lighting not working or failing tests? This guide covers battery failure, charging circuit faults, lamp failure, test mode issues…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Fault Finding Guide"

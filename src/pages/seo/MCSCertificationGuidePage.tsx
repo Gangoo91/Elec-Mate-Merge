@@ -503,7 +503,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Issue MCS installation certificates with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for certification, quoting, and job management. Issue EICs, EICRs, and solar installation documentation on your phone. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for certification, quoting, and job management. Issue EICs, EICRs…"
           icon={ShieldCheck}
         />
       </>
@@ -518,10 +518,10 @@ const sections = [
 export default function MCSCertificationGuidePage() {
   return (
     <GuideTemplate
-      title="MCS Certification for Solar Installers UK | How to Become MCS Certified"
-      description="Complete guide to MCS certification for solar installers in the UK. What MCS is, why it matters for SEG and grants, how to get certified, costs £1,000–£3,000, annual audit, and the MCS 001 standard explained."
+      title="MCS Certification for Solar Installers UK | How to Become"
+      description="Complete guide to MCS certification for solar installers in the UK. What MCS is, why it matters for SEG and grants, how to get certified…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="MCS Certification Guide"

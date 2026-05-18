@@ -616,7 +616,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete fan replacement certificates on your phone"
-          description="Elec-Mate lets you issue Minor Works Certificates on site with pre-filled templates for fan replacements. Add test results, observations, and export professional PDFs instantly."
+          description="Elec-Mate lets you issue Minor Works Certificates on site with pre-filled templates for fan replacements."
           icon={FileCheck2}
         />
       </>
@@ -632,9 +632,9 @@ export default function ExtractorFanNotWorkingPage() {
   return (
     <GuideTemplate
       title="Extractor Fan Not Working | Troubleshooting Guide"
-      description="Extractor fan not working? Learn the common causes — isolator switch, timer relay failure, humidity sensor fault, motor burnout — and when to call an electrician. Covers bathroom and kitchen fans, Building Regs Part F, and pull cord vs isolator types."
+      description="Extractor fan not working? Learn the common causes — isolator switch, timer relay failure, humidity sensor fault…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting"

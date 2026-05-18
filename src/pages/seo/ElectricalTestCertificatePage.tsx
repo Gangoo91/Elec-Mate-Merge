@@ -18,9 +18,9 @@ export default function ElectricalTestCertificatePage() {
   return (
     <GuideTemplate
       title="Electrical Test Certificate | What It Is & When You Need One"
-      description="Understand the different types of electrical test certificate in the UK. Learn when you need an EIC, EICR, or Minor Works Certificate, what each covers, what to check for on a certificate, and why proper electrical certification matters for safety and compliance."
+      description="Understand the different types of electrical test certificate in the UK. Learn when you need an EIC, EICR, or Minor Works Certificate, what each covers…"
       datePublished="2025-06-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'Test Certificate', href: '/guides/electrical-test-certificate' },
@@ -159,7 +159,7 @@ export default function ElectricalTestCertificatePage() {
               </div>
               <SEOAppBridge
                 title="Digital Certificates in Elec-Mate"
-                description="Elec-Mate provides digital EIC, Minor Works, and EICR forms that validate every test result against BS 7671 limits in real time. Complete certificates on site, generate professional PDF documents, and store everything securely in the cloud."
+                description="Elec-Mate provides digital EIC, Minor Works, and EICR forms that validate every test result against BS 7671 limits in real time."
                 icon={FileCheck2}
               />
             </>
@@ -454,7 +454,7 @@ export default function ElectricalTestCertificatePage() {
               </div>
               <SEOAppBridge
                 title="BS 7671 Validation Built In"
-                description="Elec-Mate's certificate forms validate every test result against BS 7671 maximum values as you enter them. If a reading exceeds the permitted limit, the app flags it immediately so you can investigate before leaving site."
+                description="Elec-Mate's certificate forms validate every test result against BS 7671 maximum values as you enter them."
                 icon={ShieldCheck}
               />
             </>
@@ -520,7 +520,7 @@ export default function ElectricalTestCertificatePage() {
               </div>
               <SEOAppBridge
                 title="Complete Certificates in Minutes With Elec-Mate"
-                description="Elec-Mate's digital certificate platform handles EIC, Minor Works, and EICR forms with real-time BS 7671 validation, auto-populated fields, cloud storage, and instant PDF delivery. Join thousands of electricians who have switched from paper to digital."
+                description="Elec-Mate's digital certificate platform handles EIC, Minor Works, and EICR forms with real-time BS 7671 validation, auto-populated fields…"
                 icon={FileText}
               />
             </>

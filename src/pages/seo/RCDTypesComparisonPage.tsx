@@ -465,7 +465,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Record RCD types and test results on site"
-          description="Elec-Mate's EIC and EICR apps include RCD type recording, trip time testing, and automatic compliance checking. Complete your certificates on your phone. 7-day free trial."
+          description="Elec-Mate's EIC and EICR apps include RCD type recording, trip time testing, and automatic compliance checking. Complete your certificates on your phone."
           icon={ShieldCheck}
         />
       </>
@@ -481,9 +481,9 @@ export default function RCDTypesComparisonPage() {
   return (
     <GuideTemplate
       title="RCD Types AC, A, F, B Explained | UK Electrician Guide"
-      description="Complete guide to RCD types for UK electricians. Type AC, A, F, and B differences, when each is required, cost comparison, BS 7671 Regulation 531.3.3 requirements, and practical specification guidance."
+      description="Complete guide to RCD types for UK electricians. Type AC, A, F, and B differences, when each is required, cost comparison…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Technical Guide"

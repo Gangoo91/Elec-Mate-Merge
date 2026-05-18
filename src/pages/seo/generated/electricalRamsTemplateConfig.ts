@@ -5,14 +5,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // CDM 2015 statutory framework and the Electricity at Work Regulations 1989.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const electricalRamsTemplateConfig: GeneratedGuideConfig = {
   pagePath: '/guides/electrical-rams-template-uk',
   title:
-    'Electrical RAMS Template (UK) — Free Guide + In-App Generator | Elec-Mate',
+    'Electrical RAMS Template (UK) — Free Guide + In-App',
   description:
-    'Electrical RAMS template for UK electricians — what a Risk Assessment and Method Statement must cover, CDM 2015 duties, EAWR 1989 obligations, the sign-off chain, and how to produce a 30-page CDM-compliant RAMS in two minutes with the Elec-Mate RAMS Generator.',
+    'Electrical RAMS template for UK electricians — what a Risk Assessment and Method Statement must cover, CDM 2015 duties, EAWR 1989 obligations…',
   datePublished: published,
   dateModified: modified,
   readingTime: 12,

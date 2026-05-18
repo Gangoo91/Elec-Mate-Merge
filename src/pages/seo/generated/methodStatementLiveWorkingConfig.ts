@@ -5,14 +5,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Electricity at Work Regulations 1989 and HSE guidance HSR25 / GS38.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const methodStatementLiveWorkingConfig: GeneratedGuideConfig = {
   pagePath: '/guides/method-statement-live-working',
   title:
-    'Method Statement for Live Working — UK Electrical Procedure | Elec-Mate',
+    'Method Statement for Live Working — UK Electrical Procedure',
   description:
-    'Method statement for live electrical working in the UK. When live work is lawful under EAWR 1989 Regulation 14, the three-part test, GS38 instruments, BS EN 60900 insulated tools, PPE, lone working and the documentation electricians must hold before any live task begins.',
+    'Method statement for live electrical working in the UK. When live work is lawful under EAWR 1989 Regulation 14, the three-part test, GS38 instruments…',
   datePublished: published,
   dateModified: modified,
   readingTime: 12,

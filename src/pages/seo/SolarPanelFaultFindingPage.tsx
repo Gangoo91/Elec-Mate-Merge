@@ -479,7 +479,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certificate solar PV installations with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate to certificate solar PV installations, complete EICRs, and generate BS 7671-compliant documentation on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to certificate solar PV installations, complete EICRs, and generate BS 7671-compliant documentation on site."
           icon={Sun}
         />
       </>
@@ -495,9 +495,9 @@ export default function SolarPanelFaultFindingPage() {
   return (
     <GuideTemplate
       title="Solar Panels Not Working | Solar PV Fault Finding Guide UK"
-      description="Solar panels not working or underperforming? This guide covers inverter faults, DC isolator issues, string faults, shading problems, MCS monitoring, and when to call an MCS-certified installer."
+      description="Solar panels not working or underperforming? This guide covers inverter faults, DC isolator issues, string faults, shading problems, MCS monitoring…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Fault Finding Guide"

@@ -624,7 +624,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage your nuclear site qualifications with Elec-Mate"
-          description="Keep your ECS card, 18th Edition certification, nuclear awareness certificates, and test records organised in one place. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial."
+          description="Keep your ECS card, 18th Edition certification, nuclear awareness certificates, and test records organised in one place."
           icon={ShieldCheck}
         />
       </>
@@ -639,10 +639,10 @@ const sections = [
 export default function NuclearSiteElectricalPage() {
   return (
     <GuideTemplate
-      title="Nuclear Site Electrical Engineering UK | Nuclear Industry Guide"
-      description="Complete guide to nuclear site electrical engineering in the UK — nuclear island vs conventional island, QA Nuclear Baseline, BPSS/SC security clearance, ECS nuclear card, radiation protection, and pay rates of £60–£100+/hr."
+      title="Nuclear Site Electrical Engineering UK | Nuclear Industry"
+      description="Complete guide to nuclear site electrical engineering in the UK — nuclear island vs conventional island, QA Nuclear Baseline, BPSS/SC security clearance…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Specialist Sector"

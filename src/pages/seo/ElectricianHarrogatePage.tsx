@@ -456,7 +456,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Harrogate electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for electricians working across Harrogate and North Yorkshire. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -473,9 +473,9 @@ export default function ElectricianHarrogatePage() {
     <GuideTemplate
       localArea="Harrogate"
       title="Electrician in Harrogate | Local Electricians 2026"
-      description="Find qualified electricians in Harrogate. NICEIC and NAPIT registered, Part P compliant. Yorkshire rates, Victorian property rewires, EICRs, EV chargers, and hotel electrical work in Harrogate 2026."
+      description="Find qualified electricians in Harrogate. NICEIC and NAPIT registered, Part P compliant. Yorkshire rates, Victorian property rewires, EICRs, EV chargers…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Harrogate"

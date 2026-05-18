@@ -447,7 +447,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Bournemouth electrical business from your phone"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs…"
           icon={MapPin}
         />
       </>
@@ -463,10 +463,10 @@ export default function ElectricianBournemouthPage() {
   return (
     <GuideTemplate
       localArea="Bournemouth"
-      title="Electrician in Bournemouth | Find Qualified Electricians 2026"
-      description="Find qualified, registered electricians in Bournemouth. Realistic 2026 pricing, SSEN connections, coastal electrical considerations, flat conversion challenges, Part P compliance, and Bournemouth-specific information."
+      title="Electrician in Bournemouth | Find Qualified Electricians"
+      description="Find qualified, registered electricians in Bournemouth. Realistic 2026 pricing, SSEN connections, coastal electrical considerations…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Find an Electrician"

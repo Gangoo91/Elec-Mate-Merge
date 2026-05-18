@@ -539,7 +539,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage wind turbine installations with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC certificates, G99 commissioning records, and professional quoting. 7-day free trial, cancel anytime."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC certificates, G99 commissioning records, and professional quoting."
           icon={Wind}
         />
       </>
@@ -554,10 +554,10 @@ const sections = [
 export default function WindTurbineElectricalPage() {
   return (
     <GuideTemplate
-      title="Small Wind Turbine Electrical Installation UK | Micro Wind Guide"
-      description="Complete guide to small wind turbine electrical installation in the UK. Micro wind under 50 kW, planning permission, site wind speed assessment (minimum 5 m/s), G99 grid connection, MCS 006 certification, electrical connection requirements, inverter types, and battery integration."
+      title="Small Wind Turbine Electrical Installation UK | Micro Wind"
+      description="Complete guide to small wind turbine electrical installation in the UK. Micro wind under 50 kW, planning permission…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Micro Wind Guide"

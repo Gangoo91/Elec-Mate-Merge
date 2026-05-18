@@ -309,7 +309,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Issue a Minor Works Certificate on site"
-          description="Added a spur? Elec-Mate generates the Minor Works Certificate on your phone. Enter the test results, describe the work, and send the certificate to the customer as a professional PDF before you leave."
+          description="Added a spur? Elec-Mate generates the Minor Works Certificate on your phone. Enter the test results, describe the work…"
           icon={FileCheck2}
         />
       </>
@@ -591,7 +591,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Certify spur additions in minutes"
-          description="Elec-Mate's Minor Works Certificate captures your test results, describes the work, and generates a professional PDF. Send it to the customer by email or WhatsApp before you pack up your tools. No desk time required."
+          description="Elec-Mate's Minor Works Certificate captures your test results, describes the work, and generates a professional PDF."
           icon={FileCheck2}
         />
       </>
@@ -607,9 +607,9 @@ export default function SpurSocketRegsPage() {
   return (
     <GuideTemplate
       title="Spur Socket Regulations | Fused Spur Guide UK"
-      description="Complete guide to spur socket regulations in the UK. Fused vs unfused spurs, when to use each type, connection methods, cable sizes, common mistakes, and certification requirements under BS 7671."
+      description="Complete guide to spur socket regulations in the UK. Fused vs unfused spurs, when to use each type, connection methods, cable sizes, common mistakes…"
       datePublished="2025-07-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

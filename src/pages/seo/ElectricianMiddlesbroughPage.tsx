@@ -510,7 +510,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Middlesbrough electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for electricians working across Teesside and the North East. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -527,9 +527,9 @@ export default function ElectricianMiddlesbroughPage() {
     <GuideTemplate
       localArea="Middlesbrough"
       title="Electrician in Middlesbrough | Local Electricians 2026"
-      description="Find qualified electricians in Middlesbrough. Part P compliance, Northern Powergrid DNO, NICEIC and NAPIT registered electricians, EICR for landlords, consumer unit replacement, and Middlesbrough electrician rates for 2026."
+      description="Find qualified electricians in Middlesbrough. Part P compliance, Northern Powergrid DNO, NICEIC and NAPIT registered electricians, EICR for landlords…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Middlesbrough"

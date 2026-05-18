@@ -374,7 +374,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Issue Part P certificates on site"
-          description="Elec-Mate lets you complete Electrical Installation Certificates and Minor Works Certificates on your phone. AI board scanning, voice test entry, and instant PDF export — issue the Part P documentation before you leave the job."
+          description="Elec-Mate lets you complete Electrical Installation Certificates and Minor Works Certificates on your phone."
           icon={FileCheck2}
         />
       </>
@@ -514,7 +514,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Never forget to issue a certificate again"
-          description="Elec-Mate automatically prompts you to issue an EIC or Minor Works Certificate at the end of every job. Part P documentation issued on site, sent to the customer instantly, and stored in your job records."
+          description="Elec-Mate automatically prompts you to issue an EIC or Minor Works Certificate at the end of every job."
           icon={FileCheck2}
         />
       </>
@@ -589,10 +589,10 @@ const sections = [
 export default function PartPBuildingRegulationsGuidePage() {
   return (
     <GuideTemplate
-      title="Part P Building Regulations | Electrical Work in Dwellings Guide"
-      description="Complete guide to Part P Building Regulations for electricians. What work is notifiable, competent person scheme self-certification, building notice process, penalties for non-compliance, and how Part P affects property sales."
+      title="Part P Building Regulations | Electrical Work in Dwellings"
+      description="Complete guide to Part P Building Regulations for electricians. What work is notifiable, competent person scheme self-certification…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations Guide"

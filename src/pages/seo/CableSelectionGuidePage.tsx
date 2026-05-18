@@ -681,8 +681,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Complete EICs and EICRs with full cable documentation on your phone"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion with conductor size recording, AI board scanning, and instant PDF export. 7-day free trial."
+          title="Complete EICs and EICRs with full cable documentation on"
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion with conductor size recording, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -698,9 +698,9 @@ export default function CableSelectionGuidePage() {
   return (
     <GuideTemplate
       title="Cable Selection Guide BS 7671 | Choosing the Right Cable UK"
-      description="Complete cable selection guide for UK electrical installations under BS 7671. T&E flat twin, SWA armoured, MICC mineral insulated, FP200 fire resistant, SY and CY flexible cables — current capacity, voltage drop, mechanical protection, and environmental considerations."
+      description="Complete cable selection guide for UK electrical installations under BS 7671. T&E flat twin, SWA armoured, MICC mineral insulated, FP200 fire resistant…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Wiring Guide"

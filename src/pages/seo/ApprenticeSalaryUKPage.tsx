@@ -400,7 +400,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Track every hour and penny from day one"
-          description="Elec-Mate business tools include expense tracking, income logging, and financial dashboards. Even as an apprentice, building the habit of tracking your earnings and outgoings sets you up for success when you go self-employed."
+          description="Elec-Mate business tools include expense tracking, income logging, and financial dashboards. Even as an apprentice…"
           icon={Calculator}
         />
       </>
@@ -584,7 +584,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="46+ training courses to accelerate your apprenticeship"
-          description="Elec-Mate apprentice hub covers Level 2 and Level 3 electrical courses, AM2 preparation, portfolio building, and EPA readiness. Study on your phone between site visits. 7-day free trial."
+          description="Elec-Mate apprentice hub covers Level 2 and Level 3 electrical courses, AM2 preparation, portfolio building, and EPA readiness."
           icon={GraduationCap}
         />
       </>
@@ -660,9 +660,9 @@ export default function ApprenticeSalaryUKPage() {
   return (
     <GuideTemplate
       title="Apprentice Electrician Salary UK 2026 | Pay Rates"
-      description="Complete guide to apprentice electrician pay in the UK. NMW/NLW rates by age, Year 1 to Year 4 salary progression, JIB rates, regional variations, overtime pay, and what employers actually pay in 2026."
+      description="Complete guide to apprentice electrician pay in the UK. NMW/NLW rates by age, Year 1 to Year 4 salary progression, JIB rates, regional variations…"
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

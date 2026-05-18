@@ -21,7 +21,7 @@ import {
 
 const PAGE_TITLE = 'BS 7671 Appendix 4 Tables | Current Carrying Capacity';
 const PAGE_DESCRIPTION =
-  'Complete guide to BS 7671 Appendix 4 tables. How to read current carrying capacity tables (4D1A-4J4A) for PVC and XLPE cables, voltage drop tables (mV/A/m), and how to use them with correction factors and reference methods for cable sizing.';
+  'BS 7671 Appendix 4 tables explained: current carrying capacity (4D1A-4J4A), voltage drop (mV/A/m), correction factors, reference methods. UK electricians.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -44,7 +44,7 @@ const tocItems = [
 const keyTakeaways = [
   'Appendix 4 contains the current-carrying capacity tables for every cable type and installation method in BS 7671 — it is the core reference for all cable sizing calculations.',
   'Tables are numbered systematically: the letter indicates cable type (D for multicore thermoplastic, E for multicore thermosetting), and the column indicates the reference method (A, B, C, etc.).',
-  'Voltage drop values (mV/A/m) are now in Appendix 12 following Amendment 3 (A4:2026) — previously they were in Appendix 4. The values themselves are unchanged.',
+  'Voltage drop values (mV/A/m) are now in Appendix 12 following Amendment 4 (A4:2026) — previously they were in Appendix 4. The values themselves are unchanged.',
   'You must use the correct table for your cable type AND the correct column for your reference method — getting either wrong gives the wrong current-carrying capacity.',
   'Elec-Mate has every Appendix 4 table built into the cable sizing calculator. Select cable type and reference method, and the app looks up the correct value instantly — no more flicking through the brown book.',
 ];
@@ -53,7 +53,7 @@ const faqs = [
   {
     question: 'What does Appendix 4 of BS 7671 contain?',
     answer:
-      'Appendix 4 of BS 7671 contains the current-carrying capacity tables for all standard cable types used in UK electrical installations. These tables give the maximum current (in amperes) that a cable of a given size can carry continuously under specific reference conditions — a defined installation method, an ambient temperature of 30 degrees Celsius, no grouping with other circuits, and no thermal insulation. The tables cover thermoplastic (PVC) insulated cables, thermosetting (XLPE and LSF) insulated cables, mineral insulated (MICC) cables, and flexible cables, in sizes from 1mm squared up to 630mm squared or more. Appendix 4 also contains the correction factor tables (Table 4B1 for ambient temperature, Tables 4C1 to 4C5 for grouping) and, prior to Amendment 3, the voltage drop tables (mV/A/m values). After Amendment 3 (A4:2026), the voltage drop tables have been moved to Appendix 12, though the values remain the same.',
+      'Appendix 4 of BS 7671 contains the current-carrying capacity tables for all standard cable types used in UK electrical installations. These tables give the maximum current (in amperes) that a cable of a given size can carry continuously under specific reference conditions — a defined installation method, an ambient temperature of 30 degrees Celsius, no grouping with other circuits, and no thermal insulation. The tables cover thermoplastic (PVC) insulated cables, thermosetting (XLPE and LSF) insulated cables, mineral insulated (MICC) cables, and flexible cables, in sizes from 1mm squared up to 630mm squared or more. Appendix 4 also contains the correction factor tables (Table 4B1 for ambient temperature, Tables 4C1 to 4C5 for grouping) and, prior to Amendment 4, the voltage drop tables (mV/A/m values). After Amendment 4 (A4:2026), the voltage drop tables have been moved to Appendix 12, though the values remain the same.',
   },
   {
     question: 'How do I read the Appendix 4 current-carrying capacity tables?',
@@ -68,7 +68,7 @@ const faqs = [
   {
     question: 'What are mV/A/m voltage drop values and how do I use them?',
     answer:
-      'The mV/A/m (millivolts per ampere per metre) values are used to calculate the voltage drop across a cable run. The voltage drop formula is: VD = mV/A/m x Ib x L / 1000, where VD is the voltage drop in volts, Ib is the design current in amperes, and L is the cable length in metres. The mV/A/m values were previously in Appendix 4 of BS 7671 but have been moved to Appendix 12 following Amendment 3 (A4:2026). The values themselves have not changed. Each cable type and size has a specific mV/A/m value that depends on the conductor resistance and, for AC circuits, the conductor reactance. For single-phase circuits, you use the two-core or single-phase mV/A/m values. For three-phase circuits, the tables provide separate three-phase mV/A/m values that account for the different voltage relationship in a balanced three-phase system. BS 7671 limits voltage drop to 3 percent for lighting circuits and 5 percent for all other circuits, measured from the origin of the installation.',
+      'The mV/A/m (millivolts per ampere per metre) values are used to calculate the voltage drop across a cable run. The voltage drop formula is: VD = mV/A/m x Ib x L / 1000, where VD is the voltage drop in volts, Ib is the design current in amperes, and L is the cable length in metres. The mV/A/m values were previously in Appendix 4 of BS 7671 but have been moved to Appendix 12 following Amendment 4 (A4:2026). The values themselves have not changed. Each cable type and size has a specific mV/A/m value that depends on the conductor resistance and, for AC circuits, the conductor reactance. For single-phase circuits, you use the two-core or single-phase mV/A/m values. For three-phase circuits, the tables provide separate three-phase mV/A/m values that account for the different voltage relationship in a balanced three-phase system. BS 7671 limits voltage drop to 3 percent for lighting circuits and 5 percent for all other circuits, measured from the origin of the installation.',
   },
   {
     question: 'Where can I find the tables for SWA cable?',
@@ -76,9 +76,9 @@ const faqs = [
       'Steel wire armoured (SWA) cable current-carrying capacity tables are in the Appendix 4 series covering armoured cables. For multicore thermoplastic (PVC) armoured cable, use Table 4D4A (and associated columns). For multicore thermosetting (XLPE) armoured cable, use Table 4E4A. The SWA tables include columns for different installation methods, but the most commonly used methods for SWA are Method C (clipped direct to a surface), Method D (buried underground in a duct or directly buried), and Methods E/F (on a cable tray). SWA cable is the standard choice for underground runs to outbuildings, submain feeds, and external installations. When sizing SWA for underground use (Method D), remember to use the specific underground tables and apply the ground temperature and soil thermal resistivity corrections.',
   },
   {
-    question: 'Have the Appendix 4 tables changed in Amendment 3 (A4:2026)?',
+    question: 'Have the Appendix 4 tables changed in Amendment 4 (A4:2026)?',
     answer:
-      'The main change in Amendment 3 affecting Appendix 4 is the relocation of the voltage drop tables. The mV/A/m (millivolts per ampere per metre) tables, which were previously located within Appendix 4, have been moved to a new Appendix 12. This is an organisational change — the voltage drop values themselves have not changed. The current-carrying capacity tables remain in Appendix 4 and their values are unchanged by Amendment 3. The reason for the relocation is to improve the structure of the standard and separate the current-carrying capacity data (which is about thermal performance) from the voltage drop data (which is about electrical performance). In practice, this means that when you are sizing cables, you still use Appendix 4 for current-carrying capacity and now use Appendix 12 for voltage drop — but the actual numbers you use are the same as before.',
+      'The main change in Amendment 4 affecting Appendix 4 is the relocation of the voltage drop tables. The mV/A/m (millivolts per ampere per metre) tables, which were previously located within Appendix 4, have been moved to a new Appendix 12. This is an organisational change — the voltage drop values themselves have not changed. The current-carrying capacity tables remain in Appendix 4 and their values are unchanged by Amendment 4. The reason for the relocation is to improve the structure of the standard and separate the current-carrying capacity data (which is about thermal performance) from the voltage drop data (which is about electrical performance). In practice, this means that when you are sizing cables, you still use Appendix 4 for current-carrying capacity and now use Appendix 12 for voltage drop — but the actual numbers you use are the same as before.',
   },
   {
     question: 'Does Elec-Mate include all the Appendix 4 tables?',
@@ -126,7 +126,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="BS 7671 Appendix 4 Tables | A4:2026"
-          description="BS 7671 Appendix 4 current-carrying capacity tables for all cable types and reference methods. Updated A4:2026. Instant lookup — no guesswork on site."
+          description="BS 7671 Appendix 4 current-carrying capacity tables for 16 cable types and all reference methods. Updated A4:2026. Find your rating in seconds."
           icon={BookOpen}
         />
       </>
@@ -362,13 +362,13 @@ const sections = [
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
             <div>
-              <h3 className="font-bold text-white mb-1">Amendment 3 change: Appendix 12</h3>
+              <h3 className="font-bold text-white mb-1">Amendment 4 change: Appendix 12</h3>
               <p className="text-white text-sm leading-relaxed">
-                Following Amendment 3 (A4:2026), the voltage drop tables have been moved from
+                Following Amendment 4 (A4:2026), the voltage drop tables have been moved from
                 Appendix 4 to a new Appendix 12. The values themselves have not changed — this is an
                 organisational restructure to separate current-carrying capacity data from voltage
                 drop data. If you are using BS 7671:2018+A2:2022 (the physical brown book), the
-                voltage drop tables are still in Appendix 4. If you are using the Amendment 3
+                voltage drop tables are still in Appendix 4. If you are using the Amendment 4
                 supplement, refer to Appendix 12.
               </p>
             </div>
@@ -392,7 +392,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Voltage drop calculated automatically"
-          description="Elec-Mate's cable sizing calculator checks voltage drop as part of every cable sizing calculation. Enter the cable length and the app uses the correct mV/A/m value from Appendix 12. Warns if the drop exceeds BS 7671 limits."
+          description="Elec-Mate's cable sizing calculator checks voltage drop as part of every cable sizing calculation."
           icon={Zap}
         />
       </>
@@ -553,7 +553,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Instant Appendix 4 lookup on site"
-          description="Skip the manual table lookup. Elec-Mate's cable sizing calculator selects the correct table, applies correction factors, and gives you the cable size in seconds. Every Appendix 4 table is built in. Works offline."
+          description="Skip the manual table lookup. Elec-Mate's cable sizing calculator selects the correct table, applies correction factors…"
           icon={Search}
         />
       </>
@@ -693,7 +693,7 @@ export default function AppendixFourTablesPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-06-01"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="BS 7671 Appendix 4"

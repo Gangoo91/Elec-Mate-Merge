@@ -25,9 +25,9 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const PAGE_TITLE = 'Earthing Arrangements Explained | TN-S TN-C-S TT Systems | Elec-Mate';
+const PAGE_TITLE = 'Earthing Arrangements | TN-S, TN-C-S, TT Systems';
 const PAGE_DESCRIPTION =
-  'Complete guide to UK earthing systems: TN-S, TN-C-S (PME), TN-C, TT, and IT. How to identify each on site, typical Ze values, PME restrictions, electrode testing. For UK electricians.';
+  'UK earthing systems: TN-S, TN-C-S (PME), TN-C, TT, IT. How to identify on site, typical Ze values, PME restrictions, electrode testing.';
 
 const faqs = [
   {
@@ -80,7 +80,7 @@ const features = [
     icon: ShieldCheck,
     title: 'BS 7671:2018+A4:2026',
     description:
-      'Built to the current 18th Edition including Amendment 3. All earthing references, Ze values, and compliance checks are fully up to date.',
+      'Built to the current 18th Edition including Amendment 4. All earthing references, Ze values, and compliance checks are fully up to date.',
   },
   {
     icon: Smartphone,
@@ -92,7 +92,7 @@ const features = [
     icon: Activity,
     title: 'Smart Test Validation',
     description:
-      'Enter your Ze and Zs readings and the app validates them against the declared values and BS 7671 maximum permitted values for the selected protective device.',
+      'Enter your Ze and Zs readings and the app validates them against the declared values and BS 7671 maximum permitted values for the selected protective…',
   },
 ];
 
@@ -101,7 +101,7 @@ const articleSchema = {
   headline: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
   datePublished: '2025-04-01',
-  dateModified: '2026-02-10',
+  dateModified: '2026-05-18',
   author: {
     '@type': 'Organization',
     name: 'Elec-Mate',
@@ -649,7 +649,7 @@ export default function EarthingArrangementsPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Verify Earthing Arrangements Digitally with Elec-Mate"
-            description="Record Ze measurements, earthing system type, and PME restrictions directly in your EIC or EICR — with built-in Zs verification and BS 7671 compliance checks. Generate professional certificates on site."
+            description="Record Ze measurements, earthing system type, and PME restrictions directly in your EIC or EICR — with built-in Zs verification and BS 7671 compliance…"
             ctaText="Start 7-day free trial"
             ctaHref="/auth/signup"
           />

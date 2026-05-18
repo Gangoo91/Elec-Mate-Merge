@@ -24,9 +24,9 @@ export default function ProjectManagementElectricianPage() {
   return (
     <BusinessTemplate
       title="Project Management for Electrical Contractors"
-      description="Manage electrical projects efficiently with job scheduling, staff allocation, material tracking, progress monitoring, and client updates. Purpose-built project management for UK electricians."
+      description="Manage electrical projects efficiently with job scheduling, staff allocation, material tracking, progress monitoring, and client updates."
       datePublished="2025-09-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Business Tools', href: '/tools' },
         { label: 'Project Management', href: PAGE_PATH },
@@ -307,7 +307,7 @@ export default function ProjectManagementElectricianPage() {
           appBridge: {
             title: 'Keep Clients Informed Without Extra Work',
             description:
-              'Automated scheduling confirmations, progress updates, and completion notifications — Elec-Mate handles client communication so you can focus on the work itself.',
+              'Automated scheduling confirmations, progress updates, and completion notifications — Elec-Mate handles client communication so you can focus on the work…',
             icon: Bell,
           },
         },
@@ -442,7 +442,7 @@ export default function ProjectManagementElectricianPage() {
           applicationCategory: 'BusinessApplication',
           operatingSystem: 'Web, iOS, Android',
           description:
-            'Project management tools for UK electrical contractors. Job scheduling, staff allocation, material tracking, progress monitoring, and client communication in one mobile-first app.',
+            'Project management tools for UK electrical contractors. Job scheduling, staff allocation, material tracking, progress monitoring…',
           url: 'https://www.elec-mate.com/tools/project-management-electrician',
           offers: {
             '@type': 'Offer',

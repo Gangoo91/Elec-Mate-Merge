@@ -21,9 +21,9 @@ export default function BreakEvenCalculatorPage() {
   return (
     <BusinessTemplate
       title="Break-Even Calculator for Electricians"
-      description="Calculate your break-even point — how many billable hours or jobs you need each month to cover all your costs. Understand fixed vs variable costs, margin of safety, and how pricing decisions affect your break-even point."
+      description="Calculate your break-even point — how many billable hours or jobs you need each month to cover all your costs."
       datePublished="2025-09-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Business Tools', href: '/tools' },
         { label: 'Break-Even Calculator', href: PAGE_PATH },
@@ -100,7 +100,7 @@ export default function BreakEvenCalculatorPage() {
           appBridge: {
             title: 'Calculate Your Break-Even Point Now',
             description:
-              'Enter your fixed costs, variable costs, and day rate. Elec-Mate instantly calculates how many billable days per month you need to break even — and how much profit each additional day generates.',
+              'Enter your fixed costs, variable costs, and day rate. Elec-Mate instantly calculates how many billable days per month you need to break even — and how…',
             icon: Target,
           },
         },
@@ -295,7 +295,7 @@ export default function BreakEvenCalculatorPage() {
           appBridge: {
             title: 'Model Your Break-Even Scenarios',
             description:
-              'Elec-Mate lets you adjust your day rate, fixed costs, and variable costs to see how each change affects your break-even point and annual profit. Make pricing decisions with data.',
+              'Elec-Mate lets you adjust your day rate, fixed costs, and variable costs to see how each change affects your break-even point and annual profit.',
             icon: TrendingUp,
           },
         },

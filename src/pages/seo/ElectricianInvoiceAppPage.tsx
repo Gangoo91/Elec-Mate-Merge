@@ -65,7 +65,7 @@ const features = [
     icon: FileText,
     title: 'Professional Digital Invoices',
     description:
-      'Generate branded PDF invoices with your logo, company details, VAT number, and sequential invoice numbering. Send by email in seconds. Clients view and pay online.',
+      'Generate branded PDF invoices with your logo, company details, VAT number, and sequential invoice numbering. Send by email in seconds.',
   },
   {
     icon: CreditCard,
@@ -83,19 +83,19 @@ const features = [
     icon: Clock,
     title: 'Automatic Payment Reminders',
     description:
-      'Set your reminder schedule and Elec-Mate chases overdue invoices automatically. Professional, branded reminder emails sent on the due date, 7 days, 14 days, and 30 days.',
+      'Set your reminder schedule and Elec-Mate chases overdue invoices automatically. Professional, branded reminder emails sent on the due date, 7 days…',
   },
   {
     icon: Shield,
     title: 'CIS and VAT Compliance',
     description:
-      'CIS deductions calculated and displayed on subcontractor invoices. VAT at standard, reduced, or zero rate. Flat-rate VAT scheme supported. All compliant with HMRC requirements.',
+      'CIS deductions calculated and displayed on subcontractor invoices. VAT at standard, reduced, or zero rate. Flat-rate VAT scheme supported.',
   },
   {
     icon: TrendingUp,
     title: 'Job-by-Job Profitability',
     description:
-      'Track expenses against each job. See the true profit on every job — materials, labour, overheads, and margin. Identify your most profitable work types and price accordingly.',
+      'Track expenses against each job. See the true profit on every job — materials, labour, overheads, and margin.',
   },
 ];
 
@@ -105,7 +105,7 @@ const softwareAppSchema = {
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'Web, iOS, Android',
   description:
-    'Digital invoicing app for UK electricians. Stripe card payments, Xero and QuickBooks integration, automatic payment reminders, VAT and CIS compliance, expense tracking.',
+    'Digital invoicing app for UK electricians. Stripe card payments, Xero and QuickBooks integration, automatic payment reminders, VAT and CIS compliance…',
   url: 'https://www.elec-mate.com/electrician-invoice-app',
   offers: {
     '@type': 'Offer',
@@ -137,12 +137,12 @@ export default function ElectricianInvoiceAppPage() {
   useSEO({
     title: 'Electrician Invoice App UK | Digital Invoicing & Payments',
     description:
-      'Digital invoicing app for UK electricians. Stripe card payments, Xero and QuickBooks sync, automatic payment chasing, VAT and CIS compliance, expense tracking.',
+      'Digital invoicing app for UK electricians. Stripe card payments, Xero and QuickBooks sync, automatic payment chasing, VAT and CIS compliance…',
     breadcrumbs: [
       { name: 'Home', url: '/' },
       { name: 'Electrician Invoice App', url: '/electrician-invoice-app' },
     ],
-    dateModified: '2026-04-12',
+    dateModified: '2026-05-18',
     author: 'Elec-Mate Technical Team',
   });
 
@@ -560,7 +560,7 @@ export default function ElectricianInvoiceAppPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Send Invoices and Get Paid Faster"
-            description="Elec-Mate's invoicing tool lets you create professional invoices on site, send them instantly, and accept card payments via Stripe — all linked to your quotes and certificates."
+            description="Elec-Mate's invoicing tool lets you create professional invoices on site, send them instantly…"
             ctaText="Try Elec-Mate free"
             ctaHref="/auth/signup"
             icon={PoundSterling}

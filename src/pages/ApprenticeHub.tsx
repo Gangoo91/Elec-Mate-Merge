@@ -260,7 +260,10 @@ const EditorialToolGrid = ({
       <motion.div
         variants={itemVariants}
         className={cn(
-          'relative grid auto-rows-[220px] sm:auto-rows-[240px] gap-[2px] bg-black border border-white/[0.08] rounded-2xl overflow-hidden',
+          // Content-driven row heights; default `align-items: stretch`
+          // keeps same-row cards equal-height so the layout never crops
+          // the footer "Open" CTA on the longer card.
+          'relative grid gap-[2px] bg-black border border-white/[0.08] rounded-2xl overflow-hidden',
           colClass
         )}
       >
@@ -274,9 +277,9 @@ const EditorialToolGrid = ({
               if (card.onClick) card.onClick();
               else if (card.to) navigate(card.to);
             }}
-            className="group relative bg-[hsl(0_0%_10%)] hover:bg-elec-yellow/[0.04] transition-colors p-5 sm:p-6 lg:p-7 text-left touch-manipulation flex flex-col h-full"
+            className="group relative bg-[hsl(0_0%_10%)] hover:bg-elec-yellow/[0.04] transition-colors p-5 sm:p-6 lg:p-7 text-left touch-manipulation flex flex-col h-full min-h-[280px] sm:min-h-[300px] lg:min-h-[320px]"
           >
-            <div className="flex items-baseline justify-between gap-2">
+            <div className="flex items-baseline justify-between gap-2 flex-wrap">
               <div className="flex items-baseline gap-2">
                 <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
                   {String(i + 1).padStart(2, '0')}
@@ -295,17 +298,23 @@ const EditorialToolGrid = ({
             <h3 className="mt-3 sm:mt-4 text-[18px] sm:text-[20px] lg:text-[22px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors">
               {card.title}
             </h3>
-            <p className="mt-2 text-[12.5px] leading-relaxed text-white/60 max-w-[34ch]">
+            {/* Description — line-clamp keeps the card tidy without ever
+                cropping mid-word, no max-width that forces tall wraps in
+                narrow cells. */}
+            <p className="mt-2 text-[12.5px] leading-relaxed text-white/65 line-clamp-3">
               {card.description}
             </p>
 
-            <div className="flex-grow" />
+            <div className="flex-grow min-h-[8px]" />
 
-            <div className="mt-5 flex items-center justify-between gap-3 pt-3 border-t border-white/[0.05]">
-              <span className="text-[11px] text-white/55 truncate tabular-nums">
+            {/* Footer — stacks vertically by default so the Open CTA gets
+                its own line and can never be clipped by long meta text.
+                Inline only at lg+ where there's guaranteed horizontal room. */}
+            <div className="mt-4 pt-3 border-t border-white/[0.05] flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2">
+              <span className="text-[11px] text-white/55 tabular-nums leading-tight">
                 {card.meta ?? 'Open'}
               </span>
-              <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-elec-yellow shrink-0">
+              <span className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-elec-yellow shrink-0 self-start lg:self-auto">
                 Open
                 <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
               </span>

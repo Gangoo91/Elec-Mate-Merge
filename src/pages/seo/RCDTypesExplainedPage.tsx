@@ -20,9 +20,9 @@ export default function RCDTypesExplainedPage() {
   return (
     <GuideTemplate
       title="RCD Types Explained | Type AC, A, B, F | Which Do You Need?"
-      description="Complete guide to RCD types for UK electricians. Type AC (sinusoidal AC only), Type A (AC + pulsating DC), Type B (AC + smooth DC for EV chargers), Type F (frequency faults for VFDs). BS EN 62423, BS 7671 requirements, 30mA vs 100mA vs 300mA, RCBO vs RCD+MCB, time-delayed RCDs."
+      description="Complete guide to RCD types for UK electricians. Type AC (sinusoidal AC only), Type A (AC + pulsating DC), Type B (AC + smooth DC for EV chargers)…"
       datePublished="2025-06-01"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'RCD Types Explained', href: '/guides/rcd-types-explained' },
@@ -285,7 +285,7 @@ export default function RCDTypesExplainedPage() {
               </p>
               <SEOAppBridge
                 title="EV Charger Certificate Specifies RCD Type"
-                description="Elec-Mate's EV charger certificate form includes a dedicated field for RCD type selection — Type A with 6mA DC detection or Type B. The form captures the charger manufacturer's specification and cross-references it with BS 7671 Regulation 722.531.3.101 to ensure the correct device is specified."
+                description="Elec-Mate's EV charger certificate form includes a dedicated field for RCD type selection — Type A with 6mA DC detection or Type B."
                 icon={Car}
               />
             </>
@@ -472,7 +472,7 @@ export default function RCDTypesExplainedPage() {
               </p>
               <SEOAppBridge
                 title="Board Scanner Reads RCD/RCBO Labels from Photos"
-                description="Take a photo of any consumer unit and Elec-Mate's AI board scanner reads the RCD and RCBO labels — identifying the manufacturer, type (AC, A, B, or F), rating, and whether the device is an RCD, RCBO, or MCB. Saves time during inspections and catches incorrect device types."
+                description="Take a photo of any consumer unit and Elec-Mate's AI board scanner reads the RCD and RCBO labels — identifying the manufacturer, type (AC, A, B, or F)…"
                 icon={Camera}
               />
             </>
@@ -581,7 +581,7 @@ export default function RCDTypesExplainedPage() {
               </p>
               <SEOAppBridge
                 title="Schedule of Tests Validates RCD Trip Times"
-                description="Elec-Mate's schedule of test results validates every RCD trip time you enter against the correct BS 7671 limits — automatically distinguishing between general (non-delayed) and Type S (time-delayed) devices. Failed tests are highlighted immediately, with the relevant regulation reference."
+                description="Elec-Mate's schedule of test results validates every RCD trip time you enter against the correct BS 7671 limits — automatically distinguishing between…"
                 icon={Timer}
               />
             </>

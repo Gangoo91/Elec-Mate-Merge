@@ -20,9 +20,9 @@ export default function SPDSurgeProtectionPage() {
   return (
     <GuideTemplate
       title="SPD Surge Protection Guide | BS 7671 Requirements"
-      description="Complete guide to Surge Protective Devices (SPDs) under BS 7671. Type 1, 2, and 3 SPDs, risk assessment under Regulation 443.4, installation at the consumer unit, earthing considerations for TN-C-S, TN-S, and TT systems, coordination with RCDs, and back-up protection requirements."
+      description="Complete guide to Surge Protective Devices (SPDs) under BS 7671. Type 1, 2, and 3 SPDs, risk assessment under Regulation 443.4…"
       datePublished="2025-05-15"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'SPD Surge Protection', href: '/guides/spd-surge-protection' },
@@ -176,7 +176,7 @@ export default function SPDSurgeProtectionPage() {
               </p>
               <SEOAppBridge
                 title="AI Circuit Designer Includes SPD Specification"
-                description="Elec-Mate's AI Circuit Designer automatically includes SPD specification when designing new installations. It selects the appropriate SPD type based on the earthing arrangement, supply characteristics, and the equipment to be protected — and includes the back-up protective device in the design."
+                description="Elec-Mate's AI Circuit Designer automatically includes SPD specification when designing new installations."
                 icon={Brain}
               />
             </>
@@ -439,7 +439,7 @@ export default function SPDSurgeProtectionPage() {
               </p>
               <SEOAppBridge
                 title="Calculators and BS 7671 Regs Built In"
-                description="Elec-Mate includes the full BS 7671 Section 534 requirements for SPD installation, plus calculators for maximum demand, cable sizing, and circuit design that factor in SPD back-up protection. All accessible on site, even offline."
+                description="Elec-Mate includes the full BS 7671 Section 534 requirements for SPD installation, plus calculators for maximum demand, cable sizing…"
                 icon={Calculator}
               />
             </>
@@ -525,7 +525,7 @@ export default function SPDSurgeProtectionPage() {
               </p>
               <SEOAppBridge
                 title="Certificate Forms Capture SPD Details"
-                description="Elec-Mate's EIC and EICR forms include dedicated fields for SPD type, manufacturer, connection configuration, back-up protection rating, and status indicator condition. Everything you need to document the SPD installation is built into the digital form."
+                description="Elec-Mate's EIC and EICR forms include dedicated fields for SPD type, manufacturer, connection configuration, back-up protection rating…"
                 icon={ClipboardCheck}
               />
             </>

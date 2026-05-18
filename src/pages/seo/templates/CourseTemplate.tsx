@@ -144,7 +144,7 @@ export default function CourseTemplate({
 
         <p className="text-lg text-white leading-relaxed mb-6">{heroSubtitle}</p>
 
-        <div className="flex flex-wrap gap-3 mb-6">
+        <div className="flex flex-wrap gap-3 mb-3">
           <a
             href="/auth/signup"
             className="inline-flex items-center justify-center gap-2 w-full sm:w-auto h-14 px-8 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold rounded-xl touch-manipulation transition-colors"
@@ -158,6 +158,9 @@ export default function CourseTemplate({
             See the Modules
           </a>
         </div>
+        <p className="text-xs text-white/60 mb-6">
+          No card required · Free for 7 days · Cancel anytime · Used by 1,000+ UK electricians
+        </p>
 
         <SEOReadingMeta readingTime={readingTime} dateUpdated={dateModified} />
 

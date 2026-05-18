@@ -517,7 +517,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify retail electrical fit-outs with Elec-Mate"
-          description="Create professional itemised retail electrical fit-out quotes with display lighting, till points, CCTV, emergency lighting, and fire alarm costs. Issue EICs on site. Join 1,000+ UK electricians. 7-day free trial."
+          description="Create professional itemised retail electrical fit-out quotes with display lighting, till points, CCTV, emergency lighting, and fire alarm costs."
           icon={FileCheck2}
         />
       </>
@@ -532,10 +532,10 @@ const sections = [
 export default function RetailElectricalCostPage() {
   return (
     <GuideTemplate
-      title="Retail Shop Electrical Fit Out Cost UK 2025 | Shop Wiring Costs"
-      description="Retail shop electrical fit-out costs in the UK for 2025. Small retail unit £3,000–£12,000. Display lighting, till points, EPoS power, CCTV, security systems, emergency lighting, fire alarms, and compliance requirements explained."
+      title="Retail Shop Electrical Fit Out Cost UK 2025 | Shop Wiring"
+      description="Retail shop electrical fit-out costs in the UK for 2025. Small retail unit £3,000–£12,000. Display lighting, till points, EPoS power, CCTV…"
       datePublished="2025-01-01"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

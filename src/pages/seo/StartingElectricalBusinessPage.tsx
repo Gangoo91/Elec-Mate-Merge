@@ -16,9 +16,9 @@ export default function StartingElectricalBusinessPage() {
   return (
     <GuideTemplate
       title="Starting an Electrical Business UK 2026 | Startup Guide"
-      description="Step-by-step guide to starting an electrical business in the UK. Covers qualifications, competent person scheme registration, business structure, insurance, finding clients, pricing, accounting, and growing from sole trader to employer."
+      description="Step-by-step guide to starting an electrical business in the UK. Covers qualifications, competent person scheme registration, business structure…"
       datePublished="2026-01-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         {
@@ -397,7 +397,7 @@ export default function StartingElectricalBusinessPage() {
 
               <SEOAppBridge
                 title="Elec-Mate — One Subscription Replaces 5+ Apps"
-                description="Certificates, AI agents, quoting, invoicing, expense tracking, customer management, calculators, and more — all in one platform from £12.99/month. New businesses save hundreds per year compared to buying separate apps for each function."
+                description="Certificates, AI agents, quoting, invoicing, expense tracking, customer management, calculators, and more — all in one platform from £12.99/month."
                 icon={Zap}
               />
             </>
@@ -499,7 +499,7 @@ export default function StartingElectricalBusinessPage() {
 
               <SEOAppBridge
                 title="AI Cost Engineer — Accurate Quoting From Day One"
-                description="Describe any electrical job and the AI generates an itemised estimate with current UK trade pricing, realistic labour hours, and your profit margin. Stop underquoting, start making money from every job."
+                description="Describe any electrical job and the AI generates an itemised estimate with current UK trade pricing, realistic labour hours, and your profit margin."
                 icon={Brain}
               />
             </>
@@ -620,7 +620,7 @@ export default function StartingElectricalBusinessPage() {
 
               <SEOAppBridge
                 title="Elec-Mate — Built for New Electrical Businesses"
-                description="Certificates, AI agents, quoting, invoicing, expense tracking, customer management, job profitability, cash flow planning, hourly rate calculator — everything you need in one subscription. Stop cobbling together 5 different apps."
+                description="Certificates, AI agents, quoting, invoicing, expense tracking, customer management, job profitability, cash flow planning…"
                 icon={Briefcase}
               />
             </>

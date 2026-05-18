@@ -396,7 +396,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Calculate maximum demand in seconds"
-          description="Elec-Mate's maximum demand calculator applies the correct diversity factors, adds the EV charger load, and compares to supply capacity. Generates a professional document you can include with the EIC."
+          description="Elec-Mate's maximum demand calculator applies the correct diversity factors, adds the EV charger load, and compares to supply capacity."
           icon={Calculator}
         />
       </>
@@ -619,7 +619,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EV charger certificates on your phone"
-          description="EIC with EV-specific fields, integrated load assessment, and instant PDF delivery. Join 1,000+ electricians using Elec-Mate for professional certification. 7-day free trial."
+          description="EIC with EV-specific fields, integrated load assessment, and instant PDF delivery. Join 1,000+ electricians using Elec-Mate for professional…"
           icon={Car}
         />
       </>
@@ -635,9 +635,9 @@ export default function EVChargerCertificateRequirementsPage() {
   return (
     <GuideTemplate
       title="EV Charger Certificate Requirements UK | What to Issue"
-      description="Complete guide to EV charger certification in the UK. EIC required, IET Code of Practice compliance, Part P notification, load assessment, PME earthing, and RCD selection. Avoid common mistakes."
+      description="Complete guide to EV charger certification in the UK. EIC required, IET Code of Practice compliance, Part P notification, load assessment, PME earthing…"
       datePublished="2025-05-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Certificate Guide"

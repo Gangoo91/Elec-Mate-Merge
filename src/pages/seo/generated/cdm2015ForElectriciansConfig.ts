@@ -5,13 +5,13 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // (18th Edition) and the Electricity at Work Regulations 1989.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const cdm2015ForElectriciansConfig: GeneratedGuideConfig = {
   pagePath: '/guides/cdm-2015-for-electricians',
   title: 'CDM 2015 for Electricians — UK Compliance Guide | Elec-Mate',
   description:
-    'CDM 2015 explained for UK electricians: who carries which duty, when CDM applies to electrical work, pre-construction information, construction phase plans, HSE F10 notification and how to stay compliant on domestic and commercial jobs. Aligned to HSE Approved Code of Practice L153.',
+    'CDM 2015 explained for UK electricians: who carries which duty, when CDM applies to electrical work, pre-construction information…',
   datePublished: published,
   dateModified: modified,
   readingTime: 12,

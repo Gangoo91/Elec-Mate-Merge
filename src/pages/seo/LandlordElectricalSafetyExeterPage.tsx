@@ -713,8 +713,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Grow your Exeter and Devon landlord EICR business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more Devon EICRs per day and win the remedial work. 7-day free trial."
+          title="Grow your Exeter and Devon landlord EICR business with"
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -730,9 +730,9 @@ export default function LandlordElectricalSafetyExeterPage() {
   return (
     <GuideTemplate
       title="Landlord Electrical Safety Exeter | EICR Landlords Devon"
-      description="Landlord electrical safety requirements in Exeter and Devon. 2020 Regulations, Exeter City Council enforcement, HMO licensing, rural Devon TT earthing, penalties up to £30,000, and 2026 EICR costs."
+      description="Landlord electrical safety requirements in Exeter and Devon. 2020 Regulations, Exeter City Council enforcement, HMO licensing, rural Devon TT earthing…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Landlord Guide"

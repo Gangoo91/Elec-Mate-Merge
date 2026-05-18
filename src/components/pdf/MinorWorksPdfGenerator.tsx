@@ -37,6 +37,8 @@ import PDFExportProgress from '@/components/PDFExportProgress';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { openExternalUrl } from '@/utils/open-external-url';
+import { Capacitor } from '@capacitor/core';
+import { sharePdfBytesFromUrlToWhatsAppWeb } from '@/utils/share-pdf-to-whatsapp-web';
 
 // Feature flag: set to true to use Gotenberg (v2), false to revert to PDF Monkey (v1)
 const USE_GOTENBERG_PDF = false;
@@ -577,20 +579,45 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
       const certRef = formData.certificateNumber || 'MW';
       const clientName = formData.clientName || '';
       const address = formData.propertyAddress || 'your property';
-
-      const text = `Hi ${clientName},\n\nPlease find your Minor Works Certificate (${certRef}) for ${address}.\n\nDownload your certificate:\n${report.pdf_url}\n\nKind regards`;
-
-      let whatsappUrl: string;
       const clientPhone = formData.clientPhone || '';
-      if (clientPhone && (clientPhone.startsWith('+44') || clientPhone.startsWith('44'))) {
-        const cleanPhone = clientPhone.replace(/\s/g, '').replace(/^44/, '+44');
-        whatsappUrl = `https://wa.me/${cleanPhone.replace('+', '')}?text=${encodeURIComponent(text)}`;
-      } else {
-        whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
+
+      if (Capacitor.isNativePlatform()) {
+        const text = `Hi ${clientName},\n\nPlease find your Minor Works Certificate (${certRef}) for ${address}.\n\nDownload your certificate:\n${report.pdf_url}\n\nKind regards`;
+
+        let whatsappUrl: string;
+        if (clientPhone && (clientPhone.startsWith('+44') || clientPhone.startsWith('44'))) {
+          const cleanPhone = clientPhone.replace(/\s/g, '').replace(/^44/, '+44');
+          whatsappUrl = `https://wa.me/${cleanPhone.replace('+', '')}?text=${encodeURIComponent(text)}`;
+        } else {
+          whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
+        }
+
+        await openExternalUrl(whatsappUrl);
+        return;
       }
 
-      await openExternalUrl(whatsappUrl);
+      // Web: attach the actual PDF, never a link in the body
+      const webText = `Hi ${clientName},\n\nPlease find your Minor Works Certificate (${certRef}) for ${address}.\n\nKind regards`;
+
+      const result = await sharePdfBytesFromUrlToWhatsAppWeb({
+        pdfUrl: report.pdf_url,
+        filename: `Minor-Works-Certificate-${certRef}.pdf`,
+        message: webText,
+        recipientPhone: clientPhone || undefined,
+        title: `Minor Works Certificate ${certRef}`,
+      });
+
+      toast({
+        title: result.mode === 'web-share' ? 'Opening share sheet' : 'PDF downloaded',
+        description:
+          result.mode === 'web-share'
+            ? 'Pick WhatsApp to send the PDF.'
+            : 'PDF saved to your Downloads — attach it from your WhatsApp chat.',
+      });
     } catch (err) {
+      if (err instanceof Error && err.name === 'AbortError') {
+        return;
+      }
       console.error('[MW WhatsApp] Error:', err);
       toast({
         title: 'WhatsApp Error',

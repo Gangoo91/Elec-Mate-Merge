@@ -229,7 +229,7 @@ const sections = [
           </ul>
         </div>
         <SEOAppBridge
-          title="Generate Electrical Installation Certificates for consumer unit work"
+          title="Generate Electrical Installation Certificates for consumer"
           description="Elec-Mate produces EICs, Minor Works Certificates, and EICRs on your phone. PDF generation in seconds, stored securely in the cloud."
           ctaText="Start 7-day free trial"
           icon={FileCheck2}
@@ -586,10 +586,10 @@ const sections = [
 export default function RCBOInstallationGuidePage() {
   return (
     <GuideTemplate
-      title="RCBO Installation Guide — Types, Costs, and BS 7671 Requirements | Elec-Mate"
-      description="Complete guide to RCBO installation for UK electricians. Covers Type A, B, and F RCBOs, nuisance tripping on LED circuits, consumer unit compatibility, costs of £15 to £45 per RCBO, and BS 7671 Regulation 531 requirements."
+      title="RCBO Installation Guide — Types, Costs, and BS 7671"
+      description="Complete guide to RCBO installation for UK electricians. Covers Type A, B, and F RCBOs, nuisance tripping on LED circuits, consumer unit compatibility…"
       datePublished="2024-07-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Guide"

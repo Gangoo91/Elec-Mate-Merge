@@ -216,7 +216,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs on site with Elec-Mate"
-          description="Elec-Mate's EICR certificate app guides you through the inspection and testing process, records all results, classifies deficiencies, and produces a professional EICR PDF on site. Ideal for new home purchase EICRs."
+          description="Elec-Mate's EICR certificate app guides you through the inspection and testing process, records all results, classifies deficiencies…"
           icon={ClipboardCheck}
         />
       </>
@@ -533,10 +533,10 @@ const sections = [
 export default function ElectricalSafetyChecksNewHomePage() {
   return (
     <GuideTemplate
-      title="Electrical Safety Checks for a New Home | EICR Buyer's Guide UK"
-      description="What to check in the electrical installation when buying a home in the UK. How to commission an EICR, wiring age indicators (rubber pre-1960s, aluminium 1960s–1970s, TRS 1960s–1980s), consumer unit types, red flags including no earth bonding and no RCD protection, and what to do before and after purchase."
+      title="Electrical Safety Checks for a New Home | EICR Buyer's"
+      description="What to check in the electrical installation when buying a home in the UK. How to commission an EICR, wiring age indicators (rubber pre-1960s…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Home Buyer's Guide"

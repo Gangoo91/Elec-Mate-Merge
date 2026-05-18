@@ -37,7 +37,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Consumer unit replacement in Exeter typically costs £450 to £800 for a standard domestic installation, reflecting South West labour rates and including the metal consumer unit, testing, and the Electrical Installation Certificate.',
-  'Metal consumer unit enclosures have been mandatory for all domestic replacements since January 2016 under BS 7671 Regulation 421.1.201, introduced by Amendment 3 to BS 7671:2008.',
+  'Metal consumer unit enclosures have been mandatory for all domestic replacements since January 2016 under BS 7671 Regulation 421.1.201, introduced by Amendment 4 to BS 7671:2008.',
   'Exeter has significant Victorian and Edwardian terraced housing — particularly in St Thomas, Heavitree, and St James — where rewireable fuse boards and pre-RCD wiring remain common EICR findings.',
   'Consumer unit replacement is Part P notifiable work. Exeter homeowners must use a registered competent person (NICEIC/NAPIT/ELECSA) or notify Devon Building Control Partnership before work begins.',
   'Under Regulation 411.3.3 of BS 7671:2018+A4:2026, RCD protection not exceeding 30 mA is mandatory on socket-outlet circuits rated up to 32 A. Absence is a C2 EICR observation requiring remedial action within 28 days.',
@@ -58,7 +58,7 @@ const faqs = [
   {
     question: 'Does my Exeter property need a metal consumer unit?',
     answer:
-      'Yes. Amendment 3 to BS 7671:2008, effective from 1 January 2016, introduced Regulation 421.1.201 requiring metal enclosures for all domestic consumer units. The requirement was carried forward into BS 7671:2018 (18th Edition) and remains current. Any replacement consumer unit in Exeter must use a metal enclosure. Plastic consumer units installed after January 2016 are non-compliant and should be flagged as such on any EICR.',
+      'Yes. Amendment 4 to BS 7671:2008, effective from 1 January 2016, introduced Regulation 421.1.201 requiring metal enclosures for all domestic consumer units. The requirement was carried forward into BS 7671:2018 (18th Edition) and remains current. Any replacement consumer unit in Exeter must use a metal enclosure. Plastic consumer units installed after January 2016 are non-compliant and should be flagged as such on any EICR.',
   },
   {
     question: 'My Exeter Victorian terrace has old wiring — does the whole house need rewiring?',
@@ -270,7 +270,7 @@ const sections = [
     content: (
       <>
         <p>
-          Amendment 3 to BS 7671:2008, in force from 1 January 2016, added Regulation 421.1.201
+          Amendment 4 to BS 7671:2008, in force from 1 January 2016, added Regulation 421.1.201
           requiring that consumer units and similar switchgear assemblies in domestic premises have
           a non-combustible (metal) enclosure. This requirement is unchanged in BS 7671:2018+A4:2026. Every consumer unit replacement in Exeter must comply.
         </p>
@@ -458,7 +458,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Exeter electrical business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and professional certificate management. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and professional certificate management."
           icon={FileCheck2}
         />
       </>
@@ -473,10 +473,10 @@ const sections = [
 export default function ConsumerUnitReplacementExeterPage() {
   return (
     <GuideTemplate
-      title="Consumer Unit Replacement Exeter | Fuse Box Upgrade EX Postcodes 2026"
-      description="Consumer unit replacement in Exeter — typical cost £450–£800, metal enclosures mandatory since 2016, Part P Building Regulations. Find a qualified electrician in Exeter and understand the full replacement process."
+      title="Consumer Unit Replacement Exeter | Fuse Box Upgrade EX"
+      description="Consumer unit replacement in Exeter — typical cost £450–£800, metal enclosures mandatory since 2016, Part P Building Regulations."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Electrician Guide"

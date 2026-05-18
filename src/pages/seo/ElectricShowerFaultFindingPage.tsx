@@ -582,8 +582,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Complete shower installation certificates on your phone"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site Electrical Installation Certificates, Minor Works certificates, and instant quoting. 7-day free trial."
+          title="Electric Shower Broken? Fault-Find in 2026"
+          description="Electric shower not working? Diagnose 8 common faults fast. Step-by-step guides for electricians. Get your shower back online today."
           icon={FileCheck2}
         />
       </>
@@ -599,9 +599,9 @@ export default function ElectricShowerFaultFindingPage() {
   return (
     <GuideTemplate
       title="Electric Shower Not Working | Fault Finding & Repair Guide"
-      description="Electric shower fault finding guide for UK homeowners and electricians. RCD tripping, solenoid valve, heating element, flow switch, pressure issues, when to call electrician vs plumber, and 2026 repair costs."
+      description="Electric shower fault finding guide for UK homeowners and electricians. RCD tripping, solenoid valve, heating element, flow switch, pressure issues…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Fault Finding Guide"

@@ -162,7 +162,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                Updated periodically. The current edition is BS 7671:2018+A4:2026 (Amendment 3,
+                Updated periodically. The current edition is BS 7671:2018+A4:2026 (Amendment 4,
                 published 2024). Previous editions (16th and 17th editions) remain relevant for
                 understanding existing installations but new work must comply with the current
                 edition.
@@ -519,10 +519,10 @@ const sections = [
 export default function WiringRegulationsBuildingRegulationsPage() {
   return (
     <GuideTemplate
-      title="Wiring Regulations vs Building Regulations — BS 7671 and Part P Explained"
-      description="How BS 7671:2018+A4:2026 relates to Part P Building Regulations: notifiable vs non-notifiable work, competent person schemes (NICEIC, NAPIT, ELECSA), building control route, and common misconceptions about Part P."
+      title="Wiring Regulations vs Building Regulations — BS 7671 and"
+      description="How BS 7671:2018+A4:2026 relates to Part P Building Regulations: notifiable vs non-notifiable work, competent person schemes (NICEIC, NAPIT, ELECSA)…"
       datePublished="2024-06-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations Guide"

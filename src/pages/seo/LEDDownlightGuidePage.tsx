@@ -263,7 +263,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Design lighting circuits with the AI circuit designer"
-          description="Elec-Mate's AI circuit designer generates complete lighting circuit layouts for any project. Specify the room dimensions, fitting positions, and switch requirements — the AI handles cable sizing, circuit allocation, and generates the full schedule."
+          description="Elec-Mate's AI circuit designer generates complete lighting circuit layouts for any project. Specify the room dimensions, fitting positions…"
           icon={CircuitBoard}
         />
       </>
@@ -586,7 +586,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote LED downlight installations accurately"
-          description="Elec-Mate's quoting app lets you build a detailed quote for LED downlight installations — fittings, dimmers, cable, labour, and margin. Send a professional quote to the customer from site."
+          description="Elec-Mate's quoting app lets you build a detailed quote for LED downlight installations — fittings, dimmers, cable, labour, and margin."
           icon={Calculator}
         />
       </>
@@ -602,9 +602,9 @@ export default function LEDDownlightGuidePage() {
   return (
     <GuideTemplate
       title="LED Downlight Installation | Fire Rating & IC Guide"
-      description="Complete guide to LED downlight installation in the UK. Fire-rated vs non-fire-rated, IC rating for insulation contact, thermal protection, driver compatibility, dimming, wiring methods, and Building Regulations compliance."
+      description="Complete guide to LED downlight installation in the UK. Fire-rated vs non-fire-rated, IC rating for insulation contact, thermal protection…"
       datePublished="2025-07-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

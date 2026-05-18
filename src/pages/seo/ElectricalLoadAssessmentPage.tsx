@@ -20,9 +20,9 @@ export default function ElectricalLoadAssessmentPage() {
   return (
     <GuideTemplate
       title="Electrical Load Assessment | Maximum Demand Guide"
-      description="Complete guide to electrical load assessments and maximum demand calculations for UK electricians. When an assessment is required, how to calculate maximum demand with diversity, DNO notification triggers, EV charger and heat pump considerations, and when to recommend a supply upgrade."
+      description="Electrical load assessments + max demand calculations for UK electricians. Diversity factors, single + three-phase, supply upgrades, DNO submissions."
       datePublished="2026-01-22"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'Load Assessment', href: '/guides/electrical-load-assessment' },
@@ -248,7 +248,7 @@ export default function ElectricalLoadAssessmentPage() {
               </p>
               <SEOAppBridge
                 title="Max Demand Calculator with automatic diversity"
-                description="Enter your loads and Elec-Mate applies BS 7671 Table A1 diversity factors automatically. See instantly whether the supply can handle the load and get flagged when DNO notification is needed."
+                description="Enter your loads and Elec-Mate applies BS 7671 Table A1 diversity factors automatically. See instantly whether the supply can handle the load and get…"
                 icon={Calculator}
               />
             </>
@@ -409,7 +409,7 @@ export default function ElectricalLoadAssessmentPage() {
               </p>
               <SEOAppBridge
                 title="EV and heat pump load calculations in seconds"
-                description="Elec-Mate's Max Demand Calculator handles EV chargers, heat pumps, and all standard domestic loads with BS 7671 diversity applied automatically. Know instantly if the supply is adequate."
+                description="Elec-Mate's Max Demand Calculator handles EV chargers, heat pumps, and all standard domestic loads with BS 7671 diversity applied automatically."
                 icon={Brain}
               />
             </>

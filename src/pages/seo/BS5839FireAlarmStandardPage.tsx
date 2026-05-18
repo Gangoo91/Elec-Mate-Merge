@@ -540,7 +540,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AI defect coding for fire alarm observations"
-          description="Found a fire alarm defect during an EICR or fire alarm inspection? Describe it in plain English and Elec-Mate's defect code AI returns the correct observation code with the matching BS 5839 regulation reference. Accurate, fast, and consistent."
+          description="Found a fire alarm defect during an EICR or fire alarm inspection? Describe it in plain English and Elec-Mate's defect code AI returns the correct…"
           icon={Brain}
         />
       </>
@@ -666,7 +666,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Create fire alarm certificates on your phone"
-          description="Elec-Mate's fire alarm certificate template produces professional BS 5839-compliant PDFs. Complete it on site, attach photos, and send to the client before you leave. Plus business tools: quoting, invoicing, expenses, and cash flow management."
+          description="Elec-Mate's fire alarm certificate template produces professional BS 5839-compliant PDFs. Complete it on site, attach photos…"
           icon={FileCheck2}
         />
       </>
@@ -682,9 +682,9 @@ export default function BS5839FireAlarmStandardPage() {
   return (
     <GuideTemplate
       title="BS 5839 Fire Alarm Standard | Complete Guide UK"
-      description="Complete guide to BS 5839 fire alarm standard. Part 1 commercial, Part 6 domestic, system categories L1-L5 and P1-P2, grades A-F, design, installation, testing intervals, and certification requirements."
+      description="Complete guide to BS 5839 fire alarm standard. Part 1 commercial, Part 6 domestic, system categories L1-L5 and P1-P2, grades A-F, design, installation…"
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations"

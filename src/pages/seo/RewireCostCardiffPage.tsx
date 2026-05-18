@@ -605,9 +605,9 @@ export default function RewireCostCardiffPage() {
   return (
     <GuideTemplate
       title="House Rewire Cost Cardiff 2025 | Rewire Prices Wales"
-      description="House rewire costs in Cardiff for 2025. Prices for all property sizes, Part P compliance in Wales, NICEIC and NAPIT contractors, signs you need a rewire, timescales, and certification explained."
+      description="House rewire costs in Cardiff for 2025. Prices for all property sizes, Part P compliance in Wales, NICEIC and NAPIT contractors, signs you need a rewire…"
       datePublished="2025-01-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Rewire Cost Guide"

@@ -25,9 +25,9 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const PAGE_TITLE = 'PASMA Training Course Online | Mobile Tower Scaffolding | Elec-Mate';
+const PAGE_TITLE = 'PASMA Training Course Online | Mobile Tower Scaffolds';
 const PAGE_DESCRIPTION =
-  'Study PASMA (Prefabricated Access Suppliers and Manufacturers Association) training online. Tower assembly, safe working heights, inspection requirements. Mock exams included.';
+  'PASMA training online: mobile tower assembly, safe working heights, inspection requirements. Mock exams + AI-powered study tools for UK trades.';
 
 const faqs = [
   {
@@ -68,13 +68,13 @@ const features = [
     icon: Construction,
     title: '3T Assembly Method Training',
     description:
-      'Step-by-step study material covering the Through the Trap (3T) assembly technique, including frame locking, brace positioning, guardrail fitting, and safe platform installation.',
+      'Step-by-step study material covering the Through the Trap (3T) assembly technique, including frame locking, brace positioning, guardrail fitting…',
   },
   {
     icon: Ruler,
     title: 'Height and Stability Calculations',
     description:
-      'Understand base-to-height ratios, outrigger requirements, and maximum heights for indoor and outdoor use. Interactive examples for common tower configurations.',
+      'Understand base-to-height ratios, outrigger requirements, and maximum heights for indoor and outdoor use.',
   },
   {
     icon: ShieldCheck,
@@ -86,7 +86,7 @@ const features = [
     icon: Brain,
     title: 'AI-Powered Mock Exams',
     description:
-      'Practise with hundreds of PASMA theory questions. Elec-AI provides instant feedback, explains correct answers, and identifies areas where you need further study.',
+      'Practise with hundreds of PASMA theory questions. Elec-AI provides instant feedback, explains correct answers…',
   },
   {
     icon: Wind,

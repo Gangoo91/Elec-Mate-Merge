@@ -626,7 +626,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete listed building EICRs professionally with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with thorough photographic documentation, AI board scanning, and professional quoting. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with thorough photographic documentation, AI board scanning…"
           icon={FileCheck2}
         />
       </>
@@ -641,10 +641,10 @@ const sections = [
 export default function ListedBuildingElectricalPage() {
   return (
     <GuideTemplate
-      title="Listed Building Electrical Guide | Rewiring Grade I & II Listed Properties UK"
-      description="Complete guide to electrical work in listed buildings. Listed building consent requirements, working with conservation officers, surface wiring methods, sympathetic installation, NICEIC/NAPIT specialists, and costs £250–£30,000+ for 2026."
+      title="Listed Building Electrical Guide | Rewiring Grade I & II"
+      description="Complete guide to electrical work in listed buildings. Listed building consent requirements, working with conservation officers, surface wiring methods…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Listed Building Guide"

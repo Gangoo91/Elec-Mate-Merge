@@ -266,7 +266,7 @@ const sections = [
                 <strong>Bakelite consumer units</strong> — Bakelite (an early thermosetting plastic)
                 was used for consumer unit enclosures from the 1920s through to the 1960s. Bakelite
                 is brittle and combustible under sustained arcing conditions. A modern
-                non-combustible metal-clad consumer unit is required under BS 7671 Amendment 3.
+                non-combustible metal-clad consumer unit is required under BS 7671 Amendment 4.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -550,7 +550,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage Edwardian house rewires with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for pre-rewire EICRs, professional quoting, and job management. AI board scanning, voice test entry, instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for pre-rewire EICRs, professional quoting, and job management."
           icon={FileCheck2}
         />
       </>
@@ -565,10 +565,10 @@ const sections = [
 export default function EdwardianHouseElectricalPage() {
   return (
     <GuideTemplate
-      title="Edwardian House Electrical Guide | Rewiring 1900–1910 Homes UK"
-      description="Complete electrical guide for Edwardian houses built 1901–1910. VIR cable hazards, early consumer units, renovation considerations, larger room circuit requirements, and rewire costs £4,500–£9,500 for 2026."
+      title="Edwardian House Electrical Guide | Rewiring 1900–1910 Homes"
+      description="Complete electrical guide for Edwardian houses built 1901–1910. VIR cable hazards, early consumer units, renovation considerations…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Property Guide"

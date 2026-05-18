@@ -512,7 +512,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Include rescue procedures in your site RAMS"
-          description="Elec-Mate's AI RAMS generator creates site-specific risk assessments and method statements that include electrical emergency procedures, rescue plans, and first aid arrangements. Compliant with UK regulations. 7-day free trial."
+          description="Elec-Mate's AI RAMS generator creates site-specific risk assessments and method statements that include electrical emergency procedures, rescue plans…"
           icon={Heart}
         />
       </>
@@ -558,10 +558,10 @@ const sections = [
 export default function ElectricalRescueProcedurePage() {
   return (
     <GuideTemplate
-      title="Electrical Rescue Procedure UK | Electric Shock First Aid Guide"
-      description="UK electrical rescue procedure guide — do not touch the casualty, isolate the supply, call 999, CPR for electric shock, burn treatment, entry and exit wounds, and first aid training requirements for electricians."
+      title="Electrical Rescue Procedure UK | Electric Shock First Aid"
+      description="UK electrical rescue procedure guide — do not touch the casualty, isolate the supply, call 999, CPR for electric shock, burn treatment…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Critical"

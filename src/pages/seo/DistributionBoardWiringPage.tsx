@@ -42,7 +42,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'RCBO boards provide individual RCD and overcurrent protection per circuit, eliminating the nuisance tripping and loss-of-supply issues that affect split-load and dual-RCD configurations.',
-  'All consumer units in domestic premises must be constructed from non-combustible material (typically metal) under Amendment 3 of BS 7671:2018.',
+  'All consumer units in domestic premises must be constructed from non-combustible material (typically metal) under Amendment 4 of BS 7671:2018.',
   'Circuit labelling must be clear, permanent, and durable — Regulation 514.9.1 requires a chart or table at or near the distribution board identifying each circuit and the area it serves.',
   'Consumer units must be type-tested assemblies complying with BS EN 61439-3 — assembling a consumer unit from separate components (a "mix and match" approach) does not meet this requirement unless the assembly is verified by the manufacturer.',
   "Elec-Mate's AI circuit designer generates a complete circuit schedule with suggested board layout, circuit allocation, and cable sizing for any domestic or commercial installation.",
@@ -243,7 +243,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Design the board layout with AI"
-          description="Elec-Mate's AI circuit designer generates a complete circuit schedule with suggested board layout and circuit allocation. Enter the property details and let the AI handle the design."
+          description="Elec-Mate's AI circuit designer generates a complete circuit schedule with suggested board layout and circuit allocation."
           icon={CircuitBoard}
         />
       </>
@@ -638,7 +638,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certify consumer unit changes on your phone"
-          description="Elec-Mate generates the Electrical Installation Certificate (EIC) for consumer unit changes on your phone. AI board scanner reads the new board, voice test entry captures results, and the certificate is ready before you leave the property."
+          description="Elec-Mate generates the Electrical Installation Certificate (EIC) for consumer unit changes on your phone."
           icon={FileCheck2}
         />
       </>
@@ -654,9 +654,9 @@ export default function DistributionBoardWiringPage() {
   return (
     <GuideTemplate
       title="Distribution Board Wiring Guide | Consumer Unit Layout"
-      description="Complete guide to distribution board wiring and consumer unit layout in the UK. Split load vs dual RCD vs RCBO boards, circuit arrangement, labelling requirements, type testing under BS EN 61439, SPD installation, and common mistakes."
+      description="Complete guide to distribution board wiring and consumer unit layout in the UK. Split load vs dual RCD vs RCBO boards, circuit arrangement…"
       datePublished="2025-08-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

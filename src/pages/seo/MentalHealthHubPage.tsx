@@ -135,31 +135,31 @@ const features = [
     icon: Activity,
     title: 'Wellbeing Self-Assessment',
     description:
-      'Validated screening tools adapted for tradespeople. Check in with yourself regularly, track your wellbeing over time, and get signposted to support when you need it.',
+      'Validated screening tools adapted for tradespeople. Check in with yourself regularly, track your wellbeing over time…',
   },
   {
     icon: Brain,
     title: 'Mindfulness Exercises',
     description:
-      'Short guided exercises designed for construction site environments. Breathing techniques, body scans, and grounding exercises you can do in 2-10 minutes on a break.',
+      'Short guided exercises designed for construction site environments. Breathing techniques, body scans…',
   },
   {
     icon: Phone,
     title: 'Instant Support Contacts',
     description:
-      'One-tap access to the Samaritans, MATES in Mind, Lighthouse Club, Electrical Industries Charity, and other UK helplines. Available offline for when you need them most.',
+      'One-tap access to the Samaritans, MATES in Mind, Lighthouse Club, Electrical Industries Charity, and other UK helplines.',
   },
   {
     icon: Shield,
     title: 'Complete Privacy',
     description:
-      'All mental health data is encrypted on your device. Never shared with employers, clients, or anyone else. No data appears on your profile or professional card.',
+      'All mental health data is encrypted on your device. Never shared with employers, clients, or anyone else.',
   },
   {
     icon: MessageCircle,
     title: 'Industry-Specific Content',
     description:
-      'Resources that address the real stressors tradespeople face: financial pressure, long hours, job insecurity, isolation, and the physical toll of manual work.',
+      'Resources that address the real stressors tradespeople face: financial pressure, long hours, job insecurity, isolation…',
   },
   {
     icon: Headphones,
@@ -423,7 +423,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Access mental health resources built for your industry"
-          description="Resources that understand the real pressures of working in the electrical trade. Financial stress, isolation, physical demands, and workplace culture — all addressed with practical guidance."
+          description="Resources that understand the real pressures of working in the electrical trade. Financial stress, isolation, physical demands…"
           icon={Shield}
         />
       </>
@@ -439,9 +439,9 @@ export default function MentalHealthHubPage() {
   return (
     <ToolTemplate
       title="Mental Health Hub for Tradespeople | Wellbeing Tools"
-      description="Mental health and wellbeing resources designed for electricians and tradespeople. Self-assessment tools, mindfulness exercises, industry-specific support, and instant access to UK helplines including the Samaritans, Lighthouse Club, and Electrical Industries Charity."
+      description="Mental health and wellbeing resources designed for electricians and tradespeople. Self-assessment tools, mindfulness exercises…"
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Wellbeing Resources"

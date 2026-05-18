@@ -109,7 +109,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
-      'Current regulations for consumer unit installation and replacement including Amendment 3 requirements.',
+      'Current regulations for consumer unit installation and replacement including Amendment 4 requirements.',
     icon: Settings,
     category: 'Guide',
   },
@@ -164,7 +164,7 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          (the IET Wiring Regulations, 18th Edition with Amendment 3).
+          (the IET Wiring Regulations, 18th Edition with Amendment 4).
         </p>
         <p>
           ADP applies to dwellings only — houses, flats, maisonettes, and shared areas in blocks of
@@ -441,7 +441,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Generate compliant certificates in minutes"
-          description="Elec-Mate creates EIC, Minor Works, and EICR certificates in the correct BS 7671 format. Fill in the details on site, capture test results with voice entry, and export a professional PDF — ready for your scheme provider or building control."
+          description="Elec-Mate creates EIC, Minor Works, and EICR certificates in the correct BS 7671 format. Fill in the details on site…"
           icon={FileCheck2}
         />
       </>
@@ -586,7 +586,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Never miss a Part P notification again"
-          description="Elec-Mate prompts you when a job is notifiable, generates the correct certificate, and reminds you to submit to your scheme provider. Join 1,000+ UK electricians staying compliant effortlessly. 7-day free trial."
+          description="Elec-Mate prompts you when a job is notifiable, generates the correct certificate, and reminds you to submit to your scheme provider."
           icon={Shield}
         />
       </>
@@ -602,9 +602,9 @@ export default function BuildingRegsElectricalPage() {
   return (
     <GuideTemplate
       title="Building Regulations Electrical | Approved Document P"
-      description="Complete guide to Building Regulations for electrical work in UK dwellings. Approved Document P requirements, notifiable work types, competent person schemes, building control route, certification requirements, and penalties for non-compliance."
+      description="Complete guide to Building Regulations for electrical work in UK dwellings. Approved Document P requirements, notifiable work types…"
       datePublished="2025-03-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations Guide"

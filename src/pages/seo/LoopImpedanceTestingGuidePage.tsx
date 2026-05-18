@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Overview of the wiring regulations and key changes in Amendment 3.',
+    description: 'Overview of the wiring regulations and key changes in Amendment 4.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
@@ -531,7 +531,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Loop Impedance Test Results | BS 7671:2026"
-          description="Record loop impedance test results on site in seconds. Auto-flags Zs values against BS 7671:2018+A4:2026 limits and generates compliant test schedules instantly."
+          description="Record loop impedance test results on site instantly. Auto-flags Zs values against BS 7671:2018+A4:2026 limits and generates compliant test schedules."
           icon={FileCheck2}
         />
       </>
@@ -592,9 +592,9 @@ export default function LoopImpedanceTestingGuidePage() {
   return (
     <GuideTemplate
       title="Loop Impedance Testing Guide | Zs & Ze Testing BS 7671"
-      description="Complete guide to earth fault loop impedance testing. External loop impedance (Ze), total loop impedance (Zs), prospective fault current (PFC), maximum Zs values for MCBs and fuses, live vs calculated methods, and instrument settings."
+      description="Complete guide to earth fault loop impedance testing. External loop impedance (Ze), total loop impedance (Zs), prospective fault current (PFC)…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

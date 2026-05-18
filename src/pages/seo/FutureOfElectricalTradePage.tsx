@@ -20,9 +20,9 @@ export default function FutureOfElectricalTradePage() {
   return (
     <GuideTemplate
       title="Future of the Electrical Trade | Trends 2026 & Beyond"
-      description="Explore the future of the electrical trade in the UK. Covers EV charging growth, smart home technology, renewable energy, AI tools for electricians, the skills shortage, career outlook, salary trends, and how electricians can future-proof their careers."
+      description="Explore the future of the electrical trade in the UK. Covers EV charging growth, smart home technology, renewable energy, AI tools for electricians…"
       datePublished="2025-11-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Career', href: '/guides' },
         { label: 'Future of Trade', href: '/guides/future-of-electrical-trade' },
@@ -114,7 +114,7 @@ export default function FutureOfElectricalTradePage() {
               </div>
               <SEOAppBridge
                 title="EV Charger Certificate in Elec-Mate"
-                description="Elec-Mate provides dedicated EV charger certificate forms with all the specific fields required by the IET Code of Practice. Complete the certificate on site and generate a professional PDF instantly."
+                description="Elec-Mate provides dedicated EV charger certificate forms with all the specific fields required by the IET Code of Practice."
                 icon={Car}
               />
             </>
@@ -315,7 +315,7 @@ export default function FutureOfElectricalTradePage() {
               </div>
               <SEOAppBridge
                 title="AI Tools Built for Electricians"
-                description="Elec-Mate's AI suite includes circuit design, cost engineering, RAMS generation, and intelligent certificate completion — all built specifically for UK electricians. Reduce admin, increase accuracy, and spend more time on site."
+                description="Elec-Mate's AI suite includes circuit design, cost engineering, RAMS generation…"
                 icon={Brain}
               />
             </>
@@ -570,7 +570,7 @@ export default function FutureOfElectricalTradePage() {
               </div>
               <SEOAppBridge
                 title="Stay Up to Date With Elec-Mate"
-                description="Elec-Mate's Study Centre includes the latest regulation updates, CPD content, and practice assessments covering BS 7671 amendments, new codes of practice, and emerging technologies. Keep your knowledge current without leaving the app."
+                description="Elec-Mate's Study Centre includes the latest regulation updates, CPD content, and practice assessments covering BS 7671 amendments…"
                 icon={GraduationCap}
               />
             </>

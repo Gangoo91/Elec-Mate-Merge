@@ -606,10 +606,10 @@ const sections = [
 export default function PubElectricalCostPage() {
   return (
     <GuideTemplate
-      title="Pub Electrical Installation Cost UK 2025 | Licensed Premises Electrical"
-      description="Pub electrical installation costs UK 2025. Cellar cooling circuits, gaming machine wiring, emergency lighting to BS 5266-1, fire alarms, CCTV, and EICR requirements for licensed premises. Typical pub fit-out £12,000–£35,000."
+      title="Pub Electrical Installation Cost UK 2025 | Licensed"
+      description="Pub electrical installation costs UK 2025. Cellar cooling circuits, gaming machine wiring, emergency lighting to BS 5266-1, fire alarms, CCTV…"
       datePublished="2025-01-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Commercial Cost Guide"

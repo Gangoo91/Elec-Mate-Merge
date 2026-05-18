@@ -527,7 +527,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify Cambridge EV charger installations"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. Complete EV charger quotes and certificates from your phone — built for electricians working across Cambridge and the East of England."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification."
           icon={Car}
         />
       </>
@@ -542,10 +542,10 @@ const sections = [
 export default function EVChargerInstallationCambridgePage() {
   return (
     <GuideTemplate
-      title="EV Charger Installation Cambridge | Home EV Charging Cambridge 2026"
-      description="EV charger installation costs in Cambridge 2026: 7kW charger £850-1,300 installed, OZEV grants up to £350, UKPN DNO notification, PME earthing requirements, conservation area planning considerations, and Part P compliance."
+      title="EV Charger Installation Cambridge | Home EV Charging"
+      description="EV charger installation costs in Cambridge 2026: 7kW charger £850-1,300 installed, OZEV grants up to £350, UKPN DNO notification…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cambridge Guide"

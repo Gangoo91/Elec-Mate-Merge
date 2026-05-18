@@ -518,7 +518,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional CIS invoicing with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional invoicing. Create CIS-compliant invoices with labour and materials clearly separated — on your phone, in seconds. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for professional invoicing. Create CIS-compliant invoices with labour and materials clearly separated — on…"
           icon={FileText}
         />
       </>
@@ -534,9 +534,9 @@ export default function CISGuideElectricianPage() {
   return (
     <GuideTemplate
       title="Construction Industry Scheme (CIS) Guide for Electricians UK"
-      description="Complete CIS guide for UK electricians — how CIS works, 20% vs 30% deduction rates, registering as a subcontractor, gross payment status, submitting monthly CIS returns as a contractor, and reclaiming CIS deductions on your self-assessment return."
+      description="Complete CIS guide for UK electricians — how CIS works, 20% vs 30% deduction rates, registering as a subcontractor, gross payment status…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Finance Guide"

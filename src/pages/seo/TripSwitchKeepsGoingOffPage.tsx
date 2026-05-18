@@ -457,7 +457,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Plastic consumer unit</strong> — since January 2016 (Amendment 3 to BS
+                <strong>Plastic consumer unit</strong> — since January 2016 (Amendment 4 to BS
                 7671), consumer units in domestic premises must be enclosed in a non-combustible
                 material (metal). A plastic consumer unit does not meet current regulations and
                 should be replaced. See our{' '}
@@ -610,7 +610,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Diagnose and document tripping faults on your phone"
-          description="Elec-Mate's AI fault diagnosis helps you systematically identify tripping causes. Complete test schedules, EICRs, and Minor Works Certificates on site with instant PDF export."
+          description="Elec-Mate's AI fault diagnosis helps you systematically identify tripping causes. Complete test schedules, EICRs…"
           icon={FileCheck2}
         />
       </>
@@ -626,9 +626,9 @@ export default function TripSwitchKeepsGoingOffPage() {
   return (
     <GuideTemplate
       title="Trip Switch Keeps Going Off | Why & How to Fix"
-      description="Trip switch keeps tripping? Learn why — MCB vs RCD tripping explained, overloaded circuits, earth faults, moisture ingress, faulty appliance isolation, and when your consumer unit needs replacing. Guide for UK homeowners and electricians."
+      description="Trip switch keeps tripping? Learn why — MCB vs RCD tripping explained, overloaded circuits, earth faults, moisture ingress, faulty appliance isolation…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Common Problem"

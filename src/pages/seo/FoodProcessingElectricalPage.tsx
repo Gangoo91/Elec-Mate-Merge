@@ -605,8 +605,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Produce professional electrical records for food factory audits"
-          description="Create test records and inspection reports that satisfy BRC Global Standard audit requirements. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial."
+          title="Produce professional electrical records for food factory"
+          description="Create test records and inspection reports that satisfy BRC Global Standard audit requirements. Join 1,000+ UK electricians using Elec-Mate."
           icon={ShieldCheck}
         />
       </>
@@ -621,10 +621,10 @@ const sections = [
 export default function FoodProcessingElectricalPage() {
   return (
     <GuideTemplate
-      title="Food Processing Electrical Installation UK | Food Factory Wiring"
-      description="Complete guide to food processing electrical installation in the UK — IP69K wash-down environments, ATEX dust zones (Zone 20/21/22), hygienic design, stainless steel enclosures, BRC Global Standards, and allergen zone electrical segregation."
+      title="Food Processing Electrical Installation UK | Food Factory"
+      description="Complete guide to food processing electrical installation in the UK — IP69K wash-down environments, ATEX dust zones (Zone 20/21/22), hygienic design…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Specialist Sector"

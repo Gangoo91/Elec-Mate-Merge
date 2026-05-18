@@ -474,9 +474,9 @@ export default function BungalowRewireCostPage() {
   return (
     <GuideTemplate
       title="Bungalow Rewire Cost 2026 | UK Price Guide"
-      description="How much does it cost to rewire a bungalow in 2026? Complete UK price guide for two, three, and four-bedroom bungalow rewires. Covers materials, labour, timescales, and why bungalows are easier to rewire than houses."
+      description="How much does it cost to rewire a bungalow in 2026? Complete UK price guide for two, three, and four-bedroom bungalow rewires."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

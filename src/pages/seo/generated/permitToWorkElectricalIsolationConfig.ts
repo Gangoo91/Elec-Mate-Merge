@@ -5,14 +5,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Electricity at Work Regulations 1989 and HSE guidance HSR25 / HSG253.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const permitToWorkElectricalIsolationConfig: GeneratedGuideConfig = {
   pagePath: '/guides/permit-to-work-electrical-isolation',
   title:
-    'Permit to Work for Electrical Isolation — UK Procedure | Elec-Mate',
+    'Permit to Work for Electrical Isolation — UK Procedure',
   description:
-    'Permit to Work (PTW) for electrical isolation — the UK procedure for HV work, multi-source LV isolation, and high-risk commercial / industrial supplies. EAWR 1989, HSR25, HSG253 and BS 7671:2018+A4:2026 aligned.',
+    'Permit to Work (PTW) for electrical isolation — the UK procedure for HV work, multi-source LV isolation, and high-risk commercial / industrial supplies.',
   datePublished: published,
   dateModified: modified,
   readingTime: 12,

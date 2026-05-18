@@ -20,7 +20,7 @@ import {
 
 const PAGE_TITLE = 'Asbestos Awareness Course | Category A Training';
 const PAGE_DESCRIPTION =
-  'Category A asbestos awareness training for UK electricians. Types of asbestos, where found in buildings, legal duties under CAR 2012, what to do if you find asbestos, and how to protect yourself. 5 modules with video content, quizzes, and AI tutor.';
+  'Category A asbestos awareness for UK electricians: types, where found, CAR 2012 duties, what to do if you find it. 5 modules with quizzes + AI tutor.';
 
 const breadcrumbs = [
   { label: 'Training', href: '/training' },
@@ -84,27 +84,27 @@ const modules = [
   {
     title: 'What Is Asbestos?',
     description:
-      'The three main types of asbestos (chrysotile, amosite, crocidolite), their properties, why asbestos was used so extensively in construction, and the history of asbestos use in UK buildings from the 1950s to the ban in 1999.',
+      'The three main types of asbestos (chrysotile, amosite, crocidolite), their properties, why asbestos was used so extensively in construction…',
   },
   {
     title: 'Health Effects of Asbestos Exposure',
     description:
-      'Mesothelioma, asbestosis, lung cancer, and pleural thickening. How asbestos fibres enter the body, latency periods (15 to 60 years), exposure thresholds, and why there is no safe level of asbestos fibre exposure.',
+      'Mesothelioma, asbestosis, lung cancer, and pleural thickening. How asbestos fibres enter the body, latency periods (15 to 60 years), exposure thresholds…',
   },
   {
     title: 'Where Asbestos Is Found in Buildings',
     description:
-      'Detailed coverage of asbestos-containing materials that electricians are most likely to encounter. Textured coatings, insulating boards, cement products, floor tiles, pipe lagging, and electrical equipment backings. Photographic identification guide.',
+      'Detailed coverage of asbestos-containing materials that electricians are most likely to encounter.',
   },
   {
     title: 'Legal Framework — CAR 2012',
     description:
-      'The Control of Asbestos Regulations 2012 in detail. Duty to manage asbestos (Regulation 4), the asbestos register, training requirements (Regulation 10), control limits, licensed and non-licensed work categories, and enforcement.',
+      'The Control of Asbestos Regulations 2012 in detail. Duty to manage asbestos (Regulation 4), the asbestos register, training requirements (Regulation 10)…',
   },
   {
     title: 'What to Do If You Find Asbestos',
     description:
-      'Step-by-step procedure if asbestos is suspected or accidentally disturbed. Stopping work safely, warning others, sealing the area, reporting procedures, decontamination, and when to call a licensed removal contractor. Practical scenarios for electricians.',
+      'Step-by-step procedure if asbestos is suspected or accidentally disturbed. Stopping work safely, warning others, sealing the area, reporting procedures…',
   },
 ];
 
@@ -113,25 +113,25 @@ const features = [
     icon: BrainCircuit,
     title: 'AI Study Assistant',
     description:
-      'Ask any asbestos-related question in plain English. Get instant answers on material identification, legal requirements, and emergency procedures based on CAR 2012 and HSE guidance.',
+      'Ask any asbestos-related question in plain English. Get instant answers on material identification, legal requirements…',
   },
   {
     icon: Search,
     title: 'Visual Identification Guide',
     description:
-      'Photographic reference showing common asbestos-containing materials in their installed state. Learn to recognise suspect materials before you start drilling or chasing.',
+      'Photographic reference showing common asbestos-containing materials in their installed state.',
   },
   {
     icon: ClipboardCheck,
     title: 'Interactive Quizzes',
     description:
-      'Scenario-based questions after every module. Identify suspect materials, apply the correct emergency procedure, and demonstrate understanding of your legal duties.',
+      'Scenario-based questions after every module. Identify suspect materials, apply the correct emergency procedure…',
   },
   {
     icon: Clock,
     title: 'Study Anywhere',
     description:
-      'Complete the course on your phone, tablet, or desktop. Study during breaks on site, at home, or on the commute. Progress syncs across all your devices automatically.',
+      'Complete the course on your phone, tablet, or desktop. Study during breaks on site, at home, or on the commute.',
   },
   {
     icon: Layers,
@@ -239,7 +239,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Visual identification guide for suspect materials"
-          description="The Elec-Mate asbestos awareness course includes a photographic guide showing common asbestos-containing materials as they appear in real buildings. Learn to spot the warning signs before you pick up a drill."
+          description="The Elec-Mate asbestos awareness course includes a photographic guide showing common asbestos-containing materials as they appear in real buildings."
           icon={Search}
         />
       </>
@@ -407,7 +407,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Track your CPD training including asbestos awareness"
-          description="Elec-Mate automatically records your asbestos awareness completion date and sends you a reminder when your annual refresher is due. Your downloadable CPD certificate is accepted by NICEIC, NAPIT, and ELECSA."
+          description="Elec-Mate automatically records your asbestos awareness completion date and sends you a reminder when your annual refresher is due."
           icon={ClipboardCheck}
         />
       </>
@@ -500,7 +500,7 @@ export default function AsbestosAwarenessCoursePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-04-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Health & Safety Training"

@@ -564,7 +564,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage infrared heating installations with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for Minor Works Certificates, EIC certificates, and professional multi-room heating quotes. 7-day free trial, cancel anytime."
+          description="Join 1,000+ UK electricians using Elec-Mate for Minor Works Certificates, EIC certificates, and professional multi-room heating quotes."
           icon={Zap}
         />
       </>
@@ -579,10 +579,10 @@ const sections = [
 export default function InfraredHeatingInstallationPage() {
   return (
     <GuideTemplate
-      title="Infrared Heating Installation UK | Infrared Panel Heater Guide"
-      description="Complete guide to infrared heating installation in the UK. How infrared heating works (radiant heat), panel sizes 300W–1800W, dedicated circuit vs plug-in, thermostat options, zone control, ceiling vs wall mounting, costs £200–£600 per panel installed, and comparison with convection heating."
+      title="Infrared Heating Installation UK | Infrared Panel Heater"
+      description="Complete guide to infrared heating installation in the UK. How infrared heating works (radiant heat), panel sizes 300W–1800W…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Heating Installation Guide"

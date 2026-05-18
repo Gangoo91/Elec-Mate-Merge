@@ -265,7 +265,7 @@ const sections = [
     appBridge: {
       title: 'Automated Customer Communications',
       description:
-        'Booking confirmations, reminders, and follow-ups sent automatically. Your clients feel looked after, and you never have to remember to send a text message again.',
+        'Booking confirmations, reminders, and follow-ups sent automatically. Your clients feel looked after…',
       icon: Bell,
     },
   },
@@ -454,9 +454,9 @@ export default function ScheduleManagerPage() {
   return (
     <BusinessTemplate
       title="Schedule Manager for Electricians | Job Booking"
-      description="Schedule manager built for UK electricians. Calendar view, job booking, customer notifications, route planning, recurring jobs, and team scheduling. Never double-book or miss an appointment again."
+      description="Schedule manager built for UK electricians. Calendar view, job booking, customer notifications, route planning, recurring jobs, and team scheduling."
       datePublished="2025-06-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Business Tools"

@@ -625,10 +625,10 @@ const sections = [
 export default function SolarPanelInstallationBirminghamPage() {
   return (
     <GuideTemplate
-      title="Solar Panel Installation Birmingham 2025 | Solar PV West Midlands"
-      description="Solar panel installation in Birmingham 2025: costs £5,000–£7,500, irradiance ~940 kWh/kWp/year. Smart Export Guarantee, MCS certification, planning permission, battery storage, and payback period for the West Midlands."
+      title="Solar Panel Installation Birmingham 2025 | Solar PV West"
+      description="Solar panel installation in Birmingham 2026: 4kW system £5,000–£7,500, irradiance ~940 kWh/kWp/year, G98 grid connection, MCS, BS 7671 Section 712."
       datePublished="2025-01-01"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Solar Guide"

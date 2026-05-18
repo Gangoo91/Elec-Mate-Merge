@@ -24,9 +24,9 @@ import {
 } from 'lucide-react';
 
 const PAGE_TITLE =
-  'Best Electrician App UK 2026 | Certificates, Calculators & AI Tools | Elec-Mate';
+  'Best Electrician App UK 2026 | Certs, Calculators, AI';
 const PAGE_DESCRIPTION =
-  'Looking for the best electrician app in the UK? Compare features, pricing, and capabilities. Certificates, calculators, AI tools, and training in one app. 7-day free trial.';
+  'Best electrician app UK 2026: compare features, pricing, capabilities. Certificates, calculators, AI tools, training in one. 7-day free trial.';
 
 const faqs = [
   {
@@ -72,31 +72,31 @@ const features = [
     icon: Calculator,
     title: '70 BS 7671 Calculators',
     description:
-      'Cable sizing, voltage drop, maximum demand, diversity, conduit fill, trunking fill, Zs verification, disconnection times, and dozens more — all referencing 18th Edition tables.',
+      'Cable sizing, voltage drop, maximum demand, diversity, conduit fill, trunking fill, Zs verification, disconnection times…',
   },
   {
     icon: Brain,
     title: '8 Elec-AI Specialist Tools',
     description:
-      '8 AI specialist agents and 12 AI-powered tools — including Circuit Designer, Cost Engineer, Installation Guide, Commissioning Specialist, Maintenance Agent, Health & Safety, Fault Finder, and Regulation Lookup.',
+      '8 AI specialist agents and 12 AI-powered tools — including Circuit Designer, Cost Engineer, Installation Guide, Commissioning Specialist…',
   },
   {
     icon: GraduationCap,
     title: 'Full Training Courses',
     description:
-      '18th Edition (BS 7671), Level 2 and Level 3 Electrical Installation, AM2 preparation, and EPA simulator. Study on the go between jobs or during quiet periods.',
+      '18th Edition (BS 7671), Level 2 and Level 3 Electrical Installation, AM2 preparation, and EPA simulator.',
   },
   {
     icon: Briefcase,
     title: 'Business Management',
     description:
-      'Job scheduling, quoting, invoicing, client management, Stripe payment collection, and Xero accounting integration. Run your electrical business from one app.',
+      'Job scheduling, quoting, invoicing, client management, Stripe payment collection, and Xero accounting integration.',
   },
   {
     icon: WifiOff,
     title: 'Works Offline',
     description:
-      'Auto-saves locally every 10 seconds and syncs to the cloud when connectivity returns. Complete certificates in basements, plant rooms, or anywhere without signal.',
+      'Auto-saves locally every 10 seconds and syncs to the cloud when connectivity returns. Complete certificates in basements, plant rooms…',
   },
 ];
 
@@ -173,14 +173,14 @@ const itemListSchema = {
 
 export default function BestElectricianAppPage() {
   useSEO({
-    title: 'Best Electrician App UK 2026 | Certificates, Calculators & AI Tools',
+    title: 'Best Electrician App UK 2026 | Certificates, Calculators &',
     description: PAGE_DESCRIPTION,
     schema: softwareAppSchema,
     breadcrumbs: [
       { name: 'Home', url: '/' },
       { name: 'Best Electrician App', url: '/best-electrician-app' },
     ],
-    dateModified: '2026-04-12',
+    dateModified: '2026-05-18',
     author: 'Elec-Mate Technical Team',
   });
 
@@ -264,7 +264,7 @@ export default function BestElectricianAppPage() {
             <p>
               <strong>BS 7671 Compliance:</strong> The app should be built around the current
               edition of the Wiring Regulations — BS 7671:2018+A4:2026 — with an understanding that
-              Amendment 3 (A4:2026) added Regulation 530.3.2 covering bidirectional and
+              Amendment 4 (A4:2026) added Regulation 530.3.2 covering bidirectional and
               unidirectional devices. Any certificate forms should follow the model forms in
               Appendix 6, and calculations should reference the correct tables. An app that is not
               kept up to date with regulation changes is a liability.
@@ -753,7 +753,7 @@ export default function BestElectricianAppPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="The Complete UK Electrician App — Free for 7 Days"
-            description="EICR, EIC, and 6 more certificate types. 70+ calculators. 8 AI specialists. 46+ training courses. Xero and QuickBooks integration. Everything a UK electrician needs in one mobile-first platform."
+            description="EICR, EIC, and 6 more certificate types. 70+ calculators. 8 AI specialists. 46+ training courses. Xero and QuickBooks integration."
             icon={Award}
           />
           <p className="text-white mt-4 text-sm">

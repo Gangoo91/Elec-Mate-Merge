@@ -16,9 +16,9 @@ export default function SmokeAlarmRegsPage() {
   return (
     <GuideTemplate
       title="Smoke Alarm Regulations UK 2026 | BS 5839-6"
-      description="Complete UK guide to smoke alarm regulations. Smoke and Carbon Monoxide Alarm Regulations 2022, BS 5839-6 grades and categories, LD1/LD2/LD3, interlinked alarms, hard-wired vs battery, Scottish requirements, landlord obligations, and Building Regulations Part B."
+      description="Complete UK guide to smoke alarm regulations. Smoke and Carbon Monoxide Alarm Regulations 2022, BS 5839-6 grades and categories, LD1/LD2/LD3…"
       datePublished="2025-07-01"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'Smoke Alarm Regulations UK', href: '/guides/smoke-alarm-regulations-uk' },
@@ -649,7 +649,7 @@ export default function SmokeAlarmRegsPage() {
               </div>
               <SEOAppBridge
                 title="Fire Alarm Certificate in Elec-Mate"
-                description="Elec-Mate's Fire Alarm Certificate covers domestic smoke alarm installations to BS 5839-6. Record the system grade and category, detector types and locations, interlinking method, and test results. The AI Installation Specialist provides guidance on alarm placement for any property layout."
+                description="Elec-Mate's Fire Alarm Certificate covers domestic smoke alarm installations to BS 5839-6. Record the system grade and category…"
                 icon={FileText}
               />
             </>

@@ -24,7 +24,7 @@ import {
 
 const PAGE_TITLE = 'Maximum Zs Values BS 7671 | Complete Table Guide';
 const PAGE_DESCRIPTION =
-  'Complete guide to maximum Zs values per BS 7671 for UK electricians. Tables 41.2, 41.3, 41.4 with values for Type B MCBs (B6=7.28, B10=4.37, B16=2.73, B20=2.19, B32=1.37, B40=1.09, B50=0.87), Type C MCBs, BS 3036 fuses, 0.8 correction factor for temperature, how to use the tables, what to do when Zs exceeds maximum. Zs lookup calculator in Elec-Mate.';
+  'Max Zs values per BS 7671 Tables 41.2/41.3/41.4: Type B + Type C MCBs, BS 3036 fuses, 0.8 temperature correction, table lookup, exceedance fixes.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -223,7 +223,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Instant Zs lookup by protective device"
-          description="Select the MCB type (B, C, or D) and rating in Elec-Mate, and the app instantly shows both the tabulated and corrected (x 0.8) maximum Zs values. No need to carry the BS 7671 tables. Works for MCBs, RCBOs, BS 3036 fuses, and BS 88 fuses."
+          description="Select the MCB type (B, C, or D) and rating in Elec-Mate, and the app instantly shows both the tabulated and corrected (x 0.8) maximum Zs values."
           icon={Calculator}
         />
       </>
@@ -466,7 +466,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="70+ calculators including Zs lookup"
-          description="Elec-Mate has 70+ electrical calculators built in, including the Zs lookup by protective device. Select the MCB type and rating, and the app shows both the tabulated and corrected maximum Zs values instantly. Also includes R1+R2, earth electrode, PFC, cable sizing, and voltage drop calculators."
+          description="Elec-Mate has 70+ electrical calculators built in, including the Zs lookup by protective device."
           icon={Calculator}
         />
       </>
@@ -614,7 +614,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Schedule of tests with auto-Zs-validation"
-          description="Enter your measured Zs values into the schedule of test results and Elec-Mate validates every reading against the BS 7671 maximum for the specific protective device on each circuit. The 0.8 correction factor is applied automatically. Failures are flagged instantly."
+          description="Enter your measured Zs values into the schedule of test results and Elec-Mate validates every reading against the BS 7671 maximum for the specific…"
           icon={ClipboardCheck}
         />
         <p>
@@ -628,7 +628,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Voice to test results — speak Zs values hands-free"
-          description="On site with your MFT in hand? Just speak: 'Ring 1, Zs 0.89 ohms.' Elec-Mate fills in the schedule and validates automatically. 70+ calculators, board scanner, EICR and EIC forms — all in one app."
+          description="On site with your MFT in hand? Just speak: 'Ring 1, Zs 0.89 ohms.' Elec-Mate fills in the schedule and validates automatically."
           icon={Mic}
         />
       </>
@@ -694,7 +694,7 @@ export default function MaximumZsValuesPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2024-11-20"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Reference Guide"

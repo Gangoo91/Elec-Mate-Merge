@@ -26,7 +26,7 @@ import {
 
 const PAGE_TITLE = 'Fluke vs Megger | Test Equipment Comparison';
 const PAGE_DESCRIPTION =
-  'Fluke vs Megger multifunction tester comparison for UK electricians. Fluke 1664FC vs Megger MFT1845, accuracy, features, price, calibration, software. Find the best MFT for your testing work.';
+  'Fluke 1664FC vs Megger MFT1845 multifunction tester comparison for UK electricians: accuracy, features, price, calibration, software.';
 
 export default function FlukeVsMeggerPage() {
   return (
@@ -34,7 +34,7 @@ export default function FlukeVsMeggerPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-04-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Comparisons', href: '/compare' },
         { label: 'Fluke vs Megger', href: '/guides/fluke-vs-megger' },
@@ -411,7 +411,7 @@ export default function FlukeVsMeggerPage() {
               </p>
               <SEOAppBridge
                 title="Track calibration expiry automatically"
-                description="Elec-Mate stores your instrument details (make, model, serial number, calibration date) and alerts you before calibration expires. Your instrument data appears on every certificate automatically — never miss a calibration renewal."
+                description="Elec-Mate stores your instrument details (make, model, serial number, calibration date) and alerts you before calibration expires."
                 icon={Award}
               />
             </>
@@ -476,7 +476,7 @@ export default function FlukeVsMeggerPage() {
               </p>
               <SEOAppBridge
                 title="Any MFT, same auto-validation"
-                description="Elec-Mate auto-validates every test result against BS 7671 maximum permitted values. Zs, R1+R2, insulation resistance, RCD trip times — enter the value and the app tells you instantly if it passes or fails. Works with any instrument brand."
+                description="Elec-Mate auto-validates every test result against BS 7671 maximum permitted values. Zs, R1+R2, insulation resistance…"
                 icon={Calculator}
               />
               <p>
@@ -540,37 +540,37 @@ export default function FlukeVsMeggerPage() {
           icon: Shield,
           title: 'Fluke: Best Drop-Test Rating',
           description:
-            'The Fluke 1664FC is rated for a 1-metre drop onto concrete — the highest in its class. Built for electricians who work at height or in demanding site conditions.',
+            'The Fluke 1664FC is rated for a 1-metre drop onto concrete — the highest in its class. Built for electricians who work at height or in demanding site…',
         },
         {
           icon: MonitorSmartphone,
           title: 'Megger: Colour Display',
           description:
-            'The MFT1845 features a full-colour LCD that is easier to read in bright sunlight, dim cupboards, and every condition in between. The display also makes navigating menus significantly faster.',
+            'The MFT1845 features a full-colour LCD that is easier to read in bright sunlight, dim cupboards, and every condition in between.',
         },
         {
           icon: Timer,
           title: 'Megger: Fastest Test Speed',
           description:
-            'Megger instruments are consistently faster at loop impedance and RCD tests. On a 20+ circuit EICR, the cumulative time saving is meaningful — especially when you have multiple inspections booked per day.',
+            'Megger instruments are consistently faster at loop impedance and RCD tests. On a 20+ circuit EICR…',
         },
         {
           icon: Cpu,
           title: 'Megger: 2,000-Result Memory',
           description:
-            'The MFT1845 stores up to 2,000 test results onboard, double the Fluke 1664FC. Useful for electricians who carry out multiple inspections before downloading data.',
+            'The MFT1845 stores up to 2,000 test results onboard, double the Fluke 1664FC. Useful for electricians who carry out multiple inspections before…',
         },
         {
           icon: Award,
           title: 'Megger: 3-Year Warranty',
           description:
-            'Megger offers a 3-year standard warranty on the MFT1845, compared to 1 year on the Fluke 1664FC. Over the life of the instrument, this can save several hundred pounds in repair costs.',
+            'Megger offers a 3-year standard warranty on the MFT1845, compared to 1 year on the Fluke 1664FC.',
         },
         {
           icon: Bluetooth,
           title: 'Both: Bluetooth Connectivity',
           description:
-            'Both the Fluke 1664FC and Megger MFT1845 include Bluetooth for wireless data transfer to companion apps (Fluke Connect and Megger Link respectively). The mid-range Megger MFT1741 uses USB only.',
+            'Both the Fluke 1664FC and Megger MFT1845 include Bluetooth for wireless data transfer to companion apps (Fluke Connect and Megger Link respectively).',
         },
       ]}
       faqs={[

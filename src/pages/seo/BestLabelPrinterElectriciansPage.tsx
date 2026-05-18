@@ -681,7 +681,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Generate circuit schedules and print labels directly"
-          description="Elec-Mate's EIC and EICR certificate apps generate circuit schedules as part of the certification process. Use the schedule to produce matching labels for every board you test and certify."
+          description="Elec-Mate's EIC and EICR certificate apps generate circuit schedules as part of the certification process."
           icon={Printer}
         />
       </>
@@ -697,9 +697,9 @@ export default function BestLabelPrinterElectriciansPage() {
   return (
     <GuideTemplate
       title="Best Label Printer for Electricians 2026 | Circuit Labels"
-      description="Honest comparison of the best label printers for UK electricians in 2026. Brother P-Touch, Dymo XTL, Brady BMP21, and Epson LW-PX400 compared on print quality, tape costs, Bluetooth, BS 7671 labelling requirements, and running costs."
+      description="Honest comparison of the best label printers for UK electricians in 2026. Brother P-Touch, Dymo XTL, Brady BMP21…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Equipment Guide"

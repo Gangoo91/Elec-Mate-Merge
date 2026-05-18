@@ -19,9 +19,9 @@ export default function CableSizingGuideBS7671Page() {
   return (
     <GuideTemplate
       title="Cable Sizing Guide BS 7671 | How to Size Cables | Elec-Mate"
-      description="Complete cable sizing guide using BS 7671:2018+A4:2026. The 5-step process: design current, protective device, correction factors (Ca, Cg, Ci, Cf), tabulated current, and voltage drop check. Reference methods, worked examples, and adiabatic verification."
+      description="Complete cable sizing guide using BS 7671:2018+A4:2026. The 5-step process: design current, protective device, correction factors (Ca, Cg, Ci, Cf)…"
       datePublished="2025-06-20"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'Cable Sizing Guide BS 7671', href: '/guides/cable-sizing-guide-bs-7671' },
@@ -193,7 +193,7 @@ export default function CableSizingGuideBS7671Page() {
               </div>
               <SEOAppBridge
                 title="All 5 Steps — Done in Seconds"
-                description="Elec-Mate's cable sizing calculator handles the entire 5-step process. Enter the load, protective device, installation conditions, and cable run — get the correct cable size with voltage drop and fault current verification. Every Appendix 4 table and correction factor is built in."
+                description="Elec-Mate's cable sizing calculator handles the entire 5-step process. Enter the load, protective device, installation conditions…"
                 icon={Calculator}
               />
             </>
@@ -482,7 +482,7 @@ export default function CableSizingGuideBS7671Page() {
               </div>
               <SEOAppBridge
                 title="Automatic Correction Factor Application"
-                description="Enter the ambient temperature, number of grouped circuits, insulation conditions, and fuse type — Elec-Mate applies Ca, Cg, Ci, and Cf automatically. No manual table lookups, no multiplication errors. The calculator uses the exact values from BS 7671 Tables 4B1 and 4C1."
+                description="Enter the ambient temperature, number of grouped circuits, insulation conditions, and fuse type — Elec-Mate applies Ca, Cg, Ci, and Cf automatically."
                 icon={Thermometer}
               />
             </>
@@ -645,7 +645,7 @@ export default function CableSizingGuideBS7671Page() {
               </p>
               <SEOAppBridge
                 title="70+ Calculators — All BS 7671 Based"
-                description="Elec-Mate has 70+ electrical calculators including cable sizing, voltage drop, adiabatic equation, conduit fill, trunking fill, Zs lookup, diversity, max demand, prospective fault current, and more. All based on BS 7671:2018+A4:2026. All work offline."
+                description="Elec-Mate has 70+ electrical calculators including cable sizing, voltage drop, adiabatic equation, conduit fill, trunking fill, Zs lookup, diversity…"
                 icon={Calculator}
               />
             </>

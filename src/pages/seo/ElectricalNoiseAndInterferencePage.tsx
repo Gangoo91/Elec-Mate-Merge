@@ -20,9 +20,9 @@ export default function ElectricalNoiseAndInterferencePage() {
   return (
     <GuideTemplate
       title="Electrical Noise & Interference | EMC Guide for Electricians"
-      description="Comprehensive guide to electromagnetic interference (EMI) and radio frequency interference (RFI) in electrical installations. Covers cable separation distances, shielded cables, filter installation, LED driver noise, BS 7671 EMC requirements, and practical troubleshooting for electricians."
+      description="Comprehensive guide to electromagnetic interference (EMI) and radio frequency interference (RFI) in electrical installations."
       datePublished="2025-08-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'Electrical Noise', href: '/guides/electrical-noise-interference' },
@@ -343,7 +343,7 @@ export default function ElectricalNoiseAndInterferencePage() {
               </div>
               <SEOAppBridge
                 title="AI Installation Assistant for EMC"
-                description="Elec-Mate's AI tools can help specify the correct EMI filter type and rating for your installation. Describe the noise problem and the equipment involved, and get a recommended solution with product specifications."
+                description="Elec-Mate's AI tools can help specify the correct EMI filter type and rating for your installation."
                 icon={Brain}
               />
             </>
@@ -527,7 +527,7 @@ export default function ElectricalNoiseAndInterferencePage() {
               </div>
               <SEOAppBridge
                 title="Document EMC Issues With Elec-Mate"
-                description="Use Elec-Mate's EICR observation coding to record EMC-related defects. The app guides you through the correct observation codes and recommendations for electromagnetic compatibility issues found during periodic inspection."
+                description="Use Elec-Mate's EICR observation coding to record EMC-related defects. The app guides you through the correct observation codes and recommendations for…"
                 icon={ClipboardCheck}
               />
             </>

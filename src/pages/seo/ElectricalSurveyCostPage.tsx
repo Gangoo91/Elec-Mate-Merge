@@ -327,7 +327,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Price surveys accurately with AI cost engineering"
-          description="Elec-Mate's AI Cost Engineer analyses the scope of work and generates accurate survey pricing based on distribution board count, circuit quantity, and site complexity. Stop underquoting — price every survey for profit."
+          description="Elec-Mate's AI Cost Engineer analyses the scope of work and generates accurate survey pricing based on distribution board count, circuit quantity…"
           icon={Calculator}
         />
       </>
@@ -576,7 +576,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Start completing surveys faster"
-          description="Join 1,000+ UK electricians using Elec-Mate to complete EICR certificates on site, generate remedial quotes from defects, and send everything to the client before leaving. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to complete EICR certificates on site, generate remedial quotes from defects…"
           icon={FileCheck2}
         />
       </>
@@ -592,9 +592,9 @@ export default function ElectricalSurveyCostPage() {
   return (
     <GuideTemplate
       title="Electrical Survey Cost UK 2026 | What to Expect"
-      description="Complete guide to electrical survey costs in the UK for 2026. Pre-purchase survey prices, commercial EICR costs, large installation assessments, what is included, and how to find a qualified electrician."
+      description="Complete guide to electrical survey costs in the UK for 2026. Pre-purchase survey prices, commercial EICR costs, large installation assessments…"
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

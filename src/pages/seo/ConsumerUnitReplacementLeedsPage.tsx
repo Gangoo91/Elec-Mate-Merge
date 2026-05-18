@@ -94,7 +94,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/consumer-unit-regulations',
     title: 'Consumer Unit Regulations UK',
     description:
-      'Detailed guide to the regulations governing consumer units including Amendment 3 changes.',
+      'Detailed guide to the regulations governing consumer units including Amendment 4 changes.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -430,8 +430,8 @@ const sections = [
           </ul>
         </div>
         <SEOAppBridge
-          title="Find registered electricians for consumer unit replacement in Leeds"
-          description="Elec-Mate connects you with NICEIC and NAPIT registered electricians across Leeds and West Yorkshire. Get itemised quotes, track your job, and receive your EIC digitally."
+          title="Find registered electricians for consumer unit replacement"
+          description="Elec-Mate connects you with NICEIC and NAPIT registered electricians across Leeds and West Yorkshire."
           icon={MapPin}
         />
       </>
@@ -446,10 +446,10 @@ const sections = [
 export default function ConsumerUnitReplacementLeedsPage() {
   return (
     <GuideTemplate
-      title="Consumer Unit Replacement Leeds | Fuse Board Upgrade Cost 2026"
-      description="How much does a consumer unit replacement cost in Leeds in 2026? Local pricing for fuse board upgrades, Part P notification, what to expect, and how to choose a registered electrician in Leeds."
+      title="Consumer Unit Replacement Leeds | Fuse Board Upgrade Cost"
+      description="How much does a consumer unit replacement cost in Leeds in 2026? Local pricing for fuse board upgrades, Part P notification, what to expect…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Leeds Price Guide"

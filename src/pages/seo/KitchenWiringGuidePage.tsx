@@ -356,7 +356,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Size every kitchen circuit correctly"
-          description="Elec-Mate's cable sizing calculator handles cooker circuits, hob circuits, and kitchen radials. Enter the appliance rating and cable length — get the correct cable size and protective device instantly."
+          description="Elec-Mate's cable sizing calculator handles cooker circuits, hob circuits, and kitchen radials."
           icon={Calculator}
         />
       </>
@@ -566,7 +566,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Design complete kitchen wiring with AI"
-          description="Elec-Mate's AI circuit designer creates full kitchen wiring schedules from your appliance list. Circuit allocation, cable sizing, protective devices, and socket positioning — all designed in minutes."
+          description="Elec-Mate's AI circuit designer creates full kitchen wiring schedules from your appliance list."
           icon={CircuitBoard}
         />
       </>
@@ -582,9 +582,9 @@ export default function KitchenWiringGuidePage() {
   return (
     <GuideTemplate
       title="Kitchen Wiring Guide | Circuits, RCDs & Regulations"
-      description="Complete guide to kitchen wiring in the UK. Number of circuits needed, ring vs radial, dedicated appliance circuits, RCD protection, zone restrictions, worktop socket positioning, and BS 7671 compliance."
+      description="Complete guide to kitchen wiring in the UK. Number of circuits needed, ring vs radial, dedicated appliance circuits, RCD protection, zone restrictions…"
       datePublished="2025-08-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

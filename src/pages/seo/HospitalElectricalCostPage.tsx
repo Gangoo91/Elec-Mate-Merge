@@ -642,7 +642,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage healthcare electrical contracts with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for healthcare sector quoting, EIC and EICR completion, and multi-board inspection management. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for healthcare sector quoting, EIC and EICR completion, and multi-board inspection management."
           icon={FileCheck2}
         />
       </>
@@ -657,10 +657,10 @@ const sections = [
 export default function HospitalElectricalCostPage() {
   return (
     <GuideTemplate
-      title="Hospital Electrical Cost UK | Healthcare Electrical Installation Costs"
-      description="Hospital electrical installation costs UK 2025. HTM 06-01 compliance, Medical IT systems, essential services, UPS, standby generation, operating theatres. Costs per ward and department. 200-bed DGH: £8m–£18m."
+      title="Hospital Electrical Cost UK | Healthcare Electrical"
+      description="Hospital electrical installation costs UK 2025. HTM 06-01 compliance, Medical IT systems, essential services, UPS, standby generation, operating theatres."
       datePublished="2025-01-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Healthcare Electrical Guide"

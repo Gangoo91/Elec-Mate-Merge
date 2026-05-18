@@ -60,13 +60,13 @@ const features = [
     icon: Brain,
     title: 'AI-Powered Cost Estimation',
     description:
-      'Describe the job in plain English and the AI Cost Engineer produces an itemised estimate. Uses real UK trade pricing and labour timing data from 8 Elec-AI agents and 12 AI tools.',
+      'Describe the job in plain English and the AI Cost Engineer produces an itemised estimate. Uses real UK trade pricing and labour timing data from 8…',
   },
   {
     icon: FileText,
     title: 'Professional PDF Quotes',
     description:
-      'Generate branded A4 quotes with your logo, company details, scope of works, itemised pricing, and terms. Send directly from the app — clients can view, accept, or query online.',
+      'Generate branded A4 quotes with your logo, company details, scope of works, itemised pricing, and terms.',
   },
   {
     icon: PoundSterling,
@@ -78,19 +78,19 @@ const features = [
     icon: Clock,
     title: 'Labour Time Estimator',
     description:
-      'AI-estimated labour hours for common job types — rewires, board changes, additional circuits, EICR inspections. Based on real data from UK electricians. Adjust to your pace.',
+      'AI-estimated labour hours for common job types — rewires, board changes, additional circuits, EICR inspections. Based on real data from UK electricians.',
   },
   {
     icon: Send,
     title: 'Quote-to-Invoice Conversion',
     description:
-      'Convert accepted quotes to invoices with one tap. All details carry forward automatically. Adjust for variations, add the final certificate reference, and send instantly.',
+      'Convert accepted quotes to invoices with one tap. All details carry forward automatically. Adjust for variations, add the final certificate reference…',
   },
   {
     icon: Users,
     title: 'Client Portal',
     description:
-      'Clients receive a branded link to view quotes, accept work, make payments, and communicate. No app download required. Keeps a clear audit trail of all interactions.',
+      'Clients receive a branded link to view quotes, accept work, make payments, and communicate. No app download required.',
   },
 ];
 
@@ -100,7 +100,7 @@ const softwareAppSchema = {
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'Web, iOS, Android',
   description:
-    'Smart quoting app for UK electricians. AI-powered cost estimation, professional PDF quotes, material pricing, labour calculation, quote-to-invoice conversion, and client portal.',
+    'Smart quoting app for UK electricians. AI-powered cost estimation, professional PDF quotes, material pricing, labour calculation…',
   url: 'https://www.elec-mate.com/electrical-quoting-app',
   offers: {
     '@type': 'Offer',
@@ -132,12 +132,12 @@ export default function ElectricalQuotingAppPage() {
   useSEO({
     title: 'Electrical Quoting App | Smart Quotes for Electricians',
     description:
-      'AI-powered quoting app for UK electricians. Produce professional quotes with accurate material and labour costs. Quote-to-invoice conversion, client portal, Xero and QuickBooks integration.',
+      'AI-powered quoting app for UK electricians. Produce professional quotes with accurate material and labour costs.',
     breadcrumbs: [
       { name: 'Home', url: '/' },
       { name: 'Electrical Quoting App', url: '/electrical-quoting-app' },
     ],
-    dateModified: '2026-04-12',
+    dateModified: '2026-05-18',
     author: 'Elec-Mate Technical Team',
   });
 
@@ -513,7 +513,7 @@ export default function ElectricalQuotingAppPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Quote, Invoice, and Get Paid — All in One App"
-            description="Elec-Mate's quoting tool is built for UK electricians. AI cost estimation, professional PDFs, Stripe payments, and a seamless link to your certificates and invoices."
+            description="Elec-Mate's quoting tool is built for UK electricians. AI cost estimation, professional PDFs, Stripe payments…"
             ctaText="Try Elec-Mate free"
             ctaHref="/auth/signup"
             icon={PoundSterling}

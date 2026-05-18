@@ -317,7 +317,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Professional Digital Certificates"
-          description="Impress clients and contractors with professionally branded digital certificates. Elec-Mate's 16 certificate types — EICR, EIC, Minor Works, EV Charger, Solar PV, Fire Alarm, Emergency Lighting, PAT Testing — demonstrate your competence and build your professional reputation."
+          description="Impress clients and contractors with professionally branded digital certificates. Elec-Mate's 16 certificate types — EICR, EIC, Minor Works, EV Charger…"
           icon={FileText}
         />
       </>
@@ -439,7 +439,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Hourly Rate Calculator"
-          description="Before accepting any job vacancy — permanent or contract — use Elec-Mate's hourly rate calculator to work out exactly what you need to earn. Factor in holidays, sick days, van costs, insurance, tools, and non-billable time to set your rate confidently."
+          description="Before accepting any job vacancy — permanent or contract — use Elec-Mate's hourly rate calculator to work out exactly what you need to earn."
           icon={Calculator}
         />
       </>
@@ -566,7 +566,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Build Your Professional Toolkit"
-          description="Elec-Mate gives you the tools to stand out: professional digital certificates, AI-powered quoting and invoicing, RAMS generation, and a study centre to maintain your CPD. Show potential employers you use the best tools in the trade."
+          description="Elec-Mate gives you the tools to stand out: professional digital certificates, AI-powered quoting and invoicing, RAMS generation…"
           icon={Briefcase}
         />
       </>
@@ -625,9 +625,9 @@ export default function ElectricianJobVacanciesPage() {
     <GuideTemplate
       localArea="Job Vacancies"
       title="Electrician Job Vacancies UK | Where to Find Work in 2026"
-      description="Complete guide to finding electrician job vacancies in the UK. Best job boards, recruitment agencies, social media strategies, direct approaches, contract vs permanent, and current pay rates for 2026."
+      description="Complete guide to finding electrician job vacancies in the UK. Best job boards, recruitment agencies, social media strategies, direct approaches…"
       datePublished="2024-09-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

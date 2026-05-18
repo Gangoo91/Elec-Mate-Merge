@@ -480,7 +480,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote listed building rewires with heritage pricing"
-          description="Elec-Mate's quoting app handles specialist rates for heritage accessories, surface-mount installation methods, and making good allowances. Professional PDF quotes that demonstrate your expertise."
+          description="Elec-Mate's quoting app handles specialist rates for heritage accessories, surface-mount installation methods, and making good allowances."
           icon={Calculator}
         />
       </>
@@ -495,10 +495,10 @@ const sections = [
 export default function ListedBuildingRewireCostPage() {
   return (
     <GuideTemplate
-      title="Listed Building Rewire Cost 2026 | UK Heritage Electrical Guide"
-      description="How much does it cost to rewire a listed building in 2026? UK guide covering conservation officer requirements, surface mount wiring, heritage accessories, lime plaster, and realistic costs from £8,000 to £25,000+."
+      title="Listed Building Rewire Cost 2026 | UK Heritage Electrical"
+      description="How much does it cost to rewire a listed building in 2026? UK guide covering conservation officer requirements, surface mount wiring…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

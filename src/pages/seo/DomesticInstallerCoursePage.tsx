@@ -18,7 +18,7 @@ import {
 
 const PAGE_TITLE = 'Domestic Installer Course | Part P Certification';
 const PAGE_DESCRIPTION =
-  'Complete Part P domestic installer training for UK electricians. Building regulations, notifiable work, competent person schemes, domestic wiring, consumer units, special locations, testing and certification. 12 modules with video content, quizzes, and AI tutor.';
+  'Part P domestic installer training: Building Regs, notifiable work, competent person schemes, CUs, special locations, certification. 12 modules.';
 
 const breadcrumbs = [
   { label: 'Training', href: '/training' },
@@ -43,7 +43,7 @@ const keyTakeaways = [
   'Part P of the Building Regulations (England and Wales) requires that electrical installation work in dwellings is designed, installed, inspected, and tested by competent persons — and that certain types of work are notified to the local authority building control.',
   'Notifiable work includes all new circuits, consumer unit replacements, work in special locations (bathrooms, swimming pools), and any additions or alterations to circuits in special locations — non-notifiable work includes like-for-like replacements and minor additions outside special locations.',
   'Competent Person Schemes (NICEIC, NAPIT, ELECSA, STROMA, BRE) allow registered electricians to self-certify their own work without involving building control, saving time and money for both the electrician and the homeowner.',
-  'Consumer unit replacements became notifiable work in 2016 and must comply with BS 7671:2018+A2:2022, including the use of metal consumer units (or non-combustible enclosures) per Amendment 3 to Part P.',
+  'Consumer unit replacements became notifiable work in 2016 and must comply with BS 7671:2018+A2:2022, including the use of metal consumer units (or non-combustible enclosures) per Amendment 4 to Part P.',
   'Special locations defined in BS 7671 include bathrooms (Section 701), swimming pools (Section 702), and locations containing a sauna heater (Section 703) — each has specific requirements for IP ratings, zones, and supplementary equipotential bonding.',
 ];
 
@@ -84,62 +84,62 @@ const modules = [
   {
     title: 'Part P Building Regulations',
     description:
-      'The scope and requirements of Part P (Electrical Safety — Dwellings). Approved Document P, the role of building control, the history and purpose of Part P, and how it interacts with BS 7671.',
+      'The scope and requirements of Part P (Electrical Safety — Dwellings). Approved Document P, the role of building control…',
   },
   {
     title: 'Notifiable vs Non-Notifiable Work',
     description:
-      'Detailed guide to which work requires notification and which does not. New circuits, consumer unit replacements, special locations, additions and alterations, outdoor wiring, and like-for-like replacements.',
+      'Detailed guide to which work requires notification and which does not. New circuits, consumer unit replacements, special locations…',
   },
   {
     title: 'Competent Person Schemes',
     description:
-      'Overview of NICEIC, NAPIT, ELECSA, STROMA, and BRE schemes. Entry requirements, assessment process, membership fees, self-certification process, and ongoing obligations.',
+      'Overview of NICEIC, NAPIT, ELECSA, STROMA, and BRE schemes. Entry requirements, assessment process, membership fees, self-certification process…',
   },
   {
     title: 'Domestic Circuit Design',
     description:
-      'Ring circuits, radial circuits, lighting circuits, cooker circuits, and dedicated appliance circuits. Maximum demand calculations, diversity factors, and circuit selection for modern domestic properties.',
+      'Ring circuits, radial circuits, lighting circuits, cooker circuits, and dedicated appliance circuits.',
   },
   {
     title: 'Consumer Unit Selection and Installation',
     description:
-      'Metal consumer unit requirements, split-load boards, RCD and RCBO selection, AFDD recommendations, circuit labelling, and the BS 7671 requirements for consumer unit installations.',
+      'Metal consumer unit requirements, split-load boards, RCD and RCBO selection, AFDD recommendations, circuit labelling…',
   },
   {
     title: 'Cable Selection and Installation Methods',
     description:
-      'Cable sizing for domestic circuits, correction factors (grouping, thermal insulation, ambient temperature), installation methods (clipped direct, in conduit, in trunking, within thermal insulation), and voltage drop verification.',
+      'Cable sizing for domestic circuits, correction factors (grouping, thermal insulation, ambient temperature), installation methods (clipped direct…',
   },
   {
     title: 'Special Locations — Bathrooms (Section 701)',
     description:
-      'Bathroom zones 0, 1, 2, and outside zones. IP rating requirements for each zone, permitted equipment, supplementary equipotential bonding, SELV requirements, and electric shower installations.',
+      'Bathroom zones 0, 1, 2, and outside zones. IP rating requirements for each zone, permitted equipment, supplementary equipotential bonding…',
   },
   {
     title: 'Special Locations — Other Areas',
     description:
-      'Swimming pools (Section 702), saunas (Section 703), construction sites (Section 704), and other special locations. Zone definitions, specific requirements, and common installation scenarios.',
+      'Swimming pools (Section 702), saunas (Section 703), construction sites (Section 704), and other special locations.',
   },
   {
     title: 'Earthing and Bonding in Domestic Properties',
     description:
-      'Main earthing arrangements (TN-S, TN-C-S, TT), main protective bonding conductors, supplementary equipotential bonding, earth electrode testing, and common earthing defects found in domestic inspections.',
+      'Main earthing arrangements (TN-S, TN-C-S, TT), main protective bonding conductors, supplementary equipotential bonding, earth electrode testing…',
   },
   {
     title: 'Inspection and Testing for Domestic Work',
     description:
-      'The full BS 7671 testing sequence applied to domestic installations. Continuity testing, insulation resistance, polarity, earth fault loop impedance, RCD testing, and prospective fault current.',
+      'The full BS 7671 testing sequence applied to domestic installations. Continuity testing, insulation resistance, polarity, earth fault loop impedance…',
   },
   {
     title: 'Certification and Documentation',
     description:
-      'Electrical Installation Certificates (EIC), Minor Works Certificates, EICR for existing installations, schedule of test results, schedule of inspections, and building control notification procedures.',
+      'Electrical Installation Certificates (EIC), Minor Works Certificates, EICR for existing installations, schedule of test results, schedule of inspections…',
   },
   {
     title: 'Common Domestic Installation Scenarios',
     description:
-      'Consumer unit upgrades, kitchen rewires, bathroom electrical installations, garden and outdoor wiring, electric vehicle charger circuits, smart home wiring, and solar PV integration.',
+      'Consumer unit upgrades, kitchen rewires, bathroom electrical installations, garden and outdoor wiring, electric vehicle charger circuits…',
   },
 ];
 
@@ -148,25 +148,25 @@ const features = [
     icon: BrainCircuit,
     title: 'AI Study Assistant',
     description:
-      'Ask any Part P or domestic wiring question in plain English. Get instant answers on notifiable work, consumer unit regulations, bathroom zones, and certification requirements.',
+      'Ask any Part P or domestic wiring question in plain English. Get instant answers on notifiable work, consumer unit regulations, bathroom zones…',
   },
   {
     icon: Home,
     title: 'Video Content',
     description:
-      'Step-by-step video demonstrations of consumer unit installations, bathroom wiring, circuit testing, and certification completion. Watch on any device, any time.',
+      'Step-by-step video demonstrations of consumer unit installations, bathroom wiring, circuit testing, and certification completion.',
   },
   {
     icon: ClipboardCheck,
     title: 'Interactive Quizzes',
     description:
-      'Scenario-based questions after every module. Determine if work is notifiable, select correct protective devices, identify bathroom zones, and complete certificate entries.',
+      'Scenario-based questions after every module. Determine if work is notifiable, select correct protective devices, identify bathroom zones…',
   },
   {
     icon: Clock,
     title: 'Study Planner',
     description:
-      'Set your target completion date and Elec-Mate creates a personalised schedule across all twelve modules. Daily progress tracking and automated study reminders.',
+      'Set your target completion date and Elec-Mate creates a personalised schedule across all twelve modules.',
   },
   {
     icon: Layers,
@@ -178,7 +178,7 @@ const features = [
     icon: FileCheck2,
     title: 'Mock Exams',
     description:
-      'Full-length mock examinations across all twelve modules. Instant marking, detailed explanations for every answer, and a readiness score that tracks your progress.',
+      'Full-length mock examinations across all twelve modules. Instant marking, detailed explanations for every answer…',
   },
 ];
 
@@ -281,7 +281,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Digital certificates for all domestic work"
-          description="Elec-Mate provides digital EIC, Minor Works, and EICR certificates for all your domestic installations. Auto-validated test results, observation code suggestions, and instant PDF export. Building control notification guidance included."
+          description="Elec-Mate provides digital EIC, Minor Works, and EICR certificates for all your domestic installations."
           icon={FileCheck2}
         />
       </>
@@ -385,7 +385,7 @@ const sections = [
           is essential for every domestic installer.
         </p>
         <p>
-          <strong>Non-combustible enclosure:</strong> Amendment 3 to Approved Document B (Fire
+          <strong>Non-combustible enclosure:</strong> Amendment 4 to Approved Document B (Fire
           Safety) introduced a requirement for consumer units in domestic premises to be enclosed in
           a non-combustible enclosure. In practice, this means using a metal consumer unit, which is
           now the industry standard for new installations and replacements.
@@ -447,8 +447,8 @@ const sections = [
           a bathroom is notifiable work.
         </p>
         <SEOAppBridge
-          title="46+ structured courses covering every aspect of domestic installation"
-          description="Elec-Mate provides 46+ structured courses including domestic installation, 18th Edition BS 7671, inspection and testing, EV charging, solar PV, and fire alarm systems. Video content, interactive quizzes, flashcards, mock exams, and an AI tutor — all for one subscription."
+          title="46+ structured courses covering every aspect of domestic"
+          description="Elec-Mate provides 46+ structured courses including domestic installation, 18th Edition BS 7671, inspection and testing, EV charging, solar PV…"
           icon={GraduationCap}
         />
       </>
@@ -541,7 +541,7 @@ export default function DomesticInstallerCoursePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-03-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Domestic Installation Training"

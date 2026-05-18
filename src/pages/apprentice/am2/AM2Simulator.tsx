@@ -34,6 +34,7 @@ import { AM2KnowledgeQuiz } from '@/components/am2/AM2KnowledgeQuiz';
 import { AM2HistoryTab } from '@/components/am2/AM2HistoryTab';
 import { MockAM2Day } from '@/components/am2/MockAM2Day';
 import { Bs7671RagQuiz } from '@/components/am2/Bs7671RagQuiz';
+import { AM2DrillMode } from '@/components/am2/AM2DrillMode';
 
 type TabId =
   | 'readiness'
@@ -42,6 +43,7 @@ type TabId =
   | 'faults'
   | 'knowledge'
   | 'bs7671'
+  | 'drill'
   | 'history'
   | 'mock-day';
 
@@ -73,7 +75,7 @@ const AM2Simulator = () => {
         'animate-fade-in',
         isImmersive
           ? 'flex flex-col h-[100dvh]'
-          : 'mx-auto max-w-6xl xl:max-w-7xl pb-20 px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6'
+          : 'mx-auto max-w-7xl 2xl:max-w-[1440px] pb-20 px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6'
       )}
     >
       {!isImmersive && (
@@ -144,6 +146,13 @@ const AM2Simulator = () => {
 
           {activeTab === 'bs7671' && (
             <Bs7671RagQuiz
+              onExit={() => setActiveTab('readiness')}
+              onSessionComplete={invalidateReadiness}
+            />
+          )}
+
+          {activeTab === 'drill' && (
+            <AM2DrillMode
               onExit={() => setActiveTab('readiness')}
               onSessionComplete={invalidateReadiness}
             />

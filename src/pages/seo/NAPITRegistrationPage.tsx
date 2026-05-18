@@ -179,7 +179,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Certificates for Every Scheme"
-          description="Elec-Mate supports all the certificate types you need for NAPIT-registered work: EICR, EIC, Minor Works, EV Charger, Solar PV, Fire Alarm, Emergency Lighting, and PAT Testing. Complete and submit professional certificates from site."
+          description="Elec-Mate supports all the certificate types you need for NAPIT-registered work: EICR, EIC, Minor Works, EV Charger, Solar PV, Fire Alarm…"
           icon={FileCheck2}
         />
       </>
@@ -332,7 +332,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Assessment-Ready Certificates"
-          description="Elec-Mate's certificate templates follow the latest formats and ensure every field is completed correctly. Complete your EICR, EIC, and Minor Works certificates digitally with auto-save, validation prompts, and professional PDF output — exactly what NAPIT assessors want to see."
+          description="Elec-Mate's certificate templates follow the latest formats and ensure every field is completed correctly."
           icon={FileCheck2}
         />
       </>
@@ -529,7 +529,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Stay Compliant with Elec-Mate"
-          description="Keep your qualifications current with Elec-Mate's 18th Edition revision course, maintain impeccable certification with digital templates, and track your CPD hours automatically. Everything you need to pass your annual NAPIT assessment with confidence."
+          description="Keep your qualifications current with Elec-Mate's 18th Edition revision course, maintain impeccable certification with digital templates…"
           icon={GraduationCap}
         />
       </>
@@ -645,10 +645,10 @@ const relatedPages = [
 export default function NAPITRegistrationPage() {
   return (
     <GuideTemplate
-      title="NAPIT Registration Guide | How to Join & What It Costs (2026)"
-      description="Complete guide to NAPIT registration for UK electricians. Application process, on-site assessment, costs, schemes available, benefits, renewal requirements, and how NAPIT compares to NICEIC and ELECSA."
+      title="NAPIT Registration Guide | How to Join & What It Costs"
+      description="Complete guide to NAPIT registration for UK electricians. Application process, on-site assessment, costs, schemes available, benefits…"
       datePublished="2024-07-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Registration Guide"

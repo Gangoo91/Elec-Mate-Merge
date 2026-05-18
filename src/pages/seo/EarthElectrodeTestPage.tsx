@@ -331,7 +331,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Record earth electrode results by voice"
-          description="Probes in hand? Speak your earth electrode reading — 'RA 47 ohms' — and Elec-Mate fills in the schedule of test results. No putting instruments down to type on your phone."
+          description="Probes in hand? Speak your earth electrode reading — 'RA 47 ohms' — and Elec-Mate fills in the schedule of test results."
           icon={Mic}
         />
       </>
@@ -578,7 +578,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Complete the EICR on site with Elec-Mate"
-          description="Record earth electrode results, Zs values, IR readings, and RCD trip times — all by voice. The schedule of test results fills itself in while you work. Export a professional PDF certificate before you leave."
+          description="Record earth electrode results, Zs values, IR readings, and RCD trip times — all by voice. The schedule of test results fills itself in while you work."
           icon={FileCheck2}
         />
       </>
@@ -594,9 +594,9 @@ export default function EarthElectrodeTestPage() {
   return (
     <GuideTemplate
       title="Earth Electrode Testing | TT System Guide UK"
-      description="Complete guide to earth electrode resistance testing for TT systems. Fall of potential method, 3-pin test procedure, acceptable RA values, instrument setup, and how to record results on EICR and EIC certificates."
+      description="Complete guide to earth electrode resistance testing for TT systems. Fall of potential method, 3-pin test procedure, acceptable RA values…"
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

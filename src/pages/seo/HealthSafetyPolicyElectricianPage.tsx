@@ -535,10 +535,10 @@ const sections = [
 export default function HealthSafetyPolicyElectricianPage() {
   return (
     <GuideTemplate
-      title="Health and Safety Policy for Electricians UK 2026 | Template Guide"
-      description="Health and safety policy template for electricians. Policy structure, risk assessments, method statements, RAMS, legal requirements, and when a written policy is legally required."
+      title="Health and Safety Policy for Electricians UK 2026"
+      description="Health and safety policy template for electricians. Policy structure, risk assessments, method statements, RAMS, legal requirements…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Compliance Guide"

@@ -472,7 +472,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote CCTV installations professionally"
-          description="Elec-Mate's quoting app lets you itemise every camera, cable run, and power component with real trade pricing. Send professional PDF quotes with your branding."
+          description="Elec-Mate's quoting app lets you itemise every camera, cable run, and power component with real trade pricing."
           icon={Calculator}
         />
       </>
@@ -633,7 +633,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote CCTV and security installations"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting with itemised pricing, professional PDF output, and AI cost engineering. Diversify into CCTV with confidence. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting with itemised pricing, professional PDF output, and AI cost engineering."
           icon={Wrench}
         />
       </>
@@ -649,9 +649,9 @@ export default function CCTVInstallationCostPage() {
   return (
     <GuideTemplate
       title="CCTV Installation Electrical Cost UK 2026 | Wiring Guide"
-      description="How much does CCTV installation cost for the electrical and cabling work in 2026? Complete UK guide covering PoE vs traditional power, Cat6 and SWA cabling, UPS backup, domestic (2-4 camera) and commercial (8-16 camera) costs, and GDPR requirements."
+      description="How much does CCTV installation cost for the electrical and cabling work in 2026? Complete UK guide covering PoE vs traditional power…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

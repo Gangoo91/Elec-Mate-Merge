@@ -348,7 +348,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Notify building control in one tap"
-          description="Elec-Mate integrates with competent person scheme notification systems. Complete the EIC, tap to notify, and the building control notification is submitted automatically. The compliance certificate follows by email."
+          description="Elec-Mate integrates with competent person scheme notification systems. Complete the EIC, tap to notify…"
           icon={Send}
         />
       </>
@@ -560,7 +560,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Issue every certificate from your phone"
-          description="Join 1,000+ UK electricians producing professional compliance certificates on site. AI board scanner, voice test entry, auto-validation, and instant delivery. 7-day free trial, cancel anytime."
+          description="Join 1,000+ UK electricians producing professional compliance certificates on site. AI board scanner, voice test entry, auto-validation…"
           icon={FileCheck2}
         />
       </>
@@ -576,9 +576,9 @@ export default function ElectricalComplianceCertificatePage() {
   return (
     <GuideTemplate
       title="Electrical Compliance Certificate | What You Need"
-      description="Complete guide to electrical compliance certificates in the UK. Types of certificates (EIC, MEIWC, EICR), Part P building regulations, competent person self-certification, and when each certificate is required."
+      description="Complete guide to electrical compliance certificates in the UK. Types of certificates (EIC, MEIWC, EICR), Part P building regulations…"
       datePublished="2025-07-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Certificate Guide"

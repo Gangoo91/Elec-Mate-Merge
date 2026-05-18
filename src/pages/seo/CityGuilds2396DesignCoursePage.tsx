@@ -468,7 +468,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AI-powered electrical design tools"
-          description="Elec-Mate's cable sizing calculator, voltage drop calculator, and AI circuit designer help you design installations that comply with BS 7671. Practise your 2396 calculations or design real projects — all from your phone."
+          description="Elec-Mate's cable sizing calculator, voltage drop calculator, and AI circuit designer help you design installations that comply with BS 7671."
           icon={PenTool}
         />
       </>
@@ -483,10 +483,10 @@ const sections = [
 export default function CityGuilds2396DesignCoursePage() {
   return (
     <GuideTemplate
-      title="City & Guilds 2396 Design Course | Electrical Design Qualification UK"
-      description="Complete guide to the City & Guilds 2396 Electrical Installation Design qualification. Course content, exam format, prerequisites, career benefits, and how to choose a training provider. Updated 2026."
+      title="City & Guilds 2396 Design Course | Electrical Design"
+      description="Complete guide to the City & Guilds 2396 Electrical Installation Design qualification. Course content, exam format, prerequisites, career benefits…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Training Guide"

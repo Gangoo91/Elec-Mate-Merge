@@ -524,7 +524,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Keep customer data secure and organised"
-          description="Elec-Mate stores your customer records, certificates, and invoices securely in the cloud — encrypted, backed up, and accessible only to you. 7-day free trial."
+          description="Elec-Mate stores your customer records, certificates, and invoices securely in the cloud — encrypted, backed up, and accessible only to you."
           icon={Shield}
         />
       </>
@@ -540,9 +540,9 @@ export default function GDPRForElectriciansPage() {
   return (
     <GuideTemplate
       title="GDPR for Electricians UK 2026 | Data Protection Guide"
-      description="GDPR guide for electricians. What data you hold, customer consent, data retention, ICO registration (£40/year), breaches, and practical compliance steps. UK-focused, plain English."
+      description="GDPR guide for electricians. What data you hold, customer consent, data retention, ICO registration (£40/year), breaches, and practical compliance steps."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Compliance Guide"

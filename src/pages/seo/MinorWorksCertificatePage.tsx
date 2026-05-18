@@ -100,7 +100,7 @@ const features = [
     icon: Shield,
     title: 'BS 7671 Compliant Observations',
     description:
-      'Library of pre-written observation phrases using correct C1, C2, C3, and FI classification codes. Every observation references the relevant BS 7671 regulation number.',
+      'Library of pre-written observation phrases using correct C1, C2, C3, and FI classification codes.',
   },
   {
     icon: Download,
@@ -118,7 +118,7 @@ const features = [
     icon: ClipboardCheck,
     title: 'Test Result Validation',
     description:
-      'Automatic validation of all test results against BS 7671 limits. Flags insulation resistance below 1 MΩ, high Zs values, and slow RCD trip times before you sign off.',
+      'Automatic validation of all test results against BS 7671 limits. Flags insulation resistance below 1 MΩ, high Zs values…',
   },
 ];
 
@@ -128,7 +128,7 @@ const softwareAppSchema = {
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'Web, iOS, Android',
   description:
-    'Create Minor Electrical Installation Works Certificates on site in minutes. Auto-fill, digital signatures, BS 7671 compliant observations, and instant PDF export.',
+    'Create Minor Electrical Installation Works Certificates on site in minutes. Auto-fill, digital signatures, BS 7671 compliant observations…',
   offers: {
     '@type': 'Offer',
     price: '0',
@@ -159,7 +159,7 @@ const howToSchema = {
   '@type': 'HowTo',
   name: 'How to Create a Minor Works Certificate with Elec-Mate',
   description:
-    'Step-by-step guide to creating a Minor Electrical Installation Works Certificate using the Elec-Mate app, from opening the form to exporting the signed PDF.',
+    'Step-by-step guide to creating a Minor Electrical Installation Works Certificate using the Elec-Mate app…',
   step: howToSteps.map((step, index) => ({
     '@type': 'HowToStep',
     position: index + 1,
@@ -172,7 +172,7 @@ export default function MinorWorksCertificatePage() {
   useSEO({
     title: 'Minor Works Certificate App | Digital EWC Form',
     description:
-      'Create Minor Works certificates on site in minutes. Auto-fill, digital signatures, BS 7671 compliant observations, and instant PDF export. Part of 16 certificate types.',
+      'Create Minor Works certificates on site in minutes. Auto-fill, digital signatures, BS 7671 compliant observations, and instant PDF export.',
   });
 
   return (

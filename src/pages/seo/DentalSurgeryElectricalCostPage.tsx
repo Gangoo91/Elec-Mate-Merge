@@ -360,7 +360,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote dental surgery electrical with Section 710 compliance"
-          description="Elec-Mate's quoting app handles medical location provisions, equipment schedules, and supplementary bonding requirements. Professional PDF quotes for dental practice fit-outs."
+          description="Elec-Mate's quoting app handles medical location provisions, equipment schedules, and supplementary bonding requirements."
           icon={Calculator}
         />
       </>
@@ -472,7 +472,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote dental surgery fit-outs with Section 710 compliance"
-          description="Elec-Mate's quoting app handles medical location electrical work with equipment schedules, supplementary bonding, and CQC-ready documentation. 7-day free trial."
+          description="Elec-Mate's quoting app handles medical location electrical work with equipment schedules, supplementary bonding, and CQC-ready documentation."
           icon={Calculator}
         />
       </>
@@ -487,10 +487,10 @@ const sections = [
 export default function DentalSurgeryElectricalCostPage() {
   return (
     <GuideTemplate
-      title="Dental Surgery Electrical Cost 2026 | UK Medical Location Guide"
-      description="How much does dental surgery electrical installation cost in 2026? UK guide covering Section 710 medical locations, dental chair supply, X-ray, compressor, steriliser, and costs from £8,000 to £25,000."
+      title="Dental Surgery Electrical Cost 2026 | UK Medical Location"
+      description="How much does dental surgery electrical installation cost in 2026? UK guide covering Section 710 medical locations, dental chair supply, X-ray…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

@@ -327,7 +327,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Price rewires accurately with the AI cost engineer"
-          description="Elec-Mate's AI cost engineer calculates materials, cable quantities, labour hours, and profit margin for any rewire. Generate a professional, itemised quote on site in minutes — not hours at your desk."
+          description="Elec-Mate's AI cost engineer calculates materials, cable quantities, labour hours, and profit margin for any rewire."
           icon={Brain}
         />
       </>
@@ -637,7 +637,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Stop guessing, start pricing accurately"
-          description="Elec-Mate's AI cost engineer calculates materials, labour, overhead, and margin for any electrical job. Generate professional quotes on site in minutes. 7-day free trial."
+          description="Elec-Mate's AI cost engineer calculates materials, labour, overhead, and margin for any electrical job. Generate professional quotes on site in minutes."
           icon={PoundSterling}
         />
       </>
@@ -653,9 +653,9 @@ export default function ElectricalWorkPricingPage() {
   return (
     <GuideTemplate
       title="Electrical Work Pricing Guide | Jobs & Costs UK 2026"
-      description="Complete guide to UK electrical work prices in 2026. Socket installation, consumer unit change, full rewire, EV charger, lighting, garden electrics — all with realistic price ranges and what affects the cost."
+      description="Complete guide to UK electrical work prices in 2026. Socket installation, consumer unit change, full rewire, EV charger, lighting…"
       datePublished="2026-01-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Pricing Guide"

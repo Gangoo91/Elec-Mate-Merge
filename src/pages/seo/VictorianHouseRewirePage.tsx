@@ -291,7 +291,7 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Non-combustible enclosure requirement</strong> — modern consumer units must
-                have a non-combustible enclosure (steel) following Amendment 3 to BS 7671. Cast iron
+                have a non-combustible enclosure (steel) following Amendment 4 to BS 7671. Cast iron
                 units are technically non-combustible but cannot accept modern protective devices.
                 Replacing a cast iron consumer unit with a modern metal-clad unit is a significant
                 improvement even if the underlying wiring is not replaced at the same time.
@@ -588,7 +588,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage Victorian house rewires with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, professional quoting, and job management. AI board scanning, voice test entry, instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, professional quoting, and job management."
           icon={FileCheck2}
         />
       </>
@@ -603,10 +603,10 @@ const sections = [
 export default function VictorianHouseRewirePage() {
   return (
     <GuideTemplate
-      title="Rewiring a Victorian House UK | Victorian Property Electrical Guide"
-      description="Complete guide to rewiring a Victorian house in the UK. Rubber and lead-sheathed wiring dangers, knob-and-tube systems, cast iron consumer units, solid wall challenges, cornicing preservation, rewire costs £3,000–£8,000+, and EPC improvements."
+      title="Rewiring a Victorian House UK | Victorian Property"
+      description="Complete guide to rewiring a Victorian house in the UK. Rubber and lead-sheathed wiring dangers, knob-and-tube systems, cast iron consumer units…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Property Guide"

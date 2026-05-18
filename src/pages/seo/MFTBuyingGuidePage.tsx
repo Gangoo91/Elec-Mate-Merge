@@ -412,7 +412,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Enter MFT test results directly into your EIC or EICR"
-          description="Elec-Mate's schedule of test results accepts Ze, Zs, RCD trip times, insulation resistance, and continuity readings. Voice entry on site, instant PDF certificate. No transcription errors."
+          description="Elec-Mate's schedule of test results accepts Ze, Zs, RCD trip times, insulation resistance, and continuity readings."
           icon={ClipboardCheck}
         />
       </>
@@ -520,8 +520,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Complete EIC and EICR certificates with MFT results on your phone"
-          description="Join 1,000+ UK electricians using Elec-Mate for MFT result entry, automatic Zs compliance checking, and professional EIC and EICR certification. 7-day free trial."
+          title="Complete EIC and EICR certificates with MFT results on your"
+          description="Join 1,000+ UK electricians using Elec-Mate for MFT result entry, automatic Zs compliance checking, and professional EIC and EICR certification."
           icon={Wrench}
         />
       </>
@@ -536,10 +536,10 @@ const sections = [
 export default function MFTBuyingGuidePage() {
   return (
     <GuideTemplate
-      title="Multifunction Tester Buying Guide UK 2026 | Best MFTs for Electricians"
-      description="Complete guide to choosing a multifunction tester (MFT) for UK electricians. What an MFT measures, CAT IV rating requirements, key features, and the best MFTs in 2026 — Megger MFT1741, Fluke 1664 FC, Kewtech KT64 DL, and Metrel MI3102H."
+      title="Multifunction Tester Buying Guide UK 2026 | Best MFTs for"
+      description="Complete guide to choosing a multifunction tester (MFT) for UK electricians. What an MFT measures, CAT IV rating requirements, key features…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Tools & Equipment Guide"

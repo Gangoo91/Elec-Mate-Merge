@@ -124,7 +124,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description:
-      'Complete guide to the 18th Edition of the IET Wiring Regulations including Amendment 3:2024.',
+      'Complete guide to the 18th Edition of the IET Wiring Regulations including Amendment 4:2024.',
     icon: FileText,
     category: 'Guide',
   },
@@ -329,7 +329,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Generate your next RAMS in 60 seconds"
-          description="Describe the job, get a complete RAMS with risk matrix, control measures, and method statement. Export as a professional PDF and submit to your principal contractor."
+          description="Describe the job, get a complete RAMS with risk matrix, control measures, and method statement."
           icon={ClipboardCheck}
         />
       </>
@@ -438,7 +438,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Professional RAMS in under 60 seconds"
-          description="No more copying templates. Describe the job, get site-specific RAMS with risk scoring, PPE requirements, and professional PDF export. Works offline on site."
+          description="No more copying templates. Describe the job, get site-specific RAMS with risk scoring, PPE requirements, and professional PDF export."
           icon={FileText}
         />
       </>
@@ -454,9 +454,9 @@ export default function AIMethodStatementPage() {
   return (
     <ToolTemplate
       title="AI Method Statement Generator | RAMS Tool"
-      description="Generate professional, site-specific method statements and risk assessments for electrical work using AI. CDM 2015 compliant, COSHH integration, risk matrix scoring. Built for UK electricians."
+      description="Generate site-specific method statements + risk assessments for UK electrical work using AI. CDM 2015, COSHH, RAMS — minutes, not hours."
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="AI Safety Agent"

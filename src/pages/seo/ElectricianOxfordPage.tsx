@@ -571,7 +571,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional certification for Oxford electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting. Heritage, HMO, or commercial — certify it all on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting."
           icon={MapPin}
         />
       </>
@@ -588,9 +588,9 @@ export default function ElectricianOxfordPage() {
     <GuideTemplate
       localArea="Oxford"
       title="Electrician in Oxford | Local Electrical Guide"
-      description="Complete guide for electricians working in Oxford. SSEN DNO, university college electrical work, listed building challenges, Cowley new builds, HMO conversions, Westgate commercial development, and realistic Oxford pricing."
+      description="Complete guide for electricians working in Oxford. SSEN DNO, university college electrical work, listed building challenges, Cowley new builds…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Location Guide"

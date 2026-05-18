@@ -26,6 +26,7 @@ import {
   ArrowRight,
   Clock,
   BookOpenCheck,
+  Target,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { AM2ReadinessGauge } from './AM2ReadinessGauge';
@@ -226,7 +227,10 @@ export function AM2ReadinessDashboard({ onNavigateToTab }: AM2ReadinessDashboard
         </div>
         <div
           className={cn(
-            'relative grid auto-rows-[230px] sm:auto-rows-[260px] lg:auto-rows-[280px] gap-[2px]',
+            // Default `align-items: stretch` keeps same-row cards equal-
+            // height; natural row size means content drives the height
+            // and the footer can never clip.
+            'relative grid gap-[2px]',
             'bg-black border border-white/[0.08] rounded-2xl overflow-hidden',
             'grid-cols-1 sm:grid-cols-2'
           )}
@@ -324,6 +328,39 @@ export function AM2ReadinessDashboard({ onNavigateToTab }: AM2ReadinessDashboard
             </p>
             <div className="mt-3 inline-flex items-center gap-1.5 text-[12px] font-semibold text-elec-yellow">
               Start the day
+              <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+            </div>
+          </div>
+        </button>
+      </motion.div>
+
+      {/* Adaptive drill — the spaced-repetition loop. Pulls the apprentice's
+          weakest regs first based on am2_reg_attempts history. Only shows
+          something useful once they've answered some BS 7671 questions —
+          the empty state handles that case. Yellow-accented like the
+          Mock day because both are "killer practice" surfaces. */}
+      <motion.div variants={fadeUp}>
+        <button
+          type="button"
+          onClick={() => onNavigateToTab('drill')}
+          className="group w-full text-left rounded-2xl border border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/[0.05] to-elec-yellow/[0.01] hover:from-elec-yellow/[0.08] hover:to-elec-yellow/[0.02] transition-colors p-5 sm:p-6 touch-manipulation flex items-start gap-4"
+        >
+          <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-2xl bg-elec-yellow/[0.10] border border-elec-yellow/25 flex items-center justify-center shrink-0">
+            <Target className="h-6 w-6 text-elec-yellow" />
+          </div>
+          <div className="min-w-0 flex-1">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
+              Adaptive · personalised today
+            </div>
+            <h3 className="mt-1.5 text-[18px] sm:text-[20px] font-semibold text-white tracking-tight group-hover:text-elec-yellow transition-colors">
+              Drill your weakest regs
+            </h3>
+            <p className="mt-1.5 text-[12.5px] text-white/70 leading-relaxed max-w-md">
+              Spaced repetition with a twist — regs you got wrong while certain come back fastest.
+              8 questions, ranked by what'll move the needle for you today.
+            </p>
+            <div className="mt-3 inline-flex items-center gap-1.5 text-[12px] font-semibold text-elec-yellow">
+              Start the drill
               <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
             </div>
           </div>
@@ -430,9 +467,11 @@ function ModeCard({
     <button
       type="button"
       onClick={onTap}
-      className="group relative bg-[hsl(0_0%_10%)] hover:bg-elec-yellow/[0.04] transition-colors p-5 sm:p-6 text-left touch-manipulation flex flex-col h-full"
+      className="group relative bg-[hsl(0_0%_10%)] hover:bg-elec-yellow/[0.04] transition-colors p-5 sm:p-6 text-left touch-manipulation flex flex-col h-full min-h-[300px] sm:min-h-[320px] lg:min-h-[340px]"
     >
-      <div className="flex items-baseline justify-between gap-2">
+      {/* Top — eyebrow + status pill. flex-wrap so a long status doesn't
+          shove the eyebrow off-screen on narrow widths. */}
+      <div className="flex items-baseline justify-between gap-2 flex-wrap">
         <div className="flex items-baseline gap-2">
           <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
             {String(index + 1).padStart(2, '0')}
@@ -456,9 +495,14 @@ function ModeCard({
       <h3 className="mt-3 sm:mt-4 text-[18px] sm:text-[20px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors">
         {title}
       </h3>
-      <p className="mt-2 text-[12.5px] leading-relaxed text-white/60 max-w-[44ch]">{description}</p>
+      {/* Description — drop the max-w and constrain by line count instead.
+          Two lines on mobile, three on desktop keeps the card tidy
+          without ever clipping a sentence half-way through a word. */}
+      <p className="mt-2 text-[12.5px] leading-relaxed text-white/65 line-clamp-3">
+        {description}
+      </p>
 
-      <div className="flex-grow" />
+      <div className="flex-grow min-h-[8px]" />
 
       {/* Score bar */}
       <div className="mt-3 h-1 rounded-full bg-white/[0.06] overflow-hidden">
@@ -479,15 +523,18 @@ function ModeCard({
         />
       </div>
 
-      <div className="mt-3 flex items-center justify-between gap-3 pt-3 border-t border-white/[0.05]">
-        <span className="text-[11px] text-white/55 truncate tabular-nums">
+      {/* Footer — stacks vertically so the Open CTA is anchored to a
+          dedicated line and can never get clipped by long metadata.
+          On wider cards (lg+) we go inline since there's room. */}
+      <div className="mt-3 pt-3 border-t border-white/[0.05] flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2">
+        <span className="text-[11px] text-white/55 tabular-nums leading-tight">
           <span className={cn('font-semibold', scoreTone)}>{notStarted ? '—' : `${score}%`}</span>
           <span className="mx-1.5 text-white/25">·</span>
           {statusLabel}
           <span className="mx-1.5 text-white/25">·</span>
           {weight}% weight
         </span>
-        <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-elec-yellow shrink-0">
+        <span className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-elec-yellow shrink-0 self-start lg:self-auto">
           Open
           <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
         </span>

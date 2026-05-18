@@ -493,7 +493,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Produce EICR and EIC reports on site with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site certificate completion. EICR, EIC, and minor works certificates — all on your phone with AI assistance and instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site certificate completion. EICR, EIC…"
           icon={FileCheck2}
         />
       </>
@@ -508,10 +508,10 @@ const sections = [
 export default function EICRForNewBuildPage() {
   return (
     <GuideTemplate
-      title="EICR for New Build Properties UK | Do New Builds Need an EICR?"
-      description="New builds receive an EIC, not an EICR. Find out when new build properties need their first EICR, the difference between an EIC and an EICR, electrical snagging issues, and landlord obligations for letting a new build."
+      title="EICR for New Build Properties UK | Do New Builds Need an"
+      description="New builds receive an EIC, not an EICR. Find out when new build properties need their first EICR, the difference between an EIC and an EICR…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="New Build Guide"

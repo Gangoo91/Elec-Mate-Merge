@@ -471,7 +471,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote new build electrical packages efficiently"
-          description="Elec-Mate's quoting app handles per-plot pricing, outlet schedules, and specification levels. AI cost engineering validates your rates against current market data. 7-day free trial."
+          description="Elec-Mate's quoting app handles per-plot pricing, outlet schedules, and specification levels."
           icon={Calculator}
         />
       </>
@@ -486,10 +486,10 @@ const sections = [
 export default function NewBuildElectricalCostPage() {
   return (
     <GuideTemplate
-      title="New Build Electrical Cost Per m² 2026 | UK Price Guide"
-      description="How much does new build electrical installation cost per square metre in 2026? UK guide covering first fix, second fix, specification levels, NHBC standards, and realistic per m² rates from £35 to £85."
+      title="Average Cost Wiring New House 2026 | UK"
+      description="What's the real cost to wire a new house in 2026? Breakdown of first fix, second fix, and labour rates per m². Get accurate pricing from £35–£85/m²."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

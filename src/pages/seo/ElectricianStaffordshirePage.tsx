@@ -520,10 +520,10 @@ const sections = [
 export default function ElectricianStaffordshirePage() {
   return (
     <GuideTemplate
-      title="Electrician Staffordshire — Find NICEIC Registered Electricians 2024"
-      description="Find a registered electrician in Staffordshire. Covers Stoke-on-Trent, Stafford, Burton upon Trent, Lichfield, and Tamworth. NICEIC/NAPIT registered, Part P, DNO (National Grid ED), and local cost guide."
+      title="Electrician Staffordshire — Find NICEIC Registered"
+      description="Find a registered electrician in Staffordshire. Covers Stoke-on-Trent, Stafford, Burton upon Trent, Lichfield, and Tamworth."
       datePublished="2024-06-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Local Guide"

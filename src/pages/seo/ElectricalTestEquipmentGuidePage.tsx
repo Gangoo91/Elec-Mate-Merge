@@ -494,10 +494,10 @@ const sections = [
 export default function ElectricalTestEquipmentGuidePage() {
   return (
     <GuideTemplate
-      title="Electrical Test Equipment Guide — MFT, Clamp Meter, CAT Ratings, Calibration"
-      description="Complete UK buying guide for electricians: multifunction testers (Megger MFT1741, Fluke 1664FC), clamp meters, voltage indicators, CAT III vs CAT IV safety ratings, GS38 compliance, and calibration requirements."
+      title="Electrical Test Equipment Guide — MFT, Clamp Meter, CAT"
+      description="Complete UK buying guide for electricians: multifunction testers (Megger MFT1741, Fluke 1664FC), clamp meters, voltage indicators…"
       datePublished="2024-06-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Test Equipment"

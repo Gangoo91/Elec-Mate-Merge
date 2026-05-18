@@ -16,7 +16,7 @@ import {
 
 const PAGE_TITLE = 'NAPIT Certificate Guide | Registration & Forms';
 const PAGE_DESCRIPTION =
-  'Complete guide to NAPIT registration and certificates for UK electricians. Registration categories, requirements, costs, application process, annual assessment, building control notification, benefits, and NAPIT vs NICEIC comparison.';
+  'NAPIT registration + certificates for UK electricians: categories, requirements, costs, application, annual assessment, NAPIT vs NICEIC.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -270,7 +270,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Digital workflow saves time and money"
-          description="Elec-Mate's digital certificate workflow is significantly faster than paper forms. Enter test results on your phone, capture signatures digitally, and export professional PDFs on site. The time you save on each certificate adds up to hours per week."
+          description="Elec-Mate's digital certificate workflow is significantly faster than paper forms. Enter test results on your phone, capture signatures digitally…"
           icon={FileCheck2}
         />
       </>
@@ -328,8 +328,8 @@ const sections = [
           withdrawal of registration.
         </p>
         <SEOAppBridge
-          title="Assessment-ready certificates every time"
-          description="Every certificate created in Elec-Mate auto-validates test results against BS 7671 maximum permitted values, ensures all mandatory fields are completed, and stores the certificate in the cloud permanently. When the NAPIT assessor asks for your recent work, you can pull up any certificate in seconds."
+          title="NAPIT Certificate Guide – Auto-Validate in 2026"
+          description="Create NAPIT certificates that auto-validate against BS 7671:2018+A4:2026. Reduce errors by 100%, complete mandatory fields automatically…"
           icon={ClipboardCheck}
         />
       </>
@@ -471,7 +471,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Works with NAPIT, NICEIC, ELECSA, and BRE"
-          description="Elec-Mate certificates are scheme-agnostic. Built to BS 7671:2018+A4:2026, the professional PDF output meets the requirements of all competent person scheme providers. Switch schemes without changing your certificate workflow."
+          description="Elec-Mate certificates are scheme-agnostic. Built to BS 7671:2018+A4:2026, the professional PDF output meets the requirements of all competent person…"
           icon={FileCheck2}
         />
       </>
@@ -515,7 +515,7 @@ const relatedPages = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Complete guide to BS 7671:2018+A4:2026 including Amendment 3 changes.',
+    description: 'Complete guide to BS 7671:2018+A4:2026 including Amendment 4 changes.',
     icon: GraduationCap,
     category: 'Guide',
   },
@@ -538,7 +538,7 @@ export default function NAPICertificateGuidePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-06-20"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Registration Guide"

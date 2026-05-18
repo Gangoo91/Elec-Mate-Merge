@@ -21,10 +21,10 @@ import {
 export default function ElectricianAppForAndroidPage() {
   return (
     <ComparisonTemplate
-      title="Best Electrician App for Android 2026 | Top Picks"
-      description="Compare the best electrician apps for Android in 2026. Elec-Mate vs iCertifi vs CertsApp vs Easy EICR — certificates, calculators, AI tools, training, and offline support compared for Android devices."
+      title="Android Electrician Apps: 4 Tools Compared 2026"
+      description="Compare 4 Android electrician apps for certificates, EICR reports, and offline access. Elec-Mate, iCertifi, CertsApp…"
       datePublished="2026-02-03"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Comparisons', href: '/compare' },
         { label: 'Electrician App for Android', href: '/compare/electrician-app-android' },
@@ -157,7 +157,7 @@ export default function ElectricianAppForAndroidPage() {
               </p>
               <SEOAppBridge
                 title="Install in Seconds — No App Store Needed"
-                description="Visit elec-mate.com on your Android browser, tap 'Add to Home Screen', and you are done. Runs like a native app with offline support. Always the latest version without manual updates."
+                description="Visit elec-mate.com on your Android browser, tap 'Add to Home Screen', and you are done. Runs like a native app with offline support."
                 icon={Download}
               />
               <p>
@@ -191,7 +191,7 @@ export default function ElectricianAppForAndroidPage() {
               </p>
               <SEOAppBridge
                 title="Your Android Phone Becomes Your Best Tool"
-                description="AI Board Scanner uses your camera. Voice Test Entry uses your microphone. 70+ calculators replace reference books. 46+ courses turn commute time into study time. All in one app."
+                description="AI Board Scanner uses your camera. Voice Test Entry uses your microphone. 70+ calculators replace reference books."
                 icon={Smartphone}
               />
               <p>

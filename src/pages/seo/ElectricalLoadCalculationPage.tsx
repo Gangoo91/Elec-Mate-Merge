@@ -507,10 +507,10 @@ const sections = [
 export default function ElectricalLoadCalculationPage() {
   return (
     <GuideTemplate
-      title="Electrical Load Calculation — UK Guide 2024 | Diversity Factors, Maximum Demand, Cable Sizing"
-      description="How to calculate electrical load for domestic and commercial premises. Diversity factors from BS 7671 Appendix 1, maximum demand calculation, cable sizing, three-phase vs single-phase, and IET On-Site Guide methods with worked examples."
+      title="Electrical Load Calculation — UK Guide 2024 | Diversity"
+      description="How to calculate electrical load for domestic and commercial premises. Diversity factors from BS 7671 Appendix 1, maximum demand calculation…"
       datePublished="2024-06-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Technical Guide"

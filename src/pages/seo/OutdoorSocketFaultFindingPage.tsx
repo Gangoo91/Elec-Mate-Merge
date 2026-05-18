@@ -600,10 +600,10 @@ const sections = [
 export default function OutdoorSocketFaultFindingPage() {
   return (
     <GuideTemplate
-      title="Outdoor Socket Not Working | External Socket Fault Finding UK"
-      description="Outdoor socket fault finding guide for UK homeowners and electricians. RCD protection requirements, IP ratings, weatherproof requirements, circuit faults, earth faults, water ingress, and 2026 repair costs."
+      title="Outdoor Socket Not Working | External Socket Fault Finding"
+      description="Outdoor socket fault finding guide for UK homeowners and electricians. RCD protection requirements, IP ratings, weatherproof requirements…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Fault Finding Guide"

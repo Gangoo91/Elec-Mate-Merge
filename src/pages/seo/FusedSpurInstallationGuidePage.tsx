@@ -475,9 +475,9 @@ export default function FusedSpurInstallationGuidePage() {
   return (
     <GuideTemplate
       title="Fused Spur Installation Guide — UK FCU Wiring Guide 2024"
-      description="Complete guide to installing fused connection units (FCUs): types, fuse ratings, when to use a fused spur, BS 7671 requirements, and step-by-step wiring for dishwashers, extractor fans, and fixed appliances."
+      description="Complete guide to installing fused connection units (FCUs): types, fuse ratings, when to use a fused spur, BS 7671 requirements…"
       datePublished="2024-06-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Wiring Guide"

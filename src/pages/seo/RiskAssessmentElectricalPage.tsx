@@ -23,7 +23,7 @@ import {
 
 const PAGE_TITLE = 'Risk Assessment for Electrical Work | Template & Guide';
 const PAGE_DESCRIPTION =
-  'Complete guide to risk assessment for electrical work. Legal requirements under the Management of Health and Safety at Work Regulations 1999, HSE five-step process, electrical hazards, risk matrix, control measures, dynamic risk assessment, and RAMS explained. For UK electricians.';
+  'Risk assessment for electrical work: MHSWR 1999 legal duties, HSE five-step process, hazards, risk matrix, control measures, dynamic RAs, RAMS.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -217,7 +217,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AI generates legally compliant risk assessments"
-          description="Elec-Mate's AI Health and Safety agent produces risk assessments that address all relevant legislation — MHSWR 1999, EAWR 1989, CDM 2015, COSHH 2002, and more. Describe your job and get a complete, site-specific assessment in seconds."
+          description="Elec-Mate's AI Health and Safety agent produces risk assessments that address all relevant legislation — MHSWR 1999, EAWR 1989, CDM 2015, COSHH 2002…"
           icon={Brain}
         />
       </>
@@ -510,7 +510,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="AI applies the hierarchy of controls automatically"
-          description="Elec-Mate's AI Health and Safety agent identifies hazards and applies the hierarchy of controls to each one. Elimination and engineering controls are prioritised over PPE, producing risk assessments that demonstrate best practice."
+          description="Elec-Mate's AI Health and Safety agent identifies hazards and applies the hierarchy of controls to each one."
           icon={ShieldCheck}
         />
       </>
@@ -581,7 +581,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Generate complete RAMS packs in under 60 seconds"
-          description="Elec-Mate's RAMS Generator and AI Health and Safety agent create site-specific RAMS packs from a plain-English job description. Risk assessment with matrix scoring, method statement with step-by-step procedures, COSHH assessments where relevant. Professional PDF export with your branding."
+          description="Elec-Mate's RAMS Generator and AI Health and Safety agent create site-specific RAMS packs from a plain-English job description."
           icon={FileCheck2}
         />
       </>
@@ -644,7 +644,7 @@ export default function RiskAssessmentElectricalPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-01-20"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Hub"

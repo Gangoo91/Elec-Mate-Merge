@@ -563,7 +563,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="The complete electrician's toolkit"
-          description="From plug wiring references to EICR certificates, from cable sizing calculators to AI-powered quoting. Elec-Mate is the all-in-one app for UK electricians. 7-day free trial."
+          description="From plug wiring references to EICR certificates, from cable sizing calculators to AI-powered quoting."
           icon={Plug}
         />
       </>
@@ -579,9 +579,9 @@ export default function HowToWireAPlugPage() {
   return (
     <GuideTemplate
       title="How to Wire a Plug | Step-by-Step Guide UK"
-      description="Step-by-step guide to wiring a UK 13A plug. Wire colours explained (brown live, blue neutral, green/yellow earth), fuse selection (3A vs 13A), correct strip lengths, and common mistakes to avoid."
+      description="Step-by-step guide to wiring a UK 13A plug. Wire colours explained (brown live, blue neutral, green/yellow earth), fuse selection (3A vs 13A)…"
       datePublished="2025-10-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="How-To Guide"

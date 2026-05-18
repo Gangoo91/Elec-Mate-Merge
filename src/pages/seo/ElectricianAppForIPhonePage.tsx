@@ -22,9 +22,9 @@ export default function ElectricianAppForiPhonePage() {
   return (
     <ToolTemplate
       title="Best Electrician App for iPhone 2026 | Elec-Mate iOS"
-      description="Elec-Mate is the best electrician app for iPhone in 2026. Native iOS experience with Face ID, 16 certificate types, AI board scanner, 70+ BS 7671 calculators, 46+ training courses, full offline mode, and professional business tools. Built for UK electricians and apprentices."
+      description="Elec-Mate is the best electrician app for iPhone in 2026. Native iOS experience with Face ID, 16 certificate types, AI board scanner…"
       datePublished="2026-01-12"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Electrician App for iPhone', href: '/tools/electrician-app-iphone' },
@@ -251,7 +251,7 @@ export default function ElectricianAppForiPhonePage() {
           appBridge: {
             title: '46+ Courses on Your iPhone',
             description:
-              'Video lessons, interactive quizzes, flashcards, and mock exams. Download courses for offline study. Progress syncs automatically. Start your 7-day free trial.',
+              'Video lessons, interactive quizzes, flashcards, and mock exams. Download courses for offline study. Progress syncs automatically.',
             icon: GraduationCap,
           },
         },

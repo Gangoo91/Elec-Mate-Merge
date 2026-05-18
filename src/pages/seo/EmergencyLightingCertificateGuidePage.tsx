@@ -369,7 +369,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Monthly emergency lighting test records on your phone"
-          description="Elec-Mate's emergency lighting module lets you record monthly test results on site. Tap through each luminaire, record pass or fail, and the app tracks which luminaires need attention. Automatic scheduling reminders ensure you never miss a test."
+          description="Elec-Mate's emergency lighting module lets you record monthly test results on site. Tap through each luminaire, record pass or fail…"
           icon={Clock}
         />
       </>
@@ -613,7 +613,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Stay compliant with digital emergency lighting records"
-          description="Elec-Mate's emergency lighting module ensures you never miss a test. Automatic monthly and annual test reminders, digital record keeping, and professional PDF reports. Demonstrate compliance to the fire authority with one tap."
+          description="Elec-Mate's emergency lighting module ensures you never miss a test. Automatic monthly and annual test reminders, digital record keeping…"
           icon={ShieldCheck}
         />
       </>
@@ -629,9 +629,9 @@ export default function EmergencyLightingCertificateGuidePage() {
   return (
     <GuideTemplate
       title="Emergency Lighting Certificate Guide | BS 5266 UK"
-      description="Complete guide to emergency lighting certificate requirements under BS 5266. Covers completion certificates, verification, monthly and annual testing records, logbook requirements, and legal obligations for UK premises."
+      description="Complete guide to emergency lighting certificate requirements under BS 5266. Covers completion certificates, verification…"
       datePublished="2026-02-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Certificates"

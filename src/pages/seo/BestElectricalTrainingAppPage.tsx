@@ -20,9 +20,9 @@ export default function BestElectricalTrainingAppPage() {
   return (
     <GuideTemplate
       title="Best Electrical Training App UK 2026 | Top Study Apps"
-      description="Compare the best electrical training apps for UK electricians and apprentices in 2026. Elec-Mate, IET apps, BS 7671 apps, YouTube, and online course providers reviewed. Practice questions, mock exams, AI tutoring, flashcards, and progress tracking compared."
+      description="Compare the best electrical training apps for UK electricians and apprentices in 2026. Elec-Mate, IET apps, BS 7671 apps, YouTube…"
       datePublished="2026-01-28"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'Best Electrical Training App', href: '/guides/best-electrical-training-app' },
@@ -64,7 +64,7 @@ export default function BestElectricalTrainingAppPage() {
             <>
               <p>
                 The electrical industry requires continuous learning. BS 7671 is amended regularly —
-                Amendment 3 (A4:2026) was issued in July 2024 — and new technologies like EV
+                Amendment 4 (A4:2026) was issued in July 2024 — and new technologies like EV
                 chargers, battery storage, and solar PV installations require electricians to
                 constantly update their knowledge.
               </p>
@@ -175,7 +175,7 @@ export default function BestElectricalTrainingAppPage() {
               </ul>
               <SEOAppBridge
                 title="46+ Training Courses — Built Into Elec-Mate"
-                description="2,000+ practice questions, flashcards with spaced repetition, mock exams, EPA simulator, AM2 simulator, and AI study assistant. All included in your subscription alongside certificates, calculators, and business tools."
+                description="2,000+ practice questions, flashcards with spaced repetition, mock exams, EPA simulator, AM2 simulator, and AI study assistant."
                 icon={GraduationCap}
               />
               <p>
@@ -448,7 +448,7 @@ export default function BestElectricalTrainingAppPage() {
               </p>
               <SEOAppBridge
                 title="Study and Work in One App"
-                description="46+ courses, 2,000+ questions, flashcards, mock exams, EPA simulator, AM2 simulator — plus 16 certificate types, 70+ calculators, and AI tools. All from £5.99/month."
+                description="46+ courses, 2,000+ questions, flashcards, mock exams, EPA simulator, AM2 simulator — plus 16 certificate types, 70+ calculators, and AI tools."
                 icon={GraduationCap}
               />
               <p>
@@ -472,7 +472,7 @@ export default function BestElectricalTrainingAppPage() {
         {
           question: 'Is there an app for 18th Edition revision?',
           answer:
-            'Yes. Elec-Mate includes a complete 18th Edition course covering BS 7671:2018+A4:2026, including the changes introduced by Amendment 3 (A4:2026) such as Regulation 530.3.2 for bidirectional and unidirectional devices. The course includes structured learning content, practice questions, and flashcards covering all parts of BS 7671 — from fundamental principles and general characteristics through to inspection and testing. You can also use the AI study assistant to ask questions about specific regulations and receive detailed explanations. The IET also offers digital versions of the On-Site Guide and Guidance Notes, which are valuable reference tools but do not include practice questions or exam simulation.',
+            'Yes. Elec-Mate includes a complete 18th Edition course covering BS 7671:2018+A4:2026, including the changes introduced by Amendment 4 (A4:2026) such as Regulation 530.3.2 for bidirectional and unidirectional devices. The course includes structured learning content, practice questions, and flashcards covering all parts of BS 7671 — from fundamental principles and general characteristics through to inspection and testing. You can also use the AI study assistant to ask questions about specific regulations and receive detailed explanations. The IET also offers digital versions of the On-Site Guide and Guidance Notes, which are valuable reference tools but do not include practice questions or exam simulation.',
         },
         {
           question: 'How can I prepare for the AM2 assessment?',

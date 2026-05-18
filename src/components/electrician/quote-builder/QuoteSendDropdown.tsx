@@ -14,6 +14,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { openExternalUrl } from '@/utils/open-external-url';
+import { Capacitor } from '@capacitor/core';
+import { sharePdfBytesFromUrlToWhatsAppWeb } from '@/utils/share-pdf-to-whatsapp-web';
 
 interface QuoteSendDropdownProps {
   quote: Quote;
@@ -406,7 +408,10 @@ export const QuoteSendDropdown = ({
         ? `${window.location.origin}/public-quote/${publicToken}`
         : null;
 
-      const message = `📋 *Quote ${freshQuote.quote_number}*
+      const clientPhone = clientData?.phone;
+
+      if (Capacitor.isNativePlatform()) {
+        const message = `📋 *Quote ${freshQuote.quote_number}*
 
 Dear ${clientName},
 
@@ -423,38 +428,70 @@ If you have any questions, please don't hesitate to contact us.
 Best regards,
 ${companyName}`;
 
-      // Step 6: Build WhatsApp URL
-      const clientPhone = clientData?.phone;
+        let whatsappUrl: string;
+        if (clientPhone && (clientPhone.startsWith('+44') || clientPhone.startsWith('44'))) {
+          const cleanPhone = clientPhone.replace(/\s/g, '').replace(/^44/, '+44');
+          whatsappUrl = `https://wa.me/${cleanPhone.replace('+', '')}?text=${encodeURIComponent(message)}`;
+        } else {
+          whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+        }
 
-      let whatsappUrl: string;
-      if (clientPhone && (clientPhone.startsWith('+44') || clientPhone.startsWith('44'))) {
-        // UK number - direct to client
-        const cleanPhone = clientPhone.replace(/\s/g, '').replace(/^44/, '+44');
-        whatsappUrl = `https://wa.me/${cleanPhone.replace('+', '')}?text=${encodeURIComponent(message)}`;
-      } else {
-        // No number or international - share URL only
-        whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+        // ELE-772 — Clear loading state BEFORE launching WhatsApp.
+        setIsSharingWhatsApp(false);
+
+        toast({
+          title: 'Opening WhatsApp',
+          description: 'WhatsApp will open with your quote message',
+          variant: 'success',
+          duration: 3000,
+        });
+
+        onSuccess?.();
+
+        // Open WhatsApp (NOT the PDF directly). No state changes after this point.
+        await openExternalUrl(whatsappUrl);
+        return;
       }
 
-      // ELE-772 — Clear loading state BEFORE launching WhatsApp.
-      // The PDF URL is already resolved at this point, so there's no reason to stay
-      // in "Loading…" while the WebView pauses for WhatsApp. If we leave the state true
-      // until after openExternalUrl, iOS can pause the WKWebView before the finally block
-      // runs and the state update is lost forever — UI stuck on "Loading…".
-      setIsSharingWhatsApp(false);
+      // Web: attach the actual PDF, never a link in the body
+      const webMessage = `📋 *Quote ${freshQuote.quote_number}*
+
+Dear ${clientName},
+
+Please find your quote for ${jobTitle}
+
+💰 Total Amount: ${formatCurrency(totalAmount)}
+Valid until: ${validityDate}
+
+${acceptanceLink ? `✍️ Review & Accept Online:\n${acceptanceLink}\n\n` : ''}If you have any questions, please don't hesitate to contact us.
+
+Best regards,
+${companyName}`;
+
+      const result = await sharePdfBytesFromUrlToWhatsAppWeb({
+        pdfUrl: pdfDownloadUrl,
+        filename: `Quote-${freshQuote.quote_number || freshQuote.id}.pdf`,
+        message: webMessage,
+        recipientPhone: clientPhone,
+        title: `Quote ${freshQuote.quote_number}`,
+      });
 
       toast({
-        title: 'Opening WhatsApp',
-        description: 'WhatsApp will open with your quote message',
+        title: result.mode === 'web-share' ? 'Opening share sheet' : 'PDF downloaded',
+        description:
+          result.mode === 'web-share'
+            ? 'Pick WhatsApp to send the PDF.'
+            : 'PDF saved to your Downloads — attach it from your WhatsApp chat.',
         variant: 'success',
         duration: 3000,
       });
 
       onSuccess?.();
-
-      // Step 7: Open WhatsApp (NOT the PDF directly). No state changes after this point.
-      await openExternalUrl(whatsappUrl);
     } catch (error: any) {
+      if (error?.name === 'AbortError') {
+        setIsSharingWhatsApp(false);
+        return;
+      }
       toast({
         title: 'Error',
         description: error.message || 'Failed to prepare quote for WhatsApp',

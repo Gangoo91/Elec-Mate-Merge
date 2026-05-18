@@ -512,7 +512,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage storage heater installations with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site Minor Works Certificates, EIC certificates, and professional quoting. 7-day free trial, cancel anytime."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site Minor Works Certificates, EIC certificates, and professional quoting."
           icon={Zap}
         />
       </>
@@ -527,10 +527,10 @@ const sections = [
 export default function ElectricStorageHeaterInstallationPage() {
   return (
     <GuideTemplate
-      title="Electric Storage Heater Installation UK | Modern Storage Heaters"
-      description="Complete guide to electric storage heater installation in the UK. Modern vs old heaters (Dimplex Quantum, Elnur Ecombi), dedicated circuit requirements, Economy 7/10 wiring, thermostat and charge control wiring, replacement costs (£300–£700 per heater + installation), and when storage heaters make sense."
+      title="Electric Storage Heater Installation UK | Modern Storage"
+      description="Complete guide to electric storage heater installation in the UK. Modern vs old heaters (Dimplex Quantum, Elnur Ecombi), dedicated circuit requirements…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Heating Installation Guide"

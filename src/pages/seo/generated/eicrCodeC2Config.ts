@@ -1,14 +1,14 @@
 import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuidePage';
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const eicrCodeC2Config: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-code-c2-potentially-dangerous',
   title:
-    'EICR Code C2 — Potentially Dangerous | Urgent Remedial Action | Elec-Mate',
+    'EICR Code C2 — Potentially Dangerous | Urgent Remedial',
   description:
-    'EICR code C2 explained: when to use it (and when not to), real-world examples from UK installations, why C2 makes the EICR "unsatisfactory", and what the responsible person must do. BS 7671:2018+A4:2026 and IET GN3 aligned.',
+    'EICR code C2 explained: when to use it (and when not to), real-world examples from UK installations, why C2 makes the EICR "unsatisfactory"…',
   datePublished: published,
   dateModified: modified,
   readingTime: 10,

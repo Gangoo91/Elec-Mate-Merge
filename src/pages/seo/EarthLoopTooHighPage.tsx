@@ -219,7 +219,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Zs calculator — instant lookup on site"
-          description="Select the protective device type and rating, and Elec-Mate's Zs calculator shows the BS 7671 maximum earth loop impedance. Enter your measured value and the app tells you instantly whether the circuit passes or fails — including the 80% temperature correction."
+          description="Select the protective device type and rating, and Elec-Mate's Zs calculator shows the BS 7671 maximum earth loop impedance."
           icon={Calculator}
         />
       </>
@@ -520,7 +520,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Record Zs readings by voice — hands-free on site"
-          description="With Elec-Mate's voice test entry, speak your earth loop impedance readings and the app fills in the schedule of test results. Say 'Ring 1, Zs 0.89' and the value is recorded, validated against BS 7671, and flagged if it exceeds the maximum."
+          description="With Elec-Mate's voice test entry, speak your earth loop impedance readings and the app fills in the schedule of test results."
           icon={Gauge}
         />
       </>
@@ -597,9 +597,9 @@ export default function EarthLoopTooHighPage() {
   return (
     <GuideTemplate
       title="Earth Loop Impedance Too High | How to Fix It"
-      description="Complete guide to diagnosing and fixing high earth fault loop impedance (Zs). Covers BS 7671 maximum values, loose connections, long cable runs, undersized CPCs, supplementary bonding, and practical solutions for UK electricians."
+      description="Complete guide to diagnosing and fixing high earth fault loop impedance (Zs). Covers BS 7671 maximum values, loose connections, long cable runs…"
       datePublished="2025-06-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting"

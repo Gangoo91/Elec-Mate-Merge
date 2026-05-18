@@ -62,37 +62,37 @@ const features = [
     icon: Calculator,
     title: 'Balanced & Unbalanced Modes',
     description:
-      'Switch between balanced three-phase calculations (single formula) and per-phase unbalanced calculations. Enter individual phase currents or a single balanced value.',
+      'Switch between balanced three-phase calculations (single formula) and per-phase unbalanced calculations.',
   },
   {
     icon: Activity,
     title: 'Star & Delta Configurations',
     description:
-      'Automatically handles the voltage and current relationships for both star (wye) and delta connected loads. Select the configuration and the correct formulas are applied.',
+      'Automatically handles the voltage and current relationships for both star (wye) and delta connected loads.',
   },
   {
     icon: Zap,
     title: 'Power Triangle Display',
     description:
-      'Shows real power (kW), reactive power (kVAr), and apparent power (kVA) with power factor. Understand the full power picture for any three-phase installation.',
+      'Shows real power (kW), reactive power (kVAr), and apparent power (kVA) with power factor. Understand the full power picture for any three-phase…',
   },
   {
     icon: BarChart3,
     title: 'Phase Balance Indicator',
     description:
-      'For unbalanced loads, shows the current on each phase and the neutral current. Highlights imbalances that could cause problems with voltage regulation or neutral overloading.',
+      'For unbalanced loads, shows the current on each phase and the neutral current. Highlights imbalances that could cause problems with voltage regulation or…',
   },
   {
     icon: Settings,
     title: 'Motor Starting Calculations',
     description:
-      'Calculate motor starting current (typically 6-8 times full load current) to check voltage drop and protective device suitability during direct-on-line starting.',
+      'Calculate motor starting current (typically 6-8 times full load current) to check voltage drop and protective device suitability during direct-on-line…',
   },
   {
     icon: Shield,
     title: 'BS 7671:2018+A4:2026 Compliant',
     description:
-      'All calculations follow the current 18th Edition wiring regulations including Amendment 3. Three-phase voltage drop uses the correct three-phase mV/A/m values from Appendix 4.',
+      'All calculations follow the current 18th Edition wiring regulations including Amendment 4. Three-phase voltage drop uses the correct three-phase mV/A/m…',
   },
 ];
 
@@ -102,7 +102,7 @@ const softwareAppSchema = {
   applicationCategory: 'UtilitiesApplication',
   operatingSystem: 'Web, iOS, Android',
   description:
-    'Calculate three-phase power, current, and voltage for balanced and unbalanced loads. Star and delta configurations for commercial and industrial electrical work.',
+    'Calculate three-phase power, current, and voltage for balanced and unbalanced loads. Star and delta configurations for commercial and industrial…',
   offers: {
     '@type': 'Offer',
     price: '0',
@@ -127,7 +127,7 @@ export default function ThreePhasePowerCalculatorPage() {
   useSEO({
     title: 'Three Phase Power Calculator | Electrical Power Calculations',
     description:
-      'Calculate three-phase power, current, and voltage for balanced and unbalanced loads. Star and delta configurations. Essential for commercial and industrial electrical work.',
+      'Calculate three-phase power, current, and voltage for balanced and unbalanced loads. Star and delta configurations.',
   });
 
   return (
@@ -519,6 +519,26 @@ export default function ThreePhasePowerCalculatorPage() {
       <section className="px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <RecentReviews />
+        </div>
+      </section>
+
+      
+
+      {/* Related calculators — peer surface for internal-link health.
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical calculators</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/guides/single-phase-vs-three-phase">Single Phase vs Three Phase Power</SEOInternalLink>
+            <SEOInternalLink href="/guides/three-phase-calculations">Three Phase Calculations</SEOInternalLink>
+            <SEOInternalLink href="/guides/three-phase-installation">Three Phase Installation Guide</SEOInternalLink>
+            <SEOInternalLink href="/guides/testing-three-phase-installation">Testing a Three Phase Installation</SEOInternalLink>
+            <SEOInternalLink href="/guides/three-phase-installation-cost">3-Phase Installation Cost UK 2026</SEOInternalLink>
+            <SEOInternalLink href="/tools/cable-volt-drop-three-phase">Three Phase Voltage Drop Calculator</SEOInternalLink>
+            <SEOInternalLink href="/guides/no-power-to-sockets">No Power to Sockets</SEOInternalLink>
+            <SEOInternalLink href="/tools/power-consumption-calculator">Power Consumption Calculator</SEOInternalLink>
+          </div>
         </div>
       </section>
 

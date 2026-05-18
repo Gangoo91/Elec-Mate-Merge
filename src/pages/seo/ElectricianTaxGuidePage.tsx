@@ -281,7 +281,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Never miss an allowable expense again"
-          description="Elec-Mate's expenses tracker captures every receipt, categorises it automatically, and gives you a real-time profit figure. When your accountant asks for your records, export everything in one tap."
+          description="Elec-Mate's expenses tracker captures every receipt, categorises it automatically, and gives you a real-time profit figure."
           icon={Receipt}
         />
       </>
@@ -627,7 +627,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Track every penny — income, expenses, and profit"
-          description="Elec-Mate gives you a complete financial picture of your business. Capture receipts, send invoices, track cash flow, and see your real-time profit. Export everything for your accountant. 7-day free trial."
+          description="Elec-Mate gives you a complete financial picture of your business. Capture receipts, send invoices, track cash flow, and see your real-time profit."
           icon={TrendingUp}
         />
       </>
@@ -644,9 +644,9 @@ export default function ElectricianTaxGuidePage() {
     <GuideTemplate
       localArea="Tax Guide Uk"
       title="Electrician Tax Guide UK 2026 | Self-Employed & Ltd"
-      description="Complete UK tax guide for self-employed electricians and limited companies. Covers self-assessment, allowable expenses, mileage, tools, CIS deductions, VAT threshold, and record keeping for HMRC."
+      description="Complete UK tax guide for self-employed electricians and limited companies. Covers self-assessment, allowable expenses, mileage, tools, CIS deductions…"
       datePublished="2026-01-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Tax Guide"

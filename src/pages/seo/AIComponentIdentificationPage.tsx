@@ -18,9 +18,9 @@ export default function AIComponentIdentificationPage() {
   return (
     <ToolTemplate
       title="AI Component ID | Photo Scanner Tool | Elec-Mate"
-      description="Point your phone camera at any electrical component and Elec-Mate's AI identifies it instantly. Get specifications, BS 7671 compliance details, compatible replacements, and supplier pricing — all from a single photo."
+      description="Point your phone camera at any electrical component and Elec-Mate's AI identifies it instantly. UK-spec accessories, MCBs, RCDs, conduit, more."
       datePublished="2026-01-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       toolPath="/tools/ai-component-identification"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
@@ -107,7 +107,7 @@ export default function AIComponentIdentificationPage() {
           appBridge: {
             title: 'AI Component Identifier — Built Into Elec-Mate',
             description:
-              'Photograph any electrical component and the AI identifies it instantly. Manufacturer, model, specifications, and compatible replacements with trade pricing. No separate app needed.',
+              'Photograph any electrical component and the AI identifies it instantly. Manufacturer, model, specifications…',
             icon: Camera,
           },
         },
@@ -246,7 +246,7 @@ export default function AIComponentIdentificationPage() {
               </p>
               <SEOAppBridge
                 title="Component to Quote in 60 Seconds"
-                description="Identify a component, see replacement options with trade pricing, and generate a professional quotation for the customer — all from one photograph. The AI Component Identifier integrates with the Cost Engineer for instant remedial quotes."
+                description="Identify a component, see replacement options with trade pricing, and generate a professional quotation for the customer — all from one photograph."
                 icon={Package}
               />
             </>
@@ -350,25 +350,25 @@ export default function AIComponentIdentificationPage() {
           icon: ScanLine,
           title: 'Full Specification Data',
           description:
-            'Breaking capacity, disconnection characteristics, rated current, voltage rating, IP rating, terminal sizes, and physical dimensions for every identified component.',
+            'Breaking capacity, disconnection characteristics, rated current, voltage rating, IP rating, terminal sizes…',
         },
         {
           icon: RefreshCw,
           title: 'Replacement Finder',
           description:
-            'Compatible replacements from all manufacturers with current-production alternatives for obsolete devices. Cross-referenced for electrical and physical compatibility.',
+            'Compatible replacements from all manufacturers with current-production alternatives for obsolete devices.',
         },
         {
           icon: Package,
           title: 'Trade Pricing',
           description:
-            'Current UK trade pricing from major wholesalers shown alongside each replacement option. Generate remedial work quotes directly from identification results.',
+            'Current UK trade pricing from major wholesalers shown alongside each replacement option. Generate remedial work quotes directly from identification…',
         },
         {
           icon: ShieldCheck,
           title: 'BS 7671 Compliance Data',
           description:
-            'Every identified component includes BS 7671:2018+A4:2026 compliance information — applicable regulations, required characteristics, and any restrictions on use.',
+            'Every identified component includes BS 7671:2018+A4:2026 compliance information — applicable regulations, required characteristics…',
         },
       ]}
       featuresHeading="Component Identifier Features"

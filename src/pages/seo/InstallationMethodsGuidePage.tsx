@@ -705,8 +705,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Complete EICs and EICRs with full installation method documentation"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion with installation method recording, AI board scanning, and instant PDF export. 7-day free trial."
+          title="Complete EICs and EICRs with full installation method"
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion with installation method recording, AI board scanning…"
           icon={FileCheck2}
         />
       </>
@@ -722,9 +722,9 @@ export default function InstallationMethodsGuidePage() {
   return (
     <GuideTemplate
       title="Cable Installation Methods BS 7671 | Reference Methods UK"
-      description="Complete guide to cable installation reference methods under BS 7671. Methods A, B, C, E, F and G explained with correction factors for grouping, ambient temperature, and thermal insulation. Practical UK examples included."
+      description="Complete guide to cable installation reference methods under BS 7671. Methods A, B, C, E, F and G explained with correction factors for grouping…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Wiring Guide"

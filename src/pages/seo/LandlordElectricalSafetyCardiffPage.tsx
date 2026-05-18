@@ -687,7 +687,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your landlord EICR business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -703,9 +703,9 @@ export default function LandlordElectricalSafetyCardiffPage() {
   return (
     <GuideTemplate
       title="Landlord Electrical Safety Cardiff | EICR Wales Landlords"
-      description="Landlord electrical safety requirements in Cardiff under the Renting Homes (Wales) Act 2022. Welsh law explained, Cardiff Council Shared Regulatory Services enforcement, HMO requirements for Cathays and Roath student properties, rubber wiring and TT earthing issues, tenant rights, and EICR costs for 2026."
+      description="Landlord electrical safety requirements in Cardiff under the Renting Homes (Wales) Act 2022. Welsh law explained…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Landlord Guide"

@@ -230,7 +230,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Labour Rate Calculator"
-          description="Build your charge-out rate from first principles. Enter your costs and Elec-Mate calculates the minimum rate you need to charge to cover everything and make a profit."
+          description="Build your charge-out rate from first principles. Enter your costs and Elec-Mate calculates the minimum rate you need to charge to cover everything and…"
           icon={Calculator}
         />
       </>
@@ -545,7 +545,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AI-Powered Quoting"
-          description="Enter the job details and Elec-Mate calculates labour, materials, overheads, and profit. Generate professional PDF quotes in minutes and send them to clients from your phone."
+          description="Enter the job details and Elec-Mate calculates labour, materials, overheads, and profit. Generate professional PDF quotes in minutes and send them to…"
           icon={Calculator}
         />
       </>
@@ -611,9 +611,9 @@ export default function ElectricalProjectCostEstimatorPage() {
   return (
     <BusinessTemplate
       title="Electrical Project Cost Estimator | Quoting Tool"
-      description="Electrical project cost estimator and quoting tool. Calculate labour rates, materials markup, overhead recovery, contingency, and profit margins. Generate professional quotes in minutes with Elec-Mate."
+      description="Electrical project cost estimator and quoting tool. Calculate labour rates, materials markup, overhead recovery, contingency, and profit margins."
       datePublished="2026-01-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Business Tools"

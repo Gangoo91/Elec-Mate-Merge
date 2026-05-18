@@ -22,7 +22,7 @@ import {
 
 const PAGE_TITLE = 'HNC Electrical Course | Higher National Certificate Guide';
 const PAGE_DESCRIPTION =
-  'Complete guide to the HNC in Electrical and Electronic Engineering for UK electricians. Entry requirements, modules, part-time study options, career benefits, and how it compares to NVQ Level 3 and degree pathways. Study support with AI tutor.';
+  'HNC in Electrical & Electronic Engineering: entry requirements, modules, part-time study, career benefits, HNC vs NVQ L3 vs degree. AI tutor.';
 
 const breadcrumbs = [
   { label: 'Training', href: '/training' },
@@ -87,32 +87,32 @@ const modules = [
   {
     title: 'Engineering Mathematics for Electricians',
     description:
-      'Algebra, trigonometry, calculus, complex numbers, and their application to electrical circuits. This module supports the most challenging aspect of HNC study for returning electricians.',
+      'Algebra, trigonometry, calculus, complex numbers, and their application to electrical circuits.',
   },
   {
     title: 'Electrical and Electronic Principles',
     description:
-      'DC and AC circuit analysis, network theorems (Kirchhoff, Thevenin, Norton), power in AC circuits, three-phase systems, transformers, and semiconductor devices.',
+      'DC and AC circuit analysis, network theorems (Kirchhoff, Thevenin, Norton), power in AC circuits, three-phase systems, transformers…',
   },
   {
     title: 'Electrical Installation and Design',
     description:
-      'Design calculations for electrical installations — cable sizing, voltage drop, fault current, discrimination, and compliance with BS 7671. Design software introduction.',
+      'Design calculations for electrical installations — cable sizing, voltage drop, fault current, discrimination, and compliance with BS 7671.',
   },
   {
     title: 'Control Systems and Automation',
     description:
-      'Open-loop and closed-loop control, PID controllers, PLCs, motor control, variable speed drives, and industrial automation. Links to instrumentation and BMS systems.',
+      'Open-loop and closed-loop control, PID controllers, PLCs, motor control, variable speed drives, and industrial automation.',
   },
   {
     title: 'Engineering Project Management',
     description:
-      'Project planning, Gantt charts, critical path analysis, cost control, quality management, risk management, and stakeholder communication. Applicable to electrical contracting projects.',
+      'Project planning, Gantt charts, critical path analysis, cost control, quality management, risk management, and stakeholder communication.',
   },
   {
     title: 'Professional Development and Study Skills',
     description:
-      'Academic writing, research methods, referencing, time management, and professional registration pathways (EngTech, IEng). Support for returning students adapting to academic study.',
+      'Academic writing, research methods, referencing, time management, and professional registration pathways (EngTech, IEng).',
   },
 ];
 
@@ -121,7 +121,7 @@ const features = [
     icon: BrainCircuit,
     title: 'AI Study Assistant',
     description:
-      'Ask any engineering question in plain English. Get step-by-step explanations of complex algebra, circuit analysis, Thevenin equivalents, and three-phase calculations.',
+      'Ask any engineering question in plain English. Get step-by-step explanations of complex algebra, circuit analysis, Thevenin equivalents…',
   },
   {
     icon: Radio,
@@ -133,7 +133,7 @@ const features = [
     icon: ClipboardCheck,
     title: 'Interactive Quizzes',
     description:
-      'Test your understanding with module-aligned questions. Solve circuit problems, apply network theorems, calculate fault currents, and verify design calculations.',
+      'Test your understanding with module-aligned questions. Solve circuit problems, apply network theorems, calculate fault currents…',
   },
   {
     icon: Clock,
@@ -234,7 +234,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Get AI help with HNC engineering maths"
-          description="Engineering mathematics is the module that most returning students find hardest. The Elec-Mate AI tutor explains algebra, trigonometry, calculus, and complex numbers step by step — ask any question, any time."
+          description="Engineering mathematics is the module that most returning students find hardest. The Elec-Mate AI tutor explains algebra, trigonometry, calculus…"
           icon={Calculator}
         />
       </>
@@ -365,7 +365,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Study engineering modules on your phone"
-          description="Elec-Mate makes HNC study accessible anywhere — commuting, on break, or waiting on site. AI explanations, flashcards, and practice questions for engineering maths, circuit analysis, and electrical principles."
+          description="Elec-Mate makes HNC study accessible anywhere — commuting, on break, or waiting on site. AI explanations, flashcards…"
           icon={BrainCircuit}
         />
       </>
@@ -522,7 +522,7 @@ export default function HNCElectricalCoursePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-08-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Higher Education"

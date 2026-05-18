@@ -24,7 +24,7 @@ import {
 
 const PAGE_TITLE = 'CDM Regulations Course for Electricians | CDM 2015 Training';
 const PAGE_DESCRIPTION =
-  'CDM 2015 training for UK electricians. Duty holder roles, principal designer and contractor responsibilities, construction phase plans, pre-construction information, and documentation requirements. 6 modules with video content, interactive quizzes, and AI tutor.';
+  'CDM 2015 training for UK electricians: duty holders, principal designer/contractor roles, phase plans, documentation. 6 modules, quizzes + AI tutor.';
 
 const breadcrumbs = [
   { label: 'Training', href: '/training' },
@@ -89,32 +89,32 @@ const modules = [
   {
     title: 'Introduction to CDM 2015',
     description:
-      'What CDM is, its history, why it was introduced, and how the 2015 regulations differ from the earlier CDM 2007. The scope of CDM — which projects it applies to and which it does not.',
+      'What CDM is, its history, why it was introduced, and how the 2015 regulations differ from the earlier CDM 2007.',
   },
   {
     title: 'Duty Holders and Their Responsibilities',
     description:
-      'The five duty holder roles: client, principal designer, principal contractor, designers, and contractors. Who appoints whom, when appointments must be made, and what each duty holder must do.',
+      'The five duty holder roles: client, principal designer, principal contractor, designers, and contractors.',
   },
   {
     title: 'The Construction Phase Plan',
     description:
-      'What the construction phase plan must contain, who prepares it, when it must be in place, and how it is maintained and updated throughout the project. Template structures and practical examples.',
+      'What the construction phase plan must contain, who prepares it, when it must be in place, and how it is maintained and updated throughout the project.',
   },
   {
     title: 'Pre-Construction Information and the Health and Safety File',
     description:
-      'What pre-construction information is, who compiles it, and how it feeds into the design and construction phase plan. The health and safety file — its purpose, contents, and handover to the client.',
+      'What pre-construction information is, who compiles it, and how it feeds into the design and construction phase plan.',
   },
   {
     title: 'Risk Assessment and Method Statements Under CDM',
     description:
-      'How risk assessments and method statements fit within the CDM framework. Writing effective RAMS for electrical work. Task-specific vs generic assessments. Review and communication procedures.',
+      'How risk assessments and method statements fit within the CDM framework. Writing effective RAMS for electrical work. Task-specific vs generic assessments.',
   },
   {
     title: 'CDM for Domestic Projects and Small Works',
     description:
-      'How CDM applies to domestic clients, single-contractor projects, and small works. Proportionate compliance — what documentation is needed and what is not. Common scenarios for electricians.',
+      'How CDM applies to domestic clients, single-contractor projects, and small works. Proportionate compliance — what documentation is needed and what is not.',
   },
 ];
 
@@ -123,7 +123,7 @@ const features = [
     icon: BrainCircuit,
     title: 'AI Study Assistant',
     description:
-      'Ask any CDM question in plain English. Get detailed answers on duty holder responsibilities, construction phase plans, and how CDM applies to your specific project scenarios.',
+      'Ask any CDM question in plain English. Get detailed answers on duty holder responsibilities, construction phase plans…',
   },
   {
     icon: Radio,
@@ -135,7 +135,7 @@ const features = [
     icon: ClipboardCheck,
     title: 'Interactive Quizzes',
     description:
-      'Test your understanding with scenario-based questions. Identify duty holders, determine documentation requirements, and apply CDM to real-world electrical projects.',
+      'Test your understanding with scenario-based questions. Identify duty holders, determine documentation requirements…',
   },
   {
     icon: Clock,
@@ -153,7 +153,7 @@ const features = [
     icon: FileCheck2,
     title: 'AI RAMS Generator',
     description:
-      'Elec-Mate AI Health and Safety Agent generates professional risk assessments and method statements aligned with CDM 2015 — create project-specific RAMS from your phone in minutes.',
+      'Elec-Mate AI Health and Safety Agent generates professional risk assessments and method statements aligned with CDM 2015 — create project-specific RAMS…',
   },
 ];
 
@@ -300,7 +300,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Generate CDM-compliant RAMS instantly"
-          description="The Elec-Mate AI Health and Safety Agent creates professional risk assessments and method statements tailored to your specific project. CDM-compliant documentation in minutes, not hours."
+          description="The Elec-Mate AI Health and Safety Agent creates professional risk assessments and method statements tailored to your specific project."
           icon={FileCheck2}
         />
       </>
@@ -464,7 +464,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Professional RAMS for every project"
-          description="Elec-Mate's AI Health and Safety Agent generates task-specific risk assessments and method statements in minutes. CDM-compliant documentation that principal contractors will accept. 7-day free trial."
+          description="Elec-Mate's AI Health and Safety Agent generates task-specific risk assessments and method statements in minutes."
           icon={FileCheck2}
         />
       </>
@@ -559,7 +559,7 @@ export default function CDMRegulationsCoursePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-09-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Health & Safety Training"

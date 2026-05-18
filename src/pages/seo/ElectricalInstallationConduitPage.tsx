@@ -591,10 +591,10 @@ const sections = [
 export default function ElectricalInstallationConduitPage() {
   return (
     <GuideTemplate
-      title="Electrical Installation Conduit Guide — Steel, PVC, Fill Calculations & Earthing"
-      description="Complete UK guide to electrical conduit installation: steel vs PVC conduit, BS EN 61386 classification, trunking fill calculations per BS 7671 Appendix 5, earthing of steel conduit, IP ratings, and fire stopping requirements."
+      title="Electrical Installation Conduit Guide — Steel, PVC, Fill"
+      description="UK electrical conduit installation guide: steel vs PVC, BS EN 61386 classification, fill calcs, bonding, fixings, fire stopping, BS 7671 alignment."
       datePublished="2024-06-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

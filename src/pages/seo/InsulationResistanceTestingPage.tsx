@@ -315,7 +315,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete IR test records on your phone"
-          description="Elec-Mate's EIC and EICR apps capture insulation resistance readings for every circuit, flag readings below the BS 7671 minimum, and generate professional test schedules. No paper — everything syncs instantly."
+          description="Elec-Mate's EIC and EICR apps capture insulation resistance readings for every circuit, flag readings below the BS 7671 minimum…"
           icon={ShieldCheck}
         />
       </>
@@ -425,7 +425,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Always Check for SPDs Before Testing</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Surge protective devices (SPDs) are now mandatory on most new installations under
-                  BS 7671:2018+A4:2026 Amendment 3. They are easily missed during inspection. Before
+                  BS 7671:2018+A4:2026 Amendment 4. They are easily missed during inspection. Before
                   applying any IR test voltage, check the consumer unit, distribution board, and
                   sub-boards for SPDs and disconnect them from the circuit. An SPD in circuit gives
                   a reading of virtually zero ohms — which can falsely condemn a sound installation.
@@ -463,9 +463,9 @@ export default function InsulationResistanceTestingPage() {
   return (
     <GuideTemplate
       title="Insulation Resistance Testing BS 7671 | IR Testing Guide UK"
-      description="Complete guide to insulation resistance testing under BS 7671 for UK electricians. Covers test voltages (250V, 500V, 1000V), minimum values (≥1 MΩ), how to test new circuits, live circuit precautions, and Regulation 643.3."
+      description="Complete guide to insulation resistance testing under BS 7671 for UK electricians. Covers test voltages (250V, 500V, 1000V), minimum values (≥1 MΩ)…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

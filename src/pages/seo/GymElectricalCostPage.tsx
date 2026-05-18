@@ -387,7 +387,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote gym electrical with equipment and zone pricing"
-          description="Elec-Mate's quoting app handles gym electrical work with equipment schedules, zone pricing, sound system wiring, and Section 701 wet area provisions. Professional PDF quotes."
+          description="Elec-Mate's quoting app handles gym electrical work with equipment schedules, zone pricing, sound system wiring, and Section 701 wet area provisions."
           icon={Calculator}
         />
       </>
@@ -498,7 +498,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote gym electrical with zone and equipment pricing"
-          description="Elec-Mate's quoting app handles gym fit-outs with equipment circuits, wet area provisions, sound system wiring, and fire safety — all in one professional PDF quote. 7-day free trial."
+          description="Elec-Mate's quoting app handles gym fit-outs with equipment circuits, wet area provisions, sound system wiring…"
           icon={Calculator}
         />
       </>
@@ -513,10 +513,10 @@ const sections = [
 export default function GymElectricalCostPage() {
   return (
     <GuideTemplate
-      title="Gym Electrical Cost 2026 | UK Commercial Gym Installation Guide"
-      description="How much does gym electrical installation cost in 2026? UK guide covering 3-phase for commercial equipment, shower area IP ratings, emergency lighting, music/PA systems, and costs from £8,000 to £30,000."
+      title="Gym Electrical Cost 2026 | UK Commercial Gym Installation"
+      description="How much does gym electrical installation cost in 2026? UK guide covering 3-phase for commercial equipment, shower area IP ratings, emergency lighting…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

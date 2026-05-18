@@ -411,8 +411,8 @@ const sections = [
           the best investments you can make in your electrical career.
         </p>
         <SEOAppBridge
-          title="18th Edition Amendment 4:2026 Release"
-          description="BS 7671:2018+A4:2026 now live. Check compliance dates, cable sizing updates, and what changed for your installations. Free guide."
+          title="18th Edition Amendment 4 Release Date 2026"
+          description="18th Edition Amendment 4:2026 is now live. Learn the compliance deadline, cable sizing changes, and installation updates you need to know."
           icon={Award}
         />
       </>
@@ -427,10 +427,10 @@ const sections = [
 export default function GoldCardRequirementsPage() {
   return (
     <GuideTemplate
-      title="Gold Card Requirements | ECS Gold Card Electrician Guide UK 2026"
-      description="Complete guide to ECS Gold Card requirements for UK electricians. Qualifications needed, AM2, experience, how to apply, benefits, and pay rates. Your roadmap to the highest ECS card."
+      title="Gold Card Requirements | ECS Gold Card Electrician Guide UK"
+      description="Complete guide to ECS Gold Card requirements for UK electricians. Qualifications needed, AM2, experience, how to apply, benefits, and pay rates."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

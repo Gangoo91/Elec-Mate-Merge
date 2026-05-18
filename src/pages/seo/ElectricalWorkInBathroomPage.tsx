@@ -614,7 +614,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certify bathroom work on your phone"
-          description="Join 1,000+ UK electricians using Elec-Mate for bathroom installation certificates. Zone compliance checking, voice test entry, instant PDF delivery. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for bathroom installation certificates. Zone compliance checking, voice test entry, instant PDF delivery."
           icon={FileCheck2}
         />
       </>
@@ -630,9 +630,9 @@ export default function ElectricalWorkInBathroomPage() {
   return (
     <GuideTemplate
       title="Electrical Work in Bathroom | Zones & Regulations UK"
-      description="Complete guide to electrical work in bathrooms in the UK. Zone 0, Zone 1, Zone 2 explained, IP ratings per zone, what can go where, extract fans, electric shower circuits, and Part P notification requirements."
+      description="Complete guide to electrical work in bathrooms in the UK. Zone 0, Zone 1, Zone 2 explained, IP ratings per zone, what can go where, extract fans…"
       datePublished="2025-09-05"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

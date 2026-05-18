@@ -442,7 +442,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote solar PV electrical work accurately"
-          description="Elec-Mate's quoting app lets you itemise every component of the electrical connection — isolators, RCBO, tails, earthing, metering — with real trade pricing and professional PDF output."
+          description="Elec-Mate's quoting app lets you itemise every component of the electrical connection — isolators, RCBO, tails, earthing…"
           icon={Calculator}
         />
       </>
@@ -640,7 +640,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify solar PV electrical work"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site EIC certification. Everything you need for solar PV electrical connections. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site EIC certification."
           icon={Wrench}
         />
       </>
@@ -656,9 +656,9 @@ export default function SolarPanelInstallationCostPage() {
   return (
     <GuideTemplate
       title="Solar Panel Electrical Installation Cost UK 2026 | Wiring"
-      description="How much does the electrical work cost for solar panel installation in 2026? Complete UK guide covering DC and AC isolators, meter tails, consumer unit connection, earthing, generation meters, MCS certification, G98/G99 DNO notification, and SEG export payments. Focus on the electrician's scope."
+      description="How much does the electrical work cost for solar panel installation in 2026? Complete UK guide covering DC and AC isolators, meter tails…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

@@ -22,7 +22,7 @@ import {
 
 const PAGE_TITLE = 'Commercial EICR Guide | Industrial Inspection UK';
 const PAGE_DESCRIPTION =
-  'Complete guide to commercial and industrial EICRs in the UK. Health and Safety at Work Act requirements, three-phase testing, larger installations, TT and TN-S earthing, documentation requirements, observation codes, costs, and frequency of inspection for commercial premises.';
+  'Commercial + industrial EICR guide: HASAWA duties, three-phase testing, TT/TN-S earthing, observation codes, costs, inspection frequency.';
 
 const breadcrumbs = [
   { label: 'Certificates', href: '/guides' },
@@ -385,7 +385,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Commercial EICR documentation made easy"
-          description="Elec-Mate handles multi-board commercial EICRs with structured, board-by-board schedules of test results. Professional PDF export produces documentation that meets building management and insurance requirements. BS 7671 compliant, every time."
+          description="Elec-Mate handles multi-board commercial EICRs with structured, board-by-board schedules of test results."
           icon={FileCheck2}
         />
       </>
@@ -587,7 +587,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional EICR tools for commercial inspections"
-          description="Elec-Mate produces BS 7671-compliant EICR documentation with multi-board support, clear observation coding, and professional PDF export. Build your reputation with documentation that impresses building managers and facilities teams."
+          description="Elec-Mate produces BS 7671-compliant EICR documentation with multi-board support, clear observation coding, and professional PDF export."
           icon={FileCheck2}
         />
       </>
@@ -650,7 +650,7 @@ export default function CommercialEICRGuidePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-08-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Certificates"

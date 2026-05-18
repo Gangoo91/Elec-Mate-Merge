@@ -597,8 +597,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Grow your landlord EICR business in Nottingham with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
+          title="Grow your landlord EICR business in Nottingham with"
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -613,10 +613,10 @@ const sections = [
 export default function LandlordElectricalSafetyNottinghamPage() {
   return (
     <GuideTemplate
-      title="Landlord Electrical Safety Nottingham | EICR Requirements 2026"
-      description="Landlord electrical safety requirements in Nottingham. 2020 Regulations explained, Nottingham City Council selective licensing and enforcement, HMO requirements, penalties up to £30,000, tenant rights, and EICR costs for 2026."
+      title="Landlord Electrical Safety Nottingham | EICR Requirements"
+      description="Landlord electrical safety requirements in Nottingham. 2020 Regulations explained, Nottingham City Council selective licensing and enforcement…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Landlord Guide"

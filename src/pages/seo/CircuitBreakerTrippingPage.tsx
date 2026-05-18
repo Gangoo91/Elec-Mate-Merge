@@ -23,7 +23,7 @@ import {
 
 const PAGE_TITLE = 'Circuit Breaker Keeps Tripping | Causes & Fixes';
 const PAGE_DESCRIPTION =
-  'Why does your circuit breaker keep tripping? Expert guide covering MCB vs RCD tripping, overloaded circuits, short circuits, earth faults, faulty appliances vs faulty wiring, when to call an electrician, and how Elec-Mate helps diagnose the root cause.';
+  'Why a circuit breaker keeps tripping: MCB vs RCD, overload, short circuit, earth fault, faulty appliance vs wiring. Diagnose the root cause.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -201,7 +201,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="AI Fault Diagnosis in Elec-Mate"
-          description="Describe the tripping pattern — when it happens, which circuit, what you were doing — and the Elec-AI diagnostic agent guides you through a systematic fault-finding process. It cross-references your symptoms against known fault patterns to help identify whether you are dealing with an overload, short circuit, or earth fault."
+          description="Describe the tripping pattern — when it happens, which circuit, what you were doing — and the Elec-AI diagnostic agent guides you through a systematic…"
           icon={Search}
         />
       </>
@@ -266,7 +266,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Board Scanner — Read MCB Ratings from a Photo"
-          description="Point your phone at the consumer unit and Elec-Mate's AI reads every MCB and RCBO rating, circuit detail, and board layout from a single photograph. No more squinting at faded labels or trying to read tiny markings in poor light."
+          description="Point your phone at the consumer unit and Elec-Mate's AI reads every MCB and RCBO rating, circuit detail, and board layout from a single photograph."
           icon={Gauge}
         />
       </>
@@ -332,7 +332,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Max Demand Calculator"
-          description="Enter every appliance connected to a circuit and Elec-Mate's max demand calculator tells you the total load in amps, applying BS 7671 diversity factors. It instantly flags if the circuit is overloaded for the MCB rating. Essential for diagnosing overload trips."
+          description="Enter every appliance connected to a circuit and Elec-Mate's max demand calculator tells you the total load in amps, applying BS 7671 diversity factors."
           icon={Calculator}
         />
       </>
@@ -414,7 +414,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="EICR — Identify Overloaded Circuits and Faulty Wiring"
-          description="Elec-Mate's digital EICR form records insulation resistance, earth fault loop impedance, and circuit details for every circuit in the installation. Failed values are flagged automatically and observation codes are suggested based on the defect. Identify overloaded circuits, deteriorated insulation, and loose connections — all documented in a professional PDF report."
+          description="Elec-Mate's digital EICR form records insulation resistance, earth fault loop impedance, and circuit details for every circuit in the installation."
           icon={ClipboardCheck}
         />
       </>
@@ -618,7 +618,7 @@ export default function CircuitBreakerTrippingPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-08-10"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting"

@@ -22,9 +22,9 @@ export default function MotorStartingCurrentCalculatorPage() {
   return (
     <ToolTemplate
       title="Motor Starting Current Calculator | DOL & Star-Delta"
-      description="Calculate motor starting current for DOL, star-delta, soft starter, and VFD starting methods. Determine the impact on supply voltage, protective device selection, and cable sizing. Part of 50+ free electrical calculators in Elec-Mate."
+      description="Calculate motor starting current for DOL, star-delta, soft starter, and VFD starting methods. UK supply assumptions, locked-rotor multipliers built in."
       datePublished="2026-02-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         {
@@ -438,7 +438,7 @@ export default function MotorStartingCurrentCalculatorPage() {
           icon: Gauge,
           title: 'All Starting Methods',
           description:
-            'Calculate starting current for DOL, star-delta, soft starter, and VFD starting. Each method displays the current multiplier, starting torque, and typical duration.',
+            'Calculate starting current for DOL, star-delta, soft starter, and VFD starting. Each method displays the current multiplier, starting torque…',
         },
         {
           icon: Activity,
@@ -450,13 +450,13 @@ export default function MotorStartingCurrentCalculatorPage() {
           icon: Cable,
           title: 'Cable Sizing Integration',
           description:
-            'Automatically determines the cable size required for the motor circuit, considering the full load current, starting current thermal effects, and voltage drop.',
+            'Automatically determines the cable size required for the motor circuit, considering the full load current, starting current thermal effects…',
         },
         {
           icon: Shield,
           title: 'MCB/MCCB Selection',
           description:
-            'Recommends the correct protective device type (B, C, or D curve) and rating based on the motor FLC and starting current. Avoids nuisance tripping during starting.',
+            'Recommends the correct protective device type (B, C, or D curve) and rating based on the motor FLC and starting current.',
         },
         {
           icon: Calculator,
@@ -468,7 +468,7 @@ export default function MotorStartingCurrentCalculatorPage() {
           icon: BarChart3,
           title: 'Starting Current Profile',
           description:
-            'Visual display of the current profile during starting — peak inrush, acceleration period, and transition to running current. Helps visualise the impact on the supply.',
+            'Visual display of the current profile during starting — peak inrush, acceleration period, and transition to running current.',
         },
       ]}
       featuresHeading="Motor Starting Current Calculator Features"

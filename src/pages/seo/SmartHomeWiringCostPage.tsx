@@ -551,8 +551,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Smart Home Wiring Cost 2026 | UK Guide"
-          description="Smart home wiring costs £800–£3,500 depending on property size. Learn labour rates, cable grades, and how to quote jobs to BS 7671:2018+A4:2026 compliance."
+          title="Smart Home Wiring Cost UK 2026 | Labour & Materials"
+          description="Smart home wiring costs £800–£3,500 installed. Compare labour rates, cable specifications, and BS 7671:2018+A4:2026 compliance for accurate project quotes."
           icon={Home}
         />
       </>
@@ -568,9 +568,9 @@ export default function SmartHomeWiringCostPage() {
   return (
     <GuideTemplate
       title="Smart Home Wiring Renovation Cost UK — Retrofit Pricing 2026"
-      description="Smart home wiring renovation cost UK — from £500 for a single room retrofit to £5,000+ for a whole-house rewire with Cat6, WiFi, smart switches and structured cabling. Real 2026 pricing from working electricians."
+      description="Smart home wiring renovation cost UK — from £500 for a single room retrofit to £5,000+ for a whole-house rewire with Cat6, WiFi…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

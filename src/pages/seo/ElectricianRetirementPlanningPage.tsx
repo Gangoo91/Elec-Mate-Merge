@@ -492,10 +492,10 @@ export default function ElectricianRetirementPlanningPage() {
   return (
     <GuideTemplate
       localArea="Retirement Planning Uk"
-      title="Electrician Retirement Planning UK | Pensions, Business Value & Exit"
-      description="Retirement planning guide for UK electricians — sole trader SIPPs, limited company employer pension contributions, physical demands and realistic retirement age (58–62), and how to maximise business value for exit."
+      title="Electrician Retirement Planning UK | Pensions, Business"
+      description="Retirement planning guide for UK electricians — sole trader SIPPs, limited company employer pension contributions…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Financial Guide"

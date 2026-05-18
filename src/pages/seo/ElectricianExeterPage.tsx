@@ -572,7 +572,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Exeter electrical business from your phone"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs…"
           icon={MapPin}
         />
       </>
@@ -589,9 +589,9 @@ export default function ElectricianExeterPage() {
     <GuideTemplate
       localArea="Exeter"
       title="Electrician in Exeter | Find Qualified Electricians 2026"
-      description="Find qualified, registered electricians in Exeter. Realistic 2026 pricing, how to verify NICEIC/NAPIT registration, period property rewiring, NGED connections, cathedral close conservation, eco-retrofit demand, and university HMO compliance."
+      description="Find qualified, registered electricians in Exeter. Realistic 2026 pricing, how to verify NICEIC/NAPIT registration, period property rewiring…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Find an Electrician"

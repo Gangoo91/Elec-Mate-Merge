@@ -5,14 +5,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Regulation 411.3.4 wording and acceptance criteria match the canonical text.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const a4LuminaireRCDProtectionConfig: GeneratedGuideConfig = {
   pagePath: '/guides/bs-7671-a4-2026-luminaire-rcd-protection',
   title:
-    'BS 7671 A4:2026 — Luminaire RCD Protection (Regulation 411.3.4) | Elec-Mate',
+    'BS 7671 A4:2026 — Luminaire RCD Protection (Regulation',
   description:
-    'Amendment 4 introduced Regulation 411.3.4: AC final circuits supplying luminaires in domestic premises require additional 30 mA RCD protection. What it means, what proof inspectors need, and how to record it on the EICR.',
+    'Amendment 4 introduced Regulation 411.3.4: AC final circuits supplying luminaires in domestic premises require additional 30 mA RCD protection.',
   datePublished: published,
   dateModified: modified,
   readingTime: 10,
@@ -150,7 +150,7 @@ export const a4LuminaireRCDProtectionConfig: GeneratedGuideConfig = {
         {
           type: 'callout',
           tone: 'warning',
-          title: 'Issue an EIC or Minor Works Certificate for the remedial work',
+          title: 'Issue an EIC or Minor Works Certificate for the remedial',
           text:
             'Whichever remediation path is chosen, the work itself must be certified — an Electrical Installation Certificate (full board replacement) or Minor Works Certificate (single-circuit upgrade) — and provided to the responsible person and (for rented properties) the local authority under PRS Regs 2020.',
         },

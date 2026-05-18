@@ -300,7 +300,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Calculate maximum demand instantly"
-          description="Elec-Mate's maximum demand calculator applies BS 7671 diversity factors automatically. Enter the connected loads and get an instant assessment of whether the circuit is adequately sized. Perfect for site surveys and quotations."
+          description="Elec-Mate's maximum demand calculator applies BS 7671 diversity factors automatically. Enter the connected loads and get an instant assessment of whether…"
           icon={Calculator}
         />
       </>
@@ -561,7 +561,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Design additional circuits with AI"
-          description="Use Elec-Mate's AI circuit designer to size cables, select protective devices, and verify that additional circuits comply with BS 7671. Generate professional specifications and certificates from your phone."
+          description="Use Elec-Mate's AI circuit designer to size cables, select protective devices, and verify that additional circuits comply with BS 7671."
           icon={Brain}
         />
       </>
@@ -641,9 +641,9 @@ export default function OverloadedCircuitPage() {
   return (
     <GuideTemplate
       title="Overloaded Circuit | Signs, Dangers & Solutions"
-      description="Expert guide to overloaded electrical circuits. Covers signs of overload, maximum demand calculation, MCB tripping, the dangers of overloading, diversity factors, and when to add new circuits. UK-focused with BS 7671 references."
+      description="Expert guide to overloaded electrical circuits. Covers signs of overload, maximum demand calculation, MCB tripping, the dangers of overloading…"
       datePublished="2025-10-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

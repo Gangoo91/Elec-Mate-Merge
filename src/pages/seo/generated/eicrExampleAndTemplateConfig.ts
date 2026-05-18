@@ -1,7 +1,7 @@
 import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuidePage';
 
 const published = '2026-04-12';
-const modified = '2026-04-12';
+const modified = '2026-05-18';
 
 export const eicrExampleAndTemplateConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-example-and-template',
@@ -92,6 +92,31 @@ export const eicrExampleAndTemplateConfig: GeneratedGuideConfig = {
           type: 'paragraph',
           text:
             'If you are trying to keep the whole workflow together, [digital EICR certificates](/tools/eicr-certificate) make it easier to complete the report, keep the observations aligned, and move on to the next job without rebuilding the paperwork.',
+        },
+      ],
+    },
+    {
+      id: 'using-the-template-on-site',
+      heading: 'Using the template properly on a live site',
+      blocks: [
+        {
+          type: 'paragraph',
+          text:
+            'An EICR template is only as good as the data going into it. The boxes on the form are not the work — they are the record of the work. If you fill in the template before you finish testing, or copy values forward from a previous report, the document weakens immediately. Treat each section as a checkpoint: complete the testing, record the result, move on.',
+        },
+        {
+          type: 'paragraph',
+          text:
+            'The most common mistake with templates is using them as a script for the inspection itself. The template should follow the testing sequence, not lead it. Open the supply, prove dead, complete continuity and insulation resistance, take the loop impedance readings, then sit down with the template and translate the results into the right boxes. That order keeps the inspection honest.',
+        },
+        {
+          type: 'list',
+          items: [
+            'Complete the test schedule first, then transcribe values into the EICR boxes — never the other way round.',
+            'Number every circuit consistently between the template, the schedule of test results, and any photos.',
+            'Use the observation codes (C1, C2, C3, FI) literally — do not soften them to keep the client happy.',
+            'Sign off only when every box is filled in or explicitly marked LIM (limitation) with a reason.',
+          ],
         },
       ],
     },

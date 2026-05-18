@@ -465,7 +465,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Professional certificates for your scheme assessment"
-          description="Elec-Mate's EIC, EICR, and minor works certificate apps produce professional documentation that passes scheme assessments. AI board scanning, voice test entry, and instant PDF export. Be assessment-ready every time."
+          description="Elec-Mate's EIC, EICR, and minor works certificate apps produce professional documentation that passes scheme assessments."
           icon={ShieldCheck}
         />
       </>
@@ -480,10 +480,10 @@ const sections = [
 export default function CompetentPersonSchemeGuidePage() {
   return (
     <GuideTemplate
-      title="Competent Person Scheme Guide | NICEIC NAPIT ELECSA Part P UK"
-      description="Complete guide to competent person schemes for UK electricians. NICEIC, NAPIT, ELECSA, STROMA — what they mean, costs, self-certification under Part P, assessment process, and which scheme to choose."
+      title="Competent Person Scheme Guide | NICEIC NAPIT ELECSA Part P"
+      description="Complete guide to competent person schemes for UK electricians. NICEIC, NAPIT, ELECSA, STROMA — what they mean, costs, self-certification under Part P…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

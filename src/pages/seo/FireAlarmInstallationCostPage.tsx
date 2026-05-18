@@ -454,7 +454,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote fire alarm installations accurately"
-          description="Elec-Mate's quoting app helps you itemise every detector, call point, cable run, and panel. Build professional quotes for domestic and commercial fire alarm work with real pricing data."
+          description="Elec-Mate's quoting app helps you itemise every detector, call point, cable run…"
           icon={Flame}
         />
       </>
@@ -617,9 +617,9 @@ export default function FireAlarmInstallationCostPage() {
   return (
     <GuideTemplate
       title="Fire Alarm Installation Cost UK 2026 | System Pricing Guide"
-      description="How much does fire alarm installation cost in 2026? Complete UK pricing guide covering domestic LD1/LD2/LD3 grades, commercial conventional and addressable systems, BS 5839 requirements, material costs, and certification."
+      description="How much does fire alarm installation cost in 2026? Complete UK pricing guide covering domestic LD1/LD2/LD3 grades…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

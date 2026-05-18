@@ -5,14 +5,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // CDM 2015 statutory framework and the Electricity at Work Regulations 1989.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const ramsForConsumerUnitReplacementConfig: GeneratedGuideConfig = {
   pagePath: '/guides/rams-for-consumer-unit-replacement',
   title:
-    'RAMS for a Consumer Unit Replacement — UK Method Statement Guide | Elec-Mate',
+    'RAMS for a Consumer Unit Replacement — UK Method Statement',
   description:
-    'Complete RAMS (Risk Assessment & Method Statement) for a UK consumer unit replacement. Hazards, control measures, safe isolation, DNO seal authority, BS 7671:2018+A4:2026 compliance (AFDD, luminaire RCD, non-combustible enclosure) and post-installation testing — written for working electricians.',
+    'Complete RAMS (Risk Assessment & Method Statement) for a UK consumer unit replacement. Hazards, control measures, safe isolation, DNO seal authority…',
   datePublished: published,
   dateModified: modified,
   readingTime: 12,

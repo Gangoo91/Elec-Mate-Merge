@@ -395,7 +395,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Test and document insulation resistance results"
-          description="Record insulation resistance readings by voice while your hands stay on the probes. Elec-Mate flags any reading below the BS 7671 minimum and auto-fills the schedule of test results on your EICR. No paperwork, no re-typing."
+          description="Record insulation resistance readings by voice while your hands stay on the probes. Elec-Mate flags any reading below the BS 7671 minimum and auto-fills…"
           icon={ClipboardCheck}
         />
       </>
@@ -452,7 +452,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="AI-assisted fault diagnosis"
-          description="Describe the intermittent fault symptoms to Elec-Mate's AI — when it happens, what triggers it, what you've tested — and get a prioritised list of probable causes with recommended test procedures. Stop guessing, start diagnosing."
+          description="Describe the intermittent fault symptoms to Elec-Mate's AI — when it happens, what triggers it…"
           icon={Brain}
         />
       </>
@@ -587,9 +587,9 @@ export default function IntermittentElectricalFaultsPage() {
   return (
     <GuideTemplate
       title="Intermittent Electrical Faults | How to Find Them"
-      description="Expert guide to diagnosing intermittent electrical faults. Covers temperature-dependent faults, vibration, loose connections, insulation breakdown, and a systematic approach to fault-finding when the fault is not present during your visit."
+      description="Expert guide to diagnosing intermittent electrical faults. Covers temperature-dependent faults, vibration, loose connections, insulation breakdown…"
       datePublished="2025-09-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting Guide"

@@ -440,7 +440,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote emergency lighting installations accurately"
-          description="Elec-Mate's quoting app helps you build itemised quotes for emergency lighting projects — luminaires, exit signs, cable, labour, testing, and certification. Professional PDF quotes from your phone."
+          description="Elec-Mate's quoting app helps you build itemised quotes for emergency lighting projects — luminaires, exit signs, cable, labour, testing…"
           icon={Lightbulb}
         />
       </>
@@ -667,7 +667,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and maintain emergency lighting systems"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, emergency lighting certification, and maintenance documentation. Build recurring revenue from testing contracts. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, emergency lighting certification, and maintenance documentation."
           icon={Lightbulb}
         />
       </>
@@ -683,9 +683,9 @@ export default function EmergencyLightingCostPage() {
   return (
     <GuideTemplate
       title="Emergency Lighting Installation Cost 2026 | UK Price Guide"
-      description="How much does emergency lighting installation cost in 2026? Complete UK price guide covering maintained vs non-maintained, self-contained vs central battery, BS 5266 requirements, material costs, testing obligations, and certification."
+      description="How much does emergency lighting installation cost in 2026? Complete UK price guide covering maintained vs non-maintained…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

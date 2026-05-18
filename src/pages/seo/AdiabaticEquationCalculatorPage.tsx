@@ -28,7 +28,7 @@ import {
 
 const PAGE_TITLE = 'Adiabatic Equation Calculator | CPC Sizing BS 7671 | Elec-Mate';
 const PAGE_DESCRIPTION =
-  'Calculate minimum CPC size using the adiabatic equation (S = square root of I squared t divided by k). BS 7671 Regulation 543.1 compliant. k values for copper, aluminium, and steel conductors. Start free.';
+  'Calculate minimum CPC size with the adiabatic equation. BS 7671 Reg 543.1 compliant. k values for copper, aluminium, steel. Start free.';
 
 const faqs = [
   {
@@ -194,7 +194,7 @@ const howToSchema = {
   '@type': 'HowTo',
   name: 'How to Calculate Minimum CPC Size Using the Adiabatic Equation in Elec-Mate',
   description:
-    'A step-by-step guide to calculating the minimum circuit protective conductor cross-sectional area using the adiabatic equation (S = square root of I squared t divided by k) in the Elec-Mate app.',
+    'A step-by-step guide to calculating the minimum circuit protective conductor cross-sectional area using the adiabatic equation (S = square root of I…',
   step: howToSteps.map((step, index) => ({
     '@type': 'HowToStep',
     position: index + 1,
@@ -563,7 +563,7 @@ export default function AdiabaticEquationCalculatorPage() {
           </div>
           <SEOAppBridge
             title="Adiabatic Calculations + Certification in One App"
-            description="Calculate minimum CPC sizes using the adiabatic equation, then record your verified results directly onto your EIC or EICR certificate — all within Elec-Mate. 70+ calculators, 16 certificate types, AI tools, and 46+ training courses."
+            description="Calculate minimum CPC sizes using the adiabatic equation, then record your verified results directly onto your EIC or EICR certificate — all within…"
             icon={Calculator}
           />
           <SEOFeatureGrid features={features} columns={3} />
@@ -631,7 +631,7 @@ export default function AdiabaticEquationCalculatorPage() {
               to use a smaller CPC than Table 54.7 would require to reduce costs.
             </p>
             <p>
-              Amendment 3 to BS 7671 (A4:2026), issued in July 2024, did not change the fundamental
+              Amendment 4 to BS 7671 (A4:2026), issued in July 2024, did not change the fundamental
               adiabatic equation requirements but added Regulation 530.3.2 covering requirements for
               bidirectional and unidirectional switching devices. The core CPC sizing requirements
               in Regulation 543.1 remain as established in the 18th Edition.

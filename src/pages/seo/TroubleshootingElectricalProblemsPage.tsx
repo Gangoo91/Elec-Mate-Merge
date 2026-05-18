@@ -629,7 +629,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Diagnose and certify faults in one visit"
-          description="AI-powered fault diagnosis, voice test result entry, and instant certificate generation. Join 1,000+ UK electricians using Elec-Mate on every callout. 7-day free trial."
+          description="AI-powered fault diagnosis, voice test result entry, and instant certificate generation. Join 1,000+ UK electricians using Elec-Mate on every callout."
           icon={Search}
         />
       </>
@@ -645,9 +645,9 @@ export default function TroubleshootingElectricalProblemsPage() {
   return (
     <GuideTemplate
       title="Troubleshooting Electrical Problems | Homeowner Guide"
-      description="Step-by-step guide to troubleshooting common electrical problems at home. Tripped MCBs, flickering lights, dead sockets, burning smells, buzzing sounds — when to DIY and when to call an electrician."
+      description="Step-by-step guide to troubleshooting common electrical problems at home. Tripped MCBs, flickering lights, dead sockets, burning smells…"
       datePublished="2026-01-18"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Homeowner Guide"

@@ -375,7 +375,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Size EV charger circuits instantly"
-          description="Elec-Mate's cable sizing calculator includes specific EV charger circuit templates. Enter the charger rating, cable length, and installation method — get the correct cable size and protective device with voltage drop verification."
+          description="Elec-Mate's cable sizing calculator includes specific EV charger circuit templates. Enter the charger rating, cable length…"
           icon={Car}
         />
       </>
@@ -551,7 +551,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Design complete new build installations with AI"
-          description="Elec-Mate's AI circuit designer creates full circuit schedules for new builds — circuit allocation, cable sizing, board layout, and protective device selection. Enter the property type and room layout, and get a complete design in minutes."
+          description="Elec-Mate's AI circuit designer creates full circuit schedules for new builds — circuit allocation, cable sizing, board layout…"
           icon={CircuitBoard}
         />
       </>
@@ -567,9 +567,9 @@ export default function NewBuildElectricalPage() {
   return (
     <GuideTemplate
       title="New Build Electrical Installation | Requirements UK"
-      description="Complete guide to new build electrical installation requirements in the UK. Building Regulations Parts P, L, B, M, and S, EV charging 2022, smoke detectors, AFDD/SPD requirements, SAP calculations, and certification."
+      description="Complete guide to new build electrical installation requirements in the UK. Building Regulations Parts P, L, B, M, and S, EV charging 2022…"
       datePublished="2025-08-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

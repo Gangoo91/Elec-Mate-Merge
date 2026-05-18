@@ -6,12 +6,12 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // of Houses in Multiple Occupation (England) Regulations 2006.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const eicrPlasticConsumerUnitHmoConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-plastic-consumer-unit-hmo',
   title:
-    'EICR: Plastic Consumer Unit in an HMO — C2 or C3? | Landlord Guide | Elec-Mate',
+    'EICR: Plastic Consumer Unit in an HMO — C2 or C3?',
   description:
     'When a plastic consumer unit in an HMO is a C2 (potentially dangerous, makes the EICR unsatisfactory) and when it\'s a C3 (improvement recommended). BS 7671 Regulation 421.1.201, escape route considerations, and the remedial pathway for landlords.',
   datePublished: published,

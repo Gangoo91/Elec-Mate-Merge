@@ -597,7 +597,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your electrical business professionally from day one"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, invoicing, job management, and certification. Professional operations that generate five-star reviews. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, invoicing, job management, and certification."
           icon={Search}
         />
       </>
@@ -612,10 +612,10 @@ const sections = [
 export default function SEOForElectriciansPage() {
   return (
     <GuideTemplate
-      title="SEO for Electricians UK | How to Rank on Google as an Electrician"
-      description="Complete SEO guide for UK electricians. Google Business Profile optimisation, local citations, on-page SEO, review generation, link building, keyword targeting, and realistic timelines."
+      title="SEO for Electricians UK | How to Rank on Google as an"
+      description="Complete SEO guide for UK electricians. Google Business Profile optimisation, local citations, on-page SEO, review generation, link building…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Business Guide"

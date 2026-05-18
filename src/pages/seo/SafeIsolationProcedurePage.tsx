@@ -23,7 +23,7 @@ import {
 
 const PAGE_TITLE = 'Safe Isolation Procedure | Step by Step Guide GS 38';
 const PAGE_DESCRIPTION =
-  'Complete safe isolation procedure following HSE Guidance Note GS 38. Step-by-step prove-test-prove method, lock-off LOTO procedures, voltage indicator requirements, legal requirements under Electricity at Work Regulations 1989. For UK electricians.';
+  'Safe isolation per HSE GS 38: step-by-step prove-test-prove, lock-off LOTO, voltage indicator rules, EAWR 1989 duties. For UK electricians.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -205,8 +205,8 @@ const sections = [
           imprisonment. In fatal cases, charges of manslaughter by gross negligence may be brought.
         </p>
         <SEOAppBridge
-          title="AI Health and Safety agent generates RAMS with safe isolation"
-          description="Elec-Mate's AI Health and Safety agent creates risk assessments and method statements (RAMS) that include safe isolation procedures tailored to your specific job. GS 38 compliant, legally defensible, ready to submit to clients."
+          title="10 Step Safe Isolation Procedure | Elec-Mate"
+          description="Elec-Mate's AI Health and Safety agent creates risk assessments and method statements (RAMS) that include safe isolation procedures tailored to your…"
           icon={Brain}
         />
       </>
@@ -587,7 +587,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Elec-Mate's testing tools validate every result"
-          description="Enter your test results on site and the app validates them against BS 7671 maximum permitted values automatically. Continuity, insulation resistance, Zs, prospective fault current, RCD times — all checked in real time."
+          description="Enter your test results on site and the app validates them against BS 7671 maximum permitted values automatically."
           icon={ClipboardCheck}
         />
       </>
@@ -651,7 +651,7 @@ export default function SafeIsolationProcedurePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2024-10-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Hub"

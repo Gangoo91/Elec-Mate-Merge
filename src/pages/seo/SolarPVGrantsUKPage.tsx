@@ -475,7 +475,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Manage MCS solar installations with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Issue MCS installation certificates and EICs on your phone. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Issue MCS installation certificates and EICs on your phone."
           icon={PoundSterling}
         />
       </>
@@ -491,9 +491,9 @@ export default function SolarPVGrantsUKPage() {
   return (
     <GuideTemplate
       title="Solar Panel Grants UK 2025 | Funding & Incentives Guide"
-      description="Complete guide to solar panel grants and incentives in the UK. Smart Export Guarantee (SEG), 0% VAT until 2027, ECO4, LA Flex schemes, Home Energy Scotland loan, and why there is no Feed-in Tariff for new installations."
+      description="Complete guide to solar panel grants and incentives in the UK. Smart Export Guarantee (SEG), 0% VAT until 2027, ECO4, LA Flex schemes…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Solar Grants Guide"

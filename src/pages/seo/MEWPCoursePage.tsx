@@ -23,7 +23,7 @@ import {
 
 const PAGE_TITLE = 'MEWP Course | Mobile Elevated Work Platforms Training';
 const PAGE_DESCRIPTION =
-  'MEWP operator training for UK electricians. MEWP categories 3a and 3b, IPAF certification, pre-use checks, safe operating procedures, rescue plans, and Work at Height Regulations. 6 modules with video content, interactive quizzes, and AI tutor.';
+  'MEWP operator training for UK electricians: categories 3a/3b, IPAF, pre-use checks, safe ops, rescue plans, Work at Height Regs. 6 modules.';
 
 const breadcrumbs = [
   { label: 'Training', href: '/training' },
@@ -88,32 +88,32 @@ const modules = [
   {
     title: 'Introduction to Mobile Elevated Work Platforms',
     description:
-      'What MEWPs are, when to use them, MEWP vs scaffolding decision criteria, and the regulatory framework. Types of MEWP work that electricians commonly perform.',
+      'What MEWPs are, when to use them, MEWP vs scaffolding decision criteria, and the regulatory framework.',
   },
   {
     title: 'MEWP Categories and Machine Types',
     description:
-      'Category 3a (scissor lifts), Category 3b (boom lifts and cherry pickers), Category 1b (vehicle-mounted platforms), and specialist machines. Working heights, reach specifications, and platform capacities.',
+      'Category 3a (scissor lifts), Category 3b (boom lifts and cherry pickers), Category 1b (vehicle-mounted platforms), and specialist machines.',
   },
   {
     title: 'IPAF Certification and Training Requirements',
     description:
-      'The IPAF PAL Card system, training centre selection, theory and practical assessment, renewal requirements, and how IPAF certification fits with CSCS and other site cards.',
+      'The IPAF PAL Card system, training centre selection, theory and practical assessment, renewal requirements…',
   },
   {
     title: 'Pre-Use Checks and Ground Assessment',
     description:
-      'Daily pre-use inspection procedures — visual checks, function tests, ground assessment, overhead hazard identification, and documentation. What to do if a defect is found.',
+      'Daily pre-use inspection procedures — visual checks, function tests, ground assessment, overhead hazard identification, and documentation.',
   },
   {
     title: 'Safe Operating Procedures',
     description:
-      'Machine controls, safe driving, positioning for work, operating at height, harness use, managing loads on the platform, working near edges and obstacles, and emergency lowering procedures.',
+      'Machine controls, safe driving, positioning for work, operating at height, harness use, managing loads on the platform, working near edges and obstacles…',
   },
   {
     title: 'Rescue Plans, Regulations, and Incident Prevention',
     description:
-      'Developing a MEWP rescue plan, Work at Height Regulations 2005, PUWER 1998, LOLER 1998, thorough examination requirements, and analysis of common MEWP incidents with prevention strategies.',
+      'Developing a MEWP rescue plan, Work at Height Regulations 2005, PUWER 1998, LOLER 1998, thorough examination requirements…',
   },
 ];
 
@@ -134,7 +134,7 @@ const features = [
     icon: ClipboardCheck,
     title: 'Interactive Quizzes',
     description:
-      'Test your knowledge with scenario-based questions. Identify hazards, select the right machine category, apply safe operating procedures, and respond to incidents.',
+      'Test your knowledge with scenario-based questions. Identify hazards, select the right machine category, apply safe operating procedures…',
   },
   {
     icon: Clock,
@@ -152,7 +152,7 @@ const features = [
     icon: FileCheck2,
     title: 'Pre-Use Checklists',
     description:
-      'Interactive digital pre-use checklists for scissor lifts and boom lifts. Complete your daily checks on your phone and maintain a digital record for compliance.',
+      'Interactive digital pre-use checklists for scissor lifts and boom lifts. Complete your daily checks on your phone and maintain a digital record for…',
   },
 ];
 
@@ -282,7 +282,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Prepare for your IPAF assessment with AI-powered study"
-          description="Study MEWP theory at your own pace with Elec-Mate's interactive modules, quizzes, and AI tutor. Arrive at your IPAF training centre confident in the theory so you can focus on the practical skills."
+          description="Study MEWP theory at your own pace with Elec-Mate's interactive modules, quizzes, and AI tutor."
           icon={BrainCircuit}
         />
       </>
@@ -386,7 +386,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Digital MEWP pre-use checklists on your phone"
-          description="Complete your daily MEWP pre-use checks using Elec-Mate's interactive checklists. Record findings digitally, maintain a compliance trail, and never miss a critical check point."
+          description="Complete your daily MEWP pre-use checks using Elec-Mate's interactive checklists. Record findings digitally, maintain a compliance trail…"
           icon={ClipboardCheck}
         />
       </>
@@ -544,7 +544,7 @@ export default function MEWPCoursePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-10-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Powered Access Training"

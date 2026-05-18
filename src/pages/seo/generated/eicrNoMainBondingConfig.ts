@@ -4,14 +4,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // (Inspection & Testing, 9th Edition) and the IET On-Site Guide.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const eicrNoMainBondingConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-no-main-protective-bonding',
   title:
-    'EICR: No Main Protective Bonding — The Classic C2 Observation | Elec-Mate',
+    'EICR: No Main Protective Bonding — The Classic C2',
   description:
-    'Missing main protective bonding to gas, water or oil services is the most common C2 observation on UK domestic EICRs. What BS 7671 actually requires, how to identify it, and the remedial work that fixes it. A4:2026 aligned.',
+    'Missing main protective bonding to gas, water or oil services is the most common C2 observation on UK domestic EICRs.',
   datePublished: published,
   dateModified: modified,
   readingTime: 11,

@@ -450,7 +450,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Sunderland electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the realities of North East housing. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -467,9 +467,9 @@ export default function ElectricianSunderlandPage() {
     <GuideTemplate
       localArea="Sunderland"
       title="Electrician in Sunderland | Local Electricians 2026"
-      description="Find qualified electricians in Sunderland. Part P compliance, Northern Powergrid DNO, NICEIC and NAPIT registered electricians, EICR costs, consumer unit replacement, and Sunderland electrician rates for 2026."
+      description="Find qualified electricians in Sunderland. Part P compliance, Northern Powergrid DNO, NICEIC and NAPIT registered electricians, EICR costs…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Sunderland"

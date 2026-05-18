@@ -483,8 +483,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Quote outbuilding electrical installations professionally with Elec-Mate"
-          description="Create itemised outbuilding electrical quotes with armoured cable, trenching, sub-board, and optional extras. Issue EICs on site. Join 1,000+ UK electricians. 7-day free trial."
+          title="Quote outbuilding electrical installations professionally"
+          description="Create itemised outbuilding electrical quotes with armoured cable, trenching, sub-board, and optional extras. Issue EICs on site."
           icon={FileCheck2}
         />
       </>
@@ -499,10 +499,10 @@ const sections = [
 export default function OutbuildingElectricalCostPage() {
   return (
     <GuideTemplate
-      title="Outbuilding Electrical Installation Cost UK 2025 | Garden Office Wiring"
-      description="Outbuilding electrical installation costs in the UK for 2025. Garden shed and office wiring from £800–£3,000. SWA armoured cable, trenching costs, sub-board, garden office requirements, and Part P compliance explained."
+      title="Outbuilding Electrical Installation Cost UK 2025 | Garden"
+      description="Outbuilding electrical installation costs UK 2026: garden shed and office wiring from £800–£3,000. SWA armoured, sub-main sizing, BS 7671 compliance."
       datePublished="2025-01-01"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

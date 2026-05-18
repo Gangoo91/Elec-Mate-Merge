@@ -20,9 +20,9 @@ export default function ElectricalRetrofitGuidePage() {
   return (
     <GuideTemplate
       title="Electrical Retrofit Guide | Upgrading Older Properties"
-      description="Complete guide to retrofitting electrical installations in older UK properties. Covers common wiring issues, rewire vs partial upgrade, consumer unit changes, earthing upgrades, Part P notification, and how to plan a cost-effective retrofit."
+      description="Complete guide to retrofitting electrical installations in older UK properties. Covers common wiring issues, rewire vs partial upgrade…"
       datePublished="2026-01-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Installation', href: '/guides' },
         { label: 'Retrofit Guide', href: '/guides/electrical-retrofit-guide' },
@@ -246,7 +246,7 @@ export default function ElectricalRetrofitGuidePage() {
               </div>
               <SEOAppBridge
                 title="AI Circuit Designer for Retrofit Planning"
-                description="Elec-Mate's AI Circuit Designer helps plan which circuits to retain and which to replace. Input the existing circuit data from your EICR and get a recommended retrofit specification — including consumer unit sizing, cable schedules, and estimated material costs."
+                description="Elec-Mate's AI Circuit Designer helps plan which circuits to retain and which to replace. Input the existing circuit data from your EICR and get a…"
                 icon={Brain}
               />
             </>
@@ -383,7 +383,7 @@ export default function ElectricalRetrofitGuidePage() {
               </div>
               <SEOAppBridge
                 title="EICR Digital Form for Retrofit Documentation"
-                description="Elec-Mate's digital EICR form captures all test results before and after retrofit work. Document the existing installation condition, record the improvements made, and issue a satisfactory report — all validated against BS 7671 limits automatically."
+                description="Elec-Mate's digital EICR form captures all test results before and after retrofit work. Document the existing installation condition…"
                 icon={ClipboardCheck}
               />
             </>

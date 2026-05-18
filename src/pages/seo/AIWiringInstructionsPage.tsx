@@ -118,7 +118,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description:
-      'Complete guide to the 18th Edition of the IET Wiring Regulations including Amendment 3:2024.',
+      'Complete guide to the 18th Edition of the IET Wiring Regulations including Amendment 4:2024.',
     icon: FileText,
     category: 'Guide',
   },
@@ -280,7 +280,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Get wiring instructions for any circuit"
-          description="Open the Wiring Instructions tool in Elec-Mate, describe the circuit, and get step-by-step guidance with diagrams and BS 7671 references. Works offline on site."
+          description="Open the Wiring Instructions tool in Elec-Mate, describe the circuit, and get step-by-step guidance with diagrams and BS 7671 references."
           icon={Cable}
         />
       </>
@@ -388,7 +388,7 @@ const sections = [
           protection), and 434.1 (fault current protection).
         </p>
         <p>
-          Amendment 3:2024 is particularly relevant for modern circuit types. Regulation 530.3.2
+          Amendment 4:2024 is particularly relevant for modern circuit types. Regulation 530.3.2
           (bidirectional and unidirectional protective devices) affects the wiring of circuits with
           solar PV, battery storage, and other sources of reverse power flow. The AI includes these
           requirements in the wiring instructions for the relevant circuit types, ensuring your
@@ -422,9 +422,9 @@ export default function AIWiringInstructionsPage() {
   return (
     <ToolTemplate
       title="AI Wiring Instructions | Step-by-Step Guidance"
-      description="Get step-by-step wiring instructions for any UK electrical circuit type. Circuit-specific guides, cable routing, connection diagrams, and BS 7671 regulation references. Built for UK electricians and apprentices."
+      description="Get step-by-step wiring instructions for any UK electrical circuit type. Circuit-specific guides, cable routing, connection diagrams…"
       datePublished="2025-08-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="AI Wiring Guidance"

@@ -339,7 +339,7 @@ const sections = [
             <div>
               <h4 className="font-bold text-white mb-1">Consumer Unit Enclosure</h4>
               <p className="text-white text-sm leading-relaxed">
-                Amendment 3 to BS 7671 requires consumer units to be either non-combustible (metal)
+                Amendment 4 to BS 7671 requires consumer units to be either non-combustible (metal)
                 or mounted on a non-combustible surface. In an outbuilding, a documented risk
                 assessment may support the use of a non-ferrous (plastic IP65) enclosure to reduce
                 corrosion risk — particularly in damp environments. This risk assessment must be
@@ -663,7 +663,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify shed electrics"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Everything you need for outbuilding installations. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
           icon={Home}
         />
       </>
@@ -679,9 +679,9 @@ export default function ShedElectricalInstallationPage() {
   return (
     <GuideTemplate
       title="Shed Electrical Installation | Complete Wiring Guide UK"
-      description="Complete guide to shed electrical installation in the UK. SWA cable selection, sub-panel installation, lighting and sockets, IP ratings, Part P notification, earthing options, and step-by-step wiring approach with 2026 pricing."
+      description="Complete guide to shed electrical installation in the UK. SWA cable selection, sub-panel installation, lighting and sockets, IP ratings…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

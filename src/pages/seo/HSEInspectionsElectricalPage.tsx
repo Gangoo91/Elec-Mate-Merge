@@ -300,7 +300,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Keep your certification records on your phone"
-          description="Elec-Mate stores all your digital certificates, test results, and reports. When an HSE inspector asks to see documentation, you can produce it instantly. No trips to the office, no searching through filing cabinets."
+          description="Elec-Mate stores all your digital certificates, test results, and reports. When an HSE inspector asks to see documentation, you can produce it instantly."
           icon={FileCheck2}
         />
       </>
@@ -522,7 +522,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Digital records available in seconds"
-          description="When an HSE inspector asks for your EICR, test results, or certificates, pull them up on your phone instantly. Elec-Mate stores all your digital certification records securely and makes them searchable."
+          description="When an HSE inspector asks for your EICR, test results, or certificates, pull them up on your phone instantly."
           icon={FileCheck2}
         />
       </>
@@ -601,9 +601,9 @@ export default function HSEInspectionsElectricalPage() {
   return (
     <GuideTemplate
       title="HSE Inspections | What Electricians Need to Know"
-      description="Complete guide to HSE inspections for electricians. What inspectors look for, improvement notices, prohibition notices, prosecution, penalties, and how to prepare. Covers Electricity at Work Regulations 1989 and Health and Safety at Work Act 1974."
+      description="Complete guide to HSE inspections for electricians. What inspectors look for, improvement notices, prohibition notices, prosecution, penalties…"
       datePublished="2025-05-12"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

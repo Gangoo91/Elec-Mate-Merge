@@ -431,7 +431,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Record test results directly on site"
-          description="Elec-Mate lets you enter multimeter readings directly into your EIC or EICR schedule of test results on your phone. Voice entry, AI assistance, and instant PDF generation. No transcription errors."
+          description="Elec-Mate lets you enter multimeter readings directly into your EIC or EICR schedule of test results on your phone."
           icon={ClipboardCheck}
         />
       </>
@@ -567,7 +567,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Record test results, certify installations, find faults"
-          description="Join 1,000+ UK electricians using Elec-Mate to record multimeter readings, complete EIC and EICR certificates, and get AI fault-finding support on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to record multimeter readings, complete EIC and EICR certificates, and get AI fault-finding support on site."
           icon={Wrench}
         />
       </>
@@ -582,10 +582,10 @@ const sections = [
 export default function MultimeterGuideElectriciansPage() {
   return (
     <GuideTemplate
-      title="Multimeter Guide for Electricians UK 2026 | CAT Ratings, True RMS, Best Meters"
-      description="Complete multimeter guide for UK electricians. CAT III vs CAT IV ratings, True RMS vs average sensing, voltage and resistance measurements, and the best multimeters in 2026 including Fluke 115, Fluke 117, and budget options."
+      title="Multimeter Guide for Electricians UK 2026 | CAT Ratings,"
+      description="Complete multimeter guide for UK electricians. CAT III vs CAT IV ratings, True RMS vs average sensing, voltage and resistance measurements…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Tools & Equipment Guide"

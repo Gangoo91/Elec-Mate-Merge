@@ -277,7 +277,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="2,000+ EPA Knowledge Test Questions"
-          description="Practice questions covering every knowledge topic in the ST0215 standard. Detailed explanations with regulation references. Timed mock tests to build exam-day confidence."
+          description="Practice questions covering every knowledge topic in the ST0215 standard. Detailed explanations with regulation references."
           icon={Brain}
         />
       </>
@@ -363,7 +363,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="EPA Professional Discussion Simulator"
-          description="Practise the professional discussion with AI-powered voice input. The AI asks portfolio-based questions, scores your responses against real grade descriptors, and coaches you to articulate competence with the depth assessors are looking for."
+          description="Practise the professional discussion with AI-powered voice input. The AI asks portfolio-based questions…"
           icon={Mic}
         />
       </>
@@ -507,7 +507,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Avoid EPA Fails — Prepare Thoroughly"
-          description="Elec-Mate's EPA Simulator covers all three components: knowledge test questions, practical assessment practice via the AM2 Simulator, and professional discussion coaching with AI voice scoring. 7-day free trial."
+          description="Elec-Mate's EPA Simulator covers all three components: knowledge test questions, practical assessment practice via the AM2 Simulator…"
           icon={ShieldCheck}
         />
       </>
@@ -567,7 +567,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Complete EPA Preparation — All Three Components"
-          description="Join 1,000+ UK apprentices preparing for the EPA with Elec-Mate. Professional discussion simulator, 2,000+ knowledge test questions, AM2 practical exercises, portfolio builder, and OJT tracker. 7-day free trial."
+          description="Join 1,000+ UK apprentices preparing for the EPA with Elec-Mate. Professional discussion simulator, 2,000+ knowledge test questions…"
           icon={Award}
         />
       </>
@@ -579,9 +579,9 @@ export default function EPAWhatToExpectPage() {
   return (
     <GuideTemplate
       title="EPA What to Expect | End Point Assessment Electrician"
-      description="Complete guide to the electrical apprenticeship End Point Assessment (EPA). What the three components involve, grading criteria, timeline from gateway to completion, common fails, and how to prepare with Elec-Mate's EPA Simulator."
+      description="Complete guide to the electrical apprenticeship End Point Assessment (EPA). What the three components involve, grading criteria…"
       datePublished="2025-10-05"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EPA Guide"

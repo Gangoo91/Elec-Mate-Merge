@@ -16,7 +16,7 @@ import {
 
 const PAGE_TITLE = 'Electrical Training Hub | Apprentice, 18th Edition, AM2 and 2391';
 const PAGE_DESCRIPTION =
-  'Explore Elec-Mate training pages for electrical apprentices and qualified electricians: 18th Edition, AM2, inspection and testing, 2391, Level 2, Level 3, EPA preparation, and the Study Centre.';
+  'Elec-Mate training for apprentices + qualified UK electricians: 18th Edition, AM2, I&T, 2391, Level 2, Level 3, EPA prep, Study Centre.';
 
 const features = [
   {
@@ -121,7 +121,7 @@ export default function TrainingHubPage() {
       { name: 'Home', url: '/' },
       { name: 'Training', url: '/training' },
     ],
-    dateModified: '2026-04-12',
+    dateModified: '2026-05-18',
     author: 'Elec-Mate Technical Team',
   });
 

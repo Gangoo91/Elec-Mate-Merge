@@ -674,10 +674,10 @@ const sections = [
 export default function HolidayLetElectricalPage() {
   return (
     <GuideTemplate
-      title="Holiday Let Electrical Safety UK | Airbnb & Holiday Cottage Guide"
-      description="Holiday let electrical safety guide for UK property owners. No mandatory EICR but duty of care under Occupiers Liability Act 1957. Recommended five-yearly EICR, PAT testing, smoke and CO detection, RCD protection, insurance implications, and marketing your safety credentials."
+      title="Holiday Let Electrical Safety UK | Airbnb & Holiday Cottage"
+      description="Holiday let electrical safety guide for UK property owners. No mandatory EICR but duty of care under Occupiers Liability Act 1957."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Holiday Let Guide"

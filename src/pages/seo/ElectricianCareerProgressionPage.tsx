@@ -326,7 +326,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Professional development tools for every career stage"
-          description="Elec-Mate includes 46+ training courses, ElecID professional card, CPD tracking, and career development resources. Whether you are an apprentice or a supervisor, keep your skills and credentials current."
+          description="Elec-Mate includes 46+ training courses, ElecID professional card, CPD tracking, and career development resources."
           icon={Award}
         />
       </>
@@ -432,7 +432,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Run your self-employed business from one app"
-          description="Quoting app, invoice app, expense tracking, cash flow planner, and job profitability calculator — all built for electricians. Send professional quotes from site, invoice instantly, and track every penny. 7-day free trial."
+          description="Quoting app, invoice app, expense tracking, cash flow planner, and job profitability calculator — all built for electricians."
           icon={Calculator}
         />
       </>
@@ -549,9 +549,9 @@ export default function ElectricianCareerProgressionPage() {
     <GuideTemplate
       localArea="Career Progression"
       title="Electrician Career Progression | From Apprentice to MD"
-      description="Complete guide to electrician career progression in the UK. Every stage from apprentice to business owner with typical salaries, qualifications needed, and how to accelerate your progression through specialisation and CPD."
+      description="Complete guide to electrician career progression in the UK. Every stage from apprentice to business owner with typical salaries, qualifications needed…"
       datePublished="2025-06-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

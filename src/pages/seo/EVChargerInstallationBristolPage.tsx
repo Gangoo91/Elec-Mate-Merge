@@ -468,7 +468,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify Bristol EV installations"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. Professional quotes and certificates from your phone."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification."
           icon={Car}
         />
       </>
@@ -483,10 +483,10 @@ const sections = [
 export default function EVChargerInstallationBristolPage() {
   return (
     <GuideTemplate
-      title="EV Charger Installation Bristol 2026 | Costs, DNO, and Grants"
-      description="How much does EV charger installation cost in Bristol in 2026? Local costs, National Grid DNO notification, OZEV grant, Clean Air Zone, Victorian terrace guidance, PME earthing, and Section 722 compliance."
+      title="EV Charger Installation Bristol 2026 | Costs, DNO, and"
+      description="How much does EV charger installation cost in Bristol in 2026? Local costs, National Grid DNO notification, OZEV grant, Clean Air Zone…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Bristol Guide"

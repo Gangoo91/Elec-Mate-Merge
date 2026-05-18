@@ -215,7 +215,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Price your garage conversion electrical package"
-          description="Use Elec-Mate's quoting app to price garage conversion electrical work with itemised materials, labour, and Part P notification. Professional PDF quotes on your phone from the survey."
+          description="Use Elec-Mate's quoting app to price garage conversion electrical work with itemised materials, labour, and Part P notification."
           icon={Calculator}
         />
       </>
@@ -469,8 +469,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Quote and certify garage conversion electrical work on your phone"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification. Everything you need for garage conversion electrical packages. 7-day free trial."
+          title="Quote and certify garage conversion electrical work on your"
+          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification."
           icon={Home}
         />
       </>
@@ -485,10 +485,10 @@ const sections = [
 export default function GarageConversionElectricalCostPage() {
   return (
     <GuideTemplate
-      title="Garage Conversion Electrical Cost UK | Circuits, Costs & Part P"
-      description="How much does garage conversion electrical work cost in the UK? Typical costs £1,500–£4,500. Covers required circuits, heating load calculations, consumer unit upgrades, and Part P Building Regulations notification."
+      title="Garage Conversion Electrical Cost UK | Circuits, Costs &"
+      description="How much does garage conversion electrical work cost in the UK? Typical costs £1,500–£4,500. Covers required circuits, heating load calculations…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

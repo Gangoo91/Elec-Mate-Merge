@@ -563,7 +563,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Every Certificate Type, One App"
-          description="Elec-Mate generates EICs, Minor Works Certificates, and EICRs with auto-validated test results against BS 7671. Digital signatures, instant PDF delivery, and professional formatting. Certificates that satisfy scheme assessors and building control. 7-day free trial."
+          description="Elec-Mate generates EICs, Minor Works Certificates, and EICRs with auto-validated test results against BS 7671."
           icon={ClipboardCheck}
         />
       </>
@@ -578,10 +578,10 @@ const sections = [
 export default function BuildingRegulationsElectricalPage() {
   return (
     <GuideTemplate
-      title="Building Regulations Part P Electrical | UK Guide for Electricians"
-      description="Complete guide to Part P Building Regulations for UK electricians. What work is notifiable, who can self-certify, competent person schemes (NICEIC, NAPIT, ELECSA), special locations, penalties for non-compliance, and documentation requirements. England, Wales, Scotland, and Northern Ireland."
+      title="Building Regulations Part P Electrical | UK Guide for"
+      description="Complete guide to Part P Building Regulations for UK electricians. What work is notifiable, who can self-certify, competent person schemes (NICEIC…"
       datePublished="2025-04-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations Guide"

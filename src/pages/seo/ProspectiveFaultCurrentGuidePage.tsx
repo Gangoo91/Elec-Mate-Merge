@@ -20,7 +20,7 @@ import {
 
 const PAGE_TITLE = 'Prospective Fault Current Explained | PFC Guide BS 7671';
 const PAGE_DESCRIPTION =
-  'Complete guide to prospective fault current (PFC/Ipf) under BS 7671. What PFC is, why it matters, how to measure it, typical domestic and commercial values, relationship to Ze, breaking capacity of MCBs, and regulatory requirements under Regulation 434.5.';
+  'Prospective fault current (PFC/Ipf) under BS 7671: what it is, why it matters, how to measure, typical values, Ze, MCB breaking capacity, Reg 434.5.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -165,7 +165,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="PFC calculator and adiabatic verification"
-          description="Elec-Mate's PFC calculator determines the fault current from supply impedance. The adiabatic calculator then verifies the cable can withstand it. Both work offline on site."
+          description="Elec-Mate's PFC calculator determines the fault current from supply impedance. The adiabatic calculator then verifies the cable can withstand it."
           icon={Calculator}
         />
       </>
@@ -386,7 +386,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="APCS Calculator | BS 7671:2018+A4:2026"
-          description="Calculate APCS (prospective fault current) in seconds. Verify Ze values against BS 7671:2018+A4:2026 breaking capacities. Free offline tool for EICR compliance."
+          description="APCS calculator for prospective fault current testing. Verify Ze values and breaking capacities against BS 7671:2018+A4:2026 in seconds. Free tool."
           icon={Gauge}
         />
       </>
@@ -518,7 +518,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="EICR records PFC and validates against device ratings"
-          description="Elec-Mate's digital EICR records the PFC at the origin and checks it against the breaking capacity of every installed protective device. Observations are auto-suggested if PFC exceeds capacity."
+          description="Elec-Mate's digital EICR records the PFC at the origin and checks it against the breaking capacity of every installed protective device."
           icon={ClipboardCheck}
         />
       </>
@@ -585,7 +585,7 @@ export default function ProspectiveFaultCurrentGuidePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-06-01"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="BS 7671 Testing"

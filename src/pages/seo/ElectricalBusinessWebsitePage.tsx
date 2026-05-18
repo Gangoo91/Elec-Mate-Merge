@@ -616,10 +616,10 @@ const sections = [
 export default function ElectricalBusinessWebsitePage() {
   return (
     <GuideTemplate
-      title="Electrician Website Guide UK | How to Build & Market Your Website"
-      description="Complete guide to building and marketing an electrician website in the UK. Trust signals, website builders vs custom, SEO basics, call tracking, booking forms, and realistic costs from £300 to £2,000."
+      title="Electrician Website Guide UK | How to Build & Market Your"
+      description="Complete guide to building and marketing an electrician website in the UK. Trust signals, website builders vs custom, SEO basics, call tracking…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Business Guide"

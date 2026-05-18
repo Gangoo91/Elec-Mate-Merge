@@ -367,7 +367,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Follow the test sequence automatically"
-          description="Elec-Mate guides you through dead tests then live tests in the correct BS 7671 order. Voice-enter your readings, and the schedule populates automatically. AI flags any failed values and suggests the right observation code."
+          description="Elec-Mate guides you through dead tests then live tests in the correct BS 7671 order. Voice-enter your readings, and the schedule populates automatically."
           icon={ClipboardCheck}
         />
       </>
@@ -619,7 +619,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Issue the EIC before you leave site"
-          description="Complete initial verification on your phone. AI board scanner, voice test entry, automatic pass/fail checking, and instant PDF export. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial."
+          description="Complete initial verification on your phone. AI board scanner, voice test entry, automatic pass/fail checking, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -635,9 +635,9 @@ export default function InitialVerificationGuidePage() {
   return (
     <GuideTemplate
       title="Initial Verification Guide | BS 7671 Chapter 61"
-      description="Complete guide to initial verification of electrical installations under BS 7671. When required, the full test sequence, inspection schedule, EIC certification, and common failures to watch for."
+      description="Complete guide to initial verification of electrical installations under BS 7671. When required, the full test sequence, inspection schedule…"
       datePublished="2025-09-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

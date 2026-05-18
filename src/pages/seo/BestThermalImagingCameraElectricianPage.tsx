@@ -707,7 +707,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Add thermal images to your EICR reports"
-          description="Elec-Mate's EICR certificate app supports photo attachments — include thermal images alongside your schedule of test results for professional, evidence-based condition reports."
+          description="Elec-Mate's EICR certificate app supports photo attachments — include thermal images alongside your schedule of test results for professional…"
           icon={Camera}
         />
       </>
@@ -723,9 +723,9 @@ export default function BestThermalImagingCameraElectricianPage() {
   return (
     <GuideTemplate
       title="Best Thermal Imaging Camera for Electricians 2026"
-      description="Honest comparison of the best thermal imaging cameras for UK electricians in 2026. FLIR C5, HikMicro B1L, Fluke PTi120, FLIR ONE Pro, and Milwaukee M12 compared on resolution, temperature range, battery life, and price."
+      description="Honest comparison of the best thermal imaging cameras for UK electricians in 2026. FLIR C5, HikMicro B1L, Fluke PTi120, FLIR ONE Pro…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Equipment Guide"

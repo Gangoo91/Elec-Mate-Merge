@@ -529,7 +529,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Sheffield electrical business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting. Eliminate paperwork and win more work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting."
           icon={FileCheck2}
         />
       </>
@@ -545,9 +545,9 @@ export default function ConsumerUnitReplacementSheffieldPage() {
   return (
     <GuideTemplate
       title="Consumer Unit Replacement Sheffield | Fuse Box Sheffield"
-      description="Consumer unit replacement in Sheffield — metal enclosure rules, Part P Building Regulations, costs £400–750, BS EN 61439, NICEIC registered electricians. Guide for Sheffield homeowners and landlords 2026."
+      description="Consumer unit replacement in Sheffield — metal enclosure rules, Part P Building Regulations, costs £400–750, BS EN 61439, NICEIC registered electricians."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Electrical Guide"

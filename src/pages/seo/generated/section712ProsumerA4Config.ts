@@ -5,14 +5,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // and Engineering Recommendation G98/G99 for grid connection.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const section712ProsumerA4Config: GeneratedGuideConfig = {
   pagePath: '/guides/section-712-prosumer-a4-2026',
   title:
-    'Section 712 Prosumer\u2019s LV Installations under BS 7671:2018+A4:2026 \u2014 Battery, Solar PV & Microgeneration Changes | Elec-Mate',
+    'Section 712 Prosumer\u2019s LV Installations under BS',
   description:
-    'Complete guide to Section 712 of BS 7671:2018+A4:2026 \u2014 prosumer\u2019s low-voltage installations, battery energy storage systems, AC vs DC coupling, isolation, earthing for islanded operation, EREC G98/G99 grid connection, DNO notification, solar PV + battery + EV interaction, Loss of Mains protection and prosumer-specific inspection and testing.',
+    'Complete guide to Section 712 of BS 7671:2018+A4:2026 \u2014 prosumer\u2019s low-voltage installations, battery energy storage systems…',
   datePublished: published,
   dateModified: modified,
   readingTime: 18,
@@ -214,7 +214,7 @@ export const section712ProsumerA4Config: GeneratedGuideConfig = {
         {
           type: 'callout',
           tone: 'warning',
-          title: 'Inverter without island-mode capability \u2014 do not strand loads',
+          title: 'Inverter without island-mode capability \u2014 do not',
           text:
             'Many cheaper PV and battery inverters are grid-tied only \u2014 they shut down completely on loss of mains and provide zero output until the grid returns. This is fully compliant with Section 712 and G98/G99. The customer must understand this is not a backup power solution \u2014 only inverters explicitly rated for island/EPS operation will keep the lights on during a power cut.',
         },
@@ -245,7 +245,7 @@ export const section712ProsumerA4Config: GeneratedGuideConfig = {
         {
           type: 'callout',
           tone: 'info',
-          title: 'A multi-source installation may need G99 even if each source is small',
+          title: 'A multi-source installation may need G99 even if each',
           text:
             'A house with 3.6 kW of solar PV + 5 kW of battery + a 7 kW EV charger that can do V2G (vehicle-to-grid) may exceed the G98 16 A per phase ceiling cumulatively even though each individual source is small. Check the cumulative export capability \u2014 if it exceeds 16 A per phase, the installation falls under G99 and the DNO must be applied to before energisation.',
         },
@@ -275,7 +275,7 @@ export const section712ProsumerA4Config: GeneratedGuideConfig = {
         {
           type: 'callout',
           tone: 'warning',
-          title: 'Notification is the installer\u2019s legal obligation, not the customer\u2019s',
+          title: 'Notification is the installer\u2019s legal obligation, not',
           text:
             'It is a common misconception that the householder notifies the DNO. They do not \u2014 the installer does, on behalf of the customer, as part of commissioning. Failing to notify exposes the installer to enforcement, the customer to potential disconnection, and creates a safety hazard for DNO field staff who may believe a property is supply-only.',
         },
@@ -447,42 +447,42 @@ export const section712ProsumerA4Config: GeneratedGuideConfig = {
     {
       href: '/guides/bs-7671-a4-2026-summary',
       title: 'BS 7671 A4:2026 Summary',
-      description: 'The full summary of the 18th Edition Amendment 4 changes \u2014 AFDDs, TN-C-S (PNB), new schedule columns, model form revisions and the Section 712 prosumer expansion.',
+      description: 'The full summary of the 18th Edition Amendment 4 changes \u2014 AFDDs, TN-C-S (PNB), new schedule columns…',
       icon: 'BookOpen',
       category: 'Guide',
     },
     {
       href: '/guides/prosumer-low-voltage-electrical-installation',
       title: 'Prosumer\u2019s Low-Voltage Electrical Installation',
-      description: 'Companion explainer on the prosumer concept, where it sits in BS 7671 and how it interacts with smart metering, export tariffs and the rest of the regulations.',
+      description: 'Companion explainer on the prosumer concept, where it sits in BS 7671 and how it interacts with smart metering…',
       icon: 'Zap',
       category: 'Guide',
     },
     {
       href: '/guides/battery-storage-guide',
       title: 'Battery Storage Guide',
-      description: 'Domestic battery storage from a UK installer\u2019s perspective \u2014 sizing, chemistry, enclosure, ventilation, fire separation, MCS 020 and BS 7671 Section 712.',
+      description: 'Domestic battery storage from a UK installer\u2019s perspective \u2014 sizing, chemistry, enclosure, ventilation, fire separation…',
       icon: 'CheckCircle2',
       category: 'Guide',
     },
     {
       href: '/guides/rams-for-solar-pv-installation',
       title: 'RAMS for Solar PV Installation',
-      description: 'CDM 2015-compliant Risk Assessment and Method Statement for a solar PV install \u2014 working at height, DC isolation, manual handling and the safe sequence of work.',
+      description: 'CDM 2015-compliant Risk Assessment and Method Statement for a solar PV install \u2014 working at height, DC isolation…',
       icon: 'ShieldCheck',
       category: 'Guide',
     },
     {
       href: '/guides/cable-size-for-ev-charger',
       title: 'Cable Size for EV Charger',
-      description: 'Sizing the supply cable for a 7 kW or 22 kW EV charge point under BS 7671 Section 722, including the interaction with a prosumer installation and TN-C-S PEN-fault detection.',
+      description: 'Sizing the supply cable for a 7 kW or 22 kW EV charge point under BS 7671 Section 722…',
       icon: 'Cable',
       category: 'Guide',
     },
     {
       href: '/guides/smart-ev-charging',
       title: 'Smart EV Charging',
-      description: 'The Electric Vehicles (Smart Charge Points) Regulations 2021, OZEV grant eligibility, and how smart EV charging interacts with solar + battery prosumer installations.',
+      description: 'The Electric Vehicles (Smart Charge Points) Regulations 2021, OZEV grant eligibility…',
       icon: 'Zap',
       category: 'Guide',
     },

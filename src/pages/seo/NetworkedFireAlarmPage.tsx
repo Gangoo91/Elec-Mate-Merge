@@ -20,9 +20,9 @@ export default function NetworkedFireAlarmPage() {
   return (
     <GuideTemplate
       title="Networked Fire Alarm System | Addressable vs Conventional"
-      description="Complete guide to networked fire alarm systems for electricians. Covers conventional zones, addressable loop wiring, analogue addressable panels, hybrid systems, BS 5839 categories, and when to specify each type for commercial and residential installations."
+      description="Complete guide to networked fire alarm systems for electricians. Covers conventional zones, addressable loop wiring, analogue addressable panels…"
       datePublished="2026-01-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'Networked Fire Alarm', href: '/guides/networked-fire-alarm-system' },
@@ -249,7 +249,7 @@ export default function NetworkedFireAlarmPage() {
               </div>
               <SEOAppBridge
                 title="Fire Alarm Certificate Digital Form"
-                description="Elec-Mate's digital fire alarm certificate captures all system details, zone or loop information, device locations, and commissioning test results. Generate professional BS 5839-compliant documentation for any fire alarm installation — conventional, addressable, or hybrid."
+                description="Elec-Mate's digital fire alarm certificate captures all system details, zone or loop information, device locations, and commissioning test results."
                 icon={FileText}
               />
             </>
@@ -509,7 +509,7 @@ export default function NetworkedFireAlarmPage() {
               </div>
               <SEOAppBridge
                 title="Emergency Lighting Certificate for Fire Safety"
-                description="Fire alarm systems are often installed alongside emergency lighting. Elec-Mate's emergency lighting certificate form covers all BS 5266 requirements — monthly functional tests, annual duration tests, and comprehensive recording of all luminaire positions and test results."
+                description="Fire alarm systems are often installed alongside emergency lighting. Elec-Mate's emergency lighting certificate form covers all BS 5266 requirements —…"
                 icon={ClipboardCheck}
               />
             </>

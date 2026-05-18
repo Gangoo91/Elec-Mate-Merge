@@ -201,7 +201,7 @@ const sections = [
               <span>
                 <strong>Regulation 421.1.6</strong> — The consumer unit (or equivalent) in domestic
                 premises must comply with BS EN 61439-3 and be constructed of non-combustible
-                material. This regulation, introduced in Amendment 3 of the 17th Edition,
+                material. This regulation, introduced in Amendment 4 of the 17th Edition,
                 effectively requires metal consumer units in domestic properties.
               </span>
             </li>
@@ -424,7 +424,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Apply Ci derating automatically"
-          description="Elec-Mate's cable sizing calculator includes all derating factors — Ci for thermal insulation, Ca for ambient temperature, Cg for grouping, and Cc for semi-enclosed fuses. Get the right cable size first time."
+          description="Elec-Mate's cable sizing calculator includes all derating factors — Ci for thermal insulation, Ca for ambient temperature, Cg for grouping…"
           icon={Calculator}
         />
       </>
@@ -587,7 +587,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Document fire protection measures on your certificates"
-          description="Elec-Mate's EIC and EICR certificates include dedicated sections for fire-stopping, cable derating, and thermal protection observations. Complete your certificates on site with all the fire safety details recorded."
+          description="Elec-Mate's EIC and EICR certificates include dedicated sections for fire-stopping, cable derating, and thermal protection observations."
           icon={FileCheck2}
         />
       </>
@@ -603,9 +603,9 @@ export default function Chapter42ThermalProtectionPage() {
   return (
     <GuideTemplate
       title="Chapter 42 BS 7671 | Protection Against Thermal Effects"
-      description="Complete guide to Chapter 42 of BS 7671 — protection against thermal effects. Fire protection from electrical equipment, cable penetrations through fire barriers, fire hoods for downlighters, Ci derating factor for thermal insulation, and escape route wiring requirements."
+      description="Complete guide to Chapter 42 of BS 7671 — protection against thermal effects. Fire protection from electrical equipment…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulation Deep-Dive"

@@ -638,7 +638,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your landlord EICR business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -653,10 +653,10 @@ const sections = [
 export default function LandlordElectricalSafetySouthamptonPage() {
   return (
     <GuideTemplate
-      title="Landlord Electrical Safety Southampton | EICR Requirements 2026"
-      description="Landlord electrical safety requirements in Southampton. 2020 Regulations explained, Southampton City Council enforcement, HMO requirements for student properties, penalties up to £30,000, tenant rights, remedial timescales, and EICR costs for 2026."
+      title="Landlord Electrical Safety Southampton | EICR Requirements"
+      description="Landlord electrical safety requirements in Southampton. 2020 Regulations explained, Southampton City Council enforcement…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Landlord Guide"

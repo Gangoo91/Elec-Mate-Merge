@@ -574,7 +574,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional certification for Cambridge electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting. Heritage, commercial, or biotech — certify it all on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting."
           icon={MapPin}
         />
       </>
@@ -591,9 +591,9 @@ export default function ElectricianCambridgePage() {
     <GuideTemplate
       localArea="Cambridge"
       title="Electrician in Cambridge | Local Electrical Guide"
-      description="Complete guide for electricians working in Cambridge. UKPN DNO, university college electrical maintenance, listed building work, biotech corridor commercial opportunities, Fen flood risk, and realistic Cambridge pricing."
+      description="Complete guide for electricians working in Cambridge. UKPN DNO, university college electrical maintenance, listed building work…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Location Guide"

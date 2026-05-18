@@ -56,7 +56,7 @@ const faqs = [
   {
     question: 'Which edition of BS 7671 should I buy?',
     answer:
-      'Buy BS 7671:2018+A2:2022, which is the 18th Edition including Amendment 1 and Amendment 2. This is the current printed book available from the IET. Amendment 3 (A4:2026) is published as a free PDF supplement — download it from the IET website and keep it with your book. Do not buy a second-hand copy of an older edition (16th or 17th Edition) unless you specifically need it for reference — all current work must be to the 18th Edition. When searching online, look for ISBN 978-1-78561-170-4 to ensure you get the correct current edition.',
+      'Buy BS 7671:2018+A2:2022, which is the 18th Edition including Amendment 1 and Amendment 2. This is the current printed book available from the IET. Amendment 4 (A4:2026) is published as a free PDF supplement — download it from the IET website and keep it with your book. Do not buy a second-hand copy of an older edition (16th or 17th Edition) unless you specifically need it for reference — all current work must be to the 18th Edition. When searching online, look for ISBN 978-1-78561-170-4 to ensure you get the correct current edition.',
   },
   {
     question: 'What is Guidance Note 3 and do I need it?',
@@ -216,8 +216,8 @@ const sections = [
         </p>
         <p>
           The current printed edition is BS 7671:2018+A2:2022 (incorporating Amendments 1 and 2).
-          Amendment 3 (A4:2026) is a free PDF supplement available from the IET website — download
-          it and keep it with your Brown Book. Amendment 3 adds Regulation 530.3.2 covering
+          Amendment 4 (A4:2026) is a free PDF supplement available from the IET website — download
+          it and keep it with your Brown Book. Amendment 4 adds Regulation 530.3.2 covering
           bidirectional and unidirectional devices.
         </p>
       </>
@@ -272,7 +272,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="OSG tables on your phone with Elec-Mate"
-          description="All the cable sizing tables, Zs limits, correction factors, and disconnection times from the OSG are built into Elec-Mate's 70+ calculators. Faster than flicking through a book, always up to date with the latest amendment."
+          description="All the cable sizing tables, Zs limits, correction factors, and disconnection times from the OSG are built into Elec-Mate's 70+ calculators."
           icon={Calculator}
         />
       </>
@@ -477,22 +477,22 @@ const sections = [
             {
               title: '18th Edition Exam Guide (2382)',
               description:
-                'Practice questions and mock exams for the City and Guilds 2382-22 (18th Edition) course. The exam is open-book — you can take BS 7671 and the OSG. Practice finding information quickly under timed conditions. Look for guides updated to include Amendment 2.',
+                'Practice questions and mock exams for the City and Guilds 2382-22 (18th Edition) course. The exam is open-book — you can take BS 7671 and the OSG.',
             },
             {
               title: '2391 Inspection and Testing Exam Guide',
               description:
-                'Covers both the written exam and the practical assessment. Includes practice questions, worked examples of certificate completion, and guidance on the practical inspection and testing exercise. BS 7671, the OSG, and GN3 are permitted in the exam.',
+                'Covers both the written exam and the practical assessment. Includes practice questions, worked examples of certificate completion…',
             },
             {
               title: 'AM2 Practical Assessment Guide',
               description:
-                'The AM2 is a practical assessment, so the best preparation is hands-on practice. However, guides that explain the marking criteria, common mistakes, and time management strategies are valuable. The JIB publishes official AM2 guidance — read it thoroughly.',
+                'The AM2 is a practical assessment, so the best preparation is hands-on practice. However, guides that explain the marking criteria, common mistakes…',
             },
             {
               title: 'Level 2 and Level 3 Study Guides',
               description:
-                'Various publishers produce study guides aligned with the City and Guilds 5357 and EAL qualifications. These provide practice questions, revision summaries, and mock exams for each unit. Combine these with your Elec-Mate study courses for comprehensive preparation.',
+                'Various publishers produce study guides aligned with the City and Guilds 5357 and EAL qualifications.',
             },
           ].map((item) => (
             <div
@@ -511,7 +511,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Study courses and exam prep built into Elec-Mate"
-          description="Level 2, Level 3, AM2, and EPA preparation courses with interactive modules, practice questions, and AI-powered tutoring. Study on your phone during commutes, breaks, and evenings."
+          description="Level 2, Level 3, AM2, and EPA preparation courses with interactive modules, practice questions, and AI-powered tutoring."
           icon={GraduationCap}
         />
       </>
@@ -531,27 +531,27 @@ const sections = [
             {
               title: 'IET Code of Practice for EV Charging Equipment Installation',
               description:
-                'Essential for electricians installing EV chargers. Covers cable sizing, earthing, protection, and the specific requirements of Section 722 of BS 7671. Updated for the latest OZEV grant requirements.',
+                'Essential for electricians installing EV chargers. Covers cable sizing, earthing, protection, and the specific requirements of Section 722 of BS 7671.',
             },
             {
               title: 'Guidance Note 7: Special Locations',
               description:
-                'Covers the requirements for bathrooms, swimming pools, saunas, construction sites, marinas, caravan parks, and other special locations defined in Part 7 of BS 7671. Essential if you work in any of these environments.',
+                'Covers the requirements for bathrooms, swimming pools, saunas, construction sites, marinas, caravan parks…',
             },
             {
               title: 'Guidance Note 8: Earthing and Bonding',
               description:
-                'In-depth guidance on TN-S, TN-C-S, and TT earthing systems, protective bonding, and earth electrode testing. Particularly valuable for EICR inspectors assessing earthing adequacy on older installations.',
+                'In-depth guidance on TN-S, TN-C-S, and TT earthing systems, protective bonding, and earth electrode testing.',
             },
             {
-              title: 'IET Code of Practice for In-Service Inspection and Testing (PAT)',
+              title: 'IET Code of Practice for In-Service Inspection and Testing',
               description:
-                'The definitive reference for PAT testing in the UK. Covers appliance classification, test procedures, pass/fail criteria, and recording requirements. Essential for any electrician offering PAT testing services.',
+                'The definitive reference for PAT testing in the UK. Covers appliance classification, test procedures, pass/fail criteria, and recording requirements.',
             },
             {
               title: "Electrician's Guide to Emergency Lighting",
               description:
-                'Covers BS 5266 emergency lighting design, installation, testing, and certification. Increasingly important as fire safety regulations tighten following the Building Safety Act 2022.',
+                'Covers BS 5266 emergency lighting design, installation, testing, and certification. Increasingly important as fire safety regulations tighten following…',
             },
           ].map((item) => (
             <div
@@ -587,9 +587,9 @@ export default function BestElectricalBooksPage() {
   return (
     <GuideTemplate
       title="Best Electrical Books 2026 | Top Reads for Electricians"
-      description="The best electrical books for UK electricians in 2026. BS 7671 Brown Book, On-Site Guide, Guidance Note 3, Brian Scaddan textbooks, exam preparation guides, and additional recommended reads for apprentices and experienced electricians."
+      description="The best electrical books for UK electricians in 2026. BS 7671 Brown Book, On-Site Guide, Guidance Note 3, Brian Scaddan textbooks…"
       datePublished="2025-11-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Training Guide"

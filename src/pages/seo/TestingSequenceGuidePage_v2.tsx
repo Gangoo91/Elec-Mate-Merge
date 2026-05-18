@@ -24,7 +24,7 @@ import {
 
 const PAGE_TITLE = 'Electrical Testing Sequence BS 7671 | Dead & Live Testing Order';
 const PAGE_DESCRIPTION =
-  'Complete guide to the correct electrical testing sequence per BS 7671 and IET Guidance Note 3 (GN3). Continuity, insulation resistance, polarity, earth electrode resistance, earth fault loop impedance, prospective fault current, functional testing including RCD operation. Why the order matters, pass/fail criteria, common mistakes. For UK electricians.';
+  'BS 7671 + IET GN3 testing sequence: continuity, IR, polarity, electrode R, EFLI, PFC, functional + RCD. Why order matters, pass/fail, mistakes.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -166,7 +166,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Guided testing sequence built into the app"
-          description="Elec-Mate walks you through the correct GN3 testing sequence step by step. Enter results for each test and the app validates them against BS 7671 maximum permitted values automatically. Never miss a test or do them in the wrong order."
+          description="Elec-Mate walks you through the correct GN3 testing sequence step by step. Enter results for each test and the app validates them against BS 7671 maximum…"
           icon={ListOrdered}
         />
       </>
@@ -294,7 +294,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="70+ calculators for Zs, Ze, R1+R2 and more"
-          description="Elec-Mate has dedicated calculators for verifying ring circuit test results, calculating expected R1+R2 values from cable data, and checking Zs against BS 7671 maximum permitted values. All built to the current standard."
+          description="Elec-Mate has dedicated calculators for verifying ring circuit test results, calculating expected R1+R2 values from cable data…"
           icon={Calculator}
         />
       </>
@@ -528,7 +528,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Voice-to-test-results — speak values while holding probes"
-          description="On site with probes in hand? Just speak: 'Ring 1, R1+R2 0.32, Zs 0.89, insulation 200 meg.' Elec-Mate fills in the schedule of test results for you. Hands-free data entry designed for how electricians actually work."
+          description="On site with probes in hand? Just speak: 'Ring 1, R1+R2 0.32, Zs 0.89, insulation 200 meg.' Elec-Mate fills in the schedule of test results for you."
           icon={Mic}
         />
       </>
@@ -765,7 +765,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Board scanner populates circuit data from a photo"
-          description="Point your phone at the distribution board and Elec-Mate's AI reads MCB/RCBO ratings, circuit details, and board layout. No more squinting at faded labels. Start the schedule of tests with the data already filled in."
+          description="Point your phone at the distribution board and Elec-Mate's AI reads MCB/RCBO ratings, circuit details, and board layout."
           icon={Camera}
         />
       </>
@@ -830,7 +830,7 @@ export default function TestingSequenceGuidePage_v2() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2024-09-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

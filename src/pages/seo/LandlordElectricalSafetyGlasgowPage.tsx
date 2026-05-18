@@ -552,10 +552,10 @@ const sections = [
 export default function LandlordElectricalSafetyGlasgowPage() {
   return (
     <GuideTemplate
-      title="Landlord Electrical Safety Glasgow | Scottish Repairing Standard 2026"
-      description="Landlord electrical safety requirements in Glasgow under Scottish law. Housing (Scotland) Act 2006 Repairing Standard, First-tier Tribunal enforcement, HMO licensing, and EICR costs for 2026. NOT the England 2020 Regulations."
+      title="Landlord Electrical Safety Glasgow | Scottish Repairing"
+      description="Landlord electrical safety requirements in Glasgow under Scottish law. Housing (Scotland) Act 2006 Repairing Standard, First-tier Tribunal enforcement…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Landlord Guide — Scotland"

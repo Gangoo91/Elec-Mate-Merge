@@ -317,7 +317,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Document offshore electrical commissioning and inspection"
-          description="Elec-Mate's certificate tools support the LV and auxiliary power documentation required during offshore wind turbine commissioning. Works offline on vessels and platforms."
+          description="Elec-Mate's certificate tools support the LV and auxiliary power documentation required during offshore wind turbine commissioning."
           icon={FileCheck2}
         />
       </>
@@ -401,10 +401,10 @@ const sections = [
 export default function OffshoreElectricalWorkPage() {
   return (
     <GuideTemplate
-      title="Offshore Electrical Work UK | Platforms, Wind Farms and Pay Rates"
-      description="Complete guide to offshore electrical work in the UK. OPITO BOSIET/FOET, OGUK medical, IEC 61892, ATEX/CompEx requirements, pay rates of £600–£1,200/day, and how to get into offshore from a domestic background."
+      title="Offshore Electrical Work UK | Platforms, Wind Farms and Pay"
+      description="Complete guide to offshore electrical work in the UK. OPITO BOSIET/FOET, OGUK medical, IEC 61892, ATEX/CompEx requirements, pay rates of £600–£1,200/day…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Specialist Guide"

@@ -547,7 +547,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your electrical partnership with Elec-Mate"
-          description="Job scheduling, electrical certificates, quoting, and invoicing for two-person electrical partnerships. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial."
+          description="Job scheduling, electrical certificates, quoting, and invoicing for two-person electrical partnerships. Join 1,000+ UK electricians using Elec-Mate."
           icon={Building2}
         />
       </>
@@ -562,10 +562,10 @@ const sections = [
 export default function ElectricalBusinessPartnershipPage() {
   return (
     <GuideTemplate
-      title="Electrical Business Partnership UK | Starting a Partnership with Another Electrician"
-      description="Complete guide to starting an electrical business partnership in the UK. Partnership vs LLP vs Ltd company, partnership agreement essentials, profit sharing, unlimited liability risks, registering with HMRC, and how to dissolve a partnership."
+      title="Electrical Business Partnership UK | Starting a Partnership"
+      description="Complete guide to starting an electrical business partnership in the UK. Partnership vs LLP vs Ltd company, partnership agreement essentials…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Business Guide"

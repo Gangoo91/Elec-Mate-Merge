@@ -21,9 +21,9 @@ export default function CapacityPlanningCalculatorPage() {
   return (
     <BusinessTemplate
       title="Capacity Planning Calculator for Electricians"
-      description="Plan your workforce capacity, schedule jobs efficiently, and maximise utilisation rates. Know exactly how many jobs you can take, when to hire, and how to grow your electrical business without overcommitting."
+      description="Plan your workforce capacity, schedule jobs efficiently, and maximise utilisation rates. Know exactly how many jobs you can take, when to hire…"
       datePublished="2025-09-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Business Tools', href: '/tools' },
         { label: 'Capacity Planning Calculator', href: PAGE_PATH },
@@ -99,7 +99,7 @@ export default function CapacityPlanningCalculatorPage() {
           appBridge: {
             title: 'See Your Real Capacity Right Now',
             description:
-              'Elec-Mate calculates your available billable hours, tracks committed jobs, and shows your utilisation rate in real time. Know exactly how much work you can take on.',
+              'Elec-Mate calculates your available billable hours, tracks committed jobs, and shows your utilisation rate in real time.',
             icon: Users,
           },
         },

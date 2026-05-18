@@ -5,14 +5,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Testing, 9th Edition), and the IET On-Site Guide.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const tnCBannedNewInstallsA4Config: GeneratedGuideConfig = {
   pagePath: '/guides/tn-c-banned-new-installations-a4-2026',
   title:
-    'TN-C Earthing Banned in New Installations — BS 7671:2018+A4:2026 Explained | Elec-Mate',
+    'TN-C Earthing Banned in New Installations — BS',
   description:
-    'Amendment 4 to BS 7671:2018 (published 15 April 2026) prohibits TN-C earthing arrangements in new low-voltage installations. This guide explains the regulation, how TN-C differs from TN-C-S (PME and PNB), how to code existing TN-C on an EICR, and how the change affects EV chargers and DNO supplies.',
+    'Amendment 4 to BS 7671:2018 (published 15 April 2026) prohibits TN-C earthing arrangements in new low-voltage installations.',
   datePublished: published,
   dateModified: modified,
   readingTime: 16,
@@ -447,7 +447,7 @@ export const tnCBannedNewInstallsA4Config: GeneratedGuideConfig = {
     {
       href: '/guides/bs-7671-a4-2026-tn-cs-pnb-earthing',
       title: 'A4:2026 TN-C-S (PNB) Earthing Arrangement',
-      description: 'The new Section I tick-box that distinguishes Protective Neutral Bonding from Protective Multiple Earthing, and how to record it correctly on the EIC and EICR.',
+      description: 'The new Section I tick-box that distinguishes Protective Neutral Bonding from Protective Multiple Earthing…',
       icon: 'ShieldCheck',
       category: 'Guide',
     },
@@ -461,21 +461,21 @@ export const tnCBannedNewInstallsA4Config: GeneratedGuideConfig = {
     {
       href: '/guides/what-is-earthing',
       title: 'What Is Earthing?',
-      description: 'A primer on earthing, bonding, protective conductors, the role of the earth electrode and why automatic disconnection of supply needs a low-impedance earth fault loop.',
+      description: 'A primer on earthing, bonding, protective conductors, the role of the earth electrode and why automatic disconnection of supply needs a low-impedance…',
       icon: 'BookOpen',
       category: 'Guide',
     },
     {
       href: '/guides/eicr-no-main-protective-bonding',
       title: 'EICR — No Main Protective Bonding',
-      description: 'How to code an EICR observation where main protective bonding to extraneous-conductive-parts is missing — and why the implications are more serious on a TN-C arrangement.',
+      description: 'How to code an EICR observation where main protective bonding to extraneous-conductive-parts is missing — and why the implications are more serious on a…',
       icon: 'FileCheck2',
       category: 'Guide',
     },
     {
       href: '/guides/cable-size-for-ev-charger',
       title: 'Cable Size for EV Charger',
-      description: 'Practical cable sizing for a 7 kW or 22 kW EV charger — including the supply earthing arrangement (PME, PNB, TN-S, TT) and the open-PEN mitigations under Section 722.',
+      description: 'Practical cable sizing for a 7 kW or 22 kW EV charger — including the supply earthing arrangement (PME, PNB, TN-S…',
       icon: 'Calculator',
       category: 'Guide',
     },

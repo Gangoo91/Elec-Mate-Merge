@@ -26,7 +26,7 @@ import {
 
 const PAGE_TITLE = 'Prospective Fault Current Calculator | PSCC & PEFC | Elec-Mate';
 const PAGE_DESCRIPTION =
-  'Calculate prospective fault current (PSCC and PEFC) instantly on your phone. Verify protective device breaking capacity, check compliance with BS 7671 Regulation 434.5.1, and access 70 electrical calculators. Start free.';
+  'Calculate prospective fault current (PSCC + PEFC) on your phone. Verify breaking capacity, BS 7671 Reg 434.5.1, plus 70 calculators. Start free.';
 
 const faqs = [
   {

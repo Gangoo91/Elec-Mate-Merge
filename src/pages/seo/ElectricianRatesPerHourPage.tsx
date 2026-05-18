@@ -478,7 +478,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Calculate your true hourly rate and job profitability"
-          description="Elec-Mate job profitability calculator works out your true costs per hour, factors in all overheads, and tells you whether each job actually makes money. Stop guessing, start knowing. 7-day free trial."
+          description="Elec-Mate job profitability calculator works out your true costs per hour, factors in all overheads, and tells you whether each job actually makes money."
           icon={Calculator}
         />
       </>
@@ -598,7 +598,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional quotes that win work at the right price"
-          description="Elec-Mate quoting app builds in your overheads, materials markup, and profit margin automatically. Send branded quotes from site and convert them to invoices with one tap. 7-day free trial."
+          description="Elec-Mate quoting app builds in your overheads, materials markup, and profit margin automatically."
           icon={Receipt}
         />
       </>
@@ -615,9 +615,9 @@ export default function ElectricianRatesPerHourPage() {
     <GuideTemplate
       localArea="Rates Per Hour Uk"
       title="Electrician Rates Per Hour UK 2026 | Pricing Guide"
-      description="Complete guide to electrician hourly rates in the UK. Average rates by region, callout charges, emergency rates, weekend and evening pricing, rate calculations, and common pricing mistakes to avoid."
+      description="Complete guide to electrician hourly rates in the UK. Average rates by region, callout charges, emergency rates, weekend and evening pricing…"
       datePublished="2025-07-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Pricing Guide"

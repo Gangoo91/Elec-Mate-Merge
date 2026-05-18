@@ -289,7 +289,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Issue EICs on site from your phone"
-          description="Elec-Mate's EIC Certificate app generates the full EIC with Schedule of Inspections and Schedule of Test Results on site. AI board scanning populates circuit details automatically. Issue the PDF to the client before you leave."
+          description="Elec-Mate's EIC Certificate app generates the full EIC with Schedule of Inspections and Schedule of Test Results on site."
           icon={FileCheck2}
         />
       </>
@@ -705,7 +705,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Never leave a job without the certificate"
-          description="Elec-Mate automatically prompts you to issue the correct certificate at the end of every job — EIC, EICR, or Minor Works. All certificates stored permanently. Issue the PDF to the client on site. 7-day free trial."
+          description="Elec-Mate automatically prompts you to issue the correct certificate at the end of every job — EIC, EICR, or Minor Works."
           icon={FileCheck2}
         />
       </>
@@ -720,10 +720,10 @@ const sections = [
 export default function ElectricalHandoverDocumentationGuidePage() {
   return (
     <GuideTemplate
-      title="Electrical Handover Documentation Guide | EIC, EICR, MEIWC, Part P"
-      description="Complete guide to electrical handover documentation requirements. When to use EIC, EICR, or MEIWC, what test results must be recorded, O&M manuals and as-built drawings for commercial work, Building Regulations completion certificates, and why documentation matters for insurance, property sale, and electrician liability."
+      title="Electrical Handover Documentation Guide | EIC, EICR, MEIWC,"
+      description="Complete guide to electrical handover documentation requirements. When to use EIC, EICR, or MEIWC, what test results must be recorded…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Documentation Guide"

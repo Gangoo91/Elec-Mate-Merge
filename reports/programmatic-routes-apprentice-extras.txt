@@ -1,0 +1,25 @@
+// Lazy:
+const 18thEditionAmendment42026ExamPrepPage = lazy(() => import('@/pages/seo/18thEditionAmendment42026ExamPrepPage'));
+const 18thEditionChapter41ProtectionAgainstElectricShockExamPage = lazy(() => import('@/pages/seo/18thEditionChapter41ProtectionAgainstElectricShockExamPage'));
+const 18thEditionChapter43OvercurrentProtectionExamPage = lazy(() => import('@/pages/seo/18thEditionChapter43OvercurrentProtectionExamPage'));
+const 18thEditionAppendix4CableCurrentRatingExamPage = lazy(() => import('@/pages/seo/18thEditionAppendix4CableCurrentRatingExamPage'));
+const EcsGoldCardRequirements2026Page = lazy(() => import('@/pages/seo/EcsGoldCardRequirements2026Page'));
+const JibPayScales2026Page = lazy(() => import('@/pages/seo/JibPayScales2026Page'));
+const AfterAm2WhatHappensNextPage = lazy(() => import('@/pages/seo/AfterAm2WhatHappensNextPage'));
+const ElectricianCareerProgressionUkPage = lazy(() => import('@/pages/seo/ElectricianCareerProgressionUkPage'));
+const FindingAnElectricalApprenticeshipUkPage = lazy(() => import('@/pages/seo/FindingAnElectricalApprenticeshipUkPage'));
+const OffTheJobTrainingHoursTrackingPage = lazy(() => import('@/pages/seo/OffTheJobTrainingHoursTrackingPage'));
+const OffTheJobTrainingEmployerGuidePage = lazy(() => import('@/pages/seo/OffTheJobTrainingEmployerGuidePage'));
+
+// Routes:
+      <Route path="/guides/18th-edition-amendment-4-2026-exam-prep" element={<LazyRoute><18thEditionAmendment42026ExamPrepPage /></LazyRoute>} />
+      <Route path="/guides/18th-edition-chapter-41-protection-against-electric-shock-exam" element={<LazyRoute><18thEditionChapter41ProtectionAgainstElectricShockExamPage /></LazyRoute>} />
+      <Route path="/guides/18th-edition-chapter-43-overcurrent-protection-exam" element={<LazyRoute><18thEditionChapter43OvercurrentProtectionExamPage /></LazyRoute>} />
+      <Route path="/guides/18th-edition-appendix-4-cable-current-rating-exam" element={<LazyRoute><18thEditionAppendix4CableCurrentRatingExamPage /></LazyRoute>} />
+      <Route path="/guides/ecs-gold-card-requirements-2026" element={<LazyRoute><EcsGoldCardRequirements2026Page /></LazyRoute>} />
+      <Route path="/guides/jib-pay-scales-2026" element={<LazyRoute><JibPayScales2026Page /></LazyRoute>} />
+      <Route path="/guides/after-am2-what-happens-next" element={<LazyRoute><AfterAm2WhatHappensNextPage /></LazyRoute>} />
+      <Route path="/guides/electrician-career-progression-uk" element={<LazyRoute><ElectricianCareerProgressionUkPage /></LazyRoute>} />
+      <Route path="/guides/finding-an-electrical-apprenticeship-uk" element={<LazyRoute><FindingAnElectricalApprenticeshipUkPage /></LazyRoute>} />
+      <Route path="/guides/off-the-job-training-hours-tracking" element={<LazyRoute><OffTheJobTrainingHoursTrackingPage /></LazyRoute>} />
+      <Route path="/guides/off-the-job-training-employer-guide" element={<LazyRoute><OffTheJobTrainingEmployerGuidePage /></LazyRoute>} />

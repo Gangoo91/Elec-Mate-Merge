@@ -463,7 +463,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AI Cost Engineer for Rewire Quotes"
-          description="Electricians: describe the job and get a detailed rewire quote with materials breakdown, cable quantities, labour hours, and profit margin calculated from real UK trade pricing data."
+          description="Electricians: describe the job and get a detailed rewire quote with materials breakdown, cable quantities, labour hours…"
           icon={Brain}
         />
       </>
@@ -557,7 +557,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage rewire projects with Elec-Mate"
-          description="Electricians: quote rewires with AI cost engineering, manage projects with task tracking, complete EIC certificates on your phone, and send professional invoices. 7-day free trial."
+          description="Electricians: quote rewires with AI cost engineering, manage projects with task tracking, complete EIC certificates on your phone…"
           icon={Wrench}
         />
       </>
@@ -573,9 +573,9 @@ export default function RewireCostLondonPage() {
   return (
     <GuideTemplate
       title="Rewire Cost London 2026 | London House Rewire Prices"
-      description="How much does a house rewire cost in London in 2026? Complete London rewire pricing guide covering Victorian terraces, flats, period properties, Part P, and finding a qualified electrician."
+      description="How much does a house rewire cost in London in 2026? Complete London rewire pricing guide covering Victorian terraces, flats, period properties, Part P…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

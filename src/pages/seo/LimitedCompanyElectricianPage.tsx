@@ -560,7 +560,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Track every business expense from your phone"
-          description="Elec-Mate expense tracking lets you photograph receipts, categorise expenses, and export data for your accountant. Keep your limited company records organised without the paperwork. 7-day free trial."
+          description="Elec-Mate expense tracking lets you photograph receipts, categorise expenses, and export data for your accountant."
           icon={Receipt}
         />
       </>
@@ -626,7 +626,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Cash flow planner built for electricians"
-          description="Elec-Mate cash flow planner tracks your income, expenses, tax reserves, and profit in real time. See exactly where your money is going and never be surprised by a tax bill. 7-day free trial."
+          description="Elec-Mate cash flow planner tracks your income, expenses, tax reserves, and profit in real time."
           icon={BarChart3}
         />
       </>
@@ -642,9 +642,9 @@ export default function LimitedCompanyElectricianPage() {
   return (
     <GuideTemplate
       title="Limited Company for Electricians | Setup Guide UK"
-      description="Complete guide to setting up a limited company as an electrician in the UK. Ltd vs sole trader comparison, Companies House registration, corporation tax, salary and dividends, accountant selection, and common mistakes."
+      description="Complete guide to setting up a limited company as an electrician in the UK. Ltd vs sole trader comparison, Companies House registration, corporation tax…"
       datePublished="2025-08-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Business Guide"

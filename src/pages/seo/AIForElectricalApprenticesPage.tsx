@@ -15,10 +15,10 @@ import {
 export default function AIForElectricalApprenticesPage() {
   return (
     <GuideTemplate
-      title="AI for Electrical Apprentices | Study Tools Guide | Elec-Mate"
-      description="How electrical apprentices can use AI to study BS 7671, practise exam questions, understand regulations, prepare for the AM2, and build on-site skills. Covers AI tutoring, regulation lookup, component identification, and exam preparation."
+      title="AI for Electrical Apprentices | Study Tools Guide"
+      description="How electrical apprentices can use AI to study BS 7671, practise exam questions, understand regulations, prepare for the AM2, and build on-site skills."
       datePublished="2026-01-18"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'AI for Electrical Apprentices', href: '/guides/ai-for-electrical-apprentices' },
@@ -148,7 +148,7 @@ export default function AIForElectricalApprenticesPage() {
               </ul>
               <SEOAppBridge
                 title="AI Tutor — Your 24/7 Study Companion"
-                description="Ask any question about BS 7671, electrical science, installation methods, or testing procedures. The AI Tutor gives clear explanations with regulation references, worked examples, and practical context — whenever you need them."
+                description="Ask any question about BS 7671, electrical science, installation methods, or testing procedures."
                 icon={Brain}
               />
             </>
@@ -403,7 +403,7 @@ export default function AIForElectricalApprenticesPage() {
               </ul>
               <SEOAppBridge
                 title="Elec-Mate for Apprentices — AI-Powered Learning"
-                description="46+ training courses aligned to NVQ Level 2 and Level 3, AI tutor for instant explanations, practice question generators, component identification, and study planning. Everything an apprentice needs to learn faster."
+                description="46+ training courses aligned to NVQ Level 2 and Level 3, AI tutor for instant explanations, practice question generators, component identification…"
                 icon={GraduationCap}
               />
             </>

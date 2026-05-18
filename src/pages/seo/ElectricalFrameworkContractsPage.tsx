@@ -636,7 +636,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win and manage framework contracts with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, RAMS generation, H&S documentation, and AI business support. Build the documentation library you need to win public sector framework contracts. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, RAMS generation, H&S documentation, and AI business support."
           icon={Building2}
         />
       </>
@@ -651,10 +651,10 @@ const sections = [
 export default function ElectricalFrameworkContractsPage() {
   return (
     <GuideTemplate
-      title="Electrical Framework Contracts UK | Getting on Approved Lists"
-      description="How to get onto local authority, NHS, and housing association electrical framework contracts. Pre-qualification questionnaires, CHAS and Constructionline, UK procurement thresholds post-Brexit, and how to win call-off contracts."
+      title="Electrical Framework Contracts UK | Getting on Approved"
+      description="How UK electricians get onto local authority, NHS, and housing association framework contracts: prequalification, accreditations, tender pricing."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Business Guide"

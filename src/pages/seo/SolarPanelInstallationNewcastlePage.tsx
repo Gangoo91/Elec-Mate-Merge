@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Amendment 3 wiring regulations — key changes for solar and EV installations.',
+    description: 'Amendment 4 wiring regulations — key changes for solar and EV installations.',
     icon: FileCheck2,
     category: 'Guide',
   },
@@ -536,7 +536,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your solar PV business in the Northeast with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, professional quoting, and job management. Complete EICs for solar installations before you leave site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, professional quoting, and job management."
           icon={Sun}
         />
       </>
@@ -551,10 +551,10 @@ const sections = [
 export default function SolarPanelInstallationNewcastlePage() {
   return (
     <GuideTemplate
-      title="Solar Panel Installation Newcastle 2025 | Solar PV Northeast England"
-      description="Solar panel installation in Newcastle 2025. Northeast irradiance data, real cost examples £5,500–£8,500 for 4kW system, Smart Export Guarantee payments, council solar schemes, and battery storage options for Northeast England."
+      title="Solar Panel Installation Newcastle 2025 | Solar PV"
+      description="Solar panel installation in Newcastle 2025. Northeast irradiance data, real cost examples £5,500–£8,500 for 4kW system, Smart Export Guarantee payments…"
       datePublished="2025-01-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Solar Guide"

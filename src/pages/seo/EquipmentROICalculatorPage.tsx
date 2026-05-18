@@ -88,7 +88,7 @@ const features = [
     icon: Calculator,
     title: 'Payback Period Calculator',
     description:
-      'Enter the purchase cost, running costs, and expected revenue or time savings. See exactly how many days or weeks it takes for the investment to pay for itself.',
+      'Enter the purchase cost, running costs, and expected revenue or time savings. See exactly how many days or weeks it takes for the investment to pay for…',
   },
   {
     icon: TrendingUp,
@@ -106,7 +106,7 @@ const features = [
     icon: BarChart3,
     title: 'Revenue Impact Projection',
     description:
-      'Project how much additional revenue or profit a tool, qualification, or vehicle will generate over its lifetime. Based on your actual charge rates and workload.',
+      'Project how much additional revenue or profit a tool, qualification, or vehicle will generate over its lifetime.',
   },
   {
     icon: Clock,
@@ -267,7 +267,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Van Cost Comparison"
-          description="Compare the total cost of owning different vans over 3, 5, or 7 years. Factor in finance, fuel, insurance, maintenance, and depreciation. See which option gives you the lowest cost per mile."
+          description="Compare the total cost of owning different vans over 3, 5, or 7 years. Factor in finance, fuel, insurance, maintenance, and depreciation."
           icon={Car}
         />
       </>
@@ -442,7 +442,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Equipment ROI Calculator"
-          description="Enter the cost, running expenses, and expected revenue for any investment. See the payback period, lifetime ROI, and whether the purchase makes financial sense. Compare multiple investments to prioritise your spending."
+          description="Enter the cost, running expenses, and expected revenue for any investment. See the payback period, lifetime ROI…"
           icon={Calculator}
         />
       </>
@@ -501,9 +501,9 @@ export default function EquipmentROICalculatorPage() {
   return (
     <BusinessTemplate
       title="Equipment ROI Calculator | Tool Investment Tool"
-      description="Calculate the return on investment for test equipment, vans, tools, and training courses. See payback periods, lifetime ROI, and compare investments side by side. Built for UK electricians."
+      description="Calculate the return on investment for test equipment, vans, tools, and training courses. See payback periods, lifetime ROI…"
       datePublished="2025-06-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Business Tools"

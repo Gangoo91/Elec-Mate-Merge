@@ -432,7 +432,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Peterborough electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for electricians working across the East of England. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -449,9 +449,9 @@ export default function ElectricianPeterboroughPage() {
     <GuideTemplate
       localArea="Peterborough"
       title="Electrician in Peterborough | Local Electricians 2026"
-      description="Find qualified electricians in Peterborough. Part P compliance, UK Power Networks DNO, NICEIC and NAPIT registered electricians, EICR for landlords, EV charger installation, and Peterborough electrician rates for 2026."
+      description="Find qualified electricians in Peterborough. Part P compliance, UK Power Networks DNO, NICEIC and NAPIT registered electricians, EICR for landlords…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Peterborough"

@@ -495,7 +495,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Huddersfield electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the residential and rental electrical market in Huddersfield and Kirklees. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -511,10 +511,10 @@ export default function ElectricianHuddersfieldPage() {
   return (
     <GuideTemplate
       localArea="Huddersfield"
-      title="Electrician Huddersfield | Local Electricians Huddersfield & Kirklees"
-      description="Find qualified electricians in Huddersfield. NICEIC and NAPIT registered, Part P compliant. EICRs for landlords and HMOs, consumer unit replacement, Victorian terrace rewires, and EV charger installation in Huddersfield 2026."
+      title="Electrician Huddersfield | Local Electricians Huddersfield"
+      description="Find qualified electricians in Huddersfield. NICEIC and NAPIT registered, Part P compliant. EICRs for landlords and HMOs, consumer unit replacement…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Huddersfield"

@@ -492,7 +492,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Electrical certification for specialist site work"
-          description="Complete Electrical Installation Certificates and test records on site. Elec-Mate's EIC app works offline on nuclear sites where internet access may be restricted, syncing when you return to a connected area. Professional PDF output for quality record submission."
+          description="Complete Electrical Installation Certificates and test records on site. Elec-Mate's EIC app works offline on nuclear sites where internet access may be…"
           icon={FileCheck2}
         />
       </>
@@ -508,9 +508,9 @@ export default function NuclearSiteElectricalWorkPage() {
   return (
     <GuideTemplate
       title="Nuclear Site Electrical Work UK | Electrician Guide"
-      description="Complete guide to working as an electrician on UK nuclear licensed sites. Security vetting (BPSS, CTC, SC), SHEA Nuclear card, CCNSG Safety Passport, IEC 60364, permit to work systems, and pay rates of £55–90+/hr."
+      description="Complete guide to working as an electrician on UK nuclear licensed sites. Security vetting (BPSS, CTC, SC), SHEA Nuclear card, CCNSG Safety Passport…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Specialist Guide"

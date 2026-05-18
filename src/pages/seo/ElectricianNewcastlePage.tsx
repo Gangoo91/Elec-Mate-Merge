@@ -601,7 +601,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Newcastle electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for Tyneside flats, HMO compliance, and North East working conditions. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -618,9 +618,9 @@ export default function ElectricianNewcastlePage() {
     <GuideTemplate
       localArea="Newcastle"
       title="Electrician in Newcastle | Local Electricians 2026"
-      description="Find qualified electricians in Newcastle. Northern Powergrid DNO, Tyneside flat conversions, quayside regeneration, cold climate EV charging, student HMOs, and local electrician rates for 2026."
+      description="Find qualified electricians in Newcastle. Northern Powergrid DNO, Tyneside flat conversions, quayside regeneration, cold climate EV charging…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Newcastle"

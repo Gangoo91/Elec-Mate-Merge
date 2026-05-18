@@ -450,7 +450,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Generate RAMS and permit documentation with Elec-Mate"
-          description="Elec-Mate's AI RAMS generator creates site-specific risk assessments and method statements for electrical work including safe isolation procedures. Compliant with UK health and safety regulations. 7-day free trial."
+          description="Elec-Mate's AI RAMS generator creates site-specific risk assessments and method statements for electrical work including safe isolation procedures."
           icon={ClipboardCheck}
         />
       </>
@@ -592,7 +592,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional RAMS and H&S documentation with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site risk assessments, method statements, and health and safety documentation. AI-generated, site-specific, and ready in minutes. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site risk assessments, method statements, and health and safety documentation."
           icon={ShieldCheck}
         />
       </>
@@ -607,10 +607,10 @@ const sections = [
 export default function LockoutTagoutGuidePage() {
   return (
     <GuideTemplate
-      title="Lockout Tagout (LOTO) Guide UK | Electrical Isolation Procedures"
-      description="Complete UK guide to lockout tagout (LOTO) and safe isolation procedures for electrical systems. Electricity at Work Regulations 1989, prove dead procedures, LOTO device types, permit to work, and multi-trade isolation."
+      title="Lockout Tagout (LOTO) Guide UK | Electrical Isolation"
+      description="UK lockout tagout (LOTO) and safe isolation procedures for electrical systems. HSE GS 38 compliant, prove-test-prove, EAWR 1989 duties covered."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

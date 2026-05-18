@@ -20,9 +20,9 @@ import {
   Target,
 } from 'lucide-react';
 
-const PAGE_TITLE = '2391 Inspection and Testing Course Online | C&G 2391-52 | Elec-Mate';
+const PAGE_TITLE = '2391 Inspection & Testing Course Online | C&G 2391-52';
 const PAGE_DESCRIPTION =
-  'Study for the City & Guilds 2391-52 Inspection and Testing qualification online. AI-powered quiz prep, GN3 testing sequence walkthroughs, mock exams, and practical assessment guidance. From £5.99/mo.';
+  'Study C&G 2391-52 Inspection & Testing online: AI quiz prep, GN3 testing sequence walkthroughs, mock exams, practical guidance. From £5.99/mo.';
 
 const faqs = [
   {
@@ -62,37 +62,37 @@ const features = [
     icon: Brain,
     title: 'AI Quiz Preparation',
     description:
-      'Hundreds of 2391-52 practice questions with AI-generated explanations. Each answer includes BS 7671 regulation references and GN3 cross-references for deep understanding.',
+      'Hundreds of 2391-52 practice questions with AI-generated explanations. Each answer includes BS 7671 regulation references and GN3 cross-references for…',
   },
   {
     icon: TestTube2,
     title: 'GN3 Testing Sequence',
     description:
-      'Interactive walkthroughs of the complete Guidance Note 3 testing sequence. Understand why each test is performed in order and what results to expect at each stage.',
+      'Interactive walkthroughs of the complete Guidance Note 3 testing sequence. Understand why each test is performed in order and what results to expect at…',
   },
   {
     icon: ClipboardCheck,
     title: 'Certificate Practice',
     description:
-      'Practise completing EICs, EICRs, and Minor Works certificates with validation. The app flags missing fields, incorrect entries, and common documentation mistakes.',
+      'Practise completing EICs, EICRs, and Minor Works certificates with validation. The app flags missing fields, incorrect entries…',
   },
   {
     icon: Search,
     title: 'Scenario Walkthroughs',
     description:
-      'Realistic initial verification and periodic inspection scenarios. Domestic rewires, commercial fit-outs, and older installations with genuine defects to identify and code.',
+      'Realistic initial verification and periodic inspection scenarios. Domestic rewires, commercial fit-outs…',
   },
   {
     icon: FileCheck2,
     title: 'Observation Code Training',
     description:
-      'Learn to assign C1, C2, C3, and FI codes correctly. Scenario-based exercises present real defects and challenge you to classify them with proper justification.',
+      'Learn to assign C1, C2, C3, and FI codes correctly. Scenario-based exercises present real defects and challenge you to classify them with proper…',
   },
   {
     icon: BookOpen,
     title: 'BS 7671 Regulation Lookup',
     description:
-      'Instant access to BS 7671:2018+A4:2026 regulation references. Search by number, topic, or keyword. The AI explains regulations in plain language with practical examples.',
+      'Instant access to BS 7671:2018+A4:2026 regulation references. Search by number, topic, or keyword.',
   },
 ];
 
@@ -438,43 +438,43 @@ export default function CityGuilds2391Page() {
                 step: '1',
                 title: 'Continuity of Protective Conductors (R1+R2)',
                 description:
-                  'Using a low-resistance ohmmeter, measure the continuity of every circuit protective conductor back to the main earthing terminal. This confirms the earth path is intact before any further tests. The R1+R2 value is also used later to verify earth fault loop impedance by calculation.',
+                  'Using a low-resistance ohmmeter, measure the continuity of every circuit protective conductor back to the main earthing terminal.',
               },
               {
                 step: '2',
                 title: 'Continuity of Ring Final Circuit Conductors',
                 description:
-                  'For ring final circuits, the three-step cross-connection test confirms that line, neutral, and CPC conductors are all continuous rings without breaks or unauthorised spurs. Measured values at each socket should be consistent, confirming a healthy ring.',
+                  'For ring final circuits, the three-step cross-connection test confirms that line, neutral…',
               },
               {
                 step: '3',
                 title: 'Insulation Resistance',
                 description:
-                  'Apply 500V DC between live conductors and earth, and between line and neutral, using a calibrated insulation resistance tester. The minimum acceptable value is 1 megohm. This test detects damaged cable insulation, moisture ingress, and contamination before the circuit is energised.',
+                  'Apply 500V DC between live conductors and earth, and between line and neutral, using a calibrated insulation resistance tester.',
               },
               {
                 step: '4',
                 title: 'Polarity',
                 description:
-                  'Confirm that single-pole switching and protective devices are connected in the line conductor only. Polarity is typically verified during the R1+R2 continuity test using the wander lead method, ensuring all accessories are correctly wired.',
+                  'Confirm that single-pole switching and protective devices are connected in the line conductor only.',
               },
               {
                 step: '5',
                 title: 'Earth Fault Loop Impedance (Zs)',
                 description:
-                  'This live test measures the total impedance of the earth fault loop at each circuit endpoint. The measured Zs must not exceed the maximum permitted value for the protective device (per BS 7671 tables) to ensure disconnection within 0.4s for final circuits or 5s for distribution circuits.',
+                  'This live test measures the total impedance of the earth fault loop at each circuit endpoint.',
               },
               {
                 step: '6',
                 title: 'Prospective Fault Current (PSCC/PEFC)',
                 description:
-                  'Measure the maximum prospective short-circuit current and prospective earth fault current at the origin. The measured values must not exceed the rated breaking capacity of the protective devices installed. This protects against catastrophic device failure under fault conditions.',
+                  'Measure the maximum prospective short-circuit current and prospective earth fault current at the origin.',
               },
               {
                 step: '7',
                 title: 'RCD Testing',
                 description:
-                  'Test each RCD at its rated residual operating current (typically 30mA) to confirm operation within 300ms, at five times rated current to confirm operation within 40ms, and at 50% rated current to confirm it does not trip. This is the final test as it requires the circuit to be live and energised.',
+                  'Test each RCD at its rated residual operating current (typically 30mA) to confirm operation within 300ms…',
               },
             ].map((item) => (
               <div
@@ -608,7 +608,7 @@ export default function CityGuilds2391Page() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Pass the C&G 2391-52 with Elec-Mate"
-            description="AI-powered quiz prep, GN3 testing walkthroughs, certificate practice, and scenario simulations — everything you need to pass the Inspection and Testing qualification first time. From £5.99/month."
+            description="AI-powered quiz prep, GN3 testing walkthroughs, certificate practice, and scenario simulations — everything you need to pass the Inspection and Testing…"
             ctaText="Start 7-day free trial"
             ctaHref="/auth/signup"
           />

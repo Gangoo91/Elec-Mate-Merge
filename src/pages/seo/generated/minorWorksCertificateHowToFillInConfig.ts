@@ -1,11 +1,11 @@
 import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuidePage';
 
 const published = '2026-04-12';
-const modified = '2026-04-12';
+const modified = '2026-05-18';
 
 export const minorWorksCertificateHowToFillInConfig: GeneratedGuideConfig = {
   pagePath: '/guides/minor-works-certificate-how-to-fill-in',
-  title: 'Minor Works Certificate How to Fill In | Electrician Guide | Elec-Mate',
+  title: 'Minor Works Certificate How to Fill In | Electrician Guide',
   description:
     'How to fill in a Minor Works certificate properly, keep the readings and description clear, and complete the paperwork cleanly from site.',
   datePublished: published,
@@ -105,6 +105,31 @@ export const minorWorksCertificateHowToFillInConfig: GeneratedGuideConfig = {
           type: 'paragraph',
           text:
             'If the work leads straight into a quote or remedial discussion, a mobile workflow tied to the [electrical quoting app](/electrical-quoting-app) helps you keep the next step in the same place.',
+        },
+      ],
+    },
+    {
+      id: 'common-mistakes-when-filling-in',
+      heading: 'Common mistakes when filling in the MWC',
+      blocks: [
+        {
+          type: 'paragraph',
+          text:
+            'Most Minor Works Certificate mistakes come from rushing — the certificate is short, so people treat it as a formality and finish it without checking. The result is missing supply details, incorrect circuit identification, or a declaration ticked before the test results are even in the boxes. None of those are technically illegal, but all of them weaken the legal value of the document.',
+        },
+        {
+          type: 'paragraph',
+          text:
+            'The fix is a short pause before sign-off. After every test is in, before any signature, read the certificate end to end as if you were the client or an inspector. Does every field describe the work you actually did? Are the readings consistent with the circuit? Is the declaration honest? If any answer is "not quite", the certificate needs another two minutes before you hand it over.',
+        },
+        {
+          type: 'list',
+          items: [
+            'Always identify the circuit by number AND description — never just "Circuit 5".',
+            'Record continuity, insulation resistance, polarity, EFLI, and RCD time for every modified circuit.',
+            'Date the certificate with the day of the work, not the day you fill in the paperwork.',
+            'Sign only after every box is filled and every value verified against the test instrument readout.',
+          ],
         },
       ],
     },

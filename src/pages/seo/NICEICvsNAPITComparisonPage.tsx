@@ -545,8 +545,8 @@ const sections = [
           registered electricians manage the certificate and documentation side of their business.
         </p>
         <SEOAppBridge
-          title="NAPIT Registration Cost 2026 | UK Electrician"
-          description="NAPIT registration fees explained for 2026. Compare costs, renewal rates, and what you get with NAPIT vs NICEIC. Full breakdown for UK electricians."
+          title="NAPIT Registration Cost 2026 | Full Breakdown"
+          description="NAPIT registration costs rising in 2026? See exact fees, renewal rates, and hidden charges. Compare NAPIT vs NICEIC to pick the right scheme for your…"
           icon={FileCheck2}
         />
       </>
@@ -562,9 +562,9 @@ export default function NICEICvsNAPITComparisonPage() {
   return (
     <GuideTemplate
       title="NICEIC vs NAPIT | Which Registration Scheme Is Best UK?"
-      description="Compare NICEIC and NAPIT registration for UK electricians — costs (£400–£600/year), inspection processes, consumer appeal, insurer acceptance, specialist work coverage, and which scheme suits your business."
+      description="Compare NICEIC and NAPIT registration for UK electricians — costs (£400–£600/year), inspection processes, consumer appeal, insurer acceptance…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Registration Guide"

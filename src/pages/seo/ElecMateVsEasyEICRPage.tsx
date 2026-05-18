@@ -20,9 +20,9 @@ export default function ElecMateVsEasyEICRPage() {
   return (
     <ComparisonTemplate
       title="Elec-Mate vs Easy EICR 2026 | Feature Comparison"
-      description="Detailed comparison of Elec-Mate and Easy EICR for UK electricians. Compare certificates, calculators, AI tools, training, business features, and pricing side by side. Find out which app is right for your workflow."
+      description="Detailed comparison of Elec-Mate and Easy EICR for UK electricians. Compare certificates, calculators, AI tools, training, business features…"
       datePublished="2026-01-20"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Comparisons', href: '/compare' },
         { label: 'Elec-Mate vs Easy EICR', href: '/compare/elec-mate-vs-easy-eicr' },
@@ -159,7 +159,7 @@ export default function ElecMateVsEasyEICRPage() {
               </p>
               <SEOAppBridge
                 title="AI Board Scanner — Photograph, Scan, Done"
-                description="Take a photo of any consumer unit. The AI extracts circuit data, device ratings, and board layout in seconds. Review and edit before it flows into your EICR. No separate app needed."
+                description="Take a photo of any consumer unit. The AI extracts circuit data, device ratings, and board layout in seconds."
                 icon={Camera}
               />
               <p>
@@ -171,7 +171,7 @@ export default function ElecMateVsEasyEICRPage() {
               </p>
               <SEOAppBridge
                 title="Voice Test Entry — Hands-Free on Site"
-                description="Speak your test readings aloud while holding test leads. The AI transcribes them directly into your schedule of test results. Faster, safer, and more accurate than typing with gloves on."
+                description="Speak your test readings aloud while holding test leads. The AI transcribes them directly into your schedule of test results."
                 icon={Mic}
               />
               <p>
@@ -235,7 +235,7 @@ export default function ElecMateVsEasyEICRPage() {
               </p>
               <SEOAppBridge
                 title="Everything in One App — From £5.99/Month"
-                description="Certificates, calculators, AI tools, training, quoting, invoicing, and payments. One subscription, unlimited usage. No per-certificate charges. 7-day free trial."
+                description="Certificates, calculators, AI tools, training, quoting, invoicing, and payments. One subscription, unlimited usage. No per-certificate charges."
                 icon={Sparkles}
               />
             </>

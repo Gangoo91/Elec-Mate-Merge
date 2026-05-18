@@ -585,7 +585,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your electrical business more efficiently with Elec-Mate"
-          description="Quote, invoice, and manage access control and security system jobs alongside your electrical work. AI-powered job management for UK electricians. 7-day free trial."
+          description="Quote, invoice, and manage access control and security system jobs alongside your electrical work. AI-powered job management for UK electricians."
           icon={FileCheck2}
         />
       </>
@@ -601,9 +601,9 @@ export default function AccessControlInstallationPage() {
   return (
     <GuideTemplate
       title="Access Control Installation UK | Door Entry & Access Systems"
-      description="Complete guide to access control installation in the UK. Keypad, fob, biometric and video intercom systems explained. Fail-safe vs fail-secure, power supply requirements, cable types, fire alarm integration, and costs from £500–£3,000 per door."
+      description="Complete guide to access control installation in the UK. Keypad, fob, biometric and video intercom systems explained."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Security Systems Guide"

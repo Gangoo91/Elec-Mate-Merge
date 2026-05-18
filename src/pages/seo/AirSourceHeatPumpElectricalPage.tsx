@@ -585,7 +585,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Quote ASHP electrical work accurately"
-          description="Elec-Mate's quoting app lets you itemise dedicated circuits, SWA cable runs, isolators, immersion circuits, and controller wiring. Professional PDF quotes sent from the survey."
+          description="Elec-Mate's quoting app lets you itemise dedicated circuits, SWA cable runs, isolators, immersion circuits, and controller wiring."
           icon={Wrench}
         />
       </>
@@ -650,7 +650,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify heat pump electrical work"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Everything you need for heat pump electrical installations. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
           icon={Wind}
         />
       </>
@@ -666,9 +666,9 @@ export default function AirSourceHeatPumpElectricalPage() {
   return (
     <GuideTemplate
       title="Air Source Heat Pump Electrical Installation | Guide UK"
-      description="Complete guide to air source heat pump electrical installation in the UK. Supply requirements, circuit sizing, dedicated MCB/RCBO, outdoor unit cable routing, controller wiring, backup immersion circuit, MCS certification, BUS grant, and typical electrical costs."
+      description="Complete guide to air source heat pump electrical installation in the UK. Supply requirements, circuit sizing, dedicated MCB/RCBO…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Emerging Technology"

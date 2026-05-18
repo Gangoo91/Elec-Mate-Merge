@@ -5,13 +5,13 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Electricity at Work Regulations 1989 and HSE guidance HSR25.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const lockoutTagoutForElectriciansConfig: GeneratedGuideConfig = {
   pagePath: '/guides/lockout-tagout-loto-electricians',
-  title: 'Lockout Tagout (LOTO) for Electricians — UK Procedure | Elec-Mate',
+  title: 'Lockout Tagout (LOTO) for Electricians — UK Procedure',
   description:
-    'Lockout tagout (LOTO) for electricians explained: the seven-step procedure, padlocks and hasps, MCB lock-off devices, group lockout, lock removal rules, and how LOTO ties into Permit to Work and RAMS. Aligned to EAWR 1989, HSE HSR25 and BS 7671:2018+A4:2026.',
+    'Lockout tagout (LOTO) for electricians explained: the seven-step procedure, padlocks and hasps, MCB lock-off devices, group lockout, lock removal rules…',
   datePublished: published,
   dateModified: modified,
   readingTime: 12,

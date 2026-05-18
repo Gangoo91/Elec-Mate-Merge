@@ -200,7 +200,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Price house extension electrical packages accurately"
-          description="Use Elec-Mate's quoting app to price extension electrical work with itemised first-fix and second-fix labour, materials by circuit, and Part P notification. Professional PDF quotes from your phone on the survey."
+          description="Use Elec-Mate's quoting app to price extension electrical work with itemised first-fix and second-fix labour, materials by circuit…"
           icon={Home}
         />
       </>
@@ -433,8 +433,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Quote and certify house extension electrical work on your phone"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification for house extension projects. 7-day free trial."
+          title="Quote and certify house extension electrical work on your"
+          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification for house extension projects."
           icon={Home}
         />
       </>
@@ -449,10 +449,10 @@ const sections = [
 export default function ExtensionElectricalCostPage() {
   return (
     <GuideTemplate
-      title="House Extension Electrical Cost UK | First Fix, Second Fix & Part P"
-      description="How much does house extension electrical work cost in the UK? Typical costs £1,200–£4,000. Covers first fix, second fix, new circuits vs extending existing, consumer unit upgrades, and Part P Building Regulations."
+      title="House Extension Electrical Cost UK | First Fix, Second Fix"
+      description="How much does house extension electrical work cost in the UK? Typical costs £1,200–£4,000. Covers first fix, second fix…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

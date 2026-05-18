@@ -24,9 +24,9 @@ import {
   ClipboardList,
 } from 'lucide-react';
 
-const PAGE_TITLE = 'Emergency Lighting Certificate App | BS 5266 Compliant | Elec-Mate';
+const PAGE_TITLE = 'Emergency Lighting Certificate App | BS 5266';
 const PAGE_DESCRIPTION =
-  'Create BS 5266-1 compliant emergency lighting certificates on your phone. Monthly function tests, annual duration tests, luminaire schedules, and professional PDF export. Start free.';
+  'BS 5266-1 emergency lighting certificates on your phone: monthly function tests, annual duration tests, luminaire schedules, PDF export. Free.';
 
 const faqs = [
   {
@@ -617,7 +617,7 @@ export default function EmergencyLightingCertificatePage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Create Emergency Lighting Certificates on Your Phone"
-            description="Elec-Mate's digital emergency lighting certificate covers BS 5266-1 monthly function tests, annual duration tests, and luminaire schedules — with instant PDF export."
+            description="Elec-Mate's digital emergency lighting certificate covers BS 5266-1 monthly function tests, annual duration tests…"
             ctaText="Try Elec-Mate free"
             ctaHref="/auth/signup"
             icon={Flashlight}

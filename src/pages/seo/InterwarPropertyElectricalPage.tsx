@@ -549,7 +549,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your interwar property rewire business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICRs, professional quoting, and job management. AI board scanning, voice test entry, instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICRs, professional quoting, and job management."
           icon={FileCheck2}
         />
       </>
@@ -564,10 +564,10 @@ const sections = [
 export default function InterwarPropertyElectricalPage() {
   return (
     <GuideTemplate
-      title="1920s/1930s House Electrical Guide | Interwar Property Rewiring UK"
-      description="Complete electrical guide for interwar properties built 1918–1939. Early rubber wiring degradation, 5-amp round pin sockets, rewiring challenges, WWII-era property issues, and rewire costs £2,800–£9,000 for 2026."
+      title="1920s/1930s House Electrical Guide | Interwar Property"
+      description="Complete electrical guide for interwar properties built 1918–1939. Early rubber wiring degradation, 5-amp round pin sockets, rewiring challenges…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Property Guide"

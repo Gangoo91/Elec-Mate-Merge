@@ -29,12 +29,12 @@ All tools, certificates, training content and calculators on Elec-Mate are align
 
 ## Complete page index
 
-Every indexable SEO page on elec-mate.com, grouped by page type. 1118 pages.
+Every indexable SEO page on elec-mate.com, grouped by page type. 1149 pages.
 
 ### Calculators (31)
 
 - [Adiabatic Equation Calculator](https://www.elec-mate.com/adiabatic-equation-calculator) — Adiabatic Equation Calculator
-- [Battery Backup Calculator](https://www.elec-mate.com/tools/battery-backup-calculator) — Battery Backup Calculator
+- [Battery Backup Calculator](https://www.elec-mate.com/tools/battery-backup-calculator) — Battery Backup Calculation Tool
 - [Cable Derating Calculator](https://www.elec-mate.com/tools/cable-derating-calculator) — Cable Derating Calculator
 - [Circuit Breaker Sizing Calculator](https://www.elec-mate.com/tools/circuit-breaker-sizing-calculator) — Circuit Breaker Sizing Calculator
 - [Ev Charger Load Calculator](https://www.elec-mate.com/tools/ev-charger-load-calculator) — EV Charger Load Calculator
@@ -52,14 +52,14 @@ Every indexable SEO page on elec-mate.com, grouped by page type. 1118 pages.
 - [Trunking Fill Calculator](https://www.elec-mate.com/trunking-fill-calculator)
 - [Voltage Drop Calculator](https://www.elec-mate.com/voltage-drop-calculator)
 - [Break Even Calculator](https://www.elec-mate.com/tools/break-even-calculator) — Break-Even Calculator for Electricians
-- [Busbar Sizing Calculator](https://www.elec-mate.com/tools/busbar-sizing-calculator) — Busbar Sizing Calculator
+- [Busbar Sizing Calculator](https://www.elec-mate.com/tools/busbar-sizing-calculator) — Busbar Calculator
 - [Cable Tray Sizing Calculator](https://www.elec-mate.com/tools/cable-tray-sizing-calculator) — Cable Tray Sizing Calculator
 - [Capacity Planning Calculator](https://www.elec-mate.com/tools/capacity-planning-calculator) — Capacity Planning Calculator for Electricians
 - [Disconnection Time Calculator](https://www.elec-mate.com/tools/disconnection-time-calculator) — Disconnection Time Calculator
-- [Earth Rod Resistance Calculator](https://www.elec-mate.com/tools/earth-rod-resistance-calculator) — Earth Rod Resistance Calculator
+- [Earth Rod Resistance Calculator](https://www.elec-mate.com/tools/earth-rod-resistance-calculator) — Ra x Iδn ≤ 50V Calculator
 - [Equipment Roi Calculator](https://www.elec-mate.com/tools/equipment-roi-calculator) — Equipment ROI Calculator
 - [Job Profitability Calculator](https://www.elec-mate.com/job-profitability-calculator)
-- [Lighting Lux Calculator](https://www.elec-mate.com/tools/lighting-lux-calculator) — Lighting Lux Level Calculator
+- [Lighting Lux Calculator](https://www.elec-mate.com/tools/lighting-lux-calculator) — Lux Level Calculation Tool
 - [Minimum Charge Calculator](https://www.elec-mate.com/tools/minimum-charge-calculator) — Minimum Charge Calculator for Electricians
 - [Power Consumption Calculator](https://www.elec-mate.com/tools/power-consumption-calculator) — Power Consumption Calculator
 - [Solar Panel Sizing Calculator](https://www.elec-mate.com/tools/solar-panel-sizing-calculator) — Solar Panel Sizing Calculator UK
@@ -77,7 +77,7 @@ Every indexable SEO page on elec-mate.com, grouped by page type. 1118 pages.
 - [Tax Ni Estimator](https://www.elec-mate.com/tools/tax-ni-estimator) — Tax & NI Estimator for Electricians
 - [Vat Scheme Comparison](https://www.elec-mate.com/tools/vat-scheme-comparison) — VAT Scheme Comparison
 
-### Guides and explainers (953)
+### Guides and explainers (984)
 
 - [Bs 7671 A4 2026 Afdd Changes](https://www.elec-mate.com/guides/bs-7671-a4-2026-afdd-changes)
 - [Bs 7671 A4 2026 Eic Model Form](https://www.elec-mate.com/guides/bs-7671-a4-2026-eic-model-form)
@@ -91,7 +91,7 @@ Every indexable SEO page on elec-mate.com, grouped by page type. 1118 pages.
 - [Afdd Mandatory Hmo Care Home A4 2026](https://www.elec-mate.com/guides/afdd-mandatory-hmo-care-home-a4-2026)
 - [Ai Electrical Fault Finding](https://www.elec-mate.com/guides/ai-electrical-fault-finding) — AI Electrical Fault Finding
 - [Ai For Electrical Apprentices](https://www.elec-mate.com/guides/ai-for-electrical-apprentices) — AI for Electrical Apprentices
-- [Ai Tools For Electricians](https://www.elec-mate.com/guides/ai-tools-for-electricians) — AI Tools for Electricians 2026
+- [Ai Tools For Electricians](https://www.elec-mate.com/guides/ai-tools-for-electricians) — AI for Electricians: 7 Tools 2026
 - [Ai Vs Manual Electrical Design](https://www.elec-mate.com/guides/ai-vs-manual-electrical-design) — AI vs Manual Electrical Design
 - [Am2 Assessment Preparation](https://www.elec-mate.com/guides/am2-assessment-preparation) — AM2 Assessment Preparation Guide UK
 - [Am2 Exam Tips](https://www.elec-mate.com/guides/am2-exam-tips) — AM2 Exam Tips 2026
@@ -132,7 +132,7 @@ Every indexable SEO page on elec-mate.com, grouped by page type. 1118 pages.
 - [Basement Conversion Electrical](https://www.elec-mate.com/basement-conversion-electrical) — Basement Conversion Electrical Work UK
 - [Bathroom Electrical Cost](https://www.elec-mate.com/guides/bathroom-electrical-cost) — Bathroom Electrical Cost 2026
 - [Bathroom Electrical Regulations](https://www.elec-mate.com/guides/bathroom-electrical-regulations) — Bathroom Electrical Regulations UK
-- [Bathroom Electrical Zones Bs7671](https://www.elec-mate.com/guides/bathroom-electrical-zones-bs7671) — Bathroom Electrical Zones BS 7671
+- [Bathroom Electrical Zones Bs7671](https://www.elec-mate.com/guides/bathroom-electrical-zones-bs7671) — Bathroom Electric Zones: BS 7671:2018+A4:2026
 - [Battery Storage Installation](https://www.elec-mate.com/guides/battery-storage-installation) — Battery Storage Installation
 - [Become Electrician No Experience](https://www.elec-mate.com/guides/become-electrician-no-experience) — How to Become an Electrician with No Experience
 - [Best Cable Detector 2026](https://www.elec-mate.com/guides/best-cable-detector-2026) — Best Cable Detector 2026
@@ -194,7 +194,7 @@ Every indexable SEO page on elec-mate.com, grouped by page type. 1118 pages.
 - [Commercial Eicr Guide](https://www.elec-mate.com/guides/commercial-eicr-guide) — Commercial EICR Guide
 - [Commercial Electrician Guide](https://www.elec-mate.com/guides/commercial-electrician-guide) — Commercial Electrician Guide
 - [Commercial Lighting Installation](https://www.elec-mate.com/guides/commercial-lighting-installation) — Commercial Lighting Installation
-- [Commercial Rewire Cost](https://www.elec-mate.com/guides/commercial-rewire-cost) — Commercial Rewire Cost 2026
+- [Commercial Rewire Cost](https://www.elec-mate.com/guides/commercial-rewire-cost) — 1000 sqft Commercial Rewire Cost 2026
 - [Commissioning Electrical Installation](https://www.elec-mate.com/guides/commissioning-electrical-installation) — Commissioning an Electrical Installation
 - [Compex Qualification Guide](https://www.elec-mate.com/guides/compex-qualification-guide) — CompEx Qualification Guide UK
 - [Competent Person Scheme Guide](https://www.elec-mate.com/guides/competent-person-scheme-guide) — Competent Person Scheme Guide
@@ -276,7 +276,37 @@ Every indexable SEO page on elec-mate.com, grouped by page type. 1118 pages.
 - [Eicr Commercial Property](https://www.elec-mate.com/guides/eicr-commercial-property) — Commercial EICR Guide UK
 - [Eicr Common Mistakes](https://www.elec-mate.com/guides/eicr-common-mistakes)
 - [Eicr Contractor Guide](https://www.elec-mate.com/eicr-contractor-guide) — EICR for Electrical Contractors UK
+- [Eicr Cost Aberdeen](https://www.elec-mate.com/guides/eicr-cost-aberdeen)
+- [Eicr Cost Belfast](https://www.elec-mate.com/guides/eicr-cost-belfast)
+- [Eicr Cost Birmingham](https://www.elec-mate.com/guides/eicr-cost-birmingham)
+- [Eicr Cost Brighton](https://www.elec-mate.com/guides/eicr-cost-brighton)
+- [Eicr Cost Bristol](https://www.elec-mate.com/guides/eicr-cost-bristol)
+- [Eicr Cost Cambridge](https://www.elec-mate.com/guides/eicr-cost-cambridge)
+- [Eicr Cost Cardiff](https://www.elec-mate.com/guides/eicr-cost-cardiff)
+- [Eicr Cost Dundee](https://www.elec-mate.com/guides/eicr-cost-dundee)
+- [Eicr Cost Edinburgh](https://www.elec-mate.com/guides/eicr-cost-edinburgh)
+- [Eicr Cost Exeter](https://www.elec-mate.com/guides/eicr-cost-exeter)
+- [Eicr Cost Glasgow](https://www.elec-mate.com/guides/eicr-cost-glasgow)
+- [Eicr Cost Hull](https://www.elec-mate.com/guides/eicr-cost-hull)
+- [Eicr Cost Leeds](https://www.elec-mate.com/guides/eicr-cost-leeds)
+- [Eicr Cost Liverpool](https://www.elec-mate.com/guides/eicr-cost-liverpool)
+- [Eicr Cost Luton](https://www.elec-mate.com/guides/eicr-cost-luton)
+- [Eicr Cost Manchester](https://www.elec-mate.com/guides/eicr-cost-manchester)
+- [Eicr Cost Milton Keynes](https://www.elec-mate.com/guides/eicr-cost-milton-keynes)
+- [Eicr Cost Newcastle](https://www.elec-mate.com/guides/eicr-cost-newcastle)
+- [Eicr Cost Norwich](https://www.elec-mate.com/guides/eicr-cost-norwich)
+- [Eicr Cost Nottingham](https://www.elec-mate.com/guides/eicr-cost-nottingham)
+- [Eicr Cost Oxford](https://www.elec-mate.com/guides/eicr-cost-oxford)
+- [Eicr Cost Plymouth](https://www.elec-mate.com/guides/eicr-cost-plymouth)
+- [Eicr Cost Portsmouth](https://www.elec-mate.com/guides/eicr-cost-portsmouth)
+- [Eicr Cost Reading](https://www.elec-mate.com/guides/eicr-cost-reading)
+- [Eicr Cost Sheffield](https://www.elec-mate.com/guides/eicr-cost-sheffield)
+- [Eicr Cost Southampton](https://www.elec-mate.com/guides/eicr-cost-southampton)
+- [Eicr Cost Stoke](https://www.elec-mate.com/guides/eicr-cost-stoke)
+- [Eicr Cost Swansea](https://www.elec-mate.com/guides/eicr-cost-swansea)
+- [Eicr Cost Swindon](https://www.elec-mate.com/guides/eicr-cost-swindon)
 - [Eicr Cost Uk](https://www.elec-mate.com/guides/eicr-cost-uk) — EICR Cost UK 2026
+- [Eicr Cost York](https://www.elec-mate.com/guides/eicr-cost-york)
 - [Eicr Coventry](https://www.elec-mate.com/guides/eicr-coventry) — EICR Coventry
 - [Eicr Derby](https://www.elec-mate.com/eicr-derby) — EICR Derby
 - [Eicr Dundee](https://www.elec-mate.com/eicr-dundee) — EICR Dundee
@@ -363,7 +393,7 @@ Every indexable SEO page on elec-mate.com, grouped by page type. 1118 pages.
 - [Earthing Systems Guide](https://www.elec-mate.com/earthing-systems-guide) — UK Earthing Systems Guide
 - [Edwardian House Electrical](https://www.elec-mate.com/edwardian-house-electrical) — Edwardian House Electrical Guide
 - [18th Edition Exam Tips](https://www.elec-mate.com/guides/18th-edition-exam-tips) — 18th Edition Exam Tips
-- [Electric Boiler Installation](https://www.elec-mate.com/electric-boiler-installation) — Electric Boiler Installation — Complete UK Guide 2024
+- [Electric Boiler Installation](https://www.elec-mate.com/electric-boiler-installation) — 12kW Shower Cable Size: 10mm² Guide
 - [Electric Car Charging At Home](https://www.elec-mate.com/guides/electric-car-charging-at-home) — Electric Car Charging at Home
 - [Electric Shock First Aid](https://www.elec-mate.com/electric-shock-first-aid) — Electric Shock First Aid UK
 - [Electric Shock From Tap](https://www.elec-mate.com/guides/electric-shock-from-tap) — Electric Shock from Tap
@@ -548,7 +578,7 @@ Every indexable SEO page on elec-mate.com, grouped by page type. 1118 pages.
 - [Electrician Tool List Uk](https://www.elec-mate.com/guides/electrician-tool-list-uk) — Electrician Tool List UK 2026
 - [Electrician Van Setup](https://www.elec-mate.com/guides/electrician-van-setup) — Electrician Van Setup
 - [Electricians/Warrington](https://www.elec-mate.com/electricians/warrington) — Electrician in Warrington
-- [Electricians/Whitehaven](https://www.elec-mate.com/electricians/whitehaven) — Electrician in Whitehaven
+- [Electricians/Whitehaven](https://www.elec-mate.com/electricians/whitehaven) — EICR in Sellafield
 - [Electricians/Wigan](https://www.elec-mate.com/electricians/wigan) — Electrician in Wigan
 - [Electrician Wolverhampton](https://www.elec-mate.com/guides/electrician-wolverhampton) — Electrician in Wolverhampton
 - [Electricians/Worcester](https://www.elec-mate.com/electricians/worcester) — Electrician in Worcester
@@ -657,7 +687,7 @@ Every indexable SEO page on elec-mate.com, grouped by page type. 1118 pages.
 - [Interwar Property Electrical](https://www.elec-mate.com/interwar-property-electrical) — 1920s/1930s House Electrical Guide
 - [Intruder Alarm Installation](https://www.elec-mate.com/intruder-alarm-installation) — Intruder Alarm Installation UK
 - [Jib Gold Card](https://www.elec-mate.com/jib-gold-card) — JIB Gold Card UK
-- [Jib Grading Explained](https://www.elec-mate.com/guides/jib-grading-explained) — JIB Grading Explained
+- [Jib Grading Explained](https://www.elec-mate.com/guides/jib-grading-explained) — ECS Grading: 2026 Pay Rates & Progression
 - [Knx Wiring Installation Guide Uk](https://www.elec-mate.com/guides/knx-wiring-installation-guide-uk)
 - [Kitchen Electrical Regulations](https://www.elec-mate.com/guides/kitchen-electrical-regulations) — Kitchen Electrical Regulations UK
 - [Kitchen Electrical Requirements](https://www.elec-mate.com/kitchen-electrical-requirements) — Kitchen Electrical Requirements UK
@@ -747,7 +777,7 @@ Every indexable SEO page on elec-mate.com, grouped by page type. 1118 pages.
 - [Near Miss Reporting Electricians](https://www.elec-mate.com/guides/near-miss-reporting-electricians)
 - [Near Miss Reporting](https://www.elec-mate.com/guides/near-miss-reporting) — Near Miss Reporting
 - [Networked Fire Alarm System](https://www.elec-mate.com/guides/networked-fire-alarm-system) — Networked Fire Alarm System
-- [New Build Electrical Cost Per M2](https://www.elec-mate.com/guides/new-build-electrical-cost-per-m2) — New Build Electrical Cost Per m² 2026
+- [New Build Electrical Cost Per M2](https://www.elec-mate.com/guides/new-build-electrical-cost-per-m2) — Average Cost Wiring New House 2026
 - [New Build Electrical](https://www.elec-mate.com/guides/new-build-electrical) — New Build Electrical Installation
 - [New Build Electrical Standards](https://www.elec-mate.com/guides/new-build-electrical-standards) — New Build Electrical Standards
 - [New Home Electrical Checklist](https://www.elec-mate.com/new-home-electrical-checklist) — New Home Electrical Checklist UK
@@ -771,7 +801,7 @@ Every indexable SEO page on elec-mate.com, grouped by page type. 1118 pages.
 - [Offshore Electrical Work Uk](https://www.elec-mate.com/guides/offshore-electrical-work-uk) — Offshore Electrical Work UK
 - [Outbuilding Electrical Cost](https://www.elec-mate.com/outbuilding-electrical-cost) — Outbuilding Electrical Installation Cost UK 2025
 - [Outbuilding Electrical Installation](https://www.elec-mate.com/outbuilding-electrical-installation) — Outbuilding Electrical Installation Guide UK
-- [Outbuilding Electrical Supply Guide](https://www.elec-mate.com/guides/outbuilding-electrical-supply-guide) — Outbuilding Electrical Supply Guide UK
+- [Outbuilding Electrical Supply Guide](https://www.elec-mate.com/guides/outbuilding-electrical-supply-guide) — Overhead Cable to Outbuilding: 3.5m Min Height
 - [Outdoor Electrical Installations](https://www.elec-mate.com/guides/outdoor-electrical-installations) — Outdoor Electrical Installations UK
 - [Outdoor Entertaining Area Electrical](https://www.elec-mate.com/guides/outdoor-entertaining-area-electrical) — Outdoor Entertaining Area Electrical UK
 - [Outdoor Light Not Working](https://www.elec-mate.com/guides/outdoor-light-not-working) — Outdoor Light Not Working
@@ -782,7 +812,7 @@ Every indexable SEO page on elec-mate.com, grouped by page type. 1118 pages.
 - [Pat Testing Frequency](https://www.elec-mate.com/guides/pat-testing-frequency) — PAT Testing Frequency
 - [Pat Testing Guide Uk](https://www.elec-mate.com/guides/pat-testing-guide-uk) — PAT Testing Guide UK 2026
 - [Plc Electrical Installation](https://www.elec-mate.com/plc-electrical-installation) — PLC Electrical Installation UK
-- [Ppe For Electricians](https://www.elec-mate.com/guides/ppe-for-electricians) — PPE for Electricians
+- [Ppe For Electricians](https://www.elec-mate.com/guides/ppe-for-electricians) — Electrical Clothing Requirements 2026
 - [Pvc Vs Xlpe Vs Lsoh Cable](https://www.elec-mate.com/guides/pvc-vs-xlpe-vs-lsoh-cable) — PVC vs XLPE vs LSOH Cable
 - [Part P Building Regulations Electrical](https://www.elec-mate.com/guides/part-p-building-regulations-electrical) — Part P Building Regulations
 - [Part P Self Certification](https://www.elec-mate.com/part-p-self-certification) — Part P Self-Certification UK
@@ -798,6 +828,7 @@ Every indexable SEO page on elec-mate.com, grouped by page type. 1118 pages.
 - [Poe Lighting Installation](https://www.elec-mate.com/guides/poe-lighting-installation) — Power over Ethernet Lighting
 - [Poe Lighting Vs Traditional Led Wiring](https://www.elec-mate.com/guides/poe-lighting-vs-traditional-led-wiring)
 - [Poe Plus Plus Type 4 90w Installation](https://www.elec-mate.com/guides/poe-plus-plus-type-4-90w-installation)
+- [Poe Structured Cabling Hub](https://www.elec-mate.com/guides/poe-structured-cabling-hub)
 - [Polarity Test Guide](https://www.elec-mate.com/polarity-test-guide) — Polarity Testing Guide UK
 - [Polarity Testing Guide](https://www.elec-mate.com/guides/polarity-testing-guide) — Polarity Testing Procedure
 - [Polarity Testing Guide Bs7671](https://www.elec-mate.com/guides/polarity-testing-guide-bs7671) — Polarity Testing Guide BS 7671
@@ -805,7 +836,7 @@ Every indexable SEO page on elec-mate.com, grouped by page type. 1118 pages.
 - [Power Cut What To Do](https://www.elec-mate.com/guides/power-cut-what-to-do) — Power Cut
 - [Power Factor Correction](https://www.elec-mate.com/power-factor-correction) — Power Factor Correction UK
 - [Power Going Off Randomly](https://www.elec-mate.com/guides/power-going-off-randomly) — Power Going Off Randomly
-- [Pricing Electrical Work Per Point](https://www.elec-mate.com/guides/pricing-electrical-work-per-point) — Pricing Electrical Work Per Point UK 2026
+- [Pricing Electrical Work Per Point](https://www.elec-mate.com/guides/pricing-electrical-work-per-point) — Price Per Point Electrical UK 2026
 - [Professional Development Electrician](https://www.elec-mate.com/guides/professional-development-electrician) — Professional Development for Electricians
 - [Prospective Fault Current Explained](https://www.elec-mate.com/guides/prospective-fault-current-explained) — Prospective Fault Current Explained
 - [Prosumer Low Voltage Electrical Installation](https://www.elec-mate.com/guides/prosumer-low-voltage-electrical-installation)
@@ -830,7 +861,7 @@ Every indexable SEO page on elec-mate.com, grouped by page type. 1118 pages.
 - [Rcd Types A B F Explained](https://www.elec-mate.com/guides/rcd-types-a-b-f-explained) — RCD Types AC, A, F, B Explained
 - [Rcd Types Explained](https://www.elec-mate.com/guides/rcd-types-explained) — RCD Types Explained
 - [Rcd Types Guide](https://www.elec-mate.com/rcd-types-guide) — RCD Types UK Guide
-- [Radial Circuit Explained](https://www.elec-mate.com/guides/radial-circuit-explained) — Radial Circuit Explained
+- [Radial Circuit Explained](https://www.elec-mate.com/guides/radial-circuit-explained) — Radial Circuit: Cable Size & MCB Rules 2026
 - [Rail Electrical Work Uk](https://www.elec-mate.com/guides/rail-electrical-work-uk) — Rail Electrical Work UK
 - [Reduced Low Voltage 110v Cte Site Supplies](https://www.elec-mate.com/guides/reduced-low-voltage-110v-cte-site-supplies)
 - [Reference Methods Cable Installation](https://www.elec-mate.com/guides/reference-methods-cable-installation) — Reference Methods for Cable Installation
@@ -863,14 +894,14 @@ Every indexable SEO page on elec-mate.com, grouped by page type. 1118 pages.
 - [Rewire Cost Uk](https://www.elec-mate.com/guides/rewire-cost-uk) — Rewire Cost UK 2026
 - [Ring Circuit Fault Finding](https://www.elec-mate.com/guides/ring-circuit-fault-finding) — Ring Circuit Fault Finding
 - [Ring Main Explained](https://www.elec-mate.com/guides/ring-main-explained) — Ring Main Explained
-- [Ring Vs Radial Circuits](https://www.elec-mate.com/guides/ring-vs-radial-circuits) — Ring Final Circuit vs Radial Circuit
+- [Ring Vs Radial Circuits](https://www.elec-mate.com/guides/ring-vs-radial-circuits) — 32A Ring Circuit Design & Testing Guide
 - [Risk Assessment Electrical Work](https://www.elec-mate.com/guides/risk-assessment-electrical-work) — Risk Assessment for Electrical Work
 - [Risk Assessment Electricians](https://www.elec-mate.com/guides/risk-assessment-electricians) — Risk Assessment for Electricians
 - [Spd Chapter 443 A4 2026](https://www.elec-mate.com/guides/spd-chapter-443-a4-2026)
 - [Spd Surge Protection](https://www.elec-mate.com/guides/spd-surge-protection) — SPD Surge Protection Guide
 - [Sssts Smsts Site Supervisor Guide](https://www.elec-mate.com/guides/sssts-smsts-site-supervisor-guide) — SSSTS vs SMSTS Guide
 - [Swa Cable Installation](https://www.elec-mate.com/guides/swa-cable-installation) — SWA Cable Installation
-- [Safe Isolation Procedure Electricians](https://www.elec-mate.com/guides/safe-isolation-procedure-electricians) — Safe Isolation Procedure for Electricians
+- [Safe Isolation Procedure Electricians](https://www.elec-mate.com/guides/safe-isolation-procedure-electricians) — 7 Step Safe Isolation Procedure
 - [Safe Isolation Procedure](https://www.elec-mate.com/guides/safe-isolation-procedure) — Safe Isolation Procedure
 - [Sauna Electrical Installation](https://www.elec-mate.com/guides/sauna-electrical-installation) — Sauna Electrical Installation
 - [School Electrical Cost](https://www.elec-mate.com/school-electrical-cost) — School Electrical Installation Cost UK 2025
@@ -895,7 +926,7 @@ Every indexable SEO page on elec-mate.com, grouped by page type. 1118 pages.
 - [Smart Distribution Board Iot Consumer Unit](https://www.elec-mate.com/guides/smart-distribution-board-iot-consumer-unit)
 - [Smart Ev Charging](https://www.elec-mate.com/smart-ev-charging) — Smart EV Charging UK
 - [Smart Home Lighting Installation](https://www.elec-mate.com/guides/smart-home-lighting-installation) — Smart Home Lighting Installation UK
-- [Smart Home Wiring Cost](https://www.elec-mate.com/guides/smart-home-wiring-cost) — Smart Home Wiring Cost UK 2026
+- [Smart Home Wiring Cost](https://www.elec-mate.com/guides/smart-home-wiring-cost) — Smart Home Wiring Renovation Cost UK — Retrofit Pricing 2026
 - [Smart Home Wiring](https://www.elec-mate.com/guides/smart-home-wiring) — Smart Home Wiring Guide
 - [Smart Lighting Control](https://www.elec-mate.com/smart-lighting-control) — Smart Lighting Control Systems UK
 - [Smart Meter Electrical Work](https://www.elec-mate.com/smart-meter-electrical-work) — Electrical Work Around Smart Meters — UK Electrician Guide 2024
@@ -1083,7 +1114,7 @@ Every indexable SEO page on elec-mate.com, grouped by page type. 1118 pages.
 
 ### Comparisons (14)
 
-- [Best Ai Tool Electricians](https://www.elec-mate.com/compare/best-ai-tool-electricians) — Best AI Tool for Electricians 2026
+- [Best Ai Tool Electricians](https://www.elec-mate.com/compare/best-ai-tool-electricians) — AI for Electricians: 5 Tools Tested 2026
 - [Best Apprentice App](https://www.elec-mate.com/compare/best-apprentice-app) — Best Apprentice App 2026
 - [Best Cable Sizing App](https://www.elec-mate.com/compare/best-cable-sizing-app) — Best Cable Sizing App 2026
 - [Best Invoice App Electricians](https://www.elec-mate.com/compare/best-invoice-app-electricians) — Best Invoice App for Electricians 2026
@@ -1092,7 +1123,7 @@ Every indexable SEO page on elec-mate.com, grouped by page type. 1118 pages.
 - [Elec Mate Vs Easy Eicr](https://www.elec-mate.com/compare/elec-mate-vs-easy-eicr) — Elec-Mate vs Easy EICR 2026
 - [Elec Mate Vs Electrical Om](https://www.elec-mate.com/compare/elec-mate-vs-electrical-om) — Elec-Mate vs Electrical OM
 - [Elec Mate Vs Simply Eicr](https://www.elec-mate.com/compare/elec-mate-vs-simply-eicr) — Elec-Mate vs SimplyEICR
-- [Electrician App Android](https://www.elec-mate.com/compare/electrician-app-android) — Best Electrician App for Android 2026
+- [Electrician App Android](https://www.elec-mate.com/compare/electrician-app-android) — Android Electrician Apps: 4 Tools Compared 2026
 - [Niceic Vs Napit Comparison](https://www.elec-mate.com/niceic-vs-napit-comparison) — NICEIC vs NAPIT
 - [Solar Pv System Design](https://www.elec-mate.com/solar-pv-system-design) — Solar PV System Design UK
 - [Solar Pv System Sizing](https://www.elec-mate.com/solar-pv-system-sizing) — Solar PV System Sizing — UK Guide 2024

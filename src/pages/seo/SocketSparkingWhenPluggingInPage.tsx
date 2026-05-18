@@ -287,7 +287,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Diagnose socket faults with AI"
-          description="Elec-Mate's AI fault diagnosis tool guides you through systematic socket fault investigation with regulation references and observation codes. Complete the EICR on site."
+          description="Elec-Mate's AI fault diagnosis tool guides you through systematic socket fault investigation with regulation references and observation codes."
           icon={Search}
         />
       </>
@@ -577,7 +577,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICR certificates on your phone"
-          description="Document socket faults professionally with Elec-Mate's EICR certificate app. AI board scanning, observation codes with photos, and instant PDF export. Join 1,000+ UK electricians. 7-day free trial."
+          description="Document socket faults professionally with Elec-Mate's EICR certificate app. AI board scanning, observation codes with photos, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -593,9 +593,9 @@ export default function SocketSparkingWhenPluggingInPage() {
   return (
     <GuideTemplate
       title="Socket Sparking When Plugging In | Safe or Dangerous?"
-      description="Why does your socket spark when you plug something in? Learn the difference between a normal inductive spark and dangerous arcing, what worn contacts and loose wiring look like, AFDD protection, and when to call an electrician."
+      description="Why does your socket spark when you plug something in? Learn the difference between a normal inductive spark and dangerous arcing…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

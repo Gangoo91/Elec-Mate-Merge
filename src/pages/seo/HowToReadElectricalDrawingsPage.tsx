@@ -120,7 +120,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
-      'Current regulations for consumer units including Amendment 3 and AFDD requirements.',
+      'Current regulations for consumer units including Amendment 4 and AFDD requirements.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -303,7 +303,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AI explains unfamiliar circuit diagrams"
-          description="Describe a circuit or a symbol to the Elec-AI agent and get an instant explanation of what it does, how it works, and which BS 7671 regulations apply. Like having a senior electrician on call 24/7."
+          description="Describe a circuit or a symbol to the Elec-AI agent and get an instant explanation of what it does, how it works, and which BS 7671 regulations apply."
           icon={Brain}
         />
       </>
@@ -326,17 +326,17 @@ const sections = [
             {
               title: 'Terminal identifications',
               description:
-                'Every terminal is labelled (L, N, E, or numbered). These labels tell you exactly where each conductor connects. If a terminal is labelled "L1" on the diagram, you connect to the terminal marked "L1" on the actual component.',
+                'Every terminal is labelled (L, N, E, or numbered). These labels tell you exactly where each conductor connects.',
             },
             {
               title: 'Cable references',
               description:
-                'Each cable is identified by type, size, and often a reference number. For example, "2.5mm2 T+E" or "4mm2 3-core SWA". The cable reference tells you what to install.',
+                'Each cable is identified by type, size, and often a reference number. For example, "2.5mm2 T+E" or "4mm2 3-core SWA".',
             },
             {
               title: 'Connection indicators',
               description:
-                'A filled dot at a junction means the conductors are connected. A crossing without a dot means the conductors cross but are not connected. This distinction is critical for correct installation.',
+                'A filled dot at a junction means the conductors are connected. A crossing without a dot means the conductors cross but are not connected.',
             },
             {
               title: 'Component positions',
@@ -473,22 +473,22 @@ const sections = [
             {
               title: 'Start with the title block',
               description:
-                'The title block (usually bottom right) tells you the project name, drawing number, revision, scale, and date. Always check the revision — using an outdated drawing is a common and costly mistake.',
+                'The title block (usually bottom right) tells you the project name, drawing number, revision, scale, and date.',
             },
             {
               title: 'Read the legend first',
               description:
-                'The legend or key explains any non-standard symbols used on the drawing. Some designers use company-specific symbols or abbreviations that differ from BS EN 60617.',
+                'The legend or key explains any non-standard symbols used on the drawing. Some designers use company-specific symbols or abbreviations that differ from BS…',
             },
             {
               title: 'Follow the flow from supply to load',
               description:
-                'Start at the incoming supply and trace the circuit through the main switch, distribution board, protective devices, and cables to the final load. This mirrors how the electricity flows and how the protection discrimination works.',
+                'Start at the incoming supply and trace the circuit through the main switch, distribution board, protective devices, and cables to the final load.',
             },
             {
               title: 'Cross-reference with the schedule',
               description:
-                'The distribution board schedule lists every circuit with its protective device, cable size, and description. Cross-reference this with the drawing to build a complete picture.',
+                'The distribution board schedule lists every circuit with its protective device, cable size, and description.',
             },
             {
               title: 'Mark up as you go',
@@ -509,7 +509,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Ask the AI about any electrical symbol or diagram"
-          description="The 8 Elec-AI agents understand BS EN 60617 symbols, circuit diagrams, and control schematics. Describe what you see and get an instant explanation — like having a technical reference library in your pocket."
+          description="The 8 Elec-AI agents understand BS EN 60617 symbols, circuit diagrams, and control schematics."
           icon={Brain}
         />
       </>
@@ -525,9 +525,9 @@ export default function HowToReadElectricalDrawingsPage() {
   return (
     <GuideTemplate
       title="How to Read Electrical Drawings | Symbols Guide UK"
-      description="Learn how to read electrical drawings and diagrams. BS EN 60617 symbols explained, single-line diagrams, wiring diagrams, schematic diagrams, and a common symbols quick reference for UK electricians."
+      description="Learn how to read electrical drawings and diagrams. BS EN 60617 symbols explained, single-line diagrams, wiring diagrams, schematic diagrams…"
       datePublished="2025-07-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Skills Guide"

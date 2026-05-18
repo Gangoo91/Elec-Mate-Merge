@@ -75,7 +75,7 @@ const faqs = [
   {
     question: 'Is the content kept up to date with regulation changes?',
     answer:
-      'Yes. The AI Tutor is updated to reflect the current edition of BS 7671, including Amendment 3:2024 (A4:2026, issued July 2024). When regulations change, the tutor content is updated to reflect the new requirements. It also notes where the current edition differs from previous editions, which is useful for electricians who qualified under an earlier edition and need to understand what has changed. For example, it explains the new Regulation 530.3.2 added by A4:2026 covering bidirectional and unidirectional protective devices, and how this affects installations with battery storage or solar PV. The tutor clearly distinguishes between requirements that have always been in BS 7671 and those added by recent amendments.',
+      'Yes. The AI Tutor is updated to reflect the current edition of BS 7671, including Amendment 4:2024 (A4:2026, issued July 2024). When regulations change, the tutor content is updated to reflect the new requirements. It also notes where the current edition differs from previous editions, which is useful for electricians who qualified under an earlier edition and need to understand what has changed. For example, it explains the new Regulation 530.3.2 added by A4:2026 covering bidirectional and unidirectional protective devices, and how this affects installations with battery storage or solar PV. The tutor clearly distinguishes between requirements that have always been in BS 7671 and those added by recent amendments.',
   },
 ];
 
@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description:
-      'Complete guide to the 18th Edition of the IET Wiring Regulations including Amendment 3:2024.',
+      'Complete guide to the 18th Edition of the IET Wiring Regulations including Amendment 4:2024.',
     icon: FileText,
     category: 'Guide',
   },
@@ -135,7 +135,7 @@ const features = [
     icon: BookOpen,
     title: 'Plain-English Regulation Explanations',
     description:
-      'Ask about any BS 7671 regulation and get a clear explanation in everyday language, with the formal regulation text and practical examples of how it applies on site.',
+      'Ask about any BS 7671 regulation and get a clear explanation in everyday language…',
   },
   {
     icon: ClipboardCheck,
@@ -147,7 +147,7 @@ const features = [
     icon: Lightbulb,
     title: 'Concept Breakdowns',
     description:
-      'Complex topics like adiabatic equations, discrimination curves, prospective fault current, and earth fault loop impedance broken down into step-by-step explanations.',
+      'Complex topics like adiabatic equations, discrimination curves, prospective fault current…',
   },
   {
     icon: MessageSquare,
@@ -159,7 +159,7 @@ const features = [
     icon: Target,
     title: 'Exam-Focused Study Plans',
     description:
-      'Tell the AI which exam you are preparing for and when the exam date is. It creates a personalised study plan covering all syllabus topics with daily targets.',
+      'Tell the AI which exam you are preparing for and when the exam date is. It creates a personalised study plan covering all syllabus topics with daily…',
   },
   {
     icon: Bot,
@@ -209,7 +209,7 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          (the 18th Edition of the IET Wiring Regulations including Amendment 3), the IET On-Site
+          (the 18th Edition of the IET Wiring Regulations including Amendment 4), the IET On-Site
           Guide, all eight IET Guidance Notes, and the syllabuses for C&G 2382, C&G 2391, C&G 2365,
           C&G 2357, the AM2 practical assessment, and the Level 3 electrical apprenticeship EPA.
         </p>
@@ -422,7 +422,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Turn every quiet moment into a study session"
-          description="The AI Tutor works offline on site. Ask a regulation question, generate practice questions, or study a specific topic — all from your phone during downtime."
+          description="The AI Tutor works offline on site. Ask a regulation question, generate practice questions…"
           icon={BookOpen}
         />
       </>
@@ -438,9 +438,9 @@ export default function AITutorPage() {
   return (
     <ToolTemplate
       title="AI Tutor for Electricians | Study Assistant"
-      description="AI study assistant for UK electricians. Explains any BS 7671 regulation in plain English, generates unlimited practice questions for C&G 2382, 2391, and AM2, and breaks down complex concepts step by step."
+      description="AI study assistant for UK electricians. Explains any BS 7671 regulation in plain English, generates unlimited practice questions for C&G 2382, 2391…"
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="AI Study Agent"

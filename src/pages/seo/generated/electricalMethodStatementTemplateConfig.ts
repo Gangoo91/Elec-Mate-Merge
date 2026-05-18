@@ -5,14 +5,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // CDM 2015 statutory framework and the Electricity at Work Regulations 1989.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const electricalMethodStatementTemplateConfig: GeneratedGuideConfig = {
   pagePath: '/guides/electrical-method-statement-template',
   title:
-    'Electrical Method Statement Template (UK) — Free Guide + Generator | Elec-Mate',
+    'Electrical Method Statement Template (UK) — Free Guide +',
   description:
-    'The complete UK electrical method statement template — section-by-section structure, hazards table, safe isolation procedure, PPE list, sign-off lines, plus job-specific variants for EICR, consumer unit changes, EV chargers, full rewires, alterations and solar PV. BS 7671:2018+A4:2026, EAWR 1989 and CDM 2015 aligned.',
+    'The complete UK electrical method statement template — section-by-section structure, hazards table, safe isolation procedure, PPE list, sign-off lines…',
   datePublished: published,
   dateModified: modified,
   readingTime: 12,
@@ -252,7 +252,7 @@ export const electricalMethodStatementTemplateConfig: GeneratedGuideConfig = {
         {
           type: 'callout',
           tone: 'warning',
-          title: 'After an incident, the method statement is the first document requested',
+          title: 'After an incident, the method statement is the first',
           text:
             'If there is an injury, near-miss or RIDDOR-reportable incident on an electrical job, the HSE inspector\'s first question is "show me the method statement and risk assessment for that work". Absence of a site-specific method statement is itself evidence of failure to plan under CDM 2015 Regulation 15 — before the inspector has even considered what went physically wrong.',
         },

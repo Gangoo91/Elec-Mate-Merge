@@ -510,8 +510,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Quote and certify commercial office electrical fit-outs with Elec-Mate"
-          description="Create professional itemised electrical fit-out quotes, issue EICs on site, and manage multi-phase commercial projects. Join 1,000+ UK electricians. 7-day free trial."
+          title="Quote and certify commercial office electrical fit-outs"
+          description="Create professional itemised electrical fit-out quotes, issue EICs on site, and manage multi-phase commercial projects. Join 1,000+ UK electricians."
           icon={FileCheck2}
         />
       </>
@@ -526,10 +526,10 @@ const sections = [
 export default function OfficeElectricalCostPage() {
   return (
     <GuideTemplate
-      title="Office Electrical Fit Out Cost UK 2025 | Commercial Office Wiring"
-      description="Office electrical fit-out costs in the UK for 2025. Small office £2,000–£8,000, per-desk estimates £500–£1,500. Power circuits, data points, emergency lighting, fire alarms, and Building Regulations compliance explained."
+      title="Office Electrical Fit Out Cost UK 2025 | Commercial Office"
+      description="Office electrical fit-out costs in the UK for 2025. Small office £2,000–£8,000, per-desk estimates £500–£1,500."
       datePublished="2025-01-01"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

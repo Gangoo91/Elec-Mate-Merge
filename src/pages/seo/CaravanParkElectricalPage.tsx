@@ -523,8 +523,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="10th Edition Caravan Park EICR Inspections"
-          description="BS 7671:2018+A4:2026 compliant EICR software for caravan parks. Record test results, generate reports in minutes. Used by 1,000+ UK electricians."
+          title="10th Edition EICR for Caravan Parks"
+          description="10th Edition BS 7671:2018+A4:2026 EICR inspections for caravan sites. Complete test recording, reporting, and compliance tracking."
           icon={FileCheck2}
         />
       </>
@@ -539,10 +539,10 @@ const sections = [
 export default function CaravanParkElectricalPage() {
   return (
     <GuideTemplate
-      title="Caravan Park Electrical Installation UK | BS 7671 Section 708"
-      description="Complete guide to caravan park electrical installations under BS 7671 Section 708. CEE connectors, 30 mA RCD requirements, socket outlet spacing, TT earthing, and metering for UK caravan and camping parks."
+      title="Caravan Park Electrical Installation UK | BS 7671 Section"
+      description="Complete guide to caravan park electrical installations under BS 7671 Section 708. CEE connectors, 30 mA RCD requirements, socket outlet spacing…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Specialist Installation"

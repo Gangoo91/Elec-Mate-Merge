@@ -19,9 +19,9 @@ export default function RCDKeepsTrippingPage() {
   return (
     <GuideTemplate
       title="RCD Keeps Tripping | Causes & How to Fix It"
-      description="Why does your RCD keep tripping? Expert guide to diagnosing common causes including earth leakage, faulty appliances, moisture ingress, and deteriorated insulation. Learn when it's nuisance tripping vs a genuine fault."
+      description="Why does your RCD keep tripping? Expert guide to diagnosing common causes including earth leakage, faulty appliances, moisture ingress…"
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'RCD Keeps Tripping', href: '/guides/rcd-keeps-tripping' },
@@ -280,7 +280,7 @@ export default function RCDKeepsTrippingPage() {
               </div>
               <SEOAppBridge
                 title="AI Fault Diagnosis in Elec-Mate"
-                description="Describe the tripping pattern to the Elec-AI diagnostic agent and get guided troubleshooting steps tailored to your exact situation. It cross-references your symptoms against known fault patterns to help you zero in on the cause faster."
+                description="Describe the tripping pattern to the Elec-AI diagnostic agent and get guided troubleshooting steps tailored to your exact situation."
                 icon={Search}
               />
             </>
@@ -396,7 +396,7 @@ export default function RCDKeepsTrippingPage() {
               </p>
               <SEOAppBridge
                 title="Insulation Resistance Validation in Elec-Mate"
-                description="Enter your IR test results into Elec-Mate and the app instantly validates them against BS 7671 Table 61 minimum values. Failed results are flagged automatically and the app suggests the appropriate observation code for EICR reporting."
+                description="Enter your IR test results into Elec-Mate and the app instantly validates them against BS 7671 Table 61 minimum values."
                 icon={Calculator}
               />
             </>
@@ -523,7 +523,7 @@ export default function RCDKeepsTrippingPage() {
               </p>
               <SEOAppBridge
                 title="EICR Certificate Built Into Elec-Mate"
-                description="If a periodic inspection is needed, Elec-Mate's digital EICR form lets you record all test results on site, validates values against BS 7671, and generates a professional PDF certificate. Complete the inspection, sign, and send to the client — all from your phone."
+                description="If a periodic inspection is needed, Elec-Mate's digital EICR form lets you record all test results on site, validates values against BS 7671…"
                 icon={ClipboardCheck}
               />
             </>

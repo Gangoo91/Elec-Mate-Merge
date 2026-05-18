@@ -297,7 +297,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="EV Charging Certificates on Elec-Mate"
-          description="Generate compliant Electrical Installation Certificates for EV charge point installations directly from your phone — including load calculations and cable sizing."
+          description="Generate compliant Electrical Installation Certificates for EV charge point installations directly from your phone — including load calculations and…"
           ctaText="Start your free trial"
         />
       </>
@@ -403,10 +403,10 @@ const sections = [
 export default function ElectricianCambridgeshirePage() {
   return (
     <GuideTemplate
-      title="Electrician Cambridgeshire — Find Registered Electricians Near You"
-      description="Find NICEIC, ELECSA, and NAPIT-registered electricians across Cambridgeshire including Cambridge, Peterborough, Ely, St Ives, March, Huntingdon, and Wisbech. Part P compliant, fully insured."
+      title="Electrician Cambridgeshire — Find Registered Electricians"
+      description="Find NICEIC, ELECSA, and NAPIT-registered electricians across Cambridgeshire including Cambridge, Peterborough, Ely, St Ives, March, Huntingdon…"
       datePublished="2024-06-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Location Guide"

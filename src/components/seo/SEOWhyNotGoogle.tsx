@@ -17,7 +17,7 @@ const reasons = [
     icon: Clock,
     title: 'Always Up to Date',
     description:
-      'YouTube videos from 2019 still reference the 17th Edition. Elec-Mate is updated to BS 7671:2018+A3:2024 (Amendment 3, issued July 2024).',
+      'YouTube videos from 2019 still reference the 17th Edition. Elec-Mate is updated to BS 7671:2018+A3:2024 (Amendment 4, issued July 2024).',
   },
   {
     icon: Calculator,

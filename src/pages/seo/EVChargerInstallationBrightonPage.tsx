@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Full guide to the IET Wiring Regulations including Amendment 3:2024.',
+    description: 'Full guide to the IET Wiring Regulations including Amendment 4:2024.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
@@ -566,8 +566,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Grow your EV charger installation business in Brighton with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EV certification, instant PDF export, and professional quoting. Complete more installations per day. 7-day free trial."
+          title="Grow your EV charger installation business in Brighton with"
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EV certification, instant PDF export, and professional quoting."
           icon={Zap}
         />
       </>
@@ -582,10 +582,10 @@ const sections = [
 export default function EVChargerInstallationBrightonPage() {
   return (
     <GuideTemplate
-      title="EV Charger Installation Brighton | EV Charging Brighton & Hove"
-      description="EV charger installation in Brighton & Hove. OZEV grants up to £350, installation costs £800–£1,200 for 7kW, options for terraced houses without driveways, BS 7671 Section 722 compliance, and NICEIC and NAPIT approved installers."
+      title="EV Charger Installation Brighton | EV Charging Brighton &"
+      description="EV charger installation in Brighton & Hove 2026: OZEV grants up to £350, 7kW installs £800–£1,200, BS 7671 Section 722 compliant. NICEIC-grade."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EV Charging Guide"

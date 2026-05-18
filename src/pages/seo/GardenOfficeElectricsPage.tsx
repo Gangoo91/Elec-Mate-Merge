@@ -366,7 +366,7 @@ const sections = [
         </div>
         <p>
           The consumer unit in the garden office must be a metal enclosure as required by BS 7671
-          Amendment 3 for domestic premises. Position it away from areas prone to condensation —
+          Amendment 4 for domestic premises. Position it away from areas prone to condensation —
           avoid external walls where cold bridging occurs.
         </p>
       </>
@@ -532,7 +532,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Complete the EIC on site and send it instantly"
-          description="Elec-Mate lets you complete the Electrical Installation Certificate on your phone. AI board scanner reads the new sub-board, voice test entry fills in the schedule of results while you test. Export as a professional PDF and send to the homeowner before you leave."
+          description="Elec-Mate lets you complete the Electrical Installation Certificate on your phone. AI board scanner reads the new sub-board…"
           icon={FileCheck2}
         />
       </>
@@ -603,7 +603,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify garden offices faster"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Everything you need for garden office electrics in one app. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
           icon={Sun}
         />
       </>
@@ -619,9 +619,9 @@ export default function GardenOfficeElectricsPage() {
   return (
     <GuideTemplate
       title="Garden Office Electrics | Power Supply Guide UK"
-      description="Complete guide to garden office electrics in the UK. SWA cable run, dedicated circuit, sub-distribution board, Part P notification, IP-rated accessories, heating options, data cabling, and EIC certification."
+      description="Complete guide to garden office electrics in the UK. SWA cable run, dedicated circuit, sub-distribution board, Part P notification, IP-rated accessories…"
       datePublished="2025-08-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

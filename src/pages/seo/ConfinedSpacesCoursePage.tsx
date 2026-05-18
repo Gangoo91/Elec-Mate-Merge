@@ -21,7 +21,7 @@ import {
 
 const PAGE_TITLE = 'Confined Spaces Course | Awareness Training';
 const PAGE_DESCRIPTION =
-  'Confined spaces awareness training for UK electricians. Confined Spaces Regulations 1997, hazard identification, atmospheric monitoring, safe systems of work, and emergency rescue procedures. 5 modules with video lessons, quizzes, and AI tutor.';
+  'Confined spaces training for UK electricians: CSR 1997, hazards, atmospheric monitoring, safe systems, rescue. 5 video modules, quizzes + AI tutor.';
 
 const breadcrumbs = [
   { label: 'Training', href: '/training' },
@@ -85,27 +85,27 @@ const modules = [
   {
     title: 'Defining and Identifying Confined Spaces',
     description:
-      'What constitutes a confined space under the Confined Spaces Regulations 1997. Common confined spaces encountered by electricians: risers, cable chambers, plant rooms, ceiling voids, and underground installations. The difference between confined spaces and restricted spaces.',
+      'What constitutes a confined space under the Confined Spaces Regulations 1997. Common confined spaces encountered by electricians: risers, cable chambers…',
   },
   {
     title: 'Atmospheric Hazards and Monitoring',
     description:
-      'Oxygen depletion, toxic gases, and flammable atmospheres. How to use portable gas detectors (4-gas monitors). Pre-entry testing, continuous monitoring during work, and alarm set points. Calibration and bump testing requirements.',
+      'Oxygen depletion, toxic gases, and flammable atmospheres. How to use portable gas detectors (4-gas monitors).',
   },
   {
     title: 'Legal Framework and Risk Assessment',
     description:
-      'The Confined Spaces Regulations 1997 in detail. Regulation 4 (avoidance), Regulation 5 (safe systems of work), and Regulation 6 (emergency arrangements). Carrying out a confined space risk assessment. Permits to work.',
+      'The Confined Spaces Regulations 1997 in detail. Regulation 4 (avoidance), Regulation 5 (safe systems of work), and Regulation 6 (emergency arrangements).',
   },
   {
     title: 'Safe Systems of Work',
     description:
-      'Planning confined space entry: permits to work, communication systems, ventilation, access and egress, PPE selection (harnesses, respiratory equipment), isolation of services, and time limits. The role of the standby person.',
+      'Planning confined space entry: permits to work, communication systems, ventilation, access and egress, PPE selection (harnesses, respiratory equipment)…',
   },
   {
     title: 'Emergency Rescue Procedures',
     description:
-      'Pre-planned rescue arrangements. Raising the alarm, non-entry rescue techniques (retrieval systems, tripods), entry rescue by trained rescue teams, first aid for gas exposure, and the critical rule of never entering a confined space to rescue a casualty without proper equipment and training.',
+      'Pre-planned rescue arrangements. Raising the alarm, non-entry rescue techniques (retrieval systems, tripods), entry rescue by trained rescue teams…',
   },
 ];
 
@@ -114,25 +114,25 @@ const features = [
     icon: BrainCircuit,
     title: 'AI Study Assistant',
     description:
-      'Ask any confined space question in plain English. Get instant answers about atmospheric hazards, permit requirements, rescue procedures, and regulatory compliance.',
+      'Ask any confined space question in plain English. Get instant answers about atmospheric hazards, permit requirements, rescue procedures…',
   },
   {
     icon: Wind,
     title: 'Atmospheric Hazard Training',
     description:
-      'Detailed coverage of gas detection equipment, alarm set points, and the three categories of atmospheric hazard. Interactive scenarios simulating real confined space entries.',
+      'Detailed coverage of gas detection equipment, alarm set points, and the three categories of atmospheric hazard.',
   },
   {
     icon: ClipboardCheck,
     title: 'Interactive Quizzes',
     description:
-      'Scenario-based questions after every module. Classify spaces, identify hazards, complete permit assessments, and demonstrate understanding of emergency procedures.',
+      'Scenario-based questions after every module. Classify spaces, identify hazards, complete permit assessments…',
   },
   {
     icon: Clock,
     title: 'Study Anywhere',
     description:
-      'Complete the course on your phone, tablet, or desktop. Study during breaks on site, at home, or on the commute. Progress syncs across all your devices automatically.',
+      'Complete the course on your phone, tablet, or desktop. Study during breaks on site, at home, or on the commute.',
   },
   {
     icon: Layers,
@@ -220,7 +220,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Atmospheric hazard scenarios in your training"
-          description="The Elec-Mate confined spaces course includes interactive scenarios where you assess atmospheric readings, decide whether entry is safe, and respond to changing conditions. Build your confidence before you face real-world situations."
+          description="The Elec-Mate confined spaces course includes interactive scenarios where you assess atmospheric readings, decide whether entry is safe…"
           icon={Wind}
         />
       </>
@@ -344,7 +344,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Emergency scenario training with AI feedback"
-          description="Practise responding to confined space emergencies in the Elec-Mate course. Work through realistic scenarios, make decisions under pressure, and receive AI-generated feedback on your response. Better to learn from simulated incidents than real ones."
+          description="Practise responding to confined space emergencies in the Elec-Mate course. Work through realistic scenarios, make decisions under pressure…"
           icon={ShieldCheck}
         />
       </>
@@ -440,7 +440,7 @@ export default function ConfinedSpacesCoursePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-07-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Health & Safety Training"

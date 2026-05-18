@@ -436,7 +436,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Colchester electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for South East electricians working across Essex. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -453,9 +453,9 @@ export default function ElectricianColchesterPage() {
     <GuideTemplate
       localArea="Colchester"
       title="Electrician in Colchester | Local Electricians 2026"
-      description="Find qualified electricians in Colchester. NICEIC and NAPIT registered, Part P compliant. South East rates, EICRs, listed building work, HMO compliance, EV chargers, and consumer unit upgrades in Colchester 2026."
+      description="Find qualified electricians in Colchester. NICEIC and NAPIT registered, Part P compliant. South East rates, EICRs, listed building work, HMO compliance…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Colchester"

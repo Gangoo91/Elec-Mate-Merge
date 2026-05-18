@@ -505,8 +505,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Professional electrical tools for Inverness and Highland electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for Scottish Building Standards and the realities of Highland electrical work. 7-day free trial."
+          title="Professional electrical tools for Inverness and Highland"
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -523,9 +523,9 @@ export default function ElectricianInvernessPage() {
     <GuideTemplate
       localArea="Inverness"
       title="Electrician in Inverness | Local Electricians 2026"
-      description="Find qualified electricians in Inverness. Scottish Building Standards (not Part P), SSEN DNO, TT earthing, Highland property rewires, EICRs, and local electrician rates for 2026."
+      description="Find qualified electricians in Inverness. Scottish Building Standards (not Part P), SSEN DNO, TT earthing, Highland property rewires, EICRs…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Inverness"

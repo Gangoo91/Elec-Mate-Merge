@@ -20,7 +20,7 @@ import {
   ClipboardCheck,
 } from 'lucide-react';
 
-const PAGE_TITLE = 'AM2 Exam Preparation Online | Practice Tests & Mock Exams | Elec-Mate';
+const PAGE_TITLE = 'AM2 Exam Prep | Practice Tests & Mock Exams Online';
 const PAGE_DESCRIPTION =
   'Prepare for the AM2 practical assessment online. Timed mock exercises, consumer unit build, ring final, lighting circuit, and fault finding practice. From £5.99/mo.';
 
@@ -85,37 +85,37 @@ const features = [
     icon: Timer,
     title: 'Timed Mock Exercises',
     description:
-      'Every AM2 exercise includes realistic time limits that match the actual assessment. Practise working under pressure so time management becomes second nature on the day.',
+      'Every AM2 exercise includes realistic time limits that match the actual assessment. Practise working under pressure so time management becomes second…',
   },
   {
     icon: Wrench,
     title: 'Consumer Unit Build',
     description:
-      'Step-by-step consumer unit installation practice. Work through circuit schedules, busbar configurations, RCBO selection, and cable termination sequences used in the real AM2.',
+      'Step-by-step consumer unit installation practice. Work through circuit schedules, busbar configurations, RCBO selection…',
   },
   {
     icon: Zap,
     title: 'Ring Final Circuit Practice',
     description:
-      'Complete ring final circuit wiring exercises with correct cable identification, socket outlet connections, and spur configurations. Learn the wiring sequence that saves time.',
+      'Complete ring final circuit wiring exercises with correct cable identification, socket outlet connections, and spur configurations.',
   },
   {
     icon: Target,
     title: 'Fault Finding Scenarios',
     description:
-      'Practise systematic fault finding on realistic pre-built circuits. Learn the logical testing sequence assessors expect, including safe isolation and GS 38 procedures.',
+      'Practise systematic fault finding on realistic pre-built circuits. Learn the logical testing sequence assessors expect…',
   },
   {
     icon: Brain,
     title: 'AI-Powered Feedback',
     description:
-      'Receive instant AI feedback on your approach to each exercise. The system identifies common mistakes, suggests improvements, and tracks your progress over time.',
+      'Receive instant AI feedback on your approach to each exercise. The system identifies common mistakes, suggests improvements…',
   },
   {
     icon: ClipboardCheck,
     title: 'Testing & Inspection Practice',
     description:
-      'Practise completing test result schedules accurately. Continuity, insulation resistance, polarity, Zs, PSCC, and RCD tests — the same sequence used in the AM2.',
+      'Practise completing test result schedules accurately. Continuity, insulation resistance, polarity, Zs, PSCC…',
   },
 ];
 
@@ -644,7 +644,7 @@ export default function AM2ExamPreparationPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="AM2 Prep + Full Electrical Training Platform"
-            description="Elec-Mate includes a dedicated AM2 simulator, 2,000+ practice questions, AI study assistant, and 46+ courses covering Level 2, Level 3, and 18th Edition. Start your free trial and prepare for your assessment today."
+            description="Elec-Mate includes a dedicated AM2 simulator, 2,000+ practice questions, AI study assistant, and 46+ courses covering Level 2, Level 3, and 18th Edition."
             icon={GraduationCap}
           />
           <p className="text-white mt-4 text-sm">

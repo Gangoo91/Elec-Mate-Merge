@@ -242,7 +242,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Apprentice Training Hub"
-          description="From day one of your apprenticeship, Elec-Mate supports your learning with 18th Edition flashcards, mock exams, EPA simulator, AM2 preparation, OJT tracking, portfolio builder, and site diary. Everything your college and employer expect, in your pocket."
+          description="From day one of your apprenticeship, Elec-Mate supports your learning with 18th Edition flashcards, mock exams, EPA simulator, AM2 preparation…"
           icon={GraduationCap}
         />
       </>
@@ -369,7 +369,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Start Studying Before Your Course"
-          description="Get ahead of your classmates by studying the 18th Edition, electrical science fundamentals, and wiring regulations before your course starts. Elec-Mate's flashcards, mock exams, and AI tutor are available from day one — no prior knowledge required."
+          description="Get ahead of your classmates by studying the 18th Edition, electrical science fundamentals, and wiring regulations before your course starts."
           icon={BookOpen}
         />
       </>
@@ -564,7 +564,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Plan Your Career with Elec-Mate"
-          description="Whether you are researching your first course or preparing for your AM2 assessment, Elec-Mate supports every stage of your journey. Study centre, flashcards, mock exams, AI tutor, and career guidance — all from GBP 4.99/month."
+          description="Whether you are researching your first course or preparing for your AM2 assessment, Elec-Mate supports every stage of your journey."
           icon={TrendingUp}
         />
       </>
@@ -625,10 +625,10 @@ const relatedPages = [
 export default function BecomeElectricianNoExperiencePage() {
   return (
     <GuideTemplate
-      title="How to Become an Electrician with No Experience | UK Career Change Guide 2026"
-      description="Complete guide to becoming an electrician in the UK with no prior experience. Adult apprenticeships, domestic installer courses, fast-track options, funding, and realistic timelines for career changers."
+      title="How to Become an Electrician with No Experience | UK Career"
+      description="Complete guide to becoming an electrician in the UK with no prior experience. Adult apprenticeships, domestic installer courses, fast-track options…"
       datePublished="2024-08-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

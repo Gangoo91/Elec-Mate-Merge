@@ -23,7 +23,7 @@ import {
 
 const PAGE_TITLE = 'Permit to Work for Electricians | Electrical Safety';
 const PAGE_DESCRIPTION =
-  'Complete guide to permit-to-work systems for electrical work. When a PTW is required, types of permits, the permit process, safe isolation, Electricity at Work Regulations 1989, who issues permits, PTW templates, and common mistakes. For UK electricians.';
+  'Permit-to-work for electrical work: when PTW is required, permit types, process, safe isolation, EAWR 1989, templates, common mistakes.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -345,7 +345,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AI generates permit-to-work supporting documents"
-          description="Elec-Mate's RAMS Generator creates the risk assessments and method statements you need to support your permit-to-work application. Site-specific, professionally formatted, ready to submit to the permit issuer."
+          description="Elec-Mate's RAMS Generator creates the risk assessments and method statements you need to support your permit-to-work application."
           icon={Brain}
         />
       </>
@@ -388,7 +388,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Safe isolation built into every testing workflow"
-          description="Elec-Mate's testing tools guide you through the GS 38 prove-test-prove safe isolation procedure before every test. The AI Health and Safety agent includes safe isolation in every RAMS pack it generates."
+          description="Elec-Mate's testing tools guide you through the GS 38 prove-test-prove safe isolation procedure before every test."
           icon={ShieldCheck}
         />
       </>
@@ -563,7 +563,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="RAMS Generator creates PTW supporting documents"
-          description="Describe your job in plain English and the AI generates risk assessments, method statements, and permit-to-work templates in under 60 seconds. Site-specific, CDM 2015 compliant, ready for the permit issuer."
+          description="Describe your job in plain English and the AI generates risk assessments, method statements, and permit-to-work templates in under 60 seconds."
           icon={FileCheck2}
         />
       </>
@@ -727,7 +727,7 @@ export default function PermitToWorkPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-01-15"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Hub"

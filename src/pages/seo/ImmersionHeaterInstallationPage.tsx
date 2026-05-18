@@ -584,7 +584,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certify immersion heater installations with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate to issue Electrical Installation Certificates and Minor Works Certificates on site. Part P compliant certification with instant PDF export and automatic notification. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to issue Electrical Installation Certificates and Minor Works Certificates on site."
           icon={FileCheck2}
         />
       </>
@@ -599,10 +599,10 @@ const sections = [
 export default function ImmersionHeaterInstallationPage() {
   return (
     <GuideTemplate
-      title="Immersion Heater Installation UK | Electrical Requirements & Costs"
-      description="Complete guide to immersion heater installation in the UK. Dedicated 20A circuit, thermostat at 60-65°C for Legionella prevention, element types, timer and boost controls, solar diverter compatibility, and typical costs (element £30-80, installation £100-200)."
+      title="Immersion Heater Installation UK | Electrical Requirements"
+      description="Complete guide to immersion heater installation in the UK. Dedicated 20A circuit, thermostat at 60-65°C for Legionella prevention, element types…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

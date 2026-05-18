@@ -196,7 +196,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Design three phase installations with AI circuit designer"
-          description="Elec-Mate's AI circuit designer can calculate three phase load schedules, balance loads across phases, size cables and protection, and check earth fault loop impedance for three phase systems."
+          description="Elec-Mate's AI circuit designer can calculate three phase load schedules, balance loads across phases, size cables and protection…"
           icon={Zap}
         />
       </>
@@ -381,7 +381,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Certificate three phase installations on your phone"
-          description="Elec-Mate's EIC app supports three phase installations: record Ze on all three phases, complete the schedule of test results for three phase circuits, and generate compliant PDF certificates instantly."
+          description="Elec-Mate's EIC app supports three phase installations: record Ze on all three phases, complete the schedule of test results for three phase circuits…"
           icon={ClipboardCheck}
         />
       </>
@@ -397,9 +397,9 @@ export default function SinglePhaseVsThreePhasePage() {
   return (
     <GuideTemplate
       title="Single Phase vs Three Phase Power | UK Electrician's Guide"
-      description="Complete guide to single phase vs three phase electrical supplies for UK electricians. When three phase is needed (above 15kW), DNO upgrade costs (£2,000–£10,000+), load balancing, and wiring differences."
+      description="Complete guide to single phase vs three phase electrical supplies for UK electricians. When three phase is needed (above 15kW)…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Supply Systems Guide"

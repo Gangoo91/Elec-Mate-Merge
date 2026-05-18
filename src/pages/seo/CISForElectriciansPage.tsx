@@ -382,7 +382,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Keep every CIS statement and deduction in one place"
-          description="Elec-Mate tracks every invoice, CIS payment, and deduction automatically. When your accountant needs the records for Self-Assessment, export everything in one tap. No chasing contractors for missing statements."
+          description="Elec-Mate tracks every invoice, CIS payment, and deduction automatically. When your accountant needs the records for Self-Assessment…"
           icon={ClipboardCheck}
         />
       </>
@@ -556,7 +556,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Track every CIS payment and deduction automatically"
-          description="Elec-Mate records every CIS invoice and payment. Export your complete CIS income and deduction summary for your accountant in one tap — no chasing contractors for missing statements."
+          description="Elec-Mate records every CIS invoice and payment. Export your complete CIS income and deduction summary for your accountant in one tap — no chasing…"
           icon={BarChart3}
         />
       </>
@@ -636,9 +636,9 @@ export default function CISForElectriciansPage() {
   return (
     <GuideTemplate
       title="CIS for Electricians | Construction Industry Scheme Guide"
-      description="Complete guide to CIS for UK electricians. Covers registration, gross payment status, 20% and 30% deduction rates, monthly returns, Domestic Reverse Charge VAT, and how to claim CIS refunds."
+      description="Complete guide to CIS for UK electricians. Covers registration, gross payment status, 20% and 30% deduction rates, monthly returns…"
       datePublished="2026-01-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="CIS Guide"

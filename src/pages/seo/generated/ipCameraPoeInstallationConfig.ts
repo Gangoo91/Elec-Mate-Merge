@@ -6,14 +6,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // (Protection of Freedoms Act 2012).
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const ipCameraPoeInstallationConfig: GeneratedGuideConfig = {
   pagePath: '/guides/ip-camera-poe-installation-uk',
   title:
-    'IP Camera PoE Installation Guide (UK) — CCTV over Power-over-Ethernet | Elec-Mate',
+    'IP Camera PoE Installation Guide (UK) — CCTV over',
   description:
-    'A definitive UK installer guide to IP camera systems powered over Ethernet — PoE class selection under IEEE 802.3at/bt, NVR PoE switch sizing, BS EN 62676 surveillance design, BS EN 50174 cable installation, BS 7671 Section 715 ELV requirements, surge protection, GDPR and the Surveillance Camera Code of Practice.',
+    'A definitive UK installer guide to IP camera systems powered over Ethernet — PoE class selection under IEEE 802.3at/bt, NVR PoE switch sizing…',
   datePublished: published,
   dateModified: modified,
   readingTime: 18,

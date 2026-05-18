@@ -304,7 +304,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Practise Testing Theory with Mock Exams"
-          description="Elec-Mate mock exams cover every testing topic you will encounter in Year 2 — continuity, insulation resistance, Zs, polarity, and RCD testing. Timed practice with instant feedback and explanations."
+          description="Elec-Mate mock exams cover every testing topic you will encounter in Year 2 — continuity, insulation resistance, Zs, polarity, and RCD testing."
           icon={Award}
         />
       </>
@@ -476,7 +476,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AM2 Simulator: Practise Before the Real Thing"
-          description="Elec-Mate's AM2 Simulator gives you realistic practice for the practical assessment. Work through installation tasks, fault-finding scenarios, and safe isolation procedures. Build confidence before your AM2 date."
+          description="Elec-Mate's AM2 Simulator gives you realistic practice for the practical assessment. Work through installation tasks, fault-finding scenarios…"
           icon={Award}
         />
       </>
@@ -598,7 +598,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Level Up in Year 2 with Elec-Mate"
-          description="AM2 Simulator, EPA Simulator, 46+ training courses, mock exams, flashcards, AI tutor, portfolio builder, and OJT tracker. Everything Year 2 apprentices need in one platform. 7-day free trial."
+          description="AM2 Simulator, EPA Simulator, 46+ training courses, mock exams, flashcards, AI tutor, portfolio builder, and OJT tracker."
           icon={GraduationCap}
         />
       </>
@@ -614,9 +614,9 @@ export default function Year2ApprenticeGuidePage() {
   return (
     <GuideTemplate
       title="Year 2 Electrical Apprentice | Skills & Progression"
-      description="Complete guide to Year 2 of your electrical apprenticeship. More responsibility on site, introduction to testing, circuit installation, Level 3 theory, AM2 preparation, and how Elec-Mate supports your development."
+      description="Complete guide to Year 2 of your electrical apprenticeship. More responsibility on site, introduction to testing, circuit installation, Level 3 theory…"
       datePublished="2025-11-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

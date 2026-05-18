@@ -452,7 +452,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Track your earnings and expenses"
-          description="Elec-Mate's business tools let you track income, expenses, and job profitability in real time. See exactly what you are earning per job, per week, and per month — whether you are domestic, commercial, or both."
+          description="Elec-Mate's business tools let you track income, expenses, and job profitability in real time."
           icon={PoundSterling}
         />
       </>
@@ -649,7 +649,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your domestic or commercial business from one app"
-          description="Quoting, invoicing, expense tracking, digital certificates, and AI-powered tools — Elec-Mate handles the admin so you can focus on the electrical work. Whether you are domestic, commercial, or transitioning between the two."
+          description="Quoting, invoicing, expense tracking, digital certificates, and AI-powered tools — Elec-Mate handles the admin so you can focus on the electrical work."
           icon={Briefcase}
         />
       </>
@@ -665,9 +665,9 @@ export default function DomesticVsCommercialElectricianPage() {
   return (
     <GuideTemplate
       title="Domestic vs Commercial Electrician | Key Differences"
-      description="Complete comparison of domestic and commercial electrician careers in the UK. Work types, qualifications, earning potential, career paths, pros and cons, and how to switch between sectors."
+      description="Complete comparison of domestic and commercial electrician careers in the UK. Work types, qualifications, earning potential, career paths, pros and cons…"
       datePublished="2025-07-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

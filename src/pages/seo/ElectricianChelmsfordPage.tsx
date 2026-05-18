@@ -434,7 +434,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Chelmsford electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for South East electricians working across Chelmsford and Essex. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -451,9 +451,9 @@ export default function ElectricianChelmsfordPage() {
     <GuideTemplate
       localArea="Chelmsford"
       title="Electrician in Chelmsford | Local Electricians 2026"
-      description="Find qualified electricians in Chelmsford. NICEIC and NAPIT registered, Part P compliant. South East rates, EICRs, consumer unit upgrades, EV chargers, and commercial electrical work in Chelmsford 2026."
+      description="Find qualified electricians in Chelmsford. NICEIC and NAPIT registered, Part P compliant. South East rates, EICRs, consumer unit upgrades, EV chargers…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Chelmsford"

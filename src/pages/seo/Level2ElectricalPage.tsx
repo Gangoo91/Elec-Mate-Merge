@@ -20,9 +20,9 @@ import {
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
-const PAGE_TITLE = 'Level 2 Electrical Installation Course Online | C&G 2365 | Elec-Mate';
+const PAGE_TITLE = 'Level 2 Electrical Installation | C&G 2365 Online';
 const PAGE_DESCRIPTION =
-  'Study for the City & Guilds 2365-02 Level 2 Diploma in Electrical Installation online. AI study assistant, interactive modules covering electrical science, installation methods, earthing and bonding. From £5.99/mo.';
+  'Study C&G 2365-02 Level 2 Electrical Installation online: AI study assistant, modules on science, installation methods, earthing. From £5.99/mo.';
 
 const faqs = [
   {
@@ -62,7 +62,7 @@ const features = [
     icon: Brain,
     title: 'AI Study Assistant',
     description:
-      'Ask questions about any topic in the Level 2 syllabus. The AI explains electrical science concepts, installation methods, and safety requirements in plain language with worked examples.',
+      'Ask questions about any topic in the Level 2 syllabus. The AI explains electrical science concepts, installation methods…',
   },
   {
     icon: Lightbulb,
@@ -74,7 +74,7 @@ const features = [
     icon: Cable,
     title: 'Installation Methods',
     description:
-      'Comprehensive coverage of cable types, containment systems, wiring methods, and termination techniques. Visual guides show real-world applications on domestic and commercial sites.',
+      'Comprehensive coverage of cable types, containment systems, wiring methods, and termination techniques.',
   },
   {
     icon: ShieldCheck,
@@ -86,13 +86,13 @@ const features = [
     icon: ClipboardCheck,
     title: 'Practice Assessments',
     description:
-      'Hundreds of practice questions mapped to each unit of the 2365-02 syllabus. Timed mock assessments simulate the real examination format with instant marking and feedback.',
+      'Hundreds of practice questions mapped to each unit of the 2365-02 syllabus. Timed mock assessments simulate the real examination format with instant…',
   },
   {
     icon: BarChart3,
     title: 'Progress Tracking',
     description:
-      'Visual dashboards show your progress across every module and unit. Identify weak areas at a glance and focus your study time where it will have the most impact.',
+      'Visual dashboards show your progress across every module and unit. Identify weak areas at a glance and focus your study time where it will have the most…',
   },
 ];
 
@@ -284,7 +284,7 @@ export default function Level2ElectricalPage() {
                 step: '1',
                 title: 'Health and Safety in Electrical Installation',
                 description:
-                  'Covers the Health and Safety at Work Act 1974, the Electricity at Work Regulations 1989, CDM Regulations 2015, risk assessment procedures, method statements, PPE requirements, manual handling, working at height, and asbestos awareness. This unit ensures you understand the legal framework and practical safety measures that protect you and others on site. You will learn safe isolation procedures — the three-step process of proving your voltage indicator, testing the circuit dead, and re-proving — which forms the basis of all electrical work.',
+                  'Covers the Health and Safety at Work Act 1974, the Electricity at Work Regulations 1989, CDM Regulations 2015, risk assessment procedures…',
               },
               {
                 step: '2',
@@ -296,19 +296,19 @@ export default function Level2ElectricalPage() {
                 step: '3',
                 title: 'Electrical Installation Technology',
                 description:
-                  'Covers cable types and construction (T&E, SWA, MICC, FP cables), cable ratings and current-carrying capacity, containment systems (trunking, conduit, cable tray, basket), wiring systems and methods, accessory types and applications, consumer units and distribution boards, circuit protection (MCBs, RCDs, RCBOs, fuses), and basic circuit configurations (radial, ring, lighting). This unit bridges the gap between theory and practice, showing you what real installations look like and how components are selected.',
+                  'Covers cable types and construction (T&E, SWA, MICC, FP cables), cable ratings and current-carrying capacity, containment systems (trunking, conduit…',
               },
               {
                 step: '4',
                 title: 'Earthing and Bonding',
                 description:
-                  'Covers the purpose of earthing, types of earthing systems (TN-S, TN-C-S, TT), main protective bonding conductors, supplementary bonding, the earth fault loop path, the role of the circuit protective conductor (CPC), and the relationship between earthing and automatic disconnection of supply. This unit is fundamental to understanding electrical safety — without effective earthing, protective devices cannot operate correctly under fault conditions. You will learn why Regulation 411.3 of BS 7671:2018+A4:2026 requires automatic disconnection of supply as the primary protective measure.',
+                  'Covers the purpose of earthing, types of earthing systems (TN-S, TN-C-S, TT), main protective bonding conductors, supplementary bonding…',
               },
               {
                 step: '5',
                 title: 'Basic Installation Practice',
                 description:
-                  'Covers cable preparation and termination techniques, connection of accessories (sockets, switches, light fittings), basic circuit wiring (ring final circuits, radial circuits, one-way and two-way lighting), use of conduit and trunking, marking and labelling, and basic testing (continuity, insulation resistance, polarity). This practical unit is assessed at a training centre but the underlying knowledge can be thoroughly prepared online.',
+                  'Covers cable preparation and termination techniques, connection of accessories (sockets, switches, light fittings)…',
               },
             ].map((item) => (
               <div
@@ -455,13 +455,13 @@ export default function Level2ElectricalPage() {
                 step: '1',
                 title: 'Level 3 Diploma (C&G 2365-03)',
                 description:
-                  'Advanced study covering circuit design, inspection and testing, fault diagnosis, BS 7671 application, and special installations. Typically completed in years two and three of an apprenticeship.',
+                  'Advanced study covering circuit design, inspection and testing, fault diagnosis, BS 7671 application, and special installations.',
               },
               {
                 step: '2',
                 title: 'AM2 Practical Assessment',
                 description:
-                  'The industry-standard practical assessment run by NET/JIB. Demonstrates your ability to install, test, and commission electrical circuits safely and competently.',
+                  'The industry-standard practical assessment run by NET/JIB. Demonstrates your ability to install, test…',
               },
               {
                 step: '3',
@@ -479,7 +479,7 @@ export default function Level2ElectricalPage() {
                 step: '5',
                 title: 'JIB Gold Card & Scheme Registration',
                 description:
-                  'With Level 3, AM2, 18th Edition, and the 2391-52, you can apply for the JIB Installation Electrician (Gold Card) and register with NICEIC, NAPIT, or ELECSA.',
+                  'With Level 3, AM2, 18th Edition, and the 2391-52, you can apply for the JIB Installation Electrician (Gold Card) and register with NICEIC, NAPIT…',
               },
             ].map((item) => (
               <div
@@ -541,7 +541,7 @@ export default function Level2ElectricalPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Study Level 2 Electrical Installation with Elec-Mate"
-            description="Elec-Mate's Study Centre has revision materials, exam prep, and on-the-job reference guides for the C&G 2365-02 Level 2 Diploma and the electrical apprenticeship."
+            description="Elec-Mate's Study Centre has revision materials, exam prep, and on-the-job reference guides for the C&G 2365-02 Level 2 Diploma and the electrical…"
             ctaText="Try Elec-Mate free"
             ctaHref="/auth/signup"
             icon={GraduationCap}

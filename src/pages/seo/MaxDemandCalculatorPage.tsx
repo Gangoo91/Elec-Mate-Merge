@@ -84,13 +84,13 @@ const features = [
     icon: Calculator,
     title: 'Automatic Diversity Factors',
     description:
-      'All BS 7671 Table 1B diversity factors built in. Select the circuit type and load, and the correct factor is applied automatically. No manual table look-ups.',
+      'All BS 7671 Table 1B diversity factors built in. Select the circuit type and load, and the correct factor is applied automatically.',
   },
   {
     icon: Home,
     title: 'Domestic Load Assessment',
     description:
-      'Pre-configured for typical domestic circuits: ring finals, lighting, cooker, shower, immersion heater, EV charger. The cooker formula is calculated automatically.',
+      'Pre-configured for typical domestic circuits: ring finals, lighting, cooker, shower, immersion heater, EV charger.',
   },
   {
     icon: Building2,
@@ -108,13 +108,13 @@ const features = [
     icon: BarChart3,
     title: 'Supply Capacity Check',
     description:
-      'Compares your calculated maximum demand against common UK supply ratings (60 A, 80 A, 100 A single-phase; three-phase options). Flags when a supply upgrade is needed.',
+      'Compares your calculated maximum demand against common UK supply ratings (60 A, 80 A, 100 A single-phase; three-phase options).',
   },
   {
     icon: BookOpen,
     title: 'BS 7671 Appendix 12 Compliant',
     description:
-      'All calculations follow the methodology in BS 7671:2018+A4:2026 Appendix 12 and Table 1B. Verified against the current edition of the IET Wiring Regulations.',
+      'All calculations follow the methodology in BS 7671:2018+A4:2026 Appendix 12 and Table 1B. Verified against the current edition of the IET Wiring…',
   },
 ];
 
@@ -124,7 +124,7 @@ const softwareAppSchema = {
   applicationCategory: 'UtilitiesApplication',
   operatingSystem: 'Web, iOS, Android',
   description:
-    'Calculate maximum demand to BS 7671 Appendix 12 with diversity factors from Table 1B. Covers domestic, commercial, cooker, shower, EV charger, and heating loads.',
+    'Calculate maximum demand to BS 7671 Appendix 12 with diversity factors from Table 1B. Covers domestic, commercial, cooker, shower, EV charger…',
   url: 'https://www.elec-mate.com/max-demand-calculator',
   offers: {
     '@type': 'Offer',
@@ -163,7 +163,7 @@ export default function MaxDemandCalculatorPage() {
   useSEO({
     title: 'Maximum Demand Calculator BS 7671 | Diversity Factors',
     description:
-      'Calculate maximum demand to BS 7671 Appendix 12 with diversity factors from Table 1B. Covers domestic, commercial, cooker, shower, EV charger, and heating loads.',
+      'Calculate maximum demand to BS 7671 Appendix 12 with diversity factors from Table 1B. Covers domestic, commercial, cooker, shower, EV charger…',
   });
 
   return (
@@ -656,6 +656,26 @@ export default function MaxDemandCalculatorPage() {
       <section className="px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <RecentReviews />
+        </div>
+      </section>
+
+      
+
+      {/* Related calculators — peer surface for internal-link health.
+          Hand-curated where slug-token matching couldn't surface peers. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical calculators</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/diversity-factor-calculator">Diversity Factor Calculator</SEOInternalLink>
+            <SEOInternalLink href="/guides/max-demand-calculation-guide">Max Demand Calculation Guide</SEOInternalLink>
+            <SEOInternalLink href="/electrical-load-calculation">Electrical Load Calculation — UK Guide 2024</SEOInternalLink>
+            <SEOInternalLink href="/tools/electrical-load-schedule">Electrical Load Schedule Calculator</SEOInternalLink>
+            <SEOInternalLink href="/cable-sizing-calculator">Cable Sizing Calculator BS 7671</SEOInternalLink>
+            <SEOInternalLink href="/voltage-drop-calculator">Voltage Drop Calculator</SEOInternalLink>
+            <SEOInternalLink href="/three-phase-power-calculator">Three Phase Power Calculator</SEOInternalLink>
+            <SEOInternalLink href="/guides/single-phase-vs-three-phase">Single Phase vs Three Phase Power</SEOInternalLink>
+          </div>
         </div>
       </section>
 

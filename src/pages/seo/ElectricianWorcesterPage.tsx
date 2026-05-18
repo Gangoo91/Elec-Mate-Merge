@@ -421,7 +421,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Worcester electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for electricians working across Worcestershire and the West Midlands. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -438,9 +438,9 @@ export default function ElectricianWorcesterPage() {
     <GuideTemplate
       localArea="Worcester"
       title="Electrician in Worcester | Local Electricians 2026"
-      description="Find qualified electricians in Worcester. Part P compliance, NGED DNO, NICEIC and NAPIT registered electricians, EICR for landlords, flood-zone electrical work, and Worcester electrician rates for 2026."
+      description="Find qualified electricians in Worcester. Part P compliance, NGED DNO, NICEIC and NAPIT registered electricians, EICR for landlords…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Worcester"

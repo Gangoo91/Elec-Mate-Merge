@@ -617,7 +617,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Motor circuit certification and quoting with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, motor circuit test recording, and instant PDF export. Quote VFD upgrades on the day. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, motor circuit test recording, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -633,9 +633,9 @@ export default function MotorStartersInstallationPage() {
   return (
     <GuideTemplate
       title="Motor Starter Installation UK | DOL, Star-Delta & VFD Guide"
-      description="Complete guide to motor starter installation in the UK. DOL, star-delta, and VFD drives explained — wiring, overload protection, forward/reverse control circuits, and BS 7671 compliance for industrial motor installations."
+      description="Complete guide to motor starter installation in the UK. DOL, star-delta, and VFD drives explained — wiring, overload protection…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Industrial Guide"

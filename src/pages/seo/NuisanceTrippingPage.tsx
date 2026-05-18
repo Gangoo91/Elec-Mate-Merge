@@ -24,7 +24,7 @@ import {
 
 const PAGE_TITLE = 'Nuisance Tripping | Why Your RCD Keeps Tripping';
 const PAGE_DESCRIPTION =
-  'Why does your RCD keep tripping for no apparent reason? Expert guide to nuisance tripping caused by cumulative earth leakage, Type AC RCD incompatibility with DC components, EMC interference from VFDs and LED drivers, moisture, shared neutral faults, and how to fix each cause with split load boards, Type A/F RCDs, and individual RCBOs.';
+  'RCD nuisance tripping causes: cumulative earth leakage, Type AC vs DC kit, EMC from VFD + LED drivers, moisture, shared neutrals. Fix with Type A/F.';
 
 const breadcrumbs = [
   { label: 'Troubleshooting', href: '/guides/troubleshooting' },
@@ -364,7 +364,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="AI Fault Diagnosis"
-          description="Describe the tripping pattern to Elec-Mate's AI diagnostic agent — when it happens, which circuits are in use, whether it correlates with weather — and the AI helps distinguish genuine intermittent faults from nuisance tripping. It cross-references your symptoms against known fault patterns to guide your diagnosis."
+          description="Describe the tripping pattern to Elec-Mate's AI diagnostic agent — when it happens, which circuits are in use…"
           icon={Search}
         />
       </>
@@ -381,12 +381,12 @@ const sections = [
         </p>
         <SEOAppBridge
           title="EICR — RCD Type and Trip Times"
-          description="Elec-Mate's digital EICR form captures the RCD type (AC, A, F, B), rated residual current, and measured trip times at rated current and five times rated current. Non-compliant trip times are flagged automatically. The form also records the circuit configuration, making it easy to identify split-load boards with excessive circuits per RCD."
+          description="Elec-Mate's digital EICR form captures the RCD type (AC, A, F, B), rated residual current…"
           icon={ClipboardCheck}
         />
         <SEOAppBridge
           title="Board Scanner — Read Existing RCD/RCBO Configuration"
-          description="Point your phone at the consumer unit and Elec-Mate's AI reads every device — MCBs, RCDs, RCBOs — identifying types, ratings, and circuit allocations. Instantly see how circuits are distributed across RCDs and identify boards with too many circuits on a single RCD."
+          description="Point your phone at the consumer unit and Elec-Mate's AI reads every device — MCBs, RCDs, RCBOs — identifying types, ratings, and circuit allocations."
           icon={Gauge}
         />
         <p>
@@ -458,7 +458,7 @@ export default function NuisanceTrippingPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-10-15"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting"

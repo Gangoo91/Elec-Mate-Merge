@@ -230,7 +230,7 @@ const sections = [
           </ul>
         </div>
         <SEOAppBridge
-          title="Record your socket outlet additions with a Minor Works Certificate"
+          title="Record your socket outlet additions with a Minor Works"
           description="Elec-Mate generates Minor Electrical Installation Works Certificates on your phone at the job. PDF in seconds, stored in the cloud."
           ctaText="Start 7-day free trial"
           icon={FileCheck2}
@@ -500,10 +500,10 @@ const sections = [
 export default function SocketOutletInstallationPage() {
   return (
     <GuideTemplate
-      title="Socket Outlet Installation Guide — Ring Main, Spurs, Outdoor, USB | Elec-Mate"
-      description="Complete UK guide to adding socket outlets. Ring main vs radial circuits, spur rules, one socket per spur from a ring, maximum floor area, USB socket outlets, outdoor IP44 requirements, BS 7671 Regulation 411.3.3, Part P notification, and typical costs."
+      title="Socket Outlet Installation Guide — Ring Main, Spurs,"
+      description="Complete UK guide to adding socket outlets. Ring main vs radial circuits, spur rules, one socket per spur from a ring, maximum floor area…"
       datePublished="2024-07-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Guide"

@@ -141,7 +141,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Hourly Rate Calculator"
-          description="Work out exactly what you need to charge per hour to hit your target salary — factoring in holidays, sick days, van costs, insurance, tools, and non-billable time. Most electricians undercharge because they do not account for these hidden costs."
+          description="Work out exactly what you need to charge per hour to hit your target salary — factoring in holidays, sick days, van costs, insurance, tools…"
           icon={Calculator}
         />
       </>
@@ -339,7 +339,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="50+ Training Courses to Upskill"
-          description="Elec-Mate's study centre covers EV installation, solar PV, fire alarm (BS 5839), emergency lighting (BS 5266), inspection and testing, and more. Flashcards, mock exams, and AI tutoring help you pass first time — so you can start earning specialist rates sooner."
+          description="Elec-Mate's study centre covers EV installation, solar PV, fire alarm (BS 5839), emergency lighting (BS 5266), inspection and testing, and more."
           icon={GraduationCap}
         />
       </>
@@ -407,7 +407,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Apprentice Training Hub"
-          description="Elec-Mate supports apprentices from Day 1 to qualification. Flashcards, mock exams, EPA simulator, AM2 simulator, OJT tracking, portfolio builder, and site diary — everything your college and employer expect, in your pocket."
+          description="Elec-Mate supports apprentices from Day 1 to qualification. Flashcards, mock exams, EPA simulator, AM2 simulator, OJT tracking, portfolio builder…"
           icon={GraduationCap}
         />
       </>
@@ -549,7 +549,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Job Profitability Tracker"
-          description="Track every job's actual costs against your quote — materials, labour hours, travel, extras. See your real profit margin per job, per week, per month. Stop guessing and start knowing which work actually makes you money."
+          description="Track every job's actual costs against your quote — materials, labour hours, travel, extras. See your real profit margin per job, per week, per month."
           icon={BarChart3}
         />
       </>
@@ -614,7 +614,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Cash Flow Planner"
-          description="The biggest challenge for self-employed electricians is not earning enough — it is managing cash flow. Elec-Mate's cash flow planner tracks money in and money out, shows you upcoming tax liabilities, and warns you before you hit a crunch."
+          description="The biggest challenge for self-employed electricians is not earning enough — it is managing cash flow."
           icon={BarChart3}
         />
       </>
@@ -664,7 +664,7 @@ const sections = [
               <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span className="flex-1 text-left">
                 <strong>Stay current with certifications:</strong> Hold the 18th Edition (including
-                Amendment 3:2024), C&G 2391, and membership of a competent person scheme. These
+                Amendment 4:2024), C&G 2391, and membership of a competent person scheme. These
                 credentials signal reliability to clients and allow you to self-certify notifiable
                 work.
               </span>
@@ -689,7 +689,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quoting and Invoicing Tools"
-          description="Elec-Mate's AI Cost Engineer generates detailed quotes with materials and labour breakdowns. The invoice builder lets you send a professional invoice from site the moment the job is done. Stop losing money to slow quoting and late invoicing."
+          description="Elec-Mate's AI Cost Engineer generates detailed quotes with materials and labour breakdowns. The invoice builder lets you send a professional invoice…"
           icon={Receipt}
         />
       </>
@@ -747,9 +747,9 @@ export default function ElectricianSalaryUKPage() {
   return (
     <GuideTemplate
       title="Electrician Salary UK 2026 | Average Pay & Earnings Guide"
-      description="Complete guide to electrician salaries in the UK for 2026. Average pay by region, specialisation, and experience level. Apprentice rates, JIB pay, day rates, self-employed earnings, and how to increase your income."
+      description="Complete guide to electrician salaries in the UK for 2026. Average pay by region, specialisation, and experience level."
       datePublished="2024-06-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Salary Guide"

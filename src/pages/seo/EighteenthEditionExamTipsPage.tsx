@@ -331,7 +331,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Study smarter with the Elec-Mate study planner"
-          description="Elec-Mate's AI-powered study planner builds a personalised revision schedule for the 18th Edition exam. It tracks your progress across 46+ training courses, flashcards, and mock exams — and tells you exactly what to revise each day."
+          description="Elec-Mate's AI-powered study planner builds a personalised revision schedule for the 18th Edition exam."
           icon={Brain}
         />
       </>
@@ -579,7 +579,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Take a timed mock exam on Elec-Mate"
-          description="Elec-Mate's 18th Edition mock exams mirror the real C&G 2382 format — 60 questions, 2-hour timer, instant marking, and detailed explanations for every answer. See exactly where you stand before exam day."
+          description="Elec-Mate's 18th Edition mock exams mirror the real C&G 2382 format — 60 questions, 2-hour timer, instant marking…"
           icon={GraduationCap}
         />
       </>
@@ -595,9 +595,9 @@ export default function EighteenthEditionExamTipsPage() {
   return (
     <GuideTemplate
       title="18th Edition Exam Tips | How to Pass C&G 2382"
-      description="How to pass the C&G 2382 18th Edition exam. Covers exam format, key BS 7671 regulation areas, study strategy, book tabs, time management, and common question types. Open-book tips and mock exam advice."
+      description="How to pass the C&G 2382 18th Edition exam. Covers exam format, key BS 7671 regulation areas, study strategy, book tabs, time management…"
       datePublished="2025-03-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Exam Guide"

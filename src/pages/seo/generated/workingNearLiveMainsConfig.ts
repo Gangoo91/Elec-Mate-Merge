@@ -5,14 +5,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Electricity at Work Regulations 1989 and HSE guidance GS6 / HSG47.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const workingNearLiveMainsConfig: GeneratedGuideConfig = {
   pagePath: '/guides/working-near-live-mains-hazard-control',
   title:
-    'Working Near Live Mains — Hazard Control for UK Electricians | Elec-Mate',
+    'Working Near Live Mains — Hazard Control for UK',
   description:
-    'Working near live mains: identifying the hazard, control measures, safe approach distances, PPE, and the legal framework under EAWR 1989, HSE GS6 and HSG47. Practical hazard-control guidance for UK electricians aligned to BS 7671:2018+A4:2026.',
+    'Working near live mains: identifying the hazard, control measures, safe approach distances, PPE, and the legal framework under EAWR 1989…',
   datePublished: published,
   dateModified: modified,
   readingTime: 13,

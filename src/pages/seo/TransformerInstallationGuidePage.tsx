@@ -571,9 +571,9 @@ export default function TransformerInstallationGuidePage() {
   return (
     <GuideTemplate
       title="Transformer Installation UK | Electrical Transformer Guide"
-      description="Complete guide to electrical transformer installation in the UK. Isolation, step-down, and autotransformers — ventilation requirements, oil-filled vs dry-type, primary and secondary protection, DNO notification, commissioning tests, and maintenance."
+      description="Complete guide to electrical transformer installation in the UK. Isolation, step-down, and autotransformers — ventilation requirements…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Industrial Guide"

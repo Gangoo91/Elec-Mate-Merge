@@ -260,7 +260,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="AI Board Scanner pre-fills EICR data from a photo"
-          description="Point your phone at the consumer unit. Elec-Mate reads MCB/RCBO ratings, circuit details, and board layout — so the EICR starts half-complete before you pick up a test instrument."
+          description="Point your phone at the consumer unit. Elec-Mate reads MCB/RCBO ratings, circuit details…"
           icon={Camera}
         />
       </>
@@ -353,17 +353,17 @@ const sections = [
             {
               title: 'New build sign-off',
               description:
-                'A building control body or approved inspector may require an EIC from a registered competent person. If the installing electrician is not scheme-registered, a separate inspector must be engaged. Typical cost: £150 to £400 depending on property size.',
+                'A building control body or approved inspector may require an EIC from a registered competent person.',
             },
             {
               title: 'Third-party verification',
               description:
-                'Some clients, contractors, or local authorities require initial verification by an independent third party (not the installing electrician). This adds a layer of quality assurance. Typical cost: £200 to £500.',
+                'Some clients, contractors, or local authorities require initial verification by an independent third party (not the installing electrician).',
             },
             {
               title: 'Commercial handover',
               description:
-                'Large commercial installations often require initial verification documentation as part of the handover package. This may include full schedule of test results, circuit charts, as-built drawings, and the EIC. Typical cost: included in the contract sum.',
+                'Large commercial installations often require initial verification documentation as part of the handover package.',
             },
           ].map((item) => (
             <div
@@ -477,17 +477,17 @@ const sections = [
             {
               title: 'Calculate your true hourly rate',
               description:
-                'Add up all your annual costs (van, insurance, tools, calibration, scheme membership, software, training, tax) and divide by your billable hours (typically 1,400 to 1,600 per year). Add a 20 to 40% profit margin. Most experienced electricians in 2026 should target £45 to £65/hr outside London, or £55 to £80/hr in the South East.',
+                'Add up all your annual costs (van, insurance, tools, calibration, scheme membership, software, training…',
             },
             {
               title: 'Include every minute of the job',
               description:
-                'A 3-hour EICR is not a 3-hour job. Add travel time (30 to 60 minutes each way), report completion (30 to 90 minutes if done manually), and admin (booking, confirmation, sending the report). A "3-hour" EICR often consumes 5 to 6 hours of your day when done manually.',
+                'A 3-hour EICR is not a 3-hour job. Add travel time (30 to 60 minutes each way), report completion (30 to 90 minutes if done manually)…',
             },
             {
               title: 'Eliminate post-site paperwork',
               description:
-                'This is the single biggest way to increase profitability. If you save 45 minutes per certificate by completing everything on site with Elec-Mate, and you do 3 certificates per week, that is over 100 hours recovered per year — worth £5,000+ at a £50/hr rate.',
+                'This is the single biggest way to increase profitability. If you save 45 minutes per certificate by completing everything on site with Elec-Mate…',
             },
           ].map((item) => (
             <div
@@ -506,7 +506,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete certificates on site, not at home"
-          description="Elec-Mate's voice test entry, AI board scanner, and instant PDF delivery mean you leave site with the certificate done, the quote sent, and the invoice raised. No desk time, no double-handling."
+          description="Elec-Mate's voice test entry, AI board scanner, and instant PDF delivery mean you leave site with the certificate done, the quote sent…"
           icon={Receipt}
         />
       </>
@@ -593,9 +593,9 @@ export default function ElectricalTestingCostUKPage() {
   return (
     <GuideTemplate
       title="Electrical Testing Cost UK 2026 | EICR & PAT Prices"
-      description="Complete guide to electrical testing costs in the UK for 2026. EICR pricing by property size, PAT testing rates, initial verification fees, periodic inspection costs, and how to price your testing work profitably."
+      description="Complete guide to electrical testing costs in the UK for 2026. EICR pricing by property size, PAT testing rates, initial verification fees…"
       datePublished="2025-06-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Pricing Guide"

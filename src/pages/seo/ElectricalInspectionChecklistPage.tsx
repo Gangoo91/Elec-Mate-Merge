@@ -731,7 +731,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Never Miss an Inspection Item"
-          description="Structured digital inspection checklist with AI-assisted observation classification. Complete the full Schedule of Inspections on your phone. Professional EICR generated automatically. 7-day free trial."
+          description="Structured digital inspection checklist with AI-assisted observation classification. Complete the full Schedule of Inspections on your phone."
           icon={ClipboardCheck}
         />
       </>
@@ -747,9 +747,9 @@ export default function ElectricalInspectionChecklistPage() {
   return (
     <GuideTemplate
       title="Electrical Inspection Checklist | What to Check"
-      description="Comprehensive electrical inspection checklist for UK electricians. Visual inspection items, consumer unit checks, earthing and bonding, labelling, cable condition, accessories, and special locations. Digital inspection with Elec-Mate."
+      description="Comprehensive electrical inspection checklist for UK electricians. Visual inspection items, consumer unit checks, earthing and bonding, labelling…"
       datePublished="2026-01-22"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

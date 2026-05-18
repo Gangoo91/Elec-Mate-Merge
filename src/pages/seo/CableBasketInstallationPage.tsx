@@ -521,7 +521,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete commercial installation certificates on your phone"
-          description="Elec-Mate's EIC and EICR apps help you certify commercial cable basket installations on site. Record earth continuity, circuit tests, and cable details — instant PDF export. 7-day free trial."
+          description="Elec-Mate's EIC and EICR apps help you certify commercial cable basket installations on site."
           icon={FileCheck2}
         />
       </>
@@ -537,9 +537,9 @@ export default function CableBasketInstallationPage() {
   return (
     <GuideTemplate
       title="Wire Cable Basket Installation UK | Wiremesh Tray Guide"
-      description="Complete UK guide to wire cable basket installation (Cablofil type). Advantages, sizes, support requirements, earthing, data centre and commercial use, and honest cost comparison with solid steel cable tray."
+      description="Complete UK guide to wire cable basket installation (Cablofil type). Advantages, sizes, support requirements, earthing, data centre and commercial use…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

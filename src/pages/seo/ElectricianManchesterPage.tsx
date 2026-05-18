@@ -488,7 +488,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Manage commercial and domestic jobs from one app"
-          description="Elec-Mate helps Manchester electricians quote, schedule, and certify jobs across domestic and commercial work. Professional EICRs, EICs, and Minor Works certificates completed on your phone."
+          description="Elec-Mate helps Manchester electricians quote, schedule, and certify jobs across domestic and commercial work."
           icon={Building2}
         />
       </>
@@ -540,7 +540,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Manchester electrical business"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Complete EICRs and EICs on site, send instant PDFs to letting agents and landlords. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Complete EICRs and EICs on site…"
           icon={MapPin}
         />
       </>
@@ -557,9 +557,9 @@ export default function ElectricianManchesterPage() {
     <GuideTemplate
       localArea="Manchester"
       title="Electrician in Manchester | Qualified Electricians 2026"
-      description="Find qualified, registered electricians in Manchester. 2026 pricing guide, how to verify NICEIC/NAPIT registration, terraced house rewiring, Electricity North West connections, HMO compliance, and Manchester-specific electrical regulations."
+      description="Find qualified, registered electricians in Manchester. 2026 pricing guide, how to verify NICEIC/NAPIT registration, terraced house rewiring…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Find an Electrician"

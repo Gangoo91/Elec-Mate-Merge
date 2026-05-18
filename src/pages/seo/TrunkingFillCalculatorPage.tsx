@@ -84,19 +84,19 @@ const features = [
     icon: Calculator,
     title: 'Instant Trunking Size Selection',
     description:
-      'Enter the number and type of cables, and the calculator recommends the minimum trunking size. Supports all standard UK trunking sizes from 16 x 16 mm to 150 x 150 mm.',
+      'Enter the number and type of cables, and the calculator recommends the minimum trunking size.',
   },
   {
     icon: Layers,
     title: 'Mixed Cable Types',
     description:
-      'Handles any combination of cable types in the same trunking — flat twin and earth, singles, multicore, data cables. Each cable type uses its actual overall dimensions for accurate fill calculation.',
+      'Handles any combination of cable types in the same trunking — flat twin and earth, singles, multicore, data cables.',
   },
   {
     icon: Ruler,
     title: 'Compartment Mode',
     description:
-      'Calculate fill for compartmentalised trunking. Define each compartment separately and check the 45% rule independently. Ensures segregation requirements are met.',
+      'Calculate fill for compartmentalised trunking. Define each compartment separately and check the 45% rule independently.',
   },
   {
     icon: BarChart3,
@@ -114,7 +114,7 @@ const features = [
     icon: BookOpen,
     title: 'BS 7671:2018+A4:2026 Compliant',
     description:
-      'All cable dimensions and fill limits verified against BS 7671:2018+A4:2026 and the IET Guidance Note 1. Part of 70 electrical calculators built for UK electricians.',
+      'All cable dimensions and fill limits verified against BS 7671:2018+A4:2026 and the IET Guidance Note 1.',
   },
 ];
 
@@ -124,7 +124,7 @@ const softwareAppSchema = {
   applicationCategory: 'UtilitiesApplication',
   operatingSystem: 'Web, iOS, Android',
   description:
-    'Calculate trunking fill to the 45% rule from BS 7671. Check cable CSA against trunking capacity for all standard sizes, mixed cable types, and compartmentalised trunking.',
+    'Calculate trunking fill to the 45% rule from BS 7671. Check cable CSA against trunking capacity for all standard sizes, mixed cable types…',
   url: 'https://www.elec-mate.com/trunking-fill-calculator',
   offers: {
     '@type': 'Offer',
@@ -163,7 +163,7 @@ export default function TrunkingFillCalculatorPage() {
   useSEO({
     title: 'Trunking Fill Calculator | 45% Fill Rule BS 7671',
     description:
-      'Calculate trunking fill to the 45% rule from BS 7671. Check cable CSA against trunking capacity for all standard UK sizes, mixed cable types, and compartmentalised trunking.',
+      'Calculate trunking fill to the 45% rule from BS 7671. Check cable CSA against trunking capacity for all standard UK sizes, mixed cable types…',
   });
 
   return (
@@ -649,6 +649,23 @@ export default function TrunkingFillCalculatorPage() {
       <section className="px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <RecentReviews />
+        </div>
+      </section>
+
+      
+
+      {/* Related calculators — peer surface for internal-link health.
+          Topic-matched via token-Jaccard against the broader SEO corpus. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical calculators</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/conduit-fill-calculator">/conduit-fill-calculator</SEOInternalLink>
+            <SEOInternalLink href="/guides/trunking-installation-guide">Trunking Installation Guide</SEOInternalLink>
+            <SEOInternalLink href="/how-to-fill-in-eicr">How to Fill In an EICR Form</SEOInternalLink>
+            <SEOInternalLink href="/guides/how-to-fill-in-minor-works">How to Fill In a Minor Works Certificate</SEOInternalLink>
+            <SEOInternalLink href="/guides/minor-works-certificate-how-to-fill-in">/guides/minor-works-certificate-how-to-fill-in</SEOInternalLink>
+          </div>
         </div>
       </section>
 

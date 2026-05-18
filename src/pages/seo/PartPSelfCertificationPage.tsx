@@ -152,7 +152,7 @@ const sections = [
               <span>
                 <strong>Statutory instrument</strong> — Part P is implemented through Schedule 1 and
                 Schedule 4 of the Building Regulations 2010. The technical standard it requires
-                compliance with is BS 7671:2018 (incorporating Amendment 3:2024), the current
+                compliance with is BS 7671:2018 (incorporating Amendment 4:2024), the current
                 edition of the IET Wiring Regulations.
               </span>
             </li>
@@ -509,8 +509,8 @@ const sections = [
           helps you generate compliant certificates on site and deliver them to clients immediately.
         </p>
         <SEOAppBridge
-          title="Complete Part P certification on your phone"
-          description="Join 1,000+ UK electricians using Elec-Mate to complete Electrical Installation Certificates, Minor Works Certificates, and EICRs on site. Instant PDF generation and client delivery. 7-day free trial."
+          title="Part P Competent Person Scheme | Elec-Mate"
+          description="Register as a Part P competent person and issue Building Regs certificates. Manage EICRs, Minor Works, and Installation Certs in one platform. Start free."
           icon={FileCheck2}
         />
       </>
@@ -526,9 +526,9 @@ export default function PartPSelfCertificationPage() {
   return (
     <GuideTemplate
       title="Part P Self-Certification UK | Competent Person Scheme Guide"
-      description="Complete guide to Part P self-certification — what Part P covers, which work is notifiable, how competent person schemes work, consequences of non-compliance, and Scotland/Northern Ireland differences."
+      description="Complete guide to Part P self-certification — what Part P covers, which work is notifiable, how competent person schemes work…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Building Regulations Guide"

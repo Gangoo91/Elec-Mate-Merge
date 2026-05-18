@@ -26,9 +26,9 @@ const faqs = [
       'Most electricians complete the BS 7671 course content in 20 to 40 hours of study, depending on prior experience. Because Elec-Mate is entirely self-paced, you can fit sessions around your working day. Our AI study assistant identifies weak areas early, so you spend less time on topics you already understand and more on the sections that need attention. Many users pass within four to six weeks of starting.',
   },
   {
-    question: 'Does this course cover Amendment 3:2024 (A4:2026)?',
+    question: 'Does this course cover Amendment 4:2024 (A4:2026)?',
     answer:
-      'Yes. Our content is fully updated for BS 7671:2018+A4:2026, which was published on 31 July 2024. Amendment 3 introduces Regulation 530.3.201 covering requirements for bidirectional and unidirectional protective devices, particularly relevant for solar PV and battery storage installations. Every quiz and practice exam in Elec-Mate reflects the latest regulation text.',
+      'Yes. Our content is fully updated for BS 7671:2018+A4:2026, which was published on 31 July 2024. Amendment 4 introduces Regulation 530.3.201 covering requirements for bidirectional and unidirectional protective devices, particularly relevant for solar PV and battery storage installations. Every quiz and practice exam in Elec-Mate reflects the latest regulation text.',
   },
   {
     question: 'Is online 18th Edition training accepted by NICEIC and NAPIT?',
@@ -58,37 +58,37 @@ const features = [
     icon: BrainCircuit,
     title: 'AI Study Assistant',
     description:
-      'Ask any BS 7671 question in plain English and get an instant, regulation-referenced answer. Our AI understands context, cross-references related clauses, and explains complex topics step by step.',
+      'Ask any BS 7671 question in plain English and get an instant, regulation-referenced answer. Our AI understands context, cross-references related clauses…',
   },
   {
     icon: ClipboardCheck,
     title: 'Practice Exams',
     description:
-      'Hundreds of multiple-choice questions modelled on the City & Guilds 2382-22 exam. Timed mock tests replicate real exam conditions so there are no surprises on test day.',
+      'Hundreds of multiple-choice questions modelled on the City & Guilds 2382-22 exam. Timed mock tests replicate real exam conditions so there are no…',
   },
   {
     icon: BarChart3,
     title: 'Progress Tracking',
     description:
-      'Visual dashboards show your strengths and weak areas across all seven parts of BS 7671. Focus your revision where it matters most and track improvement over time.',
+      'Visual dashboards show your strengths and weak areas across all seven parts of BS 7671. Focus your revision where it matters most and track improvement…',
   },
   {
     icon: Zap,
     title: 'Spaced Repetition',
     description:
-      'Flashcards powered by proven spaced-repetition algorithms ensure you remember key regulations long after you close the app. Perfect for retaining tricky numbering.',
+      'Flashcards powered by proven spaced-repetition algorithms ensure you remember key regulations long after you close the app.',
   },
   {
     icon: Clock,
     title: 'Study Anywhere',
     description:
-      'Access all course material on your phone, tablet, or desktop. Study during breaks on site, on the commute, or at home. Your progress syncs across every device automatically.',
+      'Access all course material on your phone, tablet, or desktop. Study during breaks on site, on the commute, or at home.',
   },
   {
     icon: Shield,
-    title: 'Amendment 3 Updated',
+    title: 'Amendment 4 Updated',
     description:
-      'Fully updated for BS 7671:2018+A4:2026 including the new Regulation 530.3.201 for bidirectional protective devices. Stay current with the latest requirements.',
+      'Fully updated for BS 7671:2018+A4:2026 including the new Regulation 530.3.201 for bidirectional protective devices.',
   },
 ];
 
@@ -97,7 +97,7 @@ const courseSchema = {
   '@type': 'Course',
   name: '18th Edition Course Online - BS 7671 Training',
   description:
-    'Comprehensive online training for BS 7671:2018 + Amendment 3:2024. AI-powered study assistant, practice exams, and progress tracking for UK electricians.',
+    'Comprehensive online training for BS 7671:2018 + Amendment 4:2024. AI-powered study assistant, practice exams, and progress tracking for UK electricians.',
   provider: {
     '@type': 'Organization',
     name: 'Elec-Mate',
@@ -138,13 +138,13 @@ export default function EighteenthEditionCoursePage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   useSEO({
-    title: '18th Edition Course Online | BS 7671 Amendment 3 Training',
+    title: '18th Edition Course Online | BS 7671 Amendment 4 Training',
     description:
-      'Study BS 7671:2018 + Amendment 3:2024 online. AI-powered study assistant, practice quizzes, and progress tracking. From £5.99/mo with 7-day free trial.',
+      'Study BS 7671:2018 + Amendment 4:2024 online. AI-powered study assistant, practice quizzes, and progress tracking. From £5.99/mo with 7-day free trial.',
     schema: {
       '@type': 'Course',
       name: '18th Edition Course Online',
-      description: 'BS 7671:2018 + Amendment 3:2024 training with AI study assistant',
+      description: 'BS 7671:2018 + Amendment 4:2024 training with AI study assistant',
       provider: {
         '@type': 'Organization',
         name: 'Elec-Mate',
@@ -194,7 +194,7 @@ export default function EighteenthEditionCoursePage() {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
             <GraduationCap className="w-4 h-4 text-yellow-400" />
             <span className="text-sm font-medium text-yellow-400">
-              Updated for Amendment 3:2024
+              Updated for Amendment 4:2024
             </span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-6">
@@ -203,7 +203,7 @@ export default function EighteenthEditionCoursePage() {
             <span className="text-yellow-400">BS 7671 Training</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
-            Master BS 7671:2018 + Amendment 3:2024 with an AI-powered study platform built
+            Master BS 7671:2018 + Amendment 4:2024 with an AI-powered study platform built
             specifically for UK electricians. Practice exams, regulation search, progress tracking,
             and more.
           </p>
@@ -259,11 +259,11 @@ export default function EighteenthEditionCoursePage() {
         </div>
       </section>
 
-      {/* Amendment 3:2024 */}
+      {/* Amendment 4:2024 */}
       <section className="py-12 sm:py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">
-            What Changed in Amendment 3:2024?
+            What Changed in Amendment 4:2024?
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
@@ -482,7 +482,7 @@ export default function EighteenthEditionCoursePage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Pass Your 18th Edition with Elec-Mate"
-            description="AI-powered 18th Edition study platform built for UK electricians — practice exams updated to Amendment 3:2024, instant regulation search, progress tracking, and mock tests. Study on your phone, around your working day."
+            description="AI-powered 18th Edition study platform built for UK electricians — practice exams updated to Amendment 4:2024, instant regulation search…"
             ctaText="Start 7-day free trial"
             ctaHref="/auth/signup"
           />
@@ -557,7 +557,7 @@ export default function EighteenthEditionCoursePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
             <SEOInternalLink href="/training/instrumentation-course">Instrumentation Course for Electricians</SEOInternalLink>
             <SEOInternalLink href="/training/mewp-course">MEWP Course</SEOInternalLink>
-            <SEOInternalLink href="/training/bs-7671-amendment-3-course">BS 7671 Amendment 3 Course</SEOInternalLink>
+            <SEOInternalLink href="/training/bs-7671-amendment-3-course">BS 7671 Amendment 4 Course</SEOInternalLink>
             <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671 18th Edition Guide 2026</SEOInternalLink>
             <SEOInternalLink href="/training/cdm-regulations-course">CDM Regulations Course for Electricians</SEOInternalLink>
             <SEOInternalLink href="/training/workplace-safety-course">Workplace Safety Course</SEOInternalLink>

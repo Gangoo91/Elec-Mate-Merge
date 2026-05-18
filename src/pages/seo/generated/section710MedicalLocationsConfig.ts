@@ -5,14 +5,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Every regulation cite resolves to a canonical reference.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const section710MedicalLocationsConfig: GeneratedGuideConfig = {
   pagePath: '/guides/bs-7671-section-710-medical-locations',
   title:
-    'BS 7671 Section 710 Medical Locations — Electrical Requirements (A4:2026) | Elec-Mate',
+    'BS 7671 Section 710 Medical Locations — Electrical',
   description:
-    'BS 7671 Section 710 explained: medical location groups 0/1/2, medical IT systems, AFDD prohibitions, RCD requirements, SELV/PELV voltage limits for hospitals, dental surgeries and clinics. A4:2026 aligned.',
+    'BS 7671 Section 710 explained: medical location groups 0/1/2, medical IT systems, AFDD prohibitions, RCD requirements…',
   datePublished: published,
   dateModified: modified,
   readingTime: 14,

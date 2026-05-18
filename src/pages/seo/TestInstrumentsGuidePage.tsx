@@ -19,7 +19,7 @@ import {
 
 const PAGE_TITLE = 'Electrical Test Instruments Guide | What You Need';
 const PAGE_DESCRIPTION =
-  'Complete guide to electrical test instruments for UK electricians. Multifunction tester, clamp meter, proving unit, socket tester, PAT tester, and calibration requirements. What you need, what it costs, and how to keep instruments compliant.';
+  'Electrical test instruments for UK electricians: MFT, clamp meter, proving unit, socket tester, PAT tester, calibration. What you need + cost.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -146,7 +146,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Record MFT results by voice on site"
-          description="With probes in one hand, use Elec-Mate's voice entry to speak your test results directly into the schedule of tests. Say the circuit number and reading — the app fills in the rest. No clipboard juggling."
+          description="With probes in one hand, use Elec-Mate's voice entry to speak your test results directly into the schedule of tests."
           icon={Radio}
         />
       </>
@@ -431,7 +431,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Instrument details auto-printed on every certificate"
-          description="Enter your MFT and voltage indicator details once. Elec-Mate prints the make, model, serial number, and calibration date on every EIC, EICR, and Minor Works certificate automatically. Update the calibration date after recalibration and all future certificates reflect the new date."
+          description="Enter your MFT and voltage indicator details once. Elec-Mate prints the make, model, serial number, and calibration date on every EIC, EICR…"
           icon={BadgeCheck}
         />
         <p>
@@ -508,7 +508,7 @@ export default function TestInstrumentsGuidePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-05-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Equipment Guide"

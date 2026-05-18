@@ -20,7 +20,7 @@ import {
   Info,
 } from 'lucide-react';
 
-const PAGE_TITLE = 'BS 7671 Observation Codes Explained | C1, C2, C3, FI Guide | Elec-Mate';
+const PAGE_TITLE = 'BS 7671 Observation Codes | C1, C2, C3, FI Explained';
 const PAGE_DESCRIPTION =
   'Complete guide to EICR observation codes C1, C2, C3, and FI. Real examples, classification criteria, and how to write clear observations. For UK electricians.';
 
@@ -62,25 +62,25 @@ const features = [
     icon: ShieldCheck,
     title: 'Smart Observation Coding',
     description:
-      'The app guides you through observation classification with clear criteria and real examples for each code. Reduces coding errors and ensures consistency across reports.',
+      'The app guides you through observation classification with clear criteria and real examples for each code.',
   },
   {
     icon: Brain,
     title: 'AI Observation Descriptions',
     description:
-      'Get suggestions for clear, specific observation descriptions that reference the relevant BS 7671 regulation. Write professional observations in seconds, not minutes.',
+      'Get suggestions for clear, specific observation descriptions that reference the relevant BS 7671 regulation.',
   },
   {
     icon: FileCheck2,
     title: 'Automatic Overall Assessment',
     description:
-      'As you add observations and assign codes, the app automatically determines whether the overall assessment is Satisfactory or Unsatisfactory. No more manual tracking.',
+      'As you add observations and assign codes, the app automatically determines whether the overall assessment is Satisfactory or Unsatisfactory.',
   },
   {
     icon: Search,
     title: 'Regulation Lookup',
     description:
-      'Tap any observation to look up the relevant BS 7671 regulation. The app provides the regulation text and guidance on whether the observation warrants a C1, C2, C3, or FI code.',
+      'Tap any observation to look up the relevant BS 7671 regulation. The app provides the regulation text and guidance on whether the observation warrants a…',
   },
   {
     icon: BookOpen,
@@ -92,7 +92,7 @@ const features = [
     icon: AlertTriangle,
     title: 'Coding Consistency Checks',
     description:
-      'The app flags potential inconsistencies — like similar defects coded differently on the same report — so you can review and ensure consistent coding throughout.',
+      'The app flags potential inconsistencies — like similar defects coded differently on the same report — so you can review and ensure consistent coding…',
   },
 ];
 
@@ -101,7 +101,7 @@ const articleSchema = {
   headline: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
   datePublished: '2025-01-15',
-  dateModified: '2026-01-10',
+  dateModified: '2026-05-18',
   author: {
     '@type': 'Organization',
     name: 'Elec-Mate',
@@ -858,7 +858,7 @@ export default function BS7671ObservationCodesPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Produce Professional EICRs with Elec-Mate"
-            description="Generate compliant EICR certificates with smart observation coding guidance, AI-powered descriptions, and automatic overall assessment — all built to BS 7671:2018+A4:2026."
+            description="Generate compliant EICR certificates with smart observation coding guidance, AI-powered descriptions…"
             ctaText="Start 7-day free trial"
             ctaHref="/auth/signup"
           />

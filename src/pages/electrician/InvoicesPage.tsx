@@ -41,6 +41,8 @@ import CertificateGenerationDialog from '@/components/inspection/CertificateGene
 import { createQuickTaskBatch } from '@/utils/createQuickTask';
 import { ClipboardCheck } from 'lucide-react';
 import { openExternalUrl } from '@/utils/open-external-url';
+import { Capacitor } from '@capacitor/core';
+import { sharePdfToWhatsAppWeb } from '@/utils/share-pdf-to-whatsapp-web';
 
 type TemporaryPdfLinkResponse = {
   publicUrl: string;
@@ -280,35 +282,63 @@ const InvoicesPage = () => {
   const handleShareWhatsApp = async (invoice: Quote) => {
     setSharingWhatsAppId(invoice.id);
     try {
+      const clientName = invoice.client?.name || 'there';
+
+      if (Capacitor.isNativePlatform()) {
+        toast({
+          title: 'Preparing PDF',
+          description: 'Generating shareable link for WhatsApp...',
+          duration: 5000,
+        });
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
+        if (!session) throw new Error('User not authenticated');
+
+        const linkData = await retryAsync<TemporaryPdfLinkResponse>(async () => {
+          const { data, error } = await supabase.functions.invoke(
+            'generate-temporary-pdf-link',
+            {
+              body: { documentId: invoice.id, documentType: 'invoice' },
+              headers: { Authorization: `Bearer ${session.access_token}` },
+            }
+          );
+          if (error || !data?.publicUrl) throw new Error('Failed to generate shareable PDF link');
+          return data;
+        });
+
+        const message = `Hello ${clientName},\n\nHere is your invoice:\n\n📄 Invoice #${invoice.invoice_number}\n💷 Amount: ${formatCurrency(invoice.total)}\n\n📥 Download Invoice:\n${linkData.publicUrl}\n\nThank you for your business!`;
+
+        await openExternalUrl(`https://wa.me/?text=${encodeURIComponent(message)}`);
+        toast({ title: 'Opening WhatsApp', description: 'Invoice ready to share via WhatsApp' });
+        return;
+      }
+
       toast({
         title: 'Preparing PDF',
-        description: 'Generating shareable link for WhatsApp...',
+        description: 'Getting the file ready to attach…',
         duration: 5000,
       });
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      if (!session) throw new Error('User not authenticated');
 
-      const linkData = await retryAsync<TemporaryPdfLinkResponse>(async () => {
-        const { data, error } = await supabase.functions.invoke(
-          'generate-temporary-pdf-link',
-          {
-            body: { documentId: invoice.id, documentType: 'invoice' },
-            headers: { Authorization: `Bearer ${session.access_token}` },
-          }
-        );
-        if (error || !data?.publicUrl) throw new Error('Failed to generate shareable PDF link');
-        return data;
+      const message = `Hello ${clientName},\n\nHere is your invoice:\n\n📄 Invoice #${invoice.invoice_number}\n💷 Amount: ${formatCurrency(invoice.total)}\n\nThank you for your business!`;
+
+      const result = await sharePdfToWhatsAppWeb({
+        documentId: invoice.id,
+        documentType: 'invoice',
+        filename: `Invoice-${invoice.invoice_number || invoice.id}.pdf`,
+        message,
+        title: `Invoice #${invoice.invoice_number}`,
       });
 
-      const clientData = invoice.client;
-
-      const message = `Hello ${clientData?.name || 'there'},\n\nHere is your invoice:\n\n📄 Invoice #${invoice.invoice_number}\n💷 Amount: ${formatCurrency(invoice.total)}\n\n📥 Download Invoice:\n${linkData.publicUrl}\n\nThank you for your business!`;
-
-      await openExternalUrl(`https://wa.me/?text=${encodeURIComponent(message)}`);
-      toast({ title: 'Opening WhatsApp', description: 'Invoice ready to share via WhatsApp' });
+      toast({
+        title: result.mode === 'web-share' ? 'Opening share sheet' : 'PDF downloaded',
+        description:
+          result.mode === 'web-share'
+            ? 'Pick WhatsApp to send the PDF.'
+            : 'PDF saved to your Downloads — attach it from your WhatsApp chat.',
+      });
     } catch (error) {
+      if (error instanceof Error && error.name === 'AbortError') return;
       toast({
         title: 'Error',
         description: 'Failed to prepare invoice for WhatsApp. Please try again.',

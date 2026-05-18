@@ -5,14 +5,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Edition) and the IET On-Site Guide.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const a4OverviewHubConfig: GeneratedGuideConfig = {
   pagePath: '/guides/bs-7671-a4-2026-summary',
   title:
-    'BS 7671 A4:2026 — Every Model Form Change Explained | Elec-Mate',
+    'BS 7671 A4:2026 — Every Model Form Change Explained',
   description:
-    'Comprehensive index to every BS 7671:2018+A4:2026 change: AFDD inspection (item 4.23 + column 30), luminaire RCD protection (Regulation 411.3.4), TN-C-S (PNB) earthing, new Schedule of Tests columns, model form updates and the A3 withdrawal date.',
+    'Comprehensive index to every BS 7671:2018+A4:2026 change: AFDD inspection (item 4.23 + column 30), luminaire RCD protection (Regulation 411.3.4)…',
   datePublished: published,
   dateModified: modified,
   readingTime: 12,
@@ -50,7 +50,7 @@ export const a4OverviewHubConfig: GeneratedGuideConfig = {
             'BS 7671:2018 (18th Edition) — January 2018.',
             'Amendment 1 (A1:2020) — February 2020.',
             'Amendment 2 (A2:2022) — March 2022.',
-            'Amendment 3 (A3:2024) — published in 2024 (note: commonly mis-cited as "A3:2022"; the correct version is A3:2024).',
+            'Amendment 4 (A3:2024) — published in 2024 (note: commonly mis-cited as "A3:2022"; the correct version is A3:2024).',
             'Amendment 4 (A4:2026) — published 15 April 2026. A3 withdrawn 15 October 2026.',
           ],
         },

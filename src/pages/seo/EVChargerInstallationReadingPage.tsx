@@ -113,7 +113,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Full guide to the IET Wiring Regulations including Amendment 3:2024.',
+    description: 'Full guide to the IET Wiring Regulations including Amendment 4:2024.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
@@ -571,9 +571,9 @@ export default function EVChargerInstallationReadingPage() {
   return (
     <GuideTemplate
       title="EV Charger Installation Reading | Home EV Charging Reading"
-      description="EV charger installation in Reading. OZEV grants up to £350, installation costs £800–£1,200 for 7kW, Building Regulations Part S for new-builds, BS 7671 Section 722 compliance, and NICEIC and NAPIT approved installers in Berkshire."
+      description="EV charger installation in Reading. OZEV grants up to £350, installation costs £800–£1,200 for 7kW, Building Regulations Part S for new-builds…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EV Charging Guide"

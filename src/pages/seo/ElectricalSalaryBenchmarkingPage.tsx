@@ -533,8 +533,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="2026 JIB rates for UK electricians"
-          description="Current JIB rates 2026: benchmark your labour costs against industry standards. Track approved electrician pay scales and margins in real time with Elec-Mate."
+          title="2026 JIB rates for electricians — live"
+          description="2026 JIB rates updated monthly. Compare approved labour costs, hourly scales and grade benchmarks against your current pay structure."
           icon={PoundSterling}
         />
       </>
@@ -550,9 +550,9 @@ export default function ElectricalSalaryBenchmarkingPage() {
   return (
     <GuideTemplate
       title="Electrician Salary Benchmarking UK 2025 | Pay Rates Guide"
-      description="Complete UK electrician pay rates guide for 2025. JIB grade rates (Apprentice Year 1–4, Electrician, Approved Electrician, Technician), London weighting, regional variations, shift allowances, hazard money, and how to negotiate a pay rise."
+      description="Complete UK electrician pay rates guide for 2025. JIB grade rates (Apprentice Year 1–4, Electrician, Approved Electrician, Technician), London weighting…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Pay Guide"

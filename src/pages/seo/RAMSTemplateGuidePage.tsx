@@ -585,7 +585,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Generate RAMS in minutes with AI"
-          description="Elec-Mate's AI Health and Safety Agent creates site-specific risk assessments and method statements for electrical work. Describe the job, get a tailored RAMS, review and export. Professional output in minutes, not hours."
+          description="Elec-Mate's AI Health and Safety Agent creates site-specific risk assessments and method statements for electrical work."
           icon={Shield}
         />
       </>
@@ -601,9 +601,9 @@ export default function RAMSTemplateGuidePage() {
   return (
     <GuideTemplate
       title="RAMS Template for Electricians | Free Guide"
-      description="Complete guide to writing RAMS (Risk Assessment and Method Statement) for electrical work. Risk assessment structure, method statement sections, CDM 2015 requirements, common electrical hazards, and AI-generated RAMS."
+      description="Complete guide to writing RAMS (Risk Assessment and Method Statement) for electrical work. Risk assessment structure, method statement sections…"
       datePublished="2025-03-18"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

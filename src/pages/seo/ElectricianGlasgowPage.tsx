@@ -579,7 +579,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Glasgow electrical business"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Complete EICRs and EICs on site, send instant PDFs to Glasgow factors and letting agents. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Complete EICRs and EICs on site…"
           icon={MapPin}
         />
       </>
@@ -596,9 +596,9 @@ export default function ElectricianGlasgowPage() {
     <GuideTemplate
       localArea="Glasgow"
       title="Electrician in Glasgow | Qualified Electricians 2026"
-      description="Find qualified, registered electricians in Glasgow. Scottish Building Standards (not Part P), SELECT trade body, SPEN connections, tenement rewiring, Glasgow pricing guide, and Scotland-specific electrical regulations."
+      description="Find qualified, registered electricians in Glasgow. Scottish Building Standards (not Part P), SELECT trade body, SPEN connections, tenement rewiring…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Find an Electrician"

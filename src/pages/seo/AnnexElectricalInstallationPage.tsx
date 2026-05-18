@@ -62,7 +62,7 @@ const faqs = [
   {
     question: 'What consumer unit do I need for a granny annex?',
     answer:
-      'A granny annex needs its own consumer unit with full RCD protection. A typical one-bedroom annex requires an 8 to 12 way consumer unit to accommodate: lighting circuits (x2), socket circuits (x2), cooker circuit, shower circuit (if electric shower), immersion heater or heating circuit, smoke detection circuit, and spare ways for future additions. Use an RCBO board for individual circuit protection without the risk of one fault tripping unrelated circuits. The consumer unit must comply with Amendment 3 requirements for non-combustible enclosures.',
+      'A granny annex needs its own consumer unit with full RCD protection. A typical one-bedroom annex requires an 8 to 12 way consumer unit to accommodate: lighting circuits (x2), socket circuits (x2), cooker circuit, shower circuit (if electric shower), immersion heater or heating circuit, smoke detection circuit, and spare ways for future additions. Use an RCBO board for individual circuit protection without the risk of one fault tripping unrelated circuits. The consumer unit must comply with Amendment 4 requirements for non-combustible enclosures.',
   },
   {
     question: 'Does a granny annex need Building Control sign-off?',
@@ -730,7 +730,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify annex electrics"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification. Everything you need for annex electrical installations. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification."
           icon={Home}
         />
       </>
@@ -746,9 +746,9 @@ export default function AnnexElectricalInstallationPage() {
   return (
     <GuideTemplate
       title="Granny Annex Electrical Installation | Wiring Guide UK"
-      description="Complete guide to granny annex electrical installation in the UK. Separate supply vs extension, consumer unit design, kitchen and bathroom circuits, heating, fire separation, Building Control, and Part P certification with 2026 pricing."
+      description="Complete guide to granny annex electrical installation in the UK. Separate supply vs extension, consumer unit design, kitchen and bathroom circuits…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

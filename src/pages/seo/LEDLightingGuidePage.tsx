@@ -20,9 +20,9 @@ export default function LEDLightingGuidePage() {
   return (
     <GuideTemplate
       title="LED Lighting Guide | Choosing, Installing & Dimming"
-      description="Complete guide to LED lighting for electricians and homeowners. Covers LED technology, colour temperature, lumens vs watts, dimmable drivers, transformer compatibility, common dimming problems, and installation best practice for domestic and commercial projects."
+      description="Complete guide to LED lighting for electricians and homeowners. Covers LED technology, colour temperature, lumens vs watts, dimmable drivers…"
       datePublished="2025-07-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Installation', href: '/guides' },
         { label: 'LED Lighting', href: '/guides/led-lighting-guide' },
@@ -297,7 +297,7 @@ export default function LEDLightingGuidePage() {
               </div>
               <SEOAppBridge
                 title="AI Circuit Designer for Lighting Layouts"
-                description="Elec-Mate's AI Circuit Designer helps plan lighting circuits with the correct dimmer type, cable sizing, and circuit protection for LED installations. Specify the luminaires and the app recommends compatible dimmers and driver configurations."
+                description="Elec-Mate's AI Circuit Designer helps plan lighting circuits with the correct dimmer type, cable sizing, and circuit protection for LED installations."
                 icon={Brain}
               />
             </>
@@ -510,7 +510,7 @@ export default function LEDLightingGuidePage() {
               </div>
               <SEOAppBridge
                 title="Cable Sizing for LED Circuits"
-                description="Elec-Mate's cable sizing calculator applies all derating factors for LED lighting circuits, including grouping in insulated ceilings, ambient temperature corrections, and voltage drop calculations for long cable runs."
+                description="Elec-Mate's cable sizing calculator applies all derating factors for LED lighting circuits, including grouping in insulated ceilings…"
                 icon={Calculator}
               />
             </>

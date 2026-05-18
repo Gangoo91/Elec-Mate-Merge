@@ -555,7 +555,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify hot tub connections"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Everything you need for hot tub electrical installations. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
           icon={Droplets}
         />
       </>
@@ -571,9 +571,9 @@ export default function HotTubElectricalConnectionPage() {
   return (
     <GuideTemplate
       title="Hot Tub Electrical Connection | Dedicated Circuit Guide UK"
-      description="Complete guide to hot tub electrical connections in the UK. Dedicated 32A/40A circuit, RCD protection, SWA cable, outdoor IP ratings, isolator requirements, testing, certification, and realistic pricing."
+      description="Complete guide to hot tub electrical connections in the UK. Dedicated 32A/40A circuit, RCD protection, SWA cable, outdoor IP ratings…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

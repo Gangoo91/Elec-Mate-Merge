@@ -540,9 +540,9 @@ export default function RewireCostSouthamptonPage() {
   return (
     <GuideTemplate
       title="House Rewire Cost Southampton 2025 | Rewire Hampshire"
-      description="House rewire costs in Southampton for 2025. Prices for all property sizes, Part P compliance, NICEIC and NAPIT contractors, signs you need a rewire, timescales, and what certificate you should receive."
+      description="House rewire costs in Southampton for 2025. Prices for all property sizes, Part P compliance, NICEIC and NAPIT contractors, signs you need a rewire…"
       datePublished="2025-01-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Rewire Cost Guide"

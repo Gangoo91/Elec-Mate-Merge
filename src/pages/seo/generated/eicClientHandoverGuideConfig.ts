@@ -1,11 +1,11 @@
 import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuidePage';
 
 const published = '2026-04-12';
-const modified = '2026-04-12';
+const modified = '2026-05-18';
 
 export const eicClientHandoverGuideConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eic-client-handover-guide',
-  title: 'EIC Client Handover Guide | Electrician Handover Advice | Elec-Mate',
+  title: 'EIC Client Handover Guide | Electrician Handover Advice',
   description:
     'How to hand over an Electrical Installation Certificate clearly, so clients understand what was done, what was tested, and what happens next.',
   datePublished: published,
@@ -99,6 +99,31 @@ export const eicClientHandoverGuideConfig: GeneratedGuideConfig = {
           type: 'paragraph',
           text:
             'For full certificate completion, the [digital EICR certificate workflow](/tools/eicr-certificate) is the right place to keep the readings, observations, signatures, and PDF output together.',
+        },
+      ],
+    },
+    {
+      id: 'handover-checklist',
+      heading: 'The handover checklist that keeps clients happy',
+      blocks: [
+        {
+          type: 'paragraph',
+          text:
+            'A good EIC handover is not a long meeting — it is a short, well-prepared conversation. The client wants to know three things: what you did, what they need to be aware of, and what happens next. If the certificate, the schedule, and the follow-on quote all answer those three questions, the handover is done. If any of them dodge the question, the client will ring you again next week.',
+        },
+        {
+          type: 'paragraph',
+          text:
+            'The simplest way to keep it clean is to walk the client through the EIC in the order it reads — supply details, scope of work, test results, observations, sign-off. Stop at each section, explain it in plain English, and confirm the client understands before moving on. That fifteen-minute conversation is what stops the "I did not understand this bit" calls.',
+        },
+        {
+          type: 'list',
+          items: [
+            'Print or PDF the EIC + schedule of test results before you start the handover conversation.',
+            'Highlight any observations the client needs to act on, with a clear remedial deadline.',
+            'Confirm the date and value of any follow-on quote in writing, not just verbally.',
+            'Send the digital copy within 24 hours — speed of handover is a quality signal in itself.',
+          ],
         },
       ],
     },

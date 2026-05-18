@@ -560,7 +560,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs faster with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -576,9 +576,9 @@ export default function EICRCambridgePage() {
   return (
     <GuideTemplate
       title="EICR Cambridge | Electrical Safety Certificate Cost 2026"
-      description="EICR costs in Cambridge for 2026. Landlord legal requirements, Cambridge City Council enforcement, Victorian terraced HMO findings, observation codes, and how to find a qualified inspector. Prices from £120 for a flat."
+      description="EICR costs in Cambridge for 2026. Landlord legal requirements, Cambridge City Council enforcement, Victorian terraced HMO findings, observation codes…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

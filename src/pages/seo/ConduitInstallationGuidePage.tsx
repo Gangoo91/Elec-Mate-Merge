@@ -628,7 +628,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete conduit installation certificates on your phone"
-          description="Elec-Mate's EIC and EICR apps help you certify commercial conduit wiring installations on site. Record earth continuity, loop impedance, and test results — instant PDF export. 7-day free trial."
+          description="Elec-Mate's EIC and EICR apps help you certify commercial conduit wiring installations on site."
           icon={FileCheck2}
         />
       </>
@@ -643,10 +643,10 @@ const sections = [
 export default function ConduitInstallationGuidePage() {
   return (
     <GuideTemplate
-      title="Conduit Installation Guide UK | Steel & Plastic Conduit Wiring"
-      description="Complete UK guide to conduit installation. Heavy gauge steel vs PVC conduit, oval vs round, bending (radius requirements), draw wires, junction boxes, thread cutting, expansion couplings for long runs, earthing steel conduit, and fire stopping at penetrations."
+      title="Conduit Installation Guide UK | Steel & Plastic Conduit"
+      description="Complete UK guide to conduit installation. Heavy gauge steel vs PVC conduit, oval vs round, bending (radius requirements), draw wires, junction boxes…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

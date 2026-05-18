@@ -522,10 +522,10 @@ const sections = [
 export default function SolarPVSystemSizingPage() {
   return (
     <GuideTemplate
-      title="Solar PV System Sizing — UK Guide 2024 | kWp Calculation, MCS, G98/G99, BS 7671 Section 712"
-      description="How to size a solar PV system for UK homes: kWp calculation methods, orientation and tilt factors, MCS standards, G98/G99 DNO notification thresholds, BS 7671 Section 712 requirements, battery storage integration, and export limiting."
+      title="Solar PV System Sizing — UK Guide 2024 | kWp Calculation,"
+      description="How to size a solar PV system for UK homes: kWp calculation methods, orientation and tilt factors, MCS standards, G98/G99 DNO notification thresholds…"
       datePublished="2024-06-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Solar PV Guide"

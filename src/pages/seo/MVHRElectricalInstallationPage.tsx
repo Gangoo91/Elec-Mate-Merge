@@ -567,7 +567,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify MVHR electrical work"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Everything you need for MVHR installations. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
           icon={Fan}
         />
       </>
@@ -583,9 +583,9 @@ export default function MVHRElectricalInstallationPage() {
   return (
     <GuideTemplate
       title="MVHR Electrical Installation | Ventilation Wiring Guide"
-      description="Complete guide to MVHR electrical installation in the UK. Dedicated circuit, boost switch wiring, summer bypass controls, condensate pump, duct heater circuit, Building Regulations Part F compliance, and commissioning requirements."
+      description="Complete guide to MVHR electrical installation in the UK. Dedicated circuit, boost switch wiring, summer bypass controls, condensate pump…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Emerging Technology"

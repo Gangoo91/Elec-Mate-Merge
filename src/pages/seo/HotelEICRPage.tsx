@@ -695,7 +695,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more hotel electrical work with Elec-Mate"
-          description="Complete hotel EICRs on your phone, quote remedial works and upgrades on site, and build recurring relationships with hotel facilities managers. 7-day free trial for UK electricians."
+          description="Complete hotel EICRs on your phone, quote remedial works and upgrades on site, and build recurring relationships with hotel facilities managers."
           icon={FileCheck2}
         />
       </>
@@ -710,10 +710,10 @@ const sections = [
 export default function HotelEICRPage() {
   return (
     <GuideTemplate
-      title="Hotel EICR UK | Electrical Inspection for Hotels & Guest Houses"
-      description="Complete guide to EICR for hotels and guest houses in the UK. Regulatory Reform (Fire Safety) Order 2005 obligations, recommended EICR frequency, bedroom electrical safety, kitchen and laundry circuits, emergency lighting to BS 5266-1, fire alarm systems to BS 5839-1, en-suite bathroom zone requirements, and 2026 compliance costs."
+      title="Hotel EICR UK | Electrical Inspection for Hotels & Guest"
+      description="Complete guide to EICR for hotels and guest houses in the UK. Regulatory Reform (Fire Safety) Order 2005 obligations, recommended EICR frequency…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Hotel Electrical Guide"

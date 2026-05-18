@@ -22,9 +22,9 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Scaffolding Awareness Course for Electricians | Safe Use of Scaffolding';
+const PAGE_TITLE = 'Scaffolding Awareness Course | Safe Use for Electricians';
 const PAGE_DESCRIPTION =
-  'Scaffolding awareness training for UK electricians. Scaffold types, inspection procedures, tag systems, safe use, load limits, and Work at Height Regulations. 6 modules with video content, interactive quizzes, and AI tutor.';
+  'Scaffolding awareness for UK electricians: scaffold types, inspection, tag systems, safe use, load limits, Work at Height Regs. 6 modules + quizzes.';
 
 const breadcrumbs = [
   { label: 'Training', href: '/training' },
@@ -89,32 +89,32 @@ const modules = [
   {
     title: 'Introduction to Scaffolding for Electricians',
     description:
-      'Why scaffolding awareness matters for electricians, accident statistics, legal framework, and the difference between scaffolding awareness and scaffolder training. When electricians encounter scaffolding on site.',
+      'Why scaffolding awareness matters for electricians, accident statistics, legal framework…',
   },
   {
     title: 'Types of Scaffolding',
     description:
-      'Independent tied scaffolds, putlog scaffolds, birdcage scaffolds, mobile scaffold towers, system scaffolds (Layher, Haki, Cuplok), and suspended scaffolds. Characteristics, uses, and limitations of each type.',
+      'Independent tied scaffolds, putlog scaffolds, birdcage scaffolds, mobile scaffold towers, system scaffolds (Layher, Haki, Cuplok)…',
   },
   {
     title: 'The Scaffold Tag and Inspection System',
     description:
-      'Green, yellow, and red tag meanings. Scaffold inspection registers. Who can inspect scaffolding. What to check on a tag. How to report an unsafe scaffold. Weekly inspection requirements under the Work at Height Regulations.',
+      'Green, yellow, and red tag meanings. Scaffold inspection registers. Who can inspect scaffolding. What to check on a tag. How to report an unsafe scaffold.',
   },
   {
     title: 'Safe Use of Scaffolding',
     description:
-      'Pre-use visual checks, safe access and egress, load limits and overloading, housekeeping on scaffold platforms, working near scaffold edges, weather considerations (wind, ice, rain), and emergency procedures.',
+      'Pre-use visual checks, safe access and egress, load limits and overloading, housekeeping on scaffold platforms, working near scaffold edges…',
   },
   {
     title: 'Scaffold Hazards and Incident Prevention',
     description:
-      'Falls from platforms, falling objects, scaffold collapse, contact with overhead power lines, structural overload, unauthorised alterations, and inadequate bracing. Real-world case studies and lessons learned.',
+      'Falls from platforms, falling objects, scaffold collapse, contact with overhead power lines, structural overload, unauthorised alterations…',
   },
   {
     title: 'Regulations, Standards, and Best Practice',
     description:
-      'Work at Height Regulations 2005, Construction (Design and Management) Regulations 2015, NASC (National Access and Scaffolding Confederation) guidance, TG20 compliance, and employer responsibilities.',
+      'Work at Height Regulations 2005, Construction (Design and Management) Regulations 2015, NASC (National Access and Scaffolding Confederation) guidance…',
   },
 ];
 
@@ -135,7 +135,7 @@ const features = [
     icon: ClipboardCheck,
     title: 'Interactive Quizzes',
     description:
-      'Test your knowledge after every module with scenario-based questions. Identify unsafe scaffolds from photos, interpret tag information, and apply regulations correctly.',
+      'Test your knowledge after every module with scenario-based questions. Identify unsafe scaffolds from photos, interpret tag information…',
   },
   {
     icon: Clock,
@@ -305,7 +305,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Interactive scaffold inspection training"
-          description="Practise identifying safe and unsafe scaffolding with photo-based scenarios. Learn the tag system, spot common defects, and build confidence in your scaffold inspection skills — all within the Elec-Mate app."
+          description="Practise identifying safe and unsafe scaffolding with photo-based scenarios. Learn the tag system, spot common defects…"
           icon={Search}
         />
       </>
@@ -414,7 +414,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Site safety training in your pocket"
-          description="Elec-Mate covers all the essential site safety courses — scaffolding awareness, working at height, manual handling, and asbestos awareness. Complete your training and earn CPD certificates from your phone."
+          description="Elec-Mate covers all the essential site safety courses — scaffolding awareness, working at height, manual handling, and asbestos awareness."
           icon={ShieldCheck}
         />
       </>
@@ -579,7 +579,7 @@ export default function ScaffoldingAwarenessCoursePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-10-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Site Safety Training"

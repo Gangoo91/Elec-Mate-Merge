@@ -7,14 +7,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // (Inspection & Testing, 9th Edition) and the IET On-Site Guide.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const a4TnCsPnbEarthingConfig: GeneratedGuideConfig = {
   pagePath: '/guides/bs-7671-a4-2026-tn-cs-pnb-earthing',
   title:
-    'BS 7671 A4:2026 — TN-C-S (PNB) Earthing Arrangement Explained | Elec-Mate',
+    'BS 7671 A4:2026 — TN-C-S (PNB) Earthing Arrangement',
   description:
-    'Amendment 4 (January 2026) formally split TN-C-S into two distinct earthing arrangements on the EICR/EIC model form: TN-C-S (PME) and TN-C-S (PNB). What PNB means, when it applies, how to record it on the certificate, and how the choice affects bonding, RCD selection and earth electrode requirements.',
+    'Amendment 4 (January 2026) formally split TN-C-S into two distinct earthing arrangements on the EICR/EIC model form: TN-C-S (PME) and TN-C-S (PNB).',
   datePublished: published,
   dateModified: modified,
   readingTime: 11,

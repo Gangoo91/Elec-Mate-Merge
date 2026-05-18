@@ -313,7 +313,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Track your CPD and qualifications with Elec-Mate"
-          description="Elec-Mate helps electricians and engineers manage certificates, CPD records, and professional development in one place. Join 1,000+ UK electrical professionals."
+          description="Elec-Mate helps electricians and engineers manage certificates, CPD records, and professional development in one place."
           icon={BookOpen}
         />
       </>
@@ -598,7 +598,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Elec-Mate — the app built for UK electrical professionals"
-          description="From apprentice to chartered engineer, Elec-Mate helps you certify, quote, invoice, and manage your electrical business. Join 1,000+ UK electrical professionals on a 7-day free trial."
+          description="From apprentice to chartered engineer, Elec-Mate helps you certify, quote, invoice, and manage your electrical business."
           icon={Zap}
         />
       </>
@@ -613,10 +613,10 @@ const sections = [
 export default function ElectricalEngineeringDegreePage() {
   return (
     <GuideTemplate
-      title="Electrical Engineering Degree UK | BEng vs MEng, CEng Routes and Salaries"
-      description="Complete guide to electrical engineering degrees in the UK. BEng vs MEng, HNC/HND to degree top-up, Chartered Engineer (CEng) routes, IET membership, design and commissioning engineer careers, and 2026 salary guide (£35,000–£75,000+)."
+      title="Electrical Engineering Degree UK | BEng vs MEng, CEng"
+      description="Complete guide to electrical engineering degrees in the UK. BEng vs MEng, HNC/HND to degree top-up, Chartered Engineer (CEng) routes, IET membership…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

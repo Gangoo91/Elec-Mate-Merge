@@ -34,7 +34,7 @@ const tocItems = [
   { id: 'what-is-consumer-unit', label: 'What Is a Consumer Unit?' },
   { id: 'when-to-upgrade', label: 'When to Upgrade' },
   { id: 'metal-vs-plastic', label: 'Metal vs Plastic Consumer Units' },
-  { id: 'amendment-3', label: 'Amendment 3 Requirements' },
+  { id: 'amendment-3', label: 'Amendment 4 Requirements' },
   { id: 'afdd-spd', label: 'AFDDs and SPDs' },
   { id: 'part-p', label: 'Part P and Certification' },
   { id: 'cost-guide', label: 'Cost Guide 2026' },
@@ -46,7 +46,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'A consumer unit upgrade is one of the most important electrical safety improvements you can make — replacing outdated rewirable fuses with modern MCBs, RCDs, or RCBOs that disconnect in milliseconds.',
-  'Since Amendment 3 to BS 7671 (January 2016), all new or replacement consumer units in domestic premises must be housed in a non-combustible (metal) enclosure.',
+  'Since Amendment 4 to BS 7671 (January 2016), all new or replacement consumer units in domestic premises must be housed in a non-combustible (metal) enclosure.',
   'AFDDs (Arc Fault Detection Devices) are recommended by BS 7671:2018+A2:2022 for final circuits supplying socket outlets up to 32A in specific locations — expect them to become more widely required.',
   'A consumer unit upgrade is notifiable work under Part P of the Building Regulations — it must be carried out by a registered electrician who will issue an Electrical Installation Certificate (EIC).',
   'Elec-Mate helps electricians complete consumer unit upgrades efficiently — AI board scanner reads the existing board, the app generates the EIC, and the remedial estimator prices the job.',
@@ -61,7 +61,7 @@ const faqs = [
   {
     question: 'Do I need a metal consumer unit by law?',
     answer:
-      'Amendment 3 to BS 7671 (effective from January 2016) requires that all new or replacement consumer units in domestic premises must be enclosed in a non-combustible enclosure. In practice, this means a metal consumer unit. The amendment was introduced following research by the Chief Fire Officers Association that showed plastic consumer units were more likely to contribute to fire spread if an internal fault caused overheating or arcing. The requirement applies to new installations and replacements — you are not required by law to replace an existing plastic consumer unit if no other work is being done. However, if your consumer unit is being replaced for any reason (upgrading protection devices, adding circuits, or following an unsatisfactory EICR), the replacement must be a metal unit. Many electricians recommend upgrading a plastic consumer unit as part of any significant work on the installation, even if the regulations do not strictly require it, because the safety benefit is substantial.',
+      'Amendment 4 to BS 7671 (effective from January 2016) requires that all new or replacement consumer units in domestic premises must be enclosed in a non-combustible enclosure. In practice, this means a metal consumer unit. The amendment was introduced following research by the Chief Fire Officers Association that showed plastic consumer units were more likely to contribute to fire spread if an internal fault caused overheating or arcing. The requirement applies to new installations and replacements — you are not required by law to replace an existing plastic consumer unit if no other work is being done. However, if your consumer unit is being replaced for any reason (upgrading protection devices, adding circuits, or following an unsatisfactory EICR), the replacement must be a metal unit. Many electricians recommend upgrading a plastic consumer unit as part of any significant work on the installation, even if the regulations do not strictly require it, because the safety benefit is substantial.',
   },
   {
     question: 'What is the difference between an MCB, RCD, and RCBO?',
@@ -257,7 +257,7 @@ const sections = [
     content: (
       <>
         <p>
-          Before January 2016, consumer units could be housed in plastic enclosures. Amendment 3 to{' '}
+          Before January 2016, consumer units could be housed in plastic enclosures. Amendment 4 to{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>{' '}
           changed this. All new or replacement consumer units in domestic premises must now be in a
           non-combustible enclosure — which in practice means a metal unit.
@@ -300,11 +300,11 @@ const sections = [
   },
   {
     id: 'amendment-3',
-    heading: 'Amendment 3 Requirements for Consumer Units',
+    heading: 'Amendment 4 Requirements for Consumer Units',
     content: (
       <>
         <p>
-          Amendment 3 to{' '}
+          Amendment 4 to{' '}
           <SEOInternalLink href="/guides/consumer-unit-regulations">BS 7671</SEOInternalLink>{' '}
           (effective from January 2016) introduced several important changes for domestic consumer
           units. Any consumer unit upgrade must comply with these requirements:
@@ -399,7 +399,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Price consumer unit upgrades accurately"
-          description="Elec-Mate's remedial estimator prices every component — the board, MCBs, RCBOs, AFDDs, SPDs, earthing, and labour. Generate a professional quote for the customer on site, with materials and margin calculated automatically."
+          description="Elec-Mate's remedial estimator prices every component — the board, MCBs, RCBOs, AFDDs, SPDs, earthing, and labour."
           icon={Receipt}
         />
       </>
@@ -609,7 +609,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete CU upgrades end-to-end on your phone"
-          description="Join 1,000+ UK electricians creating professional EICs with AI board scanning, voice test entry, and instant PDF delivery. Complete the certificate before you leave the job. 7-day free trial."
+          description="Join 1,000+ UK electricians creating professional EICs with AI board scanning, voice test entry, and instant PDF delivery."
           icon={Camera}
         />
       </>
@@ -625,9 +625,9 @@ export default function ConsumerUnitUpgradePage() {
   return (
     <GuideTemplate
       title="Consumer Unit Upgrade | Cost, Regulations & Guide UK"
-      description="Complete guide to consumer unit upgrades in the UK. When to upgrade, metal vs plastic requirements, Amendment 3, AFDDs and SPDs, Part P certification, cost guide 2026, and choosing a qualified electrician."
+      description="Complete guide to consumer unit upgrades in the UK. When to upgrade, metal vs plastic requirements, Amendment 4, AFDDs and SPDs, Part P certification…"
       datePublished="2025-05-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"
@@ -638,7 +638,7 @@ export default function ConsumerUnitUpgradePage() {
           <span className="text-yellow-400">Cost, Regulations, and Complete Guide</span>
         </>
       }
-      heroSubtitle="Your consumer unit is the heart of your home's electrical safety. This guide covers when to upgrade, the difference between metal and plastic enclosures, Amendment 3 requirements, AFDDs and SPDs, Part P certification, and what you should expect to pay in 2026."
+      heroSubtitle="Your consumer unit is the heart of your home's electrical safety. This guide covers when to upgrade, the difference between metal and plastic enclosures, Amendment 4 requirements, AFDDs and SPDs, Part P certification, and what you should expect to pay in 2026."
       readingTime={14}
       keyTakeaways={keyTakeaways}
       sections={sections}

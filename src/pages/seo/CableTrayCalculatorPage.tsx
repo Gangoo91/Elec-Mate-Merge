@@ -19,9 +19,9 @@ export default function CableTrayCalculatorPage() {
   return (
     <ToolTemplate
       title="Cable Tray Sizing Calculator | Fill Capacity Tool"
-      description="Calculate cable tray fill percentage and select the correct tray size for any cable combination. Covers BS EN 61537, cable diameters, ladder tray vs perforated tray, and maximum fill capacity. Free UK electrical calculator."
+      description="Calculate cable tray fill percentage and select the correct tray size for any cable combination. BS EN 61537 aligned. UK electricians."
       datePublished="2026-02-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Cable Tray Sizing Calculator', href: '/tools/cable-tray-sizing-calculator' },
@@ -261,7 +261,7 @@ export default function CableTrayCalculatorPage() {
           appBridge: {
             title: 'Cable Diameters Built Into the Calculator',
             description:
-              'Select cable types from the dropdown — SWA, T&E, singles, LSOH, data — and Elec-Mate uses the correct overall diameter automatically. No manual lookup needed.',
+              'Select cable types from the dropdown — SWA, T&E, singles, LSOH, data — and Elec-Mate uses the correct overall diameter automatically.',
             icon: Ruler,
           },
         },

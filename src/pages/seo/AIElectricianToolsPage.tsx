@@ -26,7 +26,7 @@ import { Button } from '@/components/ui/button';
 
 const PAGE_TITLE = 'AI Electrician Tools | 8 BS 7671 Trained Specialists | Elec-Mate';
 const PAGE_DESCRIPTION =
-  '8 Elec-AI specialists trained on BS 7671:2018 + Amendment 3. Circuit Designer, Cost Engineer, Installation Guide, Commissioning Specialist, Maintenance Agent, Health & Safety, Fault Finder, and Regulation Lookup — plus 12 AI-powered tools. Ask anything about electrical regulations.';
+  '8 AI specialists trained on BS 7671:2018+A4:2026 — Circuit Designer, Cost Engineer, Fault Finder, Reg Lookup, and 4 more — plus 12 AI tools.';
 
 const softwareApplicationSchema = {
   '@type': 'SoftwareApplication',
@@ -53,7 +53,7 @@ const faqData = [
   {
     question: 'How is the AI trained on BS 7671 regulations?',
     answer:
-      'Each of the eight Elec-AI specialists is built on a large language model trained on the full text of BS 7671:2018+A4:2026, Amendment 3:2024, the IET On-Site Guide, IET Guidance Notes 1 through 8, and a curated library of real-world installation scenarios. The AI retrieves the exact regulation text before generating an answer, so responses cite specific regulation numbers (for example, Regulation 411.3.2 for disconnection time requirements). The knowledge base is updated whenever new amendments or guidance notes are published, and all responses include regulation references so you can verify them independently.',
+      'Each of the eight Elec-AI specialists is built on a large language model trained on the full text of BS 7671:2018+A4:2026, Amendment 4:2024, the IET On-Site Guide, IET Guidance Notes 1 through 8, and a curated library of real-world installation scenarios. The AI retrieves the exact regulation text before generating an answer, so responses cite specific regulation numbers (for example, Regulation 411.3.2 for disconnection time requirements). The knowledge base is updated whenever new amendments or guidance notes are published, and all responses include regulation references so you can verify them independently.',
   },
   {
     question: 'Can the AI Circuit Designer produce a complete consumer unit schedule?',
@@ -93,7 +93,7 @@ const howToSchema = {
   '@type': 'HowTo',
   name: 'How to Use AI Electrician Tools for BS 7671 Compliance',
   description:
-    'Step-by-step guide to using Elec-Mate AI specialists for electrical design, costing, installation guidance, maintenance planning, and health and safety documentation.',
+    'Step-by-step guide to using Elec-Mate AI specialists for electrical design, costing, installation guidance, maintenance planning…',
   step: [
     {
       '@type': 'HowToStep',
@@ -163,7 +163,7 @@ const features = [
     icon: MessageSquare,
     title: 'Fault Finder',
     description:
-      'Systematic fault diagnosis from symptoms. Describe the problem and the AI walks you through a logical diagnostic sequence with test procedures and expected readings.',
+      'Systematic fault diagnosis from symptoms. Describe the problem and the AI walks you through a logical diagnostic sequence with test procedures and…',
   },
   {
     icon: BookOpen,
@@ -473,7 +473,7 @@ export default function AIElectricianToolsPage() {
                 step: '1',
                 title: 'Choose your specialist',
                 description:
-                  'Pick from eight Elec-AI specialists — Circuit Designer, Cost Engineer, Installation Guide, Commissioning Specialist, Maintenance Agent, Health & Safety, Fault Finder, or Regulation Lookup — depending on what you need.',
+                  'Pick from eight Elec-AI specialists — Circuit Designer, Cost Engineer, Installation Guide, Commissioning Specialist, Maintenance Agent, Health & Safety…',
               },
               {
                 step: '2',
@@ -485,13 +485,13 @@ export default function AIElectricianToolsPage() {
                 step: '3',
                 title: 'Review the response with BS 7671 references',
                 description:
-                  'Every recommendation cites specific regulation numbers. The AI retrieves the exact regulation text before generating its response, so you can verify every claim.',
+                  'Every recommendation cites specific regulation numbers. The AI retrieves the exact regulation text before generating its response…',
               },
               {
                 step: '4',
                 title: 'Export and use on site',
                 description:
-                  'Download circuit schedules, quotes, RAMS documents, and maintenance plans as PDFs. Use them directly in your certification, client communications, and site documentation.',
+                  'Download circuit schedules, quotes, RAMS documents, and maintenance plans as PDFs. Use them directly in your certification, client communications…',
               },
             ].map((item) => (
               <div key={item.step} className="flex gap-5 items-start">
@@ -512,7 +512,7 @@ export default function AIElectricianToolsPage() {
       <section className="py-16 px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">
-            Trained on BS 7671:2018 + Amendment 3:2024
+            Trained on BS 7671:2018 + Amendment 4:2024
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
@@ -523,7 +523,7 @@ export default function AIElectricianToolsPage() {
             <p>
               The core training data includes BS 7671:2018+A4:2026, which is the current 18th
               Edition of the IET Wiring Regulations — the standard that governs every electrical
-              installation in the United Kingdom. It also includes Amendment 3:2024 (A4:2026),
+              installation in the United Kingdom. It also includes Amendment 4:2024 (A4:2026),
               issued on 31 July 2024, which adds Regulation 530.3.2 covering the requirements for
               bidirectional and unidirectional protective devices. This amendment is particularly
               relevant for installations with battery storage systems, solar PV, and other sources
@@ -543,7 +543,7 @@ export default function AIElectricianToolsPage() {
           <div className="mt-8 grid sm:grid-cols-2 gap-4">
             {[
               'BS 7671:2018+A4:2026 (18th Edition)',
-              'Amendment 3:2024 (A4:2026)',
+              'Amendment 4:2024 (A4:2026)',
               'IET On-Site Guide',
               'IET Guidance Notes 1-8',
               'GN3: Inspection & Testing (9th Edition)',
@@ -580,7 +580,7 @@ export default function AIElectricianToolsPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="8 AI Specialists + All Your Electrical Tools"
-            description="Elec-Mate gives you 8 BS 7671-trained AI agents, 70+ calculators, 16 certificate types, and 46+ training courses in one mobile-first platform. Start your free 7-day trial today."
+            description="Elec-Mate gives you 8 BS 7671-trained AI agents, 70+ calculators, 16 certificate types, and 46+ training courses in one mobile-first platform."
             icon={Brain}
           />
           <p className="text-white mt-4 text-sm">

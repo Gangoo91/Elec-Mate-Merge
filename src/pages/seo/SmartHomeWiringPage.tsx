@@ -577,7 +577,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certify the electrical work on your phone"
-          description="Complete the EIC on site with Elec-Mate. AI board scanner reads the consumer unit, voice test entry fills in results while you test. Export as PDF and send to the homeowner. Professional certification in minutes."
+          description="Complete the EIC on site with Elec-Mate. AI board scanner reads the consumer unit, voice test entry fills in results while you test."
           icon={FileCheck2}
         />
       </>
@@ -651,7 +651,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify smart home installations"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Everything you need for smart home electrical work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
           icon={Wifi}
         />
       </>
@@ -667,9 +667,9 @@ export default function SmartHomeWiringPage() {
   return (
     <GuideTemplate
       title="Smart Home Wiring Guide | Electrician's Perspective"
-      description="Complete guide to smart home wiring for UK electricians. Cat 6 structured cabling, smart switches with neutral wire, Wi-Fi access points, containment design, future-proofing, and certification requirements."
+      description="Complete guide to smart home wiring for UK electricians. Cat 6 structured cabling, smart switches with neutral wire, Wi-Fi access points…"
       datePublished="2025-09-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

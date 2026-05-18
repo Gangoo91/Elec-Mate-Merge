@@ -631,10 +631,10 @@ const sections = [
 export default function HowToReadWiringDiagramPage() {
   return (
     <GuideTemplate
-      title="How to Read a Wiring Diagram | UK Electrical Drawing Guide 2026"
-      description="How to read electrical wiring diagrams, circuit diagrams, and single-line diagrams. IEC vs BS symbols, common symbols (switches, motors, transformers, relays), reading SLDs, three-phase diagrams, and practical tips for UK electricians."
+      title="How to Read a Wiring Diagram | UK Electrical Drawing Guide"
+      description="How to read electrical wiring diagrams, circuit diagrams, and single-line diagrams. IEC vs BS symbols, common symbols (switches, motors, transformers…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Technical Guide"

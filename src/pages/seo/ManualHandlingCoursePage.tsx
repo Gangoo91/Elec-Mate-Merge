@@ -21,9 +21,9 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 
-const PAGE_TITLE = 'Manual Handling Course for Electricians | Online Training | Elec-Mate';
+const PAGE_TITLE = 'Manual Handling Course | Online for UK Electricians';
 const PAGE_DESCRIPTION =
-  'Manual handling training for electricians. Safe lifting techniques, TILE risk assessment, load handling. Compliant with Manual Handling Operations Regulations 1992. Mock exams included.';
+  'Manual handling training for UK electricians: safe lifting, TILE risk assessment, load handling, MHOR 1992 compliant. Mock exams included.';
 
 const faqs = [
   {
@@ -63,37 +63,37 @@ const features = [
     icon: Dumbbell,
     title: 'Safe Lifting Technique',
     description:
-      'Step-by-step instruction on correct lifting posture: planning the lift, positioning feet, bending knees, keeping a straight back, and maintaining a smooth controlled movement throughout.',
+      'Step-by-step instruction on correct lifting posture: planning the lift, positioning feet, bending knees, keeping a straight back…',
   },
   {
     icon: Target,
     title: 'TILE Risk Assessment',
     description:
-      'Learn to assess every manual handling task using the TILE framework — Task, Individual, Load, Environment — before you start lifting. Practical examples from real electrical jobs.',
+      'Learn to assess every manual handling task using the TILE framework — Task, Individual, Load, Environment — before you start lifting.',
   },
   {
     icon: Wrench,
     title: 'Electrical-Specific Scenarios',
     description:
-      'Training designed for electricians covering cable drum handling, consumer unit installation at height, distribution board lifting, and working with heavy equipment in confined plant rooms.',
+      'Training designed for electricians covering cable drum handling, consumer unit installation at height, distribution board lifting…',
   },
   {
     icon: Users,
     title: 'Team Lifting Procedures',
     description:
-      'How to coordinate two-person and multi-person lifts safely. Communication protocols, synchronised movement, and when to insist on mechanical aids instead of manual effort.',
+      'How to coordinate two-person and multi-person lifts safely. Communication protocols, synchronised movement…',
   },
   {
     icon: HeartPulse,
     title: 'Injury Prevention',
     description:
-      'Understanding musculoskeletal disorders, recognising early warning signs, warm-up exercises for physical work, and long-term strategies for protecting your back throughout your career.',
+      'Understanding musculoskeletal disorders, recognising early warning signs, warm-up exercises for physical work…',
   },
   {
     icon: ClipboardCheck,
     title: 'Mock Exams & Certificate',
     description:
-      'Multiple-choice assessments and scenario-based questions specific to electrical work. Downloadable CPD certificate on completion. Track your progress in the Elec-Mate dashboard.',
+      'Multiple-choice assessments and scenario-based questions specific to electrical work. Downloadable CPD certificate on completion.',
   },
 ];
 
@@ -102,37 +102,37 @@ const courseModules = [
     number: 1,
     title: 'Introduction to Manual Handling Legislation',
     description:
-      'The Manual Handling Operations Regulations 1992, the Health and Safety at Work etc. Act 1974, employer and employee duties, and how these apply specifically to electrical installation work.',
+      'The Manual Handling Operations Regulations 1992, the Health and Safety at Work etc. Act 1974, employer and employee duties…',
   },
   {
     number: 2,
     title: 'The TILE Risk Assessment Framework',
     description:
-      'How to carry out a TILE assessment before every manual handling task. Worked examples for common electrical scenarios including cable drum delivery, board installation, and tool carrying.',
+      'How to carry out a TILE assessment before every manual handling task. Worked examples for common electrical scenarios including cable drum delivery…',
   },
   {
     number: 3,
     title: 'Safe Lifting Technique',
     description:
-      'The correct biomechanics of lifting: planning, foot position, grip, bend at the knees, straight back, controlled ascent, and smooth movement. Common mistakes that cause injury.',
+      'The correct biomechanics of lifting: planning, foot position, grip, bend at the knees, straight back, controlled ascent, and smooth movement.',
   },
   {
     number: 4,
     title: 'Electrical-Specific Manual Handling',
     description:
-      'Cable drums (rolling vs lifting), consumer units and distribution boards, conduit and trunking bundles, heavy power tools, working on ladders and scaffolding with loads.',
+      'Cable drums (rolling vs lifting), consumer units and distribution boards, conduit and trunking bundles, heavy power tools…',
   },
   {
     number: 5,
     title: 'Mechanical Aids and Team Lifting',
     description:
-      'Cable drum stands, drum rollers, sack trucks, trolleys, pulleys, and hoists. When to use mechanical aids. Team lifting coordination, communication, and synchronisation.',
+      'Cable drum stands, drum rollers, sack trucks, trolleys, pulleys, and hoists. When to use mechanical aids.',
   },
   {
     number: 6,
     title: 'Assessment and Certification',
     description:
-      'Multiple-choice knowledge test and scenario-based assessment. Pass mark, certificate download, and CPD recording. Review of key principles and further resources.',
+      'Multiple-choice knowledge test and scenario-based assessment. Pass mark, certificate download, and CPD recording.',
   },
 ];
 
@@ -557,7 +557,7 @@ export default function ManualHandlingCoursePage() {
             <SEOInternalLink href="/training/instrumentation-course">Instrumentation Course for Electricians</SEOInternalLink>
             <SEOInternalLink href="/training/mewp-course">MEWP Course</SEOInternalLink>
             <SEOInternalLink href="/guides/ai-vs-manual-electrical-design">AI vs Manual Electrical Design</SEOInternalLink>
-            <SEOInternalLink href="/training/bs-7671-amendment-3-course">BS 7671 Amendment 3 Course</SEOInternalLink>
+            <SEOInternalLink href="/training/bs-7671-amendment-3-course">BS 7671 Amendment 4 Course</SEOInternalLink>
             <SEOInternalLink href="/training/cdm-regulations-course">CDM Regulations Course for Electricians</SEOInternalLink>
             <SEOInternalLink href="/training/workplace-safety-course">Workplace Safety Course</SEOInternalLink>
             <SEOInternalLink href="/guides/city-guilds-2396-design-course">City & Guilds 2396 Design Course</SEOInternalLink>

@@ -267,7 +267,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Consumer Unit Replacement Certificates on Elec-Mate"
-          description="Generate Electrical Installation Certificates for consumer unit replacements on your phone. Full test schedule included, PDF shared with the client instantly."
+          description="Generate Electrical Installation Certificates for consumer unit replacements on your phone. Full test schedule included…"
           ctaText="Try Elec-Mate free"
         />
       </>
@@ -397,10 +397,10 @@ const sections = [
 export default function SmartMeterElectricalWorkPage() {
   return (
     <GuideTemplate
-      title="Electrical Work Around Smart Meters — UK Electrician Guide 2024"
-      description="Guide for electricians working near SMETS2 smart meters — what is and is not allowed, consumer unit upgrades, meter tails, safe isolation, IHD devices, and Part P compliance."
+      title="Electrical Work Around Smart Meters — UK Electrician Guide"
+      description="Guide for electricians working near SMETS2 smart meters — what is and is not allowed, consumer unit upgrades, meter tails, safe isolation, IHD devices…"
       datePublished="2024-06-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Technical Guide"

@@ -312,7 +312,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Defect Code AI: describe it, get the right code"
-          description="Not sure if it is C2 or C3? Type or dictate the defect in plain English and Elec-Mate's AI returns the correct classification code with the matching BS 7671 regulation number. No more guesswork."
+          description="Not sure if it is C2 or C3? Type or dictate the defect in plain English and Elec-Mate's AI returns the correct classification code with the matching BS…"
           icon={Brain}
         />
       </>
@@ -503,7 +503,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Auto overall assessment — no human error"
-          description="Elec-Mate watches your observation codes in real time. The moment a C1, C2, or FI is added, the overall assessment flips to Unsatisfactory automatically. You cannot accidentally mark an unsafe installation as Satisfactory."
+          description="Elec-Mate watches your observation codes in real time. The moment a C1, C2, or FI is added, the overall assessment flips to Unsatisfactory automatically."
           icon={ShieldCheck}
         />
       </>
@@ -676,7 +676,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Try Defect Code AI free for 7 days"
-          description="Describe any defect in plain English and get the correct EICR classification code with the matching BS 7671 regulation. No more second-guessing between C2 and C3."
+          description="Describe any defect in plain English and get the correct EICR classification code with the matching BS 7671 regulation."
           icon={Brain}
         />
       </>
@@ -692,9 +692,9 @@ export default function EICRObservationCodesPage() {
   return (
     <GuideTemplate
       title="EICR Observation Codes C1 C2 C3 FI Explained"
-      description="Complete guide to EICR observation codes C1, C2, C3, and FI. Real examples of each classification, how they affect the overall assessment, common mistakes, and how Elec-Mate's Defect Code AI gets the right code every time."
+      description="Complete guide to EICR observation codes C1, C2, C3, and FI. Real examples of each classification, how they affect the overall assessment…"
       datePublished="2025-01-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Classification Guide"

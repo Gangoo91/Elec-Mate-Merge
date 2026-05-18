@@ -22,9 +22,9 @@ export default function PricingStrategyElectricianPage() {
   return (
     <BusinessTemplate
       title="Pricing Strategy for Electricians | Maximise Profit"
-      description="Master pricing for your electrical business. Fixed price vs day rate vs hourly — learn when to use each, pricing psychology for electricians, and how to quote jobs that win work and make profit."
+      description="Master pricing for your electrical business. Fixed price vs day rate vs hourly — learn when to use each, pricing psychology for electricians…"
       datePublished="2025-07-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Business Tools', href: '/tools' },
         { label: 'Pricing Strategy', href: PAGE_PATH },
@@ -308,7 +308,7 @@ export default function PricingStrategyElectricianPage() {
           appBridge: {
             title: 'Quote, Invoice, and Get Paid — All in One App',
             description:
-              'Elec-Mate builds professional quotes in minutes, converts them to invoices with one tap, and tracks payment status with automatic reminders. Stop losing money on admin.',
+              'Elec-Mate builds professional quotes in minutes, converts them to invoices with one tap, and tracks payment status with automatic reminders.',
             icon: PoundSterling,
           },
         },
@@ -442,7 +442,7 @@ export default function PricingStrategyElectricianPage() {
           applicationCategory: 'BusinessApplication',
           operatingSystem: 'Web, iOS, Android',
           description:
-            'Professional quoting, pricing strategy, and job costing tools for UK electricians. Fixed price, day rate, and hourly pricing with automatic overhead and margin calculation.',
+            'Professional quoting, pricing strategy, and job costing tools for UK electricians. Fixed price, day rate…',
           url: 'https://www.elec-mate.com/tools/pricing-strategy-electrician',
           offers: {
             '@type': 'Offer',

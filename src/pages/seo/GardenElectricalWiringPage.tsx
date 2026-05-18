@@ -423,7 +423,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certificate garden and outdoor circuits on your phone"
-          description="Elec-Mate's EIC app lets you complete the Electrical Installation Certificate for garden and outdoor circuit installations on site. AI-assisted, instant PDF to the customer. Part P self-certification made simple."
+          description="Elec-Mate's EIC app lets you complete the Electrical Installation Certificate for garden and outdoor circuit installations on site."
           icon={FileCheck2}
         />
       </>
@@ -591,10 +591,10 @@ const sections = [
 export default function GardenElectricalWiringPage() {
   return (
     <GuideTemplate
-      title="Garden Electrical Wiring Regulations UK | SWA Cable, RCD, BS 7671"
-      description="Complete guide to garden electrical wiring regulations under BS 7671. SWA armoured cable requirements, burial depths (0.5m gardens, 0.45m paved), mandatory RCD protection under Regulation 411.3.3, outdoor socket IP ratings, garden shed supply, and Part P notification."
+      title="Garden Electrical Wiring Regulations UK | SWA Cable, RCD,"
+      description="Complete guide to garden electrical wiring regulations under BS 7671. SWA armoured cable requirements, burial depths (0.5m gardens, 0.45m paved)…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Garden Electrical Guide"

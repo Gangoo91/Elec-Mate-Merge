@@ -257,7 +257,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Record ring circuit test results on your phone"
-          description="Elec-Mate's EIC app guides you through the ring circuit test procedure, calculates r1+r2/4, and records all values on the schedule of test results automatically."
+          description="Elec-Mate's EIC app guides you through the ring circuit test procedure, calculates r1+r2/4…"
           icon={ClipboardCheck}
         />
       </>
@@ -459,10 +459,10 @@ const sections = [
 export default function ContinuityTestingPage() {
   return (
     <GuideTemplate
-      title="Continuity Testing Guide for Electricians | R1+R2 and Ring Circuits"
-      description="Complete guide to continuity testing for UK electricians. Covers R1+R2 measurement, the r1+r2/4 method for ring final circuits, CPC continuity, test lead resistance, and BS 7671 Regulation 643.2."
+      title="Continuity Testing Guide for Electricians | R1+R2 and Ring"
+      description="Complete guide to continuity testing for UK electricians. Covers R1+R2 measurement, the r1+r2/4 method for ring final circuits, CPC continuity…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

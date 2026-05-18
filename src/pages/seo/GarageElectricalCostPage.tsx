@@ -495,8 +495,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Quote garage electrical installations professionally with Elec-Mate"
-          description="Create itemised garage electrical quotes with armoured cable, trenching, consumer unit, and EV charger options. Issue EICs on site. Join 1,000+ UK electricians. 7-day free trial."
+          title="Quote garage electrical installations professionally with"
+          description="Create itemised garage electrical quotes with armoured cable, trenching, consumer unit, and EV charger options. Issue EICs on site."
           icon={FileCheck2}
         />
       </>
@@ -511,10 +511,10 @@ const sections = [
 export default function GarageElectricalCostPage() {
   return (
     <GuideTemplate
-      title="Garage Electrical Installation Cost UK 2025 | Garage Wiring Prices"
-      description="Garage electrical installation costs in the UK for 2025. Detached garage from £800–£2,000, integral garage £400–£800. SWA armoured cable, trenching, consumer unit, and EV charger add-on costs explained."
+      title="Garage Electrical Installation Cost UK 2025 | Garage Wiring"
+      description="Garage electrical installation costs in the UK for 2025. Detached garage from £800–£2,000, integral garage £400–£800."
       datePublished="2025-01-01"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

@@ -554,7 +554,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete fire alarm certificates on your phone"
-          description="Elec-Mate's fire alarm certificate app lets you document BS 5839-6 compliant installations with system design, test schedules, and instant PDF export. Join 1,000+ UK electricians."
+          description="Elec-Mate's fire alarm certificate app lets you document BS 5839-6 compliant installations with system design, test schedules, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -570,9 +570,9 @@ export default function SmokeDetectorBeepingPage() {
   return (
     <GuideTemplate
       title="Smoke Detector Beeping | Why and What to Do"
-      description="Why is your smoke detector beeping? Learn the causes — low battery, end of life, false alarms, wiring faults — what to do step by step, and when to call an electrician. UK guide for homeowners and electricians."
+      description="Why is your smoke detector beeping? Learn the causes — low battery, end of life, false alarms, wiring faults — what to do step by step…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety"

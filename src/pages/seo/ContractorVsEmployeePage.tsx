@@ -534,7 +534,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Everything you need to run your contracting business"
-          description="Quoting app, invoice app, expense tracking, cash flow planner, and job profitability calculator. Elec-Mate handles the business side so you can focus on the electrical work. 7-day free trial."
+          description="Quoting app, invoice app, expense tracking, cash flow planner, and job profitability calculator."
           icon={Calculator}
         />
       </>
@@ -597,7 +597,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Set up your business the right way from day one"
-          description="Elec-Mate gives you professional quoting, instant invoicing, expense tracking, and cash flow visibility — all from your phone. Start looking professional from your very first job. 7-day free trial."
+          description="Elec-Mate gives you professional quoting, instant invoicing, expense tracking, and cash flow visibility — all from your phone."
           icon={Receipt}
         />
       </>
@@ -613,9 +613,9 @@ export default function ContractorVsEmployeePage() {
   return (
     <GuideTemplate
       title="Contractor vs Employee | Which Is Better for Electricians?"
-      description="Complete comparison of self-employed contractor versus employed electrician. Tax differences, IR35, CIS, financial comparison, benefits, job security vs freedom, and how to make the switch."
+      description="Complete comparison of self-employed contractor versus employed electrician. Tax differences, IR35, CIS, financial comparison, benefits…"
       datePublished="2025-07-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

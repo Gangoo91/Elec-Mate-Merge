@@ -310,7 +310,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Manage LV certification within HV substation projects"
-          description="Even the largest HV substation projects include LV distribution boards, UPS systems, and auxiliary supplies that require BS 7671-compliant EIC certificates. Elec-Mate's certificate tools handle the LV elements efficiently."
+          description="Even the largest HV substation projects include LV distribution boards, UPS systems…"
           icon={FileCheck2}
         />
       </>
@@ -430,9 +430,9 @@ export default function HighVoltageElectricalWorkPage() {
   return (
     <GuideTemplate
       title="High Voltage Electrical Work UK | HV Electrician Guide"
-      description="Complete guide to high voltage electrical work in the UK. HV definition (above 1kV AC), AP/CP/SAP authorisation roles, ENA G74 and G82, DNO connections at 11kV/33kV/132kV, HV training, and Electricity at Work Regulations Regulation 14."
+      description="Complete guide to high voltage electrical work in the UK. HV definition (above 1kV AC), AP/CP/SAP authorisation roles, ENA G74 and G82…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Specialist Guide"

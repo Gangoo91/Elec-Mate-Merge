@@ -521,7 +521,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Whitehaven electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for west Cumbria's Georgian heritage properties, coastal installations, and Sellafield-adjacent work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -537,10 +537,10 @@ export default function ElectricianWhitehavenPage() {
   return (
     <GuideTemplate
       localArea="Whitehaven"
-      title="Electrician in Whitehaven | Local Electricians 2026"
-      description="Find qualified electricians in Whitehaven, Cumbria. Sellafield nuclear site (9 miles), Georgian conservation area, Electricity North West DNO, coastal IP ratings, and Whitehaven electrician rates 2026."
+      title="EICR in Sellafield | BS 7671:2018+A4:2026"
+      description="EICR inspections for Sellafield nuclear contractors. BS 7671 compliant reports, 5-day turnaround, Electricity North West certified. Book now."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Whitehaven"

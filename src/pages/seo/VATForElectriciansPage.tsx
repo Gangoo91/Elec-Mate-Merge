@@ -512,7 +512,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional VAT invoicing for electricians — Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional invoicing. VAT-compliant invoices with correct labour/materials splits, sent from your phone in seconds. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for professional invoicing. VAT-compliant invoices with correct labour/materials splits…"
           icon={Receipt}
         />
       </>
@@ -527,10 +527,10 @@ const sections = [
 export default function VATForElectriciansPage() {
   return (
     <GuideTemplate
-      title="VAT for Electricians UK | When to Register & VAT Schemes Guide"
-      description="Complete VAT guide for UK electricians — the £85,000 registration threshold, voluntary registration, flat rate scheme (9.5%), cash accounting, VAT on materials vs labour, and the domestic reverse charge (VAT RCM) for CIS subcontractors."
+      title="VAT for Electricians UK | When to Register & VAT Schemes"
+      description="Complete VAT guide for UK electricians — the £85,000 registration threshold, voluntary registration, flat rate scheme (9.5%), cash accounting…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Finance Guide"

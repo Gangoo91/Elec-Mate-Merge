@@ -484,10 +484,10 @@ const sections = [
 export default function FindingCommercialWorkPage() {
   return (
     <GuideTemplate
-      title="Finding Commercial Electrical Work UK 2026 | Contractor Guide"
-      description="How to find commercial electrical work. Tender websites, FM companies, networking, frameworks, subcontracting, and the accreditations you need. Practical guide for UK electricians."
+      title="Finding Commercial Electrical Work UK 2026 | Contractor"
+      description="How to find commercial electrical work. Tender websites, FM companies, networking, frameworks, subcontracting, and the accreditations you need."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Business Guide"

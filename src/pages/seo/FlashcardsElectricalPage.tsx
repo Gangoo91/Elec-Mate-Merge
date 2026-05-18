@@ -363,7 +363,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Pre-built flashcard decks for every electrical exam"
-          description="Elec-Mate includes curated flashcard decks for 18th Edition, 2391, AM2, and EPA — written by qualified electricians and covering the topics most likely to appear in your exam. Spaced repetition built in."
+          description="Elec-Mate includes curated flashcard decks for 18th Edition, 2391, AM2, and EPA — written by qualified electricians and covering the topics most likely…"
           icon={BookOpen}
         />
       </>
@@ -590,7 +590,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Start using flashcards today"
-          description="Elec-Mate gives you curated flashcard decks for 18th Edition, 2391, AM2, and EPA, with spaced repetition built in. Study on your phone, track your progress, and pass first time. 7-day free trial."
+          description="Elec-Mate gives you curated flashcard decks for 18th Edition, 2391, AM2, and EPA, with spaced repetition built in."
           icon={BookOpen}
         />
       </>
@@ -606,9 +606,9 @@ export default function FlashcardsElectricalPage() {
   return (
     <GuideTemplate
       title="Flashcards for Electrical Exams | Study Tool"
-      description="Complete guide to using flashcards for UK electrical exams. Active recall, spaced repetition, key topics for 18th Edition, 2391, AM2, and EPA. How to make effective flashcards and build a study schedule."
+      description="Complete guide to using flashcards for UK electrical exams. Active recall, spaced repetition, key topics for 18th Edition, 2391, AM2, and EPA."
       datePublished="2025-03-05"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Study Tool"

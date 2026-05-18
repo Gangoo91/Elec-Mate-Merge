@@ -652,7 +652,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more commercial electrical tenders with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, RAMS generation, and business management. Build better tender submissions in less time. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, RAMS generation, and business management."
           icon={Briefcase}
         />
       </>
@@ -668,9 +668,9 @@ export default function TenderWritingElectricianPage() {
   return (
     <GuideTemplate
       title="How to Write Electrical Tenders UK | Winning Tender Guide"
-      description="How to price and write winning tenders for commercial electrical contracts. Prelims, labour rates, materials markup, programme, H&S documentation, NEC/JCT contracts, and common mistakes that lose tenders."
+      description="How to price and write winning tenders for commercial electrical contracts. Prelims, labour rates, materials markup, programme, H&S documentation…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Business Guide"

@@ -331,7 +331,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Ze Value Calculator | BS 7671:2018+A4:2026"
-          description="Ze value checker for TN-S, TN-C-S, TT earthing. Validate measured impedance against 2026 limits in seconds. EICR testing made faster."
+          description="Ze value calculator for TN-S, TN-C-S, TT systems. Check earth loop impedance against 2026 limits in seconds. EICR testing tool."
           icon={Calculator}
         />
       </>
@@ -397,7 +397,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Voice entry for Ze and all test results"
-          description="Speak your Ze reading — 'Ze, 0.24 ohms' — and Elec-Mate records it on the EICR. Continue speaking Zs, R1+R2, insulation resistance, and RCD trip times as you test. The app validates everything against BS 7671 in real time. No clipboards, no double-handling."
+          description="Speak your Ze reading — 'Ze, 0.24 ohms' — and Elec-Mate records it on the EICR. Continue speaking Zs, R1+R2, insulation resistance…"
           icon={Mic}
         />
       </>
@@ -591,7 +591,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Record Ze, PFC, and all supply characteristics digitally"
-          description="Elec-Mate captures the full supply characteristics section of the EICR — earthing arrangement, Ze, PFC, supply voltage, and supply type — with automatic validation against BS 7671 expected values. AI agents help with observation coding when Ze is out of range. 70+ calculators for every test."
+          description="Elec-Mate captures the full supply characteristics section of the EICR — earthing arrangement, Ze, PFC, supply voltage…"
           icon={FileCheck2}
         />
       </>
@@ -607,9 +607,9 @@ export default function ZeValuesUKPage() {
   return (
     <GuideTemplate
       title="Ze Values UK | External Earth Loop Impedance"
-      description="Complete guide to expected Ze (external earth fault loop impedance) values for UK electricians. TN-S maximum 0.80 ohms, TN-C-S (PME) maximum 0.35 ohms, TT maximum 21 ohms. How to measure Ze, what affects it, what to do when Ze is too high, and when to query the DNO."
+      description="Expected Ze (external earth fault loop impedance) values for UK electricians: TN-S, TN-C-S, TT typical Ze, supplier limits, how to measure, fix high Ze."
       datePublished="2025-08-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

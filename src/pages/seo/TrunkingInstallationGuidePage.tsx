@@ -21,9 +21,9 @@ export default function TrunkingInstallationGuidePage() {
   return (
     <GuideTemplate
       title="Trunking Installation Guide | Types & Sizing UK"
-      description="Complete guide to electrical trunking for UK installations. PVC trunking, metal trunking, dado trunking, skirting trunking, mini trunking, compartmental trunking, sizing calculations, segregation rules, BS 7671 requirements, and installation best practice."
+      description="Complete guide to electrical trunking for UK installations. PVC trunking, metal trunking, dado trunking, skirting trunking, mini trunking…"
       datePublished="2025-06-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Installation', href: '/guides' },
         { label: 'Trunking Guide', href: '/guides/trunking-installation-guide' },
@@ -396,7 +396,7 @@ export default function TrunkingInstallationGuidePage() {
               </div>
               <SEOAppBridge
                 title="Trunking Fill Calculator"
-                description="Elec-Mate's trunking fill calculator covers all standard trunking sizes and cable types. Select the trunking, add your cables, and get instant fill percentage with pass or fail indication. Essential for commercial installation design and certification."
+                description="Elec-Mate's trunking fill calculator covers all standard trunking sizes and cable types. Select the trunking, add your cables…"
                 icon={Calculator}
               />
             </>
@@ -554,7 +554,7 @@ export default function TrunkingInstallationGuidePage() {
               </p>
               <SEOAppBridge
                 title="Commercial Installation Certificates"
-                description="Elec-Mate generates EIC and EICR certificates for commercial installations with full circuit schedules, containment system details, and segregation documentation. Professional PDF output for your clients and building control."
+                description="Elec-Mate generates EIC and EICR certificates for commercial installations with full circuit schedules, containment system details…"
                 icon={FileText}
               />
             </>

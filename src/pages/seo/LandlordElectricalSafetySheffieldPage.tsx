@@ -567,7 +567,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your landlord EICR business in Sheffield with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -582,10 +582,10 @@ const sections = [
 export default function LandlordElectricalSafetySheffieldPage() {
   return (
     <GuideTemplate
-      title="Landlord Electrical Safety Sheffield | EICR Requirements 2026"
-      description="Landlord electrical safety requirements in Sheffield. 2020 Regulations explained, Sheffield City Council enforcement, HMO requirements, penalties up to £30,000, tenant rights, remedial timescales, and EICR costs for 2026."
+      title="Landlord Electrical Safety Sheffield | EICR Requirements"
+      description="Landlord electrical safety requirements in Sheffield. 2020 Regulations explained, Sheffield City Council enforcement, HMO requirements…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Landlord Guide"

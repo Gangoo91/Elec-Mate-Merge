@@ -581,7 +581,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your consumer unit replacement business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting. Complete more jobs per day and eliminate paperwork. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting."
           icon={FileCheck2}
         />
       </>
@@ -596,10 +596,10 @@ const sections = [
 export default function ConsumerUnitReplacementNewcastlePage() {
   return (
     <GuideTemplate
-      title="Consumer Unit Replacement Newcastle | Fuse Box Upgrade Newcastle"
-      description="Consumer unit replacement in Newcastle — metal enclosure requirements since 2016, costs £400–800, BS EN 61439, Part P Building Regulations, NICEIC registered electricians. Complete guide for 2026."
+      title="Consumer Unit Replacement Newcastle | Fuse Box Upgrade"
+      description="Consumer unit replacement in Newcastle — metal enclosure requirements since 2016, costs £400–800, BS EN 61439, Part P Building Regulations…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Electrical Guide"

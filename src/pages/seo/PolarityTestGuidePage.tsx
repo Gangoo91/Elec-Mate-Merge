@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Overview of the wiring regulations and key changes in Amendment 3.',
+    description: 'Overview of the wiring regulations and key changes in Amendment 4.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
@@ -541,8 +541,8 @@ const sections = [
           </ul>
         </div>
         <SEOAppBridge
-          title="Polarity Test Electrical: BS 7671:2026"
-          description="Polarity test electrical circuits per BS 7671:2018+A4:2026. Record results, generate compliant EICR reports in minutes. Free tool for electricians."
+          title="Polarity Test Electrical: BS 7671 Guide"
+          description="Polarity test electrical circuits correctly under BS 7671:2018+A4:2026. Step-by-step method, record results, generate EICR reports. Free for electricians."
           icon={FileCheck2}
         />
       </>
@@ -604,9 +604,9 @@ export default function PolarityTestGuidePage() {
   return (
     <GuideTemplate
       title="Polarity Testing Guide UK | Electrical Polarity Test Method"
-      description="Complete guide to electrical polarity testing for UK electricians. Why polarity matters, bell and battery method, continuity tester method, live verification at switch positions, common polarity errors and how to trace them."
+      description="Complete guide to electrical polarity testing for UK electricians. Why polarity matters, bell and battery method, continuity tester method…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

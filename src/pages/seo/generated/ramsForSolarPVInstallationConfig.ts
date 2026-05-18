@@ -6,14 +6,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // and the Work at Height Regulations 2005.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const ramsForSolarPVInstallationConfig: GeneratedGuideConfig = {
   pagePath: '/guides/rams-for-solar-pv-installation',
   title:
-    'RAMS for Solar PV Installation — UK Method Statement Guide | Elec-Mate',
+    'RAMS for Solar PV Installation — UK Method Statement Guide',
   description:
-    'How to write a Risk Assessment and Method Statement (RAMS) for a UK solar PV installation. Covers working at height, live DC strings, inverter mounting, G98/G99 DNO interaction, battery storage, EIC item 14.0 Prosumer LV under BS 7671:2018+A4:2026.',
+    'How to write a Risk Assessment and Method Statement (RAMS) for a UK solar PV installation. Covers working at height, live DC strings, inverter mounting…',
   datePublished: published,
   dateModified: modified,
   readingTime: 14,

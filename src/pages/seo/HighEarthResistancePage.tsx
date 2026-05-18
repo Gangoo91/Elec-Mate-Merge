@@ -445,7 +445,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Earth Rod Resistance Calculator"
-          description="Elec-Mate's earth rod resistance calculator estimates the expected RA value based on soil type, rod dimensions, and number of rods. Use it before installation to plan your earthing strategy, and after installation to verify that measured values match expectations."
+          description="Elec-Mate's earth rod resistance calculator estimates the expected RA value based on soil type, rod dimensions, and number of rods."
           icon={Calculator}
         />
       </>
@@ -552,7 +552,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Earth Resistance on Every Certificate"
-          description="Elec-Mate captures RA values on all certificates for TT installations. The app automatically calculates RA x IΔn and validates the result against the 50V limit in BS 7671. Non-compliant values are flagged immediately with guidance on improving the earth electrode resistance."
+          description="Elec-Mate captures RA values on all certificates for TT installations. The app automatically calculates RA x IΔn and validates the result against the 50V…"
           icon={FileCheck2}
         />
       </>
@@ -567,10 +567,10 @@ const sections = [
 export default function HighEarthResistancePage() {
   return (
     <GuideTemplate
-      title="High Earth Resistance | Causes and Solutions for UK Electricians"
-      description="Complete guide to high earth resistance for UK electricians. Causes, soil conditions, electrode types (rods, plates, tapes), how to improve earth resistance, testing methods, and recording RA values on certificates. BS 7671 requirements for TT installations."
+      title="High Earth Resistance | Causes and Solutions for UK"
+      description="Complete guide to high earth resistance for UK electricians. Causes, soil conditions, electrode types (rods, plates, tapes)…"
       datePublished="2025-08-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Essential Guide"

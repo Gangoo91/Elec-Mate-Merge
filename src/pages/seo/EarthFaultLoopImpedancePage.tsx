@@ -322,7 +322,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Check Zs against BS 7671 tables instantly"
-          description="Enter your measured Ze and R1+R2 values into the Elec-Mate Zs calculator. It adds them, applies temperature correction, and checks the result against the maximum Zs tables for your protective device type and rating."
+          description="Enter your measured Ze and R1+R2 values into the Elec-Mate Zs calculator. It adds them, applies temperature correction…"
           icon={Gauge}
         />
       </>
@@ -712,7 +712,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="All BS 7671 tables in your pocket"
-          description="Stop flipping through the regulation book on site. Elec-Mate's Zs calculator has all the maximum Zs tables built in, plus temperature correction and 50+ other calculators. 7-day free trial."
+          description="Stop flipping through the regulation book on site. Elec-Mate's Zs calculator has all the maximum Zs tables built in…"
           icon={Calculator}
         />
       </>
@@ -728,9 +728,9 @@ export default function EarthFaultLoopImpedancePage() {
   return (
     <GuideTemplate
       title="Earth Fault Loop Impedance Calculation | Zs Guide"
-      description="Complete guide to earth fault loop impedance (Zs) calculation. The formula Zs = Ze + (R1+R2), temperature correction factors, maximum Zs values from BS 7671, worked examples for domestic circuits, and common mistakes to avoid."
+      description="Complete guide to earth fault loop impedance (Zs) calculation. The formula Zs = Ze + (R1+R2), temperature correction factors…"
       datePublished="2025-05-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Technical Guide"

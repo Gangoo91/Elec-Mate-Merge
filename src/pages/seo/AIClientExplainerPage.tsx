@@ -357,7 +357,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Send landlords a clear explanation with every EICR"
-          description="Generate a plain-English summary with legal obligations, attach it to the EICR, and send both by email or WhatsApp. The landlord knows exactly what to do and by when."
+          description="Generate a plain-English summary with legal obligations, attach it to the EICR, and send both by email or WhatsApp."
           icon={Send}
         />
       </>
@@ -433,7 +433,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Turn every EICR into a remedial work opportunity"
-          description="The AI Client Explainer helps clients understand what needs fixing. When they understand, they approve the work. Send the explanation and the remedial quote together."
+          description="The AI Client Explainer helps clients understand what needs fixing. When they understand, they approve the work."
           icon={Lightbulb}
         />
       </>
@@ -449,9 +449,9 @@ export default function AIClientExplainerPage() {
   return (
     <ToolTemplate
       title="AI Client Explainer | Plain English Reports"
-      description="Turn technical EICR and EIC findings into plain-English explanations for homeowners and landlords. Translate observation codes, generate client-facing summary letters, and include landlord legal obligations. Built for UK electricians."
+      description="Turn technical EICR and EIC findings into plain-English explanations for homeowners and landlords. Built for UK electricians. 7-day free trial."
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="AI Communication Agent"

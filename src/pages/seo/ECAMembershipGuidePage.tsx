@@ -477,7 +477,7 @@ const sections = [
               <BookOpen className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Amendment notification</strong> — ECA members are informed of BS 7671
-                amendments (such as Amendment 3:2024) before they come into force, with practical
+                amendments (such as Amendment 4:2024) before they come into force, with practical
                 guidance on what changes affect day-to-day work. This helps contractors update their
                 procedures ahead of amendment implementation dates.
               </span>
@@ -553,7 +553,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Certificate management for ECA members"
-          description="Join 1,000+ UK electricians using Elec-Mate to complete EICRs, Minor Works Certificates, and Electrical Installation Certificates on site. On-site PDF generation, AI board scanning, and instant client delivery. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to complete EICRs, Minor Works Certificates, and Electrical Installation Certificates on site."
           icon={FileCheck2}
         />
       </>
@@ -569,9 +569,9 @@ export default function ECAMembershipGuidePage() {
   return (
     <GuideTemplate
       title="ECA Membership Guide UK | Electrical Contractors Association"
-      description="Complete guide to ECA membership for UK electricians — benefits including technical helpline, legal support, BS 7671 guidance, lobbying; eligibility requirements; cost tiers by company size; and how ECA compares to NICEIC and SELECT."
+      description="Complete guide to ECA membership for UK electricians — benefits including technical helpline, legal support, BS 7671 guidance, lobbying…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Trade Body Guide"

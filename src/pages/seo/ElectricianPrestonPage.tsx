@@ -454,7 +454,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Preston electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for Part P compliance and the rental and residential market in Preston. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -471,9 +471,9 @@ export default function ElectricianPrestonPage() {
     <GuideTemplate
       localArea="Preston"
       title="Electrician in Preston | Local Electricians 2026"
-      description="Find qualified electricians in Preston. Part P compliance, NICEIC registered, EICR for HMO landlords, consumer unit replacement, rewiring, and local electrician rates for Preston in 2026."
+      description="Find qualified electricians in Preston. Part P compliance, NICEIC registered, EICR for HMO landlords, consumer unit replacement, rewiring…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Preston"

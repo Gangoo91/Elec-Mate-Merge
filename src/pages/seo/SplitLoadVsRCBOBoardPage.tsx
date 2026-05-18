@@ -193,7 +193,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EIC certificates for consumer unit replacements"
-          description="Elec-Mate's EIC certificate app captures all board details: RCBO specifications, circuit descriptions, test results, and board photos. Generate compliant PDF certificates on site."
+          description="Elec-Mate's EIC certificate app captures all board details: RCBO specifications, circuit descriptions, test results, and board photos."
           icon={ShieldCheck}
         />
       </>
@@ -371,7 +371,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Complete EIC certificates for consumer unit replacements"
-          description="Elec-Mate's EIC app is optimised for consumer unit replacements: board scan to capture circuit details, schedule of test results for all circuits, and professional PDF certificate for the customer. 7-day free trial."
+          description="Elec-Mate's EIC app is optimised for consumer unit replacements: board scan to capture circuit details, schedule of test results for all circuits…"
           icon={Wrench}
         />
       </>
@@ -387,9 +387,9 @@ export default function SplitLoadVsRCBOBoardPage() {
   return (
     <GuideTemplate
       title="Split Load vs RCBO Consumer Unit | BS 7671 Guide UK"
-      description="Complete guide to split load vs RCBO consumer units for UK electricians. BS 7671 Regulation 314.1 requirements, nuisance tripping causes and solutions, cost comparison, and when to specify each type for domestic installations."
+      description="Complete guide to split load vs RCBO consumer units for UK electricians. BS 7671 Regulation 314.1 requirements, nuisance tripping causes and solutions…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Consumer Unit Guide"

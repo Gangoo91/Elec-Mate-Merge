@@ -613,7 +613,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more Airbnb and short-let electrical work with Elec-Mate"
-          description="Complete EICRs and PAT tests on site, quote remedial works and upgrades immediately, and build recurring relationships with Airbnb hosts. 7-day free trial for UK electricians."
+          description="Complete EICRs and PAT tests on site, quote remedial works and upgrades immediately, and build recurring relationships with Airbnb hosts."
           icon={FileCheck2}
         />
       </>
@@ -628,10 +628,10 @@ const sections = [
 export default function AirBnBElectricalSafetyPage() {
   return (
     <GuideTemplate
-      title="Airbnb Electrical Safety UK | Host Guide to Electrical Compliance"
-      description="Airbnb electrical safety guide for UK hosts. Host responsibilities under the Occupiers Liability Act 1957, electrical checks before listing, smoke and CO detector requirements, RCD protection, extension lead safety, outdoor area considerations, insurance implications, and when to get a professional inspection."
+      title="Airbnb Electrical Safety UK | Host Guide to Electrical"
+      description="Airbnb electrical safety guide for UK hosts. Host responsibilities under the Occupiers Liability Act 1957, electrical checks before listing…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Airbnb Host Guide"

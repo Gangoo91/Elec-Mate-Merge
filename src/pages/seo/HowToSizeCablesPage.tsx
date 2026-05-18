@@ -90,7 +90,7 @@ const appPreviewFeatures = [
     icon: ShieldCheck,
     title: 'BS 7671:2018+A4:2026',
     description:
-      'Every calculator, every AI agent, every course \u2014 updated to the latest Amendment 3 (issued July 2024). No outdated references.',
+      'Every calculator, every AI agent, every course \u2014 updated to the latest Amendment 4 (issued July 2024). No outdated references.',
   },
   {
     icon: Zap,
@@ -135,7 +135,7 @@ export default function HowToSizeCablesPage() {
   useSEO({
     title: 'How to Size Cables to BS 7671 | Complete Guide | Elec-Mate',
     description:
-      'Complete guide to cable sizing using BS 7671:2018+A4:2026 Appendix 4 tables. Current carrying capacity, derating factors, voltage drop, and fault current verification with worked examples.',
+      'Complete guide to cable sizing using BS 7671:2018+A4:2026 Appendix 4 tables. Current carrying capacity, derating factors, voltage drop…',
     canonical: 'https://www.elec-mate.com/guides/how-to-size-cables-bs-7671',
   });
 
@@ -604,7 +604,7 @@ export default function HowToSizeCablesPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Cable Sizing Calculator Built for UK Electricians"
-            description="Elec-Mate's digital EICR and test certificates make inspection reporting faster and more professional — and all 70+ calculators, including full BS 7671 cable sizing, are included."
+            description="Elec-Mate's digital EICR and test certificates make inspection reporting faster and more professional — and all 70+ calculators…"
             ctaText="Try Elec-Mate free"
             ctaHref="/auth/signup"
             icon={Cable}

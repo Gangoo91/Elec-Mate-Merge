@@ -500,7 +500,7 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Grow your solar installation business in Sheffield with Elec-Mate"
+          title="Grow your solar installation business in Sheffield with"
           description="Join 1,000+ UK electricians using Elec-Mate to quote solar PV jobs, manage MCS certificates, and run their business from their phone. 7-day free trial."
           icon={Sun}
         />
@@ -516,10 +516,10 @@ const sections = [
 export default function SolarPanelInstallationSheffieldPage() {
   return (
     <GuideTemplate
-      title="Solar Panel Installation Sheffield 2025 | Solar PV South Yorkshire"
-      description="Complete guide to solar panel installation in Sheffield and South Yorkshire. Costs, savings, payback periods, grants, Smart Export Guarantee, Sheffield-specific design considerations, and MCS certification."
+      title="Solar Panel Installation Sheffield 2025 | Solar PV South"
+      description="Complete guide to solar panel installation in Sheffield and South Yorkshire. Costs, savings, payback periods, grants, Smart Export Guarantee…"
       datePublished="2025-01-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Solar Guide"

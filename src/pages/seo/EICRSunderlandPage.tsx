@@ -553,9 +553,9 @@ export default function EICRSunderlandPage() {
   return (
     <GuideTemplate
       title="EICR Sunderland | Electrical Inspection Sunderland"
-      description="EICR requirements for Sunderland landlords and homeowners. Legal obligations under the 2020 Regulations, Sunderland City Council enforcement, costs £150–300, HMO requirements, and finding qualified electricians in Sunderland."
+      description="EICR requirements for Sunderland landlords and homeowners. Legal obligations under the 2020 Regulations, Sunderland City Council enforcement…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

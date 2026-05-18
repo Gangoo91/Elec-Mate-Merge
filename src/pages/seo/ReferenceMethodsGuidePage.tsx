@@ -171,8 +171,8 @@ const sections = [
           method is not optional — it is a required step in every cable sizing calculation.
         </p>
         <SEOAppBridge
-          title="BS 7671 Reference Method C Cable Install"
-          description="Reference Method C clipped direct to surface — find correct current capacity in Appendix 4:2026. Fast lookup, no table confusion."
+          title="BS 7671 Reference Method C: Current Capacity"
+          description="BS 7671 Reference Method C for cables clipped direct to surface. Check Appendix 4:2026 current ratings in seconds. Avoid undersizing on site."
           icon={Calculator}
         />
       </>
@@ -442,7 +442,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="70+ calculators built for UK electricians"
-          description="Cable sizing, voltage drop, max demand, Zs, PFC, adiabatic equation, conduit fill, trunking fill, power factor, diversity factor, three-phase power — all in one app, all working to BS 7671. 7-day free trial."
+          description="Cable sizing, voltage drop, max demand, Zs, PFC, adiabatic equation, conduit fill, trunking fill, power factor, diversity factor…"
           icon={Calculator}
         />
       </>
@@ -609,9 +609,9 @@ export default function ReferenceMethodsGuidePage() {
   return (
     <GuideTemplate
       title="Reference Methods for Cable Installation | BS 7671"
-      description="Complete guide to BS 7671 installation reference methods A to G. How each method affects current-carrying capacity, when to use each method, common domestic and commercial scenarios, and how to select the correct method for every cable run."
+      description="Complete guide to BS 7671 installation reference methods A to G. How each method affects current-carrying capacity, when to use each method…"
       datePublished="2025-04-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Technical Guide"

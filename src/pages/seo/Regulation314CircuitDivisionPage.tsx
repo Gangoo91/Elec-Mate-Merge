@@ -580,7 +580,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Design circuit schedules with AI assistance"
-          description="Elec-Mate's AI circuit designer generates circuit schedules based on property type, room layout, and equipment. Professional schedules with cable sizes, protective devices, and cable routes — ready for your EIC certificate."
+          description="Elec-Mate's AI circuit designer generates circuit schedules based on property type, room layout, and equipment."
           icon={CircuitBoard}
         />
       </>
@@ -660,9 +660,9 @@ export default function Regulation314CircuitDivisionPage() {
   return (
     <GuideTemplate
       title="Regulation 314 | Division of Installation Into Circuits"
-      description="Complete guide to Regulation 314 of BS 7671 — division of installation into circuits. Circuit design principles, ring vs radial decisions, maximum demand, circuit separation for lighting and power, and practical circuit schedules for domestic and commercial installations."
+      description="Complete guide to Regulation 314 of BS 7671 — division of installation into circuits. Circuit design principles, ring vs radial decisions…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulation Deep-Dive"

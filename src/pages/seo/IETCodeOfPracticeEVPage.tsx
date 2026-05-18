@@ -334,7 +334,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="EV charger certificates with O-PEN verification"
-          description="Elec-Mate's EV charger certificate template includes the O-PEN verification checklist from the IET CoP. Confirm the earthing arrangement, document the O-PEN device details, and generate a compliant certificate in minutes."
+          description="Elec-Mate's EV charger certificate template includes the O-PEN verification checklist from the IET CoP."
           icon={Shield}
         />
       </>
@@ -613,8 +613,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="IET Code of Practice EV Installation 5th Ed"
-          description="IET CoP 5th edition guidance for EV charger installations. BS 7671:2018+A4:2026 compliant cable sizing, load assessment, and instant PDF certificates. Free trial."
+          title="Code of Practice EV Charging 5th Ed PDF"
+          description="5th edition CoP for EV charging installations. BS 7671:2018+A4:2026 compliant guidance on cable sizing, load assessment, and earthing. Download now."
           icon={Car}
         />
       </>
@@ -630,9 +630,9 @@ export default function IETCodeOfPracticeEVPage() {
   return (
     <GuideTemplate
       title="IET Code of Practice EV Charging | Complete Guide"
-      description="Complete guide to the IET Code of Practice for EV Charging Equipment Installation. Covers load assessment, PME earthing and O-PEN protection, cable sizing, smart charging regulations, OCPP, and certification requirements for UK electricians."
+      description="Complete guide to the IET Code of Practice for EV Charging Equipment Installation. Covers load assessment, PME earthing and O-PEN protection…"
       datePublished="2025-04-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EV Charging Guide"

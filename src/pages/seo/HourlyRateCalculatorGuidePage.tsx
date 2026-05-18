@@ -470,7 +470,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Generate accurate fixed-price quotes in minutes"
-          description="Elec-Mate's AI cost engineer uses real trade pricing data to calculate labour, materials, and overheads for any job. Generate professional quotes from your phone that cover your costs and protect your margin."
+          description="Elec-Mate's AI cost engineer uses real trade pricing data to calculate labour, materials, and overheads for any job."
           icon={Calculator}
         />
       </>
@@ -585,7 +585,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Stop guessing — start pricing for profit"
-          description="Elec-Mate's AI cost engineer, job profitability tracker, and cash flow planner give you the financial clarity to price every job for profit. Know your numbers, grow your business. 7-day free trial."
+          description="Elec-Mate's AI cost engineer, job profitability tracker, and cash flow planner give you the financial clarity to price every job for profit."
           icon={Target}
         />
       </>
@@ -601,9 +601,9 @@ export default function HourlyRateCalculatorGuidePage() {
   return (
     <GuideTemplate
       title="Hourly Rate Calculator for Electricians | Set Your Rate"
-      description="Calculate your true hourly rate as a UK electrician. Covers overheads, billable hours, profit margin, pricing methods, and a step-by-step formula to set a rate that covers all costs and delivers the income you deserve."
+      description="Calculate your true hourly rate as a UK electrician. Covers overheads, billable hours, profit margin, pricing methods…"
       datePublished="2026-01-22"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Pricing Guide"

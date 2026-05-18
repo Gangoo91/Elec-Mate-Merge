@@ -418,7 +418,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Crawley electrical business from your phone"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs…"
           icon={MapPin}
         />
       </>
@@ -435,9 +435,9 @@ export default function ElectricianCrawleyPage() {
     <GuideTemplate
       localArea="Crawley"
       title="Electrician in Crawley | Find Qualified Electricians 2026"
-      description="Find qualified, registered electricians in Crawley. Realistic 2026 pricing, how to verify NICEIC/NAPIT registration, new town rewiring costs, UKPN connections, Part P compliance, and Crawley-specific electrical challenges."
+      description="Find qualified, registered electricians in Crawley. Realistic 2026 pricing, how to verify NICEIC/NAPIT registration, new town rewiring costs…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Find an Electrician"

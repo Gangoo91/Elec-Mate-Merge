@@ -537,7 +537,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run a protected electrical business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for electrical certificates, job scheduling, quoting, and invoicing. Build the paper trail that protects your business. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for electrical certificates, job scheduling, quoting, and invoicing."
           icon={ShieldCheck}
         />
       </>
@@ -553,9 +553,9 @@ export default function ElectricalToolInsurancePage2025Page() {
   return (
     <GuideTemplate
       title="Electrician Tool Insurance UK 2025 | Van & Tool Cover Guide"
-      description="Complete guide to electrician tool insurance in the UK for 2025. What's covered (tools in van, on site, at home), common exclusions (unattended vehicle, no forced entry), claim process, excess amounts, specialist vs general insurers, and typical premiums (£15–40/month for £5,000 of tools)."
+      description="Complete guide to electrician tool insurance in the UK for 2025. What's covered (tools in van, on site, at home), common exclusions (unattended vehicle…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Insurance Guide"

@@ -408,7 +408,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AI Cost Engineer for Bristol Rewire Quotes"
-          description="Electricians: describe the job and get a detailed rewire quote with materials breakdown, cable quantities, labour hours, and profit margin from real UK trade pricing data."
+          description="Electricians: describe the job and get a detailed rewire quote with materials breakdown, cable quantities, labour hours…"
           icon={Brain}
         />
       </>
@@ -546,7 +546,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage Bristol rewire projects with Elec-Mate"
-          description="Electricians: quote rewires with AI cost engineering, manage projects with task tracking, complete EIC certificates on your phone, and send professional invoices. 7-day free trial."
+          description="Electricians: quote rewires with AI cost engineering, manage projects with task tracking, complete EIC certificates on your phone…"
           icon={Wrench}
         />
       </>
@@ -562,9 +562,9 @@ export default function RewireCostBristolPage() {
   return (
     <GuideTemplate
       title="House Rewire Cost Bristol 2025 | Full Rewire Prices Bristol"
-      description="How much does a house rewire cost in Bristol in 2025? Real prices for 2-bed, 3-bed, and 4-bed properties — Victorian terraces in Clifton and Totterdown, Part P notification, disruption, replastering, and finding a NICEIC-registered electrician in Bristol."
+      description="How much does a house rewire cost in Bristol in 2025? Real prices for 2-bed, 3-bed, and 4-bed properties — Victorian terraces in Clifton and Totterdown…"
       datePublished="2025-01-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

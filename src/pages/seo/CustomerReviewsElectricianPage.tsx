@@ -516,8 +516,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Professional customer management that generates five-star reviews"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, invoicing, job management, and certification. The professional experience your customers will review. 7-day free trial."
+          title="Professional customer management that generates five-star"
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, invoicing, job management, and certification."
           icon={Star}
         />
       </>
@@ -532,10 +532,10 @@ const sections = [
 export default function CustomerReviewsElectricianPage() {
   return (
     <GuideTemplate
-      title="Getting Customer Reviews as an Electrician UK | Review Strategy"
-      description="How to get more Google, Checkatrade, and Trustpilot reviews as a UK electrician. When and how to ask, dealing with negative reviews, QR code cards, and how reviews improve your Google ranking and conversion rate."
+      title="Getting Customer Reviews as an Electrician UK | Review"
+      description="How to get more Google, Checkatrade, and Trustpilot reviews as a UK electrician. When and how to ask, dealing with negative reviews, QR code cards…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Business Guide"

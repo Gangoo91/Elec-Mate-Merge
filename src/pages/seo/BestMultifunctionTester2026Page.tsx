@@ -684,7 +684,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Record your MFT results directly into certificates"
-          description="Elec-Mate's EICR and EIC certificate apps let you enter test results on site and generate professional PDF certificates instantly. No more transcribing results from paper at the end of the day."
+          description="Elec-Mate's EICR and EIC certificate apps let you enter test results on site and generate professional PDF certificates instantly."
           icon={FileCheck2}
         />
       </>
@@ -700,9 +700,9 @@ export default function BestMultifunctionTester2026Page() {
   return (
     <GuideTemplate
       title="Best Multifunction Tester 2026 | Top MFTs Compared"
-      description="Honest comparison of the best multifunction testers for UK electricians in 2026. Fluke 1664 FC, Megger MFT1741+, Metrel MI 3152, Kewtech KT66DL, and Seaward Clare compared on accuracy, speed, Bluetooth, battery life, weight, and price."
+      description="Honest comparison of the best multifunction testers for UK electricians in 2026. Fluke 1664 FC, Megger MFT1741+, Metrel MI 3152, Kewtech KT66DL…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Equipment Guide"

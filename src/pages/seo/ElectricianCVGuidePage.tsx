@@ -548,7 +548,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Build your ElecID profile"
-          description="Create a verified digital profile that shows employers your qualifications, certifications, and CPD record. Share a single link instead of scanning certificates. Professional, verifiable, always up to date."
+          description="Create a verified digital profile that shows employers your qualifications, certifications, and CPD record."
           icon={ShieldCheck}
         />
         <p>
@@ -561,7 +561,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Manage your business from your phone"
-          description="Elec-Mate gives you professional quoting, invoicing, expense tracking, and certification tools — all in one app. Show employers or clients that you run a professional operation."
+          description="Elec-Mate gives you professional quoting, invoicing, expense tracking, and certification tools — all in one app."
           icon={Briefcase}
         />
       </>
@@ -578,9 +578,9 @@ export default function ElectricianCVGuidePage() {
     <GuideTemplate
       localArea="Cv Guide"
       title="Electrician CV Guide 2026 | Template & Tips UK"
-      description="Complete guide to writing an electrician CV that gets interviews. CV structure, qualifications section, experience tips, common mistakes to avoid, and how to stand out in the UK electrical industry."
+      description="Complete guide to writing an electrician CV that gets interviews. CV structure, qualifications section, experience tips, common mistakes to avoid…"
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

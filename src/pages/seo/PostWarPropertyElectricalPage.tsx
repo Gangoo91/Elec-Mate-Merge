@@ -279,7 +279,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Non-combustible requirement</strong> — Amendment 3 to BS 7671 (effective
+                <strong>Non-combustible requirement</strong> — Amendment 4 to BS 7671 (effective
                 from 2016) requires consumer unit enclosures to be of non-combustible construction
                 (typically steel). While existing Bakelite or early plastic consumer units are not
                 required to be replaced immediately on these grounds alone, they cannot be
@@ -558,7 +558,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete post-war property EICRs and quotes with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, consumer unit replacement paperwork, and professional quoting. AI board scanning, instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, consumer unit replacement paperwork, and professional quoting."
           icon={FileCheck2}
         />
       </>
@@ -573,10 +573,10 @@ const sections = [
 export default function PostWarPropertyElectricalPage() {
   return (
     <GuideTemplate
-      title="1940s/1950s House Electrical Guide | Post-War Property Electrical UK"
-      description="Complete electrical guide for post-war properties built 1945–1965. Early PVC wiring, rewirable fuse boxes, earthing issues, signs your installation needs upgrading, and upgrade costs £400–£6,000 for 2026."
+      title="1940s/1950s House Electrical Guide | Post-War Property"
+      description="Complete electrical guide for post-war properties built 1945–1965. Early PVC wiring, rewirable fuse boxes, earthing issues…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Property Guide"

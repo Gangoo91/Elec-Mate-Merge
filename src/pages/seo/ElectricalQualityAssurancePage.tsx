@@ -23,7 +23,7 @@ import {
 
 const PAGE_TITLE = 'Electrical Quality Assurance | QA on Site Guide';
 const PAGE_DESCRIPTION =
-  'Complete guide to electrical quality assurance on construction sites. Inspection and test plans (ITPs), snagging, quality documentation, client acceptance, witness and hold points, NCRs, and how to build a QA system that delivers right-first-time installations.';
+  'Electrical QA on construction sites: ITPs, snagging, quality docs, client acceptance, witness/hold points, NCRs. Right-first-time installs.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -404,7 +404,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional quality documentation with Elec-Mate"
-          description="Elec-Mate produces BS 7671-compliant test certificates and schedules of test results that form the core of your quality documentation package. Professional PDF export, cloud storage, and accessible from any device on site."
+          description="Elec-Mate produces BS 7671-compliant test certificates and schedules of test results that form the core of your quality documentation package."
           icon={FileCheck2}
         />
       </>
@@ -482,7 +482,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Documentation that impresses clients"
-          description="Elec-Mate produces professional, BS 7671-compliant certification and test documentation that demonstrates quality. Present your work with confidence. Digital storage means you can retrieve any certificate instantly when clients ask."
+          description="Elec-Mate produces professional, BS 7671-compliant certification and test documentation that demonstrates quality. Present your work with confidence."
           icon={Award}
         />
       </>
@@ -610,7 +610,7 @@ export default function ElectricalQualityAssurancePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-08-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Guide"

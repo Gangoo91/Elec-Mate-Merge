@@ -24,9 +24,9 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const PAGE_TITLE = 'Part P Building Regulations Explained | Electrical Work Guide | Elec-Mate';
+const PAGE_TITLE = 'Part P Building Regulations | Electrical Work Guide';
 const PAGE_DESCRIPTION =
-  'Complete guide to Part P Building Regulations for electricians. Notifiable vs non-notifiable work, competent person schemes (NICEIC, NAPIT, ELECSA), penalties, and BS 7671 interaction.';
+  'Part P Building Regs for UK electricians: notifiable vs non-notifiable work, NICEIC/NAPIT/ELECSA competent person schemes, penalties, BS 7671.';
 
 const faqs = [
   {
@@ -84,7 +84,7 @@ const features = [
     icon: ShieldCheck,
     title: 'BS 7671:2018+A4:2026',
     description:
-      'Built to the current 18th Edition including Amendment 3. All regulation references, test limits, and compliance checks are up to date.',
+      'Built to the current 18th Edition including Amendment 4. All regulation references, test limits, and compliance checks are up to date.',
   },
   {
     icon: Smartphone,
@@ -105,7 +105,7 @@ const articleSchema = {
   headline: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
   datePublished: '2025-03-10',
-  dateModified: '2026-02-10',
+  dateModified: '2026-05-18',
   author: {
     '@type': 'Organization',
     name: 'Elec-Mate',
@@ -152,7 +152,7 @@ const breadcrumbSchema = {
 
 export default function PartPBuildingRegulationsPage() {
   useSEO({
-    title: 'Part P Building Regulations Explained | Electrical Work Guide',
+    title: 'Part P Building Regulations Explained | Electrical Work',
     description: PAGE_DESCRIPTION,
   });
 
@@ -564,7 +564,7 @@ export default function PartPBuildingRegulationsPage() {
               Approved Document P references BS 7671 as the standard that, if followed, demonstrates
               compliance with the safety requirements of Part P. The current referenced edition is
               BS 7671:2018+A4:2026 — the 18th Edition of the IET Wiring Regulations with Amendment
-              3, issued in July 2024. Amendment 3 introduced Regulation 530.3.201 covering
+              3, issued in July 2024. Amendment 4 introduced Regulation 530.3.201 covering
               bidirectional and unidirectional protective devices, as well as other updates and
               clarifications.
             </p>

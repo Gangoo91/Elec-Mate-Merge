@@ -209,7 +209,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Apprentice Training Hub"
-          description="Elec-Mate supports apprentices from Day 1 to qualification. Flashcards for Level 2 and Level 3 theory, mock exams that replicate the real papers, an EPA simulator, AM2 practice scenarios, on-the-job training (OJT) tracking, site diary for recording daily learning, and a portfolio builder for gathering evidence. Everything your college and employer expect, on your phone."
+          description="Elec-Mate supports apprentices from Day 1 to qualification. Flashcards for Level 2 and Level 3 theory, mock exams that replicate the real papers…"
           icon={GraduationCap}
         />
       </>
@@ -383,7 +383,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Flashcards and Mock Exams"
-          description="Study for every qualification on the pathway — Level 2, Level 3, 18th Edition, C&G 2391 — with Elec-Mate's flashcard decks and timed mock exams. AI-powered explanations break down every question you get wrong. Pass first time."
+          description="Study for every qualification on the pathway — Level 2, Level 3, 18th Edition, C&G 2391 — with Elec-Mate's flashcard decks and timed mock exams."
           icon={BookOpen}
         />
       </>
@@ -467,7 +467,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AM2 Simulator"
-          description="Elec-Mate's AM2 simulator replicates the assessment scenarios and marking criteria. Practice the installation sequence, work through the testing procedures, complete the certification forms, and check your answers against the marking scheme — all on your phone. Walk into the assessment centre knowing exactly what to expect."
+          description="Elec-Mate's AM2 simulator replicates the assessment scenarios and marking criteria. Practice the installation sequence…"
           icon={ClipboardCheck}
         />
       </>
@@ -739,7 +739,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="The Complete Platform for Your Career"
-          description="Elec-Mate grows with you. As an apprentice: flashcards, mock exams, AM2 simulator. As a newly qualified sparky: 16 certificate types, 70+ calculators, 5 AI agents. As a self-employed business owner: quoting, invoicing, expense tracking, cash flow planning. One app for every stage of your career."
+          description="Elec-Mate grows with you. As an apprentice: flashcards, mock exams, AM2 simulator. As a newly qualified sparky: 16 certificate types, 70+ calculators…"
           icon={Zap}
         />
       </>
@@ -797,9 +797,9 @@ export default function HowToBecomeElectricianPage() {
   return (
     <GuideTemplate
       title="How to Become an Electrician UK 2026 | Complete Career Guide"
-      description="Complete guide to becoming a qualified electrician in the UK in 2026. Apprenticeship and adult retraining routes, qualifications needed, AM2 assessment, competent person schemes, costs, timeline, and what the work involves."
+      description="Complete guide to becoming a qualified electrician in the UK in 2026. Apprenticeship and adult retraining routes, qualifications needed, AM2 assessment…"
       datePublished="2024-03-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

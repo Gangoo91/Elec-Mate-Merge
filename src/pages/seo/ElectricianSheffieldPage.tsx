@@ -513,7 +513,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Complete HMO EICRs faster on site"
-          description="Elec-Mate's EICR app lets you complete the full report on your phone during the inspection. AI board scanning, voice-to-text observations, and instant PDF export. Send the report before you leave."
+          description="Elec-Mate's EICR app lets you complete the full report on your phone during the inspection. AI board scanning, voice-to-text observations…"
           icon={FileCheck2}
         />
       </>
@@ -680,7 +680,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Join 1,000+ UK electricians using Elec-Mate"
-          description="Cable sizing, professional quoting, and on-site certification. Everything a Sheffield electrician needs for HMOs, conversions, and domestic work. 7-day free trial, cancel anytime."
+          description="Cable sizing, professional quoting, and on-site certification. Everything a Sheffield electrician needs for HMOs, conversions, and domestic work."
           icon={MapPin}
         />
       </>
@@ -697,9 +697,9 @@ export default function ElectricianSheffieldPage() {
     <GuideTemplate
       localArea="Sheffield"
       title="Electrician in Sheffield | Find Qualified Electricians 2026"
-      description="Find qualified, registered electricians in Sheffield. Realistic 2026 pricing, Northern Powergrid DNO, steel city industrial conversions, Crookes and Walkley stone terraces, university HMOs, Peak District conservation, and Meadowhall commercial work."
+      description="Find qualified, registered electricians in Sheffield. Realistic 2026 pricing, Northern Powergrid DNO, steel city industrial conversions…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Find an Electrician"

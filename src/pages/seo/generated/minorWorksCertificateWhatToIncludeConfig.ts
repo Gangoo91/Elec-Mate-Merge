@@ -1,11 +1,11 @@
 import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuidePage';
 
 const published = '2026-04-12';
-const modified = '2026-04-12';
+const modified = '2026-05-18';
 
 export const minorWorksCertificateWhatToIncludeConfig: GeneratedGuideConfig = {
   pagePath: '/guides/minor-works-certificate-what-to-include',
-  title: 'Minor Works Certificate What to Include | Electrician Guide | Elec-Mate',
+  title: 'Minor Works Certificate What to Include | Electrician Guide',
   description:
     'What a strong Minor Works certificate should include, from the job scope and test results to observations, notes, and client handover.',
   datePublished: published,
@@ -99,6 +99,31 @@ export const minorWorksCertificateWhatToIncludeConfig: GeneratedGuideConfig = {
           type: 'paragraph',
           text:
             'Not every job stays minor for long. If the work expands into deeper testing, a fuller inspection, or a larger remedial package, the paperwork should change with it. That keeps the record accurate and avoids forcing one small certificate to cover a bigger scope than it should.',
+        },
+      ],
+    },
+    {
+      id: 'fields-that-matter-most',
+      heading: 'Fields that matter most on a Minor Works Certificate',
+      blocks: [
+        {
+          type: 'paragraph',
+          text:
+            'A Minor Works Certificate covers a single circuit change — not a new installation, not a rewire. The form is short on purpose, but every field on it matters. The mistake people make is treating the MWC as a quick-fire receipt rather than a legal record. Skip the wrong field and the certificate stops being defensible.',
+        },
+        {
+          type: 'paragraph',
+          text:
+            'The three fields that matter most are the description of work, the test results, and the declaration of compliance with BS 7671. Each one anchors a different part of the legal record. The description proves scope. The test results prove safety. The declaration proves competence. If any of the three is vague, the certificate weakens.',
+        },
+        {
+          type: 'list',
+          items: [
+            'Description of work: name the circuit by number AND by use ("Circuit 4, kitchen ring final").',
+            'Test results: continuity, insulation resistance, polarity, EFLI, and RCD time for every modified circuit.',
+            'Declaration: tick the BS 7671 compliance box only after every test result is in.',
+            'Reason for departure: if you departed from BS 7671 for any reason, write the reason — do not leave it blank.',
+          ],
         },
       ],
     },

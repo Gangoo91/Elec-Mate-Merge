@@ -22,9 +22,9 @@ export default function EmployerElectricalPlatformPage() {
   return (
     <ToolTemplate
       title="Employer Platform for Electrical Companies | Dashboard"
-      description="Elec-Mate's employer platform for electrical companies. 5 employer hubs — apprentice tracking, staff management, certificate oversight, compliance monitoring, and business analytics. Real-time dashboards, progress tracking, and team management tools for electrical contractors."
+      description="Elec-Mate's employer platform for electrical companies. 5 employer hubs — apprentice tracking, staff management, certificate oversight…"
       datePublished="2026-01-18"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Employer Platform', href: '/tools/employer-electrical-platform' },
@@ -250,7 +250,7 @@ export default function EmployerElectricalPlatformPage() {
           appBridge: {
             title: 'Oversee Every Certificate Your Team Produces',
             description:
-              'Review, approve, and track all certificates from one dashboard. Search by property, client, date, or electrician. Quality control before submission to scheme providers.',
+              'Review, approve, and track all certificates from one dashboard. Search by property, client, date, or electrician.',
             icon: ClipboardCheck,
           },
         },

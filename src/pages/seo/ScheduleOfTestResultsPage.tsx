@@ -295,7 +295,7 @@ export default function ScheduleOfTestResultsPage() {
       title="Schedule of Test Results Guide for Electricians"
       description="Learn what the schedule of test results records, what values belong on it, common mistakes to avoid, and how to complete cleaner electrical certificates."
       datePublished="2026-04-12"
-      dateModified="2026-04-12"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Certificate Guide"

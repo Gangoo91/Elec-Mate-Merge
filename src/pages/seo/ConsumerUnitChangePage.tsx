@@ -20,9 +20,9 @@ export default function ConsumerUnitChangePage() {
   return (
     <GuideTemplate
       title="Consumer Unit Change UK 2026 | Cost, Regulations & Guide"
-      description="Complete guide to changing a consumer unit in the UK. Costs from £500 to £1,200, Part P notification requirements, BS EN 61439-3 metal enclosure regulations, AFDD considerations, and what's involved step by step."
+      description="Complete guide to changing a consumer unit in the UK. Costs from £500 to £1,200, Part P notification requirements…"
       datePublished="2025-04-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'Consumer Unit Change', href: '/guides/consumer-unit-change' },
@@ -159,7 +159,7 @@ export default function ConsumerUnitChangePage() {
             <>
               <p>
                 A consumer unit change in 2026 must comply with BS 7671:2018+A4:2026 — the 18th
-                Edition of the IET Wiring Regulations with Amendment 3. The key regulatory
+                Edition of the IET Wiring Regulations with Amendment 4. The key regulatory
                 requirements are:
               </p>
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -210,7 +210,7 @@ export default function ConsumerUnitChangePage() {
                       <strong className="text-yellow-400">
                         Bidirectional devices (BS 7671:2018+A4:2026, Section 530)
                       </strong>{' '}
-                      — Introduced by Amendment 3 (A4:2026). Where the installation includes battery
+                      — Introduced by Amendment 4 (A4:2026). Where the installation includes battery
                       storage, solar PV with battery backup, or V2G EV chargers, protective devices
                       must be suitable for bidirectional fault current flow.
                     </span>
@@ -236,7 +236,7 @@ export default function ConsumerUnitChangePage() {
               </p>
               <SEOAppBridge
                 title="BS 7671 Compliance Built Into Every Certificate"
-                description="Elec-Mate's EIC form is structured around BS 7671:2018+A4:2026 requirements. Every test result is validated against the correct limits, and the design section covers RCD selection, SPD provision, and all mandatory checklist items."
+                description="Elec-Mate's EIC form is structured around BS 7671:2018+A4:2026 requirements. Every test result is validated against the correct limits…"
                 icon={ShieldCheck}
               />
             </>
@@ -388,7 +388,7 @@ export default function ConsumerUnitChangePage() {
               </p>
               <SEOAppBridge
                 title="Price Jobs Accurately with AI Cost Engineer"
-                description="Elec-Mate's AI Cost Engineer prices consumer unit changes based on your specific specification — board type, number of ways, RCBO vs split-load, SPD, AFDDs, and any additional work. Get an accurate quote in seconds, backed by real trade pricing data."
+                description="Elec-Mate's AI Cost Engineer prices consumer unit changes based on your specific specification — board type, number of ways, RCBO vs split-load, SPD…"
                 icon={PoundSterling}
               />
             </>
@@ -485,7 +485,7 @@ export default function ConsumerUnitChangePage() {
               </div>
               <SEOAppBridge
                 title="Board Scanner — Photograph the Old Board"
-                description="Elec-Mate's Board Scanner photographs the existing consumer unit and uses AI to extract all circuit data — circuit numbers, MCB ratings, RCD types, and circuit descriptions. This saves time during the survey and creates a digital record before the old board is removed."
+                description="Elec-Mate's Board Scanner photographs the existing consumer unit and uses AI to extract all circuit data — circuit numbers, MCB ratings, RCD types…"
                 icon={Camera}
               />
             </>

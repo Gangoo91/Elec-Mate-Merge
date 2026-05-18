@@ -22,7 +22,7 @@ import {
 
 const PAGE_TITLE = 'Electrical Trade Unions | Unite & GMB Guide UK';
 const PAGE_DESCRIPTION =
-  'Complete guide to trade union membership for UK electricians. Unite the Union, GMB, JIB agreements, benefits of membership, collective bargaining, legal support, pay rates, dispute resolution, and how unions support your electrical career.';
+  'Trade union membership for UK electricians: Unite, GMB, JIB agreements, benefits, collective bargaining, legal support, pay rates, disputes.';
 
 const breadcrumbs = [
   { label: 'Career', href: '/guides' },
@@ -428,7 +428,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Track your CPD and career progression"
-          description="Elec-Mate's CPD tracker records all your training, courses, and professional development activities. Build evidence for JIB grading assessments and demonstrate ongoing competence. Everything documented, nothing forgotten."
+          description="Elec-Mate's CPD tracker records all your training, courses, and professional development activities."
           icon={GraduationCap}
         />
         <p>
@@ -479,7 +479,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Professional tools for every electrician"
-          description="Whether you are employed, self-employed, or running a team, Elec-Mate provides the certificates, calculators, study tools, and business features you need. Union membership covers your rights — Elec-Mate covers your workflow."
+          description="Whether you are employed, self-employed, or running a team, Elec-Mate provides the certificates, calculators, study tools, and business features you need."
           icon={Briefcase}
         />
       </>
@@ -542,7 +542,7 @@ export default function ElectricalUnionMembershipPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

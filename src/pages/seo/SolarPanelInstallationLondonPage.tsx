@@ -644,7 +644,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your solar PV business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, instant quoting, and business management. Complete solar EICs on your phone. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, instant quoting, and business management. Complete solar EICs on your phone."
           icon={FileCheck2}
         />
       </>
@@ -660,9 +660,9 @@ export default function SolarPanelInstallationLondonPage() {
   return (
     <GuideTemplate
       title="Solar Panel Installation London 2025 | Solar PV London Costs"
-      description="Solar panel installation costs in London 2025: 4kW system £5,000–£8,000. London generates ~1,000 kWh/kWp/year. Smart Export Guarantee, MCS certification, planning permission, and finding certified installers."
+      description="Solar panel installation costs in London 2025: 4kW system £5,000–£8,000. London generates ~1,000 kWh/kWp/year."
       datePublished="2025-01-01"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Solar Guide"

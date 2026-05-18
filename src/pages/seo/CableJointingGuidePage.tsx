@@ -547,10 +547,10 @@ const sections = [
 export default function CableJointingGuidePage() {
   return (
     <GuideTemplate
-      title="Cable Jointing Guide — LV and MV Jointing for UK Electricians"
-      description="Complete guide to cable jointing for UK electricians: heat shrink vs cold shrink joints, Scotchlok connectors, cable stripping techniques, insulation testing after jointing, and BS 7671 Regulations 526.1 and 526.3 requirements."
+      title="Cable Jointing Guide — LV and MV Jointing for UK"
+      description="Complete guide to cable jointing for UK electricians: heat shrink vs cold shrink joints, Scotchlok connectors, cable stripping techniques…"
       datePublished="2024-06-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cable Jointing"

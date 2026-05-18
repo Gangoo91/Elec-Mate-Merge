@@ -582,7 +582,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Edinburgh electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the challenges of Edinburgh's property stock. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -599,9 +599,9 @@ export default function ElectricianEdinburghPage() {
     <GuideTemplate
       localArea="Edinburgh"
       title="Electrician in Edinburgh | Local Electricians 2026"
-      description="Find qualified electricians in Edinburgh. Scottish Building Standards, SPEN DNO, listed building work, tenement rewiring, Edinburgh Festival installations, and local electrician rates for 2026."
+      description="Find qualified electricians in Edinburgh. Scottish Building Standards, SPEN DNO, listed building work, tenement rewiring…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Edinburgh"

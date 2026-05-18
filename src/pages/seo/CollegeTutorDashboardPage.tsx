@@ -147,7 +147,7 @@ const features = [
     icon: ClipboardCheck,
     title: 'Built-In Assessment Tools',
     description:
-      'Generate and assign mock exams for any qualification. Create custom quizzes on specific topics. Record practical observation marks against qualification criteria.',
+      'Generate and assign mock exams for any qualification. Create custom quizzes on specific topics.',
   },
   {
     icon: FileText,
@@ -165,7 +165,7 @@ const features = [
     icon: Settings,
     title: 'Multi-Tutor Access',
     description:
-      'Multiple tutor accounts with configurable permissions. Lead tutors see everything; additional tutors manage their assigned groups. Full audit trail on all entries.',
+      'Multiple tutor accounts with configurable permissions. Lead tutors see everything; additional tutors manage their assigned groups.',
   },
 ];
 
@@ -394,9 +394,9 @@ export default function CollegeTutorDashboardPage() {
   return (
     <ToolTemplate
       title="College Tutor Dashboard | Electrical Training Platform"
-      description="College tutor dashboard for managing electrical apprentice progress. Student tracking, course assignment, assessment tools, automated reporting, and EPA gateway readiness. Built for UK electrical training providers."
+      description="College tutor dashboard for managing electrical apprentice progress. Student tracking, course assignment, assessment tools, automated reporting…"
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Tutor Management Platform"

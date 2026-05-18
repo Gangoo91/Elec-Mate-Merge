@@ -380,7 +380,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote warehouse lighting projects accurately"
-          description="Elec-Mate's quoting app handles fitting schedules, per-fitting installation rates, and control system costing. AI cost engineering validates your prices against current market data."
+          description="Elec-Mate's quoting app handles fitting schedules, per-fitting installation rates, and control system costing."
           icon={Calculator}
         />
       </>
@@ -489,7 +489,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote warehouse lighting with fitting schedules"
-          description="Elec-Mate's quoting app handles per-fitting pricing, access equipment, controls, and emergency lighting as separate line items. Professional PDF quotes with energy saving calculations."
+          description="Elec-Mate's quoting app handles per-fitting pricing, access equipment, controls, and emergency lighting as separate line items."
           icon={Calculator}
         />
       </>
@@ -505,9 +505,9 @@ export default function WarehouseLightingCostPage() {
   return (
     <GuideTemplate
       title="Warehouse Lighting Cost 2026 | LED High Bay UK Price Guide"
-      description="How much does warehouse LED lighting cost in 2026? UK guide covering high bay LED fittings at £15-40 per fitting installed, lux levels, emergency lighting, controls, and energy savings."
+      description="How much does warehouse LED lighting cost in 2026? UK guide covering high bay LED fittings at £15-40 per fitting installed, lux levels…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

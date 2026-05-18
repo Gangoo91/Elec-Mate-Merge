@@ -93,7 +93,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/consumer-unit-regulations',
     title: 'Consumer Unit Regulations UK',
     description:
-      'Detailed guide to the regulations governing consumer units including Amendment 3 changes.',
+      'Detailed guide to the regulations governing consumer units including Amendment 4 changes.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -458,8 +458,8 @@ const sections = [
           </ul>
         </div>
         <SEOAppBridge
-          title="Find registered electricians for consumer unit replacement in Edinburgh"
-          description="Elec-Mate connects you with SELECT and NICEIC-registered electricians across Edinburgh and the Lothians. Get itemised quotes, track your job, and receive your EIC digitally."
+          title="Find registered electricians for consumer unit replacement"
+          description="Elec-Mate connects you with SELECT and NICEIC-registered electricians across Edinburgh and the Lothians."
           icon={MapPin}
         />
       </>
@@ -474,10 +474,10 @@ const sections = [
 export default function ConsumerUnitReplacementEdinburghPage() {
   return (
     <GuideTemplate
-      title="Consumer Unit Replacement Edinburgh | Fuse Board Upgrade Cost 2026"
-      description="How much does a consumer unit replacement cost in Edinburgh in 2026? Local pricing, Scottish building regulations, what to expect, and how to choose a registered electrician in Edinburgh."
+      title="Consumer Unit Replacement Edinburgh | Fuse Board Upgrade"
+      description="How much does a consumer unit replacement cost in Edinburgh in 2026? Local pricing, Scottish building regulations, what to expect…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Edinburgh Price Guide"

@@ -414,7 +414,7 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Generate electrical certificates on your phone with Elec-Mate"
+          title="Generate electrical certificates on your phone with"
           description="Join 1,000+ UK electricians using Elec-Mate for EICRs, minor works certificates, and BS 7671-compliant documentation. 7-day free trial."
           icon={ShieldAlert}
         />
@@ -431,9 +431,9 @@ export default function SecurityAlarmElectricalFaultPage() {
   return (
     <GuideTemplate
       title="Security Alarm Electrical Fault | Alarm Wiring Problems UK"
-      description="Security alarm fault? This guide covers tamper alerts, low battery, power supply faults, communication faults, and when to reset versus call an alarm engineer."
+      description="Security alarm fault? This guide covers tamper alerts, low battery, power supply faults, communication faults…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Fault Finding Guide"

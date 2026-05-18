@@ -26,7 +26,7 @@ import {
 
 const PAGE_TITLE = 'Fire Alarm Certificate App | BS 5839 Compliant | Elec-Mate';
 const PAGE_DESCRIPTION =
-  'Create BS 5839-1 compliant fire alarm certificates on your phone. Zone schedules, cause-and-effect matrices, weekly test records, annual servicing, and professional PDF export. Start free.';
+  'BS 5839-1 fire alarm certificates on your phone: zone schedules, cause-and-effect, weekly tests, annual service, professional PDF export. Free.';
 
 const faqs = [
   {
@@ -578,7 +578,7 @@ export default function FireAlarmCertificatePage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Create BS 5839-1 Fire Alarm Certificates on Your Phone"
-            description="Elec-Mate's fire alarm certificate app covers zone schedules, cause-and-effect matrices, weekly test records, and annual servicing reports — with professional PDF export."
+            description="Elec-Mate's fire alarm certificate app covers zone schedules, cause-and-effect matrices, weekly test records…"
             ctaText="Try Elec-Mate free"
             ctaHref="/auth/signup"
             icon={Bell}

@@ -302,7 +302,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Size the heat pump circuit in seconds"
-          description="Enter the design current, cable length, installation method, and correction factors into Elec-Mate's cable sizing calculator. It confirms the cable size, MCB rating, and voltage drop — and flags any issues before you install."
+          description="Enter the design current, cable length, installation method, and correction factors into Elec-Mate's cable sizing calculator."
           icon={Calculator}
         />
       </>
@@ -620,9 +620,9 @@ export default function HeatPumpElectricalPage() {
   return (
     <GuideTemplate
       title="Heat Pump Electrical Requirements | Supply & Circuit Guide"
-      description="Complete guide to heat pump electrical requirements for UK electricians. Single phase vs three phase supply, cable sizing, MCB rating, dedicated circuit design, BUS grant requirements, MCS compliance, and EIC certification."
+      description="Complete guide to heat pump electrical requirements for UK electricians. Single phase vs three phase supply, cable sizing, MCB rating…"
       datePublished="2025-08-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

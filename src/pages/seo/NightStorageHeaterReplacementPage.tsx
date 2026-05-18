@@ -605,10 +605,10 @@ const sections = [
 export default function NightStorageHeaterReplacementPage() {
   return (
     <GuideTemplate
-      title="Night Storage Heater Replacement — Complete UK Electrician Guide 2024"
-      description="Full guide to replacing night storage heaters: Lot 20 regulations, wiring requirements under BS 7671, Economy 7 implications, and costs for panel heaters, infrared panels, and heat pumps."
+      title="Night Storage Heater Replacement — Complete UK Electrician"
+      description="Full guide to replacing night storage heaters: Lot 20 regulations, wiring requirements under BS 7671, Economy 7 implications…"
       datePublished="2024-06-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Heating Guide"

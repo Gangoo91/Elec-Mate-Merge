@@ -179,27 +179,27 @@ const sections = [
             {
               title: '1st Edition (1882)',
               description:
-                'Published as "Rules and Regulations for the Prevention of Fire Risks Arising from Electric Lighting." Covered basic insulation requirements, fuse protection, and separation from combustible materials. Written for the tiny number of buildings with electric lighting.',
+                'Published as "Rules and Regulations for the Prevention of Fire Risks Arising from Electric Lighting." Covered basic insulation requirements…',
             },
             {
               title: '2nd to 4th Editions (1888 — 1903)',
               description:
-                'Expanded as electricity became more common. Covered new installation methods, improved insulation materials, and the growing use of electric motors in industry. The 4th Edition (1903) was the first to address three-phase systems.',
+                'Expanded as electricity became more common. Covered new installation methods, improved insulation materials…',
             },
             {
               title: '5th to 8th Editions (1907 — 1924)',
               description:
-                'Covered the rapid expansion of domestic electricity during and after World War I. The 8th Edition (1924) introduced specific requirements for domestic installations as electricity moved from factories and mansions into ordinary homes.',
+                'Covered the rapid expansion of domestic electricity during and after World War I. The 8th Edition (1924) introduced specific requirements for domestic…',
             },
             {
               title: '9th to 11th Editions (1927 — 1939)',
               description:
-                'Addressed the National Grid rollout (1926 — 1933) and the standardisation of supply voltage. The 11th Edition (1939) was published just before World War II and remained in force throughout the war years.',
+                'Addressed the National Grid rollout (1926 — 1933) and the standardisation of supply voltage. The 11th Edition (1939) was published just before World War…',
             },
             {
               title: '12th Edition (1950)',
               description:
-                'The first post-war edition, reflecting the massive programme of house building and industrial reconstruction. Introduced more structured earthing requirements and improved protection standards.',
+                'The first post-war edition, reflecting the massive programme of house building and industrial reconstruction.',
             },
           ].map((item) => (
             <div
@@ -234,17 +234,17 @@ const sections = [
             {
               title: '13th Edition (1955)',
               description:
-                'Introduced the concept of shock protection alongside fire protection. Earthing requirements were significantly strengthened. This edition recognised that a person touching a live conductor was as dangerous as a fire, and the regulations began to reflect this.',
+                'Introduced the concept of shock protection alongside fire protection. Earthing requirements were significantly strengthened.',
             },
             {
               title: '14th Edition (1966)',
               description:
-                'A major restructuring. Organised the regulations into parts covering design, selection, and installation. Introduced ring final circuits as a standard domestic wiring pattern. The familiar structure of the regulations — supply, distribution, final circuits — began to take shape.',
+                'A major restructuring. Organised the regulations into parts covering design, selection, and installation.',
             },
             {
               title: '15th Edition (1981)',
               description:
-                'A complete rewrite that aligned the UK regulations with the emerging European harmonised standard (HD 384). Introduced the modern numbering system (Part 1 through Part 7) and the concept of protection against electric shock using automatic disconnection of supply. This edition is the foundation of the regulation structure we use today.',
+                'A complete rewrite that aligned the UK regulations with the emerging European harmonised standard (HD 384).',
             },
           ].map((item) => (
             <div
@@ -310,7 +310,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="All BS 7671 regulation references at your fingertips"
-          description="Elec-Mate's 8 Elec-AI agents are trained on the full text of BS 7671:2018+A3:2024, the On-Site Guide, and all 8 Guidance Notes. Ask any regulation question and get an instant, referenced answer on site."
+          description="Elec-Mate's 8 Elec-AI agents are trained on the full text of BS 7671:2018+A3:2024, the On-Site Guide, and all 8 Guidance Notes."
           icon={Brain}
         />
       </>
@@ -331,7 +331,7 @@ const sections = [
             {
               title: 'Key changes in the 18th Edition (2018)',
               description:
-                'Introduction of AFDDs (Arc Fault Detection Devices) per Regulation 421.1. Energy efficiency requirements in a new Section 801. Requirements for EV charging installations in Section 722. Expanded requirements for solar PV in Section 712. New requirements for prosumer installations.',
+                'Introduction of AFDDs (Arc Fault Detection Devices) per Regulation 421.1. Energy efficiency requirements in a new Section 801.',
             },
             {
               title: 'Amendment 1 (A1:2020)',
@@ -341,12 +341,12 @@ const sections = [
             {
               title: 'Amendment 2 (A2:2022)',
               description:
-                'More substantial changes. Updated requirements for RCD protection, cable installation methods, and special locations. The base standard most electricians currently work to is BS 7671:2018+A2:2022.',
+                'More substantial changes. Updated requirements for RCD protection, cable installation methods, and special locations.',
             },
             {
               title: 'Amendment 3 (A3:2024)',
               description:
-                'Issued 31 July 2024. Added new Section 530 requirements covering bidirectional and unidirectional protective and switching devices — driven by the growth of solar PV, battery storage, and EV chargers. Published as a free PDF supplement.',
+                'Issued 31 July 2024. Added new Section 530 requirements covering bidirectional and unidirectional protective and switching devices — driven by the growth…',
             },
           ].map((item) => (
             <div
@@ -515,22 +515,22 @@ const sections = [
             {
               title: 'Battery energy storage systems (BESS)',
               description:
-                'The rapid growth of domestic and commercial battery storage (often combined with solar PV and EV charging) is creating new challenges for installation design, protection, and testing. Expect more specific requirements for BESS installations.',
+                'The rapid growth of domestic and commercial battery storage (often combined with solar PV and EV charging) is creating new challenges for installation…',
             },
             {
               title: 'Vehicle-to-grid (V2G) technology',
               description:
-                'V2G-capable EV chargers can export energy from the vehicle battery back into the home or grid. This creates bidirectional power flows that existing protection may not be designed for — building on the work started in Amendment 3.',
+                'V2G-capable EV chargers can export energy from the vehicle battery back into the home or grid.',
             },
             {
               title: 'Heat pump installations',
               description:
-                'The UK government target of 600,000 heat pump installations per year will drive new requirements for high-power domestic circuits, dedicated supplies, and integration with existing consumer units.',
+                'The UK government target of 600,000 heat pump installations per year will drive new requirements for high-power domestic circuits, dedicated supplies…',
             },
             {
               title: 'Cybersecurity for connected devices',
               description:
-                'Smart meters, EV chargers, and battery storage systems are all connected to the internet. Future editions may address cybersecurity requirements to prevent malicious control of electrical equipment.',
+                'Smart meters, EV chargers, and battery storage systems are all connected to the internet. Future editions may address cybersecurity requirements to…',
             },
           ].map((item) => (
             <div
@@ -549,7 +549,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Stay current with every amendment and edition"
-          description="Elec-Mate is updated to reflect every amendment to BS 7671. All Zs limits, regulation references, and compliance checks are always current. When the regulations change, your app changes with them."
+          description="Elec-Mate is updated to reflect every amendment to BS 7671. All Zs limits, regulation references, and compliance checks are always current."
           icon={BookOpen}
         />
       </>
@@ -565,9 +565,9 @@ export default function ElectricalWiringRegulationsHistoryPage() {
   return (
     <GuideTemplate
       title="History of UK Wiring Regulations | IEE to IET"
-      description="The complete history of UK wiring regulations from the first IEE rules in 1882 to BS 7671:2018+A3:2024. All 18 editions, the IEE to IET name change, key milestones, and how safety standards have evolved over 140 years."
+      description="History of UK wiring regulations from the first IEE rules (1882) through every edition to BS 7671:2018+A4:2026. Major changes, drivers, milestones."
       datePublished="2025-10-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulation History"

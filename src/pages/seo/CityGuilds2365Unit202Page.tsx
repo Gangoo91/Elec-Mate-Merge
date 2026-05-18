@@ -249,7 +249,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Practice circuit calculations with AI guidance"
-          description="Elec-Mate's apprentice study module covers Ohm's law, voltage drop, and circuit analysis with worked examples and practice questions. Study on your phone between jobs."
+          description="Elec-Mate's apprentice study module covers Ohm's law, voltage drop, and circuit analysis with worked examples and practice questions."
           icon={Calculator}
         />
       </>
@@ -432,8 +432,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Study Unit 202 with worked examples and AI practice questions"
-          description="Elec-Mate's apprentice training hub covers all Unit 202 topics with worked examples, AI-generated practice questions, and instant explanation of wrong answers. Study on your phone between jobs."
+          title="Study Unit 202 with worked examples and AI practice"
+          description="Elec-Mate's apprentice training hub covers all Unit 202 topics with worked examples, AI-generated practice questions…"
           icon={GraduationCap}
         />
       </>
@@ -448,10 +448,10 @@ const sections = [
 export default function CityGuilds2365Unit202Page() {
   return (
     <GuideTemplate
-      title="City & Guilds 2365 Unit 202 — Electrical Principles | Revision Guide UK"
-      description="Complete revision guide for City & Guilds 2365 Unit 202 — Principles of Building Services Engineering. Ohm's law, power calculations, series and parallel circuits, AC vs DC, SI units, and exam technique for electrical apprentices."
+      title="City & Guilds 2365 Unit 202 — Electrical Principles"
+      description="C&G 2365 Unit 202 revision: Principles of Building Services Engineering. Learning outcomes, key terms, mock questions for UK apprentices."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

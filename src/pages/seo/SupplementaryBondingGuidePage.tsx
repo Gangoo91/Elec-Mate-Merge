@@ -353,7 +353,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Check bonding requirements with AI"
-          description="Describe the bathroom installation to Elec-Mate's AI regulations assistant — RCD protection, pipe materials, main bonding status — and get a clear answer on whether supplementary bonding is required or can be omitted."
+          description="Describe the bathroom installation to Elec-Mate's AI regulations assistant — RCD protection, pipe materials…"
           icon={Brain}
         />
       </>
@@ -592,7 +592,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Record bonding test results on your phone"
-          description="Elec-Mate lets you record inspection and test results for supplementary bonding, main bonding, and all other tests directly on your phone. Voice entry, AI validation, and professional PDF export. Complete the EICR on site."
+          description="Elec-Mate lets you record inspection and test results for supplementary bonding, main bonding, and all other tests directly on your phone."
           icon={FileCheck2}
         />
       </>
@@ -608,9 +608,9 @@ export default function SupplementaryBondingGuidePage() {
   return (
     <GuideTemplate
       title="Supplementary Bonding | When Is It Required? UK Guide"
-      description="Complete guide to supplementary bonding under BS 7671. Covers Regulation 415.2, bathroom bonding requirements, when supplementary bonding can be omitted, 4mm conductor sizing, installation methods, and testing procedures."
+      description="Complete guide to supplementary bonding under BS 7671. Covers Regulation 415.2, bathroom bonding requirements, when supplementary bonding can be omitted…"
       datePublished="2025-05-25"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations Guide"

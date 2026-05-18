@@ -625,10 +625,10 @@ const sections = [
 export default function ElectricianSalaryBristolPage() {
   return (
     <GuideTemplate
-      title="Electrician Salary Bristol 2025 | Electrician Pay Southwest England"
-      description="Electrician salary guide for Bristol 2025. JIB rates, employed vs self-employed earnings, specialist uplifts for tech and aerospace sectors, apprentice rates, overtime, and benefits for Bristol electricians."
+      title="Electrician Salary Bristol 2025 | Electrician Pay Southwest"
+      description="Electrician salary guide for Bristol 2025. JIB rates, employed vs self-employed earnings, specialist uplifts for tech and aerospace sectors…"
       datePublished="2025-01-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Salary Guide"

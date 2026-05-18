@@ -635,7 +635,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win new homeowner electrical work with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Deliver reports on the day and quote upgrade work immediately. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -651,9 +651,9 @@ export default function NewHomeElectricalChecklistPage() {
   return (
     <GuideTemplate
       title="New Home Electrical Checklist UK | Moving into a New House"
-      description="Complete electrical checklist for moving into a new home in the UK. Locate consumer unit, test RCDs, check smoke and CO detectors, know emergency procedures, test outdoor sockets IP rating, register meter, and set up energy account."
+      description="Complete electrical checklist for moving into a new home in the UK. Locate consumer unit, test RCDs, check smoke and CO detectors…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Homeowner Guide"

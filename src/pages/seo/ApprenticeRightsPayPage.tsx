@@ -526,7 +526,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Focus on Learning, Not Worrying"
-          description="Elec-Mate's apprentice hub gives you the study tools, portfolio builder, and OJT tracker you need to make the most of your apprenticeship. 46+ courses, flashcards, mock exams, AI tutor, and more. 7-day free trial."
+          description="Elec-Mate's apprentice hub gives you the study tools, portfolio builder, and OJT tracker you need to make the most of your apprenticeship."
           icon={GraduationCap}
         />
       </>
@@ -569,7 +569,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Track Everything in One Place"
-          description="Elec-Mate's portfolio builder, OJT tracker, and site diary keep all your apprenticeship evidence organised and accessible. If you ever need to demonstrate what training you have received, the records are there."
+          description="Elec-Mate's portfolio builder, OJT tracker, and site diary keep all your apprenticeship evidence organised and accessible."
           icon={Briefcase}
         />
       </>
@@ -585,9 +585,9 @@ export default function ApprenticeRightsPayPage() {
   return (
     <GuideTemplate
       title="Apprentice Rights & Pay UK 2026 | Know Your Entitlements"
-      description="Complete guide to apprentice rights and pay in the UK. National Minimum Wage rates, holiday entitlement, sick pay, working hours, redundancy rights, discrimination protection, and where to get help if your rights are violated."
+      description="Complete guide to apprentice rights and pay in the UK. National Minimum Wage rates, holiday entitlement, sick pay, working hours, redundancy rights…"
       datePublished="2025-12-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

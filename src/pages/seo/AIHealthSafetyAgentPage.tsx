@@ -23,9 +23,9 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const PAGE_TITLE = 'AI Health & Safety Agent | RAMS Generator for Electricians | Elec-Mate';
+const PAGE_TITLE = 'AI Health & Safety Agent | RAMS for UK Electricians';
 const PAGE_DESCRIPTION =
-  'Generate comprehensive RAMS and risk assessments with AI trained for UK electrical work. HSE 5-step methodology, 80+ hazard database, CDM 2015 compliant. Professional documents in minutes.';
+  'Generate UK electrical RAMS + risk assessments with AI. HSE 5-step method, 80+ hazard database, CDM 2015 compliant. Documents in minutes.';
 
 const faqs = [
   {
@@ -70,13 +70,13 @@ const features = [
     icon: AlertTriangle,
     title: 'HSE 5-Step Methodology',
     description:
-      'Every risk assessment follows the HSE 5-step approach: identify hazards, decide who is at risk, evaluate risks, record findings, and review. Meets HSE expectations for all workplaces.',
+      'Every risk assessment follows the HSE 5-step approach: identify hazards, decide who is at risk, evaluate risks, record findings, and review.',
   },
   {
     icon: Layers,
     title: 'Hierarchy of Controls',
     description:
-      'Control measures follow ELIMINATE, SUBSTITUTE, ENGINEER, ADMIN, PPE hierarchy. The AI specifies the most effective practical controls, not just PPE for everything.',
+      'Control measures follow ELIMINATE, SUBSTITUTE, ENGINEER, ADMIN, PPE hierarchy. The AI specifies the most effective practical controls…',
   },
   {
     icon: ShieldCheck,
@@ -88,19 +88,19 @@ const features = [
     icon: HardHat,
     title: '80+ Electrical Hazards',
     description:
-      'Database of 80+ hazards specific to electrical installation work. Electric shock, arc flash, working at height, asbestos, confined spaces, lone working, and more.',
+      'Database of 80+ hazards specific to electrical installation work. Electric shock, arc flash, working at height, asbestos, confined spaces, lone working…',
   },
   {
     icon: Flame,
     title: 'COSHH Integration',
     description:
-      'Automatic COSHH assessments for hazardous substances in electrical work: PVC fumes, silica dust, solvents, adhesives, and insulating compounds. Integrated into every RAMS.',
+      'Automatic COSHH assessments for hazardous substances in electrical work: PVC fumes, silica dust, solvents, adhesives, and insulating compounds.',
   },
   {
     icon: FileCheck,
     title: 'Professional PDF Export',
     description:
-      'Export branded, professional RAMS documents as PDF. Company details, logo, risk matrices, method statements, and emergency procedures — ready for site submission.',
+      'Export branded, professional RAMS documents as PDF. Company details, logo, risk matrices, method statements…',
   },
 ];
 
@@ -400,7 +400,7 @@ export default function AIHealthSafetyAgentPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="RAMS + Certificates + AI Tools in One App"
-            description="Generate CDM 2015 compliant RAMS with AI, then complete your EIC or EICR certificates on the same job — all from your phone. Elec-Mate covers every document an electrician needs."
+            description="Generate CDM 2015 compliant RAMS with AI, then complete your EIC or EICR certificates on the same job — all from your phone."
             icon={ShieldAlert}
           />
           <p className="text-white mt-4 text-sm">

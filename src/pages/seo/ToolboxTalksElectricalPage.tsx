@@ -76,7 +76,7 @@ const faqs = [
   {
     question: 'Can toolbox talks be used to introduce a new piece of legislation or regulation?',
     answer:
-      'Yes — toolbox talks are an effective way to communicate regulatory changes to a site team quickly and practically. For electricians, examples include introducing the requirements of BS 7671 Amendment 3:2024 (covering EV charging, arc fault detection, and SPD requirements), changes to Part P of the Building Regulations, updates to CDM 2015 guidance, or new HSE guidance on safe isolation. When covering legislation in a toolbox talk, the goal is not to teach the full detail of the regulation but to explain the practical implications for the work being done — what it means for today\'s tasks, what has changed from previous practice, and what steps the team needs to take to comply. Follow up a legislative toolbox talk with a written summary, posted on the site notice board or shared digitally, so workers can refer back to it.',
+      'Yes — toolbox talks are an effective way to communicate regulatory changes to a site team quickly and practically. For electricians, examples include introducing the requirements of BS 7671 Amendment 4:2024 (covering EV charging, arc fault detection, and SPD requirements), changes to Part P of the Building Regulations, updates to CDM 2015 guidance, or new HSE guidance on safe isolation. When covering legislation in a toolbox talk, the goal is not to teach the full detail of the regulation but to explain the practical implications for the work being done — what it means for today\'s tasks, what has changed from previous practice, and what steps the team needs to take to comply. Follow up a legislative toolbox talk with a written summary, posted on the site notice board or shared digitally, so workers can refer back to it.',
   },
 ];
 
@@ -303,7 +303,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Generate toolbox talk content with AI"
-          description="Elec-Mate's AI Health and Safety agent can generate toolbox talk content on any topic relevant to electrical work — including key points, discussion questions, and a printable handout. Spend 2 minutes generating the talk and 5 minutes delivering it."
+          description="Elec-Mate's AI Health and Safety agent can generate toolbox talk content on any topic relevant to electrical work — including key points…"
           icon={Megaphone}
         />
       </>
@@ -545,7 +545,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="AI-generated risk assessments and method statements"
-          description="Elec-Mate's AI Health and Safety agent generates complete RAMS documents, risk assessments, and method statements for electrical work. Use them as the basis for your toolbox talks — the hazards are already identified, the controls are already specified."
+          description="Elec-Mate's AI Health and Safety agent generates complete RAMS documents, risk assessments, and method statements for electrical work."
           icon={ClipboardCheck}
         />
       </>
@@ -561,9 +561,9 @@ export default function ToolboxTalksElectricalPage() {
   return (
     <GuideTemplate
       title="Toolbox Talks for Electricians | Topics & Templates"
-      description="Complete guide to toolbox talks for UK electricians. Common topics, 5-minute format, record keeping, sample talks, and legal requirements under CDM 2015. Free templates and AI-generated content."
+      description="Complete guide to toolbox talks for UK electricians. Common topics, 5-minute format, record keeping, sample talks, and legal requirements under CDM 2015."
       datePublished="2025-07-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

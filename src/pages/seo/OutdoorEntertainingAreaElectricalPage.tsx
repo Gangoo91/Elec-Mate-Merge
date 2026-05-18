@@ -318,7 +318,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Quote outdoor entertaining area electrical packages"
-          description="Elec-Mate's quoting app allows UK electricians to price outdoor electrical packages with itemised armoured cable, IP66 sockets, LED strip lighting, and festoon supplies. Professional PDF quotes from the survey."
+          description="Elec-Mate's quoting app allows UK electricians to price outdoor electrical packages with itemised armoured cable, IP66 sockets, LED strip lighting…"
           icon={Sun}
         />
       </>
@@ -535,8 +535,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Quote outdoor entertaining area electrical packages on your phone"
-          description="Join 1,000+ UK electricians using Elec-Mate for outdoor electrical quoting, cable sizing, and on-site EIC certification. Professional PDF quotes from the survey — armoured cable, IP66 sockets, and LED lighting all itemised. 7-day free trial."
+          title="Quote outdoor entertaining area electrical packages on your"
+          description="Join 1,000+ UK electricians using Elec-Mate for outdoor electrical quoting, cable sizing, and on-site EIC certification."
           icon={Sun}
         />
       </>
@@ -551,10 +551,10 @@ const sections = [
 export default function OutdoorEntertainingAreaElectricalPage() {
   return (
     <GuideTemplate
-      title="Outdoor Entertaining Area Electrical UK | IP Ratings, Sockets and Lighting"
-      description="Complete guide to outdoor entertaining area electrical installations in the UK. IP ratings for outdoor equipment, IP66 sockets, outdoor kitchen circuits, 12V SELV vs 230V LED strip, Section 714 and Regulation 411.3.3 RCD requirements."
+      title="Outdoor Entertaining Area Electrical UK | IP Ratings,"
+      description="Complete guide to outdoor entertaining area electrical installations in the UK. IP ratings for outdoor equipment, IP66 sockets, outdoor kitchen circuits…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

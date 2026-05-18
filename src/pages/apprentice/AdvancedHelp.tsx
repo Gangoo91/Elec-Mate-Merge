@@ -1,89 +1,110 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import {
-  PageFrame,
-  PageHero,
-  itemVariants,
-} from '@/components/college/primitives';
+import { ArrowLeft, BookOpen, Wrench, GraduationCap } from 'lucide-react';
+import { PageFrame, itemVariants } from '@/components/college/primitives';
 import DailyAITipsTab from '@/components/apprentice/ojt/enhanced/DailyAITipsTab';
 import HelpBotTab from '@/components/apprentice/ojt/enhanced/HelpBotTab';
+import { cn } from '@/lib/utils';
+
+type View = 'dave' | 'tips';
 
 export default function AdvancedHelp() {
   const navigate = useNavigate();
+  // Daily Tips routes here with ?prompt= for "Ask Dave" handoff; HelpBotTab
+  // reads the param and auto-sends. We just default to the Dave view.
+  const [view, setView] = useState<View>('dave');
 
   return (
-    <PageFrame className="px-4 sm:px-6 lg:px-8">
+    <PageFrame className="px-4 sm:px-6 lg:px-8 max-w-6xl xl:max-w-7xl">
+      {/* Back nav — matches apprentice hub */}
       <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
+        <button
+          type="button"
           onClick={() => navigate('/apprentice')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+          className="inline-flex items-center gap-1.5 h-9 px-2 -ml-2 text-[13px] font-medium text-white hover:text-elec-yellow transition-colors touch-manipulation"
         >
-          <ArrowLeft className="mr-2 h-5 w-5" />
+          <ArrowLeft className="h-4 w-4" />
           Back
-        </Button>
+        </button>
       </motion.div>
 
-      <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow="Apprentice · AI Study Centre"
-          title="Ask Dave, your AI mentor"
-          description="20-year veteran electrical mentor on tap. Get expert guidance on theory, exams, BS 7671 and the things you can't ask your supervisor twice."
-          tone="yellow"
-        />
-      </motion.div>
-
-      <motion.div variants={itemVariants}>
-        <Tabs defaultValue="helpbot" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 h-11 bg-white/[0.04] border border-white/[0.08] rounded-2xl p-1">
-            <TabsTrigger
-              value="helpbot"
-              className="text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black h-9 rounded-xl touch-manipulation"
-            >
-              Ask Dave
-            </TabsTrigger>
-            <TabsTrigger
-              value="tips"
-              className="text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black h-9 rounded-xl touch-manipulation"
-            >
-              Daily tips
-            </TabsTrigger>
-          </TabsList>
-
-          <TabsContent
-            value="helpbot"
-            className="mt-5 sm:mt-6 rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_10%)] overflow-hidden"
-          >
-            <HelpBotTab />
-          </TabsContent>
-
-          <TabsContent value="tips" className="mt-5 sm:mt-6">
-            <DailyAITipsTab />
-          </TabsContent>
-        </Tabs>
-      </motion.div>
-
-      <motion.div
-        variants={itemVariants}
-        className="rounded-2xl border border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/[0.06] via-amber-500/[0.02] to-transparent px-5 py-4 sm:px-6 sm:py-5"
-      >
-        <div className="flex items-baseline gap-2 mb-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
-            Note
-          </span>
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-            · Learning support, not replacement
-          </span>
+      {/* Editorial hero — same yellow-eyebrow pattern as /apprentice/am2 */}
+      <motion.div variants={itemVariants} className="space-y-2 sm:space-y-2.5">
+        <div className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+          Apprentice · AI tutor
         </div>
-        <p className="text-[12.5px] leading-relaxed text-white/70 max-w-3xl">
-          These AI tools complement your apprenticeship training — they don't replace it. Always
-          verify safety-critical information with your supervisor or the official BS 7671 / IET
-          guidance.
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight leading-[1.05] text-white">
+          Ask Dave
+        </h1>
+        <p className="text-[13px] sm:text-sm text-white/70 max-w-2xl leading-relaxed">
+          Master sparky with 20+ years on UK installs. Grounded in BS 7671, GN3, OSG and AM4:2026 —
+          and reads your practice history so the advice fits where you actually are.
         </p>
+
+        {/* Capability strip — what Dave is wired into */}
+        <div className="mt-3 flex flex-wrap gap-1.5">
+          <Capability icon={<BookOpen className="h-3 w-3" />} label="BS 7671 RAG" />
+          <Capability icon={<Wrench className="h-3 w-3" />} label="200k practical jobs" />
+          <Capability icon={<GraduationCap className="h-3 w-3" />} label="Your course LO/ACs" />
+        </div>
       </motion.div>
+
+      {/* Mode toggle — Dave / Daily tips. Two pill buttons rather than a
+          tab strip, fits the editorial scheme better at this density. */}
+      <motion.div variants={itemVariants} className="flex gap-2">
+        <ModeBtn active={view === 'dave'} onClick={() => setView('dave')} label="Ask Dave" />
+        <ModeBtn active={view === 'tips'} onClick={() => setView('tips')} label="Daily tips" />
+      </motion.div>
+
+      {/* Body */}
+      {view === 'dave' ? (
+        <motion.div
+          variants={itemVariants}
+          className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_10%)] overflow-hidden"
+        >
+          <HelpBotTab />
+        </motion.div>
+      ) : (
+        <motion.div variants={itemVariants}>
+          <DailyAITipsTab />
+        </motion.div>
+      )}
+
+      {/* Footnote — kept compact, no longer competing for attention */}
+      <motion.p
+        variants={itemVariants}
+        className="text-[10.5px] text-white/40 leading-relaxed max-w-2xl"
+      >
+        Learning support, not a replacement. Always verify safety-critical decisions with your
+        supervisor or the official BS 7671 / IET guidance.
+      </motion.p>
     </PageFrame>
+  );
+}
+
+function Capability({ icon, label }: { icon: React.ReactNode; label: string }) {
+  return (
+    <span className="inline-flex items-center gap-1.5 text-[10.5px] font-medium text-elec-yellow/85 bg-elec-yellow/[0.06] border border-elec-yellow/25 px-2 py-0.5 rounded-full">
+      {icon}
+      {label}
+    </span>
+  );
+}
+
+function ModeBtn({ active, onClick, label }: { active: boolean; onClick: () => void; label: string }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        'h-9 px-4 rounded-full text-[12.5px] font-semibold touch-manipulation transition-colors',
+        active
+          ? 'bg-elec-yellow text-black'
+          : 'bg-white/[0.04] text-white/80 border border-white/[0.10] hover:bg-white/[0.08]'
+      )}
+    >
+      {label}
+    </button>
   );
 }

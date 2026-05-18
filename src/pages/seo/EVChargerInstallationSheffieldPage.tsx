@@ -502,7 +502,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify Sheffield EV charger installations"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. Complete EV charger quotes and certificates from your phone — built for electricians working across Sheffield and South Yorkshire."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification."
           icon={Car}
         />
       </>
@@ -517,10 +517,10 @@ const sections = [
 export default function EVChargerInstallationSheffieldPage() {
   return (
     <GuideTemplate
-      title="EV Charger Installation Sheffield | Home EV Charging Sheffield 2026"
-      description="EV charger installation costs in Sheffield 2026: 7kW charger £800-1,200 installed, OZEV grants up to £350, Northern Powergrid DNO notification, PME earthing, Part P compliance, and Sheffield terrain considerations."
+      title="EV Charger Installation Sheffield | Home EV Charging"
+      description="EV charger installation costs in Sheffield 2026: 7kW charger £800-1,200 installed, OZEV grants up to £350, Northern Powergrid DNO notification…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Sheffield Guide"

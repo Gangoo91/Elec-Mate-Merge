@@ -550,7 +550,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage subcontractors and jobs with Elec-Mate"
-          description="Job scheduling, electrical certificates, quoting, and invoicing in one app built for UK electricians. Join 1,000+ electricians running their business with Elec-Mate. 7-day free trial."
+          description="Job scheduling, electrical certificates, quoting, and invoicing in one app built for UK electricians."
           icon={Users}
         />
       </>
@@ -565,10 +565,10 @@ const sections = [
 export default function ManagingSubcontractorsElectricianPage() {
   return (
     <GuideTemplate
-      title="Managing Electrical Subcontractors UK | Subcontractor Management Guide"
-      description="Complete guide to managing electrical subcontractors in the UK. Checking NICEIC/NAPIT registration, CIS verification, written subcontract agreements, day rates vs measure-and-value, quality control, retention, poor performance, and IR35 considerations."
+      title="Managing Electrical Subcontractors UK | Subcontractor"
+      description="Complete guide to managing electrical subcontractors in the UK. Checking NICEIC/NAPIT registration, CIS verification, written subcontract agreements…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Business Guide"

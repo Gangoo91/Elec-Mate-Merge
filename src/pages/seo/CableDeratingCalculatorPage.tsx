@@ -21,9 +21,9 @@ export default function CableDeratingCalculatorPage() {
   return (
     <ToolTemplate
       title="Cable Derating Calculator | Correction Factors Tool"
-      description="Calculate cable derating correction factors to BS 7671. Apply Ca (ambient temperature), Cg (grouping), Ci (thermal insulation), and Cf (semi-enclosed fuse) factors to determine the required current carrying capacity. Part of 50+ free electrical calculators."
+      description="Calculate cable derating correction factors to BS 7671. Apply Ca (ambient temperature), Cg (grouping), Ci (thermal insulation)…"
       datePublished="2026-01-22"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Cable Derating Calculator', href: '/tools/cable-derating-calculator' },
@@ -106,7 +106,7 @@ export default function CableDeratingCalculatorPage() {
           appBridge: {
             title: 'Calculate Derating Factors Instantly',
             description:
-              'Enter your installation conditions and the calculator applies all four correction factors automatically. See the required It value and the recommended cable size in seconds.',
+              'Enter your installation conditions and the calculator applies all four correction factors automatically.',
             icon: Calculator,
           },
         },
@@ -289,7 +289,7 @@ export default function CableDeratingCalculatorPage() {
           appBridge: {
             title: 'All Four Correction Factors in One Calculator',
             description:
-              'Stop looking up Ca, Cg, Ci, and Cf values in separate tables. The derating calculator applies all factors automatically and recommends the minimum cable size for your installation.',
+              'Stop looking up Ca, Cg, Ci, and Cf values in separate tables. The derating calculator applies all factors automatically and recommends the minimum cable…',
             icon: Thermometer,
           },
         },
@@ -420,13 +420,13 @@ export default function CableDeratingCalculatorPage() {
           icon: Layers,
           title: 'Grouping Factor Tables',
           description:
-            'Select the number of circuits and arrangement method. All grouping tables from 4C1 to 4C5 are built in, covering conduit, trunking, cable tray, and direct burial.',
+            'Select the number of circuits and arrangement method. All grouping tables from 4C1 to 4C5 are built in, covering conduit, trunking, cable tray…',
         },
         {
           icon: Snowflake,
           title: 'Insulation Assessment',
           description:
-            'Specify the thermal insulation conditions. The calculator applies Ci = 0.5 for enclosed cables or selects Reference Method 100 for one-sided contact automatically.',
+            'Specify the thermal insulation conditions. The calculator applies Ci = 0.5 for enclosed cables or selects Reference Method 100 for one-sided contact…',
         },
         {
           icon: Shield,
@@ -438,7 +438,7 @@ export default function CableDeratingCalculatorPage() {
           icon: Calculator,
           title: 'Instant It Calculation',
           description:
-            'All factors are multiplied together and the required tabulated current (It) is calculated instantly. The recommended cable size is displayed for your reference method.',
+            'All factors are multiplied together and the required tabulated current (It) is calculated instantly.',
         },
         {
           icon: Gauge,

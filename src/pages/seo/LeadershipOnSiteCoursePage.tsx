@@ -24,7 +24,7 @@ import {
 
 const PAGE_TITLE = 'Leadership on Site Course | Electrical Supervisors & Foremen';
 const PAGE_DESCRIPTION =
-  'Leadership and site supervision training for UK electricians. Team management, communication, quality control, mentoring apprentices, CDM duties, and project coordination. 8 modules with video content, interactive quizzes, and AI tutor.';
+  'Leadership + site supervision for UK electricians: team management, communication, QC, mentoring apprentices, CDM duties, coordination. 8 modules.';
 
 const breadcrumbs = [
   { label: 'Training', href: '/training' },
@@ -89,42 +89,42 @@ const modules = [
   {
     title: 'The Transition From Electrician to Supervisor',
     description:
-      'What changes when you step into a leadership role. Shifting from technical execution to people management. Common pitfalls for new supervisors. Setting expectations with your team from day one.',
+      'What changes when you step into a leadership role. Shifting from technical execution to people management. Common pitfalls for new supervisors.',
   },
   {
     title: 'Site Supervision Fundamentals',
     description:
-      'Daily planning and task allocation. Site diaries and progress recording. Material management and logistics. Coordinating with other trades. Programme awareness and critical path management.',
+      'Daily planning and task allocation. Site diaries and progress recording. Material management and logistics. Coordinating with other trades.',
   },
   {
     title: 'Team Management and Motivation',
     description:
-      'Building an effective team. Understanding different working styles. Delegation and accountability. Managing underperformance. Recognising and rewarding good work. Handling conflict between team members.',
+      'Building an effective team. Understanding different working styles. Delegation and accountability. Managing underperformance.',
   },
   {
     title: 'Communication Skills for Site Leaders',
     description:
-      'Running effective toolbox talks and daily briefings. Written communication — site diaries, emails, reports. Having difficult conversations. Communicating upwards to management and clients. Active listening techniques.',
+      'Running effective toolbox talks and daily briefings. Written communication — site diaries, emails, reports. Having difficult conversations.',
   },
   {
     title: 'Quality Control and Standards Compliance',
     description:
-      'Ensuring work meets BS 7671 and specification requirements. Quality inspection procedures. Snagging and defect management. Documentation and record keeping. Handover procedures and client sign-off.',
+      'Ensuring work meets BS 7671 and specification requirements. Quality inspection procedures. Snagging and defect management.',
   },
   {
     title: 'Mentoring Apprentices and Developing Staff',
     description:
-      'Your responsibilities as a mentor under the apprenticeship framework. Structured on-the-job training. Giving constructive feedback. Portfolio evidence and workplace assessment. Supporting apprentices through difficult periods.',
+      'Your responsibilities as a mentor under the apprenticeship framework. Structured on-the-job training. Giving constructive feedback.',
   },
   {
     title: 'Safety Leadership on Site',
     description:
-      'CDM 2015 supervisor duties. Risk assessment and method statement implementation. Toolbox talks. Accident and near-miss reporting. Creating a positive safety culture. Leading by example.',
+      'CDM 2015 supervisor duties. Risk assessment and method statement implementation. Toolbox talks. Accident and near-miss reporting.',
   },
   {
     title: 'Career Development: From Supervisor to Manager',
     description:
-      'Career pathways beyond supervision — contracts management, project management, operations. Building your professional network. Continuous professional development. Starting your own electrical contracting business.',
+      'Career pathways beyond supervision — contracts management, project management, operations. Building your professional network.',
   },
 ];
 
@@ -133,19 +133,19 @@ const features = [
     icon: BrainCircuit,
     title: 'AI Study Assistant',
     description:
-      'Ask any leadership or management question in plain English. Get practical advice on team management, communication, conflict resolution, and career development.',
+      'Ask any leadership or management question in plain English. Get practical advice on team management, communication, conflict resolution…',
   },
   {
     icon: Radio,
     title: 'Video Content',
     description:
-      'Real-world scenario videos covering daily briefings, difficult conversations, apprentice mentoring, and quality inspection techniques — watch on any device.',
+      'Real-world scenario videos covering daily briefings, difficult conversations, apprentice mentoring…',
   },
   {
     icon: ClipboardCheck,
     title: 'Interactive Quizzes',
     description:
-      'Test your understanding with scenario-based questions. Handle performance issues, plan daily work allocation, respond to site incidents, and make supervisory decisions.',
+      'Test your understanding with scenario-based questions. Handle performance issues, plan daily work allocation, respond to site incidents…',
   },
   {
     icon: Clock,
@@ -163,7 +163,7 @@ const features = [
     icon: FileCheck2,
     title: 'Staff Management Tools',
     description:
-      'Elec-Mate includes employer tools for tracking team performance, managing apprentice portfolios, scheduling work, and maintaining quality records — all from your phone.',
+      'Elec-Mate includes employer tools for tracking team performance, managing apprentice portfolios, scheduling work…',
   },
 ];
 
@@ -233,7 +233,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Track team progress and manage tasks from your phone"
-          description="Elec-Mate's employer platform lets you assign tasks, track completion, manage snagging lists, and maintain quality records — all from your phone on site. No more spreadsheets and paper lists."
+          description="Elec-Mate's employer platform lets you assign tasks, track completion, manage snagging lists, and maintain quality records — all from your phone on site."
           icon={Target}
         />
       </>
@@ -373,7 +373,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Digital quality inspection with photo evidence"
-          description="Use Elec-Mate to create quality inspection records with photos, notes, and sign-off — all from your phone. Build a professional quality trail that demonstrates your standards to clients and auditors."
+          description="Use Elec-Mate to create quality inspection records with photos, notes, and sign-off — all from your phone."
           icon={ClipboardCheck}
         />
       </>
@@ -536,7 +536,7 @@ export default function LeadershipOnSiteCoursePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-09-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Leadership Training"

@@ -223,7 +223,7 @@ const sections = [
           </ul>
         </div>
         <SEOAppBridge
-          title="Need to issue a certificate after resolving smart meter installation barriers?"
+          title="Need to issue a certificate after resolving smart meter"
           description="Elec-Mate lets you complete Minor Works Certificates and EICRs on your phone, with instant PDF generation and cloud storage."
           ctaText="Start 7-day free trial"
           icon={FileCheck2}
@@ -526,10 +526,10 @@ const sections = [
 export default function SmartMeterInstallationPage() {
   return (
     <GuideTemplate
-      title="Smart Meter Installation — An Electrician's Guide | Elec-Mate"
-      description="Understand what happens during a smart meter installation from an electrician's perspective. SMETS1 vs SMETS2, DNO vs supplier responsibilities, TT earthing complications, consumer unit issues, and when to call an electrician."
+      title="Smart Meter Installation — An Electrician's Guide"
+      description="Understand what happens during a smart meter installation from an electrician's perspective. SMETS1 vs SMETS2, DNO vs supplier responsibilities…"
       datePublished="2024-06-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Guide"

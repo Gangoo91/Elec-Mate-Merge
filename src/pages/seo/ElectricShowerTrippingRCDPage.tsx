@@ -261,7 +261,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Diagnose shower faults with AI"
-          description="Elec-Mate's AI fault diagnosis tool walks you through the systematic diagnostic process for RCD tripping, including insulation resistance testing and element testing. Regulation references included."
+          description="Elec-Mate's AI fault diagnosis tool walks you through the systematic diagnostic process for RCD tripping…"
           icon={Search}
         />
       </>
@@ -628,7 +628,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete certificates on site after shower replacement"
-          description="Elec-Mate's certificate app lets you complete Minor Works Certificates and EICRs on your phone with AI assistance. Instant PDF export and cloud backup. Join 1,000+ UK electricians. 7-day free trial."
+          description="Elec-Mate's certificate app lets you complete Minor Works Certificates and EICRs on your phone with AI assistance. Instant PDF export and cloud backup."
           icon={FileCheck2}
         />
       </>
@@ -644,9 +644,9 @@ export default function ElectricShowerTrippingRCDPage() {
   return (
     <GuideTemplate
       title="Electric Shower Keeps Tripping RCD | Causes & Solutions"
-      description="Why does your electric shower keep tripping the RCD? Learn the common causes — heating element failure, water ingress, neutral-earth faults — the Section 701 bathroom regulations, and when to call an electrician."
+      description="Why does your electric shower keep tripping the RCD? Learn the common causes — heating element failure, water ingress…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting Guide"

@@ -489,10 +489,10 @@ const sections = [
 export default function OfficeElectricalRequirementsPage() {
   return (
     <GuideTemplate
-      title="Office Electrical Requirements — Commercial Fit-Out, PAT Testing, Emergency Lighting"
-      description="Complete guide to office electrical requirements: open plan power distribution, floor boxes, server room power, PAT testing obligations, emergency lighting under BS 5266, and EICR frequency for commercial premises."
+      title="Office Electrical Requirements — Commercial Fit-Out, PAT"
+      description="Complete guide to office electrical requirements: open plan power distribution, floor boxes, server room power, PAT testing obligations…"
       datePublished="2024-06-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Commercial Guide"

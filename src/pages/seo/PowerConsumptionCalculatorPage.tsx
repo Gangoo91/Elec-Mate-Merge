@@ -20,9 +20,9 @@ export default function PowerConsumptionCalculatorPage() {
   return (
     <ToolTemplate
       title="Power Consumption Calculator | kWh & Running Cost"
-      description="Calculate power consumption in kWh and running costs for any electrical appliance. Convert wattage to annual energy use, compare running costs at current UK electricity rates, and identify high-consumption equipment. Part of 50+ free electrical calculators."
+      description="Calculate power consumption in kWh and running costs for any electrical appliance. Convert wattage to annual energy use…"
       datePublished="2026-02-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Power Consumption Calculator', href: '/tools/power-consumption-calculator' },
@@ -322,7 +322,7 @@ export default function PowerConsumptionCalculatorPage() {
           appBridge: {
             title: 'Compare Appliance Running Costs',
             description:
-              'Add multiple appliances and see the total daily, monthly, and annual consumption and cost. Identify the biggest energy users and compare efficient alternatives.',
+              'Add multiple appliances and see the total daily, monthly, and annual consumption and cost. Identify the biggest energy users and compare efficient…',
             icon: BarChart3,
           },
         },
@@ -426,7 +426,7 @@ export default function PowerConsumptionCalculatorPage() {
           icon: BarChart3,
           title: 'Appliance Comparison Tool',
           description:
-            'Compare the running costs of different appliances or efficiency alternatives side by side. Quantify savings from upgrades like LED lighting or efficient heating.',
+            'Compare the running costs of different appliances or efficiency alternatives side by side. Quantify savings from upgrades like LED lighting or efficient…',
         },
         {
           icon: Plug,

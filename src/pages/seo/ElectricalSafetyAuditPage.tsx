@@ -20,9 +20,9 @@ export default function ElectricalSafetyAuditPage() {
   return (
     <GuideTemplate
       title="Electrical Safety Audit | Workplace Compliance Guide"
-      description="Complete guide to electrical safety audits in UK workplaces. Covers the difference between audits and inspections, regulatory requirements under the Electricity at Work Regulations 1989, documentation review, corrective actions, reporting, and how to maintain ongoing compliance."
+      description="Complete guide to electrical safety audits in UK workplaces. Covers the difference between audits and inspections…"
       datePublished="2026-01-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Safety', href: '/guides/safety' },
         { label: 'Safety Audit', href: '/guides/electrical-safety-audit' },
@@ -139,7 +139,7 @@ export default function ElectricalSafetyAuditPage() {
               </p>
               <SEOAppBridge
                 title="All your certificates and records in one place"
-                description="Elec-Mate stores EICRs, EICs, minor works, PAT records, and test results digitally. When the auditor arrives, pull up everything instantly instead of searching through filing cabinets."
+                description="Elec-Mate stores EICRs, EICs, minor works, PAT records, and test results digitally. When the auditor arrives…"
                 icon={ClipboardCheck}
               />
             </>
@@ -316,7 +316,7 @@ export default function ElectricalSafetyAuditPage() {
               </p>
               <SEOAppBridge
                 title="Digital certificate storage that auditors trust"
-                description="Elec-Mate generates BS 7671 compliant certificates and stores them securely with full audit trails. Every certificate is timestamped, versioned, and instantly retrievable. No more missing paperwork."
+                description="Elec-Mate generates BS 7671 compliant certificates and stores them securely with full audit trails."
                 icon={FileText}
               />
             </>
@@ -489,7 +489,7 @@ export default function ElectricalSafetyAuditPage() {
               </p>
               <SEOAppBridge
                 title="Never miss a re-inspection date again"
-                description="Elec-Mate tracks every certificate expiry and EICR re-inspection date across all your clients. Automatic reminders ensure nothing slips through the cracks. Your clients stay compliant and you stay in work."
+                description="Elec-Mate tracks every certificate expiry and EICR re-inspection date across all your clients."
                 icon={Shield}
               />
             </>

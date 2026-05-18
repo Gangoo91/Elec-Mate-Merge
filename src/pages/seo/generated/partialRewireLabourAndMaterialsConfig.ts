@@ -1,11 +1,11 @@
 import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuidePage';
 
 const published = '2026-04-12';
-const modified = '2026-04-12';
+const modified = '2026-05-18';
 
 export const partialRewireLabourAndMaterialsConfig: GeneratedGuideConfig = {
   pagePath: '/guides/partial-rewire-labour-and-materials',
-  title: 'Partial Rewire Labour and Materials | Pricing Guide | Elec-Mate',
+  title: 'Partial Rewire Labour and Materials | Pricing Guide',
   description:
     'How electricians can separate labour and materials on a partial rewire, explain the price clearly, and keep the job easy for the client to understand.',
   datePublished: published,
@@ -105,6 +105,31 @@ export const partialRewireLabourAndMaterialsConfig: GeneratedGuideConfig = {
           title: 'Useful when the job needs to be priced and billed cleanly',
           text:
             'For a fuller cost comparison, [rewire cost UK](/guides/rewire-cost-uk) is a helpful reference. If you need to turn the figures into a live quote or final invoice, [electrical quoting](/electrical-quoting-app) and the [electrician invoice app](/electrician-invoice-app) keep the job moving.',
+        },
+      ],
+    },
+    {
+      id: 'pricing-a-partial-rewire-honestly',
+      heading: 'Pricing a partial rewire honestly',
+      blocks: [
+        {
+          type: 'paragraph',
+          text:
+            'Partial rewires are where most quotes go wrong, and where most electricians get caught short. The job sounds smaller than a full rewire, so the quote starts smaller — but the access work, the chasing, the patching, and the testing are all the same per circuit. Halving the price of a rewire to do "half the work" rarely covers the actual time.',
+        },
+        {
+          type: 'paragraph',
+          text:
+            'The honest way to price a partial rewire is to break it down by circuit, then add a fixed access and reinstatement allowance. A two-circuit partial in an occupied house is usually a 2-3 day job once protection, lifting boards, chasing, replastering, and certification are all costed in. Quote that fairly and the customer respects the number. Quote it as "half of £4,000" and you will lose money on every job.',
+        },
+        {
+          type: 'list',
+          items: [
+            'Price per circuit, not per square metre — every circuit is its own testing + certification cycle.',
+            'Add a fixed access allowance (carpets up, boards lifted, plaster cut + made good) — never absorb it.',
+            'Quote certification time separately — EIC + schedule of test results is its own deliverable.',
+            'Build a contingency for unforeseen work (asbestos, old wiring, missing earths) — 10-15% is normal.',
+          ],
         },
       ],
     },

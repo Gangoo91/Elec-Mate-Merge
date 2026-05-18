@@ -30,7 +30,7 @@ const tocItems = [
   { id: 'what-is-regs-lookup', label: 'What Is AI Regulations Lookup?' },
   { id: 'how-it-works', label: 'How It Works' },
   { id: 'practical-guidance', label: 'Practical Guidance' },
-  { id: 'amendment-3', label: 'Amendment 3:2024 Coverage' },
+  { id: 'amendment-3', label: 'Amendment 4:2024 Coverage' },
   { id: 'on-site-use', label: 'Using It on Site' },
   { id: 'how-to', label: 'How to Use It' },
   { id: 'features', label: 'Features' },
@@ -40,7 +40,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Ask any question in plain English and get the specific BS 7671 regulation number, full text, and a practical explanation of what it means for your work.',
-  'Covers the complete BS 7671:2018+A4:2026 including Amendment 3 (July 2024), the IET On-Site Guide, and all eight IET Guidance Notes.',
+  'Covers the complete BS 7671:2018+A4:2026 including Amendment 4 (July 2024), the IET On-Site Guide, and all eight IET Guidance Notes.',
   'The AI distinguishes between mandatory requirements ("shall"), recommendations ("should"), and permitted alternatives ("may") — so you know what is required versus what is best practice.',
   'Works offline on site, so you can look up regulations in basements, plant rooms, and new-build sites with no signal.',
   'Cross-references related regulations automatically — when one regulation depends on or modifies another, the AI shows you the complete picture.',
@@ -68,9 +68,9 @@ const faqs = [
       'Yes, and this is one of its most useful features. Many regulations in BS 7671 interact with or modify each other, and understanding these relationships is essential for correct application. For example, if you ask about protection against electric shock, the AI will explain the relationship between Chapter 41 (protection against electric shock), Section 411 (automatic disconnection of supply), Section 412 (double or reinforced insulation), Section 413 (electrical separation), and Section 414 (extra-low voltage). It shows how these different protective measures relate to each other and when each applies. Similarly, for cable sizing, it explains how the requirements of Chapter 52 (selection and erection of wiring systems) interact with the tables in Appendix 4 and the voltage drop limits in Appendix 12.',
   },
   {
-    question: 'Does it cover Amendment 3:2024?',
+    question: 'Does it cover Amendment 4:2024?',
     answer:
-      'Yes. The AI includes the complete content of BS 7671:2018+A4:2026, which is Amendment 3 issued on 31 July 2024. The key addition in A4:2026 is Regulation 530.3.2, which introduces requirements for bidirectional and unidirectional protective devices. This is particularly relevant for installations incorporating battery energy storage systems (BESS), solar PV arrays with battery storage, and other installations where power can flow in both directions through protective devices. The AI explains what this new regulation requires, when it applies, and what it means in practice for the selection and installation of protective devices in modern installations with distributed generation and energy storage.',
+      'Yes. The AI includes the complete content of BS 7671:2018+A4:2026, which is Amendment 4 issued on 31 July 2024. The key addition in A4:2026 is Regulation 530.3.2, which introduces requirements for bidirectional and unidirectional protective devices. This is particularly relevant for installations incorporating battery energy storage systems (BESS), solar PV arrays with battery storage, and other installations where power can flow in both directions through protective devices. The AI explains what this new regulation requires, when it applies, and what it means in practice for the selection and installation of protective devices in modern installations with distributed generation and energy storage.',
   },
   {
     question: 'How quickly does the AI return an answer?',
@@ -108,7 +108,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description:
-      'Complete guide to the 18th Edition of the IET Wiring Regulations including Amendment 3:2024.',
+      'Complete guide to the 18th Edition of the IET Wiring Regulations including Amendment 4:2024.',
     icon: FileText,
     category: 'Guide',
   },
@@ -157,7 +157,7 @@ const features = [
   },
   {
     icon: ShieldCheck,
-    title: 'Amendment 3:2024 Included',
+    title: 'Amendment 4:2024 Included',
     description:
       'Full coverage of the latest amendment including Regulation 530.3.2 for bidirectional and unidirectional protective devices.',
   },
@@ -263,7 +263,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Search BS 7671 in plain English"
-          description="Open the Regulations Lookup agent and ask any question. Get the specific regulation number, full text, and practical guidance in under 10 seconds. Works offline on site."
+          description="Open the Regulations Lookup agent and ask any question. Get the specific regulation number, full text, and practical guidance in under 10 seconds."
           icon={Search}
         />
       </>
@@ -327,17 +327,17 @@ const sections = [
   },
   {
     id: 'amendment-3',
-    heading: 'Full Coverage of Amendment 3:2024',
+    heading: 'Full Coverage of Amendment 4:2024',
     content: (
       <>
         <p>
-          BS 7671:2018+A4:2026 is the current edition of the IET Wiring Regulations. Amendment 3 was
+          BS 7671:2018+A4:2026 is the current edition of the IET Wiring Regulations. Amendment 4 was
           issued on 31 July 2024 and is a free PDF supplement to the existing 18th Edition book. The
-          AI Regulations Lookup includes the complete content of Amendment 3, so you always get
+          AI Regulations Lookup includes the complete content of Amendment 4, so you always get
           answers based on the current requirements.
         </p>
         <p>
-          The key addition in Amendment 3 is <strong>Regulation 530.3.2</strong>, which introduces
+          The key addition in Amendment 4 is <strong>Regulation 530.3.2</strong>, which introduces
           requirements for the selection and erection of bidirectional and unidirectional protective
           devices. This regulation is particularly relevant for installations incorporating:
         </p>
@@ -436,7 +436,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Your portable BS 7671 reference"
-          description="The AI Regulations Lookup puts the entire content of BS 7671:2018+A4:2026, the On-Site Guide, and all Guidance Notes in your pocket. Works offline. Search by question, not by index."
+          description="The AI Regulations Lookup puts the entire content of BS 7671:2018+A4:2026, the On-Site Guide, and all Guidance Notes in your pocket. Works offline."
           icon={BookOpen}
         />
       </>
@@ -452,9 +452,9 @@ export default function AIRegulationsLookupPage() {
   return (
     <ToolTemplate
       title="AI Regulations Lookup | BS 7671 Search Tool"
-      description="Search BS 7671:2018+A4:2026 in plain English. Ask any question and get the specific regulation number, full text, and practical guidance. Covers the complete 18th Edition with Amendment 3, IET On-Site Guide, and all Guidance Notes."
+      description="Search BS 7671:2018+A4:2026 in plain English. Ask any question and get the specific regulation number, full text, and practical guidance."
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="AI Regulations Agent"
@@ -465,7 +465,7 @@ export default function AIRegulationsLookupPage() {
           <span className="text-yellow-400">Search BS 7671 in Plain English</span>
         </>
       }
-      heroSubtitle="Ask any question about electrical regulations and get the specific BS 7671 regulation number, full text, and practical guidance. Covers the complete 18th Edition with Amendment 3:2024, the IET On-Site Guide, and all eight Guidance Notes."
+      heroSubtitle="Ask any question about electrical regulations and get the specific BS 7671 regulation number, full text, and practical guidance. Covers the complete 18th Edition with Amendment 4:2024, the IET On-Site Guide, and all eight Guidance Notes."
       heroFeaturePills={[
         { icon: Search, label: 'Plain-English Search' },
         { icon: BookOpen, label: 'Full Regulation Text' },

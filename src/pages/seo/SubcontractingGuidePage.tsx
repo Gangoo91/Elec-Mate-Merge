@@ -604,7 +604,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your electrical subcontracting business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, RAMS generation, invoice management, and AI business support. 7-day free trial, cancel anytime."
+          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, RAMS generation, invoice management, and AI business support."
           icon={Briefcase}
         />
       </>
@@ -619,10 +619,10 @@ const sections = [
 export default function SubcontractingGuidePage() {
   return (
     <GuideTemplate
-      title="Electrical Subcontracting Guide UK | How to Subcontract Electrical Work"
-      description="How to find main contractors, get CHAS and Constructionline, price to win subcontract work, protect your payment rights under the Construction Act 1996, understand CIS deductions, and navigate direct vs labour-only subcontracting."
+      title="Electrical Subcontracting Guide UK | How to Subcontract"
+      description="How to find main contractors, get CHAS and Constructionline, price to win subcontract work, protect your payment rights under the Construction Act 1996…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Business Guide"

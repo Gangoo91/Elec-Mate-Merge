@@ -20,7 +20,7 @@ import {
 
 const PAGE_TITLE = 'BS 7671 Correction Factors | Ca Cg Ci Cf Explained';
 const PAGE_DESCRIPTION =
-  'Complete guide to BS 7671 correction factors for cable sizing. Ca (ambient temperature from Table 4B1), Cg (grouping from Table 4C1-4C5), Ci (thermal insulation from Regulation 523.7), and Cf (0.725 for BS 3036 fuses). Worked examples, formula, common mistakes.';
+  'BS 7671 correction factors for cable sizing: Ca (4B1), Cg (4C1-4C5), Ci (523.7), Cf (0.725 BS 3036). Worked examples, formula, mistakes.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -132,7 +132,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Cable sizing calculator with all correction factors built in"
-          description="Enter your load, installation conditions, and cable route. Elec-Mate applies Ca, Cg, Ci, and Cf automatically using every BS 7671 Appendix 4 table. No manual lookups, no calculation errors."
+          description="Enter your load, installation conditions, and cable route. Elec-Mate applies Ca, Cg, Ci, and Cf automatically using every BS 7671 Appendix 4 table."
           icon={Calculator}
         />
       </>
@@ -334,7 +334,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Never forget a derating factor again"
-          description="Elec-Mate's cable derating calculator prompts you for ambient temperature, grouping, and insulation conditions. It applies Ci automatically and warns if the cable passes through thermal insulation."
+          description="Elec-Mate's cable derating calculator prompts you for ambient temperature, grouping, and insulation conditions."
           icon={Thermometer}
         />
       </>
@@ -431,7 +431,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Automatic derating with every BS 7671 table"
-          description="Elec-Mate's cable sizing calculator applies all correction factors and shows you the calculation step by step. See every factor, every table reference, every intermediate value. Works offline on site."
+          description="Elec-Mate's cable sizing calculator applies all correction factors and shows you the calculation step by step."
           icon={Calculator}
         />
       </>
@@ -657,7 +657,7 @@ export default function CorrectionFactorsGuidePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-06-01"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="BS 7671 Cable Sizing"

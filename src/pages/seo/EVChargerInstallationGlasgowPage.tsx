@@ -457,7 +457,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify Glasgow EV installations"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. Professional quotes and certificates from your phone."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification."
           icon={Car}
         />
       </>
@@ -472,10 +472,10 @@ const sections = [
 export default function EVChargerInstallationGlasgowPage() {
   return (
     <GuideTemplate
-      title="EV Charger Installation Glasgow 2026 | Costs, DNO, Scottish Regulations"
-      description="How much does EV charger installation cost in Glasgow in 2026? Local costs, SPEN DNO notification, OZEV grant, Scottish Building Standards vs Part P, tenement flat guidance, and Section 722 compliance."
+      title="EV Charger Installation Glasgow 2026 | Costs, DNO, Scottish"
+      description="How much does EV charger installation cost in Glasgow in 2026? Local costs, SPEN DNO notification, OZEV grant, Scottish Building Standards vs Part P…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Glasgow Guide"

@@ -444,7 +444,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Get the limitations section right first time"
-          description="Elec-Mate prompts you to record the extent and limitations as you work through the EICR. Pre-populated options for common limitations, plus free text for specific access issues. No more vague boilerplate."
+          description="Elec-Mate prompts you to record the extent and limitations as you work through the EICR. Pre-populated options for common limitations…"
           icon={ClipboardCheck}
         />
       </>
@@ -563,7 +563,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Record extent and limitations as you inspect"
-          description="Elec-Mate walks you through the extent and limitations section as part of the EICR workflow. Common limitation templates plus free text, all recorded in real time on site. Professional reporting with zero desk time."
+          description="Elec-Mate walks you through the extent and limitations section as part of the EICR workflow. Common limitation templates plus free text…"
           icon={FileCheck2}
         />
       </>
@@ -579,9 +579,9 @@ export default function EICRLimitationsPage() {
   return (
     <GuideTemplate
       title="EICR Limitations | What the EICR Does Not Cover"
-      description="Understanding EICR extent and limitations. What the EICR covers, what it does not, sampling, concealed wiring, and how to record limitations correctly. Essential for electricians and property owners."
+      description="Understanding EICR extent and limitations. What the EICR covers, what it does not, sampling, concealed wiring, and how to record limitations correctly."
       datePublished="2025-03-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

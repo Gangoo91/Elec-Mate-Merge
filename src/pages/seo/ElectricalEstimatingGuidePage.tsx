@@ -596,10 +596,10 @@ const sections = [
 export default function ElectricalEstimatingGuidePage() {
   return (
     <GuideTemplate
-      title="Electrical Estimating Guide UK 2026 | Pricing for Electricians"
-      description="Complete guide to estimating electrical work. Per-point pricing rates, material markup, labour rate calculation, contingency, and common mistakes. Practical examples for UK electricians in 2026."
+      title="Electrical Estimating Guide UK 2026 | Pricing for"
+      description="Complete guide to estimating electrical work. Per-point pricing rates, material markup, labour rate calculation, contingency, and common mistakes."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Business Guide"

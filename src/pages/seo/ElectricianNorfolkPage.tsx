@@ -383,9 +383,9 @@ export default function ElectricianNorfolkPage() {
   return (
     <GuideTemplate
       title="Electrician Norfolk — Find Registered Electricians Near You"
-      description="Find NICEIC, ELECSA, and NAPIT-registered electricians across Norfolk including Norwich, King's Lynn, Great Yarmouth, Cromer, Diss, and Fakenham. Part P compliant, fully insured."
+      description="Find NICEIC, ELECSA, and NAPIT-registered electricians across Norfolk including Norwich, King's Lynn, Great Yarmouth, Cromer, Diss, and Fakenham."
       datePublished="2024-06-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Location Guide"

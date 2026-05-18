@@ -591,7 +591,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage factory electrical projects with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. Complete EICs and EICRs on your phone with instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, quoting, and project management."
           icon={FileCheck2}
         />
       </>
@@ -607,9 +607,9 @@ export default function FactoryElectricalInstallationPage() {
   return (
     <GuideTemplate
       title="Factory Electrical Installation UK | Industrial Wiring Guide"
-      description="Complete guide to factory electrical installation in the UK. Three-phase supplies, motor control centres, power factor correction, HRC fuses, IP ratings, ATEX zone classification, cable management, and Electricity at Work Regulations 1989."
+      description="Complete guide to factory electrical installation in the UK. Three-phase supplies, motor control centres, power factor correction, HRC fuses, IP ratings…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Industrial Electrical Guide"

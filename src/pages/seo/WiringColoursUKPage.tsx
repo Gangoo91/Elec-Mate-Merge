@@ -20,9 +20,9 @@ export default function WiringColoursUKPage() {
   return (
     <GuideTemplate
       title="Wiring Colours UK | Cable Colour Codes Explained"
-      description="Complete guide to UK wiring colours. Current harmonised colours (brown, blue, green/yellow), old colours (red, black, green), three-phase identification, cable types, mixed-colour installations, and BS 7671 requirements for colour identification."
+      description="Complete guide to UK wiring colours. Current harmonised colours (brown, blue, green/yellow), old colours (red, black, green), three-phase identification…"
       datePublished="2025-04-01"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'Wiring Colours UK', href: '/guides/wiring-colours-uk' },
@@ -369,7 +369,7 @@ export default function WiringColoursUKPage() {
               </p>
               <SEOAppBridge
                 title="EICR Forms Capture Colour Scheme Details"
-                description="Elec-Mate's EICR form includes fields for recording the wiring colour scheme used in the installation. When both old and new colours are present, the app flags the warning notice requirement automatically and adds it to the observations if missing."
+                description="Elec-Mate's EICR form includes fields for recording the wiring colour scheme used in the installation."
                 icon={ClipboardCheck}
               />
             </>
@@ -442,7 +442,7 @@ export default function WiringColoursUKPage() {
               </div>
               <SEOAppBridge
                 title="AI Board Scanner Identifies Cable Colours"
-                description="Take a photo of any consumer unit or distribution board and Elec-Mate's AI board scanner identifies the cable colours, flags mixed-colour installations, and notes any missing CPC sleeving. Saves time during inspections and reduces missed observations."
+                description="Take a photo of any consumer unit or distribution board and Elec-Mate's AI board scanner identifies the cable colours, flags mixed-colour installations…"
                 icon={Camera}
               />
             </>
@@ -550,7 +550,7 @@ export default function WiringColoursUKPage() {
               </p>
               <SEOAppBridge
                 title="BS 7671 Regulations Accessible In-App"
-                description="Every BS 7671 regulation relating to conductor identification, colour coding, and warning notices is accessible within Elec-Mate. Search by regulation number or topic and get the full text instantly — even without an internet connection."
+                description="Every BS 7671 regulation relating to conductor identification, colour coding, and warning notices is accessible within Elec-Mate."
                 icon={BookOpen}
               />
             </>
@@ -594,7 +594,7 @@ export default function WiringColoursUKPage() {
         {
           href: '/guides/consumer-unit-regulations',
           title: 'Consumer Unit Regulations',
-          description: 'Metal CU requirements, RCD protection, and Amendment 3 changes.',
+          description: 'Metal CU requirements, RCD protection, and Amendment 4 changes.',
           icon: ShieldCheck,
           category: 'Regulations',
         },

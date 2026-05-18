@@ -6,12 +6,12 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // (Protection against electric shock).
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const lvdcMicrogridDistributionConfig: GeneratedGuideConfig = {
   pagePath: '/guides/lvdc-dc-microgrid-distribution',
   title:
-    'LVDC (Low-Voltage DC) Microgrid Distribution Guide for UK Electricians | Elec-Mate',
+    'LVDC (Low-Voltage DC) Microgrid Distribution Guide for UK',
   description:
     'A UK electrician\'s guide to Low-Voltage DC (LVDC) microgrid distribution — the 380 V DC data centre bus, the 48 V DC ELV bus for USB-PD/PoE/lighting, native DC sources, DC fault and arc-flash behaviour, DC-rated switchgear and fuses, DC earthing, Type B RCDs, AC/DC hybrid topology and the BS 7671:2018+A4:2026 / BS EN 62109 standards landscape.',
   datePublished: published,
@@ -495,7 +495,7 @@ export const lvdcMicrogridDistributionConfig: GeneratedGuideConfig = {
     {
       href: '/guides/section-712-prosumer-a4-2026',
       title: 'Section 712 Prosumer (A4:2026)',
-      description: 'The regulation-by-regulation walk-through of Section 712 of BS 7671:2018+A4:2026 — main switch, earthing, isolation and labelling for prosumer installations.',
+      description: 'The regulation-by-regulation walk-through of Section 712 of BS 7671:2018+A4:2026 — main switch, earthing…',
       icon: 'BookOpen',
       category: 'Guide',
     },
@@ -523,7 +523,7 @@ export const lvdcMicrogridDistributionConfig: GeneratedGuideConfig = {
     {
       href: '/guides/rams-for-solar-pv-installation',
       title: 'RAMS for Solar PV Installation',
-      description: 'Solar-PV-specific Risk Assessment and Method Statement — DC string isolation sequence, MC4 connector hazards, working at height and arc-flash working distance.',
+      description: 'Solar-PV-specific Risk Assessment and Method Statement — DC string isolation sequence, MC4 connector hazards…',
       icon: 'ShieldCheck',
       category: 'Guide',
     },

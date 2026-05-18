@@ -460,7 +460,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Rotherham electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the residential and commercial electrical market in Rotherham. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -477,9 +477,9 @@ export default function ElectricianRotherhamPage() {
     <GuideTemplate
       localArea="Rotherham"
       title="Electrician in Rotherham | Local Electricians 2026"
-      description="Find qualified electricians in Rotherham. Part P compliance, NICEIC registered, EICR for landlords, consumer unit replacement, house rewiring, and local electrician rates for Rotherham in 2026."
+      description="Find qualified electricians in Rotherham. Part P compliance, NICEIC registered, EICR for landlords, consumer unit replacement, house rewiring…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Rotherham"

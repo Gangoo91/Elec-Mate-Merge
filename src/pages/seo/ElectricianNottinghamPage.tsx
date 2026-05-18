@@ -564,7 +564,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Nottingham electrical business from your phone"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs…"
           icon={MapPin}
         />
       </>
@@ -581,9 +581,9 @@ export default function ElectricianNottinghamPage() {
     <GuideTemplate
       localArea="Nottingham"
       title="Electrician in Nottingham | Find Qualified Electricians 2026"
-      description="Find qualified, registered electricians in Nottingham. Realistic 2026 pricing, NGED DNO connections, selective licensing EICR requirements, Lace Market conversions, student HMO compliance, and Part P guidance."
+      description="Find qualified, registered electricians in Nottingham. Realistic 2026 pricing, NGED DNO connections, selective licensing EICR requirements…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Find an Electrician"

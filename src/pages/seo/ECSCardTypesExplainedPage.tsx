@@ -449,7 +449,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Track your qualifications with Elec-Mate"
-          description="Keep all your certificates, card expiry dates, and CPD records in one place. Elec-Mate reminds you when renewals are due so you never work with an expired card."
+          description="Keep all your certificates, card expiry dates, and CPD records in one place. Elec-Mate reminds you when renewals are due so you never work with an…"
           icon={CreditCard}
         />
       </>
@@ -465,9 +465,9 @@ export default function ECSCardTypesExplainedPage() {
   return (
     <GuideTemplate
       title="ECS Card Types Explained | Electrician Card Guide UK 2026"
-      description="Complete guide to ECS card types for UK electricians. Apprentice, Provisional, Installation Electrician, Maintenance, and Gold Card — requirements, how to apply, costs, and renewal. Updated 2026."
+      description="Complete guide to ECS card types for UK electricians. Apprentice, Provisional, Installation Electrician, Maintenance, and Gold Card — requirements…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

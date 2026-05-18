@@ -5,14 +5,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // CDM 2015 statutory framework and the Electricity at Work Regulations 1989.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const ramsForEVChargerInstallationConfig: GeneratedGuideConfig = {
   pagePath: '/guides/rams-for-ev-charger-installation',
   title:
-    'RAMS for EV Charger Installation — UK Method Statement Guide | Elec-Mate',
+    'RAMS for EV Charger Installation — UK Method Statement',
   description:
-    'EV charger installation RAMS for UK electricians. Hazards, control measures, BS 7671:2018+A4:2026 Section 722 references, PME/PNB earthing, AFDD exemption, CDM 2015 and EAWR 1989 duties — with a method statement template and digital RAMS Generator.',
+    'EV charger installation RAMS for UK electricians. Hazards, control measures, BS 7671:2018+A4:2026 Section 722 references, PME/PNB earthing…',
   datePublished: published,
   dateModified: modified,
   readingTime: 12,

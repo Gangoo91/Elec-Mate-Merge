@@ -5,14 +5,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Every regulation cite resolves to a canonical reference.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const section714OutdoorLightingConfig: GeneratedGuideConfig = {
   pagePath: '/guides/bs-7671-section-714-outdoor-lighting',
   title:
-    'BS 7671 Section 714 Outdoor Lighting Installations — Highway, Street Furniture, Floodlighting (A4:2026) | Elec-Mate',
+    'BS 7671 Section 714 Outdoor Lighting Installations',
   description:
-    'BS 7671 Section 714 explained: scope, exclusions, 5 second disconnection time, IP44 minimum, firefighter switch requirements and isolation rules for outdoor lighting, highway power supplies and street furniture. A4:2026 aligned.',
+    'BS 7671 Section 714 explained: scope, exclusions, 5 second disconnection time, IP44 minimum…',
   datePublished: published,
   dateModified: modified,
   readingTime: 13,

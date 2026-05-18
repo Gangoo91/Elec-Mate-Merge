@@ -445,7 +445,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Ipswich electrical business from your phone"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs…"
           icon={MapPin}
         />
       </>
@@ -462,9 +462,9 @@ export default function ElectricianIpswichPage() {
     <GuideTemplate
       localArea="Ipswich"
       title="Electrician in Ipswich | Find Qualified Electricians 2026"
-      description="Find qualified, registered electricians in Ipswich. Realistic 2026 pricing, UKPN connections, Victorian rewiring, waterfront developments, Part P compliance, and Ipswich-specific electrical information."
+      description="Find qualified, registered electricians in Ipswich. Realistic 2026 pricing, UKPN connections, Victorian rewiring, waterfront developments…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Find an Electrician"

@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description:
-      'Complete guide to the 18th Edition of the IET Wiring Regulations including Amendment 3:2024.',
+      'Complete guide to the 18th Edition of the IET Wiring Regulations including Amendment 4:2024.',
     icon: FileText,
     category: 'Guide',
   },
@@ -135,19 +135,19 @@ const features = [
     icon: Brain,
     title: 'AI Pattern Recognition',
     description:
-      'The AI cross-references your symptom description against thousands of documented fault patterns in UK electrical installations to identify the most probable causes.',
+      'The AI cross-references your symptom description against thousands of documented fault patterns in UK electrical installations to identify the most…',
   },
   {
     icon: ShieldCheck,
     title: 'BS 7671 Regulation References',
     description:
-      'Every diagnosis includes specific regulation references from BS 7671:2018+A4:2026 so you can verify the reasoning and cite the correct standard on your report.',
+      'Every diagnosis includes specific regulation references from BS 7671:2018+A4:2026 so you can verify the reasoning and cite the correct standard on your…',
   },
   {
     icon: ListChecks,
     title: 'Suggested Test Sequence',
     description:
-      'For each probable cause, the AI provides a step-by-step test sequence specifying the instrument, measurement, expected values, and fault-confirming readings.',
+      'For each probable cause, the AI provides a step-by-step test sequence specifying the instrument, measurement, expected values…',
   },
   {
     icon: Cable,
@@ -159,13 +159,13 @@ const features = [
     icon: Zap,
     title: 'Intermittent Fault Strategies',
     description:
-      'Purpose-built diagnostic approaches for intermittent faults including thermal effects, moisture ingress, load-dependent failures, and time-dependent deterioration.',
+      'Purpose-built diagnostic approaches for intermittent faults including thermal effects, moisture ingress, load-dependent failures…',
   },
   {
     icon: Bot,
     title: 'Conversational Follow-Up',
     description:
-      'After the initial diagnosis, continue the conversation. Report your test results and the AI refines the diagnosis, narrowing down causes based on real measurements.',
+      'After the initial diagnosis, continue the conversation. Report your test results and the AI refines the diagnosis…',
   },
 ];
 
@@ -274,7 +274,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Diagnose your next fault in minutes"
-          description="Open the Fault Diagnosis agent in Elec-Mate, describe the symptoms, and get a ranked diagnosis with test sequences. Works offline on site — no signal needed."
+          description="Open the Fault Diagnosis agent in Elec-Mate, describe the symptoms, and get a ranked diagnosis with test sequences."
           icon={Brain}
         />
       </>
@@ -370,7 +370,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          The AI references the complete BS 7671:2018+A4:2026 including Amendment 3 (issued July
+          The AI references the complete BS 7671:2018+A4:2026 including Amendment 4 (issued July
           2024), which adds Regulation 530.3.2 for bidirectional and unidirectional protective
           devices. It also references GN3 (Guidance Note 3: Inspection and Testing, 9th Edition) for
           test procedures and the IET On-Site Guide for practical installation guidance.
@@ -432,7 +432,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Try it with your current fault"
-          description="Got a tricky fault right now? Open the Fault Diagnosis agent and describe the symptoms. The AI will produce a diagnosis with test sequences in under 30 seconds."
+          description="Got a tricky fault right now? Open the Fault Diagnosis agent and describe the symptoms. The AI will produce a diagnosis with test sequences in under 30…"
           icon={Lightbulb}
         />
       </>
@@ -448,9 +448,9 @@ export default function AIFaultDiagnosisPage() {
   return (
     <ToolTemplate
       title="AI Fault Diagnosis Tool | Electrical Troubleshooting"
-      description="Diagnose electrical faults with AI trained for UK installations. Describe symptoms in plain English, get ranked probable causes with BS 7671 references, suggested test sequences, and recommended fixes."
+      description="Diagnose electrical faults with AI trained for UK installations. Describe symptoms in plain English, get ranked probable causes with BS 7671 references…"
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="AI Diagnostic Agent"

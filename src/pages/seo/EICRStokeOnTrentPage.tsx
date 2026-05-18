@@ -314,7 +314,7 @@ const sections = [
               <Zap className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Non-compliant consumer units</strong> — consumer units installed or replaced
-                before 2016 may be housed in combustible plastic enclosures. Since Amendment 3 to
+                before 2016 may be housed in combustible plastic enclosures. Since Amendment 4 to
                 the 17th Edition (now consolidated in BS 7671:2018), consumer units in domestic
                 premises must be housed in non-combustible enclosures.
               </span>
@@ -529,7 +529,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more EICR work across Stoke-on-Trent with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more inspections per day and convert findings to quotes on the spot. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -545,9 +545,9 @@ export default function EICRStokeOnTrentPage() {
   return (
     <GuideTemplate
       title="EICR Stoke-on-Trent | Electrical Inspection Stoke"
-      description="EICR Stoke-on-Trent — landlord regulations, inspection costs, common findings in the six towns' older terraced properties, qualified electrician requirements, and enforcement by Stoke-on-Trent City Council. 2026 guide."
+      description="EICR Stoke-on-Trent — landlord regulations, inspection costs, common findings in the six towns' older terraced properties…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

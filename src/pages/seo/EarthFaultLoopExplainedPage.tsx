@@ -24,7 +24,7 @@ import {
 
 const PAGE_TITLE = 'Earth Fault Loop Impedance Explained | Ze & Zs Guide';
 const PAGE_DESCRIPTION =
-  'Complete guide to earth fault loop impedance for UK electricians. What earth fault loop impedance is, Ze (external) and Zs (total = Ze + R1+R2), why it determines disconnection time, maximum Zs values per BS 7671 Tables 41.3/41.4, how to measure Ze and Zs, temperature correction (0.8 factor), TN-C-S vs TN-S vs TT typical values. Record and validate with Elec-Mate.';
+  'Earth fault loop impedance explained: Ze vs Zs, disconnection time, BS 7671 Tables 41.3/41.4 max values, 0.8 correction, TN-C-S/TN-S/TT values.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -255,7 +255,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Zs lookup by protective device — instant maximum values"
-          description="Select the protective device type (B, C, D MCB, BS 3036 fuse, BS 88 fuse) and rating, and Elec-Mate instantly shows the maximum permitted Zs from BS 7671, with the 0.8 correction factor already applied. No need to carry the tables."
+          description="Select the protective device type (B, C, D MCB, BS 3036 fuse, BS 88 fuse) and rating…"
           icon={Calculator}
         />
       </>
@@ -428,7 +428,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Voice to test results — speak Zs values on site"
-          description="With your MFT in one hand, speak: 'Ring 1, Zs 0.89 ohms.' Elec-Mate fills in the schedule of test results and validates the value against the maximum Zs for the protective device on that circuit. Hands-free, BS 7671 compliant."
+          description="With your MFT in one hand, speak: 'Ring 1, Zs 0.89 ohms.' Elec-Mate fills in the schedule of test results and validates the value against the maximum Zs…"
           icon={Mic}
         />
       </>
@@ -590,7 +590,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Auto-validated Zs in the schedule of tests"
-          description="Elec-Mate validates every measured Zs against BS 7671 maximum permitted values for the specific protective device on each circuit. Failures are flagged immediately with the relevant table reference. 70+ calculators including Zs lookup, R1+R2, and PFC."
+          description="Elec-Mate validates every measured Zs against BS 7671 maximum permitted values for the specific protective device on each circuit."
           icon={ClipboardCheck}
         />
       </>
@@ -656,7 +656,7 @@ export default function EarthFaultLoopExplainedPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2024-11-05"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

@@ -6,14 +6,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // the Electric Vehicles (Smart Charge Points) Regulations 2021.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const v2hBidirectionalEvChargingConfig: GeneratedGuideConfig = {
   pagePath: '/guides/v2h-bidirectional-ev-charging',
   title:
-    'V2H Bidirectional EV Charging Installation Guide (UK) — BS 7671 A4:2026 | Elec-Mate',
+    'V2H Bidirectional EV Charging Installation Guide (UK) — BS',
   description:
-    'Vehicle-to-Home (V2H) bidirectional EV charging installation guide for UK electricians — V2G vs V2H vs V2L, CHAdeMO vs CCS, ISO 15118-20, DC vs AC architectures, inverter requirements, BS 7671 Section 712 prosumer interaction, G99 DNO notification, island-mode operation, tariff arbitrage and EICR coding.',
+    'Vehicle-to-Home (V2H) bidirectional EV charging installation guide for UK electricians — V2G vs V2H vs V2L, CHAdeMO vs CCS, ISO 15118-20…',
   datePublished: published,
   dateModified: modified,
   readingTime: 18,
@@ -454,7 +454,7 @@ export const v2hBidirectionalEvChargingConfig: GeneratedGuideConfig = {
     {
       href: '/guides/section-722-ev-charging-a4-2026-changes',
       title: 'Section 722 EV Charging — A4:2026 Changes',
-      description: 'The BS 7671 Section 722 amendments brought in by Amendment 4:2026 — RCD selection, earthing for TN-C-S/PNB supplies, and the specific clauses bidirectional chargers must satisfy.',
+      description: 'The BS 7671 Section 722 amendments brought in by Amendment 4:2026 — RCD selection, earthing for TN-C-S/PNB supplies…',
       icon: 'Zap',
       category: 'Guide',
     },
@@ -468,28 +468,28 @@ export const v2hBidirectionalEvChargingConfig: GeneratedGuideConfig = {
     {
       href: '/guides/v2g-installation-guide',
       title: 'V2G Installation Guide',
-      description: 'Vehicle-to-Grid — the grid-export variant of bidirectional charging, with full G99 notification, flexibility platform integration and commercial-scale considerations.',
+      description: 'Vehicle-to-Grid — the grid-export variant of bidirectional charging, with full G99 notification…',
       icon: 'Zap',
       category: 'Guide',
     },
     {
       href: '/guides/cable-size-for-ev-charger',
       title: 'Cable Size for EV Charger',
-      description: 'Cable sizing for EV charging circuits — voltage drop, current-carrying capacity, reference methods and the specific requirements for 7-22 kW domestic and bidirectional installs.',
+      description: 'Cable sizing for EV charging circuits — voltage drop, current-carrying capacity…',
       icon: 'Cable',
       category: 'Guide',
     },
     {
       href: '/guides/smart-ev-charging',
       title: 'Smart EV Charging',
-      description: 'The Electric Vehicles (Smart Charge Points) Regulations 2021 — randomised delay, default off-peak settings, data privacy and the smart tariffs (Octopus Intelligent, EDF GoElectric) that drive V2H economics.',
+      description: 'The Electric Vehicles (Smart Charge Points) Regulations 2021 — randomised delay, default off-peak settings…',
       icon: 'Gauge',
       category: 'Guide',
     },
     {
       href: '/guides/ev-charger-installation',
       title: 'EV Charger Installation',
-      description: 'The end-to-end unidirectional EV charger install — the foundation a V2H upgrade is built on top of, covering BS 7671 Section 722, IET Code of Practice 5th Edition and Part P notification.',
+      description: 'The end-to-end unidirectional EV charger install — the foundation a V2H upgrade is built on top of, covering BS 7671 Section 722…',
       icon: 'Wrench',
       category: 'Guide',
     },

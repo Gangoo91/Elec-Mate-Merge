@@ -222,7 +222,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Complete commercial EICRs efficiently with Elec-Mate"
-          description="Elec-Mate's EICR app handles multiple distribution boards, three-phase installations, and generates professional commercial EICR reports on your phone. Issue the PDF to the client before you leave site."
+          description="Elec-Mate's EICR app handles multiple distribution boards, three-phase installations, and generates professional commercial EICR reports on your phone."
           icon={Building2}
         />
       </>
@@ -507,7 +507,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Build a commercial EICR business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for commercial EICR reports, remedial works quoting, and professional documentation. Issue EICR reports on site and remedial quotes the same day. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for commercial EICR reports, remedial works quoting, and professional documentation."
           icon={Building2}
         />
       </>
@@ -522,10 +522,10 @@ const sections = [
 export default function EICRCommercialPage() {
   return (
     <GuideTemplate
-      title="Commercial EICR Guide UK | Intervals, Scope, Qualifications and Cost"
-      description="Complete guide to commercial property EICRs in the UK. Inspection intervals, scope vs domestic EICR, qualifications required, three-phase installations, fire alarm and emergency lighting, and typical costs £500–£3,000+."
+      title="Commercial EICR Guide UK | Intervals, Scope, Qualifications"
+      description="Complete guide to commercial property EICRs in the UK. Inspection intervals, scope vs domestic EICR, qualifications required, three-phase installations…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Inspection Guide"

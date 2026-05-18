@@ -369,7 +369,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Schedule of Test Results Captures Polarity"
-          description="Elec-Mate's schedule of test results includes polarity verification for every circuit. Enter your continuity readings and the app auto-confirms polarity. Any circuit without confirmed polarity is flagged as requiring attention before the certificate can be completed."
+          description="Elec-Mate's schedule of test results includes polarity verification for every circuit. Enter your continuity readings and the app auto-confirms polarity."
           icon={ClipboardCheck}
         />
       </>
@@ -588,7 +588,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Auto-Validated Schedule of Test Results"
-          description="Elec-Mate captures polarity verification on every circuit in the schedule of test results. The app ensures polarity is confirmed before a certificate can be finalised. Incomplete polarity verification is flagged automatically, preventing certificates from being issued with missing data."
+          description="Elec-Mate captures polarity verification on every circuit in the schedule of test results. The app ensures polarity is confirmed before a certificate can…"
           icon={FileCheck2}
         />
       </>
@@ -603,10 +603,10 @@ const sections = [
 export default function PolarityTestingGuidePage() {
   return (
     <GuideTemplate
-      title="Polarity Testing Procedure | Complete Guide for UK Electricians"
-      description="Complete guide to polarity testing for UK electricians. Why polarity matters, verification methods (visual, continuity, instrument), when required by BS 7671, common polarity faults, and recording results on EIC/EICR schedules. GN3 procedure explained."
+      title="Polarity Testing Procedure | Complete Guide for UK"
+      description="Complete guide to polarity testing for UK electricians. Why polarity matters, verification methods (visual, continuity, instrument)…"
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Essential Guide"

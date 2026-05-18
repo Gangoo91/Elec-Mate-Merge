@@ -450,7 +450,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Cheltenham electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for electricians working in period properties and premium markets. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -467,9 +467,9 @@ export default function ElectricianCheltenhamPage() {
     <GuideTemplate
       localArea="Cheltenham"
       title="Electrician in Cheltenham | Local Electricians 2026"
-      description="Find qualified electricians in Cheltenham. Part P compliance, NGED DNO, listed building consent, Regency property rewiring, EICR costs, and Cheltenham electrician rates for 2026."
+      description="Find qualified electricians in Cheltenham. Part P compliance, NGED DNO, listed building consent, Regency property rewiring, EICR costs…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cheltenham"

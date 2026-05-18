@@ -654,8 +654,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Produce qualification-ready electrical records with Elec-Mate"
-          description="Create professional test records and inspection reports that support cleanroom IQ/OQ/PQ qualification. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial."
+          title="Produce qualification-ready electrical records with"
+          description="Create professional test records and inspection reports that support cleanroom IQ/OQ/PQ qualification. Join 1,000+ UK electricians using Elec-Mate."
           icon={ShieldCheck}
         />
       </>
@@ -670,10 +670,10 @@ const sections = [
 export default function CleanroomElectricalPage() {
   return (
     <GuideTemplate
-      title="Cleanroom Electrical Installation UK | ISO Cleanroom Wiring Guide"
-      description="Complete guide to cleanroom electrical installation in the UK — ISO 14644 classifications (ISO 5-8), minimising particle generation, flush-mounted fittings, sealed cable entries, HEPA filtration electrical controls, positive pressure monitoring, and UPS for critical environments."
+      title="Cleanroom Electrical Installation UK | ISO Cleanroom Wiring"
+      description="Complete guide to cleanroom electrical installation in the UK — ISO 14644 classifications (ISO 5-8), minimising particle generation…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Specialist Sector"

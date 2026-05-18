@@ -643,9 +643,9 @@ export default function EICRNottinghamPage() {
   return (
     <GuideTemplate
       title="EICR Nottingham | Electrical Safety Certificate Cost 2026"
-      description="EICR costs in Nottingham for 2026. Selective licensing requirements, landlord obligations, observation codes explained, and how to find a qualified inspector. Prices from £120 for a flat to £400+ for a house."
+      description="EICR costs in Nottingham for 2026. Selective licensing requirements, landlord obligations, observation codes explained…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

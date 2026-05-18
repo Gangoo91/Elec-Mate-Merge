@@ -17,10 +17,10 @@ import {
 export default function OutdoorElectricsPage() {
   return (
     <GuideTemplate
-      title="Outdoor Electrical Installations UK | Garden & External Wiring"
-      description="Complete UK guide to outdoor electrical installations. BS 7671 Section 714, IP ratings (IP44/IP65), RCD protection, SWA and Hi-Tuf cable, burial depths, garden lighting, outdoor sockets, hot tubs, swimming pools, Part P notification, and EV charger outdoor considerations."
+      title="Outdoor Electrical Installations UK | Garden & External"
+      description="Complete UK guide to outdoor electrical installations. BS 7671 Section 714, IP ratings (IP44/IP65), RCD protection, SWA and Hi-Tuf cable, burial depths…"
       datePublished="2025-06-01"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         {
@@ -350,7 +350,7 @@ export default function OutdoorElectricsPage() {
               </p>
               <SEOAppBridge
                 title="Cable Sizing Calculator for Outdoor Circuits"
-                description="Elec-Mate's cable sizing calculator handles outdoor SWA circuits with all relevant derating factors — ground temperature, depth of burial, grouping with other cables, and soil thermal resistivity. Enter the load and cable route details for the correct SWA cable size."
+                description="Elec-Mate's cable sizing calculator handles outdoor SWA circuits with all relevant derating factors — ground temperature, depth of burial…"
                 icon={Calculator}
               />
             </>
@@ -601,7 +601,7 @@ export default function OutdoorElectricsPage() {
               </p>
               <SEOAppBridge
                 title="EIC and Minor Works Certificates for Outdoor Installations"
-                description="Elec-Mate's Electrical Installation Certificate and Minor Works Certificate forms cover all outdoor installation requirements — IP ratings, RCD details, SWA cable specifications, and earthing arrangements. Complete everything on site and export a professional PDF."
+                description="Elec-Mate's Electrical Installation Certificate and Minor Works Certificate forms cover all outdoor installation requirements — IP ratings, RCD details…"
                 icon={FileText}
               />
             </>
@@ -717,7 +717,7 @@ export default function OutdoorElectricsPage() {
               </p>
               <SEOAppBridge
                 title="AI Installation Specialist for Outdoor Wiring"
-                description="Elec-Mate's AI Installation Specialist provides guidance on outdoor wiring — cable selection, burial depths, IP ratings, RCD requirements, and earthing arrangements. Ask any question about outdoor electrical installations and get instant, regulation-referenced answers."
+                description="Elec-Mate's AI Installation Specialist provides guidance on outdoor wiring — cable selection, burial depths, IP ratings, RCD requirements…"
                 icon={Brain}
               />
             </>

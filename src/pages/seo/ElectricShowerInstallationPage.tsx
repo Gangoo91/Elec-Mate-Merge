@@ -289,7 +289,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Size shower cables in seconds"
-          description="Enter the shower kW rating, cable length, and installation method. Elec-Mate's cable sizing calculator applies all BS 7671 correction factors and checks voltage drop automatically. No manual Appendix 4 lookups."
+          description="Enter the shower kW rating, cable length, and installation method. Elec-Mate's cable sizing calculator applies all BS 7671 correction factors and checks…"
           icon={Calculator}
         />
       </>
@@ -589,8 +589,8 @@ const sections = [
           </ul>
         </div>
         <SEOAppBridge
-          title="Create the EIC on site after installation"
-          description="Elec-Mate generates the Electrical Installation Certificate for your new shower circuit on your phone. Enter the test results, describe the installation, and send the certificate to the customer instantly."
+          title="7.5kW Shower Cable Size: BS 7671:2018+A4:2026"
+          description="7.5kW shower needs 10mm² cable minimum. Calculate exact sizing, earthing, and MCB ratings for safe installation to regs."
           icon={FileCheck2}
         />
       </>
@@ -606,9 +606,9 @@ export default function ElectricShowerInstallationPage() {
   return (
     <GuideTemplate
       title="Electric Shower Installation | Cable Size & Circuit Guide"
-      description="Complete guide to electric shower installation in the UK. Cable sizing for 7.5kW to 12kW showers, MCB rating, pull cord vs ceiling switch, RCD protection, bathroom zones, Part P notification, and common installation mistakes under BS 7671."
+      description="Complete guide to electric shower installation in the UK. Cable sizing for 7.5kW to 12kW showers, MCB rating, pull cord vs ceiling switch…"
       datePublished="2025-06-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

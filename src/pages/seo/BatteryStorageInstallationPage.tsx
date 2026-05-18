@@ -517,7 +517,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage your battery storage installations with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site certificates, quoting, and job management. Complete MCS commissioning documents and G98 notifications on your phone. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site certificates, quoting, and job management."
           icon={Battery}
         />
       </>
@@ -532,10 +532,10 @@ const sections = [
 export default function BatteryStorageInstallationPage() {
   return (
     <GuideTemplate
-      title="Home Battery Storage Installation UK | Energy Storage Guide 2025"
-      description="Complete guide to home battery storage installation in the UK. Battery types (lithium-ion, LFP), popular systems (Tesla Powerwall, GivEnergy, SolarEdge, Growatt, Fox ESS), AC vs DC coupled, sizing 5–15 kWh, costs £3,000–£8,000, G99 grid connection, and MCS certification for grants."
+      title="Home Battery Storage Installation UK | Energy Storage Guide"
+      description="Complete guide to home battery storage installation in the UK. Battery types (lithium-ion, LFP), popular systems (Tesla Powerwall, GivEnergy, SolarEdge…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Energy Storage Guide"

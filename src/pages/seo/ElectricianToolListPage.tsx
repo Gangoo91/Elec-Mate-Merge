@@ -306,7 +306,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Digital Test Results and Certificates"
-          description="Record test results on your phone as you take them. Elec-Mate auto-populates your EICR, EIC, or Minor Works certificate from the test data. No more scribbling results on paper and typing them up later."
+          description="Record test results on your phone as you take them. Elec-Mate auto-populates your EICR, EIC, or Minor Works certificate from the test data."
           icon={Gauge}
         />
       </>
@@ -606,7 +606,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Track Tool Inventory and Values"
-          description="Record every tool you own, its purchase date, cost, serial number, and insurance value. Track calibration dates for test instruments. Generate a tool inventory for your insurance company. All stored securely in the cloud."
+          description="Record every tool you own, its purchase date, cost, serial number, and insurance value. Track calibration dates for test instruments."
           icon={Wrench}
         />
       </>
@@ -667,9 +667,9 @@ export default function ElectricianToolListPage() {
     <GuideTemplate
       localArea="Tool List Uk"
       title="Electrician Tool List UK 2026 | Essential Tools Guide"
-      description="Complete UK electrician tool list for 2026. Hand tools, VDE insulated tools, test equipment, power tools, PPE, budget guide, and brand recommendations. Everything you need to kit out as a professional electrician."
+      description="Complete UK electrician tool list for 2026. Hand tools, VDE insulated tools, test equipment, power tools, PPE, budget guide, and brand recommendations."
       datePublished="2025-01-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

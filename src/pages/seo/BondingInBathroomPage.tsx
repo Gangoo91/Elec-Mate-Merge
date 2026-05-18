@@ -501,7 +501,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Record bonding observations on the EICR instantly"
-          description="Found missing or inadequate bonding? Elec-Mate's AI assigns the correct observation code (C1, C2, or C3) with the BS 7671 regulation reference. Complete the EICR on your phone and send it to the customer before you leave."
+          description="Found missing or inadequate bonding? Elec-Mate's AI assigns the correct observation code (C1, C2, or C3) with the BS 7671 regulation reference."
           icon={ClipboardCheck}
         />
       </>
@@ -563,8 +563,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="EICR, bonding observations, remedial quotes — all on your phone"
-          description="Join 1,000+ UK electricians completing EICR certificates with AI observation coding, remedial quoting, and instant delivery. 7-day free trial, cancel anytime."
+          title="701.415.2 Bathroom Bonding | BS 7671:2018+A4:2026"
+          description="701.415.2 supplementary bonding in bathrooms: meet BS 7671:2018+A4:2026 requirements. Instant compliance checks, observation coding…"
           icon={Droplet}
         />
       </>
@@ -580,9 +580,9 @@ export default function BondingInBathroomPage() {
   return (
     <GuideTemplate
       title="Bonding in a Bathroom | When Is It Required? UK Guide"
-      description="Complete guide to supplementary bonding in bathrooms under BS 7671. When bonding is required, when it can be omitted under Regulation 701.415.2, 4mm conductor requirements, what to bond, testing procedures, and EICR observation coding."
+      description="Complete guide to supplementary bonding in bathrooms under BS 7671. When bonding is required, when it can be omitted under Regulation 701.415.2…"
       datePublished="2025-05-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

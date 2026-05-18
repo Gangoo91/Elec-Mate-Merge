@@ -480,10 +480,10 @@ const sections = [
 export default function ElectricianDerbyshirePage() {
   return (
     <GuideTemplate
-      title="Electrician Derbyshire — Derby, Chesterfield, Matlock, Peak District | Elec-Mate"
-      description="Find registered electricians in Derbyshire covering Derby, Chesterfield, Matlock, Belper, Ilkeston, and Long Eaton. Local DNO (NGED East Midlands), Peak District TT earthing, older wiring, Part P, and typical costs for electrical work across Derbyshire."
+      title="Electrician Derbyshire — Derby, Chesterfield, Matlock, Peak"
+      description="Find registered electricians in Derbyshire covering Derby, Chesterfield, Matlock, Belper, Ilkeston, and Long Eaton."
       datePublished="2024-08-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Local Guide"

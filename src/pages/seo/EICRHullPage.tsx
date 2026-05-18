@@ -543,7 +543,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your EICR business in Hull with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate to complete EICRs on site, scan boards with AI, and export instant PDFs. Complete more inspections per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to complete EICRs on site, scan boards with AI, and export instant PDFs."
           icon={FileCheck2}
         />
       </>
@@ -558,10 +558,10 @@ const sections = [
 export default function EICRHullPage() {
   return (
     <GuideTemplate
-      title="EICR Certificate Hull | Electrical Installation Condition Report"
-      description="EICR requirements for Hull landlords and homeowners. Learn about legal obligations under the 2020 Regulations, Hull City Council enforcement, EICR costs £150–300, 5-year inspection periods, and finding qualified electricians in Hull."
+      title="EICR Certificate Hull | Electrical Installation Condition"
+      description="EICR requirements for Hull landlords and homeowners. Learn about legal obligations under the 2020 Regulations, Hull City Council enforcement…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

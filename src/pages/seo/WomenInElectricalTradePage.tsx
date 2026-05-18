@@ -406,7 +406,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Study smarter with AI-powered revision"
-          description="Elec-Mate's study centre gives apprentices structured courses, flashcards, and mock exams for 18th Edition, 2391, and AM2 preparation. Track your progress and identify weak areas before exam day."
+          description="Elec-Mate's study centre gives apprentices structured courses, flashcards, and mock exams for 18th Edition, 2391, and AM2 preparation."
           icon={Brain}
         />
       </>
@@ -548,7 +548,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional tools for every stage of your career"
-          description="Whether you are an apprentice studying for your 18th Edition or a self-employed electrician running your own business, Elec-Mate provides digital certificates, AI calculators, quoting tools, and study resources. 7-day free trial."
+          description="Whether you are an apprentice studying for your 18th Edition or a self-employed electrician running your own business…"
           icon={Briefcase}
         />
       </>
@@ -629,9 +629,9 @@ export default function WomenInElectricalTradePage() {
   return (
     <GuideTemplate
       title="Women in the Electrical Trade | Career Guide UK"
-      description="Complete guide for women considering or pursuing a career in the UK electrical trade. Industry statistics, apprenticeship advice, support networks, role models, career progression, and practical guidance for breaking barriers."
+      description="Complete guide for women considering or pursuing a career in the UK electrical trade. Industry statistics, apprenticeship advice, support networks…"
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

@@ -482,7 +482,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Produce compliant EICRs that protect landlords and tenants"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion. Clear C1/C2/C3/FI classification, instant PDF export, and landlord portal upload. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion. Clear C1/C2/C3/FI classification, instant PDF export, and landlord portal upload."
           icon={FileCheck2}
         />
       </>
@@ -498,9 +498,9 @@ export default function EICRTenantRightsPage() {
   return (
     <GuideTemplate
       title="Tenant Rights for EICR UK | Renters' Electrical Safety Guide"
-      description="Tenants' guide to EICR rights in the private rented sector. Your right to a copy of the EICR within 28 days, what to do if your landlord refuses, how to report to the local authority, council enforcement powers, eviction protections, and why you should not withhold rent."
+      description="Tenants' guide to EICR rights in the private rented sector. Your right to a copy of the EICR within 28 days, what to do if your landlord refuses…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Tenant Rights Guide"

@@ -20,9 +20,9 @@ import {
   FileCheck2,
 } from 'lucide-react';
 
-const PAGE_TITLE = 'Electrical Apprentice Portfolio Guide | Evidence Tracking | Elec-Mate';
+const PAGE_TITLE = 'Electrical Apprentice Portfolio Guide | Evidence Tracking';
 const PAGE_DESCRIPTION =
-  'Complete guide to building your electrical apprentice portfolio. Digital evidence tracking, photo documentation, criteria mapping, employer review, and EPAO submission. From £5.99/mo.';
+  'Build your electrical apprentice portfolio: digital evidence tracking, photo documentation, criteria mapping, EPAO submission. From £5.99/mo.';
 
 const faqs = [
   {
@@ -62,7 +62,7 @@ const features = [
     icon: Camera,
     title: 'Photo Evidence Capture',
     description:
-      'Capture evidence directly from your phone on site. Photograph completed work, add descriptions, and tag against apprenticeship standard criteria in seconds.',
+      'Capture evidence directly from your phone on site. Photograph completed work, add descriptions…',
   },
   {
     icon: FolderOpen,
@@ -74,13 +74,13 @@ const features = [
     icon: Clock,
     title: 'OJT Hours Integration',
     description:
-      'Portfolio entries automatically link to your off-the-job training hours log. Study sessions, college attendance, and on-platform learning are tracked and documented.',
+      'Portfolio entries automatically link to your off-the-job training hours log. Study sessions, college attendance…',
   },
   {
     icon: Brain,
     title: 'AI Reflection Coach',
     description:
-      'The AI prompts you with questions to write better reflective statements: "What regulation did this comply with?", "What would you do differently?", "What did you learn?"',
+      'The AI prompts you with questions to write better reflective statements: "What regulation did this comply with?", "What would you do differently?"…',
   },
   {
     icon: Users,
@@ -271,37 +271,37 @@ export default function ApprenticePortfolioGuidePage() {
                 step: '1',
                 title: 'Photographs of Completed Work',
                 description:
-                  'Photograph every significant piece of work you complete: consumer unit installations, cable routes, containment runs, accessory installations, distribution boards, and test setups. Include "before and after" shots where possible. Each photograph should have a description explaining what the work involved, what regulations applied, and what decisions you made. This maps to the "installation" skills criteria.',
+                  'Photograph every significant piece of work you complete: consumer unit installations, cable routes, containment runs, accessory installations…',
               },
               {
                 step: '2',
                 title: 'Work Logs and Activity Records',
                 description:
-                  'Maintain a regular log of the activities you carry out on site. Record what you did, what tools and materials you used, who supervised you, what safety precautions you took, and what you learned. Work logs demonstrate consistency of experience over time and map to multiple skills and behaviour criteria including safe working practices and communication.',
+                  'Maintain a regular log of the activities you carry out on site. Record what you did, what tools and materials you used, who supervised you…',
               },
               {
                 step: '3',
                 title: 'Witness Testimonies',
                 description:
-                  'Ask your employer, supervisor, or experienced colleagues to provide witness testimonies confirming your competence in specific areas. A witness testimony is a signed statement from someone who observed your work, confirming that you carried out a task competently and safely. Digital witness testimonies through Elec-Mate include verification signatures and can be reviewed by your training provider.',
+                  'Ask your employer, supervisor, or experienced colleagues to provide witness testimonies confirming your competence in specific areas.',
               },
               {
                 step: '4',
                 title: 'Test Certificates and Documentation',
                 description:
-                  'Include copies of test certificates you have contributed to — EICs, Minor Works certificates, and EICRs. Even if you did not sign as the responsible person (you cannot until you hold the 2391-52), evidence that you participated in the testing process and helped complete the documentation demonstrates your developing competence in inspection and testing.',
+                  'Include copies of test certificates you have contributed to — EICs, Minor Works certificates, and EICRs.',
               },
               {
                 step: '5',
                 title: 'Reflective Accounts',
                 description:
-                  'Reflective accounts are written descriptions of specific experiences where you analyse what happened, what you learned, and how you would apply that learning in the future. Strong reflective accounts demonstrate critical thinking and self-awareness — both key behaviour criteria. The AI reflection coach in Elec-Mate prompts you with targeted questions to draw out deeper insights from your experiences.',
+                  'Reflective accounts are written descriptions of specific experiences where you analyse what happened, what you learned…',
               },
               {
                 step: '6',
                 title: 'Training and CPD Records',
                 description:
-                  'Document all training activities: college attendance, online study sessions, toolbox talks, manufacturer training, trade show attendance, and self-directed learning. Link these to your off-the-job training hours log and map them to the knowledge criteria they cover. This demonstrates your commitment to continuing professional development, which assessors value highly.',
+                  'Document all training activities: college attendance, online study sessions, toolbox talks, manufacturer training, trade show attendance…',
               },
             ].map((item) => (
               <div
@@ -565,7 +565,7 @@ export default function ApprenticePortfolioGuidePage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Build Your Portfolio + Study for Exams in One App"
-            description="Elec-Mate helps electrical apprentices track their NVQ progress, study for assessments with 2,000+ practice questions, and prepare professional portfolio evidence. Start your free trial today."
+            description="Elec-Mate helps electrical apprentices track their NVQ progress, study for assessments with 2,000+ practice questions…"
             icon={GraduationCap}
           />
           <p className="text-white mt-4 text-sm">

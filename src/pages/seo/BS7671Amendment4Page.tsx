@@ -44,7 +44,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Amendment 4 to BS 7671:2018 is expected in 2026 — the IET has not confirmed a precise publication date, but consultation processes are under way.',
-  'A4 is anticipated to be more substantial than Amendment 3, addressing energy storage, EV charging infrastructure, smart home installations, and harmonised European standards.',
+  'A4 is anticipated to be more substantial than Amendment 4, addressing energy storage, EV charging infrastructure, smart home installations, and harmonised European standards.',
   'Electricians should prepare now by studying the current edition thoroughly, understanding A3:2024 changes, and staying current with CPD on emerging technologies.',
   'There will typically be a transition period after publication during which both the current and amended versions are acceptable for compliance purposes.',
   'Elec-Mate will update its AI agents, regulation references, calculators, and training content as soon as Amendment 4 is officially published.',
@@ -59,7 +59,7 @@ const faqs = [
   {
     question: 'Will I need a new book for Amendment 4?',
     answer:
-      'It depends on the scope of the amendment. Amendment 3 (A3:2024) was small enough to be issued as a free PDF supplement. If Amendment 4 involves more extensive changes — for example, new chapters on energy storage or significant rewrites of existing regulations — the IET may publish a consolidated version of the standard (BS 7671:2018+A4:2026) as a new book. Alternatively, they may decide to publish a completely new edition (the 19th Edition) rather than another amendment to the 18th Edition. The IET has not indicated which approach they will take. Either way, Elec-Mate will include all updated regulation references in the app, so you will have access to the correct requirements without needing to search through the book on site.',
+      'It depends on the scope of the amendment. Amendment 4 (A3:2024) was small enough to be issued as a free PDF supplement. If Amendment 4 involves more extensive changes — for example, new chapters on energy storage or significant rewrites of existing regulations — the IET may publish a consolidated version of the standard (BS 7671:2018+A4:2026) as a new book. Alternatively, they may decide to publish a completely new edition (the 19th Edition) rather than another amendment to the 18th Edition. The IET has not indicated which approach they will take. Either way, Elec-Mate will include all updated regulation references in the app, so you will have access to the correct requirements without needing to search through the book on site.',
   },
   {
     question: 'Will Amendment 4 make the 18th Edition qualification obsolete?',
@@ -79,7 +79,7 @@ const faqs = [
   {
     question: 'How does Elec-Mate keep up to date with BS 7671 amendments?',
     answer:
-      'Elec-Mate tracks IET and BSI publications and updates its regulation database, calculators, training content, and AI regulation lookup as each amendment is officially published. When Amendment 3 (A3:2024) was published on 31 July 2024, the app was updated to reflect the new Section 530 requirements on bidirectional devices within 30 days. The AI regulation assistant references the live regulation database rather than a fixed training dataset, so it always returns answers based on the current edition. When Amendment 4 is published, the app will be updated through a standard app update — you do not need to do anything other than keep your app current. All existing subscribers receive regulation updates at no additional cost as part of their subscription.',
+      'Elec-Mate tracks IET and BSI publications and updates its regulation database, calculators, training content, and AI regulation lookup as each amendment is officially published. When Amendment 4 (A3:2024) was published on 31 July 2024, the app was updated to reflect the new Section 530 requirements on bidirectional devices within 30 days. The AI regulation assistant references the live regulation database rather than a fixed training dataset, so it always returns answers based on the current edition. When Amendment 4 is published, the app will be updated through a standard app update — you do not need to do anything other than keep your app current. All existing subscribers receive regulation updates at no additional cost as part of their subscription.',
   },
 ];
 
@@ -94,7 +94,7 @@ const relatedPages: RelatedPage[] = [
   },
   {
     href: '/guides/bs-7671-amendment-3-changes',
-    title: 'Amendment 3 Changes Explained',
+    title: 'Amendment 4 Changes Explained',
     description:
       'A3:2024 Section 530 — bidirectional and unidirectional devices for solar PV and battery storage installations.',
     icon: Scale,
@@ -152,7 +152,7 @@ const sections = [
           consultation is under way.
         </p>
         <p>
-          While Amendment 3 was narrowly focused on a single Section 530 requirement (on
+          While Amendment 4 was narrowly focused on a single Section 530 requirement (on
           bidirectional devices), Amendment 4 is anticipated to be broader in scope. The rapid
           evolution of electrical installation technology — energy storage systems, smart home
           infrastructure, electric vehicle charging, and the continuing harmonisation of European
@@ -312,7 +312,7 @@ const sections = [
         <p>
           The growth of domestic battery energy storage systems (BESS) in the UK has outpaced the
           regulation framework. While{' '}
-          <SEOInternalLink href="/guides/bs-7671-amendment-3-changes">Amendment 3</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/bs-7671-amendment-3-changes">Amendment 4</SEOInternalLink>{' '}
           addressed the bidirectional device issue, there are many other aspects of BESS
           installation that need clearer guidance in BS 7671:
         </p>
@@ -362,7 +362,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AI circuit designer for battery storage installations"
-          description="Elec-Mate's AI circuit designer handles BESS circuit design with correct DC and AC protection, cable sizing, and compliance. Describe the installation — battery capacity, inverter type, connection arrangement — and get a compliant design in seconds."
+          description="Elec-Mate's AI circuit designer handles BESS circuit design with correct DC and AC protection, cable sizing, and compliance."
           icon={Brain}
         />
       </>
@@ -550,7 +550,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Start your CPD now — do not wait for Amendment 4"
-          description="Elec-Mate includes 46+ training courses covering every area expected to change in Amendment 4. Solar PV, battery storage, EV charging, smart installations, AFDDs, SPDs — plus mock exams, flashcards, and structured learning paths. 7-day free trial."
+          description="Elec-Mate includes 46+ training courses covering every area expected to change in Amendment 4."
           icon={GraduationCap}
         />
       </>
@@ -623,7 +623,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Be ready for Amendment 4 on day one"
-          description="Join 1,000+ UK electricians using Elec-Mate for certificates, calculations, AI agents, and CPD. When Amendment 4 drops, your tools and training will update automatically. 7-day free trial, cancel anytime."
+          description="Join 1,000+ UK electricians using Elec-Mate for certificates, calculations, AI agents, and CPD."
           icon={ShieldCheck}
         />
       </>
@@ -639,9 +639,9 @@ export default function BS7671Amendment4Page() {
   return (
     <GuideTemplate
       title="BS 7671 Amendment 4 2026 | Upcoming Changes UK"
-      description="Everything we know about BS 7671 Amendment 4 expected in 2026. Anticipated changes to energy storage, EV charging, smart installations, AFDD requirements, and European harmonisation. How to prepare now."
+      description="Everything we know about BS 7671 Amendment 4 expected in 2026. Anticipated changes to energy storage, EV charging, smart installations…"
       datePublished="2025-11-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations"

@@ -87,7 +87,7 @@ const features = [
     icon: CircuitBoard,
     title: 'AI Circuit Designer',
     description:
-      'Specify the installation and get a complete consumer unit schedule with cable sizes, protective devices, diversity calculations, and RCD/SPD recommendations.',
+      'Specify the installation and get a complete consumer unit schedule with cable sizes, protective devices, diversity calculations…',
   },
   {
     icon: Mic,
@@ -99,7 +99,7 @@ const features = [
     icon: GraduationCap,
     title: 'AI Tutor',
     description:
-      'Ask any question about BS 7671, inspection and testing, or installation practice. The AI answers with specific regulation references from BS 7671:2018+A4:2026.',
+      'Ask any question about BS 7671, inspection and testing, or installation practice. The AI answers with specific regulation references from BS…',
   },
   {
     icon: MessageSquare,
@@ -326,7 +326,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Never second-guess a defect code again"
-          description="Describe any defect in plain English. The AI assigns the correct C1, C2, C3, or FI code with the specific BS 7671 regulation reference. Flows directly into your EICR observations."
+          description="Describe any defect in plain English. The AI assigns the correct C1, C2, C3, or FI code with the specific BS 7671 regulation reference."
           icon={Search}
         />
       </>
@@ -437,7 +437,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Site-specific RAMS in under 60 seconds"
-          description="Describe the work and location. The AI generates a complete risk assessment and method statement covering all relevant hazards, control measures, and legal references. Export as a professional PDF."
+          description="Describe the work and location. The AI generates a complete risk assessment and method statement covering all relevant hazards, control measures…"
           icon={ShieldAlert}
         />
       </>
@@ -520,9 +520,9 @@ export default function ElectricalAppWithAIPage() {
   return (
     <ToolTemplate
       title="Electrical App with AI | Smart Tools for Electricians"
-      description="Elec-Mate is the only UK electrical app with AI built into every workflow. AI board scanning, defect coding, fault diagnosis, cost estimation, RAMS generation, voice test entry, and AI tutoring — all in one app for electricians."
+      description="Elec-Mate is the only UK electrical app with AI built into every workflow. AI board scanning, defect coding, fault diagnosis, cost estimation…"
       datePublished="2025-10-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       toolPath="/tools/electrical-app-with-ai"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}

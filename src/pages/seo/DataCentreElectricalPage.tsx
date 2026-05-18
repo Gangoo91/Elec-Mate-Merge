@@ -617,7 +617,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage data centre electrical projects with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. Complete EICs and EICRs on your phone with instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, quoting, and project management."
           icon={FileCheck2}
         />
       </>
@@ -632,10 +632,10 @@ const sections = [
 export default function DataCentreElectricalPage() {
   return (
     <GuideTemplate
-      title="Data Centre Electrical Installation UK | Critical Power Systems"
-      description="Complete guide to data centre electrical installation in the UK. UPS systems, dual power feeds, PDUs, N+1 redundancy, Tier classifications, TN-S earthing to BS 7671, busbar systems, generator backup, and critical power calculations."
+      title="Data Centre Electrical Installation UK | Critical Power"
+      description="Complete guide to data centre electrical installation in the UK. UPS systems, dual power feeds, PDUs, N+1 redundancy, Tier classifications…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Industrial Guide"

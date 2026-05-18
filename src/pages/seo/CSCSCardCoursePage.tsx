@@ -22,7 +22,7 @@ import {
 
 const PAGE_TITLE = 'CSCS Card Course | Construction Skills Test Guide';
 const PAGE_DESCRIPTION =
-  'Comprehensive CSCS card preparation for UK electricians. Health, safety, and environment test revision, card types explained, application process, and mock tests. 6 modules with video content, interactive quizzes, and AI tutor.';
+  'CSCS card prep for UK electricians: HSE test revision, card types, application process, mock tests. 6 modules with quizzes + AI tutor.';
 
 const breadcrumbs = [
   { label: 'Training', href: '/training' },
@@ -91,27 +91,27 @@ const modules = [
   {
     title: 'Health, Safety, and Environment Test Format',
     description:
-      'Test structure (50 questions, 45 minutes, 45 pass mark), question types (multiple choice and image-based), booking process, test centre procedures, and what to bring on the day.',
+      'Test structure (50 questions, 45 minutes, 45 pass mark), question types (multiple choice and image-based), booking process, test centre procedures…',
   },
   {
     title: 'Working at Height and Manual Handling',
     description:
-      'Work at Height Regulations 2005, scaffold safety, ladder use, fall protection, manual handling risk assessment, correct lifting technique, and avoiding musculoskeletal injuries.',
+      'Work at Height Regulations 2005, scaffold safety, ladder use, fall protection, manual handling risk assessment, correct lifting technique…',
   },
   {
     title: 'Health, Welfare, and Hazardous Substances',
     description:
-      'COSHH regulations, asbestos awareness, noise exposure limits, vibration risks (HAVs/WBV), welfare facilities requirements, personal hygiene on site, and occupational health surveillance.',
+      'COSHH regulations, asbestos awareness, noise exposure limits, vibration risks (HAVs/WBV), welfare facilities requirements, personal hygiene on site…',
   },
   {
     title: 'Fire Safety, Electrical Risks, and Site Hazards',
     description:
-      'Fire prevention on construction sites, fire extinguisher types, emergency procedures, electrical safety (safe isolation, overhead cables, underground services), confined spaces, and excavation hazards.',
+      'Fire prevention on construction sites, fire extinguisher types, emergency procedures, electrical safety (safe isolation, overhead cables…',
   },
   {
     title: 'Environmental Awareness and Mock Test Practice',
     description:
-      'Waste management (duty of care), pollution prevention, protected species, noise and dust control, environmental permits, and unlimited timed mock tests mirroring the real HS&E examination.',
+      'Waste management (duty of care), pollution prevention, protected species, noise and dust control, environmental permits…',
   },
 ];
 
@@ -132,7 +132,7 @@ const features = [
     icon: ClipboardCheck,
     title: 'Unlimited Mock Tests',
     description:
-      'Timed 50-question mock tests that mirror the real CITB HS&E examination format. New question sets generated each time. Instant marking with detailed explanations.',
+      'Timed 50-question mock tests that mirror the real CITB HS&E examination format. New question sets generated each time.',
   },
   {
     icon: Clock,
@@ -220,7 +220,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Find out which CSCS card you need"
-          description="Not sure which card type matches your qualifications? Ask the Elec-Mate AI tutor — it knows every CSCS and ECS card category and can guide you through the application process step by step."
+          description="Not sure which card type matches your qualifications? Ask the Elec-Mate AI tutor — it knows every CSCS and ECS card category and can guide you through…"
           icon={BrainCircuit}
         />
       </>
@@ -320,7 +320,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Unlimited HS&E mock tests with instant feedback"
-          description="Practice with timed 50-question mock tests that mirror the real CITB examination. Every question includes a detailed explanation of the correct answer, helping you learn from mistakes and build genuine understanding."
+          description="Practice with timed 50-question mock tests that mirror the real CITB examination. Every question includes a detailed explanation of the correct answer…"
           icon={ClipboardCheck}
         />
       </>
@@ -417,7 +417,7 @@ export default function CSCSCardCoursePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-09-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Construction Training"

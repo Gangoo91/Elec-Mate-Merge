@@ -18,7 +18,7 @@ import {
 
 const PAGE_TITLE = 'PAT Testing Frequency | How Often by Premises Type';
 const PAGE_DESCRIPTION =
-  'Complete guide to PAT testing frequency in the UK. IET Code of Practice 5th Edition recommended intervals by premises type — offices, construction sites, schools, hotels, factories, churches. Risk-based approach, Class I vs Class II, and how to manage testing schedules.';
+  'PAT testing frequency in the UK: IET CoP 5th Ed intervals by premises type, risk-based approach, Class I vs II, managing testing schedules.';
 
 const breadcrumbs = [
   { label: 'Testing', href: '/guides/testing-sequence-guide' },
@@ -438,7 +438,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Digital PAT testing with Elec-Mate"
-          description="Elec-Mate includes a complete PAT Testing certificate form with pass/fail recording, equipment registers, and customer management to track testing schedules by premises. Set reminders for re-tests. Quote and invoice PAT testing contracts directly from the app."
+          description="Elec-Mate includes a complete PAT Testing certificate form with pass/fail recording, equipment registers…"
           icon={ClipboardCheck}
         />
       </>
@@ -473,7 +473,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Manage PAT testing schedules and contracts"
-          description="Elec-Mate's customer management tracks testing schedules by premises and equipment type. Set re-test reminders so you never miss a renewal. Use the quoting tool to price PAT testing contracts and the invoicing tool to bill from site. Recurring revenue made simple."
+          description="Elec-Mate's customer management tracks testing schedules by premises and equipment type. Set re-test reminders so you never miss a renewal."
           icon={CalendarClock}
         />
         <p>
@@ -550,7 +550,7 @@ export default function PATTestingFrequencyPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-07-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

@@ -343,7 +343,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certify the electrical elements of BMS installations"
-          description="Elec-Mate's EIC certificate tools handle the electrical certification for BMS panel power supplies, DALI wiring, and sub-metering installations. Complete on site, export professional PDF."
+          description="Elec-Mate's EIC certificate tools handle the electrical certification for BMS panel power supplies, DALI wiring, and sub-metering installations."
           icon={FileCheck2}
         />
       </>
@@ -430,10 +430,10 @@ const sections = [
 export default function BuildingManagementSystemsElectricalPage() {
   return (
     <GuideTemplate
-      title="Building Management Systems (BMS) Electrical Guide UK | BACnet, KNX, DALI"
-      description="Complete guide to building management systems for UK electricians. BMS architecture (DDC controllers, sensors, actuators), BACnet, Modbus, KNX, LON protocols, CIBSE TM47 metering, DALI integration, BS EN ISO 16484, and career path from electrician to BMS engineer (£45–65k)."
+      title="Building Management Systems (BMS) Electrical Guide UK"
+      description="Complete guide to building management systems for UK electricians. BMS architecture (DDC controllers, sensors, actuators), BACnet, Modbus, KNX…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Specialist Guide"

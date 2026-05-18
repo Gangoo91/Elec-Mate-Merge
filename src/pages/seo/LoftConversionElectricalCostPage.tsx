@@ -204,7 +204,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Price your loft conversion electrical package accurately"
-          description="Elec-Mate's quoting app helps UK electricians price loft conversion electrical packages with itemised materials, consumer unit options, and Part P notification costs. Professional PDF quotes from your phone."
+          description="Elec-Mate's quoting app helps UK electricians price loft conversion electrical packages with itemised materials, consumer unit options…"
           icon={Home}
         />
       </>
@@ -470,8 +470,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Quote, cable-size, and certify loft conversion electrical work"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certificates for loft conversion projects. 7-day free trial."
+          title="Quote, cable-size, and certify loft conversion electrical"
+          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certificates for loft conversion projects."
           icon={Home}
         />
       </>
@@ -486,10 +486,10 @@ const sections = [
 export default function LoftConversionElectricalCostPage() {
   return (
     <GuideTemplate
-      title="Loft Conversion Electrical Cost UK | Circuits, Costs & Part P"
-      description="How much does loft conversion electrical work cost in the UK? Typical costs £1,800–£5,000. Covers required circuits, consumer unit upgrades, cable routing by loft type, fire detection, and Part P notification."
+      title="Loft Conversion Electrical Cost UK | Circuits, Costs & Part"
+      description="How much does loft conversion electrical work cost in the UK? Typical costs £1,800–£5,000. Covers required circuits, consumer unit upgrades…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

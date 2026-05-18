@@ -585,9 +585,9 @@ export default function ImmersionHeaterFaultFindingPage() {
   return (
     <GuideTemplate
       title="Immersion Heater Not Working | Fault Finding Guide UK"
-      description="Immersion heater fault finding guide for UK homeowners and electricians. Thermostat failure, element burn-out, sacrificial anode, wiring faults, safe isolation procedure, and 2026 repair costs."
+      description="Immersion heater fault finding guide for UK homeowners and electricians. Thermostat failure, element burn-out, sacrificial anode, wiring faults…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Fault Finding Guide"

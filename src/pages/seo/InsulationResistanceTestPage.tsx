@@ -24,7 +24,7 @@ import {
 
 const PAGE_TITLE = 'Insulation Resistance Testing | How to Test & Minimum Values';
 const PAGE_DESCRIPTION =
-  'Complete guide to insulation resistance testing for UK electricians. Test voltages, BS 7671 Table 61 minimum values (1 MΩ), conductor combinations (L-N, L-E, N-E), how to perform the test, typical good values, causes of low readings, three-phase testing. Record results digitally with Elec-Mate.';
+  'Insulation resistance testing for UK electricians: test voltages, BS 7671 Table 61 minimums (1 MΩ), L-N/L-E/N-E, three-phase, low-reading causes.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -218,7 +218,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Auto-validated insulation resistance readings"
-          description="Enter your IR readings into Elec-Mate's schedule of tests and the app instantly validates them against BS 7671 Table 61 minimum values. Failures are highlighted automatically with the appropriate observation code. No need to memorise the table."
+          description="Enter your IR readings into Elec-Mate's schedule of tests and the app instantly validates them against BS 7671 Table 61 minimum values."
           icon={ClipboardCheck}
         />
       </>
@@ -259,7 +259,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Voice to test results — speak values while holding probes"
-          description="On site with probes in hand? Just speak: 'Ring 1, insulation resistance 200 meg.' Elec-Mate fills in the schedule of test results for you. Hands-free data entry designed for how electricians actually work."
+          description="On site with probes in hand? Just speak: 'Ring 1, insulation resistance 200 meg.' Elec-Mate fills in the schedule of test results for you."
           icon={Mic}
         />
       </>
@@ -530,7 +530,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Schedule of tests with auto-validation"
-          description="Enter insulation resistance readings into the schedule of test results and Elec-Mate instantly validates them against the BS 7671 Table 61 minimum of 1 MΩ. Failures are flagged automatically — no need to memorise the tables or check values manually."
+          description="Enter insulation resistance readings into the schedule of test results and Elec-Mate instantly validates them against the BS 7671 Table 61 minimum of 1…"
           icon={ClipboardCheck}
         />
         <p>
@@ -548,7 +548,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Board scanner — photograph the board, populate the schedule"
-          description="Point your phone at the distribution board and Elec-Mate's AI reads MCB/RCBO ratings, circuit details, and board layout. Start the schedule of tests with the data already filled in. No more squinting at faded labels."
+          description="Point your phone at the distribution board and Elec-Mate's AI reads MCB/RCBO ratings, circuit details, and board layout."
           icon={Camera}
         />
       </>
@@ -616,7 +616,7 @@ export default function InsulationResistanceTestPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2024-10-20"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

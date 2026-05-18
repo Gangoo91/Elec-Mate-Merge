@@ -21,9 +21,9 @@ export default function CircuitBreakerSizingCalculatorPage() {
   return (
     <ToolTemplate
       title="Circuit Breaker Sizing Calculator | MCB Selection"
-      description="Calculate the correct circuit breaker size for any circuit to BS 7671. Verify the Ib ≤ In ≤ Iz relationship, select the right MCB type (B, C, or D), and coordinate with cable current carrying capacity. Part of 50+ free electrical calculators."
+      description="Calculate the correct circuit breaker size for any circuit to BS 7671. Verify the Ib ≤ In ≤ Iz relationship, select the right MCB type (B, C, or D)…"
       datePublished="2026-01-25"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         {
@@ -104,7 +104,7 @@ export default function CircuitBreakerSizingCalculatorPage() {
           appBridge: {
             title: 'Size Your MCB in Seconds',
             description:
-              'Enter the design current and cable details. The calculator recommends the correct MCB rating, verifies Ib ≤ In ≤ Iz, and checks the I2 condition automatically.',
+              'Enter the design current and cable details. The calculator recommends the correct MCB rating, verifies Ib ≤ In ≤ Iz…',
             icon: Shield,
           },
         },
@@ -356,13 +356,13 @@ export default function CircuitBreakerSizingCalculatorPage() {
           icon: Calculator,
           title: 'Automatic MCB Selection',
           description:
-            'Enter the design current and load type. The calculator recommends the correct MCB rating and trip curve, with alternatives if the primary selection is marginal.',
+            'Enter the design current and load type. The calculator recommends the correct MCB rating and trip curve…',
         },
         {
           icon: Shield,
           title: 'Ib ≤ In ≤ Iz Verification',
           description:
-            'Automatically checks the fundamental coordination requirement. Flags any circuit where the MCB rating exceeds the cable capacity or is below the design current.',
+            'Automatically checks the fundamental coordination requirement. Flags any circuit where the MCB rating exceeds the cable capacity or is below the design…',
         },
         {
           icon: Settings,
@@ -380,7 +380,7 @@ export default function CircuitBreakerSizingCalculatorPage() {
           icon: BookOpen,
           title: 'BS 7671:2018+A4:2026 Data',
           description:
-            'All standard MCB ratings, trip curves, and coordination requirements from the current edition of BS 7671 including Amendment 3.',
+            'All standard MCB ratings, trip curves, and coordination requirements from the current edition of BS 7671 including Amendment 4.',
         },
         {
           icon: Gauge,

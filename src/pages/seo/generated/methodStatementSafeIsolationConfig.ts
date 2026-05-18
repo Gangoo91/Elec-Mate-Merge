@@ -5,14 +5,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Electricity at Work Regulations 1989 and HSE guidance GS38 / HSR25.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const methodStatementSafeIsolationConfig: GeneratedGuideConfig = {
   pagePath: '/guides/method-statement-safe-isolation',
   title:
-    'Method Statement for Safe Isolation — UK Electrical Procedure | Elec-Mate',
+    'Method Statement for Safe Isolation — UK Electrical',
   description:
-    'The full UK method statement for safe isolation of electrical circuits — 10-step procedure, GS38-compliant voltage indicators, lock-off and tagging, written notices. Aligned to BS 7671:2018+A4:2026, EAWR 1989 and HSE GS38 / HSR25.',
+    'The full UK method statement for safe isolation of electrical circuits — 10-step procedure, GS38-compliant voltage indicators, lock-off and tagging…',
   datePublished: published,
   dateModified: modified,
   readingTime: 13,

@@ -361,7 +361,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Self-certify with confidence"
-          description="Elec-Mate's EIC and Minor Works Certificate apps are designed for competent person scheme members. Complete your certificates on site, issue them to the homeowner, and upload to your scheme portal — all from your phone."
+          description="Elec-Mate's EIC and Minor Works Certificate apps are designed for competent person scheme members."
           icon={ShieldCheck}
         />
       </>
@@ -597,9 +597,9 @@ export default function ElectricalWorkNotificationGuidePage() {
   return (
     <GuideTemplate
       title="Electrical Work Notification Part P | What Must Be Notified"
-      description="Detailed guide to electrical work notification under Part P Building Regulations. What work is specifically notifiable, how to notify building control, building notice costs, completion certificates, and why documentation matters for property sale."
+      description="Detailed guide to electrical work notification under Part P Building Regulations. What work is specifically notifiable, how to notify building control…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Part P Guide"

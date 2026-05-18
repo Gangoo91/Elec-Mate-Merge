@@ -665,7 +665,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your landlord EICR business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -680,10 +680,10 @@ const sections = [
 export default function LandlordElectricalSafetyNewcastlePage() {
   return (
     <GuideTemplate
-      title="Landlord Electrical Safety Newcastle | EICR for Landlords Newcastle"
-      description="Landlord electrical safety requirements in Newcastle upon Tyne. 2020 Regulations explained, Newcastle City Council enforcement, HMO requirements for student properties, Tyneside flat wiring issues, Northern Powergrid earthing, penalties up to £30,000, and EICR costs for 2026."
+      title="Landlord Electrical Safety Newcastle | EICR for Landlords"
+      description="Landlord electrical safety requirements in Newcastle upon Tyne. 2020 Regulations explained, Newcastle City Council enforcement…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Landlord Guide"

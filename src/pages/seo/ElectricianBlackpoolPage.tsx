@@ -471,7 +471,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Blackpool electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the guesthouse, HMO, and rental market in Blackpool. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -488,9 +488,9 @@ export default function ElectricianBlackpoolPage() {
     <GuideTemplate
       localArea="Blackpool"
       title="Electrician in Blackpool | Local Electricians 2026"
-      description="Find qualified electricians in Blackpool. Part P compliance, NICEIC registered, EICR for guesthouses and HMOs, guesthouse rewiring, consumer unit replacement, and local electrician rates for 2026."
+      description="Find qualified electricians in Blackpool. Part P compliance, NICEIC registered, EICR for guesthouses and HMOs, guesthouse rewiring…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Blackpool"

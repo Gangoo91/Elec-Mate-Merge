@@ -237,7 +237,7 @@ const sections = [
               <span>
                 <strong>City and Guilds 2382 (18th Edition BS 7671)</strong> — confirms knowledge of
                 the current edition of the IET Wiring Regulations. Must be kept current — the 18th
-                Edition (Amendment 3, 2024) is the version in force. This should be renewed when
+                Edition (Amendment 4, 2024) is the version in force. This should be renewed when
                 major amendments are published.
               </span>
             </li>
@@ -553,7 +553,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs correctly and efficiently with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion. AI board scanning, voice test entry, correct C1/C2/C3/FI classification, instant PDF export, and remediation quoting. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion. AI board scanning, voice test entry, correct C1/C2/C3/FI classification…"
           icon={FileCheck2}
         />
       </>
@@ -568,10 +568,10 @@ const sections = [
 export default function EICRContractorGuidePage() {
   return (
     <GuideTemplate
-      title="EICR for Electrical Contractors UK | How to Carry Out EICR Correctly"
-      description="Contractor guide to carrying out EICRs correctly. Who can carry out an EICR, City and Guilds 2391/2394/2395 qualifications, correct test equipment, completing the schedule of inspections and tests, common mistakes, and using Elec-Mate for on-site EICR completion."
+      title="EICR for Electrical Contractors UK | How to Carry Out EICR"
+      description="Contractor guide to carrying out EICRs correctly. Who can carry out an EICR, City and Guilds 2391/2394/2395 qualifications, correct test equipment…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Contractor Guide"

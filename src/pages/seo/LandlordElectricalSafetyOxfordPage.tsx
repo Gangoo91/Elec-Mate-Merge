@@ -657,7 +657,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Oxford landlord EICR business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more Oxford EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -673,9 +673,9 @@ export default function LandlordElectricalSafetyOxfordPage() {
   return (
     <GuideTemplate
       title="Landlord Electrical Safety Oxford | EICR Landlords Oxford"
-      description="Landlord electrical safety requirements in Oxford. 2020 Regulations, Oxford City Council enforcement, student HMO licensing, penalties up to £30,000, Victorian property EICR challenges, and 2026 costs."
+      description="Landlord electrical safety requirements in Oxford. 2020 Regulations, Oxford City Council enforcement, student HMO licensing, penalties up to £30,000…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Landlord Guide"

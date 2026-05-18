@@ -341,7 +341,7 @@ const sections = [
         <p>
           All electrical work in Bolton dwellings must comply with{' '}
           <strong>Part P of the Building Regulations</strong> and the current edition of{' '}
-          <strong>BS 7671:2018 (18th Edition) including Amendment 3:2024</strong>. The key
+          <strong>BS 7671:2018 (18th Edition) including Amendment 4:2024</strong>. The key
           requirements are:
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
@@ -500,7 +500,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Bolton electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the realities of Bolton's terraced housing stock. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -517,9 +517,9 @@ export default function ElectricianBoltonPage() {
     <GuideTemplate
       localArea="Bolton"
       title="Electrician in Bolton | Local Electricians 2026"
-      description="Find qualified electricians in Bolton. NICEIC and NAPIT registered, Part P compliant. Typical costs, consumer unit upgrades, EICRs, rewires, and EV chargers in Bolton 2026."
+      description="Find qualified electricians in Bolton. NICEIC and NAPIT registered, Part P compliant. Typical costs, consumer unit upgrades, EICRs, rewires…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Bolton"

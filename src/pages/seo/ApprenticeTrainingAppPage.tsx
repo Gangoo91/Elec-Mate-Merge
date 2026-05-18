@@ -135,31 +135,31 @@ const features = [
     icon: BookOpen,
     title: 'Spaced Repetition Flashcards',
     description:
-      'Hundreds of flashcards covering BS 7671 regulations, cable data, IP ratings, and essential apprentice knowledge. The algorithm schedules reviews at optimal intervals for long-term retention.',
+      'Hundreds of flashcards covering BS 7671 regulations, cable data, IP ratings, and essential apprentice knowledge.',
   },
   {
     icon: ClipboardCheck,
     title: 'Timed Mock Exams',
     description:
-      'Full-length mock exams for Level 2, Level 3, C&G 2382, and C&G 2391. Randomly generated from a large question bank with detailed mark schemes and regulation references.',
+      'Full-length mock exams for Level 2, Level 3, C&G 2382, and C&G 2391. Randomly generated from a large question bank with detailed mark schemes and…',
   },
   {
     icon: Target,
     title: 'EPA & AM2 Simulator',
     description:
-      'Simulates the complete end-point assessment and AM2 format. Knowledge tests, practical scenario walkthroughs, and professional discussion preparation with sample questions.',
+      'Simulates the complete end-point assessment and AM2 format. Knowledge tests, practical scenario walkthroughs…',
   },
   {
     icon: NotebookPen,
     title: 'Site Diary & OJT Tracker',
     description:
-      'Log daily tasks, hours, photographs, and evidence from site. Works offline and syncs when connectivity returns. Calculates total OJT hours towards your apprenticeship target.',
+      'Log daily tasks, hours, photographs, and evidence from site. Works offline and syncs when connectivity returns.',
   },
   {
     icon: Briefcase,
     title: 'Portfolio Builder',
     description:
-      'Organise evidence against each KSB in your apprenticeship standard. Add photos, reflective accounts, certificates, and witness testimonies. Export as a submission-ready PDF.',
+      'Organise evidence against each KSB in your apprenticeship standard. Add photos, reflective accounts, certificates, and witness testimonies.',
   },
   {
     icon: Smartphone,
@@ -260,7 +260,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Start revising with flashcards and mock exams"
-          description="Hundreds of flashcards with spaced repetition and full-length mock exams for Level 2, Level 3, C&G 2382, and C&G 2391. Track your progress and focus on weak areas."
+          description="Hundreds of flashcards with spaced repetition and full-length mock exams for Level 2, Level 3, C&G 2382, and C&G 2391."
           icon={BookOpen}
         />
       </>
@@ -333,7 +333,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Log your site evidence today"
-          description="Open the site diary, record your daily tasks and hours, and attach photographs as evidence. Everything maps to your apprenticeship KSBs and syncs to the cloud."
+          description="Open the site diary, record your daily tasks and hours, and attach photographs as evidence. Everything maps to your apprenticeship KSBs and syncs to the…"
           icon={NotebookPen}
         />
       </>
@@ -384,9 +384,9 @@ export default function ApprenticeTrainingAppPage() {
   return (
     <ToolTemplate
       title="Apprentice Training App | Electrical Study Tools"
-      description="Complete training app for UK electrical apprentices. Flashcards with spaced repetition, mock exams, EPA simulator, AM2 preparation, site diary, OJT tracker, and portfolio builder. Works offline on site."
+      description="Complete training app for UK electrical apprentices. Flashcards with spaced repetition, mock exams, EPA simulator, AM2 preparation, site diary…"
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Training Platform"

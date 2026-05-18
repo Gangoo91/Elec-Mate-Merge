@@ -547,7 +547,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Produce NAPIT-compliant certificates on your phone"
-          description="Elec-Mate produces all 16 certificate types with built-in validation, AI board scanning, and voice test entry. Export professional PDFs and upload to the NAPIT portal. 7-day free trial."
+          description="Elec-Mate produces all 16 certificate types with built-in validation, AI board scanning, and voice test entry."
           icon={ClipboardCheck}
         />
       </>
@@ -563,9 +563,9 @@ export default function NAPICCertificateGuidePage() {
   return (
     <GuideTemplate
       title="NAPIT Certificate Guide | Registration & Forms"
-      description="Complete guide to NAPIT registration, certificate requirements, assessment visits, and costs for UK electricians. How to produce NAPIT-compliant certificates digitally."
+      description="Complete guide to NAPIT registration, certificate requirements, assessment visits, and costs for UK electricians."
       datePublished="2025-05-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Scheme Guide"

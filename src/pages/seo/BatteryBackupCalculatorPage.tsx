@@ -21,9 +21,9 @@ export default function BatteryBackupCalculatorPage() {
   return (
     <ToolTemplate
       title="Battery Backup Calculation Tool | Elec-Mate"
-      description="Calculate battery backup capacity in minutes. Size UPS systems, assess load demand, and determine Ah requirements for emergency power. Free tool for UK electricians."
+      description="Calculate battery backup runtime in minutes. Size UPS capacity, assess load demand, and determine Ah requirements. Free tool for UK electricians."
       datePublished="2026-01-25"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Battery Backup Calculator', href: '/tools/battery-backup-calculator' },
@@ -101,7 +101,7 @@ export default function BatteryBackupCalculatorPage() {
           appBridge: {
             title: 'Calculate UPS Size and Battery Capacity',
             description:
-              'Enter your load in watts or VA, select the required runtime, and Elec-Mate recommends the UPS rating and battery Ah. Includes derating factors for discharge rate and ambient temperature.',
+              'Enter your load in watts or VA, select the required runtime, and Elec-Mate recommends the UPS rating and battery Ah.',
             icon: Battery,
           },
         },
@@ -225,7 +225,7 @@ export default function BatteryBackupCalculatorPage() {
           appBridge: {
             title: 'Battery Ah Calculator with Derating',
             description:
-              'Elec-Mate calculates the required battery Ah including discharge rate derating, temperature correction, and ageing factor. Get a realistic capacity figure, not a theoretical one.',
+              'Elec-Mate calculates the required battery Ah including discharge rate derating, temperature correction, and ageing factor.',
             icon: Gauge,
           },
         },

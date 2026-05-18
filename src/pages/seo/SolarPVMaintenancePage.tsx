@@ -491,7 +491,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Manage solar maintenance jobs with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for job management, quoting, and certification. Issue inspection reports and EICs on your phone. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for job management, quoting, and certification. Issue inspection reports and EICs on your phone."
           icon={Sun}
         />
       </>
@@ -506,10 +506,10 @@ const sections = [
 export default function SolarPVMaintenancePage() {
   return (
     <GuideTemplate
-      title="Solar Panel Maintenance UK | Solar PV Servicing & Cleaning Guide"
-      description="Complete guide to solar panel maintenance in the UK. Annual inspection checklist, professional cleaning costs £100–£200, inverter replacement, optimiser checks, monitoring setup, MCS installer vs DIY, and what to do if output drops."
+      title="Solar Panel Maintenance UK | Solar PV Servicing & Cleaning"
+      description="Complete guide to solar panel maintenance in the UK. Annual inspection checklist, professional cleaning costs £100–£200, inverter replacement…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Solar Maintenance Guide"

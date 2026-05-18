@@ -526,9 +526,9 @@ export default function PATTestingCostPage() {
   return (
     <GuideTemplate
       title="PAT Testing Cost 2026 | UK Price Guide"
-      description="How much does PAT testing cost in 2026? UK price guide covering per-appliance rates, package pricing, legal requirements, testing frequency, and what is involved. £1-3 per appliance for most jobs."
+      description="How much does PAT testing cost in 2026? UK price guide covering per-appliance rates, package pricing, legal requirements, testing frequency…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

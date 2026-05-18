@@ -428,7 +428,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Send the EIC to the client instantly"
-          description="Finished commissioning? Export the EIC as a professional PDF and send it to the client by email or WhatsApp — before you leave site. The client has the certificate, schedule, and your contact details within minutes."
+          description="Finished commissioning? Export the EIC as a professional PDF and send it to the client by email or WhatsApp — before you leave site."
           icon={Send}
         />
       </>
@@ -642,7 +642,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Commission and certify from one app"
-          description="AI board scanner, voice test entry, automatic BS 7671 compliance checking, and instant PDF export. Complete the EIC on site and hand it over digitally. 7-day free trial."
+          description="AI board scanner, voice test entry, automatic BS 7671 compliance checking, and instant PDF export. Complete the EIC on site and hand it over digitally."
           icon={FileCheck2}
         />
       </>
@@ -658,9 +658,9 @@ export default function CommissioningGuidePage() {
   return (
     <GuideTemplate
       title="Commissioning an Electrical Installation | Guide UK"
-      description="Complete guide to commissioning an electrical installation. What commissioning involves, how it differs from testing, functional checks, documentation requirements, O&M manuals, handover procedure, and commissioning checklist."
+      description="Complete guide to commissioning an electrical installation. What commissioning involves, how it differs from testing, functional checks…"
       datePublished="2025-10-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

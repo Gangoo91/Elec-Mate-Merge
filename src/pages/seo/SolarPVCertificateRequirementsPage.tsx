@@ -268,7 +268,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Solar PV EIC templates in Elec-Mate"
-          description="Elec-Mate includes dedicated solar PV EIC templates with DC and AC test result fields, string voltage and current recording, and automatic validation against BS 7671 requirements. Complete the EIC on site and export as a professional PDF."
+          description="Elec-Mate includes dedicated solar PV EIC templates with DC and AC test result fields, string voltage and current recording…"
           icon={FileCheck2}
         />
       </>
@@ -539,7 +539,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Complete solar PV handover packs in Elec-Mate"
-          description="Create professional solar PV handover documentation with Elec-Mate. EIC, commissioning record, system design summary, and warranty information all in one digital pack. Export as a branded PDF for your customer."
+          description="Create professional solar PV handover documentation with Elec-Mate. EIC, commissioning record, system design summary…"
           icon={Sun}
         />
       </>
@@ -617,9 +617,9 @@ export default function SolarPVCertificateRequirementsPage() {
   return (
     <GuideTemplate
       title="Solar PV Certificate Requirements | MCS UK"
-      description="Complete guide to solar PV certificate requirements in the UK. Covers EIC, MCS certification, G98/G99 DNO notification, handover documentation, and building regulations compliance for solar panel installations."
+      description="Complete guide to solar PV certificate requirements in the UK. Covers EIC, MCS certification, G98/G99 DNO notification, handover documentation…"
       datePublished="2026-02-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Certificates"

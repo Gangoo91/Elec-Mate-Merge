@@ -668,9 +668,9 @@ export default function ElectricianToolInsurancePage() {
   return (
     <GuideTemplate
       title="Electrician Tool Insurance UK 2026 | Cover Your Kit"
-      description="Complete guide to tool insurance for UK electricians. Cover types, provider comparison, van security discounts, inventory documentation, exclusions, and how to make a claim. Protect £5,000-£15,000 of essential kit."
+      description="Complete guide to tool insurance for UK electricians. Cover types, provider comparison, van security discounts, inventory documentation, exclusions…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Insurance Guide"

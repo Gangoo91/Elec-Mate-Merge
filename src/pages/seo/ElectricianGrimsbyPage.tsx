@@ -515,7 +515,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Grimsby electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the residential and commercial electrical market in Grimsby and Cleethorpes. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -531,10 +531,10 @@ export default function ElectricianGrimsbyPage() {
   return (
     <GuideTemplate
       localArea="Grimsby"
-      title="Electrician Grimsby | Find Electricians in Grimsby & Cleethorpes"
-      description="Find qualified electricians in Grimsby and Cleethorpes. NICEIC and NAPIT registered, Part P compliant. EICRs for landlords, consumer unit replacement, house rewiring, EV charger installation, and local electrician rates for Grimsby 2026."
+      title="Electrician Grimsby | Find Electricians in Grimsby &"
+      description="Find qualified electricians in Grimsby + Cleethorpes: NICEIC and NAPIT registered, Part P compliant, BS 7671:2018+A4:2026 trained. Local prices."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Grimsby"

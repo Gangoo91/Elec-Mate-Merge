@@ -622,7 +622,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage BMS and smart building projects with Elec-Mate"
-          description="Quote, invoice, and track BMS electrical installation alongside your electrical contracting work. Professional PDF quotes and job management for UK electricians. 7-day free trial."
+          description="Quote, invoice, and track BMS electrical installation alongside your electrical contracting work."
           icon={FileCheck2}
         />
       </>
@@ -637,10 +637,10 @@ const sections = [
 export default function BuildingManagementSystemPage() {
   return (
     <GuideTemplate
-      title="Building Management Systems (BMS) UK | Electrical Integration Guide"
-      description="Building Management Systems guide for UK electricians and building managers. What a BMS does, HVAC integration, energy metering, lighting control, access control integration, BACnet and Modbus protocols, energy monitoring, and commissioning process."
+      title="Building Management Systems (BMS) UK | Electrical"
+      description="Building Management Systems guide for UK electricians and building managers. What a BMS does, HVAC integration, energy metering, lighting control…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Building Systems Guide"

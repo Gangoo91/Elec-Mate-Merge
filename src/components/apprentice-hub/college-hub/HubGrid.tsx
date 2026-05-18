@@ -146,7 +146,10 @@ export function HubGrid({ stats }: HubGridProps) {
       <motion.div
         variants={itemVariants}
         className={cn(
-          'relative grid auto-rows-[220px] sm:auto-rows-[240px] gap-[2px]',
+          // Content-driven rows + default stretch keeps same-row cards
+          // equal-height. Cards each carry their own min-h so the layout
+          // never crops the "Open" CTA at the bottom.
+          'relative grid gap-[2px]',
           'bg-black border border-white/[0.08] rounded-2xl overflow-hidden',
           'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4'
         )}
@@ -158,9 +161,9 @@ export function HubGrid({ stats }: HubGridProps) {
             key={card.eyebrow}
             type="button"
             onClick={() => navigate(card.route)}
-            className="group relative bg-[hsl(0_0%_10%)] hover:bg-elec-yellow/[0.04] transition-colors p-5 sm:p-6 lg:p-7 text-left touch-manipulation flex flex-col h-full"
+            className="group relative bg-[hsl(0_0%_10%)] hover:bg-elec-yellow/[0.04] transition-colors p-5 sm:p-6 lg:p-7 text-left touch-manipulation flex flex-col h-full min-h-[280px] sm:min-h-[300px] lg:min-h-[320px]"
           >
-            <div className="flex items-baseline justify-between gap-2">
+            <div className="flex items-baseline justify-between gap-2 flex-wrap">
               <div className="flex items-baseline gap-2">
                 <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
                   {String(i + 1).padStart(2, '0')}
@@ -179,15 +182,20 @@ export function HubGrid({ stats }: HubGridProps) {
             <h3 className="mt-3 sm:mt-4 text-[18px] sm:text-[20px] lg:text-[22px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors">
               {card.title}
             </h3>
-            <p className="mt-2 text-[12.5px] leading-relaxed text-white/60 max-w-[34ch]">
+            <p className="mt-2 text-[12.5px] leading-relaxed text-white/65 line-clamp-3">
               {card.description}
             </p>
 
-            <div className="flex-grow" />
+            <div className="flex-grow min-h-[8px]" />
 
-            <div className="mt-5 flex items-center justify-between gap-3 pt-3 border-t border-white/[0.05]">
-              <span className="text-[11px] text-white/55 truncate tabular-nums">{card.meta}</span>
-              <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-elec-yellow shrink-0">
+            {/* Footer — stacks vertically by default so the Open CTA
+                always has its own line. Inline only at lg+ (and even there
+                with 4 cols cards are narrow, so we keep stacked). */}
+            <div className="mt-4 pt-3 border-t border-white/[0.05] flex flex-col gap-2">
+              <span className="text-[11px] text-white/55 tabular-nums leading-tight">
+                {card.meta}
+              </span>
+              <span className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-elec-yellow shrink-0 self-start">
                 Open
                 <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
               </span>

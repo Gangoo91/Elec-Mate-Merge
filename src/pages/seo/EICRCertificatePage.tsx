@@ -47,7 +47,7 @@ import {
 
 const PAGE_TITLE = 'EICR Certificate Guide 2026 | Digital EICR App UK';
 const PAGE_DESCRIPTION =
-  'Complete EICR certificate guide for UK electricians. Create professional Electrical Installation Condition Reports on your phone. Digital signatures, observation coding, PDF export, BS 7671 compliant. Start free.';
+  'EICR certificates for UK electricians: create EICRs on your phone, digital signatures, observation coding, PDF export, BS 7671. Start free.';
 
 const breadcrumbs = [
   { label: 'Certificates', href: '/guides/electrical-certificate-types-uk' },
@@ -72,7 +72,7 @@ const keyTakeaways = [
   'Landlords in England must have a valid EICR before tenants move in and renew it every 5 years — penalties of up to £30,000 per breach.',
   'Any C1 or C2 observation code makes the overall assessment Unsatisfactory — Elec-Mate tracks this automatically.',
   'You can create, sign, and export a professional EICR as a PDF directly from your phone using Elec-Mate.',
-  'BS 7671:2018 + Amendment 3:2024 is the current standard. Amendment 4 is expected in 2026.',
+  'BS 7671:2018 + Amendment 4:2024 is the current standard. Amendment 4 is expected in 2026.',
 ];
 
 const faqs = [
@@ -156,7 +156,7 @@ const killerFeatures = [
     title: 'AI Board Scanner',
     subtitle: 'Point your camera at the DB. Done.',
     description:
-      'Open the board scanner, point your phone at any distribution board, and Elec-Mate reads it. Circuit details, MCB/RCBO ratings, RCD types, cable sizes — all captured from the photo. No more squinting at faded labels and scribbling on the back of your hand.',
+      'Open the board scanner, point your phone at any distribution board, and Elec-Mate reads it. Circuit details, MCB/RCBO ratings, RCD types…',
     color: 'yellow',
   },
   {
@@ -164,7 +164,7 @@ const killerFeatures = [
     title: 'Defect Code AI',
     subtitle: 'Describe it. Get the right code.',
     description:
-      'Type or dictate a defect in plain English — "no RCD protection on socket circuit in bathroom" — and the AI returns the correct observation code with the matching BS 7671 regulation number. No more flicking through guidance notes trying to decide between C2 and C3.',
+      'Type or dictate a defect in plain English — "no RCD protection on socket circuit in bathroom" — and the AI returns the correct observation code with the…',
     color: 'blue',
   },
   {
@@ -172,7 +172,7 @@ const killerFeatures = [
     title: 'Voice to Test Results',
     subtitle: 'Talk to fill in the schedule of tests.',
     description:
-      'You are on site, probes in hand. Just speak: "Ring circuit 1, R1+R2 0.32, Zs 0.89, insulation resistance 200 megohms, RCD 18 milliseconds." Elec-Mate fills in the schedule of test results for you. Hands-free data entry while you work.',
+      'You are on site, probes in hand. Just speak: "Ring circuit 1, R1+R2 0.32, Zs 0.89, insulation resistance 200 megohms…',
     color: 'purple',
   },
   {
@@ -180,7 +180,7 @@ const killerFeatures = [
     title: 'Observations → Remedial Quote',
     subtitle: 'Turn every defect into money.',
     description:
-      'Every C1, C2, and FI observation feeds straight into the remedial works estimator. It prices the fix — materials, labour, margin — and generates a quote on the spot. Hand the client the EICR and the quote for the remedial work in the same visit.',
+      'Every C1, C2, and FI observation feeds straight into the remedial works estimator. It prices the fix — materials, labour…',
     color: 'green',
   },
 ];
@@ -215,13 +215,13 @@ const features = [
     icon: CheckCircle2,
     title: 'Live Test Value Validation',
     description:
-      'Enter a Zs value and the app checks it against the maximum permitted value for that protective device instantly. Same for R1+R2, insulation resistance, and RCD times.',
+      'Enter a Zs value and the app checks it against the maximum permitted value for that protective device instantly.',
   },
   {
     icon: AlertTriangle,
     title: 'Auto Overall Assessment',
     description:
-      'The app watches your observation codes in real time. The moment a C1 or C2 is added, the overall assessment flips to Unsatisfactory automatically. No human error.',
+      'The app watches your observation codes in real time. The moment a C1 or C2 is added, the overall assessment flips to Unsatisfactory automatically.',
   },
   {
     icon: Cloud,
@@ -251,7 +251,7 @@ const features = [
     icon: ShieldCheck,
     title: 'BS 7671:2018+A4:2026',
     description:
-      'Form structure, observation codes, test value limits, and regulation references all track the current 18th Edition including Amendment 3.',
+      'Form structure, observation codes, test value limits, and regulation references all track the current 18th Edition including Amendment 4.',
   },
   {
     icon: Calculator,
@@ -339,7 +339,7 @@ export default function EICRCertificatePage() {
       { name: 'EICR Certificate', url: '/tools/eicr-certificate' },
     ],
     datePublished: '2024-09-15',
-    dateModified: '2026-02-13',
+    dateModified: '2026-05-18',
     author: 'Elec-Mate Technical Team',
   });
 
@@ -466,7 +466,7 @@ export default function EICRCertificatePage() {
 
         <SEOAppBridge
           title="Elec-Mate's AI Board Scanner reads the DB for you"
-          description="Point your phone camera at the distribution board. The AI reads MCB/RCBO ratings, circuit details, and board layout from the photo — so you start the EICR with half the data already filled in."
+          description="Point your phone camera at the distribution board. The AI reads MCB/RCBO ratings, circuit details…"
           icon={Camera}
         />
       </section>
@@ -556,7 +556,7 @@ export default function EICRCertificatePage() {
 
         <SEOAppBridge
           title="Doing landlord EICRs? Turn defects into quotes on site"
-          description="Find a C1 or C2? The remedial works estimator prices the fix instantly — materials, labour, margin. Hand the landlord the EICR report and a quote for the remedial work before you leave."
+          description="Find a C1 or C2? The remedial works estimator prices the fix instantly — materials, labour, margin."
           icon={Receipt}
         />
       </section>
@@ -646,8 +646,8 @@ export default function EICRCertificatePage() {
         </div>
 
         <SEOAppBridge
-          title="Not sure if it's C2 or C3? The Defect Code AI decides for you"
-          description="Describe the defect in plain English — 'no RCD on socket circuit in bathroom' — and the AI returns the correct classification code with the matching BS 7671 regulation number. No second-guessing."
+          title="Not sure if it's C2 or C3? The Defect Code AI decides for"
+          description="Describe the defect in plain English — 'no RCD on socket circuit in bathroom' — and the AI returns the correct classification code with the matching BS…"
           icon={Brain}
         />
       </section>
@@ -662,7 +662,7 @@ export default function EICRCertificatePage() {
 
         <SEOAppBridge
           title="Fill in test results with your voice"
-          description="Probes in hand? Just speak: 'Ring circuit 1, R1+R2 0.32, Zs 0.89, insulation resistance 200 megohms, RCD 18 milliseconds.' Elec-Mate fills in the schedule of test results while you work. Hands-free."
+          description="Probes in hand? Just speak: 'Ring circuit 1, R1+R2 0.32, Zs 0.89, insulation resistance 200 megohms…"
           icon={Mic}
         />
       </section>
@@ -712,7 +712,7 @@ export default function EICRCertificatePage() {
 
         <SEOAppBridge
           title="Send the EICR and invoice together"
-          description="Finished the inspection? Send the PDF certificate and an invoice for the EICR to the landlord in one go — by email or WhatsApp, directly from the app. No chasing for payment."
+          description="Finished the inspection? Send the PDF certificate and an invoice for the EICR to the landlord in one go — by email or WhatsApp, directly from the app."
           icon={Send}
         />
       </section>

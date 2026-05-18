@@ -1,7 +1,7 @@
 import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuidePage';
 
 const published = '2026-04-12';
-const modified = '2026-04-12';
+const modified = '2026-05-18';
 
 const faultCtaHeading = 'Work through fault finding without losing the paperwork';
 const faultCtaSubheading =
@@ -21,7 +21,7 @@ const propertyCtaSubheading =
 
 export const rcdKeepsTrippingCausesAndFixesConfig: GeneratedGuideConfig = {
   pagePath: '/guides/rcd-keeps-tripping-causes-and-fixes',
-  title: 'RCD Keeps Tripping Causes and Fixes | Electrician Fault Guide | Elec-Mate',
+  title: 'RCD Keeps Tripping Causes and Fixes | Electrician Fault',
   description:
     'Common reasons an RCD keeps tripping, how to narrow the fault down, and what fixes electricians normally apply before issuing paperwork.',
   datePublished: published,
@@ -182,7 +182,7 @@ export const rcdKeepsTrippingCausesAndFixesConfig: GeneratedGuideConfig = {
 
 export const rcdKeepsTrippingTestSequenceConfig: GeneratedGuideConfig = {
   pagePath: '/guides/rcd-keeps-tripping-test-sequence',
-  title: 'RCD Keeps Tripping Test Sequence | Electrician Fault Guide | Elec-Mate',
+  title: 'RCD Keeps Tripping Test Sequence | Electrician Fault Guide',
   description:
     'A practical test sequence for RCD trips so electricians can narrow faults down quickly without jumping between random checks.',
   datePublished: published,
@@ -360,7 +360,7 @@ export const rcdKeepsTrippingTestSequenceConfig: GeneratedGuideConfig = {
 
 export const rcboKeepsTrippingGuideConfig: GeneratedGuideConfig = {
   pagePath: '/guides/rcbo-keeps-tripping-guide',
-  title: 'RCBO Keeps Tripping Guide | Electrician Fault Guide | Elec-Mate',
+  title: 'RCBO Keeps Tripping Guide | Electrician Fault Guide',
   description:
     'Why an RCBO keeps tripping, how that differs from an RCD fault, and how electricians narrow the issue down to one circuit quickly.',
   datePublished: published,
@@ -506,7 +506,7 @@ export const rcboKeepsTrippingGuideConfig: GeneratedGuideConfig = {
 
 export const rcboKeepsTrippingCausesAndFixesConfig: GeneratedGuideConfig = {
   pagePath: '/guides/rcbo-keeps-tripping-causes-and-fixes',
-  title: 'RCBO Keeps Tripping Causes and Fixes | Electrician Fault Guide | Elec-Mate',
+  title: 'RCBO Keeps Tripping Causes and Fixes | Electrician Fault',
   description:
     'Common reasons an RCBO trips and the fixes electricians normally apply once the fault has been narrowed down to one circuit.',
   datePublished: published,
@@ -651,7 +651,7 @@ export const rcboKeepsTrippingCausesAndFixesConfig: GeneratedGuideConfig = {
 
 export const eicrCommonMistakesConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-common-mistakes',
-  title: 'EICR Common Mistakes | Electrician Certificate Guide | Elec-Mate',
+  title: 'EICR Common Mistakes | Electrician Certificate Guide',
   description:
     'Common EICR mistakes that weaken the report, confuse the client, or create problems during assessment, handover, and remedial quoting.',
   datePublished: published,
@@ -794,7 +794,7 @@ export const eicrCommonMistakesConfig: GeneratedGuideConfig = {
 
 export const eicrWhatToIncludeConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-what-to-include',
-  title: 'What to Include on an EICR | Electrician Certificate Guide | Elec-Mate',
+  title: 'What to Include on an EICR | Electrician Certificate Guide',
   description:
     'A practical checklist for what an EICR should include so the report is complete, readable, and useful for both client handover and remedial work.',
   datePublished: published,
@@ -923,7 +923,7 @@ export const eicrWhatToIncludeConfig: GeneratedGuideConfig = {
 
 export const eicrClientHandoverGuideConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-client-handover-guide',
-  title: 'EICR Client Handover Guide | Electrician Certificate Guide | Elec-Mate',
+  title: 'EICR Client Handover Guide | Electrician Certificate Guide',
   description:
     'How to hand over an EICR so the client understands the result, the urgent actions, and the next step without confusion.',
   datePublished: published,
@@ -1050,7 +1050,7 @@ export const eicrClientHandoverGuideConfig: GeneratedGuideConfig = {
 
 export const consumerUnitUpgradeCostGuideConfig: GeneratedGuideConfig = {
   pagePath: '/guides/consumer-unit-upgrade-cost-guide',
-  title: 'Consumer Unit Upgrade Cost Guide | UK Electrician Pricing | Elec-Mate',
+  title: 'Consumer Unit Upgrade Cost Guide | UK Electrician Pricing',
   description:
     'How electricians and clients price consumer unit upgrades, what changes the cost, and how to keep the quote clear from the first visit.',
   datePublished: published,
@@ -1180,7 +1180,7 @@ export const consumerUnitUpgradeCostGuideConfig: GeneratedGuideConfig = {
 
 export const consumerUnitUpgradePriceBreakdownConfig: GeneratedGuideConfig = {
   pagePath: '/guides/consumer-unit-upgrade-price-breakdown',
-  title: 'Consumer Unit Upgrade Price Breakdown | UK Electrician Pricing | Elec-Mate',
+  title: 'Consumer Unit Upgrade Price Breakdown | UK Electrician',
   description:
     'A line-by-line breakdown of the cost areas that usually make up a consumer unit upgrade quote in the UK.',
   datePublished: published,
@@ -1311,7 +1311,7 @@ export const consumerUnitUpgradePriceBreakdownConfig: GeneratedGuideConfig = {
 
 export const consumerUnitUpgradeLabourAndMaterialsConfig: GeneratedGuideConfig = {
   pagePath: '/guides/consumer-unit-upgrade-labour-and-materials',
-  title: 'Consumer Unit Upgrade Labour and Materials | UK Electrician Pricing | Elec-Mate',
+  title: 'Consumer Unit Upgrade Labour and Materials | UK Electrician',
   description:
     'How labour and materials usually split on a consumer unit upgrade and what experienced electricians make sure is visible before quoting.',
   datePublished: published,
@@ -1444,7 +1444,7 @@ export const consumerUnitUpgradeLabourAndMaterialsConfig: GeneratedGuideConfig =
 
 export const victorianTerraceElectricalRequirementsConfig: GeneratedGuideConfig = {
   pagePath: '/guides/victorian-terrace-electrical-requirements',
-  title: 'Electrical Requirements for Victorian Terrace | Electrician Guide | Elec-Mate',
+  title: 'Electrical Requirements for Victorian Terrace | Electrician',
   description:
     'A practical guide to the electrical issues, survey points, and upgrade priorities electricians often find in Victorian terrace properties.',
   datePublished: published,
@@ -1578,7 +1578,7 @@ export const victorianTerraceElectricalRequirementsConfig: GeneratedGuideConfig 
 
 export const victorianTerraceConsumerUnitUpgradeConfig: GeneratedGuideConfig = {
   pagePath: '/guides/victorian-terrace-consumer-unit-upgrade',
-  title: 'Victorian Terrace Consumer Unit Upgrade | Electrician Guide | Elec-Mate',
+  title: 'Victorian Terrace Consumer Unit Upgrade | Electrician Guide',
   description:
     'How electricians approach consumer unit upgrades in Victorian terrace properties, what usually complicates the job, and how to quote it clearly.',
   datePublished: published,

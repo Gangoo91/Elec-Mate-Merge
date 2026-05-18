@@ -135,7 +135,7 @@ const features = [
     icon: CreditCard,
     title: 'Digital Professional Card',
     description:
-      'A clean, professional digital card on your phone displaying your photograph, qualifications, certifications, and ECS/JIB card details. Always with you, always current.',
+      'A clean, professional digital card on your phone displaying your photograph, qualifications, certifications, and ECS/JIB card details.',
   },
   {
     icon: QrCode,
@@ -147,13 +147,13 @@ const features = [
     icon: Award,
     title: 'Full Qualifications Display',
     description:
-      'Show every qualification you hold: core electrical, specialist certifications, health and safety, and industry card details. Each entry includes the awarding body and date.',
+      'Show every qualification you hold: core electrical, specialist certifications, health and safety, and industry card details.',
   },
   {
     icon: Shield,
     title: 'Verified Credentials',
     description:
-      'Qualifications are marked as verified when confirmed against awarding body records. This gives clients and employers confidence that your credentials are genuine.',
+      'Qualifications are marked as verified when confirmed against awarding body records. This gives clients and employers confidence that your credentials are…',
   },
   {
     icon: Smartphone,
@@ -165,7 +165,7 @@ const features = [
     icon: Eye,
     title: 'Auto-Updating',
     description:
-      'When you add new qualifications or renew certifications, your card updates automatically. Expiry alerts ensure you never let a certification lapse unknowingly.',
+      'When you add new qualifications or renew certifications, your card updates automatically. Expiry alerts ensure you never let a certification lapse…',
   },
 ];
 
@@ -391,9 +391,9 @@ export default function ElecIDProfessionalCardPage() {
   return (
     <ToolTemplate
       title="ElecID Professional Card | Digital Electrician ID"
-      description="Digital professional card for electricians. Display verified qualifications, certifications, and ECS card details. QR code verification lets clients and contractors confirm your credentials instantly."
+      description="Digital professional card for electricians. Display verified qualifications, certifications, and ECS card details."
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Digital Professional Card"

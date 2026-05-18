@@ -643,8 +643,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Certificate PFC installations and quote industrial work with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, power quality test records, industrial quoting, and instant PDF export. 7-day free trial."
+          title="Certificate PFC installations and quote industrial work"
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, power quality test records, industrial quoting, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -659,10 +659,10 @@ const sections = [
 export default function PowerFactorCorrectionPage() {
   return (
     <GuideTemplate
-      title="Power Factor Correction UK | PFC Installation Guide for Businesses"
-      description="Complete guide to power factor correction in the UK. kVA vs kW explained, DNO reactive power charges, automatic and fixed capacitor banks, harmonic distortion risks, detuned banks, savings calculation, and typical 2–4 year payback for industrial users."
+      title="Power Factor Correction UK | PFC Installation Guide for"
+      description="Complete guide to power factor correction in the UK. kVA vs kW explained, DNO reactive power charges, automatic and fixed capacitor banks…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Industrial Guide"

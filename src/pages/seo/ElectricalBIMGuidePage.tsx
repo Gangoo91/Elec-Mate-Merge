@@ -20,9 +20,9 @@ export default function ElectricalBIMGuidePage() {
   return (
     <GuideTemplate
       title="Electrical BIM Guide | Building Information Modelling"
-      description="Guide to Building Information Modelling (BIM) for electrical engineers and electricians. Covers what BIM is, LOD levels, Revit MEP for electrical, clash detection, asset data requirements, PAS 1192, ISO 19650, and how BIM affects electrical design and installation on modern construction projects."
+      description="Guide to Building Information Modelling (BIM) for electrical engineers and electricians. Covers what BIM is, LOD levels, Revit MEP for electrical…"
       datePublished="2025-10-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'BIM Guide', href: '/guides/electrical-bim-guide' },
@@ -265,7 +265,7 @@ export default function ElectricalBIMGuidePage() {
               </p>
               <SEOAppBridge
                 title="AI Circuit Designer for BIM Projects"
-                description="While Revit handles the 3D model, Elec-Mate's AI Circuit Designer handles the BS 7671 calculations. Enter circuit parameters and get cable sizing, voltage drop, fault current, and RCD selection — all validated against the current regulations."
+                description="While Revit handles the 3D model, Elec-Mate's AI Circuit Designer handles the BS 7671 calculations."
                 icon={Brain}
               />
             </>
@@ -536,7 +536,7 @@ export default function ElectricalBIMGuidePage() {
               </div>
               <SEOAppBridge
                 title="Digital Certificates for BIM Handovers"
-                description="Elec-Mate's digital certificates integrate seamlessly with BIM handover requirements. EIC, EICR, and commissioning records are stored in the cloud and can be linked to asset data in the BIM model, simplifying the O&M handover process."
+                description="Elec-Mate's digital certificates integrate seamlessly with BIM handover requirements. EIC, EICR…"
                 icon={FileText}
               />
             </>

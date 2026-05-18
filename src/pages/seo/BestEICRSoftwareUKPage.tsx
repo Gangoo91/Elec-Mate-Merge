@@ -20,9 +20,9 @@ export default function BestEICRSoftwareUKPage() {
   return (
     <GuideTemplate
       title="Best EICR Software UK 2026 | Top Apps Compared"
-      description="Compare the best EICR software for UK electricians in 2026. Elec-Mate, iCertifi, CertsApp, Easy EICR, SimplyEICR, Electrical OM, and desktop software reviewed for mobile support, AI features, offline capability, certificates, calculators, training, pricing, and user experience."
+      description="Compare the best EICR software for UK electricians in 2026. Elec-Mate, iCertifi, CertsApp, Easy EICR, SimplyEICR, Electrical OM…"
       datePublished="2026-01-25"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'Best EICR Software UK', href: '/guides/best-eicr-software-uk' },
@@ -453,7 +453,7 @@ export default function BestEICRSoftwareUKPage() {
               </p>
               <SEOAppBridge
                 title="Elec-Mate — The Most Complete EICR Platform"
-                description="AI Board Scanner, Voice Test Entry, Defect Code AI, Remedial Cost Estimator, 70+ calculators, 46+ training courses, and business management. One subscription, unlimited usage. Try free for 7 days."
+                description="AI Board Scanner, Voice Test Entry, Defect Code AI, Remedial Cost Estimator, 70+ calculators, 46+ training courses, and business management."
                 icon={Sparkles}
               />
               <p>

@@ -464,7 +464,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AI Cost Engineer for Glasgow Rewire Quotes"
-          description="Electricians: describe the job and get a detailed rewire quote with materials breakdown, cable quantities, labour hours, and profit margin from real UK trade pricing data."
+          description="Electricians: describe the job and get a detailed rewire quote with materials breakdown, cable quantities, labour hours…"
           icon={Brain}
         />
       </>
@@ -575,7 +575,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage Glasgow rewire projects with Elec-Mate"
-          description="Electricians: quote rewires with AI cost engineering, manage projects with task tracking, complete EIC certificates on your phone, and send professional invoices. 7-day free trial."
+          description="Electricians: quote rewires with AI cost engineering, manage projects with task tracking, complete EIC certificates on your phone…"
           icon={Wrench}
         />
       </>
@@ -591,9 +591,9 @@ export default function RewireCostGlasgowPage() {
   return (
     <GuideTemplate
       title="House Rewire Cost Glasgow 2025 | Full Rewire Glasgow"
-      description="How much does a house rewire cost in Glasgow in 2025? Real prices for tenement flats, semis, and period properties — Scottish Building Standards explained, sandstone replastering costs, and finding a NICEIC or SELECT-registered electrician in Glasgow."
+      description="House rewire cost in Glasgow 2026: tenement flats £2,800–£4,200, semis £4,000–£6,000, detached £5,500–£8,500. Scottish letting compliance included."
       datePublished="2025-01-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

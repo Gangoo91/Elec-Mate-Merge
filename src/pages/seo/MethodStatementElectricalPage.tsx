@@ -24,7 +24,7 @@ import {
 
 const PAGE_TITLE = 'Method Statement for Electrical Work | Template & Guide';
 const PAGE_DESCRIPTION =
-  'Complete guide to writing method statements for electrical work. What to include, when required, common electrical method statements (rewire, CU change, testing, EV charger), relationship to risk assessments, RAMS explained. Template and examples for UK electricians.';
+  'Method statements for electrical work: what to include, when required, common MS (rewire, CU change, testing, EV charger), RAMS, templates.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -302,7 +302,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AI writes method statements from your job description"
-          description="Describe your job in plain English — 'Full rewire of a 1930s three-bed semi, TN-S supply, customer in residence' — and Elec-Mate's AI generates a complete, site-specific method statement in under 60 seconds. Edit, customise, and export as a professional PDF."
+          description="Describe your job in plain English — 'Full rewire of a 1930s three-bed semi, TN-S supply…"
           icon={Brain}
         />
       </>
@@ -342,7 +342,7 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Site assessment and existing installation review, safe isolation of incoming supply
               (coordination with DNO if required for service fuse), removal of existing consumer
-              unit, installation of new metal consumer unit (AMD3 type per BS 7671 Amendment 3),
+              unit, installation of new metal consumer unit (AMD3 type per BS 7671 Amendment 4),
               circuit transfer and termination with correct torque settings, labelling of all
               circuits, initial verification testing, completion of electrical installation
               certificate (EIC), Part P notification, customer handover. Method statement must
@@ -452,7 +452,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Generate complete RAMS packs with AI"
-          description="Elec-Mate's AI Health and Safety agent generates complete, site-specific RAMS packs from a plain-English job description. Risk assessment with matrix scoring, method statement with step-by-step procedures, COSHH assessments — all in under 60 seconds. Professional PDF export with your branding."
+          description="Elec-Mate's AI Health and Safety agent generates complete, site-specific RAMS packs from a plain-English job description."
           icon={FileCheck2}
         />
       </>
@@ -615,7 +615,7 @@ export default function MethodStatementElectricalPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-01-28"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Hub"

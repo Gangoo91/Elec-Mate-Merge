@@ -596,8 +596,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Certify thermostat and heating control installations with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate to issue Minor Works Certificates and Electrical Installation Certificates on site. Part P compliant certification with instant PDF export. 7-day free trial."
+          title="Certify thermostat and heating control installations with"
+          description="Join 1,000+ UK electricians using Elec-Mate to issue Minor Works Certificates and Electrical Installation Certificates on site."
           icon={FileCheck2}
         />
       </>
@@ -612,10 +612,10 @@ const sections = [
 export default function ThermostatWiringGuidePage() {
   return (
     <GuideTemplate
-      title="Thermostat Wiring Guide UK | Room & Cylinder Thermostat Wiring"
-      description="Complete UK thermostat wiring guide. S-Plan and Y-Plan heating systems, room thermostat wiring, cylinder thermostat (60°C minimum for Legionella), programmer wiring, Nest and Hive smart thermostat earth wire requirements, and heat pump OpenTherm compatibility."
+      title="Thermostat Wiring Guide UK | Room & Cylinder Thermostat"
+      description="Complete UK thermostat wiring guide. S-Plan and Y-Plan heating systems, room thermostat wiring, cylinder thermostat (60°C minimum for Legionella)…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Wiring Guide"

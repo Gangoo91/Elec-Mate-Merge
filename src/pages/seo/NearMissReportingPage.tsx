@@ -297,7 +297,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Report near misses from your phone in seconds"
-          description="Elec-Mate lets you report near misses directly from the site — capture a photo, describe what happened, and the AI Health and Safety agent classifies the hazard and suggests corrective actions. No paper forms, no waiting until you get back to the office."
+          description="Elec-Mate lets you report near misses directly from the site — capture a photo, describe what happened…"
           icon={AlertTriangle}
         />
       </>
@@ -481,7 +481,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Digital near miss reporting and risk assessment tools"
-          description="Elec-Mate's AI Health and Safety agent helps you capture near misses, generate risk assessments, and create RAMS documents — all from your phone. Build a culture of safety reporting without the paperwork burden."
+          description="Elec-Mate's AI Health and Safety agent helps you capture near misses, generate risk assessments, and create RAMS documents — all from your phone."
           icon={Shield}
         />
       </>
@@ -571,9 +571,9 @@ export default function NearMissReportingPage() {
   return (
     <GuideTemplate
       title="Near Miss Reporting | Why It Matters for Electricians"
-      description="Complete guide to near miss reporting for UK electricians. What counts as a near miss, the reporting process, learning from near misses, legal requirements, and how to build a reporting culture on site."
+      description="Complete guide to near miss reporting for UK electricians. What counts as a near miss, the reporting process, learning from near misses…"
       datePublished="2025-08-05"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

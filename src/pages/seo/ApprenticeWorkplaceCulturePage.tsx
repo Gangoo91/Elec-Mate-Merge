@@ -282,7 +282,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Record Your Professional Development Daily"
-          description="Elec-Mate's site diary helps you record daily learning, track skills across 8 categories, and build portfolio evidence. The AI coach provides insights on your progress. Start building your professional record from day one."
+          description="Elec-Mate's site diary helps you record daily learning, track skills across 8 categories, and build portfolio evidence."
           icon={BookOpen}
         />
       </>
@@ -535,7 +535,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="More Than Just Technical Training"
-          description="Elec-Mate supports your whole apprenticeship experience — site diary with mood tracking, mental health resources, professional development tools, and a community of apprentices. 7-day free trial."
+          description="Elec-Mate supports your whole apprenticeship experience — site diary with mood tracking, mental health resources, professional development tools…"
           icon={Heart}
         />
       </>
@@ -546,10 +546,10 @@ const sections = [
 export default function ApprenticeWorkplaceCulturePage() {
   return (
     <GuideTemplate
-      title="Workplace Culture for Electrical Apprentices | Fitting In on Site"
-      description="Guide to workplace culture for electrical apprentices. Fitting in on site, professional behaviour, communication, dealing with bullying, mentoring relationships, and being part of a team in the construction industry."
+      title="Workplace Culture for Electrical Apprentices | Fitting In"
+      description="Guide to workplace culture for electrical apprentices. Fitting in on site, professional behaviour, communication, dealing with bullying…"
       datePublished="2026-01-22"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

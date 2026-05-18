@@ -16,9 +16,9 @@ export default function HowToPriceElectricalJobsPage() {
   return (
     <GuideTemplate
       title="How to Price Electrical Jobs UK 2026 | Pricing Guide"
-      description="Complete guide to pricing electrical work in the UK. Covers day rates, fixed prices, per-point pricing, cost-plus, hourly rate calculation, material markup, common job prices, quoting tips, and payment terms for electricians."
+      description="Complete guide to pricing electrical work in the UK. Covers day rates, fixed prices, per-point pricing, cost-plus, hourly rate calculation…"
       datePublished="2026-01-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'How to Price Electrical Jobs', href: '/guides/how-to-price-electrical-jobs' },
@@ -168,7 +168,7 @@ export default function HowToPriceElectricalJobsPage() {
 
               <SEOAppBridge
                 title="Hourly Rate Calculator — Know Your True Cost"
-                description="Enter your target salary, overheads, and working hours. Elec-Mate calculates the hourly rate you need to charge to actually make the money you want after all costs and tax."
+                description="Enter your target salary, overheads, and working hours. Elec-Mate calculates the hourly rate you need to charge to actually make the money you want after…"
                 icon={Calculator}
               />
             </>
@@ -308,7 +308,7 @@ export default function HowToPriceElectricalJobsPage() {
 
               <SEOAppBridge
                 title="AI Cost Engineer — Accurate Job Pricing in Seconds"
-                description="Describe any electrical job and the AI generates an itemised estimate with current UK trade pricing, realistic labour hours, and your profit margin applied. Stop guessing, start knowing."
+                description="Describe any electrical job and the AI generates an itemised estimate with current UK trade pricing, realistic labour hours…"
                 icon={Brain}
               />
             </>
@@ -364,7 +364,7 @@ export default function HowToPriceElectricalJobsPage() {
 
               <SEOAppBridge
                 title="Professional PDF Quotes — Sent From Site in Minutes"
-                description="Elec-Mate's quoting app generates branded PDF quotes with your logo, itemised pricing, scope of works, and terms. Send to the client with one tap. They can view and accept online."
+                description="Elec-Mate's quoting app generates branded PDF quotes with your logo, itemised pricing, scope of works, and terms. Send to the client with one tap."
                 icon={FileText}
               />
             </>
@@ -461,7 +461,7 @@ export default function HowToPriceElectricalJobsPage() {
 
               <SEOAppBridge
                 title="Invoice Builder — Bill From Site, Get Paid Faster"
-                description="Create professional invoices with payment terms, VAT, and online payment links. Send from site the moment the job is done. Track payments and chase overdue invoices automatically."
+                description="Create professional invoices with payment terms, VAT, and online payment links. Send from site the moment the job is done."
                 icon={Receipt}
               />
             </>
@@ -505,7 +505,7 @@ export default function HowToPriceElectricalJobsPage() {
 
               <SEOAppBridge
                 title="Job Profitability Tracker — See Which Jobs Make Money"
-                description="Track actual materials, hours, and costs against every quoted price. Elec-Mate shows your real profit margin per job, per customer, and per job type — so you can focus on the work that pays best."
+                description="Track actual materials, hours, and costs against every quoted price. Elec-Mate shows your real profit margin per job, per customer…"
                 icon={BarChart3}
               />
             </>

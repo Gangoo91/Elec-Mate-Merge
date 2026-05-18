@@ -23,9 +23,9 @@ export default function BusinessCostCalculatorPage() {
   return (
     <BusinessTemplate
       title="Business Cost Calculator | Electrician Overheads Tool"
-      description="Calculate the true running costs of your electrical business. Van costs, tools, insurance, fuel, training, marketing — know exactly what your business costs to operate every month and price your work accordingly."
+      description="Calculate the true running costs of your UK electrical business: van, tools, insurance, fuel, training, scheme fees, CPD. Real overhead, real numbers."
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Business Tools', href: '/tools' },
         { label: 'Business Cost Calculator', href: PAGE_PATH },
@@ -106,7 +106,7 @@ export default function BusinessCostCalculatorPage() {
           appBridge: {
             title: 'Calculate Your True Business Costs Now',
             description:
-              'Elec-Mate captures every business expense — van, tools, insurance, fuel, training, marketing — and converts them into an hourly overhead rate for accurate job pricing.',
+              'Elec-Mate captures every business expense — van, tools, insurance, fuel, training…',
             icon: Calculator,
           },
         },
@@ -271,7 +271,7 @@ export default function BusinessCostCalculatorPage() {
               </p>
               <p>
                 <strong className="text-yellow-400">18th Edition updates:</strong> When BS 7671 is
-                amended (Amendment 3 was issued in July 2024, with Amendment 4 expected in 2026),
+                amended (Amendment 4 was issued in July 2024, with Amendment 4 expected in 2026),
                 you may need to attend an update course. These typically cost £150 to £300 for a
                 one-day course.
               </p>
@@ -341,7 +341,7 @@ export default function BusinessCostCalculatorPage() {
           appBridge: {
             title: 'Track Every Business Expense in One Place',
             description:
-              'Elec-Mate combines expense tracking, receipt scanning, mileage logging, and overhead calculation into a single app built for electricians. Know your true costs, price with confidence.',
+              'Elec-Mate combines expense tracking, receipt scanning, mileage logging, and overhead calculation into a single app built for electricians.',
             icon: Receipt,
           },
         },
@@ -475,7 +475,7 @@ export default function BusinessCostCalculatorPage() {
           applicationCategory: 'BusinessApplication',
           operatingSystem: 'Web, iOS, Android',
           description:
-            'Calculate the true running costs of your electrical business. Van, tools, insurance, fuel, training, marketing — know your overheads and price every job to profit.',
+            'Calculate the true running costs of your electrical business. Van, tools, insurance, fuel, training…',
           url: 'https://www.elec-mate.com/tools/business-cost-calculator',
           offers: {
             '@type': 'Offer',

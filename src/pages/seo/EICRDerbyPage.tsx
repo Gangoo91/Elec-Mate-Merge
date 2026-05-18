@@ -604,7 +604,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your EICR business in Derby with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate to complete EICRs on site, scan boards with AI, and export instant PDFs. Complete more inspections per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to complete EICRs on site, scan boards with AI, and export instant PDFs."
           icon={FileCheck2}
         />
       </>
@@ -620,9 +620,9 @@ export default function EICRDerbyPage() {
   return (
     <GuideTemplate
       title="EICR Derby | Electrical Installation Condition Report Derby"
-      description="EICR requirements for Derby landlords and homeowners. Legal obligations under the 2020 Regulations, Derby City Council enforcement, costs £150–300, HMO requirements, common findings in Derby's housing stock, and finding qualified electricians in Derby."
+      description="EICR requirements for Derby landlords and homeowners. Legal obligations under the 2020 Regulations, Derby City Council enforcement, costs £150–300…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

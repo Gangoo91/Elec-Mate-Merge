@@ -21,7 +21,7 @@ import {
 
 const PAGE_TITLE = 'COSHH Course | Control of Substances Training';
 const PAGE_DESCRIPTION =
-  'Online COSHH training for UK electricians. Control of Substances Hazardous to Health Regulations 2002, COSHH assessments, chemical safety, PPE selection, and emergency procedures. 5 modules with video lessons, quizzes, and AI tutor.';
+  'Online COSHH training for UK electricians: CoSHH Regs 2002, assessments, chemical safety, PPE, emergencies. 5 video modules, quizzes + AI tutor.';
 
 const breadcrumbs = [
   { label: 'Training', href: '/training' },
@@ -85,27 +85,27 @@ const modules = [
   {
     title: 'Introduction to COSHH Legislation',
     description:
-      'The Control of Substances Hazardous to Health Regulations 2002, the Health and Safety at Work etc. Act 1974, employer and employee duties, the role of the HSE, and how COSHH applies specifically to electrical installation work.',
+      'The Control of Substances Hazardous to Health Regulations 2002, the Health and Safety at Work etc.',
   },
   {
     title: 'Identifying Hazardous Substances',
     description:
-      'Types of hazardous substances (chemicals, biological agents, dust, fumes, vapours), GHS hazard symbols and labelling, reading safety data sheets (SDS), and specific substances electricians encounter on site.',
+      'Types of hazardous substances (chemicals, biological agents, dust, fumes, vapours), GHS hazard symbols and labelling, reading safety data sheets (SDS)…',
   },
   {
     title: 'Carrying Out COSHH Assessments',
     description:
-      'Step-by-step process for completing a COSHH assessment: identifying substances, evaluating hazards, assessing exposure routes and likelihood, determining control measures, recording the assessment, and reviewing periodically.',
+      'Step-by-step process for completing a COSHH assessment: identifying substances, evaluating hazards, assessing exposure routes and likelihood…',
   },
   {
     title: 'Control Measures and PPE',
     description:
-      'The hierarchy of control applied to COSHH: elimination, substitution, engineering controls (LEV), administrative controls, and PPE. Selecting the right respiratory protection, gloves, and eye protection for electrical work scenarios.',
+      'The hierarchy of control applied to COSHH: elimination, substitution, engineering controls (LEV), administrative controls, and PPE.',
   },
   {
     title: 'Emergency Procedures and First Aid',
     description:
-      'What to do in the event of a spill, splash, inhalation incident, or skin contact. First aid for chemical burns, eye contamination, and inhalation of fumes. Spill containment, reporting incidents, and RIDDOR requirements.',
+      'What to do in the event of a spill, splash, inhalation incident, or skin contact. First aid for chemical burns, eye contamination…',
   },
 ];
 
@@ -126,13 +126,13 @@ const features = [
     icon: ClipboardCheck,
     title: 'Interactive Quizzes',
     description:
-      'Scenario-based questions after every module. Complete COSHH assessments, select appropriate control measures, and demonstrate understanding of emergency procedures.',
+      'Scenario-based questions after every module. Complete COSHH assessments, select appropriate control measures…',
   },
   {
     icon: Clock,
     title: 'Study Anywhere',
     description:
-      'Complete the course on your phone, tablet, or desktop. Study during breaks on site, at home, or on the commute. Progress syncs across all your devices automatically.',
+      'Complete the course on your phone, tablet, or desktop. Study during breaks on site, at home, or on the commute.',
   },
   {
     icon: Layers,
@@ -180,7 +180,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Study COSHH with Elec-Mate's AI tutor"
-          description="Ask questions about specific substances, get help completing COSHH assessments, and test your knowledge with interactive quizzes. All 46+ courses included in your subscription."
+          description="Ask questions about specific substances, get help completing COSHH assessments, and test your knowledge with interactive quizzes."
           icon={BrainCircuit}
         />
       </>
@@ -359,7 +359,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Interactive emergency procedure scenarios"
-          description="The Elec-Mate COSHH course includes scenario-based assessments where you practise responding to chemical spills, splash injuries, and inhalation incidents. Build confidence in your emergency response before you need it for real."
+          description="The Elec-Mate COSHH course includes scenario-based assessments where you practise responding to chemical spills, splash injuries…"
           icon={ShieldCheck}
         />
       </>
@@ -456,7 +456,7 @@ export default function COSHHCoursePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Health & Safety Training"

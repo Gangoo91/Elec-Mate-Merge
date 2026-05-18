@@ -498,7 +498,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify Southampton EV charger installations"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. Complete EV charger quotes and certificates from your phone — built for electricians working across Southampton and Hampshire."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification."
           icon={Car}
         />
       </>
@@ -513,10 +513,10 @@ const sections = [
 export default function EVChargerInstallationSouthamptonPage() {
   return (
     <GuideTemplate
-      title="EV Charger Installation Southampton | Home EV Charging Southampton 2026"
-      description="EV charger installation costs in Southampton 2026: 7kW charger £850-1,300 installed, OZEV grants up to £350, SSEN DNO notification, PME earthing requirements, Part P compliance, and Southampton coastal considerations."
+      title="EV Charger Installation Southampton | Home EV Charging"
+      description="EV charger installation costs in Southampton 2026: 7kW charger £850-1,300 installed, OZEV grants up to £350, SSEN DNO notification…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Southampton Guide"

@@ -632,7 +632,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Record test results and issue certificates on your phone"
-          description="Elec-Mate lets you complete EICRs and Minor Works Certificates on site with full test result recording. AI-powered fault diagnosis, observation codes, and instant professional PDF export."
+          description="Elec-Mate lets you complete EICRs and Minor Works Certificates on site with full test result recording."
           icon={FileCheck2}
         />
       </>
@@ -648,9 +648,9 @@ export default function NoElectricityInPartOfHousePage() {
   return (
     <GuideTemplate
       title="No Electricity in Part of House | Causes & Fixes"
-      description="Lost electricity in part of your house? Learn the causes — tripped MCB, loose connections, damaged cables, shared neutral faults, ring main breaks, and blown fuses. What to check yourself and when to call an electrician."
+      description="Lost electricity in part of your house? Learn the causes — tripped MCB, loose connections, damaged cables, shared neutral faults, ring main breaks…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Common Problem"

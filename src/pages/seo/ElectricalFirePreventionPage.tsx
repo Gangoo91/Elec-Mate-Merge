@@ -40,7 +40,7 @@ const tocItems = [
 const keyTakeaways = [
   'Approximately 20,000 electrical fires occur in the UK each year, accounting for around 50% of all accidental house fires. The majority are caused by faulty wiring, overloaded circuits, or faulty appliances.',
   'Arc Fault Detection Devices (AFDDs) can detect the electrical signatures of arcing faults before they develop into fires. BS 7671 recommends (but does not mandate) AFDDs for most domestic installations.',
-  'Metal consumer unit enclosures have been mandatory for new installations in dwellings since Amendment 3 to BS 7671 (2015). Plastic consumer units are a fire risk if a fault causes arcing inside the enclosure.',
+  'Metal consumer unit enclosures have been mandatory for new installations in dwellings since Amendment 4 to BS 7671 (2015). Plastic consumer units are a fire risk if a fault causes arcing inside the enclosure.',
   'Optical smoke alarms are more effective than ionisation alarms for slow-burning fires (which are common in electrical fires starting in wall voids). Heat alarms are required in kitchens where cooking fumes would cause nuisance alarms from smoke detectors.',
   'Warning signs of dangerous wiring include scorch marks around sockets or switches, hot socket outlet plates, flickering lights, frequent circuit breaker trips, and the smell of burning plastic.',
 ];
@@ -59,7 +59,7 @@ const faqs = [
   {
     question: 'Why are metal consumer units required in dwellings?',
     answer:
-      'Amendment 3 to BS 7671 (2015) required that consumer units installed in domestic premises must have a metal (steel or other non-combustible material) enclosure. The requirement came from analysis of fires caused by arcing faults inside plastic consumer unit enclosures. When an arcing fault occurs inside a plastic enclosure, the arc can ignite the plastic and the fire can spread before any protective device operates. A metal enclosure contains the arc and any initial fire, giving the protective devices time to operate and preventing the fire from spreading to the surrounding structure. Plastic consumer units installed before 2015 do not need to be replaced immediately (unless there are other grounds for replacement), but any new consumer unit installed in a dwelling must have a metal enclosure.',
+      'Amendment 4 to BS 7671 (2015) required that consumer units installed in domestic premises must have a metal (steel or other non-combustible material) enclosure. The requirement came from analysis of fires caused by arcing faults inside plastic consumer unit enclosures. When an arcing fault occurs inside a plastic enclosure, the arc can ignite the plastic and the fire can spread before any protective device operates. A metal enclosure contains the arc and any initial fire, giving the protective devices time to operate and preventing the fire from spreading to the surrounding structure. Plastic consumer units installed before 2015 do not need to be replaced immediately (unless there are other grounds for replacement), but any new consumer unit installed in a dwelling must have a metal enclosure.',
   },
   {
     question: 'What type of smoke alarm is best for bedrooms and living rooms?',
@@ -381,7 +381,7 @@ const sections = [
           and the concentration of circuits in one location increases the risk.
         </p>
         <p>
-          Amendment 3 to BS 7671 (2015) introduced the requirement that consumer units in
+          Amendment 4 to BS 7671 (2015) introduced the requirement that consumer units in
           domestic premises must have a metal enclosure. This requirement exists because plastic
           consumer units, when subjected to an internal arc fault, can ignite — and the plastic
           enclosure then becomes fuel for the fire. A metal enclosure contains the arc and any
@@ -423,7 +423,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Issue EICs for consumer unit upgrades on site"
-          description="Elec-Mate's EIC Certificate app is designed for consumer unit replacements. AI board scanning populates the schedule of circuits automatically. Issue the certificate before you leave. Part P self-certification included."
+          description="Elec-Mate's EIC Certificate app is designed for consumer unit replacements. AI board scanning populates the schedule of circuits automatically."
           icon={FileCheck2}
         />
       </>
@@ -606,10 +606,10 @@ const sections = [
 export default function ElectricalFirePreventionPage() {
   return (
     <GuideTemplate
-      title="Electrical Fire Prevention UK | AFDDs, Consumer Units, Warning Signs"
-      description="Complete guide to electrical fire prevention in UK homes. UK statistics (~20,000 electrical fires/year), arc fault detection devices (AFDDs), smoke detector types, metal consumer unit requirements post-2016, and warning signs of dangerous wiring."
+      title="Electrical Fire Prevention UK | AFDDs, Consumer Units,"
+      description="Complete guide to electrical fire prevention in UK homes. UK statistics (~20,000 electrical fires/year), arc fault detection devices (AFDDs)…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Fire Safety Guide"

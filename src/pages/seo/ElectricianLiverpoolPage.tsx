@@ -581,7 +581,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Liverpool electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for Liverpool's terraced houses, HMO market, and regeneration projects. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -598,9 +598,9 @@ export default function ElectricianLiverpoolPage() {
     <GuideTemplate
       localArea="Liverpool"
       title="Electrician in Liverpool | Qualified Electricians 2026"
-      description="Find qualified electricians in Liverpool. SP Energy Networks DNO, dock area regeneration, conservation areas, terraced house rewiring, HMO compliance, and local electrician rates for 2026."
+      description="Find qualified electricians in Liverpool. SP Energy Networks DNO, dock area regeneration, conservation areas, terraced house rewiring, HMO compliance…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Liverpool"

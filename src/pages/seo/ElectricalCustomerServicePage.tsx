@@ -20,9 +20,9 @@ export default function ElectricalCustomerServicePage() {
   return (
     <GuideTemplate
       title="Customer Service for Electricians | Win Repeat Work"
-      description="Practical customer service guide for UK electricians. First impressions, communication, cleanliness on site, professional paperwork, follow-up, getting reviews, handling complaints, and turning one-off customers into lifelong clients."
+      description="Practical customer service guide for UK electricians. First impressions, communication, cleanliness on site, professional paperwork, follow-up…"
       datePublished="2026-02-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Business', href: '/guides/business' },
         { label: 'Customer Service', href: '/guides/customer-service-electricians' },
@@ -165,7 +165,7 @@ export default function ElectricalCustomerServicePage() {
               </p>
               <SEOAppBridge
                 title="Send certificates and invoices before you leave site"
-                description="Elec-Mate generates BS 7671 certificates, professional invoices, and completion reports on your phone. Send everything to the customer before you drive away. No delays, no forgotten paperwork."
+                description="Elec-Mate generates BS 7671 certificates, professional invoices, and completion reports on your phone."
                 icon={FileText}
               />
             </>
@@ -294,7 +294,7 @@ export default function ElectricalCustomerServicePage() {
               </p>
               <SEOAppBridge
                 title="Professional documents from your phone"
-                description="BS 7671 certificates, branded quotes, invoices with payment links — all generated on your phone in minutes. Elec-Mate makes every piece of paperwork reflect the quality of your work."
+                description="BS 7671 certificates, branded quotes, invoices with payment links — all generated on your phone in minutes."
                 icon={Receipt}
               />
             </>
@@ -491,7 +491,7 @@ export default function ElectricalCustomerServicePage() {
               </ul>
               <SEOAppBridge
                 title="Automatic re-inspection reminders keep clients coming back"
-                description="Elec-Mate tracks every certificate expiry date and sends you reminders when clients are due for re-inspection. Contact your clients proactively, book the work, and maintain the relationship year after year."
+                description="Elec-Mate tracks every certificate expiry date and sends you reminders when clients are due for re-inspection."
                 icon={Shield}
               />
             </>

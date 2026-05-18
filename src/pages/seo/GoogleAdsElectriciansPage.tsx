@@ -559,7 +559,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Convert your Google Ad leads into booked jobs"
-          description="Professional quoting, invoicing, and job management for UK electricians. Respond to leads faster and more professionally. 7-day free trial, no card required."
+          description="Professional quoting, invoicing, and job management for UK electricians. Respond to leads faster and more professionally."
           icon={BarChart3}
         />
       </>
@@ -574,10 +574,10 @@ const sections = [
 export default function GoogleAdsElectriciansPage() {
   return (
     <GuideTemplate
-      title="Google Ads for Electricians UK | PPC Guide for Electrical Contractors"
-      description="Complete Google Ads guide for UK electricians. Local Services Ads (Google Guaranteed), traditional search ads, typical cost per click (£3–£10), conversion tracking, ad copy, negative keywords, and budget recommendations."
+      title="Google Ads for Electricians UK | PPC Guide for Electrical"
+      description="Complete Google Ads guide for UK electricians. Local Services Ads (Google Guaranteed), traditional search ads, typical cost per click (£3–£10)…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Business Guide"

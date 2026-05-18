@@ -6,14 +6,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Association — guidelines for supporting PoE).
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
   pagePath: '/guides/cat6-cat6a-current-rating-poe',
   title:
-    'Cat6 vs Cat6a Current Rating for PoE Installations | Bundle De-rating Guide for UK Electricians | Elec-Mate',
+    'Cat6 vs Cat6a Current Rating for PoE Installations | Bundle',
   description:
-    'Cat6 vs Cat6a current rating for PoE — conductor area, current per pair by PoE type, bundle de-rating, ambient impact, LSZH vs PVC, TIA TSB-184-A bundle limits, pull-tension and BS EN 50174 routing for UK electricians.',
+    'Cat6 vs Cat6a current rating for PoE — conductor area, current per pair by PoE type, bundle de-rating, ambient impact, LSZH vs PVC…',
   datePublished: published,
   dateModified: modified,
   readingTime: 14,
@@ -546,7 +546,7 @@ export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
       href: '/guides/bs-en-50174-data-cable-installation',
       title: 'BS EN 50174 — Data Cable Installation',
       description:
-        'Installation practice for data cabling — pathway design, segregation from mains, pull tension, bend radius, and the informative annex on PoE thermal performance.',
+        'Installation practice for data cabling — pathway design, segregation from mains, pull tension, bend radius…',
       icon: 'ClipboardCheck',
       category: 'Guide',
     },
@@ -554,7 +554,7 @@ export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
       href: '/guides/section-715-elv-lighting-a4-2026',
       title: 'Section 715 ELV Lighting (A4:2026)',
       description:
-        'BS 7671:2018+A4:2026 Section 715 requirements for extra-low voltage lighting, including PoE-driven LED installations and the mains-supply rules they sit alongside.',
+        'BS 7671:2018+A4:2026 Section 715 requirements for extra-low voltage lighting, including PoE-driven LED installations and the mains-supply rules they sit…',
       icon: 'BookOpen',
       category: 'Guide',
     },
@@ -562,7 +562,7 @@ export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
       href: '/guides/correction-factors-guide',
       title: 'Correction Factors Guide',
       description:
-        'BS 7671 ambient temperature, grouping and thermal insulation correction factors — the parallel framework for derating mains cables that sits alongside PoE bundle derating.',
+        'BS 7671 ambient temperature, grouping and thermal insulation correction factors — the parallel framework for derating mains cables that sits alongside…',
       icon: 'Calculator',
       category: 'Guide',
     },

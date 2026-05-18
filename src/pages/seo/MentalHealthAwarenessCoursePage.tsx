@@ -22,7 +22,7 @@ import {
 
 const PAGE_TITLE = 'Mental Health Awareness Course | Construction Industry';
 const PAGE_DESCRIPTION =
-  'Mental health awareness training for UK electricians and construction workers. Recognise the signs, start conversations, support colleagues, and look after your own mental health. 4 modules with video lessons, quizzes, and AI tutor.';
+  'Mental health awareness for UK electricians + construction: spot the signs, start conversations, support colleagues, look after yourself. 4 modules.';
 
 const breadcrumbs = [
   { label: 'Training', href: '/training' },
@@ -85,22 +85,22 @@ const modules = [
   {
     title: 'Understanding Mental Health in Construction',
     description:
-      'The scale of the problem: suicide statistics, prevalence of depression, anxiety, and stress in construction. Contributing factors: culture, working conditions, financial insecurity, and stigma. Why electricians and tradespeople are disproportionately affected.',
+      'The scale of the problem: suicide statistics, prevalence of depression, anxiety, and stress in construction.',
   },
   {
     title: 'Recognising the Signs',
     description:
-      'How to spot changes in behaviour that may indicate mental health problems. Depression, anxiety, stress, and substance misuse — what they look like on a building site. The difference between a bad day and a pattern of concern.',
+      'How to spot changes in behaviour that may indicate mental health problems. Depression, anxiety, stress…',
   },
   {
     title: 'Starting Supportive Conversations',
     description:
-      'How to approach a colleague you are concerned about. Choosing the right time and place, opening the conversation, active listening, responding without judgement, and knowing when to signpost to professional help. Practical role-play scenarios.',
+      'How to approach a colleague you are concerned about. Choosing the right time and place, opening the conversation, active listening…',
   },
   {
     title: 'Looking After Your Own Mental Health',
     description:
-      'Evidence-based strategies for maintaining your own mental wellbeing: routine, physical activity, sleep, social connection, limiting alcohol, and seeking help early. Building resilience in a demanding industry. Professional support services and how to access them.',
+      'Evidence-based strategies for maintaining your own mental wellbeing: routine, physical activity, sleep, social connection, limiting alcohol…',
   },
 ];
 
@@ -115,7 +115,7 @@ const features = [
     icon: MessageCircle,
     title: 'Conversation Scenarios',
     description:
-      'Practise starting supportive conversations through realistic, construction-specific scenarios. Build confidence in your ability to reach out to a colleague who may be struggling.',
+      'Practise starting supportive conversations through realistic, construction-specific scenarios.',
   },
   {
     icon: ClipboardCheck,
@@ -127,7 +127,7 @@ const features = [
     icon: Clock,
     title: 'Study Anywhere',
     description:
-      'Complete the course on your phone, tablet, or desktop. Study during breaks on site, at home, or on the commute. Progress syncs across all your devices automatically.',
+      'Complete the course on your phone, tablet, or desktop. Study during breaks on site, at home, or on the commute.',
   },
   {
     icon: HandHeart,
@@ -225,7 +225,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Real-world scenarios from construction settings"
-          description="The Elec-Mate mental health awareness course includes realistic scenarios set on construction sites and in electrical contracting businesses. Practise identifying signs and deciding how to respond in a safe learning environment."
+          description="The Elec-Mate mental health awareness course includes realistic scenarios set on construction sites and in electrical contracting businesses."
           icon={Heart}
         />
       </>
@@ -330,7 +330,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Personal wellbeing plan builder"
-          description="The Elec-Mate course includes a guided personal wellbeing plan where you identify your stress triggers, your support network, your coping strategies, and your early warning signs. A practical tool you can use beyond the course."
+          description="The Elec-Mate course includes a guided personal wellbeing plan where you identify your stress triggers, your support network, your coping strategies…"
           icon={HandHeart}
         />
       </>
@@ -425,7 +425,7 @@ export default function MentalHealthAwarenessCoursePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-09-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Wellbeing Training"

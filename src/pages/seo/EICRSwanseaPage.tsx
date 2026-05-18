@@ -535,7 +535,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more EICR work across Swansea with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more inspections per day and convert findings to remedial quotes on the spot. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -550,10 +550,10 @@ const sections = [
 export default function EICRSwanseaPage() {
   return (
     <GuideTemplate
-      title="EICR Swansea | Electrical Installation Condition Report Swansea"
-      description="EICR Swansea — Welsh landlord regulations under the Renting Homes (Wales) Act 2016, Rent Smart Wales requirements, inspection costs, common findings in student lets and older terraces, and how to find a qualified electrician in Swansea. 2026 guide."
+      title="EICR Swansea | Electrical Installation Condition Report"
+      description="EICR Swansea — Welsh landlord regulations under the Renting Homes (Wales) Act 2016, Rent Smart Wales requirements, inspection costs…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

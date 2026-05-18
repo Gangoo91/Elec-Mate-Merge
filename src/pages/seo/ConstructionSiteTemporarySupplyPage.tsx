@@ -306,8 +306,8 @@ const sections = [
           accessible for operation, testing, and emergency isolation.
         </p>
         <SEOAppBridge
-          title="AI board scanner for site distribution"
-          description="Photograph the site distribution board and let Elec-Mate read the MCB ratings, circuit details, and board layout. The EICR schedule is populated automatically — even for temporary installations with non-standard configurations."
+          title="Construction site electrics: temporary supply"
+          description="BS 7671:2018+A4:2026 compliant temporary electrical distribution for site. Scan boards, auto-populate EICR schedules in minutes. Reduce paperwork by 80%."
           icon={Brain}
         />
       </>
@@ -621,7 +621,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Site EICRs completed on site, not at a desk"
-          description="Join 1,000+ UK electricians creating professional certificates with voice entry, AI defect coding, and instant PDF delivery. Built for construction site conditions. 7-day free trial."
+          description="Join 1,000+ UK electricians creating professional certificates with voice entry, AI defect coding, and instant PDF delivery."
           icon={FileCheck2}
         />
       </>
@@ -637,9 +637,9 @@ export default function ConstructionSiteTemporarySupplyPage() {
   return (
     <GuideTemplate
       title="Construction Site Temporary Supply | 110V Guide UK"
-      description="Complete guide to construction site temporary electrical supply in the UK. BS 7375, 110V CTE supply, site distribution boards, RCD protection, cable management, and quarterly inspection requirements for temporary installations."
+      description="Complete guide to construction site temporary electrical supply in the UK. BS 7375, 110V CTE supply, site distribution boards, RCD protection…"
       datePublished="2025-11-12"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Construction Guide"

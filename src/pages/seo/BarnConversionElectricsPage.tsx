@@ -758,7 +758,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, size, and certify barn conversion electrics"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification. Built for complex projects like barn conversions. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification."
           icon={Landmark}
         />
       </>
@@ -774,9 +774,9 @@ export default function BarnConversionElectricsPage() {
   return (
     <GuideTemplate
       title="Barn Conversion Electrical Installation | Guide UK"
-      description="Complete guide to barn conversion electrical installation in the UK. Heritage constraints, long cable runs, voltage drop, three-phase supply, exposed beam challenges, underfloor heating, industrial lighting, and 2026 pricing from £5,000 to £20,000+."
+      description="Complete guide to barn conversion electrical installation in the UK. Heritage constraints, long cable runs, voltage drop, three-phase supply…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

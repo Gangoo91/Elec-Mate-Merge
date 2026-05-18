@@ -26,7 +26,7 @@ import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
 const PAGE_TITLE = 'How to Do Safe Isolation | GS38 Procedure Steps | Elec-Mate';
 const PAGE_DESCRIPTION =
-  'Step-by-step safe isolation procedure following HSE GS38 guidance. Prove-test-prove method, approved voltage indicators, lockout/tagout. Essential for every UK electrician.';
+  'Step-by-step safe isolation per HSE GS38: prove-test-prove method, approved voltage indicators, lockout/tagout. Essential for UK electricians.';
 
 const faqs = [
   {
@@ -128,7 +128,7 @@ const features = [
     icon: ShieldCheck,
     title: 'BS 7671:2018+A4:2026',
     description:
-      'All regulation references, Zs limits, and compliance checks built to the current 18th Edition including Amendment 3.',
+      'All regulation references, Zs limits, and compliance checks built to the current 18th Edition including Amendment 4.',
   },
 ];
 
@@ -524,7 +524,7 @@ export default function HowToDoSafeIsolationPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Digital EICR and Test Certificates for UK Electricians"
-            description="Elec-Mate's digital EICR and test certificates make inspection reporting faster and more professional. Complete forms on your phone and export professional PDFs instantly."
+            description="Elec-Mate's digital EICR and test certificates make inspection reporting faster and more professional."
             ctaText="Try Elec-Mate free"
             ctaHref="/auth/signup"
             icon={ShieldCheck}

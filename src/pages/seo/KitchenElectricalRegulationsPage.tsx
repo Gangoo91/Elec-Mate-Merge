@@ -222,7 +222,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Size the cooker cable correctly on site"
-          description="Elec-Mate's cable sizing calculator handles cooker circuits with full derating for installation method, grouping, and thermal insulation. Get the right cable size before you quote."
+          description="Elec-Mate's cable sizing calculator handles cooker circuits with full derating for installation method, grouping, and thermal insulation."
           icon={Calculator}
         />
       </>
@@ -563,10 +563,10 @@ const sections = [
 export default function KitchenElectricalRegulationsPage() {
   return (
     <GuideTemplate
-      title="Kitchen Electrical Regulations UK | Circuits, Sockets and Part P"
-      description="Complete guide to kitchen electrical regulations under BS 7671. Cooker circuit sizing (32A/45A), appliance dedicated circuits, Regulation 553.1 socket placement near sinks, kitchen island supply, RCD protection requirements, and Part P notification for new kitchen circuits."
+      title="Kitchen Electrical Regulations UK | Circuits, Sockets and"
+      description="Complete guide to kitchen electrical regulations under BS 7671. Cooker circuit sizing (32A/45A), appliance dedicated circuits…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Kitchen Electrical Guide"

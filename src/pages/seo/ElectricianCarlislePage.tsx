@@ -511,7 +511,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Carlisle electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for Carlisle's Victorian terraces, cross-border work, and rural Cumbrian properties. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -528,9 +528,9 @@ export default function ElectricianCarlislePage() {
     <GuideTemplate
       localArea="Carlisle"
       title="Electrician in Carlisle | Local Electricians 2026"
-      description="Find qualified electricians in Carlisle, Cumbria. Part P, cross-border Scottish work, Electricity North West DNO, flood-affected properties, Victorian terraces, and Carlisle electrician rates 2026."
+      description="Find qualified electricians in Carlisle, Cumbria. Part P, cross-border Scottish work, Electricity North West DNO, flood-affected properties…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Carlisle"

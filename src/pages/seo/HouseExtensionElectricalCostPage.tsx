@@ -310,7 +310,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Steel enclosure requirement</strong> — since Amendment 3 to BS 7671 (January
+                <strong>Steel enclosure requirement</strong> — since Amendment 4 to BS 7671 (January
                 2019), new and replacement consumer units in domestic premises must have a
                 non-combustible (steel) enclosure. Plastic consumer units installed before this date
                 remain legal but cannot be replaced like-for-like with plastic.
@@ -476,7 +476,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more extension electrical work with Elec-Mate"
-          description="Create professional extension electrical quotes, issue EICs on site, and track multi-stage jobs across first fix, second fix, and testing. Join 1,000+ UK electricians. 7-day free trial."
+          description="Create professional extension electrical quotes, issue EICs on site, and track multi-stage jobs across first fix, second fix, and testing."
           icon={FileCheck2}
         />
       </>
@@ -491,10 +491,10 @@ const sections = [
 export default function HouseExtensionElectricalCostPage() {
   return (
     <GuideTemplate
-      title="House Extension Electrical Cost UK 2025 | Extension Wiring Prices"
-      description="House extension electrical installation costs in the UK for 2025. Single-storey extension £800–£2,500, double-storey £1,500–£4,000, consumer unit upgrade £400–£700. Part P, Building Regulations, and what affects the price."
+      title="House Extension Electrical Cost UK 2025 | Extension Wiring"
+      description="House extension electrical installation costs in the UK for 2025. Single-storey extension £800–£2,500, double-storey £1,500–£4,000…"
       datePublished="2025-01-01"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

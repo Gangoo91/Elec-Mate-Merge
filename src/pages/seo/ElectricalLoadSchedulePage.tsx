@@ -19,9 +19,9 @@ export default function ElectricalLoadSchedulePage() {
   return (
     <ToolTemplate
       title="Electrical Load Schedule Calculator | Free Tool"
-      description="Build a circuit-by-circuit electrical load schedule with automatic diversity and total demand calculation. Covers domestic and commercial installations to BS 7671. Free UK electrical calculator for electricians and designers."
+      description="Build a circuit-by-circuit electrical load schedule with automatic diversity, total demand, and BS 7671 Appendix A factors. For UK electricians."
       datePublished="2026-01-28"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Electrical Load Schedule', href: '/tools/electrical-load-schedule' },
@@ -95,7 +95,7 @@ export default function ElectricalLoadSchedulePage() {
           appBridge: {
             title: 'Build Load Schedules Interactively',
             description:
-              'Add circuits one by one. Elec-Mate calculates design currents, applies diversity, and totals the maximum demand in real time. Export as PDF for your project records.',
+              'Add circuits one by one. Elec-Mate calculates design currents, applies diversity, and totals the maximum demand in real time.',
             icon: ClipboardList,
           },
         },
@@ -272,7 +272,7 @@ export default function ElectricalLoadSchedulePage() {
           appBridge: {
             title: 'Diversity Applied Automatically',
             description:
-              'Elec-Mate categorises each circuit by load type and applies IET On-Site Guide Table 1A diversity factors automatically. The assessed maximum demand updates in real time as you add circuits.',
+              'Elec-Mate categorises each circuit by load type and applies IET On-Site Guide Table 1A diversity factors automatically.',
             icon: BarChart3,
           },
         },

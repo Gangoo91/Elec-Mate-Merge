@@ -598,7 +598,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete RCD certificates and EICRs with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, AI board scanning, and instant PDF export. EIC, EICR, and Minor Works certificates in one app. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -614,9 +614,9 @@ export default function RCDTypesGuidePage() {
   return (
     <GuideTemplate
       title="RCD Types UK Guide | RCCB vs RCBO vs SRCD Explained"
-      description="Complete guide to RCD types in UK electrical installations. RCCB, RCBO, SRCD and RCDM explained with BS 7671 requirements, 30mA vs 100mA vs 300mA ratings, and how to choose the right device."
+      description="Complete guide to RCD types in UK electrical installations. RCCB, RCBO, SRCD and RCDM explained with BS 7671 requirements…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Wiring Guide"

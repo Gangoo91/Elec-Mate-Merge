@@ -605,7 +605,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Bonding Conductor Size Guide BS 7671:2018+A4:2026"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with bonding test recording, AI board scanning, and instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with bonding test recording, AI board scanning, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -621,9 +621,9 @@ export default function BondingConductorsGuidePage() {
   return (
     <GuideTemplate
       title="Bonding Conductors UK Guide | Main & Supplementary Bonding"
-      description="Complete guide to bonding conductors in UK electrical installations. Main protective bonding of gas, water and oil services, supplementary bonding in bathrooms, conductor sizing, when bonding can be omitted, and common EICR bonding defects."
+      description="Complete guide to bonding conductors in UK electrical installations. Main protective bonding of gas, water and oil services…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Wiring Guide"

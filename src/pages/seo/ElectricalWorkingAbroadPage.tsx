@@ -22,7 +22,7 @@ import {
 
 const PAGE_TITLE = 'Electrician Working Abroad | UK Qualifications Overseas';
 const PAGE_DESCRIPTION =
-  'Complete guide to working abroad as a UK-qualified electrician. Which countries recognise UK electrical qualifications, visa requirements, popular destinations, earnings comparison, mutual recognition agreements, and how to transfer your skills internationally.';
+  'UK-qualified electricians working abroad: which countries recognise your quals, visas, top destinations, earnings, mutual recognition, transfers.';
 
 const breadcrumbs = [
   { label: 'Career', href: '/guides' },
@@ -194,7 +194,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Build your professional digital portfolio"
-          description="Elec-Mate stores all your qualifications, test certificates, and CPD records digitally. Export a professional PDF portfolio to submit to overseas licensing bodies. Everything in one place, always accessible."
+          description="Elec-Mate stores all your qualifications, test certificates, and CPD records digitally. Export a professional PDF portfolio to submit to overseas…"
           icon={Award}
         />
       </>
@@ -461,7 +461,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Digital qualification management for overseas applications"
-          description="Elec-Mate stores all your certificates, test results, and CPD records in one secure location. Export professional PDF documentation packs tailored for overseas licensing applications. Never lose track of an important document again."
+          description="Elec-Mate stores all your certificates, test results, and CPD records in one secure location."
           icon={FileCheck2}
         />
       </>
@@ -628,7 +628,7 @@ export default function ElectricalWorkingAbroadPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-06-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

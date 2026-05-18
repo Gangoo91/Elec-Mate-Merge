@@ -557,7 +557,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AI suggests the right observation code"
-          description="Describe a defect in plain English — 'no RCD on socket circuit in bathroom' — and Elec-Mate's AI returns the correct observation code with the matching BS 7671 regulation number. No second-guessing between C2 and C3."
+          description="Describe a defect in plain English — 'no RCD on socket circuit in bathroom' — and Elec-Mate's AI returns the correct observation code with the matching…"
           icon={Brain}
         />
       </>
@@ -633,7 +633,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Complete EICRs in half the time"
-          description="AI board scanner, voice test entry, automatic defect coding, and remedial quoting — all in one app. Join 1,000+ UK electricians using Elec-Mate for periodic inspection. 7-day free trial."
+          description="AI board scanner, voice test entry, automatic defect coding, and remedial quoting — all in one app."
           icon={FileCheck2}
         />
       </>
@@ -649,9 +649,9 @@ export default function PeriodicInspectionGuidePage() {
   return (
     <GuideTemplate
       title="Periodic Inspection Guide | EICR Testing Procedure"
-      description="Complete guide to periodic inspection and EICR testing procedure. When required, inspection intervals, test sequence differences from initial verification, sampling guidance, limitations, observation codes, and reporting."
+      description="Periodic inspection and EICR testing procedure: when required, BS 7671 intervals, observation codes, what gets tested, what doesn't, costs."
       datePublished="2025-09-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

@@ -26,7 +26,7 @@ import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
 const PAGE_TITLE = 'Electrical Testing Sequence | GN3 Order Explained | Elec-Mate';
 const PAGE_DESCRIPTION =
-  'Complete guide to the correct electrical testing sequence from IET Guidance Note 3 (9th Edition). Continuity, insulation resistance, polarity, earth electrode resistance, loop impedance, PFC, and functional testing including RCDs explained.';
+  'Correct electrical testing sequence per IET GN3 (9th Ed): continuity, IR, polarity, electrode resistance, loop impedance, PFC, functional + RCDs.';
 
 const faqs = [
   {
@@ -96,7 +96,7 @@ const features = [
     icon: ShieldCheck,
     title: 'BS 7671:2018+A4:2026',
     description:
-      'All test limits, Zs values, and compliance checks are built to the current 18th Edition including Amendment 3. Always up to date.',
+      'All test limits, Zs values, and compliance checks are built to the current 18th Edition including Amendment 4. Always up to date.',
   },
 ];
 
@@ -105,7 +105,7 @@ const articleSchema = {
   headline: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
   datePublished: '2025-03-15',
-  dateModified: '2026-02-10',
+  dateModified: '2026-05-18',
   author: {
     '@type': 'Organization',
     name: 'Elec-Mate',

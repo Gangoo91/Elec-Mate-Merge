@@ -5,14 +5,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // published 15 April 2026), the IET On-Site Guide and TIA-568 (US analogue).
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const structuredCablingBsEn50173Config: GeneratedGuideConfig = {
   pagePath: '/guides/structured-cabling-bs-en-50173-electricians',
   title:
-    'Structured Cabling BS EN 50173 — UK Electrician Guide to Generic Cabling | Elec-Mate',
+    'Structured Cabling BS EN 50173 — UK Electrician Guide to',
   description:
-    'BS EN 50173 structured cabling explained for UK electricians — the six-part standard, hierarchical CD/BD/FD/TO topology, channel vs permanent link testing, the 100 m rule, Cat6/6a/7/8 categories, fibre versus copper, BS EN 50174 installation practice, and BS 7671 Section 528 segregation for data and power.',
+    'BS EN 50173 structured cabling explained for UK electricians — the six-part standard, hierarchical CD/BD/FD/TO topology…',
   datePublished: published,
   dateModified: modified,
   readingTime: 18,
@@ -565,7 +565,7 @@ export const structuredCablingBsEn50173Config: GeneratedGuideConfig = {
     {
       href: '/guides/bs-en-50174-data-cable-installation',
       title: 'BS EN 50174 — Data Cable Installation Practice',
-      description: 'The installation practice companion to BS EN 50173 — bend radius, pull tension, untwist limits, containment and on-site discipline that gets cabling certified.',
+      description: 'The installation practice companion to BS EN 50173 — bend radius, pull tension, untwist limits…',
       icon: 'BookOpen',
       category: 'Guide',
     },
@@ -586,7 +586,7 @@ export const structuredCablingBsEn50173Config: GeneratedGuideConfig = {
     {
       href: '/guides/ip-camera-poe-installation-uk',
       title: 'IP Camera PoE Installation (UK)',
-      description: 'Practical PoE camera installation for UK electricians — Cat6a horizontal cabling, outdoor-rated routing and the BS EN 50173 channel rules in a CCTV context.',
+      description: 'Practical PoE camera installation for UK electricians — Cat6a horizontal cabling…',
       icon: 'Cable',
       category: 'Guide',
     },

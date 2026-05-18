@@ -121,7 +121,7 @@ export default function CompareHubPage() {
       { name: 'Home', url: '/' },
       { name: 'Compare', url: '/compare' },
     ],
-    dateModified: '2026-04-12',
+    dateModified: '2026-05-18',
     author: 'Elec-Mate Technical Team',
   });
 

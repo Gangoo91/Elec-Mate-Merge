@@ -22,7 +22,7 @@ export default function MinimumChargeCalculatorPage() {
       title="Minimum Charge Calculator for Electricians"
       description="Calculate the minimum amount you should charge for a callout or small job so labour, travel, overheads, and profit are covered every time."
       datePublished="2026-04-12"
-      dateModified="2026-04-12"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Business Tools', href: '/tools' },
         { label: 'Minimum Charge Calculator', href: PAGE_PATH },

@@ -588,7 +588,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage emergency lighting testing with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site electrical certification. Issue BS 5266-1 emergency lighting certificates, EICR reports, and minor works notices on your phone with instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site electrical certification. Issue BS 5266-1 emergency lighting certificates, EICR reports…"
           icon={FileCheck2}
         />
       </>
@@ -604,9 +604,9 @@ export default function EmergencyLightingTestingPage() {
   return (
     <GuideTemplate
       title="Emergency Lighting Testing Guide UK | Monthly & Annual Tests"
-      description="Complete guide to emergency lighting testing in the UK. BS 5266-1 requirements — monthly function test (1 minute), annual full-duration test (1, 2, or 3 hours), log book requirements, what to do if a luminaire fails, and competent person obligations."
+      description="Complete guide to emergency lighting testing in the UK. BS 5266-1 requirements — monthly function test (1 minute), annual full-duration test (1, 2…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

@@ -513,8 +513,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Grow your solar installation business in Leeds with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate to quote solar PV and EV charger jobs, manage certificates, and run their business from their phone. 7-day free trial."
+          title="Grow your solar installation business in Leeds with"
+          description="Join 1,000+ UK electricians using Elec-Mate to quote solar PV and EV charger jobs, manage certificates, and run their business from their phone."
           icon={Sun}
         />
       </>
@@ -530,9 +530,9 @@ export default function SolarPanelInstallationLeedsPage() {
   return (
     <GuideTemplate
       title="Solar Panel Installation Leeds 2025 | Solar PV Yorkshire"
-      description="Complete guide to solar panel installation in Leeds and West Yorkshire. Costs, savings, payback periods, grants, Smart Export Guarantee, MCS certification, and system design for Yorkshire homes."
+      description="Complete guide to solar panel installation in Leeds and West Yorkshire. Costs, savings, payback periods, grants, Smart Export Guarantee…"
       datePublished="2025-01-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Solar Guide"

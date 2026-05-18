@@ -707,9 +707,9 @@ export default function SolarPanelInstallationEdinburghPage() {
   return (
     <GuideTemplate
       title="Solar Panel Installation Edinburgh 2025 | Solar PV Scotland"
-      description="Solar panel installation in Edinburgh 2025: Scottish Building Standards, World Heritage Site planning rules, costs £5,500–£8,000, irradiance ~850 kWh/kWp/year, Smart Export Guarantee, and MCS certification guide."
+      description="Solar panel installation in Edinburgh 2025: Scottish Building Standards, World Heritage Site planning rules, costs £5,500–£8,000…"
       datePublished="2025-01-01"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Solar Guide"

@@ -486,7 +486,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Manage solar battery storage jobs with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, job management, and certification. Issue MCS installation certificates, EICs, and Electrical Installation Certificates on your phone. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, job management, and certification. Issue MCS installation certificates, EICs…"
           icon={Battery}
         />
       </>
@@ -501,10 +501,10 @@ const sections = [
 export default function SolarBatteryStorageInstallationPage() {
   return (
     <GuideTemplate
-      title="Solar Battery Storage Installation UK | Home Battery Guide 2025"
-      description="Complete guide to solar battery storage installation in the UK. AC-coupled vs DC-coupled, popular batteries (Tesla Powerwall, Givenergy, Growatt), sizing, costs £2,000–£6,000, MCS requirement, and round-trip efficiency explained."
+      title="Solar Battery Storage Installation UK | Home Battery Guide"
+      description="Complete guide to solar battery storage installation in the UK. AC-coupled vs DC-coupled, popular batteries (Tesla Powerwall, Givenergy, Growatt)…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Solar Battery Guide"

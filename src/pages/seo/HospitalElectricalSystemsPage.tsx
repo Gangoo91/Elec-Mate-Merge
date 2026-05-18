@@ -300,7 +300,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Document complex healthcare installations"
-          description="Elec-Mate's certificate templates support multi-board installations, medical IT system documentation, and essential supply categorisation. Complete the paperwork on site, not at a desk three days later."
+          description="Elec-Mate's certificate templates support multi-board installations, medical IT system documentation, and essential supply categorisation."
           icon={Activity}
         />
       </>
@@ -620,7 +620,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Professional healthcare EICRs on your phone"
-          description="Join 1,000+ UK electricians creating professional certificates with AI observation coding, multi-board support, and instant PDF delivery. Built for complex installations. 7-day free trial."
+          description="Join 1,000+ UK electricians creating professional certificates with AI observation coding, multi-board support, and instant PDF delivery."
           icon={FileCheck2}
         />
       </>
@@ -636,9 +636,9 @@ export default function HospitalElectricalSystemsPage() {
   return (
     <GuideTemplate
       title="Hospital Electrical Systems | HTM 06-01 Guide"
-      description="Complete guide to hospital electrical systems under HTM 06-01 and BS 7671 Section 710. Essential supply categories, medical IT systems (IPS), residual current monitoring (RCM), medical location groups, and testing intervals for healthcare facilities."
+      description="Complete guide to hospital electrical systems under HTM 06-01 and BS 7671 Section 710. Essential supply categories, medical IT systems (IPS)…"
       datePublished="2025-09-05"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Healthcare Guide"

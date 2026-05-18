@@ -25,7 +25,7 @@ import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
 const PAGE_TITLE = 'IPAF Training Course Online | MEWP Safety | Elec-Mate';
 const PAGE_DESCRIPTION =
-  'Study IPAF (International Powered Access Federation) training online. MEWP categories, pre-use checks, safe operation, emergency procedures. Practice with mock exams and AI-powered study tools.';
+  'IPAF training online: MEWP categories, pre-use checks, safe operation, emergency procedures. Mock exams + AI-powered study tools.';
 
 const faqs = [
   {
@@ -71,7 +71,7 @@ const features = [
     icon: ShieldCheck,
     title: 'Pre-Use Inspection Checklists',
     description:
-      'Interactive checklists covering every item in the IPAF pre-use inspection sequence. Practise identifying defects and understanding when to remove a machine from service.',
+      'Interactive checklists covering every item in the IPAF pre-use inspection sequence. Practise identifying defects and understanding when to remove a…',
   },
   {
     icon: AlertTriangle,

@@ -501,7 +501,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage your extension jobs with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for EIC certificates, quoting, job management, and Part P compliance. Complete more jobs per day with less paperwork. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for EIC certificates, quoting, job management, and Part P compliance."
           icon={FileCheck2}
         />
       </>
@@ -516,10 +516,10 @@ const sections = [
 export default function HouseExtensionElectricalGuidePage() {
   return (
     <GuideTemplate
-      title="House Extension Electrical Guide UK | Wiring a House Extension"
-      description="Complete guide to electrical work in a house extension. Circuit planning, consumer unit capacity check, ring main extension vs new circuit, Part P notification, inspection and testing, and EIC certificate requirements under BS 7671."
+      title="House Extension Electrical Guide UK | Wiring a House"
+      description="Complete guide to electrical work in a house extension. Circuit planning, consumer unit capacity check, ring main extension vs new circuit…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Extension Guide"

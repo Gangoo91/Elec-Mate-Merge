@@ -300,7 +300,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="First aid training courses on Elec-Mate"
-          description="Complete your first aid at work qualification through the Elec-Mate study centre. Courses cover CPR, AED use, electrical shock response, and burns treatment — all tailored specifically for electricians working on site."
+          description="Complete your first aid at work qualification through the Elec-Mate study centre. Courses cover CPR, AED use, electrical shock response…"
           icon={Heart}
         />
       </>
@@ -480,7 +480,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Generate RIDDOR-ready incident reports with Elec-Mate"
-          description="Elec-Mate's AI Health and Safety agent helps you document incidents, generate risk assessments, and create RIDDOR-compliant reports. Record what happened, when, and why — directly from your phone on site."
+          description="Elec-Mate's AI Health and Safety agent helps you document incidents, generate risk assessments, and create RIDDOR-compliant reports."
           icon={FileText}
         />
       </>
@@ -559,9 +559,9 @@ export default function FirstAidElectricalShockPage() {
   return (
     <GuideTemplate
       title="First Aid for Electrical Shock | Emergency Response"
-      description="Emergency first aid guide for electrical shock incidents. Covers danger assessment, supply isolation, CPR, burns treatment, when to call 999, and RIDDOR reporting requirements for UK electricians."
+      description="Emergency first aid guide for electrical shock incidents. Covers danger assessment, supply isolation, CPR, burns treatment, when to call 999…"
       datePublished="2025-06-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

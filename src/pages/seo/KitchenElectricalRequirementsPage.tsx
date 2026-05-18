@@ -700,7 +700,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certify kitchen electrical work faster with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion, Part P certification, and instant quoting. Issue certificates and quotes before you leave the job. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion, Part P certification, and instant quoting."
           icon={FileCheck2}
         />
       </>
@@ -715,10 +715,10 @@ const sections = [
 export default function KitchenElectricalRequirementsPage() {
   return (
     <GuideTemplate
-      title="Kitchen Electrical Requirements UK | Kitchen Wiring Regulations Guide"
-      description="Complete guide to kitchen electrical requirements in the UK. Socket positions (300mm from sink), cooker circuit specification, dishwasher wiring, RCD protection requirements, Part P notification, and 2026 costs for kitchen electrical work."
+      title="Kitchen Electrical Requirements UK | Kitchen Wiring"
+      description="Complete guide to kitchen electrical requirements in the UK. Socket positions (300mm from sink), cooker circuit specification, dishwasher wiring…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Wiring Regulations Guide"

@@ -1,11 +1,11 @@
 import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuidePage';
 
 const published = '2026-04-12';
-const modified = '2026-04-12';
+const modified = '2026-05-18';
 
 export const rcboKeepsTrippingCommonCausesConfig: GeneratedGuideConfig = {
   pagePath: '/guides/rcbo-keeps-tripping-common-causes',
-  title: 'RCBO Keeps Tripping Common Causes | Electrician Guide | Elec-Mate',
+  title: 'RCBO Keeps Tripping Common Causes | Electrician Guide',
   description:
     'The most common reasons an RCBO keeps tripping, how to narrow the cause down quickly, and what to check before turning it into a quote or certificate.',
   datePublished: published,
@@ -94,6 +94,31 @@ export const rcboKeepsTrippingCommonCausesConfig: GeneratedGuideConfig = {
           type: 'paragraph',
           text:
             'When the job becomes a formal report or a follow-on remedial visit, move the paperwork into the [digital EICR certificate flow](/tools/eicr-certificate) or turn it into a clear [consumer unit upgrade quote](/guides/consumer-unit-upgrade-cost-guide) rather than leaving it as a loose note.',
+        },
+      ],
+    },
+    {
+      id: 'on-site-tests-to-narrow-it-down',
+      heading: 'On-site tests that narrow it down fast',
+      blocks: [
+        {
+          type: 'paragraph',
+          text:
+            'When an RCBO keeps tripping, the temptation is to swap the device and move on. Most of the time the RCBO is fine — the fault is downstream, intermittent, or shared with a neighbouring circuit. A short, structured test sequence will narrow the cause in fifteen minutes rather than two callbacks.',
+        },
+        {
+          type: 'paragraph',
+          text:
+            'Start by isolating the circuit and disconnecting any load. Energise the RCBO alone. If it holds, the fault is on the load side. Reconnect each piece of fixed wiring in turn, and finally each appliance, watching for the trip. If the RCBO trips even with no load connected, the device itself is suspect — but verify by swapping to a known-good RCBO of the same rating before condemning.',
+        },
+        {
+          type: 'list',
+          items: [
+            'Insulation resistance test L-E and N-E on the disconnected circuit. Anything below 1 MΩ is your suspect.',
+            'Check for cumulative earth leakage by measuring with a clamp meter on the protective conductor.',
+            'Look for shared neutrals between circuits — a borrowed neutral will trip on imbalance, not earth fault.',
+            'Test at 0° and 180° phase angle — some faults only trigger on one half-cycle, especially with switched-mode loads.',
+          ],
         },
       ],
     },

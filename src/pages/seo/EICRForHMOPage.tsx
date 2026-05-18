@@ -558,7 +558,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete HMO EICRs faster with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion. AI board scanning, voice test entry, and instant PDF export. Complete complex HMO EICRs without evening paperwork. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion. AI board scanning, voice test entry, and instant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -573,10 +573,10 @@ const sections = [
 export default function EICRForHMOPage() {
   return (
     <GuideTemplate
-      title="EICR for HMO Properties UK | Houses in Multiple Occupation Electrical"
-      description="Mandatory EICR requirements for HMO properties explained. Licensed HMO conditions, what inspectors check, common C2 codes, remediation costs, and penalties of up to £30,000 for non-compliance."
+      title="EICR for HMO Properties UK | Houses in Multiple Occupation"
+      description="Mandatory EICR requirements for HMO properties explained. Licensed HMO conditions, what inspectors check, common C2 codes, remediation costs…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="HMO Guide"

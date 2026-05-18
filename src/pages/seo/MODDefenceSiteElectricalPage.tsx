@@ -304,7 +304,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical certificates for MOD site work"
-          description="Elec-Mate's EIC and EICR tools produce the professional test certificates and inspection reports required for MOD site electrical documentation packages. Offline-capable. 7-day free trial."
+          description="Elec-Mate's EIC and EICR tools produce the professional test certificates and inspection reports required for MOD site electrical documentation packages."
           icon={FileCheck2}
         />
       </>
@@ -386,10 +386,10 @@ const sections = [
 export default function MODDefenceSiteElectricalPage() {
   return (
     <GuideTemplate
-      title="MOD Defence Site Electrical Work UK | BPSS, SC, Def Stan 61-12"
-      description="Complete guide to electrical work on MOD defence estates in the UK. Security clearance (BPSS, SC, DV), Def Stan 61-12 standard, SQEP requirements, DIO frameworks, and pay rates of £45–£80+/hr on barracks, airfields, naval bases, and research establishments."
+      title="MOD Defence Site Electrical Work UK | BPSS, SC, Def Stan"
+      description="Complete guide to electrical work on MOD defence estates in the UK. Security clearance (BPSS, SC, DV), Def Stan 61-12 standard, SQEP requirements…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Specialist Guide"

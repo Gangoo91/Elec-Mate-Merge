@@ -86,7 +86,7 @@ const faqs = [
 const relatedPages: RelatedPage[] = [
   {
     href: '/guides/city-guilds-2365-unit-202',
-    title: 'C&G 2365 Unit 202 — Principles of Building Services Engineering',
+    title: 'C&G 2365 Unit 202 — Principles of Building Services',
     description: 'Ohm\'s law, electrical principles, AC/DC, and SI units for the Unit 202 exam.',
     icon: Zap,
     category: 'Guide',
@@ -347,7 +347,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Generate risk assessments with AI on site"
-          description="Elec-Mate's AI creates site-specific method statements and risk assessments for electrical installation work. COSHH, manual handling, working at height, and electrical hazards covered. Professional PDF output."
+          description="Elec-Mate's AI creates site-specific method statements and risk assessments for electrical installation work."
           icon={ShieldCheck}
         />
       </>
@@ -438,8 +438,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Study Unit 201 with AI-powered flashcards and practice questions"
-          description="Elec-Mate's apprentice training hub includes Unit 201 study materials, AI-generated practice questions, and flashcards for HASAWA, COSHH, RIDDOR, and risk assessment. Study on your phone between jobs."
+          title="Study Unit 201 with AI-powered flashcards and practice"
+          description="Elec-Mate's apprentice training hub includes Unit 201 study materials, AI-generated practice questions, and flashcards for HASAWA, COSHH, RIDDOR…"
           icon={GraduationCap}
         />
       </>
@@ -454,10 +454,10 @@ const sections = [
 export default function CityGuilds2365Unit201Page() {
   return (
     <GuideTemplate
-      title="City & Guilds 2365 Unit 201 — Health and Safety | Revision Guide UK"
-      description="Complete revision guide for City & Guilds 2365 Unit 201 — Health and Safety in Building Services Engineering. HASAWA 1974, COSHH, RIDDOR, five-step risk assessment, PPE, exam structure, and revision tips for electrical apprentices."
+      title="City & Guilds 2365 Unit 201 — Health and Safety | Revision"
+      description="C&G 2365 Unit 201 revision: Health and Safety in Building Services Engineering. Learning outcomes, key terms, mock questions for UK apprentices."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

@@ -90,13 +90,13 @@ const features = [
     icon: BarChart3,
     title: 'Complete Asset Register',
     description:
-      'Build and maintain a digital register of all tested appliances. Track asset numbers, locations, test history, and next test dates across all your client sites.',
+      'Build and maintain a digital register of all tested appliances. Track asset numbers, locations, test history…',
   },
   {
     icon: ShieldCheck,
     title: 'IET Code of Practice Compliant',
     description:
-      'Pass/fail criteria aligned with the IET Code of Practice for In-Service Inspection and Testing of Electrical Equipment (5th Edition). Earth continuity, insulation resistance, and leakage limits built in.',
+      'Pass/fail criteria aligned with the IET Code of Practice for In-Service Inspection and Testing of Electrical Equipment (5th Edition).',
   },
   {
     icon: Clock,
@@ -120,7 +120,7 @@ const features = [
     icon: Briefcase,
     title: 'Part of 16 Certificate Types',
     description:
-      'PAT testing is one of eight certificate types in Elec-Mate, alongside EIC, EICR, Minor Works, Emergency Lighting, Fire Alarm, EV Charger, and Solar PV certificates.',
+      'PAT testing is one of eight certificate types in Elec-Mate, alongside EIC, EICR, Minor Works, Emergency Lighting, Fire Alarm, EV Charger…',
   },
 ];
 
@@ -130,7 +130,7 @@ const softwareAppSchema = {
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'Web, iOS, Android',
   description:
-    'Digital PAT testing records on your phone. Visual inspection, earth continuity, insulation resistance, and lead polarity. IET Code of Practice compliant. Part of 16 certificate types.',
+    'Digital PAT testing records on your phone. Visual inspection, earth continuity, insulation resistance, and lead polarity. IET Code of Practice compliant.',
   offers: {
     '@type': 'Offer',
     price: '0',
@@ -174,7 +174,7 @@ export default function PATTestingPage() {
   useSEO({
     title: 'PAT Testing App | Portable Appliance Testing',
     description:
-      'Digital PAT testing records on your phone. Visual inspection, earth continuity, insulation resistance, and lead polarity. IET Code of Practice compliant. Part of 16 certificate types.',
+      'Digital PAT testing records on your phone. Visual inspection, earth continuity, insulation resistance, and lead polarity. IET Code of Practice compliant.',
   });
 
   return (

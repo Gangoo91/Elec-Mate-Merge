@@ -152,7 +152,7 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          (the IET Wiring Regulations, 18th Edition with Amendment 3), supplemented by Approved
+          (the IET Wiring Regulations, 18th Edition with Amendment 4), supplemented by Approved
           Document P of the Building Regulations for England and Wales. Between them, these
           documents cover cable selection, burial depths, IP ratings, RCD protection, SELV/PELV
           options, and notification requirements.
@@ -608,7 +608,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Design and certify garden lighting faster"
-          description="Cable sizing, voltage drop checks, AI regulations lookup, and digital certificates — all on your phone. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial."
+          description="Cable sizing, voltage drop checks, AI regulations lookup, and digital certificates — all on your phone. Join 1,000+ UK electricians using Elec-Mate."
           icon={Sun}
         />
       </>
@@ -624,9 +624,9 @@ export default function GardenLightingRegsPage() {
   return (
     <GuideTemplate
       title="Garden Lighting Regulations | Outdoor Electrical Guide"
-      description="Complete guide to garden lighting regulations for UK electricians. IP ratings, SWA cable burial depths, RCD protection, SELV/PELV options, Part P notification requirements, and common installation mistakes to avoid."
+      description="Complete guide to garden lighting regulations for UK electricians. IP ratings, SWA cable burial depths, RCD protection, SELV/PELV options…"
       datePublished="2025-05-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations Guide"

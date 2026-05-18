@@ -5,14 +5,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // CDM 2015 statutory framework and the Electricity at Work Regulations 1989.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const ramsForFullRewireConfig: GeneratedGuideConfig = {
   pagePath: '/guides/rams-for-full-rewire',
   title:
-    'RAMS for a Full House Rewire — UK Method Statement Template | Elec-Mate',
+    'RAMS for a Full House Rewire — UK Method Statement Template',
   description:
-    'Risk assessment and method statement for a full house rewire in the UK. Hazards, CDM 2015 duties, asbestos awareness, phased isolation, and a downloadable RAMS structure aligned to BS 7671:2018+A4:2026 and the Electricity at Work Regulations 1989.',
+    'Risk assessment and method statement for a full house rewire in the UK. Hazards, CDM 2015 duties, asbestos awareness, phased isolation…',
   datePublished: published,
   dateModified: modified,
   readingTime: 14,

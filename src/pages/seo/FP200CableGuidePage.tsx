@@ -20,9 +20,9 @@ export default function FP200CableGuidePage() {
   return (
     <GuideTemplate
       title="FP200 Cable Guide | Fire Performance Cable UK"
-      description="Complete guide to FP200 and fire performance cables for UK electrical installations. Fire survival ratings, where fire-resistant cable is required (fire alarm, emergency lighting), installation methods, testing, BS EN 50200, and comparison with MICC cable."
+      description="FP200 + fire performance cable guide for UK installations: fire survival ratings, BS EN 50200, installation rules, terminating, sizing, sourcing."
       datePublished="2025-06-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'FP200 Cable', href: '/guides/fp200-cable-guide' },
@@ -250,7 +250,7 @@ export default function FP200CableGuidePage() {
               </div>
               <SEOAppBridge
                 title="Fire Alarm Certificate Generator"
-                description="Elec-Mate generates BS 5839 fire alarm certificates with cable type selection (FP200, MICC, standard), system category, zone details, and complete test results. Digital forms ensure nothing is missed on fire-critical installations."
+                description="Elec-Mate generates BS 5839 fire alarm certificates with cable type selection (FP200, MICC, standard), system category, zone details…"
                 icon={FileText}
               />
             </>
@@ -469,7 +469,7 @@ export default function FP200CableGuidePage() {
               </div>
               <SEOAppBridge
                 title="Emergency Lighting Certificate Forms"
-                description="Elec-Mate generates BS 5266 emergency lighting certificates with luminaire schedules, duration test results, illumination levels, and cable type documentation. Complete digital certification for fire-critical lighting installations."
+                description="Elec-Mate generates BS 5266 emergency lighting certificates with luminaire schedules, duration test results, illumination levels…"
                 icon={ClipboardCheck}
               />
             </>

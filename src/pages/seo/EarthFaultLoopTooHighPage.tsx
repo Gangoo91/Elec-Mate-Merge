@@ -23,7 +23,7 @@ import {
 
 const PAGE_TITLE = 'Earth Fault Loop Impedance Too High | What to Do';
 const PAGE_DESCRIPTION =
-  'Earth fault loop impedance (Zs) too high? Expert guide covering what "too high" means (exceeding BS 7671 Table 41.3/41.4 maximums), causes including poor earth connection, long cable runs, high Ze, loose connections, corroded earth, and solutions including improving earth, upsizing CPC, supplementary bonding, changing protective device, and adding a local earth rod.';
+  'Zs too high? Why it exceeds BS 7671 Tables 41.3/41.4 max values, common causes (poor earth, long runs, high Ze, loose joints), and fixes.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -139,7 +139,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Zs Lookup Calculator"
-          description="Enter the protective device type and rating and Elec-Mate instantly shows the maximum permitted Zs from BS 7671 Table 41.3 or 41.4, with the GN3 0.8 correction factor already applied. No need to carry the tables — verify Zs compliance on site in seconds."
+          description="Enter the protective device type and rating and Elec-Mate instantly shows the maximum permitted Zs from BS 7671 Table 41.3 or 41.4…"
           icon={Calculator}
         />
       </>
@@ -336,7 +336,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Earth Loop Impedance Calculator"
-          description="Enter Ze and R1+R2, select the protective device, and Elec-Mate instantly tells you whether Zs is within the BS 7671 maximum. It applies the GN3 0.8 correction factor automatically and flags any non-compliance. Verify compliance before leaving site."
+          description="Enter Ze and R1+R2, select the protective device, and Elec-Mate instantly tells you whether Zs is within the BS 7671 maximum."
           icon={Calculator}
         />
       </>
@@ -401,12 +401,12 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Zs Lookup Calculator"
-          description="Select any protective device type (BS 88 fuse, BS 3036 fuse, BS 1361 fuse, Type B/C/D MCB) and rating, and Elec-Mate instantly displays the maximum permitted Zs from BS 7671 Table 41.3 or 41.4. The GN3 0.8 temperature correction is applied automatically. No need to carry reference tables."
+          description="Select any protective device type (BS 88 fuse, BS 3036 fuse, BS 1361 fuse, Type B/C/D MCB) and rating…"
           icon={Calculator}
         />
         <SEOAppBridge
           title="R1+R2 Calculator"
-          description="Enter the cable type, conductor size, and cable length, and Elec-Mate calculates the expected R1+R2 value. Add the measured Ze and the app gives you the predicted Zs — useful for verifying designs before installation and for checking whether proposed remedial work will bring Zs within limits."
+          description="Enter the cable type, conductor size, and cable length, and Elec-Mate calculates the expected R1+R2 value."
           icon={Activity}
         />
         <p>
@@ -477,7 +477,7 @@ export default function EarthFaultLoopTooHighPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-09-20"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting"

@@ -251,7 +251,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote your London jobs accurately"
-          description="Elec-Mate's quoting app lets you build professional, itemised quotes in minutes — materials, labour, testing, certificates. Win more jobs with polished estimates sent directly from your phone."
+          description="Elec-Mate's quoting app lets you build professional, itemised quotes in minutes — materials, labour, testing, certificates."
           icon={Briefcase}
         />
       </>
@@ -477,7 +477,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your London electrical business more efficiently"
-          description="Elec-Mate helps London electricians quote accurately, complete certificates on site, and manage jobs on the go. Join 1,000+ UK electricians using the app to save hours each week."
+          description="Elec-Mate helps London electricians quote accurately, complete certificates on site, and manage jobs on the go."
           icon={Wrench}
         />
       </>
@@ -493,10 +493,10 @@ export default function ElectricianSalaryLondonPage() {
   return (
     <GuideTemplate
       localArea="Salary London"
-      title="Electrician Salary London 2026 | Employed & Self-Employed Rates"
-      description="Realistic electrician salary figures for London in 2026. Employed rates £38,000–£65,000, self-employed £55,000–£90,000, specialist roles £70,000+. Why London rates are higher and how to maximise your earnings."
+      title="Electrician Salary London 2026 | Employed & Self-Employed"
+      description="Realistic electrician salary figures for London in 2026. Employed rates £38,000–£65,000, self-employed £55,000–£90,000, specialist roles £70,000+."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Salary Guide"

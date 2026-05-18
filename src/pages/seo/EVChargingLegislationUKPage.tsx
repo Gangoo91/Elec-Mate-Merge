@@ -520,8 +520,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Building Code EV Charging 2026 Compliance"
-          description="Building Regulations for EV charging installations updated 2026. Understand Part S requirements, certification, and inspection standards for UK electricians."
+          title="Building Code Electric Vehicle Charging 2026"
+          description="Building code EV charging requirements updated for 2026. Part S compliance, certification…"
           icon={FileCheck2}
         />
       </>
@@ -536,10 +536,10 @@ const sections = [
 export default function EVChargingLegislationUKPage() {
   return (
     <GuideTemplate
-      title="EV Charging Regulations UK 2025 | Laws & Standards for EV Chargers"
-      description="Complete guide to EV charging legislation in the UK. Electric Vehicles (Smart Charge Points) Regulations 2021, Building Regulations Part S, BS 7671 Section 722, IET Code of Practice, and Public Charge Point Regulations 2023 — all explained for electricians and businesses."
+      title="EV Charging Regulations UK 2025 | Laws & Standards for EV"
+      description="Complete guide to EV charging legislation in the UK. Electric Vehicles (Smart Charge Points) Regulations 2021, Building Regulations Part S…"
       datePublished="2025-01-01"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EV Legislation Guide"

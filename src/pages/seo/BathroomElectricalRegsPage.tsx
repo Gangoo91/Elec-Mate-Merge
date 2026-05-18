@@ -16,9 +16,9 @@ export default function BathroomElectricalRegsPage() {
   return (
     <GuideTemplate
       title="Bathroom Electrical Regulations UK | BS 7671 Zones"
-      description="Complete guide to bathroom electrical regulations under BS 7671 Part 7 Section 701. Bathroom zones (0, 1, 2, outside zones), IP ratings, supplementary bonding, RCD protection, SELV requirements, shaver sockets, extractor fans, shower circuits, and underfloor heating."
+      description="Complete guide to bathroom electrical regulations under BS 7671 Part 7 Section 701. Bathroom zones (0, 1, 2, outside zones), IP ratings…"
       datePublished="2025-04-20"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         {
@@ -466,7 +466,7 @@ export default function BathroomElectricalRegsPage() {
               </div>
               <SEOAppBridge
                 title="EICR and EIC Forms for Bathroom Installations"
-                description="Elec-Mate's EICR and EIC certificate forms include bathroom-specific fields — zone identification, IP ratings, supplementary bonding status, RCD protection, and SELV circuit documentation. The AI regulations lookup explains zone requirements as you inspect."
+                description="Elec-Mate's EICR and EIC certificate forms include bathroom-specific fields — zone identification, IP ratings, supplementary bonding status…"
                 icon={FileText}
               />
             </>

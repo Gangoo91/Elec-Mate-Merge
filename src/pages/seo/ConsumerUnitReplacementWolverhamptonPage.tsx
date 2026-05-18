@@ -41,7 +41,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Consumer unit replacement in Wolverhampton typically costs £400 to £800 for a standard domestic installation, including parts and labour.',
-  'Since 2016, Amendment 3 to BS 7671:2008 requires all new and replacement consumer units in domestic premises to have a metal enclosure — plastic consumer units are no longer compliant for new installations.',
+  'Since 2016, Amendment 4 to BS 7671:2008 requires all new and replacement consumer units in domestic premises to have a metal enclosure — plastic consumer units are no longer compliant for new installations.',
   'A consumer unit replacement must be notified to Wolverhampton City Council Building Control as Part P electrical work, or carried out by a registered competent person who self-certifies.',
   'RCD protection is mandatory on socket-outlet circuits under Regulation 411.3.3 of BS 7671. A modern dual-RCD or RCBO consumer unit provides this protection.',
   'Rewireable fuses, old MCB-only boards, and split-load boards without RCD protection on socket circuits are all indications that replacement is overdue.',
@@ -62,7 +62,7 @@ const faqs = [
   {
     question: 'Do I need a metal consumer unit?',
     answer:
-      'Yes — for all domestic consumer unit replacements and new installations, a metal enclosure has been mandatory since January 2016 under Amendment 3 to BS 7671:2008 (17th Edition). This requirement was carried forward into BS 7671:2018 (18th Edition) and remains in force under BS 7671:2018+A4:2026. The metal enclosure provides arc fault containment in the event of an internal fault. Plastic consumer units installed before 2016 do not need to be immediately replaced but cannot be used for new or replacement work.',
+      'Yes — for all domestic consumer unit replacements and new installations, a metal enclosure has been mandatory since January 2016 under Amendment 4 to BS 7671:2008 (17th Edition). This requirement was carried forward into BS 7671:2018 (18th Edition) and remains in force under BS 7671:2018+A4:2026. The metal enclosure provides arc fault containment in the event of an internal fault. Plastic consumer units installed before 2016 do not need to be immediately replaced but cannot be used for new or replacement work.',
   },
   {
     question: 'How long does a consumer unit replacement take in Wolverhampton?',
@@ -220,7 +220,7 @@ const sections = [
               <span>
                 <strong>Plastic enclosure</strong> — all consumer unit replacements since January
                 2016 require a metal enclosure. A plastic consumer unit installed after this date is
-                non-compliant with BS 7671 Amendment 3 requirements.
+                non-compliant with BS 7671 Amendment 4 requirements.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -250,7 +250,7 @@ const sections = [
     content: (
       <>
         <p>
-          Amendment 3 to BS 7671:2008, which came into force on 1 January 2016, introduced
+          Amendment 4 to BS 7671:2008, which came into force on 1 January 2016, introduced
           Regulation 421.1.201 requiring that consumer units and similar switchgear assemblies in
           domestic premises have an enclosure made of non-combustible material. In practice, this
           means a metal enclosure. This requirement was carried forward into BS 7671:2018 (18th
@@ -538,9 +538,9 @@ export default function ConsumerUnitReplacementWolverhamptonPage() {
   return (
     <GuideTemplate
       title="Consumer Unit Replacement Wolverhampton | Fuse Box Upgrade"
-      description="Consumer unit replacement in Wolverhampton — costs £400–£800, metal enclosures mandatory since 2016, Part P notification required. Find a qualified electrician, understand the process, and get your EIC on site."
+      description="Consumer unit replacement in Wolverhampton — costs £400–£800, metal enclosures mandatory since 2016, Part P notification required."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Electrician Guide"

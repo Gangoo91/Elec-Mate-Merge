@@ -5,12 +5,12 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // AFDD requirements, prohibitions and exemptions match the canonical text.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const a4AFDDChangesConfig: GeneratedGuideConfig = {
   pagePath: '/guides/bs-7671-a4-2026-afdd-changes',
   title:
-    'BS 7671 A4:2026 — AFDD Changes Explained (Item 4.23 + Test Column 30) | Elec-Mate',
+    'BS 7671 A4:2026 — AFDD Changes Explained (Item 4.23 + Test',
   description:
     'Amendment 4 added AFDD (Arc Fault Detection Device) inspection item 4.23 and EICR test results column 30. What\'s mandatory, what\'s prohibited (medical IT, EV charging exemption), what evidence inspectors need and the operational test.',
   datePublished: published,

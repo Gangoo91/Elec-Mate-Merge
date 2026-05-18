@@ -1,0 +1,1997 @@
+{
+  "date": "2026-05-16",
+  "pages": [
+    {
+      "slug": "/",
+      "impressions": 36,
+      "clicks": 6,
+      "ctr": 0.16666666666666666,
+      "position": 11
+    },
+    {
+      "slug": "/guides/electrical-symbols-chart",
+      "impressions": 313,
+      "clicks": 4,
+      "ctr": 0.012779552715654952,
+      "position": 8.795527156549522
+    },
+    {
+      "slug": "/tools/busbar-sizing-calculator",
+      "impressions": 104,
+      "clicks": 3,
+      "ctr": 0.028846153846153848,
+      "position": 8.317307692307693
+    },
+    {
+      "slug": "/guides/iet-code-of-practice-ev",
+      "impressions": 51,
+      "clicks": 2,
+      "ctr": 0.0392156862745098,
+      "position": 6.490196078431373
+    },
+    {
+      "slug": "/tools/disconnection-time-calculator",
+      "impressions": 132,
+      "clicks": 2,
+      "ctr": 0.015151515151515152,
+      "position": 6.0606060606060606
+    },
+    {
+      "slug": "/tools/electrical-app-with-ai",
+      "impressions": 19,
+      "clicks": 2,
+      "ctr": 0.10526315789473684,
+      "position": 12.157894736842104
+    },
+    {
+      "slug": "/tools/lighting-lux-calculator",
+      "impressions": 54,
+      "clicks": 2,
+      "ctr": 0.037037037037037035,
+      "position": 11.555555555555555
+    },
+    {
+      "slug": "/compare/best-ai-tool-electricians",
+      "impressions": 81,
+      "clicks": 1,
+      "ctr": 0.012345679012345678,
+      "position": 9.283950617283951
+    },
+    {
+      "slug": "/consumer-unit-replacement-hull",
+      "impressions": 2,
+      "clicks": 1,
+      "ctr": 0.5,
+      "position": 3
+    },
+    {
+      "slug": "/electricians/maidstone",
+      "impressions": 1,
+      "clicks": 1,
+      "ctr": 1,
+      "position": 10
+    },
+    {
+      "slug": "/guides/caravan-park-electrical",
+      "impressions": 26,
+      "clicks": 1,
+      "ctr": 0.038461538461538464,
+      "position": 7.461538461538462
+    },
+    {
+      "slug": "/guides/method-statement-electrical",
+      "impressions": 27,
+      "clicks": 1,
+      "ctr": 0.037037037037037035,
+      "position": 7.296296296296297
+    },
+    {
+      "slug": "/guides/mock-exams-electrician",
+      "impressions": 69,
+      "clicks": 1,
+      "ctr": 0.014492753623188406,
+      "position": 19.07246376811594
+    },
+    {
+      "slug": "/guides/multifunction-tester-buying-guide",
+      "impressions": 9,
+      "clicks": 1,
+      "ctr": 0.1111111111111111,
+      "position": 6.555555555555555
+    },
+    {
+      "slug": "/guides/ring-circuit-fault-finding",
+      "impressions": 45,
+      "clicks": 1,
+      "ctr": 0.022222222222222223,
+      "position": 7.888888888888889
+    },
+    {
+      "slug": "/guides/ze-values-uk",
+      "impressions": 195,
+      "clicks": 1,
+      "ctr": 0.005128205128205128,
+      "position": 6.235897435897436
+    },
+    {
+      "slug": "/tools/cable-sizing-calculator",
+      "impressions": 136,
+      "clicks": 1,
+      "ctr": 0.007352941176470588,
+      "position": 13.5
+    },
+    {
+      "slug": "/tools/digital-certificates-app",
+      "impressions": 9,
+      "clicks": 1,
+      "ctr": 0.1111111111111111,
+      "position": 2.333333333333333
+    },
+    {
+      "slug": "/tools/earth-loop-impedance-calculator",
+      "impressions": 89,
+      "clicks": 1,
+      "ctr": 0.011235955056179775,
+      "position": 18.719101123595507
+    },
+    {
+      "slug": "/tools/power-factor-calculator",
+      "impressions": 159,
+      "clicks": 1,
+      "ctr": 0.006289308176100629,
+      "position": 12.09433962264151
+    },
+    {
+      "slug": "/cable-jointing-guide",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "slug": "/consumer-unit-replacement-southampton",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7.5
+    },
+    {
+      "slug": "/earth-loop-impedance-calculator",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 19
+    },
+    {
+      "slug": "/elec-mate-vs-i-certifi",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    },
+    {
+      "slug": "/electrical-engineering-degree",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "slug": "/guides/city-guilds-2365-electrical",
+      "impressions": 15,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 12.066666666666666
+    },
+    {
+      "slug": "/guides/eicr-bath",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6
+    },
+    {
+      "slug": "/guides/eicr-bristol",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8
+    },
+    {
+      "slug": "/guides/eicr-oxford",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 12
+    },
+    {
+      "slug": "/guides/electrical-safety-checks-new-home",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 11
+    },
+    {
+      "slug": "/guides/electrician-day-rates-uk",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    },
+    {
+      "slug": "/guides/iet-code-of-practice-ev",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 12
+    },
+    {
+      "slug": "/guides/multifunction-tester-buying-guide",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6
+    },
+    {
+      "slug": "/guides/part-p-building-regulations",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8
+    },
+    {
+      "slug": "/guides/polarity-testing-guide",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7
+    },
+    {
+      "slug": "/guides/shop-fit-out-electrical-cost",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    },
+    {
+      "slug": "/guides/storage-heater-not-working",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8
+    },
+    {
+      "slug": "/testing-sequence-guide",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "slug": "/tools/electrical-quoting-app",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    },
+    {
+      "slug": "/tools/power-factor-calculator",
+      "impressions": 6,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9.5
+    },
+    {
+      "slug": "/agricultural-electrical-installation",
+      "impressions": 12,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 15.416666666666666
+    },
+    {
+      "slug": "/ai-circuit-designer",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 28
+    },
+    {
+      "slug": "/am2-exam-preparation",
+      "impressions": 10,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9.1
+    },
+    {
+      "slug": "/apprentice-endpoint-assessment",
+      "impressions": 6,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 13.166666666666666
+    },
+    {
+      "slug": "/apprentice-first-year-revision",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5.333333333333333
+    },
+    {
+      "slug": "/basement-conversion-electrical",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "slug": "/bonding-conductors-guide",
+      "impressions": 47,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 12.617021276595745
+    },
+    {
+      "slug": "/cable-basket-installation",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 11
+    },
+    {
+      "slug": "/cable-jointing-guide",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "slug": "/cleanroom-electrical",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 47
+    },
+    {
+      "slug": "/compare/best-invoice-app-electricians",
+      "impressions": 54,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 33.907407407407405
+    },
+    {
+      "slug": "/compare/checkatrade-vs-mybuilder-vs-bark",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8
+    },
+    {
+      "slug": "/compare/elec-mate-vs-icertifi",
+      "impressions": 9,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "slug": "/compare/electrician-app-android",
+      "impressions": 78,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 28.923076923076923
+    },
+    {
+      "slug": "/confined-space-electrical",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    },
+    {
+      "slug": "/continuity-testing-guide",
+      "impressions": 35,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7
+    },
+    {
+      "slug": "/eic-certificate",
+      "impressions": 14,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 40.642857142857146
+    },
+    {
+      "slug": "/eicr-cheltenham",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    },
+    {
+      "slug": "/eicr-dundee",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10.333333333333334
+    },
+    {
+      "slug": "/elec-mate-vs-i-certifi",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7.666666666666667
+    },
+    {
+      "slug": "/electric-boiler-installation",
+      "impressions": 43,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 31.86046511627907
+    },
+    {
+      "slug": "/electric-shower-fault-finding",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 30
+    },
+    {
+      "slug": "/electrical-salary-benchmarking",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8
+    },
+    {
+      "slug": "/ev-charger-certificate",
+      "impressions": 6,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 12.166666666666666
+    },
+    {
+      "slug": "/ev-charger-installation-nottingham",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4
+    },
+    {
+      "slug": "/ev-charger-installation-oxford",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 15
+    },
+    {
+      "slug": "/ev-charger-installation-wolverhampton",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 34
+    },
+    {
+      "slug": "/ev-charging-legislation",
+      "impressions": 69,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 12.420289855072463
+    },
+    {
+      "slug": "/extension-lead-safety",
+      "impressions": 29,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8.379310344827587
+    },
+    {
+      "slug": "/faq",
+      "impressions": 8,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5.25
+    },
+    {
+      "slug": "/fire-alarm-fault-finding",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4
+    },
+    {
+      "slug": "/food-processing-electrical",
+      "impressions": 14,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 19.642857142857142
+    },
+    {
+      "slug": "/fp200-gold-cable-guide",
+      "impressions": 13,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10.076923076923077
+    },
+    {
+      "slug": "/garden-lighting-fault-finding",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8
+    },
+    {
+      "slug": "/generator-installation-guide",
+      "impressions": 21,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 14.19047619047619
+    },
+    {
+      "slug": "/guides/18th-edition-exam-tips",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "slug": "/guides/ai-tools-for-electricians",
+      "impressions": 37,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8.567567567567568
+    },
+    {
+      "slug": "/guides/ai-vs-manual-electrical-design",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 35
+    },
+    {
+      "slug": "/guides/am2-exam-tips",
+      "impressions": 49,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6.653061224489796
+    },
+    {
+      "slug": "/guides/appendix-4-tables-bs-7671",
+      "impressions": 140,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4.85
+    },
+    {
+      "slug": "/guides/apprentice-electrician-salary",
+      "impressions": 160,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 11.2625
+    },
+    {
+      "slug": "/guides/arc-flash-protection",
+      "impressions": 6,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 61
+    },
+    {
+      "slug": "/guides/bathroom-electrical-zones-bs7671",
+      "impressions": 43,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5.651162790697675
+    },
+    {
+      "slug": "/guides/battery-storage-installation",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7.5
+    },
+    {
+      "slug": "/guides/bonding-in-bathroom",
+      "impressions": 37,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 14.216216216216216
+    },
+    {
+      "slug": "/guides/bs-5266-emergency-lighting-standard",
+      "impressions": 25,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 68.12
+    },
+    {
+      "slug": "/guides/bs-7671-18th-edition-guide",
+      "impressions": 9,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6.888888888888889
+    },
+    {
+      "slug": "/guides/building-regulations-electrical",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 12
+    },
+    {
+      "slug": "/guides/cable-colour-codes-uk",
+      "impressions": 75,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 30.786666666666665
+    },
+    {
+      "slug": "/guides/cable-sizing-guide-bs-7671",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    },
+    {
+      "slug": "/guides/car-park-lighting-cost",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4.333333333333334
+    },
+    {
+      "slug": "/guides/chapter-44-overvoltage-protection",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    },
+    {
+      "slug": "/guides/circuit-breaker-keeps-tripping",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 23.25
+    },
+    {
+      "slug": "/guides/city-guilds-2365-electrical",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7.75
+    },
+    {
+      "slug": "/guides/commercial-rewire-cost",
+      "impressions": 9,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 12.333333333333334
+    },
+    {
+      "slug": "/guides/commissioning-electrical-installation",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 23
+    },
+    {
+      "slug": "/guides/competent-person-scheme-electrical",
+      "impressions": 16,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 15.625
+    },
+    {
+      "slug": "/guides/consumer-unit-change",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10
+    },
+    {
+      "slug": "/guides/consumer-unit-replacement-leeds",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7
+    },
+    {
+      "slug": "/guides/consumer-unit-upgrade",
+      "impressions": 9,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 71.66666666666667
+    },
+    {
+      "slug": "/guides/continuity-testing-electricians-guide",
+      "impressions": 20,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9.85
+    },
+    {
+      "slug": "/guides/continuity-testing-r1-r2",
+      "impressions": 52,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7.153846153846154
+    },
+    {
+      "slug": "/guides/copper-vs-aluminium-cable",
+      "impressions": 9,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8.88888888888889
+    },
+    {
+      "slug": "/guides/cpd-for-electricians",
+      "impressions": 21,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 15.380952380952381
+    },
+    {
+      "slug": "/guides/distribution-board-wiring",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 32.5
+    },
+    {
+      "slug": "/guides/domestic-vs-commercial-electrician",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    },
+    {
+      "slug": "/guides/earth-fault-loop-impedance-too-high",
+      "impressions": 40,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10.2
+    },
+    {
+      "slug": "/guides/earthing-arrangements",
+      "impressions": 9,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 13.777777777777779
+    },
+    {
+      "slug": "/guides/eic-what-to-include",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    },
+    {
+      "slug": "/guides/eicr-limitations",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 11
+    },
+    {
+      "slug": "/guides/eicr-nottingham",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    },
+    {
+      "slug": "/guides/eicr-observation-codes-explained",
+      "impressions": 5,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3.8
+    },
+    {
+      "slug": "/guides/eicr-oxford",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "slug": "/guides/eicr-schedule-of-inspections",
+      "impressions": 13,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7.538461538461538
+    },
+    {
+      "slug": "/guides/electric-shock-from-tap",
+      "impressions": 61,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9.852459016393443
+    },
+    {
+      "slug": "/guides/electric-shower-installation",
+      "impressions": 48,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 17.041666666666668
+    },
+    {
+      "slug": "/guides/electrical-acronyms-glossary",
+      "impressions": 12,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 43.333333333333336
+    },
+    {
+      "slug": "/guides/electrical-certificate-types-uk",
+      "impressions": 61,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 48.98360655737705
+    },
+    {
+      "slug": "/guides/electrical-handover-documentation",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    },
+    {
+      "slug": "/guides/electrical-inspection-checklist",
+      "impressions": 15,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 22.4
+    },
+    {
+      "slug": "/guides/electrical-regulations-timeline-uk",
+      "impressions": 46,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 21.08695652173913
+    },
+    {
+      "slug": "/guides/electrical-safety-checks-new-home",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 29
+    },
+    {
+      "slug": "/guides/electrical-site-induction",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 97
+    },
+    {
+      "slug": "/guides/electrical-wiring-regulations-history",
+      "impressions": 7,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6.428571428571429
+    },
+    {
+      "slug": "/guides/electrical-work-in-bathroom",
+      "impressions": 5,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7.6
+    },
+    {
+      "slug": "/guides/electrician-day-rates-uk",
+      "impressions": 16,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8.1875
+    },
+    {
+      "slug": "/guides/electrician-insurance-uk",
+      "impressions": 166,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 45.63253012048193
+    },
+    {
+      "slug": "/guides/electrician-retirement-planning-uk",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6
+    },
+    {
+      "slug": "/guides/electrician-salary-uk",
+      "impressions": 127,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 22.661417322834644
+    },
+    {
+      "slug": "/guides/electrician-tool-insurance",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10.5
+    },
+    {
+      "slug": "/guides/electricity-at-work-regulations",
+      "impressions": 9,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 14.222222222222221
+    },
+    {
+      "slug": "/guides/emergency-lighting-certificate-guide",
+      "impressions": 22,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 46.5
+    },
+    {
+      "slug": "/guides/ev-charger-installation-glasgow",
+      "impressions": 8,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 21
+    },
+    {
+      "slug": "/guides/first-fix-electrical",
+      "impressions": 21,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 14.904761904761905
+    },
+    {
+      "slug": "/guides/flood-damaged-electrics",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    },
+    {
+      "slug": "/guides/garage-conversion-electrics",
+      "impressions": 12,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 18
+    },
+    {
+      "slug": "/guides/gold-card-requirements-electrician",
+      "impressions": 84,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10.476190476190476
+    },
+    {
+      "slug": "/guides/ground-source-heat-pump-electrical",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6.333333333333333
+    },
+    {
+      "slug": "/guides/gs-38-proving-dead",
+      "impressions": 120,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6.358333333333333
+    },
+    {
+      "slug": "/guides/high-voltage-electrical-work-uk",
+      "impressions": 7,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 35.714285714285715
+    },
+    {
+      "slug": "/guides/hmo-electrical-requirements",
+      "impressions": 8,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7.25
+    },
+    {
+      "slug": "/guides/hourly-rate-calculator-electrician",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 13
+    },
+    {
+      "slug": "/guides/how-to-become-electrician",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9.5
+    },
+    {
+      "slug": "/guides/how-to-do-safe-isolation",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 32
+    },
+    {
+      "slug": "/guides/how-to-find-electrician-uk",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 51.5
+    },
+    {
+      "slug": "/guides/how-to-wire-a-plug",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "slug": "/guides/humming-noise-from-consumer-unit",
+      "impressions": 10,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6.8
+    },
+    {
+      "slug": "/guides/industrial-electrician-guide",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 20
+    },
+    {
+      "slug": "/guides/insulation-resistance-testing-bs7671",
+      "impressions": 7,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5.285714285714286
+    },
+    {
+      "slug": "/guides/jib-grading-explained",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9.5
+    },
+    {
+      "slug": "/guides/landlord-electrical-safety-edinburgh",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9.666666666666666
+    },
+    {
+      "slug": "/guides/landlord-electrical-safety-leeds",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 11
+    },
+    {
+      "slug": "/guides/loose-neutral-symptoms",
+      "impressions": 66,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8.969696969696969
+    },
+    {
+      "slug": "/guides/low-insulation-resistance",
+      "impressions": 51,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10.745098039215685
+    },
+    {
+      "slug": "/guides/marketing-tips-electricians",
+      "impressions": 6,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 15
+    },
+    {
+      "slug": "/guides/max-demand-calculation-guide",
+      "impressions": 95,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 24.726315789473684
+    },
+    {
+      "slug": "/guides/method-statement-electricians",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 41
+    },
+    {
+      "slug": "/guides/minor-works-vs-eic",
+      "impressions": 6,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7.166666666666667
+    },
+    {
+      "slug": "/guides/mock-exams-electrical",
+      "impressions": 26,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 25.384615384615383
+    },
+    {
+      "slug": "/guides/napit-certificate-guide",
+      "impressions": 43,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 13.255813953488373
+    },
+    {
+      "slug": "/guides/new-build-electrical-cost-per-m2",
+      "impressions": 12,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6.666666666666667
+    },
+    {
+      "slug": "/guides/no-power-to-sockets",
+      "impressions": 5,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7.6
+    },
+    {
+      "slug": "/guides/off-the-job-training-hours",
+      "impressions": 9,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6.777777777777778
+    },
+    {
+      "slug": "/guides/outbuilding-electrical-supply-guide",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 16
+    },
+    {
+      "slug": "/guides/part-p-building-regulations",
+      "impressions": 71,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 26.323943661971832
+    },
+    {
+      "slug": "/guides/part-p-building-regulations-electrical",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8
+    },
+    {
+      "slug": "/guides/partial-rewire-price-breakdown",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8
+    },
+    {
+      "slug": "/guides/partnership-vs-sole-trader-vs-ltd-electrician",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4
+    },
+    {
+      "slug": "/guides/polarity-testing-guide",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8
+    },
+    {
+      "slug": "/guides/ppe-for-electricians",
+      "impressions": 29,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 50.48275862068966
+    },
+    {
+      "slug": "/guides/pricing-electrical-work-per-point",
+      "impressions": 118,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3.6779661016949152
+    },
+    {
+      "slug": "/guides/prospective-fault-current-explained",
+      "impressions": 55,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7.509090909090909
+    },
+    {
+      "slug": "/guides/protective-earthing-bonding",
+      "impressions": 85,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 11.058823529411764
+    },
+    {
+      "slug": "/guides/radial-circuit-explained",
+      "impressions": 53,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9.69811320754717
+    },
+    {
+      "slug": "/guides/rams-template-electricians",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5.25
+    },
+    {
+      "slug": "/guides/rcbo-keeps-tripping-common-causes",
+      "impressions": 13,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8.615384615384615
+    },
+    {
+      "slug": "/guides/rcbo-keeps-tripping-guide",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6
+    },
+    {
+      "slug": "/guides/rcbo-vs-rcd-mcb",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10
+    },
+    {
+      "slug": "/guides/rcd-keeps-tripping-causes-and-fixes",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    },
+    {
+      "slug": "/guides/rcd-testing-procedure",
+      "impressions": 53,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 11.452830188679245
+    },
+    {
+      "slug": "/guides/rcd-types-explained",
+      "impressions": 102,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 16.852941176470587
+    },
+    {
+      "slug": "/guides/reference-methods-cable-installation",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 19.75
+    },
+    {
+      "slug": "/guides/regulation-530-3-201",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4
+    },
+    {
+      "slug": "/guides/restaurant-electrical-requirements",
+      "impressions": 14,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 11.642857142857142
+    },
+    {
+      "slug": "/guides/restaurant-kitchen-electrical-cost",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8
+    },
+    {
+      "slug": "/guides/rewire-cost-manchester",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8.5
+    },
+    {
+      "slug": "/guides/ring-vs-radial-circuits",
+      "impressions": 113,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5.982300884955753
+    },
+    {
+      "slug": "/guides/risk-assessment-electrical-work",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 12.333333333333334
+    },
+    {
+      "slug": "/guides/safe-isolation-procedure",
+      "impressions": 12,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8.5
+    },
+    {
+      "slug": "/guides/safe-isolation-procedure-electricians",
+      "impressions": 10,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7.4
+    },
+    {
+      "slug": "/guides/schedule-of-test-results",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7
+    },
+    {
+      "slug": "/guides/section-722-ev-charging-complete-guide",
+      "impressions": 60,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5.15
+    },
+    {
+      "slug": "/guides/smart-home-wiring-cost",
+      "impressions": 1539,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8.658869395711502
+    },
+    {
+      "slug": "/guides/special-locations-part-7-bs-7671",
+      "impressions": 69,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7.202898550724638
+    },
+    {
+      "slug": "/guides/storage-heater-not-working",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8.333333333333332
+    },
+    {
+      "slug": "/guides/swimming-pool-electrical-regulations",
+      "impressions": 42,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5.142857142857143
+    },
+    {
+      "slug": "/guides/testing-three-phase-installation",
+      "impressions": 17,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10.117647058823529
+    },
+    {
+      "slug": "/guides/three-phase-calculations",
+      "impressions": 27,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 22.51851851851852
+    },
+    {
+      "slug": "/guides/trip-switch-keeps-going-off",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9.333333333333334
+    },
+    {
+      "slug": "/guides/troubleshooting-electrical-problems",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 29
+    },
+    {
+      "slug": "/guides/underfloor-heating-electrical",
+      "impressions": 37,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 18.35135135135135
+    },
+    {
+      "slug": "/guides/year-2-electrical-apprentice",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4
+    },
+    {
+      "slug": "/holiday-let-electrical",
+      "impressions": 23,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 12.608695652173912
+    },
+    {
+      "slug": "/intruder-alarm-installation",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 29.5
+    },
+    {
+      "slug": "/loop-impedance-testing-guide",
+      "impressions": 148,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 12.533783783783784
+    },
+    {
+      "slug": "/niceic-vs-napit-comparison",
+      "impressions": 53,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8.30188679245283
+    },
+    {
+      "slug": "/part-p-self-certification",
+      "impressions": 35,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 48.74285714285714
+    },
+    {
+      "slug": "/pasma-training",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 33.333333333333336
+    },
+    {
+      "slug": "/polarity-test-guide",
+      "impressions": 66,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10.742424242424242
+    },
+    {
+      "slug": "/power-factor-correction",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 14
+    },
+    {
+      "slug": "/pub-licensed-premises-eicr",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 15
+    },
+    {
+      "slug": "/seo-for-electricians",
+      "impressions": 14,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 31
+    },
+    {
+      "slug": "/socket-outlet-installation",
+      "impressions": 5,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 11.4
+    },
+    {
+      "slug": "/solar-battery-storage-installation",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5.666666666666667
+    },
+    {
+      "slug": "/subcontracting-guide",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "slug": "/terms",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 29.5
+    },
+    {
+      "slug": "/testing-sequence-guide",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 14
+    },
+    {
+      "slug": "/tools/adiabatic-equation-calculator",
+      "impressions": 71,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5.830985915492958
+    },
+    {
+      "slug": "/tools/ai-component-identification",
+      "impressions": 10,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5.2
+    },
+    {
+      "slug": "/tools/ai-electrician",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 31.5
+    },
+    {
+      "slug": "/tools/ai-health-safety-agent",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 14
+    },
+    {
+      "slug": "/tools/ai-report-writer",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "slug": "/tools/apprentice-training-app",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "slug": "/tools/battery-backup-calculator",
+      "impressions": 64,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 16.234375
+    },
+    {
+      "slug": "/tools/best-electrician-app-uk",
+      "impressions": 17,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 25.11764705882353
+    },
+    {
+      "slug": "/tools/business-analytics-electrician",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8.333333333333332
+    },
+    {
+      "slug": "/tools/cable-derating-calculator",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    },
+    {
+      "slug": "/tools/cable-tray-sizing-calculator",
+      "impressions": 41,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 13.926829268292684
+    },
+    {
+      "slug": "/tools/cable-volt-drop-three-phase",
+      "impressions": 124,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 11.024193548387096
+    },
+    {
+      "slug": "/tools/cash-flow-planner",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    },
+    {
+      "slug": "/tools/circuit-breaker-sizing-calculator",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 11
+    },
+    {
+      "slug": "/tools/conduit-fill-calculator",
+      "impressions": 54,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 19.574074074074073
+    },
+    {
+      "slug": "/tools/cv-builder-electrician",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8
+    },
+    {
+      "slug": "/tools/earth-rod-resistance-calculator",
+      "impressions": 57,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9.859649122807017
+    },
+    {
+      "slug": "/tools/eicr-certificate",
+      "impressions": 19,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8.31578947368421
+    },
+    {
+      "slug": "/tools/electrical-quoting-app",
+      "impressions": 40,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 22.55
+    },
+    {
+      "slug": "/tools/electrical-testing-calculators",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 43.75
+    },
+    {
+      "slug": "/tools/electrician-app-iphone",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4
+    },
+    {
+      "slug": "/tools/expenses-manager-electrician",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    },
+    {
+      "slug": "/tools/minimum-charge-calculator",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 15
+    },
+    {
+      "slug": "/tools/minor-works-certificate",
+      "impressions": 14,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 34.285714285714285
+    },
+    {
+      "slug": "/tools/motor-starting-current-calculator",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7
+    },
+    {
+      "slug": "/tools/prospective-fault-current-calculator",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 23
+    },
+    {
+      "slug": "/tools/rcd-testing-guide",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 12.333333333333334
+    },
+    {
+      "slug": "/tools/schedule-manager-electrician",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 47.5
+    },
+    {
+      "slug": "/tools/solar-panel-sizing-calculator",
+      "impressions": 42,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 51.54761904761905
+    },
+    {
+      "slug": "/tools/solar-pv-certificate",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 36.5
+    },
+    {
+      "slug": "/tools/trunking-fill-calculator",
+      "impressions": 9,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7.444444444444445
+    },
+    {
+      "slug": "/training",
+      "impressions": 13,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 31.53846153846154
+    },
+    {
+      "slug": "/training/am2-exam-preparation",
+      "impressions": 15,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 29.6
+    },
+    {
+      "slug": "/training/bms-course",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 22.5
+    },
+    {
+      "slug": "/training/city-guilds-2391",
+      "impressions": 57,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 32.526315789473685
+    },
+    {
+      "slug": "/training/electrical-apprentice",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "slug": "/training/first-aid-electrical",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 18.5
+    },
+    {
+      "slug": "/training/inspection-and-testing",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 19
+    },
+    {
+      "slug": "/training/smart-home-automation",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7
+    },
+    {
+      "slug": "/utr-number-electrician",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    },
+    {
+      "slug": "/wiring-regulations-building-regulations",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8
+    }
+  ],
+  "top_q": {
+    "/guides/electrical-symbols-chart": {
+      "query": "bs en 60617 symbols",
+      "impressions": 1
+    },
+    "/tools/busbar-sizing-calculator": {
+      "query": "bus bar calculation",
+      "impressions": 1
+    },
+    "/guides/iet-code-of-practice-ev": {
+      "query": "code of practice for electric vehicle charging equipment installation, 5th edition pdf",
+      "impressions": 1
+    },
+    "/tools/disconnection-time-calculator": {
+      "query": "bs 7671 maximum disconnection time final circuits not exceeding 32 a tn system 0.4 s",
+      "impressions": 1
+    },
+    "/tools/lighting-lux-calculator": {
+      "query": "lighting lux calculation",
+      "impressions": 1
+    },
+    "/compare/best-ai-tool-electricians": {
+      "query": "ai agent for electricians",
+      "impressions": 1
+    },
+    "/guides/mock-exams-electrician": {
+      "query": "18th edition amendment 2 exam",
+      "impressions": 1
+    },
+    "/guides/ze-values-uk": {
+      "query": "ze reading for tns system",
+      "impressions": 3
+    },
+    "/tools/cable-sizing-calculator": {
+      "query": "17th edition cable size calculator",
+      "impressions": 1
+    },
+    "/tools/earth-loop-impedance-calculator": {
+      "query": "calculate earth fault loop impedance",
+      "impressions": 5
+    },
+    "/tools/power-factor-calculator": {
+      "query": "kw to kvar formula three phase",
+      "impressions": 1
+    },
+    "/compare/best-invoice-app-electricians": {
+      "query": "best electrician software uk",
+      "impressions": 1
+    },
+    "/compare/electrician-app-android": {
+      "query": "app electrician",
+      "impressions": 2
+    },
+    "/ev-charging-legislation": {
+      "query": "building regulations electric vehicle charging",
+      "impressions": 2
+    },
+    "/guides/appendix-4-tables-bs-7671": {
+      "query": "4mm twin and earth cable current carrying capacity uk bs7671",
+      "impressions": 1
+    },
+    "/guides/apprentice-electrician-salary": {
+      "query": "apprentice electrician salary",
+      "impressions": 2
+    },
+    "/guides/cable-colour-codes-uk": {
+      "query": "3 phase colours",
+      "impressions": 1
+    },
+    "/guides/continuity-testing-r1-r2": {
+      "query": "difference between r1+r2 and r1+r2",
+      "impressions": 2
+    },
+    "/guides/electric-shock-from-tap": {
+      "query": "electric shock from tap",
+      "impressions": 2
+    },
+    "/guides/electrical-certificate-types-uk": {
+      "query": "bs 7671 electrical installation certificate",
+      "impressions": 1
+    },
+    "/guides/electrician-insurance-uk": {
+      "query": "auto electrician insurance",
+      "impressions": 1
+    },
+    "/guides/electrician-salary-uk": {
+      "query": "average electrician salary",
+      "impressions": 1
+    },
+    "/guides/gold-card-requirements-electrician": {
+      "query": "ecs gold card",
+      "impressions": 3
+    },
+    "/guides/gs-38-proving-dead": {
+      "query": "gs 38",
+      "impressions": 3
+    },
+    "/guides/loose-neutral-symptoms": {
+      "query": "loose neutral",
+      "impressions": 2
+    },
+    "/guides/low-insulation-resistance": {
+      "query": "causes of low insulation resistance",
+      "impressions": 4
+    },
+    "/guides/max-demand-calculation-guide": {
+      "query": "calculate max demand",
+      "impressions": 2
+    },
+    "/guides/part-p-building-regulations": {
+      "query": "does part p apply to commercial",
+      "impressions": 1
+    },
+    "/guides/pricing-electrical-work-per-point": {
+      "query": "electrical price per point",
+      "impressions": 2
+    },
+    "/guides/prospective-fault-current-explained": {
+      "query": "ipf test electrical",
+      "impressions": 1
+    },
+    "/guides/protective-earthing-bonding": {
+      "query": "earth bonding cable size",
+      "impressions": 1
+    },
+    "/guides/radial-circuit-explained": {
+      "query": "radial circuit",
+      "impressions": 1
+    },
+    "/guides/rcd-testing-procedure": {
+      "query": "30ma rcd operating times",
+      "impressions": 1
+    },
+    "/guides/rcd-types-explained": {
+      "query": "a type rcd",
+      "impressions": 3
+    },
+    "/guides/ring-vs-radial-circuits": {
+      "query": "is a radial circuit series or parallel",
+      "impressions": 1
+    },
+    "/guides/smart-home-wiring-cost": {
+      "query": "how much does professional smart home installation cost and is it worth it in great britain?",
+      "impressions": 2
+    },
+    "/guides/special-locations-part-7-bs-7671": {
+      "query": "bs7671 part 7",
+      "impressions": 1
+    },
+    "/loop-impedance-testing-guide": {
+      "query": "bs 7671 zs ze r1+r2 divide by 1.2 guidance note 3",
+      "impressions": 1
+    },
+    "/niceic-vs-napit-comparison": {
+      "query": "napit electrical installation certificate",
+      "impressions": 1
+    },
+    "/polarity-test-guide": {
+      "query": "commercial polarity testing",
+      "impressions": 1
+    },
+    "/tools/adiabatic-equation-calculator": {
+      "query": "0.1",
+      "impressions": 1
+    },
+    "/tools/battery-backup-calculator": {
+      "query": "backup calculator",
+      "impressions": 2
+    },
+    "/tools/cable-volt-drop-three-phase": {
+      "query": "3 phase cable voltage drop calculator",
+      "impressions": 1
+    },
+    "/tools/conduit-fill-calculator": {
+      "query": "cables in conduit calculator",
+      "impressions": 1
+    },
+    "/tools/earth-rod-resistance-calculator": {
+      "query": "earth electrode resistance",
+      "impressions": 1
+    },
+    "/training/city-guilds-2391": {
+      "query": "2391",
+      "impressions": 2
+    }
+  }
+}

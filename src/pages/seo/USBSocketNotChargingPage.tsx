@@ -618,7 +618,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Issue socket replacement certificates in minutes"
-          description="Elec-Mate lets you complete Minor Works Certificates on your phone with pre-filled templates. Add test results, observations, and export professional PDFs on site. Join 1,000+ UK electricians."
+          description="Elec-Mate lets you complete Minor Works Certificates on your phone with pre-filled templates."
           icon={FileCheck2}
         />
       </>
@@ -634,9 +634,9 @@ export default function USBSocketNotChargingPage() {
   return (
     <GuideTemplate
       title="USB Socket Not Charging | Why & What to Do"
-      description="USB wall socket not charging your phone? Learn why — internal module failure, USB-A vs USB-C power limits, thermal shutdown, quality vs cheap brands — and whether to replace it yourself or call an electrician."
+      description="USB wall socket not charging your phone? Learn why — internal module failure, USB-A vs USB-C power limits, thermal shutdown…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Common Problem"

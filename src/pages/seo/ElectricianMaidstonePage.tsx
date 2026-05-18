@@ -424,7 +424,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Maidstone electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for South East electricians working across Kent. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification."
           icon={MapPin}
         />
       </>
@@ -441,9 +441,9 @@ export default function ElectricianMaidstonePage() {
     <GuideTemplate
       localArea="Maidstone"
       title="Electrician in Maidstone | Local Electricians 2026"
-      description="Find qualified electricians in Maidstone. NICEIC and NAPIT registered, Part P compliant. South East rates, EICRs, consumer unit upgrades, EV chargers, rural Kent properties in Maidstone 2026."
+      description="Find qualified electricians in Maidstone. NICEIC and NAPIT registered, Part P compliant. South East rates, EICRs, consumer unit upgrades, EV chargers…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Maidstone"

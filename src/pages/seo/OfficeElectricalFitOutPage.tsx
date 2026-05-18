@@ -602,7 +602,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage office fit-out electrical projects with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. Complete EICs and EICRs on your phone with instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, quoting, and project management."
           icon={FileCheck2}
         />
       </>
@@ -618,9 +618,9 @@ export default function OfficeElectricalFitOutPage() {
   return (
     <GuideTemplate
       title="Office Electrical Fit Out UK | Commercial Office Wiring"
-      description="Complete guide to office electrical fit-out in the UK. Power distribution, data points, office lighting design to CIBSE LG7, emergency lighting, fire alarm integration, EV charging to BS 7671 Section 722, and energy metering for Part L compliance."
+      description="Complete guide to office electrical fit-out in the UK. Power distribution, data points, office lighting design to CIBSE LG7, emergency lighting…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Commercial Electrical Guide"

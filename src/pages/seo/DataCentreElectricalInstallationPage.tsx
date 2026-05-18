@@ -384,7 +384,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Certify data centre LV installations efficiently"
-          description="Elec-Mate's EIC tools streamline the certification of data centre LV distributions. Multi-board certificate management, AI-assisted board scanning, and instant PDF export for client handover."
+          description="Elec-Mate's EIC tools streamline the certification of data centre LV distributions. Multi-board certificate management, AI-assisted board scanning…"
           icon={FileCheck2}
         />
       </>
@@ -468,10 +468,10 @@ const sections = [
 export default function DataCentreElectricalInstallationPage() {
   return (
     <GuideTemplate
-      title="Data Centre Electrical Installation UK | Tier I–IV, UPS, BS EN 50600"
-      description="Complete guide to data centre electrical installation for UK electricians and engineers. Uptime Institute Tier I–IV classification, UPS, generators, ATS, STS, BS EN 50600-2-2, PDU types, overhead busbar, and earthing design."
+      title="Data Centre Electrical Installation UK | Tier I–IV, UPS, BS"
+      description="Complete guide to data centre electrical installation for UK electricians and engineers. Uptime Institute Tier I–IV classification, UPS, generators, ATS…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Specialist Guide"

@@ -280,7 +280,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Record Zs test results on your phone"
-          description="Elec-Mate's EIC and EICR apps capture Zs test results for each circuit, automatically compare against the Appendix 3 table values, and flag any exceedances. Complete professional test schedules on site."
+          description="Elec-Mate's EIC and EICR apps capture Zs test results for each circuit, automatically compare against the Appendix 3 table values…"
           icon={ClipboardCheck}
         />
       </>
@@ -521,9 +521,9 @@ export default function EarthFaultLoopImpedanceTestingPage() {
   return (
     <GuideTemplate
       title="Earth Fault Loop Impedance Testing | Zs Testing Guide UK"
-      description="Complete guide to earth fault loop impedance (Zs) testing for UK electricians. Covers Ze vs Zs, the Zs testing procedure, BS 7671 Appendix 3 table values, pass/fail assessment, and common causes of high Zs."
+      description="Complete guide to earth fault loop impedance (Zs) testing for UK electricians. Covers Ze vs Zs, the Zs testing procedure…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

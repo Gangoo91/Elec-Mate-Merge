@@ -588,7 +588,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="AI Cost Engineer"
-          description="Describe the job in plain English and the AI Cost Engineer generates a detailed quote — materials, labour hours, overheads, and profit margin. It uses real UK trade pricing data and practical labour timing intelligence. Stop guessing and start quoting with confidence."
+          description="Describe the job in plain English and the AI Cost Engineer generates a detailed quote — materials, labour hours, overheads, and profit margin."
           icon={Brain}
         />
       </>
@@ -662,7 +662,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional Quoting and Invoicing"
-          description="First impressions count. Elec-Mate generates professional, branded quotes and invoices that make you look established and trustworthy. Send them from your phone on site — no going home to type them up. Clients who receive a quote within an hour of your visit are far more likely to accept."
+          description="First impressions count. Elec-Mate generates professional, branded quotes and invoices that make you look established and trustworthy."
           icon={Receipt}
         />
       </>
@@ -752,7 +752,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Expense Tracking and Tax Estimator"
-          description="Track every business expense on your phone as it happens — fuel, materials, tools, insurance, meals. The tax estimator shows your running tax liability so there are no surprises at Self Assessment time. Snap receipts with your camera and they are filed automatically."
+          description="Track every business expense on your phone as it happens — fuel, materials, tools, insurance, meals."
           icon={Receipt}
         />
       </>
@@ -823,7 +823,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="All Your Business Records in One App"
-          description="Certificates, test results, quotes, invoices, expenses, and client records — all stored in one place, synced to the cloud, searchable, and exportable. No more boxes of paper certificates, lost receipts, or searching through emails for test results."
+          description="Certificates, test results, quotes, invoices, expenses, and client records — all stored in one place, synced to the cloud, searchable, and exportable."
           icon={FileText}
         />
       </>
@@ -884,9 +884,9 @@ export default function ElectricianSelfEmployedPage() {
   return (
     <GuideTemplate
       title="Going Self-Employed as an Electrician UK | Complete Guide"
-      description="Complete guide to going self-employed as an electrician in the UK. Sole trader vs limited company, HMRC registration, insurance, competent person schemes, pricing, tax, CIS, finding clients, and record keeping."
+      description="Complete guide to going self-employed as an electrician in the UK. Sole trader vs limited company, HMRC registration, insurance…"
       datePublished="2024-05-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Business Guide"

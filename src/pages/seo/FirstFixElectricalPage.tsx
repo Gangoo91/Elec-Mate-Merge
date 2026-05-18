@@ -410,8 +410,8 @@ const sections = [
           the start of the project prevents misunderstandings and keeps the programme on track.
         </p>
         <SEOAppBridge
-          title="1st and 2nd fix electrical: stage guide"
-          description="Elec-Mate's quoting app lets you build a detailed first fix specification with material lists, labour estimates, and professional quotes. Send the quote to the builder before you start — no surprises, no underpricing."
+          title="1st and 2nd Fix Electrical: Stage Guide 2026"
+          description="Elec-Mate's quoting app lets you build a detailed first fix specification with material lists, labour estimates, and professional quotes."
           icon={ClipboardCheck}
         />
       </>
@@ -600,7 +600,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Design the full installation before you start drilling"
-          description="Elec-Mate's AI circuit designer creates a complete circuit schedule, cable sizing, and board layout from your job specification. Plan the first fix properly — avoid rework, reduce material waste, and finish faster."
+          description="Elec-Mate's AI circuit designer creates a complete circuit schedule, cable sizing, and board layout from your job specification."
           icon={CircuitBoard}
         />
       </>
@@ -616,9 +616,9 @@ export default function FirstFixElectricalPage() {
   return (
     <GuideTemplate
       title="First Fix Electrical | What's Involved UK Guide"
-      description="Complete guide to first fix electrical work in the UK. Cable routing, safe zones, back boxes, containment, coordination with other trades, and Part P notification requirements under BS 7671."
+      description="Complete guide to first fix electrical work in the UK. Cable routing, safe zones, back boxes, containment, coordination with other trades…"
       datePublished="2025-07-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

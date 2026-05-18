@@ -468,7 +468,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certificate heat pump installations with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate to certificate heat pump supply circuits, complete EICRs, and generate BS 7671-compliant documentation on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to certificate heat pump supply circuits, complete EICRs…"
           icon={Thermometer}
         />
       </>
@@ -484,9 +484,9 @@ export default function HeatPumpElectricalFaultPage() {
   return (
     <GuideTemplate
       title="Heat Pump Electrical Fault | Heat Pump Wiring Problems UK"
-      description="Heat pump electrical fault? This guide covers control board issues, compressor starting problems, power supply faults, dedicated circuit requirements, and when to call a qualified engineer."
+      description="Heat pump electrical fault? This guide covers control board issues, compressor starting problems, power supply faults, dedicated circuit requirements…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Fault Finding Guide"

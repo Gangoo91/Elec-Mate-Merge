@@ -427,7 +427,7 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Learning outcome</strong> — what you learned. Be specific: not "attended
-                18th Edition update" but "learned about Amendment 3 changes to Section 530 regarding
+                18th Edition update" but "learned about Amendment 4 changes to Section 530 regarding
                 bidirectional devices."
               </span>
             </li>
@@ -454,7 +454,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="CPD recording that does itself"
-          description="Elec-Mate automatically logs your training hours as you complete courses, tracks your total CPD, and generates a professional CPD record you can show to your scheme assessor. No spreadsheets, no filing."
+          description="Elec-Mate automatically logs your training hours as you complete courses, tracks your total CPD…"
           icon={ClipboardCheck}
         />
       </>
@@ -565,7 +565,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Make CPD effortless"
-          description="Structured courses, automatic hour tracking, and a professional CPD record you can generate for your scheme assessor. Join 1,000+ electricians managing their CPD on Elec-Mate. 7-day free trial."
+          description="Structured courses, automatic hour tracking, and a professional CPD record you can generate for your scheme assessor."
           icon={Award}
         />
       </>
@@ -581,9 +581,9 @@ export default function ProfessionalDevelopmentElectricianPage() {
   return (
     <GuideTemplate
       title="Professional Development for Electricians | CPD Guide"
-      description="Complete guide to CPD for electricians. Requirements for NICEIC, NAPIT, ELECSA registration. Upskilling options, conferences, industry memberships, and how to record CPD properly."
+      description="Complete guide to CPD for electricians. Requirements for NICEIC, NAPIT, ELECSA registration. Upskilling options, conferences, industry memberships…"
       datePublished="2025-05-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

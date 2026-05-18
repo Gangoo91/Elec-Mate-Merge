@@ -541,7 +541,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify EV charger installations in Newcastle"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. Complete EV charger quotes and certificates from your phone — built for electricians working across the North East."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification."
           icon={Car}
         />
       </>
@@ -556,10 +556,10 @@ const sections = [
 export default function EVChargerInstallationNewcastlePage() {
   return (
     <GuideTemplate
-      title="EV Charger Installation Newcastle | Home EV Charging Newcastle 2026"
-      description="EV charger installation costs in Newcastle 2026: 7kW charger £800-1,200 installed, OZEV grants up to £350, Northern Powergrid DNO notification, OZEV-approved installers, Part P compliance, and Section 722 earthing requirements."
+      title="EV Charger Installation Newcastle | Home EV Charging"
+      description="EV charger installation costs in Newcastle 2026: 7kW charger £800-1,200 installed, OZEV grants up to £350, Northern Powergrid DNO notification…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Newcastle Guide"

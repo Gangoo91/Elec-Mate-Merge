@@ -400,7 +400,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="AI fault diagnosis for flickering lights"
-          description="Describe the flickering pattern to Elec-Mate's AI fault diagnosis tool — which lights, when it happens, what type of lamps and dimmers — and get a prioritised diagnosis with recommended fixes. No more guessing whether it is the dimmer, the lamp, or the wiring."
+          description="Describe the flickering pattern to Elec-Mate's AI fault diagnosis tool — which lights, when it happens…"
           icon={Search}
         />
       </>
@@ -623,7 +623,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Record findings on a digital EICR"
-          description="Document flickering light defects with Elec-Mate's EICR certificate app. The AI defect code tool suggests the correct observation code based on your finding — loose connection, arcing evidence, inadequate earthing — and the remedial action. Send the report from site."
+          description="Document flickering light defects with Elec-Mate's EICR certificate app. The AI defect code tool suggests the correct observation code based on your…"
           icon={FileCheck2}
         />
       </>
@@ -639,9 +639,9 @@ export default function LightsFlickeringPage() {
   return (
     <GuideTemplate
       title="Lights Flickering | Electrical Causes & Fixes"
-      description="Complete guide to diagnosing flickering lights. Covers loose connections, voltage fluctuations, LED dimmer compatibility, neutral faults, high-load switching, and when to call an electrician. Written for UK homeowners and electricians."
+      description="Complete guide to diagnosing flickering lights. Covers loose connections, voltage fluctuations, LED dimmer compatibility, neutral faults…"
       datePublished="2025-07-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting"

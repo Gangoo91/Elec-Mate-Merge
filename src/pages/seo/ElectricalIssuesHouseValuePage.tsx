@@ -616,7 +616,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win house purchase EICR and remedial work with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion and instant quoting. Deliver both the EICR report and remedial work quote to buyers before you leave. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion and instant quoting. Deliver both the EICR report and remedial work quote to…"
           icon={FileCheck2}
         />
       </>
@@ -631,10 +631,10 @@ const sections = [
 export default function ElectricalIssuesHouseValuePage() {
   return (
     <GuideTemplate
-      title="How Electrical Issues Affect House Value UK | Rewire Effect on Price"
-      description="How rewires, consumer unit upgrades, and EICR failures affect property value in the UK. What mortgage surveyors flag, when lenders withhold mortgage funds, how much to reduce your offer, and typical costs for common electrical remedial works."
+      title="How Electrical Issues Affect House Value UK | Rewire Effect"
+      description="How rewires, consumer unit upgrades, and EICR failures affect property value in the UK. What mortgage surveyors flag…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Property Buyer Guide"

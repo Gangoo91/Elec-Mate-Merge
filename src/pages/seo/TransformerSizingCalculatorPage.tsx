@@ -21,9 +21,9 @@ export default function TransformerSizingCalculatorPage() {
   return (
     <ToolTemplate
       title="Transformer Sizing Calculator | kVA Rating Tool"
-      description="Calculate transformer kVA rating for single-phase and three-phase installations. Considers load calculation, diversity factors, oversize allowance, and future capacity. Part of 50+ free electrical calculators in Elec-Mate."
+      description="Calculate transformer kVA rating for single-phase and three-phase installations. Considers load calculation, diversity factors, oversize allowance…"
       datePublished="2026-02-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Transformer Sizing Calculator', href: '/tools/transformer-sizing-calculator' },
@@ -455,7 +455,7 @@ export default function TransformerSizingCalculatorPage() {
           icon: Gauge,
           title: 'Built-In Diversity Tables',
           description:
-            'IET On-Site Guide diversity factors are built in. Select the building type and the calculator applies the correct diversity to each load group automatically.',
+            'IET On-Site Guide diversity factors are built in. Select the building type and the calculator applies the correct diversity to each load group…',
         },
         {
           icon: BarChart3,

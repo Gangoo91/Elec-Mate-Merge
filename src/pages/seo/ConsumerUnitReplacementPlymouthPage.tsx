@@ -39,7 +39,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Consumer unit replacement (fuse box upgrade) in Plymouth typically costs £400 to £750, with South West Devon labour rates. Costs include the metal consumer unit, all labour, testing, and the Electrical Installation Certificate.',
-  'All consumer unit replacements in domestic properties must use a metal enclosure — mandatory since January 2016 under BS 7671 Regulation 421.1.201 (Amendment 3) and unchanged in BS 7671:2018+A4:2026.',
+  'All consumer unit replacements in domestic properties must use a metal enclosure — mandatory since January 2016 under BS 7671 Regulation 421.1.201 (Amendment 4) and unchanged in BS 7671:2018+A4:2026.',
   'Plymouth has significant post-war housing stock, with many 1950s and 1960s properties across Devonport, Ernesettle, and Whitleigh that may retain original wiring and fuse boards without RCD protection.',
   'Consumer unit replacement is Part P notifiable work. Plymouth homeowners must use a registered competent person (NICEIC/NAPIT/ELECSA) or notify Plymouth City Council Building Control.',
   'RCD protection not exceeding 30 mA on all socket-outlet circuits rated up to 32 A is mandatory under BS 7671 Regulation 411.3.3. This is one of the most common C2 EICR findings in Plymouth properties.',
@@ -59,7 +59,7 @@ const faqs = [
   {
     question: 'Is a metal consumer unit required in Plymouth?',
     answer:
-      'Yes. Since 1 January 2016, Regulation 421.1.201 of BS 7671 (introduced by Amendment 3 to BS 7671:2008) requires all domestic consumer unit replacements to use a non-combustible (metal) enclosure. This requirement is unchanged in BS 7671:2018+A4:2026. Any qualified Plymouth electrician will supply and install a compliant metal consumer unit. If a quote proposes a plastic unit, do not proceed.',
+      'Yes. Since 1 January 2016, Regulation 421.1.201 of BS 7671 (introduced by Amendment 4 to BS 7671:2008) requires all domestic consumer unit replacements to use a non-combustible (metal) enclosure. This requirement is unchanged in BS 7671:2018+A4:2026. Any qualified Plymouth electrician will supply and install a compliant metal consumer unit. If a quote proposes a plastic unit, do not proceed.',
   },
   {
     question: 'My Plymouth property was rebuilt after WW2 — is the wiring likely to be original?',
@@ -269,7 +269,7 @@ const sections = [
     content: (
       <>
         <p>
-          Regulation 421.1.201, introduced by Amendment 3 to BS 7671:2008 and effective from 1
+          Regulation 421.1.201, introduced by Amendment 4 to BS 7671:2008 and effective from 1
           January 2016, requires that consumer units and similar switchgear in domestic premises
           have a non-combustible (metal) enclosure. The requirement is unchanged in the current
           edition of the wiring regulations, BS 7671:2018+A4:2026.
@@ -492,7 +492,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Plymouth electrical business with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and professional certificate management. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and professional certificate management."
           icon={FileCheck2}
         />
       </>
@@ -507,10 +507,10 @@ const sections = [
 export default function ConsumerUnitReplacementPlymouthPage() {
   return (
     <GuideTemplate
-      title="Consumer Unit Replacement Plymouth | Fuse Box Plymouth — Costs 2026"
-      description="Consumer unit replacement in Plymouth — typical cost £400–£750, metal enclosures mandatory since 2016, Part P notification required. Find a qualified electrician in the PL postcode area and understand the full replacement process."
+      title="Consumer Unit Replacement Plymouth | Fuse Box Plymouth"
+      description="Consumer unit replacement in Plymouth — typical cost £400–£750, metal enclosures mandatory since 2016, Part P notification required."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Electrician Guide"

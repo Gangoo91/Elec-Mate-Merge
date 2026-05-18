@@ -610,7 +610,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify GSHP electrical work"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Everything you need for ground source heat pump installations. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification."
           icon={Layers}
         />
       </>
@@ -626,9 +626,9 @@ export default function GroundSourceHeatPumpElectricalPage() {
   return (
     <GuideTemplate
       title="Ground Source Heat Pump Electrical | Wiring Guide UK"
-      description="Complete guide to ground source heat pump electrical installation in the UK. Power demands, three-phase supply, circulation pump wiring, zone controls, buffer tank immersion, ground loop isolation, MCS certification, and BS 7671 regulations."
+      description="Complete guide to ground source heat pump electrical installation in the UK. Power demands, three-phase supply, circulation pump wiring, zone controls…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Emerging Technology"

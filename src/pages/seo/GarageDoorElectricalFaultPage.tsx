@@ -718,9 +718,9 @@ export default function GarageDoorElectricalFaultPage() {
   return (
     <GuideTemplate
       title="Garage Door Electrical Fault | Wiring & Motor Faults UK"
-      description="Garage door electrical fault finding guide for UK homeowners and electricians. Motor control board faults, limit switch issues, safety sensors, power supply problems, remote control faults, and 2026 repair costs."
+      description="Garage door electrical fault finding guide for UK homeowners and electricians. Motor control board faults, limit switch issues, safety sensors…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Fault Finding Guide"

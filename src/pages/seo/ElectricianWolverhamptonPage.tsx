@@ -460,7 +460,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Wolverhampton electrical business from your phone"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs…"
           icon={MapPin}
         />
       </>
@@ -476,10 +476,10 @@ export default function ElectricianWolverhamptonPage() {
   return (
     <GuideTemplate
       localArea="Wolverhampton"
-      title="Electrician in Wolverhampton | Find Qualified Electricians 2026"
-      description="Find qualified, registered electricians in Wolverhampton. Realistic 2026 pricing, how to verify NICEIC/NAPIT registration, NGED connections, Part P compliance, and Wolverhampton-specific property challenges."
+      title="Electrician in Wolverhampton | Find Qualified Electricians"
+      description="Find qualified, registered electricians in Wolverhampton. Realistic 2026 pricing, how to verify NICEIC/NAPIT registration, NGED connections…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Find an Electrician"

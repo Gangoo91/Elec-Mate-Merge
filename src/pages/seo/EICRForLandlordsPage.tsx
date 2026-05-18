@@ -161,7 +161,7 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          (the IET Wiring Regulations, 18th Edition with Amendment 3). It involves both dead testing
+          (the IET Wiring Regulations, 18th Edition with Amendment 4). It involves both dead testing
           (with the supply isolated) and live testing, covering continuity of protective conductors,
           insulation resistance, polarity, earth fault loop impedance, prospective fault current,
           and RCD operation.
@@ -370,7 +370,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Send the EICR to the landlord instantly"
-          description="Finished the inspection? Send the completed EICR as a professional PDF by email or WhatsApp directly from Elec-Mate — before you leave the property. The landlord has the report within minutes, not days."
+          description="Finished the inspection? Send the completed EICR as a professional PDF by email or WhatsApp directly from Elec-Mate — before you leave the property."
           icon={Send}
         />
       </>
@@ -476,7 +476,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Turn every defect into a priced remedial quote"
-          description="Elec-Mate's remedial works estimator takes every C1, C2, and FI observation from the EICR and prices the fix — materials, labour, and margin. Hand the landlord the report and the quote in the same visit. No second trip."
+          description="Elec-Mate's remedial works estimator takes every C1, C2, and FI observation from the EICR and prices the fix — materials, labour, and margin."
           icon={Receipt}
         />
       </>
@@ -687,7 +687,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Start doing landlord EICRs the fast way"
-          description="Join 1,000+ UK electricians completing EICR certificates on their phones. Board scanner, voice entry, AI defect coding, remedial quoting, and instant delivery. 7-day free trial."
+          description="Join 1,000+ UK electricians completing EICR certificates on their phones. Board scanner, voice entry, AI defect coding, remedial quoting…"
           icon={Camera}
         />
       </>
@@ -703,9 +703,9 @@ export default function EICRForLandlordsPage() {
   return (
     <GuideTemplate
       title="EICR for Landlords 2026 | Legal Requirements UK"
-      description="Complete guide to EICR requirements for UK landlords. Legal obligations under Electrical Safety Standards 2020, penalties up to £30,000, 5-year inspection cycle, remedial work deadlines, and tenant notification rules."
+      description="Complete guide to EICR requirements for UK landlords. Legal obligations under Electrical Safety Standards 2020, penalties up to £30,000…"
       datePublished="2025-01-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Landlord Guide"

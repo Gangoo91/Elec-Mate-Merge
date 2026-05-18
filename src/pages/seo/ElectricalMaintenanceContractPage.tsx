@@ -392,7 +392,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Record emergency lighting tests with Elec-Mate"
-          description="Use Elec-Mate to record emergency lighting test results, generate compliant certificates, and maintain a digital log for each commercial property. Join 1,000+ UK electrical contractors."
+          description="Use Elec-Mate to record emergency lighting test results, generate compliant certificates, and maintain a digital log for each commercial property."
           icon={Zap}
         />
       </>
@@ -619,7 +619,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage maintenance contracts with Elec-Mate"
-          description="Join 1,000+ UK electrical contractors using Elec-Mate for EICR certificates, quoting, invoicing, and job management. Streamline your maintenance contract workflow. 7-day free trial."
+          description="Join 1,000+ UK electrical contractors using Elec-Mate for EICR certificates, quoting, invoicing, and job management."
           icon={Zap}
         />
       </>
@@ -634,10 +634,10 @@ const sections = [
 export default function ElectricalMaintenanceContractPage() {
   return (
     <GuideTemplate
-      title="Electrical Maintenance Contract UK | PPM, EICR, Emergency Lighting and Fire Alarm Guide 2026"
-      description="Complete guide to electrical maintenance contracts for commercial properties. Planned preventative maintenance (PPM) vs reactive, PPM schedules, EICR frequency, PAT testing, emergency lighting tests (BS 5266), fire alarm tests (BS 5839), what to include in a contract, and 2026 pricing (£500–£5,000/year)."
+      title="Electrical Maintenance Contract UK | PPM, EICR, Emergency"
+      description="Complete guide to electrical maintenance contracts for commercial properties. Planned preventative maintenance (PPM) vs reactive, PPM schedules…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Commercial Guide"

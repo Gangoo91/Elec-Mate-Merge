@@ -708,7 +708,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more jobs from Google searches"
-          description="Elec-Mate helps you send professional quotes fast, complete certificates on site, and manage your growing business. Convert Google enquiries into booked jobs. 7-day free trial."
+          description="Elec-Mate helps you send professional quotes fast, complete certificates on site, and manage your growing business."
           icon={Search}
         />
       </>
@@ -724,9 +724,9 @@ export default function GoogleMyBusinessElectricianPage() {
   return (
     <GuideTemplate
       title="Google Business Profile for Electricians | Setup Guide 2026"
-      description="Complete guide to setting up and optimising Google Business Profile for electricians. Step-by-step setup, verification, categories, photo strategy, review generation, Google Posts, service area, and common mistakes."
+      description="Complete guide to setting up and optimising Google Business Profile for electricians. Step-by-step setup, verification, categories, photo strategy…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Marketing Guide"

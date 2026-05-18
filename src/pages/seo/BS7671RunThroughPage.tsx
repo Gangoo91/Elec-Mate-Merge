@@ -39,7 +39,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'BS 7671:2018+A4:2026 (the 18th Edition with Amendment 3) is organised into seven parts, plus appendices — understanding the structure is the key to finding regulations quickly in the exam and on site.',
+  'BS 7671:2018+A4:2026 (the 18th Edition with Amendment 4) is organised into seven parts, plus appendices — understanding the structure is the key to finding regulations quickly in the exam and on site.',
   'Part 1 (Scope, Object, and Fundamental Principles) and Part 2 (Definitions) are foundation knowledge — many exam questions test whether you know what a term means or whether a particular installation falls within scope.',
   'Part 4 (Protection for Safety) is the heaviest exam topic, covering protection against electric shock (Chapter 41), thermal effects (Chapter 42), overcurrent (Chapter 43), voltage disturbances (Chapter 44), and isolation and switching (Chapter 53).',
   'Part 7 (Special Installations or Locations) contains sections that frequently appear in exams — bathrooms (Section 701), swimming pools (Section 702), construction sites (Section 704), agricultural premises (Section 705), and EV charging (Section 722).',
@@ -96,7 +96,7 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>
-          . The "+A4:2026" indicates that Amendment 3 has been incorporated. Every electrician
+          . The "+A4:2026" indicates that Amendment 4 has been incorporated. Every electrician
           working in the UK must understand BS 7671 — it is tested in the C&G 2382 exam, it governs
           every installation you design and build, and it is the standard against which your work is
           inspected and certified.
@@ -108,7 +108,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Ask the AI tutor any BS 7671 question"
-          description="Stuck on a regulation? Ask Elec-Mate's AI tutor to explain it in plain English. Get cross-references, worked examples, and exam-style practice questions — all from your phone."
+          description="Stuck on a regulation? Ask Elec-Mate's AI tutor to explain it in plain English. Get cross-references, worked examples…"
           icon={BrainCircuit}
         />
       </>
@@ -250,13 +250,13 @@ const sections = [
           <strong>Chapter 44 — Protection against voltage disturbances.</strong> This covers
           overvoltage protection and undervoltage protection. The{' '}
           <SEOInternalLink href="/training/bs-7671-amendment-3-course">
-            Amendment 3 addition
+            Amendment 4 addition
           </SEOInternalLink>{' '}
           on bidirectional devices (Section 530, A4:2026 addition) is relevant here.
         </p>
         <SEOAppBridge
           title="Practise Chapter 41 questions with AI feedback"
-          description="Chapter 41 is the most exam-critical chapter. Elec-Mate generates unlimited practice questions on ADS, disconnection times, Zs values, and RCD requirements — with detailed explanations for every answer."
+          description="Chapter 41 is the most exam-critical chapter. Elec-Mate generates unlimited practice questions on ADS, disconnection times, Zs values…"
           icon={ClipboardCheck}
         />
       </>
@@ -467,7 +467,7 @@ const relatedPages: RelatedPage[] = [
   },
   {
     href: '/training/bs-7671-amendment-3-course',
-    title: 'Amendment 3 Course',
+    title: 'Amendment 4 Course',
     description: 'A4:2026 update training — Section 530 bidirectional device requirements.',
     icon: BookMarked,
     category: 'Training',
@@ -505,9 +505,9 @@ export default function BS7671RunThroughPage() {
   return (
     <GuideTemplate
       title="BS 7671 Run-Through Study Guide | 18th Edition Part by Part"
-      description="Complete run-through of BS 7671:2018+A4:2026 for UK electricians. Part 1 to Part 7 overview, key regulations, exam focus areas, and study strategy. AI-powered study tools and unlimited mock exams."
+      description="Complete run-through of BS 7671:2018+A4:2026 for UK electricians. Part 1 to Part 7 overview, key regulations, exam focus areas, and study strategy."
       datePublished="2025-07-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Study Guide"

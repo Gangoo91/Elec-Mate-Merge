@@ -619,7 +619,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage customer contracts and documentation with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, RAMS generation, invoice management, and AI business support. Build better customer relationships with professional documentation. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, RAMS generation, invoice management, and AI business support."
           icon={ClipboardList}
         />
       </>
@@ -634,10 +634,10 @@ const sections = [
 export default function ContractTemplatesElectricianPage() {
   return (
     <GuideTemplate
-      title="Electrical Contractor Contract Templates UK | Customer Contracts"
-      description="What to include in a domestic customer contract for electrical work — Consumer Contracts Regulations 2013, payment schedules, variation orders, defects liability periods, retention, and dispute resolution for UK electrical contractors."
+      title="Electrical Contractor Contract Templates UK | Customer"
+      description="What to include in a domestic customer contract for electrical work — Consumer Contracts Regulations 2013, payment schedules, variation orders…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Business Guide"

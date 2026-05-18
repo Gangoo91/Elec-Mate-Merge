@@ -23,9 +23,9 @@ export default function StudyCentreOnlineCoursesPage() {
   return (
     <ToolTemplate
       title="Online Electrical Courses | Study Centre UK"
-      description="Elec-Mate Study Centre — 46+ online electrical courses for UK electricians and apprentices. Video lessons, interactive quizzes, flashcards, mock exams, progress tracking, and offline study. Covers Level 2, Level 3, 18th Edition, 2391 Inspection and Testing, AM2 preparation, and CPD for qualified electricians."
+      description="Elec-Mate Study Centre — 46+ online electrical courses for UK electricians and apprentices. Video lessons, interactive quizzes, flashcards, mock exams…"
       datePublished="2026-01-14"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Study Centre Online Courses', href: '/tools/study-centre-online-courses' },
@@ -177,7 +177,7 @@ export default function StudyCentreOnlineCoursesPage() {
               </p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>
-                  BS 7671:2018+A4:2026 — what changed in Amendment 3, including new Section 530
+                  BS 7671:2018+A4:2026 — what changed in Amendment 4, including new Section 530
                   requirements for bidirectional and unidirectional devices
                 </li>
                 <li>
@@ -281,7 +281,7 @@ export default function StudyCentreOnlineCoursesPage() {
           appBridge: {
             title: 'Test Your Knowledge with Interactive Quizzes',
             description:
-              'Multiple choice, calculations, scenario-based questions, and drag-and-drop exercises. Instant feedback with BS 7671 references. Track your scores over time.',
+              'Multiple choice, calculations, scenario-based questions, and drag-and-drop exercises. Instant feedback with BS 7671 references.',
             icon: ClipboardCheck,
           },
         },
@@ -498,7 +498,7 @@ export default function StudyCentreOnlineCoursesPage() {
         {
           question: 'Is there a CPD section for qualified electricians?',
           answer:
-            'Yes. The upskilling hub provides CPD courses for qualified electricians covering topics like BS 7671 Amendment 3 changes, EV charger installation, solar PV, battery storage, surge protection, AFDDs, commercial installations, and building management systems. Completed CPD courses are logged automatically and appear on the employer compliance dashboard if your company uses the employer platform.',
+            'Yes. The upskilling hub provides CPD courses for qualified electricians covering topics like BS 7671 Amendment 4 changes, EV charger installation, solar PV, battery storage, surge protection, AFDDs, commercial installations, and building management systems. Completed CPD courses are logged automatically and appear on the employer compliance dashboard if your company uses the employer platform.',
         },
       ]}
       relatedPages={[

@@ -586,7 +586,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional certification for Coventry electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting. Rewires, EV chargers, or HMOs — certify it all on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting."
           icon={MapPin}
         />
       </>
@@ -603,9 +603,9 @@ export default function ElectricianCoventryPage() {
     <GuideTemplate
       localArea="Coventry"
       title="Electrician in Coventry | Local Electrical Guide"
-      description="Complete guide for electricians working in Coventry. NGED DNO, post-war housing rewiring, ring main vs radial circuits, university student HMOs, EV battery gigafactory demand, and realistic Coventry pricing."
+      description="Complete guide for electricians working in Coventry. NGED DNO, post-war housing rewiring, ring main vs radial circuits, university student HMOs…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Location Guide"

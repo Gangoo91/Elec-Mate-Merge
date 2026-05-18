@@ -1,0 +1,344 @@
+{
+  "_note": "How to price X as an electrician — trade-side pricing guides. Audience: UK self-employed electricians, sub-contractors and small business owners deciding what to charge. NOT homeowner cost pages. Updated 2026-05-18.",
+  "_policy": "Always electrician-side. Frame as 'what you should charge for fair margin and survival', not 'what's cheap'. Justify rates with insurance, scheme fees, calibrated kit, liability, A4:2026 compliance overhead.",
+  "jobs": [
+    {
+      "slug": "eicr",
+      "name": "EICR (Periodic Inspection)",
+      "audience": "self-employed electricians and small contractors quoting EICRs",
+      "minPrice": 220,
+      "typicalPrice": "270–360 (3-bed terrace, scheme-registered)",
+      "topPrice": 460,
+      "hourlyTarget": "55–75",
+      "regulatoryRefs": "BS 7671:2018+A4:2026 Chapter 65 + Schedule of Inspections, IET GN3 9th Edition, Electrical Safety Standards in the PRS Regs 2020",
+      "keyConsiderations": [
+        "Charge based on number of circuits + property complexity, not pure hours — older properties with no documentation take longer than 5-circuit new-build flats",
+        "Always quote inspection + remedial separately — never include unknown remedial in the EICR fee",
+        "Factor in your scheme fees (~£500/year NICEIC or NAPIT), professional indemnity (~£500-1000/year), calibrated MFT (~£1,200 every 3-5 years)",
+        "PRS-deadline jobs (5-year cycle approaching) command premium pricing — landlords need it done in time",
+        "Code C1 and C2 observations require you to recommend remedial — the EICR fee covers the report, not the fix"
+      ],
+      "commonMistakes": [
+        "Pricing below scheme members — you'll be undercut by uninsured electricians and end up doing risk-laden work for a loss",
+        "Including 'minor remedial' in the EICR price — quote remedial separately, every time",
+        "Not charging for the certificate write-up time — typical EICR is 60-80% on-site, 20-40% paperwork",
+        "Forgetting commercial premises charge per socket/fitting, not per hour"
+      ]
+    },
+    {
+      "slug": "consumer-unit-replacement",
+      "name": "Consumer Unit Replacement",
+      "audience": "self-employed electricians quoting CU swaps",
+      "minPrice": 380,
+      "typicalPrice": "450–650 (10–14 way RCBO board, domestic)",
+      "topPrice": 900,
+      "hourlyTarget": "55–75",
+      "regulatoryRefs": "BS 7671:2018+A4:2026 (Chapter 53 + Section 442 + AFDD Reg 421.1.7.101), Part P notification, BS EN 61439-3",
+      "keyConsiderations": [
+        "Price the FULL spec including SPD, AFDDs (where mandatory), main switch, RCBOs, labels, EIC certification — not the cheapest possible config",
+        "Tails upgrade is a separate price band — coordinate with the DNO if needed (£80-180 add-on typical)",
+        "Bonding upgrades (gas, water, oil) are frequently needed — quote conditionally on inspection",
+        "Three-phase boards command 1.5-2x domestic prices because of equipment cost + complexity",
+        "Travel + setup time is often skipped from quotes — include it as a minimum visit fee"
+      ],
+      "commonMistakes": [
+        "Quoting a 'CU swap' without specifying RCBO type (AC vs A) — Type A is now standard under A4:2026 considerations",
+        "Forgetting SPD — Chapter 443 makes SPDs effectively mandatory in most installations",
+        "Skipping AFDD on jobs where they're required (HMOs, care homes) — opens you to liability",
+        "Including remedial bonding in the fixed price — quote conditionally"
+      ]
+    },
+    {
+      "slug": "ev-charger-install",
+      "name": "EV Charger Installation",
+      "audience": "OZEV-approved electricians and EV-installation contractors",
+      "minPrice": 650,
+      "typicalPrice": "750–1,200 (7kW domestic, standard run)",
+      "topPrice": 2400,
+      "hourlyTarget": "60–80",
+      "regulatoryRefs": "BS 7671:2018+A4:2026 Section 722, IET Code of Practice for EV Charging Equipment Installation (5th Edition), Electric Vehicles (Smart Charge Points) Regulations 2021",
+      "keyConsiderations": [
+        "OZEV-approved installer status earns a premium — homeowners need it for the grant",
+        "Cable run distance dominates pricing — every metre over 15m adds material cost AND labour",
+        "Type B RCD (or RDC-DD device) is mandatory — not optional, not negotiable on price",
+        "DNO notification (G98/G99) takes time — bake into your fee",
+        "Section 722 + A4:2026 changes mean ongoing kit upgrades — price for current compliance, not legacy",
+        "V2G / V2H bidirectional adds significant complexity — premium pricing justified"
+      ],
+      "commonMistakes": [
+        "Pricing as 'just another circuit' — EV installations are specialised work requiring specific kit + certs",
+        "Skipping the load test — most homes do not have spare capacity for a 7kW charger without load management",
+        "Forgetting weatherproofing + IP rating premium for outdoor installations",
+        "Including extra cable runs as 'site survey will tell' — measure first, quote firm"
+      ]
+    },
+    {
+      "slug": "full-rewire",
+      "name": "Full Domestic Rewire",
+      "audience": "self-employed electricians and small contractors pricing rewires",
+      "minPrice": 3500,
+      "typicalPrice": "4,800–8,500 (3-bed terrace, plaster patching not included)",
+      "topPrice": 15000,
+      "hourlyTarget": "55–75",
+      "regulatoryRefs": "BS 7671:2018+A4:2026 (all chapters), Part P notification, Construction (Design and Management) Regulations 2015",
+      "keyConsiderations": [
+        "Price per circuit + per outlet, not per day — a 3-bed has 8-12 circuits and 35-50 outlets typically",
+        "Chase + plaster patching is normally excluded — call this out explicitly in the quote",
+        "Smoke alarm system to BS 5839-6 Grade D2 is now mandatory on rewires — add the alarm spec separately",
+        "AFDDs in HMOs / certain residential settings under A4:2026 — factor in £15-25 per AFDD-protected way",
+        "Time on site for a 3-bed rewire is typically 8-15 working days — pad the schedule for snags",
+        "Customer-supplied materials (sockets, switches) reduce your margin — quote as 'electrician supplied' by default"
+      ],
+      "commonMistakes": [
+        "Quoting per day — clients will haggle the day rate and squeeze margin",
+        "Including plaster patching in the price (unless you're sub-contracting a plasterer)",
+        "Forgetting the EIC + smoke alarm cert + Part P notification",
+        "Not factoring in DNO coordination for tails upgrades"
+      ]
+    },
+    {
+      "slug": "solar-pv-installation",
+      "name": "Solar PV Installation",
+      "audience": "MCS-certified electricians and PV installers",
+      "minPrice": 4500,
+      "typicalPrice": "5,500–9,500 (4kW system, AC-coupled, no battery)",
+      "topPrice": 18000,
+      "hourlyTarget": "60–80",
+      "regulatoryRefs": "BS 7671:2018+A4:2026 Section 712 (Prosumer's installations), MCS 005, EREC G98/G99 for grid connection, Building Regs Part P",
+      "keyConsiderations": [
+        "MCS certification is the price floor — without it, the homeowner cannot claim SEG payments",
+        "Roof-survey time before quote is critical — never quote off photos alone",
+        "G98 (≤3.68kW per phase) is notification only; G99 requires DNO pre-approval and adds 4-8 weeks",
+        "Battery storage adds 1.5-2x to the system price and falls under Section 712 prosumer rules",
+        "Inverter + cable losses + shading need a competent design — that's where MCS-certified earns the margin"
+      ],
+      "commonMistakes": [
+        "Pricing on raw watts without factoring in roof complexity, scaffold and shading",
+        "Quoting battery storage as 'add it later' — Section 712 design should consider battery from day one",
+        "Skipping the building-regulations notification — solar is notifiable Part P work in most cases"
+      ]
+    },
+    {
+      "slug": "emergency-callout",
+      "name": "Emergency Callout (24/7)",
+      "audience": "electricians offering 24/7 emergency response",
+      "minPrice": 120,
+      "typicalPrice": "120–180 callout fee + £75–110/hour or part hour, plus materials at retail+",
+      "topPrice": 300,
+      "hourlyTarget": "75–110 (premium over standard day rate)",
+      "regulatoryRefs": "BS 7671:2018+A4:2026 (relevant chapters depending on fault), Electricity at Work Regulations 1989",
+      "keyConsiderations": [
+        "Out-of-hours rates should be 1.5-2x your standard day rate — no exceptions",
+        "Bank holiday rates 2-2.5x — your time is worth more, charge accordingly",
+        "Charge a callout fee that covers your first hour minimum — even if the fix is 10 minutes",
+        "Materials at retail + premium (typically +25-40%) — you're not Screwfix, you're a 24/7 emergency electrician",
+        "Make-safe vs full fix — be explicit. Many emergency jobs are make-safe at night, full fix in daylight"
+      ],
+      "commonMistakes": [
+        "Charging your standard day rate at 11pm on a Saturday — you're underselling your time",
+        "Not having a clear callout fee structure — clients will haggle in the moment",
+        "Trying to do a full repair at night when a make-safe + return visit is safer and more profitable",
+        "Forgetting to charge mileage on rural callouts"
+      ]
+    },
+    {
+      "slug": "commercial-install",
+      "name": "Commercial Electrical Installation",
+      "audience": "electrical contractors pricing commercial fit-out work",
+      "minPrice": 5000,
+      "typicalPrice": "Highly variable — £40-70/m² for fit-out, £75-115/hour for project labour",
+      "topPrice": 200000,
+      "hourlyTarget": "75–115 (commercial premium over domestic)",
+      "regulatoryRefs": "BS 7671:2018+A4:2026 (all chapters incl. Section 528, 537), BS EN 61439 (assemblies), CDM 2015, Building Regs Part L (energy efficiency)",
+      "keyConsiderations": [
+        "Always insist on a clear scope document with drawings — verbal scope creep eats commercial margins",
+        "Three-phase supplies, large distribution boards, fire-rated cabling and SWA add significant material cost",
+        "Part L (energy efficiency) increasingly affects lighting design — LED + controls expected",
+        "BIM coordination on larger jobs — if the customer requires BIM model, charge for the time",
+        "Variations / change orders should be priced before work proceeds — never absorb them",
+        "Retention (5-10% held for 12 months) is normal — factor into cashflow"
+      ],
+      "commonMistakes": [
+        "Pricing commercial at domestic hourly rates — completely different liability + indemnity tier",
+        "Not having a clear variation procedure — clients will pile on extras and pay later",
+        "Forgetting parking, mileage and welfare on long commercial jobs",
+        "Skipping the as-built drawings + O&M pack — these are usually contractually required"
+      ]
+    },
+    {
+      "slug": "pat-testing",
+      "name": "PAT Testing (Portable Appliance Testing)",
+      "audience": "electricians offering PAT testing as a stand-alone service or bundled with EICR",
+      "minPrice": 0.85,
+      "typicalPrice": "£0.85–£1.50 per item with minimum visit fees of £85–150",
+      "topPrice": 3,
+      "hourlyTarget": "55–75",
+      "regulatoryRefs": "IET Code of Practice for In-Service Inspection and Testing of Electrical Equipment (5th Edition), Electricity at Work Regulations 1989, HSE INDG236",
+      "keyConsiderations": [
+        "Volume drives the rate — 100+ items = £0.85-£1.20 each, 20 items = £1.50-£2.50 each plus visit fee",
+        "Minimum visit fee must cover your first hour + travel — never accept jobs at the per-item rate alone",
+        "Pass/fail labels + register are part of the deliverable, not extras",
+        "Bundle PAT with EICR for commercial premises — efficient on-site and easier to upsell",
+        "City & Guilds 2377 (PAT testing course) is the recognised competence qualification"
+      ],
+      "commonMistakes": [
+        "Per-item only, no minimum visit fee — you'll lose money on small jobs",
+        "Missing the IT register update — many corporate clients require their asset register updated",
+        "Forgetting to test high-risk equipment (extension leads, multi-way sockets) which are typically 30-50% of failures",
+        "Not labelling items clearly — pass-only labels with date is the minimum"
+      ]
+    },
+    {
+      "slug": "minor-works",
+      "name": "Minor Electrical Work (Minor Works Certificate)",
+      "audience": "self-employed electricians pricing small notifiable / non-notifiable jobs",
+      "minPrice": 95,
+      "typicalPrice": "£95–180 per job (single circuit alteration, new socket on existing circuit)",
+      "topPrice": 350,
+      "hourlyTarget": "55–75",
+      "regulatoryRefs": "BS 7671:2018+A4:2026 (Section 644 + Form 4), Part P (notifiable vs non-notifiable work)",
+      "keyConsiderations": [
+        "Every minor works requires testing (R1+R2, Zs, insulation resistance) and a Minor Works Certificate — bake into the price",
+        "Travel + setup time on a 30-minute job is the same as a 4-hour job — minimum visit fee covers it",
+        "Materials at retail + (sockets, faceplates, fused spurs)",
+        "If the job becomes notifiable mid-way (added a circuit, extended a circuit), it's no longer minor works — quote needs to flex to EIC",
+        "Same-day or next-day availability is worth premium pricing"
+      ],
+      "commonMistakes": [
+        "Skipping the MWC certificate to save time — the certificate IS the deliverable, you're not paid otherwise",
+        "Charging £40 for an 'easy' job — your kit, calibration and insurance cost more than that to maintain",
+        "Forgetting that adding a circuit is notifiable Part P, not minor works"
+      ]
+    },
+    {
+      "slug": "commercial-eicr",
+      "name": "Commercial EICR",
+      "audience": "electrical contractors pricing commercial periodic inspections",
+      "minPrice": 380,
+      "typicalPrice": "£18–28 per socket / fitting with minimum visit £380–650",
+      "topPrice": 8000,
+      "hourlyTarget": "75–115",
+      "regulatoryRefs": "BS 7671:2018+A4:2026 Chapter 65, IET GN3 9th Edition, Electricity at Work Regulations 1989, RR(FS)O 2005",
+      "keyConsiderations": [
+        "Price per socket / fitting + minimum visit, not per hour — that's the industry-standard pricing model",
+        "Three-phase installations and distribution boards take more time per accessory — price band accordingly",
+        "Out-of-hours inspection is often required for retail / hospitality (after closing) — premium rates apply",
+        "Cleanroom, food-prep, medical premises = specialist work, premium pricing",
+        "Report write-up time on a 200-socket commercial premises is significant — bake into pricing"
+      ],
+      "commonMistakes": [
+        "Pricing commercial EICR at domestic hourly rates — completely different time and liability profile",
+        "Not factoring in safe-isolation time on a fully-occupied building",
+        "Forgetting the digital register + asset list deliverable expected by most commercial clients"
+      ]
+    },
+    {
+      "slug": "kitchen-rewire",
+      "name": "Kitchen Rewire",
+      "audience": "electricians quoting kitchen-specific rewiring",
+      "minPrice": 1200,
+      "typicalPrice": "£1,400–2,800 (typical kitchen refurb: sockets, hob, oven, dishwasher, lighting, extractor)",
+      "topPrice": 5500,
+      "hourlyTarget": "55–75",
+      "regulatoryRefs": "BS 7671:2018+A4:2026 (cooker circuit, ring vs radial, RCD protection), Building Regs Part P",
+      "keyConsiderations": [
+        "Cooker circuit is the biggest cost driver — 32A or 40A radial, depending on hob/oven combined rating",
+        "Under-counter sockets need IPX4 in zones near sinks under Section 528 / kitchen-specific guidance",
+        "Dishwasher / washing machine spurs from a ring or radial — confirm with the load calc",
+        "LED downlighter installations need fire hoods if in a ceiling void — add to material cost",
+        "Coordinate with the kitchen fitter on first-fix vs second-fix sequencing"
+      ],
+      "commonMistakes": [
+        "Quoting before final kitchen layout is confirmed — appliance positions change everything",
+        "Including extractor wiring as 'standard' — many extractors need dedicated isolation point",
+        "Forgetting that an island socket installation requires safety considerations not relevant in a standard kitchen"
+      ]
+    },
+    {
+      "slug": "day-rate-subcontract",
+      "name": "Day-Rate / Sub-Contract Work",
+      "audience": "self-employed electricians taking sub-contract day-rate work",
+      "minPrice": 220,
+      "typicalPrice": "£250–340/day (London + South East) or £200–280/day (regional)",
+      "topPrice": 420,
+      "hourlyTarget": "(see day rate above)",
+      "regulatoryRefs": "CIS (Construction Industry Scheme) tax rules, IR35 if applicable, JIB pay scales as a benchmark",
+      "keyConsiderations": [
+        "Day rates assume an 8-hour day — anything over should be at time-and-a-half",
+        "Travel time is usually NOT paid on day rates — factor in mileage / vehicle wear instead",
+        "CIS (Construction Industry Scheme) deductions apply — 20% deducted at source for registered contractors, 30% for unregistered",
+        "Self-employed day rates should be 1.5-2x equivalent JIB hourly to cover lack of holiday / pension / sick pay",
+        "Always invoice via written contract — verbal day rates lead to disputes"
+      ],
+      "commonMistakes": [
+        "Accepting JIB-equivalent day rates as self-employed — you carry all the overhead",
+        "Not registering for CIS — you'll be deducted 30% at source instead of 20%",
+        "Forgetting parking, mileage and welfare on long projects — these eat day-rate margin"
+      ]
+    },
+    {
+      "slug": "out-of-hours",
+      "name": "Out-of-Hours / Unsocial Work",
+      "audience": "electricians offering evening / weekend / night work",
+      "minPrice": 95,
+      "typicalPrice": "£95–145/hour (1.5x-2x standard rate)",
+      "topPrice": 200,
+      "hourlyTarget": "(premium tier — see typical price)",
+      "regulatoryRefs": "BS 7671:2018+A4:2026, EAWR 1989 (especially for occupied premises), CDM 2015 if applicable",
+      "keyConsiderations": [
+        "Premium rates are non-negotiable for evenings / weekends / bank holidays — your family time has a price",
+        "Retail / hospitality OOH work is typical (work happens after closing) — bill at a clear premium",
+        "Safe isolation in occupied premises is harder — add time + supervision cost",
+        "Sleep-out / on-call retainers are a separate fee on top of any callout"
+      ],
+      "commonMistakes": [
+        "Quoting standard rates because 'it's only a couple of hours' — the precedent costs you forever",
+        "Not having a clear OOH rate schedule (evenings, weekends, bank holidays) communicated upfront"
+      ]
+    },
+    {
+      "slug": "maintenance-contract",
+      "name": "Maintenance Contract (Annual / Quarterly)",
+      "audience": "electrical contractors selling maintenance contracts to commercial / industrial clients",
+      "minPrice": 1200,
+      "typicalPrice": "£1,800–4,500/year (small office), £8,000–25,000/year (factory / care home)",
+      "topPrice": 60000,
+      "hourlyTarget": "(contract-based, but daily rate during reactive callouts)",
+      "regulatoryRefs": "BS 7671:2018+A4:2026, EAWR 1989, RR(FS)O 2005, ISO 9001 if applicable",
+      "keyConsiderations": [
+        "Maintenance contracts trade margin for predictable cashflow — price for both reactive AND scheduled work",
+        "Define response SLAs clearly (4-hour, 24-hour, next business day) and price each tier",
+        "Include scheduled EICR / fire alarm / emergency lighting tests where appropriate",
+        "Parts at retail+ (typically 25-40% markup on commercial parts)",
+        "Annual review + price adjustment for inflation built into the contract"
+      ],
+      "commonMistakes": [
+        "Pricing the contract at standard hourly rate × estimated hours — leaves no margin for surprise callouts",
+        "Including 'unlimited' callouts at the contract price — leaves you exposed to runaway labour",
+        "Not annual-reviewing or inflation-adjusting — multi-year contracts erode margin"
+      ]
+    },
+    {
+      "slug": "smart-home-installation",
+      "name": "Smart Home Installation",
+      "audience": "electricians pricing smart home retrofits and new-build smart fit-outs",
+      "minPrice": 1500,
+      "typicalPrice": "£2,500–6,500 (single-room smart upgrade through whole-house Cat6 + PoE lighting)",
+      "topPrice": 30000,
+      "hourlyTarget": "60–85",
+      "regulatoryRefs": "BS 7671:2018+A4:2026 (Sections 528, 715), BS EN 50173 (Generic cabling), BS EN 50174 (Cable installation)",
+      "keyConsiderations": [
+        "Smart-home is a premium service — clients pay for design + commissioning, not just install",
+        "Whole-house Cat6 + PoE LED is the high-value sweet spot — bundle the package",
+        "DALI / KNX certification adds margin — many electricians can install but few can commission",
+        "Section 715 ELV crossover with Section 528 segregation must be respected — pricing should reflect the design time",
+        "Customer-supplied IoT devices (Ring, Hue, Nest) reduce your margin — quote 'Elec-Mate supplied' as default"
+      ],
+      "commonMistakes": [
+        "Quoting smart home at standard domestic install rates — completely different design + commissioning effort",
+        "Not factoring in the data certification (BS EN 50346 channel test) on the Cat6 / Cat6a installation",
+        "Forgetting commissioning time on DALI / KNX — installation is half the job, commissioning is the other half"
+      ]
+    }
+  ]
+}

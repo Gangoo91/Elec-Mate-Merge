@@ -610,8 +610,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Complete EICRs and EICs with correct earthing system documentation"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR and EIC completion. Built-in guidance for earthing system identification, AI board scanning, and instant PDF export. 7-day free trial."
+          title="Complete EICRs and EICs with correct earthing system"
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR and EIC completion. Built-in guidance for earthing system identification, AI board scanning…"
           icon={FileCheck2}
         />
       </>
@@ -626,10 +626,10 @@ const sections = [
 export default function EarthingSystemsGuidePage() {
   return (
     <GuideTemplate
-      title="UK Earthing Systems Guide | TN-S, TN-C-S, TT Systems Explained"
-      description="Complete guide to UK earthing systems. TN-S, TN-C-S (PME) and TT explained with PME limitations, EV charging requirements, outbuilding supplies, earth loop impedance differences, and how to identify the earthing system on site."
+      title="UK Earthing Systems Guide | TN-S, TN-C-S, TT Systems"
+      description="Complete guide to UK earthing systems. TN-S, TN-C-S (PME) and TT explained with PME limitations, EV charging requirements, outbuilding supplies…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Wiring Guide"

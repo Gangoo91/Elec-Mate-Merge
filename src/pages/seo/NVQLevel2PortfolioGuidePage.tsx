@@ -414,7 +414,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Capture portfolio evidence with Elec-Mate"
-          description="Elec-Mate helps you photograph work with structured templates, add descriptions, and map evidence to NVQ units. Your portfolio builds automatically as you document your work."
+          description="Elec-Mate helps you photograph work with structured templates, add descriptions, and map evidence to NVQ units."
           icon={Camera}
         />
       </>
@@ -662,9 +662,9 @@ export default function NVQLevel2PortfolioGuidePage() {
   return (
     <GuideTemplate
       title="NVQ Level 2 Electrical Portfolio Guide | What You Need"
-      description="Complete guide to building your NVQ Level 2 Electrical Installations portfolio. Evidence types, mandatory units, photographing work, common rejections, assessor expectations, and digital vs paper portfolios."
+      description="Complete guide to building your NVQ Level 2 Electrical Installations portfolio. Evidence types, mandatory units, photographing work, common rejections…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

@@ -726,7 +726,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage your tools, quotes, and certificates from the van"
-          description="Elec-Mate puts quoting, cable sizing, and certificate completion on your phone. Quote from the survey, size cables on site, and complete certificates before you leave. Everything the well-organised electrician needs."
+          description="Elec-Mate puts quoting, cable sizing, and certificate completion on your phone. Quote from the survey, size cables on site…"
           icon={Truck}
         />
       </>
@@ -742,9 +742,9 @@ export default function BestVanRackingElectriciansPage() {
   return (
     <GuideTemplate
       title="Best Van Racking for Electricians 2026 | Systems Compared"
-      description="Honest comparison of the best van racking systems for UK electricians in 2026. Sortimo, Bott Smartvan, Van Guard, Modul-System, and DIY options compared by price, weight, modularity, and suitability for Transit Custom, Vivaro, and Berlingo vans."
+      description="Honest comparison of the best van racking systems for UK electricians in 2026. Sortimo, Bott Smartvan, Van Guard, Modul-System…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Equipment Guide"

@@ -18,10 +18,10 @@ import {
 export default function BusbarSizingCalculatorPage() {
   return (
     <ToolTemplate
-      title="Busbar Calculator | Free Sizing Tool"
-      description="Free busbar calculator for copper and aluminium. Size conductors to BS 7671:2018+A4:2026, check current rating, voltage drop and temperature rise in seconds."
+      title="Busbar Calculator | BS 7671:2018+A4:2026"
+      description="Busbar calculator for copper and aluminium sizing to BS 7671:2018+A4:2026. Calculate current rating, voltage drop and temperature rise in seconds."
       datePublished="2026-02-01"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Busbar Sizing Calculator', href: '/tools/busbar-sizing-calculator' },
@@ -540,7 +540,7 @@ export default function BusbarSizingCalculatorPage() {
           icon: Calculator,
           title: 'Instant Sizing Calculation',
           description:
-            'Enter the design current and installation conditions. The calculator determines the minimum busbar cross-section and selects the nearest standard busbar size.',
+            'Enter the design current and installation conditions. The calculator determines the minimum busbar cross-section and selects the nearest standard busbar…',
         },
         {
           icon: Layers,
@@ -564,7 +564,7 @@ export default function BusbarSizingCalculatorPage() {
           icon: Shield,
           title: 'Short-Circuit Withstand Check',
           description:
-            'Verifies the busbar can withstand the thermal effects of the prospective fault current using the adiabatic equation with correct k factors for copper and aluminium.',
+            'Verifies the busbar can withstand the thermal effects of the prospective fault current using the adiabatic equation with correct k factors for copper and…',
         },
         {
           icon: Settings,

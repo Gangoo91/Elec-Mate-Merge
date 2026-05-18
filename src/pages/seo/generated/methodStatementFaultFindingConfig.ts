@@ -5,14 +5,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Electricity at Work Regulations 1989 and HSE guidance HSR25 / GS38.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const methodStatementFaultFindingConfig: GeneratedGuideConfig = {
   pagePath: '/guides/method-statement-fault-finding',
   title:
-    'Method Statement for Electrical Fault Finding — UK Procedure | Elec-Mate',
+    'Method Statement for Electrical Fault Finding — UK',
   description:
-    'Method statement for electrical fault finding in the UK: hazard identification, systematic diagnostic procedure, dead vs live testing decision, GS38 test instruments, PPE, documentation and EICR code outcomes. Aligned to BS 7671:2018+A4:2026, IET GN3, EAWR 1989 and HSE GS38.',
+    'Method statement for electrical fault finding in the UK: hazard identification, systematic diagnostic procedure, dead vs live testing decision…',
   datePublished: published,
   dateModified: modified,
   readingTime: 12,

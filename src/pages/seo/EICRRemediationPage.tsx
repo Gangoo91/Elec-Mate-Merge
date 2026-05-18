@@ -532,7 +532,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs and win remediation work with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate to complete on-site EICRs, quote for remediation work instantly, and produce all required certificates. 7-day free trial, cancel anytime."
+          description="Join 1,000+ UK electricians using Elec-Mate to complete on-site EICRs, quote for remediation work instantly, and produce all required certificates."
           icon={FileCheck2}
         />
       </>
@@ -548,9 +548,9 @@ export default function EICRRemediationPage() {
   return (
     <GuideTemplate
       title="EICR Remediation Work UK | Fixing EICR Failures Guide"
-      description="Complete guide to EICR remediation work. Understand C1 (danger present), C2 (potentially dangerous), C3 (improvement recommended) and FI (further investigation) codes, the 28-day deadline, typical remediation costs, and whether to use the same or a different electrician."
+      description="EICR remediation work explained: C1 (danger present), C2 (potentially dangerous), C3 (improvement), FI. What to fix, costs, time, certification."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Remediation Guide"

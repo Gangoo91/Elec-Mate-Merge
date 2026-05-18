@@ -19,9 +19,9 @@ export default function LandlordElectricalSafetyPage() {
   return (
     <GuideTemplate
       title="Landlord Electrical Safety | Complete Guide UK 2026"
-      description="Complete guide to landlord electrical safety requirements in the UK. Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020, EICR requirements, 5-year cycle, 28-day remedial work, £30,000 penalties, Scotland and Wales differences, HMO requirements, finding qualified electricians, and insurance."
+      description="Complete guide to landlord electrical safety requirements in the UK. Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020…"
       datePublished="2025-01-15"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'Landlord Electrical Safety', href: '/guides/landlord-electrical-safety' },
@@ -222,7 +222,7 @@ export default function LandlordElectricalSafetyPage() {
               </p>
               <SEOAppBridge
                 title="Track Properties and Certificates in Elec-Mate"
-                description="Elec-Mate lets electricians track all properties, tenants, and certificate expiry dates for their landlord clients. Set reminders before EICRs expire, and send renewal reminders to landlords automatically. Never miss a renewal date."
+                description="Elec-Mate lets electricians track all properties, tenants, and certificate expiry dates for their landlord clients."
                 icon={Clock}
               />
             </>
@@ -444,7 +444,7 @@ export default function LandlordElectricalSafetyPage() {
               </p>
               <SEOAppBridge
                 title="Remedial Estimator Turns Defects Into Quotes"
-                description="Elec-Mate's AI Cost Engineer can take the C1 and C2 observations from an EICR and generate an itemised remedial quote in seconds. It prices the materials, estimates the labour time, and produces a professional PDF quote ready to send to the landlord — all from your phone on site."
+                description="Elec-Mate's AI Cost Engineer can take the C1 and C2 observations from an EICR and generate an itemised remedial quote in seconds."
                 icon={PoundSterling}
               />
             </>

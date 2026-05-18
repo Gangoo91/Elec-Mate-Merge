@@ -216,7 +216,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Attach thermal images to EICR observations on your phone"
-          description="Elec-Mate's EICR app lets you attach thermal images directly to coded observations, providing clients with visual evidence of faults in your professional inspection reports."
+          description="Elec-Mate's EICR app lets you attach thermal images directly to coded observations…"
           icon={ShieldCheck}
         />
       </>
@@ -485,10 +485,10 @@ const sections = [
 export default function ThermalImagingElectricalPage() {
   return (
     <GuideTemplate
-      title="Thermal Imaging for Electrical Inspections | IEC 62446-3 and Camera Specs"
-      description="Complete guide to thermal imaging in electrical inspections for UK electricians. Covers use in EICRs, hotspot identification, IEC 62446-3 for solar PV, camera specifications (NETD below 50mK, 320×240 resolution minimum), and NETA standards."
+      title="Thermal Imaging for Electrical Inspections | IEC 62446-3"
+      description="Complete guide to thermal imaging in electrical inspections for UK electricians. Covers use in EICRs, hotspot identification, IEC 62446-3 for solar PV…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Inspection Guide"

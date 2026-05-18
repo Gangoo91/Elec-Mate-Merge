@@ -473,10 +473,10 @@ export default function ElectricianKentPage() {
   return (
     <GuideTemplate
       localArea="Kent"
-      title="Electrician Kent — Find Qualified Electricians in Maidstone, Canterbury, Tunbridge Wells, Dover"
-      description="Find NICEIC and NAPIT registered electricians across Kent, covering Maidstone, Canterbury, Tunbridge Wells, Folkestone, Dover, Ashford, and the Medway towns. EICR, rewires, EV charging, and commercial electrical work."
+      title="Electrician Kent — Find Qualified Electricians in"
+      description="Find NICEIC and NAPIT registered electricians across Kent, covering Maidstone, Canterbury, Tunbridge Wells, Folkestone, Dover, Ashford…"
       datePublished="2025-01-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Location Guide"

@@ -291,8 +291,8 @@ const sections = [
           the Electricity at Work Regulations 1989.
         </p>
         <SEOAppBridge
-          title="Complete electrical certificates for rail station and depot work"
-          description="Elec-Mate's EIC and test record tools are ideal for station fit-out and depot electrical work documentation. Produce professional PDF certificates on site. 7-day free trial."
+          title="Complete electrical certificates for rail station and depot"
+          description="Elec-Mate's EIC and test record tools are ideal for station fit-out and depot electrical work documentation."
           icon={FileCheck2}
         />
       </>
@@ -378,9 +378,9 @@ export default function RailElectricalWorkPage() {
   return (
     <GuideTemplate
       title="Rail Electrical Work UK | PTS Card, Sentinel, OLEC Guide"
-      description="Complete guide to rail electrical work in the UK. Network Rail PTS card, Sentinel competency scheme, OLEC (Overhead Line Electrical Competency), BS EN 50110 switching, station and depot fit-outs, and pay rates from £35–£90+/hr."
+      description="Complete guide to rail electrical work in the UK. Network Rail PTS card, Sentinel competency scheme, OLEC (Overhead Line Electrical Competency)…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Specialist Guide"

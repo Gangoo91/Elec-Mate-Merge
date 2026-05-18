@@ -497,10 +497,10 @@ const sections = [
 export default function PartialPowerLossPage() {
   return (
     <GuideTemplate
-      title="Partial Power Loss Fault Finding | Missing Phase, Open Neutral, Failed MCB"
-      description="Complete guide to diagnosing partial power loss for UK electricians. Covers missing phase in three-phase premises, open circuit neutral dangers, failed MCBs, multimeter diagnostic checks, and safe isolation procedure."
+      title="Partial Power Loss Fault Finding | Missing Phase, Open"
+      description="Complete guide to diagnosing partial power loss for UK electricians. Covers missing phase in three-phase premises, open circuit neutral dangers…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Fault Finding Guide"

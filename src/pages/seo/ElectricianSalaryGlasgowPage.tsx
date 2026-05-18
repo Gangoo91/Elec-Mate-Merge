@@ -625,9 +625,9 @@ export default function ElectricianSalaryGlasgowPage() {
   return (
     <GuideTemplate
       title="Electrician Salary Glasgow 2025 | Electrician Pay Glasgow"
-      description="Electrician salary guide for Glasgow 2025. JIB-SECTA Scotland rates, self-employed day rates, industrial and offshore energy uplifts, SECTT apprentice pay, benefits, and Glasgow vs Edinburgh pay comparison."
+      description="Electrician salary guide for Glasgow 2025. JIB-SECTA Scotland rates, self-employed day rates, industrial and offshore energy uplifts…"
       datePublished="2025-01-01"
-      dateModified="2026-04-11"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Salary Guide"

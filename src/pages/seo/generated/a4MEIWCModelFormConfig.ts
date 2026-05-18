@@ -6,14 +6,14 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // IET On-Site Guide.
 
 const published = '2026-05-17';
-const modified = '2026-05-17';
+const modified = '2026-05-18';
 
 export const a4MEIWCModelFormConfig: GeneratedGuideConfig = {
   pagePath: '/guides/bs-7671-a4-2026-meiwc-model-form',
   title:
-    'BS 7671 A4:2026 — Minor Electrical Installation Works Certificate (MEIWC) Changes | Elec-Mate',
+    'BS 7671 A4:2026 — Minor Electrical Installation Works',
   description:
-    'Amendment 4 (2026) added AFDD and SPD recording to the BS 7671 Minor Electrical Installation Works Certificate. Plus TN-C-S (PME) / (PNB) split, reference method, and the new "test button operation" lines. Every MEIWC change visible on the canonical IET form.',
+    'Amendment 4 (2026) added AFDD and SPD recording to the BS 7671 Minor Electrical Installation Works Certificate.',
   datePublished: published,
   dateModified: modified,
   readingTime: 10,

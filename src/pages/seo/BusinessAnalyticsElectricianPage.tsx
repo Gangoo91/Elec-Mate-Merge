@@ -21,9 +21,9 @@ export default function BusinessAnalyticsElectricianPage() {
   return (
     <BusinessTemplate
       title="Business Analytics for Electricians | Dashboard"
-      description="Track revenue, job profitability, customer trends, and cash flow with analytics built for UK electricians. Real-time dashboards, KPIs, and actionable insights to grow your electrical business."
+      description="Track revenue, job profitability, customer trends, and cash flow with analytics built for UK electricians. Live dashboards. 7-day free trial."
       datePublished="2025-08-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={[
         { label: 'Business Tools', href: '/tools' },
         { label: 'Business Analytics', href: PAGE_PATH },
@@ -257,7 +257,7 @@ export default function BusinessAnalyticsElectricianPage() {
           appBridge: {
             title: 'Predict Your Cash Position Months Ahead',
             description:
-              'Elec-Mate combines your pipeline, invoice data, and expense schedules to forecast cash flow automatically. Spot gaps early and take action before they become crises.',
+              'Elec-Mate combines your pipeline, invoice data, and expense schedules to forecast cash flow automatically.',
             icon: LineChart,
           },
         },
@@ -437,7 +437,7 @@ export default function BusinessAnalyticsElectricianPage() {
           applicationCategory: 'BusinessApplication',
           operatingSystem: 'Web, iOS, Android',
           description:
-            'Real-time business analytics for UK electricians. Track revenue, job profitability, customer trends, cash flow, and KPIs — all in one dashboard built for the electrical trade.',
+            'Real-time business analytics for UK electricians. Track revenue, job profitability, customer trends, cash flow…',
           url: 'https://www.elec-mate.com/tools/business-analytics-electrician',
           offers: {
             '@type': 'Offer',

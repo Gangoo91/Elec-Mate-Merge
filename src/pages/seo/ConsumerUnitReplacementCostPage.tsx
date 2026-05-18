@@ -95,7 +95,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/consumer-unit-regulations',
     title: 'Consumer Unit Regulations UK',
     description:
-      'Detailed guide to the regulations governing consumer units including Amendment 3 changes.',
+      'Detailed guide to the regulations governing consumer units including Amendment 4 changes.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -170,7 +170,7 @@ const sections = [
           </SEOInternalLink>
           , Regulation 421.1.201 requires that consumer units in domestic premises be as a
           type-tested coordinated assembly designed for use by ordinary persons, providing manual
-          double-pole isolation on incoming circuits. Since January 2016, Amendment 3 to BS 7671
+          double-pole isolation on incoming circuits. Since January 2016, Amendment 4 to BS 7671
           mandated that all new domestic consumer units must be housed in a non-combustible (metal)
           enclosure — a critical fire safety improvement.
         </p>
@@ -372,7 +372,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Price consumer unit replacements accurately"
-          description="Elec-Mate's quoting app lets you itemise every component, apply your margins, and send a professional PDF quote to the customer. AI cost engineering checks your prices against trade data."
+          description="Elec-Mate's quoting app lets you itemise every component, apply your margins, and send a professional PDF quote to the customer."
           icon={Calculator}
         />
         <p>
@@ -659,7 +659,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify CU replacements faster"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site EIC certification. Everything you need for consumer unit replacements. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site EIC certification. Everything you need for consumer unit replacements."
           icon={Wrench}
         />
       </>
@@ -675,9 +675,9 @@ export default function ConsumerUnitReplacementCostPage() {
   return (
     <GuideTemplate
       title="Consumer Unit Replacement Cost 2026 | UK Price Guide"
-      description="How much does a consumer unit replacement cost in 2026? Complete UK price guide covering material costs, labour, Part P notification, EIC certification, and factors affecting price. Real trade pricing data."
+      description="How much does a consumer unit replacement cost in 2026? Complete UK price guide covering material costs, labour, Part P notification, EIC certification…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

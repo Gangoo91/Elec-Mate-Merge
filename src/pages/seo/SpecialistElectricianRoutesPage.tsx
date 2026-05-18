@@ -139,7 +139,7 @@ const specialist = [
     entry: '2–3 years post-qualification + CompEx Foundation Units (Ex01–Ex04)',
     sectors: 'Oil and gas, petrochem, pharmaceuticals, food manufacturing, offshore',
     description:
-      'CompEx certification is the UK standard for working in explosive atmospheres (ATEX classified zones). Work includes inspection, installation, and maintenance of Ex-rated equipment (Ex d, Ex e, Ex i, Ex p enclosures). The small pool of CompEx-certified UK electricians relative to demand creates a strong ongoing rate premium.',
+      'CompEx certification is the UK standard for working in explosive atmospheres (ATEX classified zones).',
   },
   {
     id: 'hv',
@@ -151,7 +151,7 @@ const specialist = [
     entry: '5+ years LV experience + employer HV authorisation programme',
     sectors: 'DNOs, large industrial, data centres, substations, renewable energy',
     description:
-      'HV electricians (Authorised Persons) perform switching, isolation, and maintenance on systems above 1,000V AC. Authorisation is site- and employer-specific. The Electricity at Work Regulations 1989 govern HV work. Demand is driven by the energy transition — new grid connections, substations, and offshore wind O&M all require HV-authorised personnel.',
+      'HV electricians (Authorised Persons) perform switching, isolation, and maintenance on systems above 1,000V AC.',
   },
   {
     id: 'nuclear',
@@ -163,7 +163,7 @@ const specialist = [
     entry: '3+ years experience + nuclear site vetting + site-specific competency training',
     sectors: 'EDF Nuclear, Rolls-Royce SMR, Sellafield, UKAEA',
     description:
-      'Nuclear electrical work is the highest-regulated sector in the UK. All workers undergo detailed security vetting (CTC or higher). Nuclear Quality Assurance requirements (NQA-1, ISO 19443) add significant documentation and process discipline to every task. Nuclear decommissioning (Sellafield in particular) provides long-term, well-funded programmes. New build (Hinkley Point C, Sizewell C) will create substantial demand through the 2030s.',
+      'Nuclear electrical work is the highest-regulated sector in the UK. All workers undergo detailed security vetting (CTC or higher).',
   },
   {
     id: 'rail',
@@ -175,7 +175,7 @@ const specialist = [
     entry: 'PTS (Personal Track Safety) + Network Rail or TfL approved contractor',
     sectors: 'Network Rail, TfL (London Underground), HS2, tram networks',
     description:
-      'Rail electrical work encompasses infrastructure (power supply, signal cable, platform electrical) and rolling stock. Work is typically carried out at night and weekends (engineering hours) to avoid disruption to services, which drives the shift supplements. The large HS2 programme and ongoing TfL capital investment provide long-term demand. A Safety Management System (SMS) and Sentinel card are required for rail work in addition to PTS.',
+      'Rail electrical work encompasses infrastructure (power supply, signal cable, platform electrical) and rolling stock.',
   },
   {
     id: 'offshore',
@@ -187,7 +187,7 @@ const specialist = [
     entry: 'BOSIET (offshore survival), CompEx, MIST safety awareness + operator approval',
     sectors: 'North Sea oil and gas, offshore wind (installation and O&M)',
     description:
-      'Offshore electrical work requires BOSIET (Basic Offshore Safety Induction and Emergency Training — the offshore survival certificate), CompEx certification for most oil and gas installations, and operator or employer approval. The rotation model (28 days on, 28 days off is common) means the effective annual time worked is roughly half the year, making the annual salary figure misleading — the effective day rate is very high. Offshore wind O&M is a growing sector with more manageable rotations than oil and gas.',
+      'Offshore electrical work requires BOSIET (Basic Offshore Safety Induction and Emergency Training — the offshore survival certificate)…',
   },
   {
     id: 'data-centre',
@@ -199,7 +199,7 @@ const specialist = [
     entry: 'Strong LV/MV experience + critical systems training (UPS, generators, switchgear)',
     sectors: 'Co-location facilities, cloud provider (AWS, Azure, Google), enterprise',
     description:
-      'Data centre electrical work demands exceptional process discipline — every task in a live data centre requires a detailed permit-to-work, impact assessment, and often a Change Advisory Board (CAB) approval. UPS, generator, and switchgear knowledge are the core technical requirements. The UK data centre market is one of the largest in Europe and growing rapidly with cloud infrastructure investment.',
+      'Data centre electrical work demands exceptional process discipline — every task in a live data centre requires a detailed permit-to-work…',
   },
   {
     id: 'bms',
@@ -211,7 +211,7 @@ const specialist = [
     entry: 'Electrical background + BMS manufacturer training (Trend, Siemens, Honeywell, JCI)',
     sectors: 'Commercial buildings, hospitals, universities, data centres',
     description:
-      'BMS engineers programme and commission control systems that manage HVAC, lighting, access control, and energy management in large buildings. The role combines electrical knowledge with IT, networking, and software skills. Manufacturer-specific training is the primary entry route. BMS engineers with commissioning experience on major commercial buildings are in consistently short supply.',
+      'BMS engineers programme and commission control systems that manage HVAC, lighting, access control, and energy management in large buildings.',
   },
   {
     id: 'fire-security',
@@ -223,7 +223,7 @@ const specialist = [
     entry: 'FIA Level 3 Award or EAL Level 3 Fire Alarm qualification + BAFE/NSI/SSAIB registration',
     sectors: 'Commercial, residential, healthcare, public sector',
     description:
-      'Fire alarm installation and commissioning to BS 5839, access control, CCTV, and intruder alarm installation. BAFE SP203 certification (for companies) and NSI or SSAIB membership (for security systems) are required for most commercial and insurance-grade installations. The recurring maintenance revenue model makes fire and security businesses highly attractive — clients are contractually obligated to service their systems annually, providing stable income.',
+      'Fire alarm installation and commissioning to BS 5839, access control, CCTV, and intruder alarm installation.',
   },
 ];
 
@@ -332,7 +332,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Document your specialist work professionally"
-          description="Elec-Mate helps specialist electricians produce professional certificates and maintain a verifiable portfolio of complex installations. Start your 7-day free trial."
+          description="Elec-Mate helps specialist electricians produce professional certificates and maintain a verifiable portfolio of complex installations."
           icon={Star}
         />
       </>
@@ -347,10 +347,10 @@ const sections = [
 export default function SpecialistElectricianRoutesPage() {
   return (
     <GuideTemplate
-      title="Specialist Electrician Routes UK | ATEX, HV, Rail, Offshore & More"
-      description="Overview of 8 specialist electrician routes in the UK — ATEX/CompEx, HV, nuclear, rail, offshore, data centre, BMS, and fire/security. Salary uplift, entry routes, and how each route compares."
+      title="Specialist Electrician Routes UK | ATEX, HV, Rail, Offshore"
+      description="Overview of 8 specialist electrician routes in the UK — ATEX/CompEx, HV, nuclear, rail, offshore, data centre, BMS, and fire/security."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

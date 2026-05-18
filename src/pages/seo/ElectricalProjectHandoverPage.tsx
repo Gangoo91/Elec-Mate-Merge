@@ -494,7 +494,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Generate handover documentation on site"
-          description="Elec-Mate creates professional EICs, test schedules, and handover packs digitally — complete on site and share instantly with your customer. 7-day free trial."
+          description="Elec-Mate creates professional EICs, test schedules, and handover packs digitally — complete on site and share instantly with your customer."
           icon={FileCheck2}
         />
       </>
@@ -509,10 +509,10 @@ const sections = [
 export default function ElectricalProjectHandoverPage() {
   return (
     <GuideTemplate
-      title="Electrical Project Handover Guide UK 2026 | Documentation Checklist"
-      description="Complete guide to electrical project handover. EIC certificates, O&M manuals, as-built drawings, client walkthrough, warranty, and commercial handover requirements."
+      title="Electrical Project Handover Guide UK 2026 | Documentation"
+      description="Complete guide to electrical project handover. EIC certificates, O&M manuals, as-built drawings, client walkthrough, warranty…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Project Guide"

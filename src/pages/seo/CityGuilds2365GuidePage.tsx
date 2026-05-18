@@ -626,8 +626,8 @@ const sections = [
           for the rest of your working life.
         </p>
         <SEOAppBridge
-          title="Support your 2365 studies with Elec-Mate"
-          description="Mock exams, flashcards, and AI tutoring for every topic in the City & Guilds 2365. Revise electrical science, BS 7671, and design calculations at your own pace. 7-day free trial."
+          title="City & Guilds 2365 Mock Exams & Revision"
+          description="City & Guilds 2365 revision with 200+ mock exam questions, flashcards, and BS 7671:2018+A4:2026 guides. Pass first time with structured study plans."
           icon={GraduationCap}
         />
       </>
@@ -643,9 +643,9 @@ export default function CityGuilds2365GuidePage() {
   return (
     <GuideTemplate
       title="City & Guilds 2365 | Electrical Installation Course Guide"
-      description="Complete guide to the City & Guilds 2365 Diploma in Electrical Installations. Level 2 vs Level 3, course structure, exam format, practical assessments, entry requirements, costs, and how it relates to the apprenticeship."
+      description="Complete guide to the City & Guilds 2365 Diploma in Electrical Installations. Level 2 vs Level 3, course structure, exam format, practical assessments…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Course Guide"

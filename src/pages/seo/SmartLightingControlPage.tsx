@@ -590,8 +590,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Grow your smart lighting and building controls business with Elec-Mate"
-          description="Quote, invoice, and manage DALI, KNX, and smart lighting control projects with Elec-Mate. Accurate materials pricing and professional PDF quotes. 7-day free trial."
+          title="Grow your smart lighting and building controls business"
+          description="Quote, invoice, and manage DALI, KNX, and smart lighting control projects with Elec-Mate. Accurate materials pricing and professional PDF quotes."
           icon={FileCheck2}
         />
       </>
@@ -607,9 +607,9 @@ export default function SmartLightingControlPage() {
   return (
     <GuideTemplate
       title="Smart Lighting Control Systems UK | DALI, KNX & Lutron Guide"
-      description="Smart lighting control systems guide for the UK. DALI (IEC 62386), KNX, and Lutron Caseta/RA2 explained. Scene setting, occupancy sensors, daylight harvesting, emergency lighting integration under BS 5266, retrofit vs new build options, and costs."
+      description="Smart lighting control systems for UK installations: DALI (BS EN 62386), KNX, Lutron Caseta/RA2 explained — protocols, cabling, commissioning, cost."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Lighting Systems Guide"

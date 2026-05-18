@@ -399,7 +399,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Look up fire alarm regulations instantly"
-          description="Use Elec-Mate's AI regulations assistant to check smoke alarm, heat alarm, and CO alarm requirements for any property type — rented, HMO, new-build, or owner-occupied. Get the correct BS 5839-6 category and grade in seconds."
+          description="Use Elec-Mate's AI regulations assistant to check smoke alarm, heat alarm, and CO alarm requirements for any property type — rented, HMO, new-build…"
           icon={Brain}
         />
       </>
@@ -535,7 +535,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Create fire alarm certificates on site"
-          description="Elec-Mate generates professional fire alarm installation certificates and BS 5839-6 compliance documents. Complete the certificate on your phone, export as PDF, and send to the landlord before you leave."
+          description="Elec-Mate generates professional fire alarm installation certificates and BS 5839-6 compliance documents."
           icon={FileCheck2}
         />
       </>
@@ -608,9 +608,9 @@ export default function SmokeAlarmRegs2022Page() {
   return (
     <GuideTemplate
       title="Smoke Alarm Regulations 2022 | England Requirements"
-      description="Complete guide to the Smoke and Carbon Monoxide Alarm (Amendment) Regulations 2022 for England. Covers interlinked alarms, CO alarm requirements for gas boilers, landlord duties, enforcement, and installation guidance for electricians."
+      description="Smoke and Carbon Monoxide Alarm (Amendment) Regulations 2022 for England: what landlords must fit, where, when, penalties, BS 5839-6 alignment."
       datePublished="2025-03-20"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations Guide"

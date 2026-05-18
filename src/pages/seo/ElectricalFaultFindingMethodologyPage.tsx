@@ -270,7 +270,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Document fault findings with photos on your phone"
-          description="Elec-Mate's EICR app allows you to attach photos directly to coded observations, creating a full visual record of the fault and its location. Professional reports generated instantly."
+          description="Elec-Mate's EICR app allows you to attach photos directly to coded observations, creating a full visual record of the fault and its location."
           icon={Search}
         />
       </>
@@ -526,10 +526,10 @@ const sections = [
 export default function ElectricalFaultFindingMethodologyPage() {
   return (
     <GuideTemplate
-      title="Electrical Fault Finding Methodology | Systematic Approach for Electricians"
-      description="Complete guide to electrical fault finding methodology for UK electricians. Covers the systematic approach (gather info, visual inspection, test, diagnose, fix, verify), the half-split method, elimination method, experience-based method, and BS 7671 Appendix 2 safe isolation."
+      title="Electrical Fault Finding Methodology | Systematic Approach"
+      description="Complete guide to electrical fault finding methodology for UK electricians. Covers the systematic approach (gather info, visual inspection, test…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Fault Finding Guide"

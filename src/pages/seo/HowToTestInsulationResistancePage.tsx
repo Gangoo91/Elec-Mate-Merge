@@ -105,7 +105,7 @@ const features = [
     icon: ShieldCheck,
     title: 'BS 7671:2018+A4:2026 Compliant',
     description:
-      'Built to the current 18th Edition standard including Amendment 3. All test limits, observation codes, and certificate structures follow BS 7671:2018+A4:2026.',
+      'Built to the current 18th Edition standard including Amendment 4. All test limits, observation codes…',
   },
   {
     icon: Calculator,
@@ -123,7 +123,7 @@ const features = [
     icon: Activity,
     title: 'Smart Observation Coding',
     description:
-      'When a test result falls below BS 7671 limits, the app suggests the appropriate observation code (C1, C2, C3, or FI) with the relevant regulation reference.',
+      'When a test result falls below BS 7671 limits, the app suggests the appropriate observation code (C1, C2, C3…',
   },
 ];
 
@@ -131,7 +131,7 @@ const howToSchema = {
   '@type': 'HowTo',
   name: 'How to Test Insulation Resistance — Step-by-Step Procedure',
   description:
-    'Step-by-step guide to testing insulation resistance on electrical circuits using a 500 V DC insulation resistance tester, in compliance with BS 7671:2018+A4:2026.',
+    'Step-by-step guide to testing insulation resistance on electrical circuits using a 500 V DC insulation resistance tester…',
   step: howToSteps.map((step, index) => ({
     '@type': 'HowToStep',
     position: index + 1,
@@ -156,7 +156,7 @@ export default function HowToTestInsulationResistancePage() {
   useSEO({
     title: 'How to Test Insulation Resistance | BS 7671 Guide',
     description:
-      'Step-by-step guide to insulation resistance testing. Test voltages, minimum values, conductor combinations, and common faults. BS 7671:2018+A4:2026 compliant procedure.',
+      'Step-by-step guide to insulation resistance testing. Test voltages, minimum values, conductor combinations, and common faults.',
   });
 
   return (
@@ -561,7 +561,7 @@ export default function HowToTestInsulationResistancePage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Record IR Test Results and Issue Certificates on Your Phone"
-            description="Elec-Mate's digital EICR and test certificates make inspection reporting faster and more professional. Auto-validate insulation resistance readings against BS 7671 limits."
+            description="Elec-Mate's digital EICR and test certificates make inspection reporting faster and more professional."
             ctaText="Try Elec-Mate free"
             ctaHref="/auth/signup"
             icon={ShieldCheck}

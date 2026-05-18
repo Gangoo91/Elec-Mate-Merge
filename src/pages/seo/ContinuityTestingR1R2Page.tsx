@@ -24,7 +24,7 @@ import {
 
 const PAGE_TITLE = 'Continuity Testing R1+R2 | How to Test Protective Conductors';
 const PAGE_DESCRIPTION =
-  'Complete guide to continuity testing R1+R2 for UK electricians. What R1+R2 is, why it matters for Zs calculation (Zs = Ze + R1+R2), how to perform the test using the long lead method, acceptable values, ring circuit continuity testing, common mistakes. BS 7671 compliant. Record results with Elec-Mate.';
+  'Continuity testing R1+R2 for UK electricians: why it matters for Zs, long lead method, ring circuit testing, acceptable values. BS 7671 compliant.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -186,7 +186,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="R1+R2 calculator built into the app"
-          description="Elec-Mate's R1+R2 calculator lets you look up expected values by cable size and length. Compare your measured R1+R2 against the calculated value to identify anomalies. The Zs calculator then uses your R1+R2 to verify your live loop impedance readings."
+          description="Elec-Mate's R1+R2 calculator lets you look up expected values by cable size and length. Compare your measured R1+R2 against the calculated value to…"
           icon={Calculator}
         />
       </>
@@ -274,7 +274,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Voice to test results — speak R1+R2 values on site"
-          description="With probes in one hand and the instrument in the other, use Elec-Mate's voice entry: 'Ring 1, R1+R2 0.32 ohms.' The app fills in the schedule of test results for you. No juggling clipboards."
+          description="With probes in one hand and the instrument in the other, use Elec-Mate's voice entry: 'Ring 1…"
           icon={Mic}
         />
       </>
@@ -440,7 +440,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Board scanner populates your circuit list automatically"
-          description="Point your phone at the distribution board and Elec-Mate's AI reads the MCB/RCBO ratings, circuit references, and board layout. Start the schedule of tests with the circuit data already filled in — no more typing out 20 circuits manually."
+          description="Point your phone at the distribution board and Elec-Mate's AI reads the MCB/RCBO ratings, circuit references, and board layout."
           icon={Camera}
         />
       </>
@@ -535,7 +535,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Zs calculator uses your R1+R2 values"
-          description="Enter your measured R1+R2 and Ze values, and Elec-Mate calculates the expected Zs automatically. Compare against your measured Zs to verify consistency. The app also looks up the maximum permitted Zs for the protective device type and rating."
+          description="Enter your measured R1+R2 and Ze values, and Elec-Mate calculates the expected Zs automatically. Compare against your measured Zs to verify consistency."
           icon={Calculator}
         />
         <p>
@@ -616,7 +616,7 @@ export default function ContinuityTestingR1R2Page() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2024-10-25"
-      dateModified="2026-02-14"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

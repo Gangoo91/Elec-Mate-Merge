@@ -294,7 +294,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Check if the work is notifiable with AI"
-          description="Describe the job to Elec-Mate's AI regulations assistant and get an instant answer: notifiable or non-notifiable, which certificate is needed, and whether you can self-certify through your competent person scheme."
+          description="Describe the job to Elec-Mate's AI regulations assistant and get an instant answer: notifiable or non-notifiable, which certificate is needed…"
           icon={Brain}
         />
       </>
@@ -614,7 +614,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Generate EICs for notifiable work on site"
-          description="Elec-Mate creates professional Electrical Installation Certificates with full schedules of inspection and test results. Complete the EIC on your phone, submit it to your scheme provider, and send the PDF to the client — all from site."
+          description="Elec-Mate creates professional Electrical Installation Certificates with full schedules of inspection and test results."
           icon={FileCheck2}
         />
       </>
@@ -630,9 +630,9 @@ export default function NotifiableWorkGuidePage() {
   return (
     <GuideTemplate
       title="Notifiable Electrical Work | Part P Guide UK"
-      description="Complete guide to notifiable electrical work under Part P Building Regulations. Covers which work needs notification, competent person schemes, building control, self-certification, special locations, and consequences of non-compliance."
+      description="Complete guide to notifiable electrical work under Part P Building Regulations. Covers which work needs notification, competent person schemes…"
       datePublished="2025-04-10"
-      dateModified="2026-02-13"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations Guide"

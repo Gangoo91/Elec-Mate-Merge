@@ -591,7 +591,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Prepare for your EPA with Elec-Mate"
-          description="Mock knowledge tests, professional discussion practice with the AI tutor, flashcards covering the full apprenticeship standard. Study on your phone, pass your EPA. 7-day free trial."
+          description="Mock knowledge tests, professional discussion practice with the AI tutor, flashcards covering the full apprenticeship standard."
           icon={ClipboardCheck}
         />
       </>
@@ -607,9 +607,9 @@ export default function ApprenticeEndpointAssessmentPage() {
   return (
     <GuideTemplate
       title="Electrical Apprentice End-Point Assessment (EPA) Guide UK"
-      description="Complete guide to the Electrical Installation apprenticeship End-Point Assessment (EPA). Knowledge test, practical observation, professional discussion, City & Guilds vs EAL, timing, grading (pass/distinction), and re-sit process explained."
+      description="Complete guide to the Electrical Installation apprenticeship End-Point Assessment (EPA). Knowledge test, practical observation, professional discussion…"
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EPA Guide"

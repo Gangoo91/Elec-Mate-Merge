@@ -61,19 +61,19 @@ const features = [
     icon: Calculator,
     title: 'Instant Diversity Calculation',
     description:
-      'Enter your connected loads by type — lighting, sockets, cookers, showers, EV chargers — and get the diversified maximum demand calculated instantly to IET On-Site Guide rules.',
+      'Enter your connected loads by type — lighting, sockets, cookers, showers, EV chargers — and get the diversified maximum demand calculated instantly to…',
   },
   {
     icon: Home,
     title: 'Domestic & Commercial Templates',
     description:
-      'Pre-built templates for typical domestic installations (1-bed flat to 5-bed house) and small commercial units. Start from a template and adjust to match the actual installation.',
+      'Pre-built templates for typical domestic installations (1-bed flat to 5-bed house) and small commercial units.',
   },
   {
     icon: BookOpen,
     title: 'IET Table 1A Built In',
     description:
-      'All diversity percentages from the IET On-Site Guide Table 1A are built into the calculator. No need to look up tables or remember which loads get 66% and which get 100%.',
+      'All diversity percentages from the IET On-Site Guide Table 1A are built into the calculator. No need to look up tables or remember which loads get 66%…',
   },
   {
     icon: Gauge,
@@ -91,7 +91,7 @@ const features = [
     icon: Shield,
     title: 'BS 7671:2018+A4:2026 Compliant',
     description:
-      'All diversity calculations follow the current 18th Edition wiring regulations including Amendment 3. Values verified against the IET On-Site Guide published tables.',
+      'All diversity calculations follow the current 18th Edition wiring regulations including Amendment 4.',
   },
 ];
 
@@ -101,7 +101,7 @@ const softwareAppSchema = {
   applicationCategory: 'UtilitiesApplication',
   operatingSystem: 'Web, iOS, Android',
   description:
-    'Calculate diversity factors for electrical installations to BS 7671. Reduce maximum demand calculations with IET-approved diversity allowances for domestic and commercial loads.',
+    'Calculate diversity factors for electrical installations to BS 7671. Reduce maximum demand calculations with IET-approved diversity allowances for…',
   offers: {
     '@type': 'Offer',
     price: '0',
@@ -126,7 +126,7 @@ export default function DiversityFactorCalculatorPage() {
   useSEO({
     title: 'Diversity Factor Calculator | Maximum Demand BS 7671',
     description:
-      'Calculate diversity factors for electrical installations to BS 7671:2018+A4:2026. Reduce maximum demand calculations with IET-approved diversity allowances for domestic and commercial loads.',
+      'Calculate diversity factors for electrical installations to BS 7671:2018+A4:2026. Reduce maximum demand calculations with IET-approved diversity…',
   });
 
   return (
@@ -500,7 +500,7 @@ export default function DiversityFactorCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Calculate Diversity Instantly with Elec-Mate"
-            description="Enter your connected loads by type — lighting, sockets, cookers, showers, EV chargers — and Elec-Mate applies IET On-Site Guide Table 1A diversity allowances automatically. Know whether the existing supply is adequate in seconds."
+            description="Enter your connected loads by type — lighting, sockets, cookers, showers, EV chargers — and Elec-Mate applies IET On-Site Guide Table 1A diversity…"
             ctaText="Try Elec-Mate free"
             ctaHref="/auth/signup"
           />
@@ -542,6 +542,26 @@ export default function DiversityFactorCalculatorPage() {
       <section className="px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <RecentReviews />
+        </div>
+      </section>
+
+      
+
+      {/* Related calculators — peer surface for internal-link health.
+          Hand-curated where slug-token matching couldn't surface peers. */}
+      <section className="px-5 py-12 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-white mb-4">Related electrical calculators</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <SEOInternalLink href="/max-demand-calculator">Max Demand Calculator</SEOInternalLink>
+            <SEOInternalLink href="/guides/max-demand-calculation-guide">Max Demand Calculation Guide</SEOInternalLink>
+            <SEOInternalLink href="/electrical-load-calculation">Electrical Load Calculation — UK Guide 2024</SEOInternalLink>
+            <SEOInternalLink href="/tools/electrical-load-schedule">Electrical Load Schedule Calculator</SEOInternalLink>
+            <SEOInternalLink href="/cable-sizing-calculator">Cable Sizing Calculator BS 7671</SEOInternalLink>
+            <SEOInternalLink href="/voltage-drop-calculator">Voltage Drop Calculator</SEOInternalLink>
+            <SEOInternalLink href="/three-phase-power-calculator">Three Phase Power Calculator</SEOInternalLink>
+            <SEOInternalLink href="/guides/three-phase-calculations">Three Phase Calculations</SEOInternalLink>
+          </div>
         </div>
       </section>
 

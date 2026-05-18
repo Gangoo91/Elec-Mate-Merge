@@ -490,9 +490,9 @@ export default function FlatRewireCostPage() {
   return (
     <GuideTemplate
       title="Flat Rewire Cost 2026 | UK Price Guide"
-      description="How much does it cost to rewire a flat in 2026? Complete UK price guide for one, two, and three-bedroom flat rewires. Covers materials, labour, timescales, Part P certification, and factors affecting price."
+      description="How much does it cost to rewire a flat in 2026? Complete UK price guide for one, two, and three-bedroom flat rewires."
       datePublished="2026-03-27"
-      dateModified="2026-03-27"
+      dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"
