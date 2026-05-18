@@ -40,7 +40,7 @@ const CIRCUIT_ICONS: Record<number, typeof Zap> = {
 
 /** Static Tailwind class pairs — dynamic interpolation breaks purging */
 const CIRCUIT_STYLES: Record<number, { iconBg: string; iconText: string }> = {
-  1: { iconBg: 'bg-cyan-500/15', iconText: 'text-cyan-400' },
+  1: { iconBg: 'bg-elec-yellow/15', iconText: 'text-elec-yellow' },
   2: { iconBg: 'bg-amber-500/15', iconText: 'text-amber-400' },
   3: { iconBg: 'bg-yellow-500/15', iconText: 'text-yellow-400' },
   4: { iconBg: 'bg-red-500/15', iconText: 'text-red-400' },

@@ -74,7 +74,7 @@ export function EICTestResultsTab({
 
       {/* Section label */}
       <div className="flex items-center gap-2 pb-1">
-        <div className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+        <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
         <h3 className="text-xs font-bold text-white uppercase tracking-wider">
           Test Results (Cols 17-31)
         </h3>

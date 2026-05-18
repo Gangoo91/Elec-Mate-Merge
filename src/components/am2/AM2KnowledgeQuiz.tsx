@@ -301,7 +301,7 @@ export function AM2KnowledgeQuiz({ onSessionComplete }: AM2KnowledgeQuizProps) {
         {/* Start */}
         <button
           onClick={handleStart}
-          className="w-full h-12 rounded-xl bg-blue-500 text-black font-bold text-sm touch-manipulation active:scale-[0.98] transition-transform flex items-center justify-center gap-2"
+          className="w-full h-12 rounded-xl bg-elec-yellow text-black font-bold text-sm touch-manipulation active:scale-[0.98] transition-transform flex items-center justify-center gap-2"
         >
           <Zap className="h-4 w-4" />
           Start Quiz
@@ -334,7 +334,7 @@ export function AM2KnowledgeQuiz({ onSessionComplete }: AM2KnowledgeQuizProps) {
         {/* Progress bar */}
         <div className="h-1.5 rounded-full bg-white/10 overflow-hidden">
           <div
-            className="h-full rounded-full bg-blue-500 transition-all duration-300"
+            className="h-full rounded-full bg-elec-yellow transition-all duration-300"
             style={{ width: `${((currentIndex + 1) / questions.length) * 100}%` }}
           />
         </div>
@@ -448,7 +448,7 @@ export function AM2KnowledgeQuiz({ onSessionComplete }: AM2KnowledgeQuizProps) {
             className={cn(
               'flex-1 h-11 rounded-xl text-sm font-bold touch-manipulation flex items-center justify-center gap-1',
               isAnswered
-                ? 'bg-blue-500 text-black'
+                ? 'bg-elec-yellow text-black'
                 : 'bg-elec-gray border border-white/5 text-white'
             )}
           >

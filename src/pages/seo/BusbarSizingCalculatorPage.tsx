@@ -18,7 +18,7 @@ import {
 export default function BusbarSizingCalculatorPage() {
   return (
     <ToolTemplate
-      title="Busbar Calculator | Size & Current Rating"| Current Rating Tool"
+      title="Busbar Calculator | Size & Current Rating"
       description="Calculate busbar cross-section area and current rating for copper and aluminium busbars. Considers current density, voltage drop, temperature rise, and short-circuit withstand. Part of 50+ free electrical calculators in Elec-Mate."
       datePublished="2026-02-01"
       dateModified="2026-02-13"

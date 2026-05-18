@@ -44,7 +44,7 @@ export function EICSheet({ eic, onClose, onUpdateResult, onFinish }: EICSheetPro
         <div className="flex items-center justify-between">
           <button
             onClick={onClose}
-            className="flex items-center gap-1 text-sm text-cyan-300 touch-manipulation h-11 px-2 font-medium"
+            className="flex items-center gap-1 text-sm text-elec-yellow touch-manipulation h-11 px-2 font-medium"
           >
             <ArrowLeft className="w-4 h-4" />
             Testing
@@ -57,7 +57,7 @@ export function EICSheet({ eic, onClose, onUpdateResult, onFinish }: EICSheetPro
           </div>
           <button
             onClick={onFinish}
-            className="h-11 px-3 rounded-lg bg-cyan-500/20 text-cyan-300 text-xs font-semibold touch-manipulation border border-cyan-400/20"
+            className="h-11 px-3 rounded-lg bg-elec-yellow/20 text-elec-yellow text-xs font-semibold touch-manipulation border border-elec-yellow/20"
           >
             Finish
           </button>
@@ -72,7 +72,7 @@ export function EICSheet({ eic, onClose, onUpdateResult, onFinish }: EICSheetPro
               className={cn(
                 'flex-1 py-2 text-[11px] font-semibold rounded-lg touch-manipulation transition-all',
                 activeTab === tab.id
-                  ? 'bg-cyan-500/15 text-cyan-300 border border-cyan-400/20'
+                  ? 'bg-elec-yellow/15 text-elec-yellow border border-elec-yellow/20'
                   : 'text-white border border-transparent'
               )}
             >

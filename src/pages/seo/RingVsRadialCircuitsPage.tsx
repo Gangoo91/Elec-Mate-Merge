@@ -85,7 +85,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
-    description: 'Size cables for ring and radial circuits with automatic derating and voltage drop.',
+    description:
+      'Size cables for ring and radial circuits with automatic derating and voltage drop.',
     icon: Calculator,
     category: 'Tool',
   },
@@ -124,9 +125,9 @@ const sections = [
       <>
         <p>
           The ring final circuit has been the dominant method of wiring socket outlets in UK
-          domestic installations for over seventy years. It is unique to the UK — virtually no
-          other country uses ring circuits. Understanding why the ring circuit was developed, how
-          it works, and when to use it (or when to choose a radial circuit instead) is fundamental
+          domestic installations for over seventy years. It is unique to the UK — virtually no other
+          country uses ring circuits. Understanding why the ring circuit was developed, how it
+          works, and when to use it (or when to choose a radial circuit instead) is fundamental
           knowledge for every UK electrician.
         </p>
         <p>
@@ -134,9 +135,9 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          Section 433 (protection against overcurrent), Regulation 433.1.204 (socket outlets on
-          ring circuits), and Appendix 15 (guidance on ring and radial circuits for socket
-          outlets). The ring continuity test method is described in BS 7671 Appendix 14 and GN3.
+          Section 433 (protection against overcurrent), Regulation 433.1.204 (socket outlets on ring
+          circuits), and Appendix 15 (guidance on ring and radial circuits for socket outlets). The
+          ring continuity test method is described in BS 7671 Appendix 14 and GN3.
         </p>
       </>
     ),
@@ -159,8 +160,8 @@ const sections = [
             socket outlet. With 2.5mm² cable (rated 27A clipped direct), the ring can carry up to
             27A in each leg simultaneously — a total of 54A potential capacity. This allows the
             circuit to be protected by a 32A overcurrent device while serving a large floor area.
-            The 32A protection is for the cable, not each outlet — each outlet is limited to 13A
-            by the fuse in the plug.
+            The 32A protection is for the cable, not each outlet — each outlet is limited to 13A by
+            the fuse in the plug.
           </p>
         </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -225,9 +226,9 @@ const sections = [
         </div>
         <p>
           Radial circuits are gaining popularity for new UK installations because they are simpler
-          to install, easier to test, and cannot be incorrectly wired in a way that masquerades
-          as a ring. Modern low-power devices mean the diversity assumptions underlying ring
-          circuit design are less applicable to contemporary households.
+          to install, easier to test, and cannot be incorrectly wired in a way that masquerades as a
+          ring. Modern low-power devices mean the diversity assumptions underlying ring circuit
+          design are less applicable to contemporary households.
         </p>
       </>
     ),
@@ -237,41 +238,39 @@ const sections = [
     heading: 'BS 7671 Requirements: Section 433 and Appendix 15',
     content: (
       <>
-        <p>
-          The key BS 7671 regulations governing ring and radial circuits include:
-        </p>
+        <p>The key BS 7671 regulations governing ring and radial circuits include:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 433.1.204</strong> — socket outlets forming part of a ring
-                final circuit shall be connected to both legs of the ring. An outlet connected to
-                only one leg forms a spur, not a ring connection.
+                <strong>Regulation 433.1.204</strong> — socket outlets forming part of a ring final
+                circuit shall be connected to both legs of the ring. An outlet connected to only one
+                leg forms a spur, not a ring connection.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Appendix 15, Table A15.1</strong> — guidance on floor areas: 32A ring
-                (2.5mm²) — no prescribed floor area limit; 20A radial (2.5mm²) — 50m²; 32A
-                radial (4.0mm²) — 75m².
+                (2.5mm²) — no prescribed floor area limit; 20A radial (2.5mm²) — 50m²; 32A radial
+                (4.0mm²) — 75m².
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 543.1</strong> — for a ring final circuit, the CPC must also
-                form a ring, connected at both ends to the earth terminal. A broken CPC ring is a
-                Code C2 defect on an EICR.
+                <strong>Regulation 543.1</strong> — for a ring final circuit, the CPC must also form
+                a ring, connected at both ends to the earth terminal. A broken CPC ring is a Code C2
+                defect on an EICR.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Appendix 4, Tables 4D1A–4D5A</strong> — current-carrying capacity tables.
-                Installation method affects current rating: 2.5mm² 6242Y is rated 27A (Method C)
-                or 20A (Method B, enclosed in insulation).
+                Installation method affects current rating: 2.5mm² 6242Y is rated 27A (Method C) or
+                20A (Method B, enclosed in insulation).
               </span>
             </li>
           </ul>
@@ -291,8 +290,8 @@ const sections = [
       <>
         <p>
           Ring continuity testing is a mandatory inspection and test procedure for ring final
-          circuits, required by BS 7671 and described in GN3. It verifies that the ring is
-          complete and unbroken, and that no outlets have been incorrectly wired as spurs.
+          circuits, required by BS 7671 and described in GN3. It verifies that the ring is complete
+          and unbroken, and that no outlets have been incorrectly wired as spurs.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ol className="space-y-4 text-white">
@@ -300,8 +299,8 @@ const sections = [
               <span className="shrink-0 font-bold text-yellow-400">1.</span>
               <span>
                 <strong>Measure end-to-end resistance of each conductor.</strong> With the ring
-                disconnected at the consumer unit, measure the resistance of the line conductor
-                (L1 to L2) — call this r1. Measure the CPC (E1 to E2) — call this r2.
+                disconnected at the consumer unit, measure the resistance of the line conductor (L1
+                to L2) — call this r1. Measure the CPC (E1 to E2) — call this r2.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -315,9 +314,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <span className="shrink-0 font-bold text-yellow-400">3.</span>
               <span>
-                <strong>Measure at each outlet.</strong> At every socket outlet on the ring,
-                measure the resistance between the line terminal and the earth terminal. The
-                reading should be approximately (r1+r2)/4.
+                <strong>Measure at each outlet.</strong> At every socket outlet on the ring, measure
+                the resistance between the line terminal and the earth terminal. The reading should
+                be approximately (r1+r2)/4.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -337,9 +336,9 @@ const sections = [
               <p className="font-bold text-white mb-1">Common Failure: The Figure-of-Eight Spur</p>
               <p className="text-white text-sm">
                 A socket outlet connected to one leg of the ring at both terminals (looped rather
-                than properly ringed through) gives a correct reading during ring continuity
-                testing but creates a spur with no overcurrent protection at the junction. Always
-                visually inspect socket outlet wiring in older installations.
+                than properly ringed through) gives a correct reading during ring continuity testing
+                but creates a spur with no overcurrent protection at the junction. Always visually
+                inspect socket outlet wiring in older installations.
               </p>
             </div>
           </div>
@@ -353,34 +352,34 @@ const sections = [
     content: (
       <>
         <p>
-          The maximum connected load for a ring final circuit is 7,200VA (32A × 230V). In
-          practice, diversity means the simultaneous demand is much lower. BS 7671 Appendix 1
-          and the On-Site Guide provide demand estimation guidance:
+          The maximum connected load for a ring final circuit is 7,200VA (32A × 230V). In practice,
+          diversity means the simultaneous demand is much lower. BS 7671 Appendix 1 and the On-Site
+          Guide provide demand estimation guidance:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Domestic socket outlets:</strong> For the first outlet, allow the full
-                rated current. For each additional outlet, allow 40% of the rated current. This
-                reflects domestic diversity — not all outlets are used at full load simultaneously.
+                <strong>Domestic socket outlets:</strong> For the first outlet, allow the full rated
+                current. For each additional outlet, allow 40% of the rated current. This reflects
+                domestic diversity — not all outlets are used at full load simultaneously.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Kitchen circuits:</strong> Fixed appliances (dishwasher, washing machine,
-                fridge-freezer) should be on dedicated radial circuits rather than forming part of
-                a ring serving general socket outlets.
+                fridge-freezer) should be on dedicated radial circuits rather than forming part of a
+                ring serving general socket outlets.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EV chargers and heat pumps:</strong> High-power loads must always be on
-                dedicated circuits — never connected to a ring final circuit serving general
-                socket outlets.
+                dedicated circuits — never connected to a ring final circuit serving general socket
+                outlets.
               </span>
             </li>
           </ul>
@@ -403,7 +402,9 @@ const sections = [
       <>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
-            <h3 className="font-bold text-white text-base mb-3">Choose a Ring Final Circuit When:</h3>
+            <h3 className="font-bold text-white text-base mb-3">
+              Choose a Ring Final Circuit When:
+            </h3>
             <ul className="space-y-2 text-white text-sm">
               <li>• Extending an existing ring in an older property</li>
               <li>• Serving a large open-plan floor area efficiently</li>
@@ -422,8 +423,8 @@ const sections = [
         </div>
         <p>
           The industry trend is moving towards radial circuits for new domestic work. Reduced
-          complexity, lower risk of wiring errors, and easier periodic inspection make radials
-          the preferred choice for most modern installations.
+          complexity, lower risk of wiring errors, and easier periodic inspection make radials the
+          preferred choice for most modern installations.
         </p>
       </>
     ),
@@ -434,9 +435,9 @@ const sections = [
     content: (
       <>
         <p>
-          Ring continuity testing is one of the most frequently examined topics in C&G 2391.
-          Getting the methodology right — and recording results correctly on the schedule of test
-          results — is essential for compliant certification.
+          Ring continuity testing is one of the most frequently examined topics in C&G 2391. Getting
+          the methodology right — and recording results correctly on the schedule of test results —
+          is essential for compliant certification.
         </p>
         <SEOAppBridge
           title="Record ring continuity test results on your phone"
@@ -455,7 +456,7 @@ const sections = [
 export default function RingVsRadialCircuitsPage() {
   return (
     <GuideTemplate
-      title="32A Ring Circuit Design | BS 7671:2018+A4:2026"| BS 7671 Guide UK"
+      title="32A Ring Circuit Design | BS 7671:2018+A4:2026"
       description="Complete guide to ring final circuits vs radial circuits for UK electricians. BS 7671 Section 433 requirements, ring continuity testing with the r1+r2/4 method, load calculations, and when to use each circuit type."
       datePublished="2026-03-27"
       dateModified="2026-03-27"

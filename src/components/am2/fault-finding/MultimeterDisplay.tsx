@@ -101,8 +101,8 @@ export function MultimeterDisplay({
       {/* Meter body */}
       <div className="bg-gradient-to-b from-[#1a1a2e] to-[#16213e] rounded-2xl border border-white/10 overflow-hidden shadow-xl">
         {/* Brand strip */}
-        <div className="bg-gradient-to-r from-cyan-500/20 via-cyan-400/10 to-cyan-500/20 px-4 py-1.5 border-b border-white/5">
-          <p className="text-[10px] font-bold text-cyan-400/80 tracking-widest text-center uppercase">
+        <div className="bg-gradient-to-r from-elec-yellow/20 via-elec-yellow/10 to-elec-yellow/20 px-4 py-1.5 border-b border-white/5">
+          <p className="text-[10px] font-bold text-elec-yellow/80 tracking-widest text-center uppercase">
             Multimeter
           </p>
         </div>
@@ -201,7 +201,7 @@ export function MultimeterDisplay({
               className={cn(
                 'flex-1 h-10 rounded-lg text-xs font-semibold touch-manipulation transition-all',
                 mode === 'continuity'
-                  ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/40'
+                  ? 'bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/40'
                   : 'bg-white/5 text-white border border-white/10'
               )}
             >
@@ -212,7 +212,7 @@ export function MultimeterDisplay({
               className={cn(
                 'flex-1 h-10 rounded-lg text-xs font-semibold touch-manipulation transition-all',
                 mode === 'insulation'
-                  ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/40'
+                  ? 'bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/40'
                   : 'bg-white/5 text-white border border-white/10'
               )}
             >

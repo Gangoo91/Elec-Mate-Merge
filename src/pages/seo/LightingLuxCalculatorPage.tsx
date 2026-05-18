@@ -19,7 +19,7 @@ import {
 export default function LightingLuxCalculatorPage() {
   return (
     <ToolTemplate
-      title="Lux Level Calculation Tool | BS EN 12464-1"| Free Tool UK"
+      title="Lux Level Calculation Tool | BS EN 12464-1"
       description="Calculate lux levels for 20+ room types using BS EN 12464-1 standards. Free online tool with maintained illuminance values for offices, warehouses, retail and more."
       datePublished="2026-01-20"
       dateModified="2026-02-13"
@@ -161,11 +161,9 @@ export default function LightingLuxCalculatorPage() {
               <p>
                 These values should be treated as minimums. Many designers specify higher levels for
                 premium fit-outs or where the client has specific requirements. For{' '}
-                <SEOInternalLink href="/cable-sizing-calculator">
-                  cable sizing
-                </SEOInternalLink>{' '}
-                on lighting circuits, the total wattage derived from the lux calculation feeds
-                directly into the circuit design.
+                <SEOInternalLink href="/cable-sizing-calculator">cable sizing</SEOInternalLink> on
+                lighting circuits, the total wattage derived from the lux calculation feeds directly
+                into the circuit design.
               </p>
             </>
           ),

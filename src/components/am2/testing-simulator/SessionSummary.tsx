@@ -134,8 +134,8 @@ export function SessionSummary({ score, onTryAgain, onBackToRig }: SessionSummar
       </div>
 
       {/* AM2 Readiness note */}
-      <div className="rounded-xl border border-cyan-500/20 bg-cyan-500/5 p-3">
-        <p className="text-[11px] text-cyan-300/70">
+      <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/5 p-3">
+        <p className="text-[11px] text-elec-yellow/70">
           This score contributes 25% to your overall AM2 Readiness assessment under the "Testing
           Sequence" category.
         </p>
@@ -145,7 +145,7 @@ export function SessionSummary({ score, onTryAgain, onBackToRig }: SessionSummar
       <div className="flex gap-2 pt-2">
         <button
           onClick={onTryAgain}
-          className="flex-1 flex items-center justify-center gap-2 h-12 rounded-xl bg-cyan-500/15 text-cyan-300 text-sm font-semibold border border-cyan-400/20 touch-manipulation"
+          className="flex-1 flex items-center justify-center gap-2 h-12 rounded-xl bg-elec-yellow/15 text-elec-yellow text-sm font-semibold border border-elec-yellow/20 touch-manipulation"
         >
           <RotateCcw className="w-4 h-4" />
           Try Again

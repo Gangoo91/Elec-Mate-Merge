@@ -285,7 +285,7 @@ function IntroPhase({ onStart }: { onStart: () => void }) {
     >
       <div className="px-4 py-5 space-y-4 flex-1">
         {/* Hero card */}
-        <div className="relative rounded-2xl overflow-hidden border border-cyan-400/15">
+        <div className="relative rounded-2xl overflow-hidden border border-elec-yellow/15">
           <div
             className="absolute inset-0"
             style={{
@@ -298,9 +298,9 @@ function IntroPhase({ onStart }: { onStart: () => void }) {
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ type: 'spring', stiffness: 200, damping: 20, delay: 0.1 }}
-              className="h-16 w-16 rounded-2xl bg-cyan-500/15 border border-cyan-400/20 flex items-center justify-center"
+              className="h-16 w-16 rounded-2xl bg-elec-yellow/15 border border-elec-yellow/20 flex items-center justify-center"
             >
-              <Lock className="h-8 w-8 text-cyan-400" />
+              <Lock className="h-8 w-8 text-elec-yellow" />
             </motion.div>
 
             <h2 className="text-lg font-bold text-white">Safe Isolation Procedure</h2>
@@ -314,14 +314,14 @@ function IntroPhase({ onStart }: { onStart: () => void }) {
         {/* Feature badges — horizontal row */}
         <div className="flex gap-2">
           <div className="flex-1 flex items-center gap-2 p-2.5 rounded-xl bg-white/[0.03] border border-white/8">
-            <GripVertical className="h-4 w-4 text-cyan-400 shrink-0" />
+            <GripVertical className="h-4 w-4 text-elec-yellow shrink-0" />
             <div className="min-w-0">
               <p className="text-xs font-semibold text-foreground">Drag & drop</p>
               <p className="text-[10px] text-white">Reorder 8 steps</p>
             </div>
           </div>
           <div className="flex-1 flex items-center gap-2 p-2.5 rounded-xl bg-white/[0.03] border border-white/8">
-            <Timer className="h-4 w-4 text-cyan-400 shrink-0" />
+            <Timer className="h-4 w-4 text-elec-yellow shrink-0" />
             <div className="min-w-0">
               <p className="text-xs font-semibold text-foreground">Timed</p>
               <p className="text-[10px] text-white">Build speed</p>
@@ -355,7 +355,7 @@ function IntroPhase({ onStart }: { onStart: () => void }) {
         <motion.button
           whileTap={{ scale: 0.97 }}
           onClick={onStart}
-          className="w-full h-14 rounded-xl bg-cyan-500 text-black font-bold text-base touch-manipulation flex items-center justify-center gap-2 active:bg-cyan-600 transition-colors"
+          className="w-full h-14 rounded-xl bg-elec-yellow text-black font-bold text-base touch-manipulation flex items-center justify-center gap-2 active:bg-elec-yellow transition-colors"
         >
           <Zap className="h-5 w-5" />
           Start Assessment
@@ -398,7 +398,7 @@ function SequencerPhase({
           </p>
         </div>
         <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-white/[0.04] border border-white/8">
-          <GripVertical className="h-3.5 w-3.5 text-cyan-400" />
+          <GripVertical className="h-3.5 w-3.5 text-elec-yellow" />
           <span className="text-[10px] font-semibold text-white">Drag</span>
         </div>
       </div>
@@ -438,7 +438,7 @@ function SequencerPhase({
                           'flex items-center gap-3 rounded-xl border select-none touch-manipulation',
                           'transition-colors duration-150 overflow-hidden',
                           snapshot.isDragging
-                            ? 'bg-cyan-500/10 border-cyan-500/30 shadow-lg shadow-cyan-500/10 scale-[1.02] z-50'
+                            ? 'bg-elec-yellow/10 border-elec-yellow/30 shadow-lg shadow-elec-yellow/10 scale-[1.02] z-50'
                             : 'bg-white/[0.02] border-white/8 active:bg-white/[0.05] active:border-white/15',
                           isCorrect && 'border-emerald-500/30 bg-emerald-500/[0.06]',
                           isWrong && 'border-red-500/30 bg-red-500/[0.06] animate-ios-press'
@@ -453,7 +453,7 @@ function SequencerPhase({
                                 ? 'bg-emerald-500'
                                 : 'bg-red-500'
                               : snapshot.isDragging
-                                ? 'bg-cyan-400'
+                                ? 'bg-elec-yellow'
                                 : 'bg-white/10'
                           )}
                         />
@@ -468,7 +468,7 @@ function SequencerPhase({
                                   ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/20'
                                   : 'bg-red-500/15 text-red-400 border border-red-500/20'
                                 : snapshot.isDragging
-                                  ? 'bg-cyan-500/15 text-cyan-400 border border-cyan-400/20'
+                                  ? 'bg-elec-yellow/15 text-elec-yellow border border-elec-yellow/20'
                                   : 'bg-white/[0.06] text-white border border-white/10'
                             )}
                           >
@@ -506,7 +506,7 @@ function SequencerPhase({
                             <GripVertical
                               className={cn(
                                 'h-5 w-5 transition-colors',
-                                snapshot.isDragging ? 'text-cyan-400' : 'text-white'
+                                snapshot.isDragging ? 'text-elec-yellow' : 'text-white'
                               )}
                             />
                           </div>
@@ -528,7 +528,7 @@ function SequencerPhase({
           <motion.button
             whileTap={{ scale: 0.97 }}
             onClick={onSubmit}
-            className="w-full h-12 rounded-xl bg-cyan-500 text-black font-bold text-sm touch-manipulation flex items-center justify-center gap-2 active:bg-cyan-600 transition-colors"
+            className="w-full h-12 rounded-xl bg-elec-yellow text-black font-bold text-sm touch-manipulation flex items-center justify-center gap-2 active:bg-elec-yellow transition-colors"
           >
             <ShieldCheck className="h-4 w-4" />
             Check My Order
@@ -670,9 +670,11 @@ function ResultsPhase({
                 {/* Expanded detail — shown only for wrong answers to help learning */}
                 {!wasCorrect && (
                   <div className="px-3 pb-3 pt-0 ml-10">
-                    <div className="flex items-start gap-2 p-2.5 rounded-lg bg-cyan-500/[0.05] border border-cyan-400/10">
-                      <Info className="h-3.5 w-3.5 text-cyan-400 shrink-0 mt-0.5" />
-                      <p className="text-[11px] text-cyan-300/80 leading-relaxed">{step.detail}</p>
+                    <div className="flex items-start gap-2 p-2.5 rounded-lg bg-elec-yellow/[0.05] border border-elec-yellow/10">
+                      <Info className="h-3.5 w-3.5 text-elec-yellow shrink-0 mt-0.5" />
+                      <p className="text-[11px] text-elec-yellow/80 leading-relaxed">
+                        {step.detail}
+                      </p>
                     </div>
                   </div>
                 )}
@@ -717,7 +719,7 @@ function ResultsPhase({
         <motion.button
           whileTap={{ scale: 0.97 }}
           onClick={onRetry}
-          className="w-full h-12 rounded-xl bg-cyan-500 text-black font-bold text-sm touch-manipulation flex items-center justify-center gap-2 active:bg-cyan-600 transition-colors"
+          className="w-full h-12 rounded-xl bg-elec-yellow text-black font-bold text-sm touch-manipulation flex items-center justify-center gap-2 active:bg-elec-yellow transition-colors"
         >
           <RotateCcw className="h-4 w-4" />
           {isPerfect ? 'Practise Again' : 'Try Again'}

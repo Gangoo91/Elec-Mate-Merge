@@ -32,12 +32,22 @@ import { FaultFindingSimulator } from '@/components/am2/fault-finding/FaultFindi
 import { TestingSimulator } from '@/components/am2/testing-simulator/TestingSimulator';
 import { AM2KnowledgeQuiz } from '@/components/am2/AM2KnowledgeQuiz';
 import { AM2HistoryTab } from '@/components/am2/AM2HistoryTab';
+import { MockAM2Day } from '@/components/am2/MockAM2Day';
+import { Bs7671RagQuiz } from '@/components/am2/Bs7671RagQuiz';
 
-type TabId = 'readiness' | 'safe-isolation' | 'testing' | 'faults' | 'knowledge' | 'history';
+type TabId =
+  | 'readiness'
+  | 'safe-isolation'
+  | 'testing'
+  | 'faults'
+  | 'knowledge'
+  | 'bs7671'
+  | 'history'
+  | 'mock-day';
 
 /** Tabs that use their own headers and need maximum vertical space.
  *  These render full-height with the page header suppressed. */
-const IMMERSIVE_TABS: TabId[] = ['testing', 'safe-isolation', 'faults'];
+const IMMERSIVE_TABS: TabId[] = ['testing', 'safe-isolation', 'faults', 'mock-day'];
 
 const AM2Simulator = () => {
   const navigate = useNavigate();
@@ -70,9 +80,7 @@ const AM2Simulator = () => {
         <motion.div variants={itemVariants} className="mb-4">
           <button
             type="button"
-            onClick={() =>
-              isReadiness ? navigate('/apprentice') : setActiveTab('readiness')
-            }
+            onClick={() => (isReadiness ? navigate('/apprentice') : setActiveTab('readiness'))}
             className="inline-flex items-center gap-1.5 h-9 px-2 -ml-2 text-[13px] font-medium text-white hover:text-elec-yellow transition-colors touch-manipulation"
           >
             <ArrowLeft className="h-4 w-4" />
@@ -99,25 +107,48 @@ const AM2Simulator = () => {
         </motion.div>
       )}
 
-      {/* Tab Content */}
+      {/* Tab Content — immersive simulators get a bounded centred column
+          on desktop so the controls don't span 1920px and look forlorn. */}
       <div className={cn(isImmersive ? 'flex-1 min-h-0 overflow-hidden' : 'min-h-[60vh]')}>
-        {activeTab === 'readiness' && (
-          <AM2ReadinessDashboard key={readinessKey} onNavigateToTab={setActiveTab} />
-        )}
+        <div
+          className={cn(
+            isImmersive ? 'mx-auto w-full max-w-3xl xl:max-w-4xl h-full flex flex-col' : 'w-full'
+          )}
+        >
+          {activeTab === 'readiness' && (
+            <AM2ReadinessDashboard key={readinessKey} onNavigateToTab={setActiveTab} />
+          )}
 
-        {activeTab === 'safe-isolation' && (
-          <SafeIsolationAssessment onSessionComplete={invalidateReadiness} />
-        )}
+          {activeTab === 'safe-isolation' && (
+            <SafeIsolationAssessment onSessionComplete={invalidateReadiness} />
+          )}
 
-        {activeTab === 'testing' && <TestingSimulator onSessionComplete={invalidateReadiness} />}
+          {activeTab === 'testing' && <TestingSimulator onSessionComplete={invalidateReadiness} />}
 
-        {activeTab === 'faults' && (
-          <FaultFindingSimulator onSessionComplete={invalidateReadiness} />
-        )}
+          {activeTab === 'faults' && (
+            <FaultFindingSimulator onSessionComplete={invalidateReadiness} />
+          )}
 
-        {activeTab === 'knowledge' && <AM2KnowledgeQuiz onSessionComplete={invalidateReadiness} />}
+          {activeTab === 'knowledge' && (
+            <AM2KnowledgeQuiz onSessionComplete={invalidateReadiness} />
+          )}
 
-        {activeTab === 'history' && <AM2HistoryTab onNavigateToTab={setActiveTab} />}
+          {activeTab === 'history' && <AM2HistoryTab onNavigateToTab={setActiveTab} />}
+
+          {activeTab === 'mock-day' && (
+            <MockAM2Day
+              onExit={() => setActiveTab('readiness')}
+              onSessionComplete={invalidateReadiness}
+            />
+          )}
+
+          {activeTab === 'bs7671' && (
+            <Bs7671RagQuiz
+              onExit={() => setActiveTab('readiness')}
+              onSessionComplete={invalidateReadiness}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

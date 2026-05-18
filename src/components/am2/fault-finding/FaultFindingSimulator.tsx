@@ -778,9 +778,7 @@ function IntroPhase({ onStart }: { onStart: (mode: SessionMode) => void }) {
 
       {/* Mode selection */}
       <div className="space-y-2">
-        <h4 className="text-xs font-semibold text-white uppercase tracking-wider">
-          Select mode
-        </h4>
+        <h4 className="text-xs font-semibold text-white uppercase tracking-wider">Select mode</h4>
         {modes.map((mode) => {
           const Icon = mode.icon;
           const isSelected = selectedMode === mode.id;
@@ -874,7 +872,7 @@ function IntroPhase({ onStart }: { onStart: (mode: SessionMode) => void }) {
       <motion.button
         whileTap={{ scale: 0.97 }}
         onClick={() => onStart(selectedMode)}
-        className="w-full h-14 rounded-xl bg-orange-500 text-black font-bold text-base touch-manipulation flex items-center justify-center gap-2 active:bg-orange-600 transition-colors"
+        className="w-full h-14 rounded-xl bg-elec-yellow text-black font-bold text-base touch-manipulation flex items-center justify-center gap-2 active:bg-elec-yellow transition-colors"
       >
         <Search className="h-5 w-5" />
         {selectedMode === 'exam'
@@ -999,7 +997,7 @@ function TestingPhase({
       <div
         className={cn(
           'transition-all duration-150',
-          probeFlash && 'ring-2 ring-cyan-400/40 rounded-xl'
+          probeFlash && 'ring-2 ring-elec-yellow/40 rounded-xl'
         )}
       >
         <MultimeterDisplay
@@ -1047,7 +1045,7 @@ function TestingPhase({
           animate={{ opacity: 1, y: 0 }}
           whileTap={{ scale: 0.97 }}
           onClick={onDiagnose}
-          className="w-full h-12 rounded-xl bg-orange-500 text-black font-bold text-sm touch-manipulation flex items-center justify-center gap-2"
+          className="w-full h-12 rounded-xl bg-elec-yellow text-black font-bold text-sm touch-manipulation flex items-center justify-center gap-2"
         >
           <Search className="h-4 w-4" />I Know the Fault — Diagnose
         </motion.button>
@@ -1414,7 +1412,7 @@ function FeedbackPhase({
         </div>
 
         <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10">
-          <p className="text-xs font-semibold text-cyan-400 mb-1">Rectification</p>
+          <p className="text-xs font-semibold text-elec-yellow mb-1">Rectification</p>
           <p className="text-sm text-white">{fault.rectification}</p>
         </div>
 
@@ -1423,8 +1421,8 @@ function FeedbackPhase({
           <p className="text-sm text-white leading-relaxed">{fault.explanation}</p>
         </div>
 
-        <div className="p-3.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20">
-          <p className="text-xs font-semibold text-cyan-400 mb-1">Optimal method</p>
+        <div className="p-3.5 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
+          <p className="text-xs font-semibold text-elec-yellow mb-1">Optimal method</p>
           <p className="text-xs text-white whitespace-pre-line">{fault.optimalMethod}</p>
         </div>
       </div>
@@ -1432,7 +1430,7 @@ function FeedbackPhase({
       <motion.button
         whileTap={{ scale: 0.97 }}
         onClick={onNext}
-        className="w-full h-12 rounded-xl bg-orange-500 text-black font-bold text-sm touch-manipulation flex items-center justify-center gap-2"
+        className="w-full h-12 rounded-xl bg-elec-yellow text-black font-bold text-sm touch-manipulation flex items-center justify-center gap-2"
       >
         {isLast ? (
           <>
@@ -1711,7 +1709,7 @@ function ResultsPhase({
         <motion.button
           whileTap={{ scale: 0.97 }}
           onClick={onRetry}
-          className="w-full h-12 rounded-xl bg-orange-500 text-black font-bold text-sm touch-manipulation flex items-center justify-center gap-2"
+          className="w-full h-12 rounded-xl bg-elec-yellow text-black font-bold text-sm touch-manipulation flex items-center justify-center gap-2"
         >
           <RotateCcw className="h-4 w-4" />
           New Session — Different Faults

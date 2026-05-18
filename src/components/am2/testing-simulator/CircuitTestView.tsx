@@ -210,7 +210,7 @@ export function CircuitTestView({
             <span className="flex-1" />
             <button
               onClick={handleRecordAndNext}
-              className="flex items-center gap-1 h-8 px-3 rounded-md bg-cyan-500/15 border border-cyan-400/30 text-cyan-300 text-[11px] font-semibold touch-manipulation"
+              className="flex items-center gap-1 h-8 px-3 rounded-md bg-elec-yellow/15 border border-elec-yellow/30 text-elec-yellow text-[11px] font-semibold touch-manipulation"
             >
               Next <ArrowRight className="w-3 h-3" />
             </button>
@@ -229,16 +229,16 @@ export function CircuitTestView({
             </button>
           </div>
         ) : nextTest ? (
-          <div className="rounded-xl border border-cyan-400/20 bg-gradient-to-br from-cyan-500/[0.08] to-cyan-900/[0.04] overflow-hidden">
+          <div className="rounded-xl border border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/[0.08] to-elec-yellow/[0.04] overflow-hidden">
             {/* Top row — big test number + counter */}
             <div className="flex items-center justify-between px-3 pt-2.5 pb-1">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-400/20 flex items-center justify-center shrink-0">
-                  <span className="text-base font-black text-cyan-400">
+                <div className="w-8 h-8 rounded-lg bg-elec-yellow/20 border border-elec-yellow/20 flex items-center justify-center shrink-0">
+                  <span className="text-base font-black text-elec-yellow">
                     {currentTestNumber + 1}
                   </span>
                 </div>
-                <span className="text-[10px] font-semibold text-cyan-400/60 uppercase tracking-wider">
+                <span className="text-[10px] font-semibold text-elec-yellow/60 uppercase tracking-wider">
                   Test {currentTestNumber + 1} of {progress.totalTests}
                 </span>
               </div>
@@ -341,10 +341,10 @@ export function CircuitTestView({
                 </div>
               )}
               {/* EIC Schedule */}
-              <div className="flex items-start gap-2.5 p-2.5 rounded-lg bg-cyan-500/[0.06] border border-cyan-400/15">
-                <FileText className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
+              <div className="flex items-start gap-2.5 p-2.5 rounded-lg bg-elec-yellow/[0.06] border border-elec-yellow/15">
+                <FileText className="w-4 h-4 text-elec-yellow shrink-0 mt-0.5" />
                 <div className="text-left">
-                  <p className="text-[10px] font-bold text-cyan-400 mb-0.5">EIC Schedule</p>
+                  <p className="text-[10px] font-bold text-elec-yellow mb-0.5">EIC Schedule</p>
                   <p className="text-xs text-white leading-relaxed">{learnContent.eicInfo}</p>
                 </div>
               </div>
@@ -405,7 +405,7 @@ export function CircuitTestView({
         </div>
         <button
           onClick={onOpenEIC}
-          className="text-[10px] text-cyan-400/60 font-medium touch-manipulation px-1.5 h-7 flex items-center"
+          className="text-[10px] text-elec-yellow/60 font-medium touch-manipulation px-1.5 h-7 flex items-center"
         >
           EIC <ChevronRight className="w-3 h-3 ml-0.5" />
         </button>

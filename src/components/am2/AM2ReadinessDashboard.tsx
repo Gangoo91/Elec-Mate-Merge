@@ -25,6 +25,7 @@ import {
   RefreshCw,
   ArrowRight,
   Clock,
+  BookOpenCheck,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { AM2ReadinessGauge } from './AM2ReadinessGauge';
@@ -78,7 +79,8 @@ const MODE_CARDS: Array<{
     componentKey: 'testingSequence',
     eyebrow: 'Testing',
     title: 'Testing sequence',
-    description: 'Run through the AM2 testing order — continuity, IR, polarity, Zs, RCD. Get it right end-to-end.',
+    description:
+      'Run through the AM2 testing order — continuity, IR, polarity, Zs, RCD. Get it right end-to-end.',
     tab: 'testing',
   },
   {
@@ -92,14 +94,16 @@ const MODE_CARDS: Array<{
     componentKey: 'safeIsolation',
     eyebrow: 'Isolation',
     title: 'Safe isolation',
-    description: 'Practise the 8-step safe-isolation procedure. AM2 will fail you instantly on this — get it perfect.',
+    description:
+      'Practise the 8-step safe-isolation procedure. AM2 will fail you instantly on this — get it perfect.',
     tab: 'safe-isolation',
   },
   {
     componentKey: 'knowledgeAssessment',
     eyebrow: 'Knowledge',
     title: 'Knowledge test',
-    description: 'BS 7671, health & safety, building regs. 400-question bank with weak-topic feedback.',
+    description:
+      'BS 7671, health & safety, building regs. 400-question bank with weak-topic feedback.',
     tab: 'knowledge',
   },
 ];
@@ -184,7 +188,8 @@ export function AM2ReadinessDashboard({ onNavigateToTab }: AM2ReadinessDashboard
             Recalculate
           </button>
           <span className="text-[10.5px] text-white/40 tabular-nums">
-            Last {data.calculatedAt.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}
+            Last{' '}
+            {data.calculatedAt.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}
           </span>
         </div>
       </motion.div>
@@ -201,7 +206,9 @@ export function AM2ReadinessDashboard({ onNavigateToTab }: AM2ReadinessDashboard
         <RiskIcon className={cn('h-5 w-5 shrink-0 mt-0.5', riskConfig.text)} />
         <div className="min-w-0">
           <p className={cn('text-[13.5px] font-semibold', riskConfig.text)}>{riskConfig.label}</p>
-          <p className="text-[12px] text-white/70 mt-0.5 leading-relaxed">{riskConfig.description}</p>
+          <p className="text-[12px] text-white/70 mt-0.5 leading-relaxed">
+            {riskConfig.description}
+          </p>
         </div>
       </motion.div>
 
@@ -284,6 +291,65 @@ export function AM2ReadinessDashboard({ onNavigateToTab }: AM2ReadinessDashboard
           </ul>
         </motion.div>
       )}
+
+      {/* Mock AM2 day — the killer practice mode. Strings all four
+          simulators into one timed session matching the real exam order.
+          Yellow-accented to stand out from the per-mode cards above. */}
+      <motion.div variants={fadeUp}>
+        <button
+          type="button"
+          onClick={() => onNavigateToTab('mock-day')}
+          className="group w-full text-left rounded-2xl border border-elec-yellow/40 bg-gradient-to-br from-elec-yellow/[0.06] to-elec-yellow/[0.02] hover:from-elec-yellow/[0.10] hover:to-elec-yellow/[0.04] transition-colors p-5 sm:p-6 touch-manipulation flex items-start gap-4"
+        >
+          <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-2xl bg-elec-yellow/[0.12] border border-elec-yellow/30 flex items-center justify-center shrink-0">
+            <Clock className="h-6 w-6 text-elec-yellow" />
+          </div>
+          <div className="min-w-0 flex-1">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
+              Killer practice · all four phases
+            </div>
+            <h3 className="mt-1.5 text-[18px] sm:text-[20px] font-semibold text-white tracking-tight group-hover:text-elec-yellow transition-colors">
+              Mock AM2 day
+            </h3>
+            <p className="mt-1.5 text-[12.5px] text-white/70 leading-relaxed max-w-md">
+              The closest in-app practice to a real AM2 day. Safe isolation → testing → faults →
+              knowledge in sequence, with per-phase timing and a combined result.
+            </p>
+            <div className="mt-3 inline-flex items-center gap-1.5 text-[12px] font-semibold text-elec-yellow">
+              Start the day
+              <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+            </div>
+          </div>
+        </button>
+      </motion.div>
+
+      {/* BS 7671 spot check — RAG-backed mini quiz pulling real regs from
+          bs7671_facets. Sits between the killer practice (Mock AM2 day)
+          and the lower-priority history link. */}
+      <motion.div variants={fadeUp}>
+        <button
+          type="button"
+          onClick={() => onNavigateToTab('bs7671')}
+          className="group w-full text-left inline-flex items-start justify-between gap-3 rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_10%)] hover:bg-white/[0.02] hover:border-elec-yellow/30 transition-colors p-4 sm:p-5 touch-manipulation"
+        >
+          <div className="flex items-start gap-3 min-w-0">
+            <div className="h-10 w-10 rounded-xl bg-elec-yellow/[0.08] border border-elec-yellow/20 flex items-center justify-center shrink-0">
+              <BookOpenCheck className="h-4 w-4 text-elec-yellow" />
+            </div>
+            <div className="min-w-0">
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
+                Live from BS 7671
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white">BS 7671 spot check</div>
+              <div className="mt-1 text-[11.5px] text-white/55 leading-snug max-w-md">
+                8 quick questions pulled fresh from the actual regulations — every answer cites the
+                reg you'll need to know.
+              </div>
+            </div>
+          </div>
+          <ArrowRight className="h-4 w-4 text-elec-yellow/70 shrink-0 mt-1 group-hover:translate-x-0.5 transition-transform" />
+        </button>
+      </motion.div>
 
       {/* History link */}
       <motion.div variants={fadeUp}>
@@ -392,7 +458,13 @@ function ModeCard({
         <motion.div
           className={cn(
             'h-full rounded-full',
-            score >= 70 ? 'bg-emerald-400' : score >= 50 ? 'bg-amber-400' : score > 0 ? 'bg-red-400' : 'bg-white/20'
+            score >= 70
+              ? 'bg-emerald-400'
+              : score >= 50
+                ? 'bg-amber-400'
+                : score > 0
+                  ? 'bg-red-400'
+                  : 'bg-white/20'
           )}
           initial={{ width: 0 }}
           animate={{ width: `${score}%` }}
@@ -402,9 +474,7 @@ function ModeCard({
 
       <div className="mt-3 flex items-center justify-between gap-3 pt-3 border-t border-white/[0.05]">
         <span className="text-[11px] text-white/55 truncate tabular-nums">
-          <span className={cn('font-semibold', scoreTone)}>
-            {notStarted ? '—' : `${score}%`}
-          </span>
+          <span className={cn('font-semibold', scoreTone)}>{notStarted ? '—' : `${score}%`}</span>
           <span className="mx-1.5 text-white/25">·</span>
           {statusLabel}
           <span className="mx-1.5 text-white/25">·</span>

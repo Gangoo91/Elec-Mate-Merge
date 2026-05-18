@@ -163,10 +163,8 @@ const sections = [
         </p>
         <p>
           The term "radial" distinguishes this configuration from a{' '}
-          <SEOInternalLink href="/ring-circuit-calculator">
-            ring final circuit
-          </SEOInternalLink>
-          , where the cable forms a loop starting and finishing at the same terminals in the
+          <SEOInternalLink href="/ring-circuit-calculator">ring final circuit</SEOInternalLink>,
+          where the cable forms a loop starting and finishing at the same terminals in the
           distribution board. Both configurations are permitted under{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>, and
           the choice between them depends on the load, floor area, cable routing, and design
@@ -690,7 +688,7 @@ const sections = [
 export default function RadialCircuitGuidePage() {
   return (
     <GuideTemplate
-      title="Radial Circuit: BS 7671:2018+A4:2026 Guide"| When to Use Radial vs Ring"
+      title="Radial Circuit: BS 7671:2018+A4:2026 Guide"
       description="Radial circuits protect 32A+ loads in UK installations. Learn cable sizing, protection rules, and when radials outperform ring circuits under current regs."
       datePublished="2025-06-15"
       dateModified="2026-02-13"

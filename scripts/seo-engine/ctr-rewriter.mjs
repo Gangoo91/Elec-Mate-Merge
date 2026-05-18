@@ -231,16 +231,24 @@ async function apply() {
     }
     const file = join(ROOT, r.file);
     let src = readFileSync(file, 'utf-8');
-    // Replace title and description props — exact string match against current values
-    src = src.replace(
-      new RegExp(`(\\btitle=)["'\`]${r.currentTitle.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\$&')}["'\`]`),
-      `$1"${v.title}"`,
-    );
+    // Replace title and description props using literal substring match (not regex)
+    // to avoid corruption when titles contain pipe/quote/regex-special chars.
+    const titleOld = `title="${r.currentTitle}"`;
+    const titleNew = `title="${v.title}"`;
+    if (!src.includes(titleOld)) {
+      console.log(`  SKIP ${r.slug} — current title literal not found in source (may have been edited)`);
+      continue;
+    }
+    src = src.replace(titleOld, titleNew);
     if (r.currentDescription) {
-      src = src.replace(
-        new RegExp(`(\\bdescription=)["'\`]${r.currentDescription.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\$&')}["'\`]`),
-        `$1"${v.description}"`,
-      );
+      const descOld = `description="${r.currentDescription}"`;
+      const descNew = `description="${v.description}"`;
+      if (src.includes(descOld)) src = src.replace(descOld, descNew);
+    }
+    // Defensive check — after replace, the file must NOT contain a malformed `title="..."| ...` pattern
+    if (/\btitle="[^"]*"\|/.test(src)) {
+      console.log(`  REVERT ${r.slug} — malformed title detected after replace`);
+      continue;
     }
     writeFileSync(file, src);
     applied.push({ slug: r.slug, file: r.file, applied: v });

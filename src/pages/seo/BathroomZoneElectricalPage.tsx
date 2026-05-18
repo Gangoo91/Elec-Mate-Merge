@@ -88,7 +88,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/bathroom-electrical-regulations',
     title: 'Bathroom Electrical Regulations',
-    description: 'Full BS 7671 Section 701 guide including supplementary bonding and RCD requirements.',
+    description:
+      'Full BS 7671 Section 701 guide including supplementary bonding and RCD requirements.',
     icon: Droplets,
     category: 'Guide',
   },
@@ -149,8 +150,8 @@ const sections = [
           Section 701 is more restrictive than the general installation requirements because water
           and electricity are a dangerous combination. The presence of water dramatically reduces
           the body's resistance to electric shock, meaning that voltages and fault currents that
-          would not be lethal in a dry environment can cause a fatal shock in a bathroom. The
-          zone system provides a structured, risk-based approach to managing this danger.
+          would not be lethal in a dry environment can cause a fatal shock in a bathroom. The zone
+          system provides a structured, risk-based approach to managing this danger.
         </p>
         <p>
           All electrical work in bathrooms and shower rooms in dwellings is notifiable under Part P
@@ -174,23 +175,27 @@ const sections = [
         <p>
           Section 701 of BS 7671 defines zones based on the physical proximity to the bath or
           shower. The zone dimensions are measured from the interior of the bath or shower tray
-          outwards, and from the finished floor level upwards. The zones determine what equipment
-          is permitted and what IP rating is required.
+          outwards, and from the finished floor level upwards. The zones determine what equipment is
+          permitted and what IP rating is required.
         </p>
         <div className="grid gap-4 sm:grid-cols-3 my-4">
           <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
             <h3 className="font-bold text-white text-xl mb-2 flex items-center gap-2">
-              <span className="bg-red-500 text-white text-sm font-bold rounded-full w-7 h-7 flex items-center justify-center shrink-0">0</span>
+              <span className="bg-red-500 text-white text-sm font-bold rounded-full w-7 h-7 flex items-center justify-center shrink-0">
+                0
+              </span>
               Zone 0
             </h3>
             <p className="text-white text-sm leading-relaxed">
-              The interior of the bath or shower tray. The space occupied by the water. Extends
-              from the bottom of the bath to the overflow or top of the tray.
+              The interior of the bath or shower tray. The space occupied by the water. Extends from
+              the bottom of the bath to the overflow or top of the tray.
             </p>
           </div>
           <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5">
             <h3 className="font-bold text-white text-xl mb-2 flex items-center gap-2">
-              <span className="bg-orange-500 text-white text-sm font-bold rounded-full w-7 h-7 flex items-center justify-center shrink-0">1</span>
+              <span className="bg-orange-500 text-white text-sm font-bold rounded-full w-7 h-7 flex items-center justify-center shrink-0">
+                1
+              </span>
               Zone 1
             </h3>
             <p className="text-white text-sm leading-relaxed">
@@ -200,12 +205,14 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <h3 className="font-bold text-white text-xl mb-2 flex items-center gap-2">
-              <span className="bg-yellow-500 text-black text-sm font-bold rounded-full w-7 h-7 flex items-center justify-center shrink-0">2</span>
+              <span className="bg-yellow-500 text-black text-sm font-bold rounded-full w-7 h-7 flex items-center justify-center shrink-0">
+                2
+              </span>
               Zone 2
             </h3>
             <p className="text-white text-sm leading-relaxed">
-              Extends a further 0.6m horizontally from the boundary of Zone 1, from the floor
-              up to 2.25m. The area typically containing the washbasin and towel rail.
+              Extends a further 0.6m horizontally from the boundary of Zone 1, from the floor up to
+              2.25m. The area typically containing the washbasin and towel rail.
             </p>
           </div>
         </div>
@@ -242,7 +249,9 @@ const sections = [
               <tr>
                 <td className="py-3 pr-4 font-semibold text-red-400">Zone 0</td>
                 <td className="py-3 pr-4">IPX7</td>
-                <td className="py-3">Protected against immersion in water up to 1 metre depth for 30 minutes</td>
+                <td className="py-3">
+                  Protected against immersion in water up to 1 metre depth for 30 minutes
+                </td>
               </tr>
               <tr>
                 <td className="py-3 pr-4 font-semibold text-orange-400">Zone 1</td>
@@ -265,8 +274,8 @@ const sections = [
         <p>
           The IP rating must be marked on the luminaire or equipment. If a light fitting does not
           display an IP rating, it is not suitable for use within the zones. Common IP-rated
-          bathroom luminaires display IP44 or IP65 ratings — both of which meet the Zone 1 and
-          Zone 2 requirement of IPX4.
+          bathroom luminaires display IP44 or IP65 ratings — both of which meet the Zone 1 and Zone
+          2 requirement of IPX4.
         </p>
       </>
     ),
@@ -278,8 +287,8 @@ const sections = [
       <>
         <p>
           Zone 0 is the most restrictive zone. It encompasses the interior of the bath or shower
-          tray — the space where the bather or person showering is in direct contact with water.
-          The electrical risk here is the highest.
+          tray — the space where the bather or person showering is in direct contact with water. The
+          electrical risk here is the highest.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <h3 className="font-semibold text-white text-base mb-4 flex items-center gap-2">
@@ -289,11 +298,16 @@ const sections = [
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span>Equipment must be rated <strong>IPX7 minimum</strong></span>
+              <span>
+                Equipment must be rated <strong>IPX7 minimum</strong>
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span>Only <strong>SELV (Safety Extra-Low Voltage)</strong> equipment permitted — maximum 12V AC or 30V DC</span>
+              <span>
+                Only <strong>SELV (Safety Extra-Low Voltage)</strong> equipment permitted — maximum
+                12V AC or 30V DC
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
@@ -324,12 +338,12 @@ const sections = [
           </ul>
         </div>
         <p>
-          In domestic practice, Zone 0 is rarely encountered as a design challenge because very
-          few products are installed inside the bath or shower tray. The main Zone 0 product is
+          In domestic practice, Zone 0 is rarely encountered as a design challenge because very few
+          products are installed inside the bath or shower tray. The main Zone 0 product is
           specialist in-bath LED lighting, which is purpose-designed for this application. If a
-          homeowner requests lighting inside a shower enclosure, the fitting must be rated for
-          Zone 0 if it is positioned inside the shower tray, or Zone 1 if it is above the tray
-          but within the shower enclosure.
+          homeowner requests lighting inside a shower enclosure, the fitting must be rated for Zone
+          0 if it is positioned inside the shower tray, or Zone 1 if it is above the tray but within
+          the shower enclosure.
         </p>
       </>
     ),
@@ -340,11 +354,11 @@ const sections = [
     content: (
       <>
         <p>
-          Zone 1 extends upward from the bath or shower tray to a height of 2.25m above the
-          finished floor level. For showers with a fixed shower head, Zone 1 extends 1.2m
-          horizontally from the shower head position in all directions (or to the wall of the
-          shower enclosure if smaller). Zone 1 represents the area where water spray from the
-          shower or splashing from the bath is likely.
+          Zone 1 extends upward from the bath or shower tray to a height of 2.25m above the finished
+          floor level. For showers with a fixed shower head, Zone 1 extends 1.2m horizontally from
+          the shower head position in all directions (or to the wall of the shower enclosure if
+          smaller). Zone 1 represents the area where water spray from the shower or splashing from
+          the bath is likely.
         </p>
         <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-6 my-4">
           <h3 className="font-semibold text-white text-base mb-4 flex items-center gap-2">
@@ -354,7 +368,9 @@ const sections = [
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span>Equipment must be rated <strong>IPX4 minimum</strong></span>
+              <span>
+                Equipment must be rated <strong>IPX4 minimum</strong>
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
@@ -406,9 +422,9 @@ const sections = [
     content: (
       <>
         <p>
-          Zone 2 extends 0.6m horizontally beyond the boundary of Zone 1 and from the floor up
-          to 2.25m. In a typical bathroom, Zone 2 covers the area immediately adjacent to the
-          bath or shower — where the washbasin, towel rail, and mirror are typically located.
+          Zone 2 extends 0.6m horizontally beyond the boundary of Zone 1 and from the floor up to
+          2.25m. In a typical bathroom, Zone 2 covers the area immediately adjacent to the bath or
+          shower — where the washbasin, towel rail, and mirror are typically located.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <h3 className="font-semibold text-white text-base mb-4 flex items-center gap-2">
@@ -418,7 +434,9 @@ const sections = [
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span>Equipment must be rated <strong>IPX4 minimum</strong></span>
+              <span>
+                Equipment must be rated <strong>IPX4 minimum</strong>
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
@@ -469,8 +487,8 @@ const sections = [
       <>
         <p>
           The area outside Zone 2 is beyond 0.6m horizontally from the Zone 1 boundary and above
-          2.25m from the floor. In this area, standard electrical installation rules apply.
-          However, there are important caveats:
+          2.25m from the floor. In this area, standard electrical installation rules apply. However,
+          there are important caveats:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -478,10 +496,10 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection still required</strong> — Regulation 701.411.3.3 requires
-                that all circuits supplying equipment in Zone 0, 1, or 2 are RCD protected at
-                30mA, regardless of where the supply cable runs. A lighting circuit that also
-                supplies a bathroom luminaire must be RCD protected even if the consumer unit is
-                remote from the bathroom.
+                that all circuits supplying equipment in Zone 0, 1, or 2 are RCD protected at 30mA,
+                regardless of where the supply cable runs. A lighting circuit that also supplies a
+                bathroom luminaire must be RCD protected even if the consumer unit is remote from
+                the bathroom.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -489,9 +507,8 @@ const sections = [
               <span>
                 <strong>Switches and sockets permitted outside zones</strong> — a standard mains
                 switch can be installed outside the zones in a bathroom (where space permits). In
-                small bathrooms, the entire floor area is within Zone 2, so a mains switch can
-                only be placed at the door on the outside of the room, or as a pull-cord above
-                2.25m.
+                small bathrooms, the entire floor area is within Zone 2, so a mains switch can only
+                be placed at the door on the outside of the room, or as a pull-cord above 2.25m.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -499,8 +516,8 @@ const sections = [
               <span>
                 <strong>Supplementary bonding</strong> — BS 7671 Regulation 701.415.2 states that
                 supplementary protective equipotential bonding is not required where all circuits
-                are RCD protected at 30mA and the installation is in accordance with BS 7671.
-                In most modern bathrooms, supplementary bonding is therefore not required if the
+                are RCD protected at 30mA and the installation is in accordance with BS 7671. In
+                most modern bathrooms, supplementary bonding is therefore not required if the
                 circuits are correctly RCD protected.
               </span>
             </li>
@@ -533,32 +550,32 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Light fittings without IP rating in Zone 1 or 2</strong> — recessed
-                downlighters that are not IP rated installed directly above a bath. Without an
-                IP rating the fitting is not suitable for Zone 1.
+                downlighters that are not IP rated installed directly above a bath. Without an IP
+                rating the fitting is not suitable for Zone 1.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Shaver socket in Zone 1</strong> — shaver sockets are only permitted in
-                Zone 2 or outside the zones. Installing one within Zone 1 (within the footprint
-                of the bath) is non-compliant.
+                <strong>Shaver socket in Zone 1</strong> — shaver sockets are only permitted in Zone
+                2 or outside the zones. Installing one within Zone 1 (within the footprint of the
+                bath) is non-compliant.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No RCD protection on lighting circuit</strong> — bathroom lighting
-                circuits without RCD protection. This is a very common C2 or C1 deficiency on
-                older installations.
+                <strong>No RCD protection on lighting circuit</strong> — bathroom lighting circuits
+                without RCD protection. This is a very common C2 or C1 deficiency on older
+                installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Standard socket outlets in bathrooms</strong> — fitting a 13A socket
-                outlet inside a bathroom is not permitted. Only shaver sockets to BS EN 61558-2-5
-                are allowed, and only in Zone 2 or outside the zones.
+                <strong>Standard socket outlets in bathrooms</strong> — fitting a 13A socket outlet
+                inside a bathroom is not permitted. Only shaver sockets to BS EN 61558-2-5 are
+                allowed, and only in Zone 2 or outside the zones.
               </span>
             </li>
           </ul>
@@ -593,8 +610,8 @@ const sections = [
                   <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificate
                   </SEOInternalLink>{' '}
-                  on site after every bathroom installation. All bathroom work (except like-for-like)
-                  is Part P notifiable and requires an EIC or MEIWC.
+                  on site after every bathroom installation. All bathroom work (except
+                  like-for-like) is Part P notifiable and requires an EIC or MEIWC.
                 </p>
               </div>
             </div>
@@ -609,8 +626,8 @@ const sections = [
                   <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
-                  to correctly size shower circuits (typically 6mm to 10mm depending on the
-                  shower rating) and towel rail circuits.
+                  to correctly size shower circuits (typically 6mm to 10mm depending on the shower
+                  rating) and towel rail circuits.
                 </p>
               </div>
             </div>
@@ -628,7 +645,7 @@ const sections = [
 export default function BathroomZoneElectricalPage() {
   return (
     <GuideTemplate
-      title="Bathroom Electric Zones BS 7671:2018+A4:2026"| Zone 0, 1, 2 IP Ratings Guide"
+      title="Bathroom Electric Zones BS 7671:2018+A4:2026"
       description="Complete guide to bathroom electrical zones under BS 7671 Section 701. Zone 0, 1, and 2 boundaries, IP ratings required (IPX7, IPX4, IPX4), what is permitted in each zone, shaver socket placement, switch positions, and common installation mistakes."
       datePublished="2026-03-27"
       dateModified="2026-03-27"

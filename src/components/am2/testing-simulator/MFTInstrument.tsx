@@ -172,7 +172,7 @@ export function MFTInstrument({
                     'shrink-0 h-8 px-3 rounded-lg text-[11px] font-bold',
                     'touch-manipulation transition-all duration-150',
                     'border',
-                    isActive && 'ring-1 ring-cyan-400/30'
+                    isActive && 'ring-1 ring-elec-yellow/30'
                   )}
                   style={{
                     backgroundColor: style.bg,

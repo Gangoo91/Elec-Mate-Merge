@@ -32,7 +32,7 @@ export function EICCircuitDetailsTab({ circuitDetails }: EICCircuitDetailsTabPro
   return (
     <div className="px-3 py-3 space-y-3">
       <div className="flex items-center gap-2 pb-1">
-        <div className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+        <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
         <h3 className="text-xs font-bold text-white uppercase tracking-wider">
           Schedule of Circuit Details (Cols 1-16)
         </h3>

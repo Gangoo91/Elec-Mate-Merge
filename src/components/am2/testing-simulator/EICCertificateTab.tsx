@@ -26,7 +26,7 @@ function Field({ label, value }: { label: string; value: string }) {
 function SectionTitle({ title }: { title: string }) {
   return (
     <div className="flex items-center gap-2 pt-3 pb-1">
-      <div className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+      <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
       <h3 className="text-xs font-bold text-white uppercase tracking-wider">{title}</h3>
     </div>
   );
