@@ -2,10 +2,19 @@ import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
+/**
+ * Server-side factor row shape. Real data in production includes a mix of
+ *   - newer rows: { key, label, severity, detail }
+ *   - older rows: { label, detail, weight }
+ * `key` and `severity` are therefore optional from the consumer's
+ * perspective. Consumers must normalise (use `weight` as the fallback
+ * severity, fall back to label keywords when key is missing).
+ */
 export interface RiskFactor {
-  key: string;
+  key?: string;
   label: string;
-  severity: number;
+  severity?: number;
+  weight?: number;
   detail?: string;
 }
 
@@ -105,13 +114,15 @@ export function useSyncAcCoverage() {
         } else if (students === 0) {
           toast({
             title: 'No learners to seed',
-            description: 'Either no active learners match, or none have a course assigned. Open the learner profile and set a course.',
+            description:
+              'Either no active learners match, or none have a course assigned. Open the learner profile and set a course.',
             variant: 'destructive',
           });
         } else if (totalAcs === 0) {
           toast({
             title: 'No qualification ACs found',
-            description: "Course is set but its qualification has no ACs in qualification_requirements. Add ACs in admin first, then re-sync.",
+            description:
+              'Course is set but its qualification has no ACs in qualification_requirements. Add ACs in admin first, then re-sync.',
             variant: 'destructive',
           });
         } else {

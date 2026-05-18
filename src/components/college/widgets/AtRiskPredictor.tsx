@@ -4,10 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
-import {
-  useCurrentRiskForStudents,
-  useRecomputeRisk,
-} from '@/hooks/useStudentRisk';
+import { useCurrentRiskForStudents, useRecomputeRisk } from '@/hooks/useStudentRisk';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 
 interface AtRiskPredictorProps {
@@ -39,7 +36,13 @@ interface AtRiskStudent {
 }
 
 export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictorProps) {
-  const { students, cohorts, ilps, attendance: attendanceRecords, grades: assessments } = useCollegeSupabase();
+  const {
+    students,
+    cohorts,
+    ilps,
+    attendance: attendanceRecords,
+    grades: assessments,
+  } = useCollegeSupabase();
   const [selectedFilter, setSelectedFilter] = useState<'all' | 'critical' | 'high' | 'medium'>(
     'all'
   );
@@ -242,19 +245,47 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
                 ? 'medium'
                 : 'watch';
 
-        const serverFactors: RiskFactor[] = (server.factors ?? []).map((f) => ({
-          type:
-            f.key.startsWith('attendance')
-              ? 'attendance'
-              : f.key.startsWith('progress') || f.key.startsWith('ac_') || f.key.startsWith('grade')
-                ? 'progress'
-                : f.key.startsWith('ilp')
-                  ? 'ilp'
-                  : 'engagement',
-          label: f.label,
-          severity: f.severity >= 0.7 ? 'high' : f.severity >= 0.4 ? 'medium' : 'low',
-          description: f.detail ?? f.label,
-        }));
+        // Server JSONB factor shape varies by edge-fn version: newer rows
+        // carry { key, label, severity, detail }, older rows carry
+        // { label, detail, weight }. Normalise here so the widget never
+        // touches an undefined field — was the source of an "undefined
+        // is not a function" crash on legacy rows.
+        const serverFactors: RiskFactor[] = (server.factors ?? []).map((raw) => {
+          const f = raw as {
+            key?: string | null;
+            label?: string | null;
+            severity?: number | null;
+            weight?: number | null;
+            detail?: string | null;
+          };
+          const key = (f.key ?? '').toLowerCase();
+          const label = f.label ?? 'Risk factor';
+          const sev =
+            typeof f.severity === 'number'
+              ? f.severity
+              : typeof f.weight === 'number'
+                ? f.weight
+                : 0;
+          // Bucket by key if present, else fall back to label keywords so
+          // we still pick a sensible icon group for rows without a key.
+          const haystack = key || label.toLowerCase();
+          const type: RiskFactor['type'] = haystack.includes('attend')
+            ? 'attendance'
+            : haystack.includes('progress') ||
+                haystack.startsWith('ac_') ||
+                haystack.includes('grade') ||
+                haystack.includes('portfolio')
+              ? 'progress'
+              : haystack.includes('ilp') || haystack.includes('review')
+                ? 'ilp'
+                : 'engagement';
+          return {
+            type,
+            label,
+            severity: sev >= 0.7 ? 'high' : sev >= 0.4 ? 'medium' : 'low',
+            description: f.detail ?? label,
+          };
+        });
 
         const cohort = cohorts.find((c) => c.id === s.cohortId);
         return {
@@ -263,9 +294,9 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
           cohort: cohort?.name || local?.cohort || 'Unknown',
           riskScore: Math.round(server.score),
           riskLevel: widgetLevel,
-          riskFactors: serverFactors.length > 0 ? serverFactors : local?.riskFactors ?? [],
-          attendance: local?.attendance ?? (s.attendancePercentage ?? 0),
-          progressPercentage: local?.progressPercentage ?? (s.progressPercentage ?? 0),
+          riskFactors: serverFactors.length > 0 ? serverFactors : (local?.riskFactors ?? []),
+          attendance: local?.attendance ?? s.attendancePercentage ?? 0,
+          progressPercentage: local?.progressPercentage ?? s.progressPercentage ?? 0,
           lastILPReview: local?.lastILPReview,
           recommendedActions: local?.recommendedActions ?? [],
           source: 'server' as const,
@@ -344,9 +375,7 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
               <div className="text-3xl sm:text-4xl font-semibold tabular-nums leading-none text-orange-400">
                 {atRiskStudents.length}
               </div>
-              <div className="mt-1 text-[10px] uppercase tracking-[0.14em] text-white">
-                flagged
-              </div>
+              <div className="mt-1 text-[10px] uppercase tracking-[0.14em] text-white">flagged</div>
             </div>
           </div>
 
@@ -449,10 +478,30 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
         {/* Risk Level Filter */}
         <div className="mt-5 grid grid-cols-4 gap-px bg-white/[0.06] border border-white/[0.06] rounded-xl overflow-hidden">
           {[
-            { key: 'critical' as const, value: riskCounts.critical, label: 'Critical', color: 'text-red-400' },
-            { key: 'high' as const, value: riskCounts.high, label: 'High', color: 'text-orange-400' },
-            { key: 'medium' as const, value: riskCounts.medium, label: 'Medium', color: 'text-amber-400' },
-            { key: 'all' as const, value: atRiskStudents.length, label: 'All', color: 'text-elec-yellow' },
+            {
+              key: 'critical' as const,
+              value: riskCounts.critical,
+              label: 'Critical',
+              color: 'text-red-400',
+            },
+            {
+              key: 'high' as const,
+              value: riskCounts.high,
+              label: 'High',
+              color: 'text-orange-400',
+            },
+            {
+              key: 'medium' as const,
+              value: riskCounts.medium,
+              label: 'Medium',
+              color: 'text-amber-400',
+            },
+            {
+              key: 'all' as const,
+              value: atRiskStudents.length,
+              label: 'All',
+              color: 'text-elec-yellow',
+            },
           ].map((f) => (
             <button
               key={f.key}
