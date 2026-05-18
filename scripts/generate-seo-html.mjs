@@ -159,6 +159,42 @@ function extractMetadata(filePath) {
     if (multiLineDescMatch) description = multiLineDescMatch[1];
   }
 
+  // Pattern 5: GeneratedGuidePage wrapper — follow into the linked config file.
+  // The wrapper pattern is:
+  //   import { someConfig } from '@/pages/seo/generated/someConfig';
+  //   ...
+  //   <GeneratedGuidePage config={someConfig} />
+  // Read someConfig.ts and extract `title:` and `description:` from the
+  // object literal.
+  if (!title || !description) {
+    const cfgUseMatch = src.match(/<GeneratedGuidePage\s+config=\{(\w+)\}/);
+    if (cfgUseMatch) {
+      const configIdent = cfgUseMatch[1];
+      const importRe = new RegExp(
+        `import\\s*\\{\\s*${configIdent}\\s*\\}\\s*from\\s*['"]@/pages/seo/generated/(\\w+)['"]`
+      );
+      const importMatch = src.match(importRe);
+      if (importMatch) {
+        const configFile = join(SEO_PAGES_DIR, 'generated', `${importMatch[1]}.ts`);
+        if (existsSync(configFile)) {
+          const cfgSrc = readFileSync(configFile, 'utf-8');
+          if (!title) {
+            const t =
+              cfgSrc.match(/\btitle:\s*\n?\s*'([^']+)'/) ||
+              cfgSrc.match(/\btitle:\s*\n?\s*"([^"]+)"/);
+            if (t) title = t[1].replace(/\\'/g, "'");
+          }
+          if (!description) {
+            const d =
+              cfgSrc.match(/\bdescription:\s*\n?\s*'([^']+)'/) ||
+              cfgSrc.match(/\bdescription:\s*\n?\s*"([^"]+)"/);
+            if (d) description = d[1].replace(/\\'/g, "'");
+          }
+        }
+      }
+    }
+  }
+
   return title || description ? { title, description } : null;
 }
 
