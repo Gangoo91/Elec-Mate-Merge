@@ -125,8 +125,8 @@ const sections = [
           ambient temperature and Tables 4C1 to 4C5 for grouping.
         </p>
         <SEOAppBridge
-          title="BS 7671 Appendix 4 Tables 2026"
-          description="BS 7671:2018+A4:2026 Appendix 4 current-carrying capacity tables. Instant lookup by cable type and reference method. No site visits without them."
+          title="BS 7671 Appendix 4 Tables | A4:2026"
+          description="BS 7671 Appendix 4 current-carrying capacity tables for all cable types and reference methods. Updated A4:2026. Instant lookup — no guesswork on site."
           icon={BookOpen}
         />
       </>

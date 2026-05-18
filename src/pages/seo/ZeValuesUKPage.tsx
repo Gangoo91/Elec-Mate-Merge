@@ -331,7 +331,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Ze Value Calculator | BS 7671:2018+A4:2026"
-          description="Elec-Mate validates your measured Ze against the expected maximum for the declared earthing arrangement (TN-S, TN-C-S, or TT). If Ze exceeds the maximum, the app flags it immediately. Combined with 70+ calculators and voice test entry, you complete the EICR faster and more accurately."
+          description="Ze value checker for TN-S, TN-C-S, TT earthing. Validate measured impedance against 2026 limits in seconds. EICR testing made faster."
           icon={Calculator}
         />
       </>

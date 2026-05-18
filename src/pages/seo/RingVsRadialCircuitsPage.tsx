@@ -457,7 +457,7 @@ export default function RingVsRadialCircuitsPage() {
   return (
     <GuideTemplate
       title="32A Ring Circuit Design | BS 7671:2018+A4:2026"
-      description="Complete guide to ring final circuits vs radial circuits for UK electricians. BS 7671 Section 433 requirements, ring continuity testing with the r1+r2/4 method, load calculations, and when to use each circuit type."
+      description="Design 32A ring circuits to BS 7671:2018+A4:2026. Learn r1+r2/4 testing, load limits, and when radial beats ring. Compliance checklist included."
       datePublished="2026-03-27"
       dateModified="2026-03-27"
       breadcrumbs={breadcrumbs}

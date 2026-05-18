@@ -187,7 +187,8 @@ const sections = [
                     C&G 2382
                   </SEOInternalLink>
                 </strong>{' '}
-                — 18th Edition Wiring Regulations (current version: 2382-22, covering BS 7671:2018+A4:2026).
+                — 18th Edition Wiring Regulations (current version: 2382-22, covering BS
+                7671:2018+A4:2026).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -410,8 +411,8 @@ const sections = [
           the best investments you can make in your electrical career.
         </p>
         <SEOAppBridge
-          title="Track your progress to Gold Card"
-          description="Elec-Mate helps you track your qualifications, plan your training path, and prepare for exams. Cable sizing calculators, study modules, and AI-powered learning — all from your phone."
+          title="18th Edition Amendment 4:2026 Release"
+          description="BS 7671:2018+A4:2026 now live. Check compliance dates, cable sizing updates, and what changed for your installations. Free guide."
           icon={Award}
         />
       </>

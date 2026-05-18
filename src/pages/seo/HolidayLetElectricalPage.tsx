@@ -649,10 +649,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Holiday let owners need annual PAT testing, five-yearly EICRs, and ongoing
                   remedial work. Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to provide professional quotes on the day and convert inspection clients into
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  provide professional quotes on the day and convert inspection clients into
                   long-term maintenance relationships.
                 </p>
               </div>
@@ -660,8 +658,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Grow your holiday let electrical business with Elec-Mate"
-          description="Complete EICRs and PAT tests on site, quote remedial works immediately, and build recurring relationships with holiday let owners. 7-day free trial for UK electricians."
+          title="Do holiday lets need an EICR? 2026 rules"
+          description="Holiday let EICR requirements explained for UK landlords. Mandatory every 5 years under current regs. Get compliant fast with Elec-Mate's on-site testing."
           icon={FileCheck2}
         />
       </>

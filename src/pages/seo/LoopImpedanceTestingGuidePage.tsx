@@ -68,7 +68,7 @@ const faqs = [
   {
     question: 'Why should you not perform live loop impedance tests on RCD-protected circuits?',
     answer:
-      'A loop impedance tester injects a test current of typically 15A to 25A for a brief period to derive the loop impedance. This current flows in the line conductor but not the neutral — creating an imbalance that an RCD will detect as a residual current. A 30mA RCD will trip during the live loop impedance test. Use the calculated method instead: Zs = Ze + (r1 + r2), where r1 and r2 are obtained from the continuity tests. Some modern instruments use a very brief high-current pulse or a special RCD-compatible low-current method — check the instrument manufacturer\'s guidance.',
+      "A loop impedance tester injects a test current of typically 15A to 25A for a brief period to derive the loop impedance. This current flows in the line conductor but not the neutral — creating an imbalance that an RCD will detect as a residual current. A 30mA RCD will trip during the live loop impedance test. Use the calculated method instead: Zs = Ze + (r1 + r2), where r1 and r2 are obtained from the continuity tests. Some modern instruments use a very brief high-current pulse or a special RCD-compatible low-current method — check the instrument manufacturer's guidance.",
   },
   {
     question: 'What is the temperature correction factor for Zs?',
@@ -86,7 +86,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/insulation-resistance-testing-guide',
     title: 'Insulation Resistance Testing Guide',
-    description: 'Test voltages, minimum values, disconnecting components, and interpreting results.',
+    description:
+      'Test voltages, minimum values, disconnecting components, and interpreting results.',
     icon: Zap,
     category: 'Guide',
   },
@@ -142,17 +143,15 @@ const sections = [
           follow in the event of a line-to-earth fault. Understanding this path is fundamental to
           verifying that protective devices will operate fast enough to prevent electric shock or
           fire — which is the basis of{' '}
-          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671
-          </SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>{' '}
           automatic disconnection of supply (ADS) protection.
         </p>
         <p>
-          When a fault occurs between a line conductor and an exposed-conductive-part, current
-          flows from the supply transformer, along the line conductor of the distribution network,
-          through the fault path within the installation, and back to the transformer via the
-          earthing system. The impedance of this complete loop determines how much fault current
-          flows, which in turn determines how quickly the protective device operates.
+          When a fault occurs between a line conductor and an exposed-conductive-part, current flows
+          from the supply transformer, along the line conductor of the distribution network, through
+          the fault path within the installation, and back to the transformer via the earthing
+          system. The impedance of this complete loop determines how much fault current flows, which
+          in turn determines how quickly the protective device operates.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <div className="flex items-start gap-3">
@@ -205,18 +204,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <CircleDot className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>TN-S earthing</strong>: Typical Ze ≤ 0.8Ω. Separate earth conductor in
-                the supply cable sheath. The Ze is higher because the earth path impedance is
-                greater. Found in older urban properties supplied via older distribution cables.
+                <strong>TN-S earthing</strong>: Typical Ze ≤ 0.8Ω. Separate earth conductor in the
+                supply cable sheath. The Ze is higher because the earth path impedance is greater.
+                Found in older urban properties supplied via older distribution cables.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CircleDot className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>TT earthing</strong>: No Ze in the traditional sense — the installation
-                has its own earth electrode with resistance Ra. Ra plus the electrode resistance
-                of the supply transformer gives the total loop impedance. TT systems require RCD
-                protection rather than relying on overcurrent protective devices for ADS.
+                <strong>TT earthing</strong>: No Ze in the traditional sense — the installation has
+                its own earth electrode with resistance Ra. Ra plus the electrode resistance of the
+                supply transformer gives the total loop impedance. TT systems require RCD protection
+                rather than relying on overcurrent protective devices for ADS.
               </span>
             </li>
           </ul>
@@ -235,8 +234,8 @@ const sections = [
       <>
         <p>
           Zs is the total loop impedance at any point in the installation, including the internal
-          circuit conductors. It is measured (or calculated) at the furthest point of each circuit
-          — this is where the impedance is highest and therefore where the fault current will be
+          circuit conductors. It is measured (or calculated) at the furthest point of each circuit —
+          this is where the impedance is highest and therefore where the fault current will be
           lowest and the protective device takes longest to operate.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -246,19 +245,19 @@ const sections = [
               <span>
                 <strong>Live Zs test</strong>: With the circuit energised, connect the loop
                 impedance tester between line and earth at the furthest accessible point of the
-                circuit (e.g., the most remote socket outlet). The instrument injects a test
-                current and measures Zs directly. This is the preferred method where practical and
-                where RCDs do not prevent it.
+                circuit (e.g., the most remote socket outlet). The instrument injects a test current
+                and measures Zs directly. This is the preferred method where practical and where
+                RCDs do not prevent it.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Calculated Zs (dead method)</strong>: Zs is calculated as Ze plus the
-                r1+r2 value obtained from the continuity tests: Zs = Ze + (r1 + r2). This is used
-                for RCD-protected circuits and where live testing is not practicable. The calculated
-                value must be corrected to account for conductor temperature as described in
-                BS 7671 Appendix 14.
+                <strong>Calculated Zs (dead method)</strong>: Zs is calculated as Ze plus the r1+r2
+                value obtained from the continuity tests: Zs = Ze + (r1 + r2). This is used for
+                RCD-protected circuits and where live testing is not practicable. The calculated
+                value must be corrected to account for conductor temperature as described in BS 7671
+                Appendix 14.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -283,8 +282,8 @@ const sections = [
     content: (
       <>
         <p>
-          Prospective fault current (PFC) is the maximum current that would flow in the event of
-          a fault — either a line-to-earth fault (PEFC, prospective earth fault current) or a
+          Prospective fault current (PFC) is the maximum current that would flow in the event of a
+          fault — either a line-to-earth fault (PEFC, prospective earth fault current) or a
           line-to-neutral fault (PSCC, prospective short-circuit current). Both must be determined
           and recorded, and both must be within the rated short-circuit breaking capacity of the
           protective devices.
@@ -294,11 +293,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>PEFC (prospective earth fault current)</strong>: PEFC = Uo ÷ Ze, where Uo
-                = 230V and Ze is the measured external loop impedance. If Ze = 0.30Ω, PEFC =
-                230 ÷ 0.30 = 767A. Consumer unit MCBs and fuses must have a rated short-circuit
-                capacity (Ics) equal to or greater than this value. Most domestic consumer units
-                are rated at 6kA or 10kA breaking capacity, which covers typical UK PME systems.
+                <strong>PEFC (prospective earth fault current)</strong>: PEFC = Uo ÷ Ze, where Uo =
+                230V and Ze is the measured external loop impedance. If Ze = 0.30Ω, PEFC = 230 ÷
+                0.30 = 767A. Consumer unit MCBs and fuses must have a rated short-circuit capacity
+                (Ics) equal to or greater than this value. Most domestic consumer units are rated at
+                6kA or 10kA breaking capacity, which covers typical UK PME systems.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -308,9 +307,8 @@ const sections = [
                 Zline is the impedance of the line-to-neutral loop (line conductor and neutral
                 conductor). Measured by connecting the instrument between line and neutral at the
                 origin with the main switch open. Alternatively calculated from Ze and the line-to-
-                neutral resistance. For a PME system with Ze = 0.30Ω, PSCC will be higher than
-                PEFC because the line-to-neutral path has lower impedance than the line-to-earth
-                path.
+                neutral resistance. For a PME system with Ze = 0.30Ω, PSCC will be higher than PEFC
+                because the line-to-neutral path has lower impedance than the line-to-earth path.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -343,8 +341,8 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Type B MCBs (BS EN 60898)</strong>: Operate at 3–5× rated current. Maximum
-                Zs (at 80°C, 230V): 6A = 7.67Ω / 10A = 4.60Ω / 16A = 2.87Ω / 20A = 2.30Ω /
-                32A = 1.44Ω / 40A = 1.15Ω / 63A = 0.73Ω.
+                Zs (at 80°C, 230V): 6A = 7.67Ω / 10A = 4.60Ω / 16A = 2.87Ω / 20A = 2.30Ω / 32A =
+                1.44Ω / 40A = 1.15Ω / 63A = 0.73Ω.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -359,19 +357,19 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Type D MCBs (BS EN 60898)</strong>: Operate at 10–20× rated current.
-                Maximum Zs values are one quarter those of Type B: 6A = 1.92Ω / 16A = 0.72Ω /
-                32A = 0.36Ω. High Zs indicates that Type D devices require very low loop impedance
-                and are not suitable for long cable runs.
+                <strong>Type D MCBs (BS EN 60898)</strong>: Operate at 10–20× rated current. Maximum
+                Zs values are one quarter those of Type B: 6A = 1.92Ω / 16A = 0.72Ω / 32A = 0.36Ω.
+                High Zs indicates that Type D devices require very low loop impedance and are not
+                suitable for long cable runs.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>BS 88-2 (gG) fuses</strong>: Zs values depend on the fuse time-current
-                characteristic. These are tabulated in Appendix 3. Generally higher Zs is
-                permitted than for MCBs of equivalent rating, as the fuse time-current
-                characteristic has a steeper slope.
+                characteristic. These are tabulated in Appendix 3. Generally higher Zs is permitted
+                than for MCBs of equivalent rating, as the fuse time-current characteristic has a
+                steeper slope.
               </span>
             </li>
           </ul>
@@ -405,10 +403,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Live testing (preferred where RCDs permit)</strong>: Measures the actual
-                Zs of the complete circuit including all connections and joints. Detects
-                deteriorated connections, corroded terminals, and high-resistance joints that would
-                not be found by the calculated method. More accurate than calculation.
+                <strong>Live testing (preferred where RCDs permit)</strong>: Measures the actual Zs
+                of the complete circuit including all connections and joints. Detects deteriorated
+                connections, corroded terminals, and high-resistance joints that would not be found
+                by the calculated method. More accurate than calculation.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -449,8 +447,8 @@ const sections = [
     content: (
       <>
         <p>
-          Loop impedance instruments (and multifunction testers with a loop impedance function)
-          have settings that must be correctly configured before testing.
+          Loop impedance instruments (and multifunction testers with a loop impedance function) have
+          settings that must be correctly configured before testing.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -466,8 +464,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>2-wire vs 4-wire measurement</strong>: For Ze measurement at the origin,
-                use the standard 2-wire (L-PE) connection. For accurate Zs measurement at distant
+                <strong>2-wire vs 4-wire measurement</strong>: For Ze measurement at the origin, use
+                the standard 2-wire (L-PE) connection. For accurate Zs measurement at distant
                 points, some instruments support a 3-wire connection using a remote reference lead
                 to compensate for test lead resistance.
               </span>
@@ -532,7 +530,7 @@ const sections = [
           </ul>
         </div>
         <SEOAppBridge
-          title="Loop Impedance Test Results | Elec-Mate"
+          title="Loop Impedance Test Results | BS 7671:2026"
           description="Record loop impedance test results on site in seconds. Auto-flags Zs values against BS 7671:2018+A4:2026 limits and generates compliant test schedules instantly."
           icon={FileCheck2}
         />
@@ -545,9 +543,9 @@ const sections = [
     content: (
       <>
         <p>
-          Accurate loop impedance testing underpins the safety of the entire electrical installation.
-          An Zs value above the maximum permitted limit means the protective device will not
-          disconnect fast enough under a fault condition — a potentially lethal situation.
+          Accurate loop impedance testing underpins the safety of the entire electrical
+          installation. An Zs value above the maximum permitted limit means the protective device
+          will not disconnect fast enough under a fault condition — a potentially lethal situation.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">

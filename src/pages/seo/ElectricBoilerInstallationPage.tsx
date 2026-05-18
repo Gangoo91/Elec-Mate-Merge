@@ -382,11 +382,8 @@ const sections = [
               <span>
                 <strong>Electrical Installation Certificate:</strong> an EIC must be issued for any
                 new circuit. Use the{' '}
-                <SEOAppBridge
-                  href="/eic-certificate"
-                  label="Elec-Mate EIC Certificate tool"
-                />{' '}
-                to generate a compliant certificate on-site.
+                <SEOAppBridge href="/eic-certificate" label="Elec-Mate EIC Certificate tool" /> to
+                generate a compliant certificate on-site.
               </span>
             </li>
           </ul>
@@ -540,10 +537,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOAppBridge
-                  href="/eic-certificate"
-                  label="Electrical Installation Certificate"
-                />{' '}
+                <SEOAppBridge href="/eic-certificate" label="Electrical Installation Certificate" />{' '}
                 — generate compliant EICs for new boiler circuits with BS 7671 test results.
               </span>
             </li>
@@ -578,8 +572,8 @@ const sections = [
 export default function ElectricBoilerInstallationPage() {
   return (
     <GuideTemplate
-      title="Electric Boiler Installation — Complete UK Guide 2024"
-      description="Complete guide to installing an electric boiler in the UK: types, sizing (kW calculation), wiring requirements under BS 7671, Part P notification, costs (\u00a31,500\u2013\u00a35,000), and comparison with gas boilers."
+      title="12kW Shower Cable Size & Installation"
+      description="12kW shower requires 10mm² cable minimum under BS 7671:2018+A4:2026. Learn correct sizing, earthing, and Part P compliance for safe high-load circuits."
       datePublished="2024-06-01"
       dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}

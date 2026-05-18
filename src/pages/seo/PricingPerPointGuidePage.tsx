@@ -497,8 +497,8 @@ const sections = [
           adjust your rate accordingly.
         </p>
         <SEOAppBridge
-          title="Quote with built-in per-point pricing"
-          description="Elec-Mate builds per-point pricing into professional PDF quotes. Count the points, set your rate, and send a quote in minutes. 7-day free trial."
+          title="Price per point electrical installation UK"
+          description="Set your rate per point, quote faster, and win more jobs in 2026. Elec-Mate's per-point pricing cuts quoting time by 70%. Start free today."
           icon={Target}
         />
       </>

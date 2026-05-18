@@ -104,18 +104,16 @@ const sections = [
           The most common reason electricians fail their exams is not lack of knowledge — it is poor
           exam technique, particularly time management. Mock exams under timed conditions are the
           only way to develop the speed you need. If you are preparing for the{' '}
-          <SEOInternalLink href="/eighteenth-edition-course">
-            18th Edition exam
-          </SEOInternalLink>{' '}
-          or the{' '}
+          <SEOInternalLink href="/eighteenth-edition-course">18th Edition exam</SEOInternalLink> or
+          the{' '}
           <SEOInternalLink href="/training/inspection-and-testing">
             2391 inspection and testing qualification
           </SEOInternalLink>
           , make mock exams the cornerstone of your revision.
         </p>
         <SEOAppBridge
-          title="Unlimited AI-powered mock exams"
-          description="Elec-Mate generates unlimited mock exams tailored to your weak areas. Instant marking, detailed explanations, and progress tracking. Study smarter, not harder."
+          title="2391 Mock Exam Multiple Choice Free"
+          description="Free 2391 mock exams with multiple choice questions. Instant marking, detailed answers, and progress tracking to pass first time."
           icon={BrainCircuit}
         />
       </>
@@ -203,12 +201,10 @@ const sections = [
         </p>
         <p>
           Elec-Mate mock exams for the{' '}
-          <SEOInternalLink href="/guides/18th-edition-exam-tips">
-            18th Edition
-          </SEOInternalLink>{' '}
-          are designed around the actual exam syllabus, with questions weighted to match the real
-          exam. After each mock, the AI highlights your weakest topics and recommends specific
-          regulations to review.
+          <SEOInternalLink href="/guides/18th-edition-exam-tips">18th Edition</SEOInternalLink> are
+          designed around the actual exam syllabus, with questions weighted to match the real exam.
+          After each mock, the AI highlights your weakest topics and recommends specific regulations
+          to review.
         </p>
       </>
     ),
@@ -372,10 +368,8 @@ const sections = [
         </p>
         <p>
           <strong>Study groups.</strong> If you are studying with others — whether on a{' '}
-          <SEOInternalLink href="/eighteenth-edition-course">
-            training course
-          </SEOInternalLink>{' '}
-          or informally — test each other with mock questions. Explaining why an answer is wrong is
+          <SEOInternalLink href="/eighteenth-edition-course">training course</SEOInternalLink> or
+          informally — test each other with mock questions. Explaining why an answer is wrong is
           just as valuable as explaining why the correct answer is right.
         </p>
       </>

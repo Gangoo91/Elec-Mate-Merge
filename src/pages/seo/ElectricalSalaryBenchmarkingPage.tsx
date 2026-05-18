@@ -498,8 +498,8 @@ const sections = [
           For self-employed electricians and business owners, understanding market rates is only
           half the story — your effective hourly rate depends on how efficiently you quote, invoice,
           and recover costs. Elec-Mate's{' '}
-          <SEOInternalLink href="/electrical-quoting-app">quoting tools</SEOInternalLink> help
-          you price jobs correctly from day one.
+          <SEOInternalLink href="/electrical-quoting-app">quoting tools</SEOInternalLink> help you
+          price jobs correctly from day one.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -533,8 +533,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Quote, invoice, and track profitability with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for quoting, invoicing, electrical certificates, and job scheduling. Know your numbers and grow your business. 7-day free trial."
+          title="2026 JIB rates for UK electricians"
+          description="Current JIB rates 2026: benchmark your labour costs against industry standards. Track approved electrician pay scales and margins in real time with Elec-Mate."
           icon={PoundSterling}
         />
       </>

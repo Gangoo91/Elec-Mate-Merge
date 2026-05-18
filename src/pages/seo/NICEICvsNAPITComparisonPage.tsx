@@ -545,8 +545,8 @@ const sections = [
           registered electricians manage the certificate and documentation side of their business.
         </p>
         <SEOAppBridge
-          title="Certificate and document management for registered electricians"
-          description="Join 1,000+ UK electricians using Elec-Mate to complete EICRs, Minor Works, and Electrical Installation Certificates on their phone. On-site PDF generation, AI board scanning, and instant report delivery. 7-day free trial."
+          title="NAPIT Registration Cost 2026 | UK Electrician"
+          description="NAPIT registration fees explained for 2026. Compare costs, renewal rates, and what you get with NAPIT vs NICEIC. Full breakdown for UK electricians."
           icon={FileCheck2}
         />
       </>

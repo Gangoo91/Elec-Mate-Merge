@@ -526,13 +526,11 @@ const sections = [
           </ul>
         </div>
         <p>
-          An <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> must be issued.
-          The certificate should note the earthing arrangement used for the EV circuit (particularly
-          if a local earth electrode is installed on a PME supply), the RCD type, and the earth
+          An <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> must be issued. The
+          certificate should note the earthing arrangement used for the EV circuit (particularly if
+          a local earth electrode is installed on a PME supply), the RCD type, and the earth
           electrode resistance. Many installers also complete a specific{' '}
-          <SEOInternalLink href="/ev-charger-certificate">
-            EV charger certificate
-          </SEOInternalLink>{' '}
+          <SEOInternalLink href="/ev-charger-certificate">EV charger certificate</SEOInternalLink>{' '}
           alongside the EIC.
         </p>
       </>
@@ -581,8 +579,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Quote and certify EV charger installations"
-          description="Join 1,000+ UK electricians using Elec-Mate for EV charger cable sizing, professional quoting, and on-site certification. 7-day free trial."
+          title="722.411.4.1 EV charging PME supply rules"
+          description="Section 722.411.4.1 BS 7671:2018+A4:2026 — four provisions for PME-supplied EV chargers. Verify compliance, size cables, certify installations."
           icon={Car}
         />
       </>

@@ -20,8 +20,8 @@ import {
 export default function BatteryBackupCalculatorPage() {
   return (
     <ToolTemplate
-      title="Battery Backup Calculator | UPS Sizing Tool"
-      description="Calculate battery backup capacity and UPS sizing for any load. Covers load assessment, runtime calculation, battery Ah requirements, and UPS kVA rating selection. Free UK electrical calculator for electricians and designers."
+      title="Battery Backup Calculation Tool | Elec-Mate"
+      description="Calculate battery backup capacity in minutes. Size UPS systems, assess load demand, and determine Ah requirements for emergency power. Free tool for UK electricians."
       datePublished="2026-01-25"
       dateModified="2026-02-13"
       breadcrumbs={[
@@ -47,7 +47,7 @@ export default function BatteryBackupCalculatorPage() {
           Battery Bank Correctly
         </>
       }
-              calculator={<BatteryBackupCalculator />}
+      calculator={<BatteryBackupCalculator />}
       heroSubtitle="Calculate the UPS rating and battery capacity needed to keep critical loads running during a power outage. Enter the load in watts or VA, choose the required runtime, and get an instant recommendation for UPS size and battery Ah. Part of Elec-Mate's 70+ calculators for UK electricians."
       heroFeaturePills={[
         { icon: Battery, label: 'Battery Sizing' },

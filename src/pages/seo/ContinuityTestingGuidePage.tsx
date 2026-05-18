@@ -86,7 +86,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/insulation-resistance-testing-guide',
     title: 'Insulation Resistance Testing Guide',
-    description: 'Test voltages, minimum values, disconnecting components, and interpreting IR results.',
+    description:
+      'Test voltages, minimum values, disconnecting components, and interpreting IR results.',
     icon: Zap,
     category: 'Guide',
   },
@@ -141,17 +142,15 @@ const sections = [
           Chapter 61 and must be carried out on all circuits during initial verification of a new
           installation (EIC) and during every periodic inspection (EICR).
         </p>
-        <p>
-          Continuity tests cover three separate requirements:
-        </p>
+        <p>Continuity tests cover three separate requirements:</p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Ring final circuit continuity</strong>: Verifying that socket outlet circuits
-                wired as a ring form a complete loop with no spurious spurs or incorrectly wired
-                connections (Regulation 612.2.1).
+                <strong>Ring final circuit continuity</strong>: Verifying that socket outlet
+                circuits wired as a ring form a complete loop with no spurious spurs or incorrectly
+                wired connections (Regulation 612.2.1).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -197,10 +196,10 @@ const sections = [
               consumer unit. Prove dead at the consumer unit terminals.
             </li>
             <li>
-              <strong>Disconnect the ring at the consumer unit</strong>: Disconnect both ends of
-              the line conductor from the MCB (or fuse), both ends of the neutral from the neutral
-              bar, and both ends of the CPC from the earth bar. You now have two separate legs of
-              the ring — leg A and leg B.
+              <strong>Disconnect the ring at the consumer unit</strong>: Disconnect both ends of the
+              line conductor from the MCB (or fuse), both ends of the neutral from the neutral bar,
+              and both ends of the CPC from the earth bar. You now have two separate legs of the
+              ring — leg A and leg B.
             </li>
             <li>
               <strong>Measure end-to-end resistance of the line conductor</strong>: Join one end of
@@ -247,11 +246,11 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ol className="space-y-4 text-white list-decimal list-inside">
             <li>
-              <strong>Cross-connect at the consumer unit</strong>: Take one end of the line conductor
-              (leg A) and connect it together with the opposite leg's neutral conductor (leg B
-              neutral). Take the other line conductor end (leg B) and connect it with leg A neutral.
-              This transposition means the instrument now sees the line of one ring leg in series
-              with the neutral of the other.
+              <strong>Cross-connect at the consumer unit</strong>: Take one end of the line
+              conductor (leg A) and connect it together with the opposite leg's neutral conductor
+              (leg B neutral). Take the other line conductor end (leg B) and connect it with leg A
+              neutral. This transposition means the instrument now sees the line of one ring leg in
+              series with the neutral of the other.
             </li>
             <li>
               <strong>Do the same for the CPC if testing r1+r2</strong>: Cross-connect the two CPC
@@ -260,8 +259,8 @@ const sections = [
             </li>
             <li>
               <strong>Test at each outlet</strong>: At every socket outlet on the ring, connect the
-              instrument between line and neutral terminals. Record the resistance. This is the r1+rn
-              value at that outlet.
+              instrument between line and neutral terminals. Record the resistance. This is the
+              r1+rn value at that outlet.
             </li>
             <li>
               <strong>Test r1+r2 at each outlet</strong>: Connect the instrument between line and
@@ -295,9 +294,9 @@ const sections = [
               <CircleDot className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>r1</strong>: Resistance of the line conductor from the consumer unit to the
-                furthest point on the circuit. For a ring, derived from the cross-connected test
-                (r1 = measured r1+rn value ÷ 2 if line and neutral have equal resistance). For a
-                radial, measured directly.
+                furthest point on the circuit. For a ring, derived from the cross-connected test (r1
+                = measured r1+rn value ÷ 2 if line and neutral have equal resistance). For a radial,
+                measured directly.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -313,8 +312,8 @@ const sections = [
               <span>
                 <strong>r2</strong>: Resistance of the CPC from the consumer unit to the furthest
                 point. This is the most critical value. Combined with Ze, it gives Zs without
-                applying live voltage: Zs = Ze + (r1 + r2). This calculated Zs must not exceed
-                the maximum Zs for the protective device.
+                applying live voltage: Zs = Ze + (r1 + r2). This calculated Zs must not exceed the
+                maximum Zs for the protective device.
               </span>
             </li>
           </ul>
@@ -324,9 +323,10 @@ const sections = [
             <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
             <span className="text-white">
               <strong>Note on CPC size</strong>: In flat twin-and-earth cable, the CPC is typically
-              smaller than the line and neutral conductors (1.0mm² CPC in 1.5mm² T&E, 1.5mm² CPC
-              in 2.5mm² T&E). This means r2 is higher than r1 and rn, and the r1+r2 value will be
-              higher than the r1+rn value at the same point on the ring. This is normal and expected.
+              smaller than the line and neutral conductors (1.0mm² CPC in 1.5mm² T&E, 1.5mm² CPC in
+              2.5mm² T&E). This means r2 is higher than r1 and rn, and the r1+r2 value will be
+              higher than the r1+rn value at the same point on the ring. This is normal and
+              expected.
             </span>
           </div>
         </div>
@@ -351,8 +351,8 @@ const sections = [
                 <strong>Radial circuit method</strong>: Disconnect the CPC at the consumer unit
                 earth bar. Use a long wander lead to connect from the disconnected CPC end at the
                 consumer unit to the test instrument's one terminal. Connect the other terminal to
-                the earth terminal at the furthest accessory on the circuit. The reading is r2
-                for that circuit.
+                the earth terminal at the furthest accessory on the circuit. The reading is r2 for
+                that circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -385,10 +385,10 @@ const sections = [
     content: (
       <>
         <p>
-          Main equipotential bonding conductors connect extraneous-conductive-parts (gas, water,
-          and oil pipework; structural metalwork entering or passing through the building) to the
-          main earthing terminal. Supplementary bonding connects simultaneously accessible parts
-          in special locations (such as bathrooms). Both must be verified for continuity.
+          Main equipotential bonding conductors connect extraneous-conductive-parts (gas, water, and
+          oil pipework; structural metalwork entering or passing through the building) to the main
+          earthing terminal. Supplementary bonding connects simultaneously accessible parts in
+          special locations (such as bathrooms). Both must be verified for continuity.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -399,26 +399,26 @@ const sections = [
                 ends of the bonding conductor remain connected, the test current flows through the
                 general mass of earth and the general bonding network rather than through the
                 conductor itself. The result is unreliably low and meaningless. Disconnect the
-                bonding conductor at the metalwork clamp (not at the main earthing terminal, as
-                this is more difficult to access safely).
+                bonding conductor at the metalwork clamp (not at the main earthing terminal, as this
+                is more difficult to access safely).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Expected resistance values</strong>: Main equipotential bonding conductors
-                are short and of large cross-sectional area (minimum 6mm² copper for TN systems
-                per BS 7671 Table 54.8). The resistance should be very low — typically 0.05Ω or
-                less. Higher values indicate a poor connection at a clamp, a corroded conductor, or
-                a join in the bonding conductor.
+                are short and of large cross-sectional area (minimum 6mm² copper for TN systems per
+                BS 7671 Table 54.8). The resistance should be very low — typically 0.05Ω or less.
+                Higher values indicate a poor connection at a clamp, a corroded conductor, or a join
+                in the bonding conductor.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Reconnect and verify</strong>: After testing, reconnect the bonding conductor
-                and test again with both ends connected to confirm continuity is restored. Never leave
-                bonding conductors disconnected.
+                <strong>Reconnect and verify</strong>: After testing, reconnect the bonding
+                conductor and test again with both ends connected to confirm continuity is restored.
+                Never leave bonding conductors disconnected.
               </span>
             </li>
           </ul>
@@ -432,9 +432,9 @@ const sections = [
     content: (
       <>
         <p>
-          Continuity testing requires a low-resistance ohmmeter capable of passing a test current
-          of at least 200mA (as specified in BS EN 61557-4). This distinguishes a proper
-          continuity test from a simple resistance measurement — the higher current helps identify
+          Continuity testing requires a low-resistance ohmmeter capable of passing a test current of
+          at least 200mA (as specified in BS EN 61557-4). This distinguishes a proper continuity
+          test from a simple resistance measurement — the higher current helps identify
           high-resistance joints that may pass at low test currents but fail under load.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -453,9 +453,9 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Use a wander lead for distant tests</strong>: A wander lead (a long
-                single-conductor test lead, typically 10m to 25m) allows one instrument terminal
-                to remain at the consumer unit while the other is taken to the furthest point of
-                the circuit. Factor the wander lead resistance into the null reading.
+                single-conductor test lead, typically 10m to 25m) allows one instrument terminal to
+                remain at the consumer unit while the other is taken to the furthest point of the
+                circuit. Factor the wander lead resistance into the null reading.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -490,8 +490,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>r1+rn (MΩ)</strong>: The measured r1+rn resistance at the furthest point
-                of the circuit, in ohms. For ring final circuits, this is the value at the furthest
+                <strong>r1+rn (MΩ)</strong>: The measured r1+rn resistance at the furthest point of
+                the circuit, in ohms. For ring final circuits, this is the value at the furthest
                 outlet derived from the cross-connected test.
               </span>
             </li>
@@ -506,23 +506,23 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Ring final continuity</strong>: For ring final circuits, record the
-                end-to-end values (R1, Rn, R2) from Test 1, and the r1+rn and r1+r2 values from
-                the cross-connected test.
+                end-to-end values (R1, Rn, R2) from Test 1, and the r1+rn and r1+r2 values from the
+                cross-connected test.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Bonding conductor continuity</strong>: Record the measured resistance of
-                each bonding conductor tested. Note where the bonding conductor was disconnected
-                for the test.
+                each bonding conductor tested. Note where the bonding conductor was disconnected for
+                the test.
               </span>
             </li>
           </ul>
         </div>
         <SEOAppBridge
-          title="Acceptable Continuity Test Results | Elec-Mate"
-          description="The Elec-Mate testing app records r1+rn, r1+r2, and ring final continuity results on your phone. Auto-populates the schedule of test results and exports a compliant PDF. 7-day free trial."
+          title="Acceptable Continuity Test Results | BS 7671"
+          description="Acceptable continuity test results for ring finals, r1+rn, r1+r2 under BS 7671:2018+A4:2026. Pass/fail thresholds, test methods, and compliant PDF export."
           icon={FileCheck2}
         />
       </>
@@ -535,8 +535,8 @@ const sections = [
       <>
         <p>
           Continuity testing, done methodically, takes a few minutes per circuit. The steps are
-          straightforward but must be followed in order — particularly the nulling of lead resistance
-          and the disconnection of bonding conductors before testing.
+          straightforward but must be followed in order — particularly the nulling of lead
+          resistance and the disconnection of bonding conductors before testing.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">

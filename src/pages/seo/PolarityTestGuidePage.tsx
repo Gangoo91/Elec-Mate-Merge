@@ -86,7 +86,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/insulation-resistance-testing-guide',
     title: 'Insulation Resistance Testing Guide',
-    description: 'Test voltages, minimum values, disconnecting components, and interpreting IR results.',
+    description:
+      'Test voltages, minimum values, disconnecting components, and interpreting IR results.',
     icon: Zap,
     category: 'Guide',
   },
@@ -141,9 +142,7 @@ const sections = [
           Polarity is the correct assignment of line and neutral conductors throughout an electrical
           installation. Getting it wrong is not simply an administrative error — incorrect polarity
           creates real and potentially lethal hazards.{' '}
-          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671
-          </SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>{' '}
           Regulation 612.6 makes polarity verification mandatory at initial installation and at
           every periodic inspection.
         </p>
@@ -177,7 +176,8 @@ const sections = [
                 <strong>ES lamp holders</strong>: The centre contact of an ES lamp holder must be
                 connected to the line conductor. This ensures that when the lamp is unscrewed, the
                 outer threaded part (which users inevitably touch) is at neutral potential. A
-                reversed ES lamp holder has the outer shell at line potential — a hidden shock hazard.
+                reversed ES lamp holder has the outer shell at line potential — a hidden shock
+                hazard.
               </span>
             </li>
           </ul>
@@ -209,9 +209,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Socket outlets</strong>: Verify that the line conductor connects to the
-                line terminal (right-hand terminal on a BS 1363 socket when facing the socket),
-                neutral to the neutral terminal (left-hand), and earth to the earth terminal (top).
+                <strong>Socket outlets</strong>: Verify that the line conductor connects to the line
+                terminal (right-hand terminal on a BS 1363 socket when facing the socket), neutral
+                to the neutral terminal (left-hand), and earth to the earth terminal (top).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -249,10 +249,10 @@ const sections = [
     content: (
       <>
         <p>
-          The bell and battery (or buzzer) method is the original dead polarity test technique,
-          used by electricians for decades before multifunction test instruments became standard.
-          It remains valid and is useful in situations where a dedicated continuity instrument is
-          not available.
+          The bell and battery (or buzzer) method is the original dead polarity test technique, used
+          by electricians for decades before multifunction test instruments became standard. It
+          remains valid and is useful in situations where a dedicated continuity instrument is not
+          available.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ol className="space-y-4 text-white list-decimal list-inside">
@@ -287,10 +287,10 @@ const sections = [
           <div className="flex items-start gap-3">
             <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
             <span className="text-white">
-              <strong>Why low voltage?</strong> The bell and battery method uses a voltage far
-              lower than mains supply — safe to use on a de-energised circuit without risk of
-              shock. The instrument does not damage electronic components and can be used with
-              accessories left in place.
+              <strong>Why low voltage?</strong> The bell and battery method uses a voltage far lower
+              than mains supply — safe to use on a de-energised circuit without risk of shock. The
+              instrument does not damage electronic components and can be used with accessories left
+              in place.
             </span>
           </div>
         </div>
@@ -303,9 +303,9 @@ const sections = [
     content: (
       <>
         <p>
-          A low-resistance continuity tester (or a multifunction test instrument in continuity
-          mode) is the modern equivalent of the bell and battery. It is faster, more accurate,
-          and provides a numerical resistance reading rather than a simple pass/fail indication.
+          A low-resistance continuity tester (or a multifunction test instrument in continuity mode)
+          is the modern equivalent of the bell and battery. It is faster, more accurate, and
+          provides a numerical resistance reading rather than a simple pass/fail indication.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -313,9 +313,9 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Null the lead resistance</strong>: Short the instrument leads together and
-                null or record the lead resistance before testing. This is particularly important
-                on short runs where lead resistance may represent a significant proportion of the
-                total reading.
+                null or record the lead resistance before testing. This is particularly important on
+                short runs where lead resistance may represent a significant proportion of the total
+                reading.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -331,10 +331,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Polarity at each accessory</strong>: At each socket outlet, test between
-                the line terminal and the conductor connected to the consumer unit line busbar
-                (via the wander lead). Continuity confirms correct polarity. Repeat for neutral
-                and earth terminals.
+                <strong>Polarity at each accessory</strong>: At each socket outlet, test between the
+                line terminal and the conductor connected to the consumer unit line busbar (via the
+                wander lead). Continuity confirms correct polarity. Repeat for neutral and earth
+                terminals.
               </span>
             </li>
           </ul>
@@ -349,8 +349,8 @@ const sections = [
       <>
         <p>
           After the dead polarity test has been completed and the installation energised, a live
-          verification can confirm correct polarity and switching function at switch positions.
-          This is particularly important for two-way and intermediate switching arrangements.
+          verification can confirm correct polarity and switching function at switch positions. This
+          is particularly important for two-way and intermediate switching arrangements.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -396,9 +396,9 @@ const sections = [
     content: (
       <>
         <p>
-          Understanding where polarity errors typically occur helps focus the inspection and
-          speeds up fault finding. These are the most frequently encountered polarity errors in
-          UK domestic and commercial installations.
+          Understanding where polarity errors typically occur helps focus the inspection and speeds
+          up fault finding. These are the most frequently encountered polarity errors in UK domestic
+          and commercial installations.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -414,19 +414,19 @@ const sections = [
             <li className="flex items-start gap-3">
               <XCircle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Switch in the neutral</strong>: Particularly common in older loop-in
-                ceiling rose wiring where brown and blue conductors are close together and easy
-                to transpose. Also found where a lighting switch was added to an existing circuit
+                <strong>Switch in the neutral</strong>: Particularly common in older loop-in ceiling
+                rose wiring where brown and blue conductors are close together and easy to
+                transpose. Also found where a lighting switch was added to an existing circuit
                 without checking which conductor is the line.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <XCircle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Transposed at the consumer unit</strong>: Line conductors connected to
-                the neutral bar and neutral conductors connected to MCBs. This is a whole-board
-                reversal — every circuit is affected. Can occur when a consumer unit is replaced
-                and conductors are re-terminated without adequate identification.
+                <strong>Transposed at the consumer unit</strong>: Line conductors connected to the
+                neutral bar and neutral conductors connected to MCBs. This is a whole-board reversal
+                — every circuit is affected. Can occur when a consumer unit is replaced and
+                conductors are re-terminated without adequate identification.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -460,9 +460,9 @@ const sections = [
     content: (
       <>
         <p>
-          When a polarity fault is found at an accessory during the test, work backwards through
-          the circuit to locate the source. The following systematic approach minimises the time
-          spent on fault finding.
+          When a polarity fault is found at an accessory during the test, work backwards through the
+          circuit to locate the source. The following systematic approach minimises the time spent
+          on fault finding.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ol className="space-y-4 text-white list-decimal list-inside">
@@ -473,9 +473,9 @@ const sections = [
             </li>
             <li>
               <strong>Check the preceding junction</strong>: Work back to the last junction box,
-              ceiling rose, or intermediate accessory on the circuit. Test polarity there. If correct
-              at the junction but reversed at the accessory, the reversal is in the final connection
-              — at the accessory itself.
+              ceiling rose, or intermediate accessory on the circuit. Test polarity there. If
+              correct at the junction but reversed at the accessory, the reversal is in the final
+              connection — at the accessory itself.
             </li>
             <li>
               <strong>Check the consumer unit</strong>: If polarity is reversed at the first
@@ -517,32 +517,32 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Pass/Fail per circuit</strong>: Record a tick (pass) or cross (fail) in
-                the polarity column of the schedule for each circuit tested.
+                <strong>Pass/Fail per circuit</strong>: Record a tick (pass) or cross (fail) in the
+                polarity column of the schedule for each circuit tested.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Limitations</strong>: Note any circuits or accessories where polarity
-                could not be fully verified — for example, a permanently wired appliance where
-                access was not possible. State the reason.
+                <strong>Limitations</strong>: Note any circuits or accessories where polarity could
+                not be fully verified — for example, a permanently wired appliance where access was
+                not possible. State the reason.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Observations</strong>: Any polarity fault found and not immediately
-                remedied during the inspection must be recorded as an observation (C1, C2, or C3)
-                with a description and location. A switch in the neutral is C2 (potentially
-                dangerous). A reversed socket outlet is C2.
+                <strong>Observations</strong>: Any polarity fault found and not immediately remedied
+                during the inspection must be recorded as an observation (C1, C2, or C3) with a
+                description and location. A switch in the neutral is C2 (potentially dangerous). A
+                reversed socket outlet is C2.
               </span>
             </li>
           </ul>
         </div>
         <SEOAppBridge
-          title="Polarity Test Electrical: Log Results Fast"
-          description="Polarity test electrical circuits in minutes. Record per-circuit verification, export compliant EICR PDFs. BS 7671:2018+A4:2026 ready. Start free."
+          title="Polarity Test Electrical: BS 7671:2026"
+          description="Polarity test electrical circuits per BS 7671:2018+A4:2026. Record results, generate compliant EICR reports in minutes. Free tool for electricians."
           icon={FileCheck2}
         />
       </>
@@ -569,9 +569,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate schedule of tests
                   </SEOInternalLink>{' '}
-                  to tick polarity as you verify each circuit. If you find a reversal, log it as
-                  an observation immediately with the accessory location — before moving to the
-                  next circuit.
+                  to tick polarity as you verify each circuit. If you find a reversal, log it as an
+                  observation immediately with the accessory location — before moving to the next
+                  circuit.
                 </p>
               </div>
             </div>
@@ -582,8 +582,8 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Cross-Check with a Socket Tester</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  A plug-in socket tester (around £5 to £15) gives a rapid indication of polarity
-                  at every socket outlet and speeds up the polarity check significantly on larger
+                  A plug-in socket tester (around £5 to £15) gives a rapid indication of polarity at
+                  every socket outlet and speeds up the polarity check significantly on larger
                   installations. Use it alongside the continuity method — the socket tester confirms
                   function, the continuity test confirms the conductor path.
                 </p>

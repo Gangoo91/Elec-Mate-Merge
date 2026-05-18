@@ -688,8 +688,8 @@ const sections = [
 export default function RadialCircuitGuidePage() {
   return (
     <GuideTemplate
-      title="Radial Circuit: BS 7671:2018+A4:2026 Guide"
-      description="Radial circuits protect 32A+ loads in UK installations. Learn cable sizing, protection rules, and when radials outperform ring circuits under current regs."
+      title="Radial Circuit: BS 7671:2018+A4:2026 Rules"
+      description="Radial circuits handle 32A loads safely. Master cable sizing, MCB protection, and design rules under 2026 regs—plus when to use radials over rings."
       datePublished="2025-06-15"
       dateModified="2026-02-13"
       breadcrumbs={breadcrumbs}

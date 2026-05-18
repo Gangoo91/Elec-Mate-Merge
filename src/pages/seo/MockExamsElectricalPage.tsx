@@ -323,10 +323,10 @@ const sections = [
     content: (
       <>
         <p>
-          The <SEOInternalLink href="/am2-exam-preparation">AM2</SEOInternalLink> is the
-          practical assessment that sits at the end of an electrical apprenticeship. It is
-          administered by the JIB (Joint Industry Board) and typically takes 1 to 2 days at an
-          approved assessment centre.
+          The <SEOInternalLink href="/am2-exam-preparation">AM2</SEOInternalLink> is the practical
+          assessment that sits at the end of an electrical apprenticeship. It is administered by the
+          JIB (Joint Industry Board) and typically takes 1 to 2 days at an approved assessment
+          centre.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -380,11 +380,10 @@ const sections = [
     content: (
       <>
         <p>
-          The End-Point Assessment (
-          <SEOInternalLink href="/epa-preparation">EPA</SEOInternalLink>) is the final
-          assessment for electrical apprentices under the apprenticeship standard. It confirms that
-          you are occupationally competent — that you can work safely and effectively as a qualified
-          electrician.
+          The End-Point Assessment (<SEOInternalLink href="/epa-preparation">EPA</SEOInternalLink>)
+          is the final assessment for electrical apprentices under the apprenticeship standard. It
+          confirms that you are occupationally competent — that you can work safely and effectively
+          as a qualified electrician.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -597,8 +596,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Start practising with mock exams today"
-          description="Elec-Mate gives you mock exams, flashcards, and structured courses for 18th Edition, 2391, AM2, and EPA. Track your progress, identify weak areas, and study anywhere on your phone. 7-day free trial."
+          title="2391 Mock Exam | Free Practice Tests"
+          description="2391 mock exam with 200+ questions aligned to BS 7671:2018+A4:2026. Identify weak areas, track scores, study offline. Start free today."
           icon={Brain}
         />
       </>

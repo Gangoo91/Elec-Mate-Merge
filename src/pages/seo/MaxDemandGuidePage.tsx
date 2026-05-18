@@ -364,7 +364,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="After Diversity Maximum Demand Calculator"
-          description="Calculate ADMD in seconds using BS 7671:2018+A4:2026 diversity factors. Input circuit ratings, get accurate max demand in amps and kW instantly."
+          description="Calculate ADMD for BS 7671:2018+A4:2026 compliance. Input circuit ratings, get max demand in amps and kW in seconds. Free tool for electricians."
           icon={Calculator}
         />
       </>
@@ -589,10 +589,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">50+ Calculators in One App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Max demand is just one of over 70+ calculators on Elec-Mate. Others include{' '}
-                  <SEOInternalLink href="/cable-sizing-calculator">
-                    cable sizing
-                  </SEOInternalLink>
-                  ,{' '}
+                  <SEOInternalLink href="/cable-sizing-calculator">cable sizing</SEOInternalLink>,{' '}
                   <SEOInternalLink href="/guides/voltage-drop-limits-bs-7671">
                     voltage drop
                   </SEOInternalLink>

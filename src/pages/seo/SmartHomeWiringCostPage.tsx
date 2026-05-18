@@ -500,10 +500,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Create detailed, itemised quotes for smart home installations with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Smart switches, Cat6 cable runs, access points, patch panels, labour, testing —
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Smart switches, Cat6 cable runs, access points, patch panels, labour, testing —
                   all priced with your margins. Professional PDF sent to the client on site.
                 </p>
               </div>
@@ -524,8 +522,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Smart Home Wiring Cost Guide 2026"
-          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Price smart home jobs accurately and present professional documentation. 7-day free trial."
+          title="Smart Home Wiring Cost 2026 | UK Guide"
+          description="Smart home wiring costs £800–£3,500 depending on property size. Learn labour rates, cable grades, and how to quote jobs to BS 7671:2018+A4:2026 compliance."
           icon={Home}
         />
       </>

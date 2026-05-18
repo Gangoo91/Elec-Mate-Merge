@@ -563,8 +563,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="EICR Observations for Identification Defects"
-          description="Elec-Mate includes pre-built observation templates for all common conductor identification defects — missing earth sleeving, missing switch wire sleeving, missing warning notices, and incorrect phase identification. Select the observation and the app auto-populates the regulation reference and recommended action."
+          title="20 Pair Colour Code UK Cable Guide"
+          description="20 pair cable colour codes explained for UK electricians. BS 7671:2018+A4:2026 compliant identification. Quick reference chart and installation rules."
           icon={FileCheck2}
         />
       </>

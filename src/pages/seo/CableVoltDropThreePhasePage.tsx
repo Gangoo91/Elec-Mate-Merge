@@ -336,7 +336,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Three Phase Calculation Tool | BS 7671:2026"
-          description="Three phase voltage drop calculation in seconds. BS 7671:2026 compliant mV/A/m lookup, instant pass/fail results. No manual tables needed."
+          description="Three phase voltage drop calculator for BS 7671:2026. Instant mV/A/m results, no manual tables. Pass/fail compliance check in seconds."
           icon={Calculator}
         />
       </>

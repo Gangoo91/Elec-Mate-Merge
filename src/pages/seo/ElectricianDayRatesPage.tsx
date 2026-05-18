@@ -77,7 +77,7 @@ const faqs = [
   {
     question: 'How does the Construction Industry Scheme (CIS) affect my day rate?',
     answer:
-      'If you work as a self-employed electrician as a subcontractor to a main or electrical contractor, your day rate payments will usually fall under the Construction Industry Scheme (CIS). The contractor deducts 20% (or 30% if you are not registered) from your day rate payment and pays it to HMRC on your behalf. This is not an additional tax — it is a payment on account against your income tax and National Insurance liability. At the end of the tax year, these deductions are reconciled against your actual tax bill, and any overpayment is refunded. The key point for day rate setting: your quoted day rate is your gross rate before CIS deductions. Make sure your day rate calculation is based on your target net income — factor in the CIS deduction when working out what you need to charge to achieve your financial goals. Elec-Mate\'s job profitability calculator handles CIS deductions automatically.',
+      "If you work as a self-employed electrician as a subcontractor to a main or electrical contractor, your day rate payments will usually fall under the Construction Industry Scheme (CIS). The contractor deducts 20% (or 30% if you are not registered) from your day rate payment and pays it to HMRC on your behalf. This is not an additional tax — it is a payment on account against your income tax and National Insurance liability. At the end of the tax year, these deductions are reconciled against your actual tax bill, and any overpayment is refunded. The key point for day rate setting: your quoted day rate is your gross rate before CIS deductions. Make sure your day rate calculation is based on your target net income — factor in the CIS deduction when working out what you need to charge to achieve your financial goals. Elec-Mate's job profitability calculator handles CIS deductions automatically.",
   },
 ];
 
@@ -474,8 +474,8 @@ const sections = [
           are either undercharging or your costs are lower than average.
         </p>
         <SEOAppBridge
-          title="Know your true profit on every job"
-          description="Elec-Mate job profitability calculator factors in your actual overheads, not just labour and materials. Set day rates and job prices that genuinely make money. 7-day free trial."
+          title="Average Electrician Day Rate UK 2026"
+          description="UK electrician day rates vary by region and experience. See 2026 benchmarks, calculate your profitable rate, and compare London vs national averages."
           icon={Calculator}
         />
       </>

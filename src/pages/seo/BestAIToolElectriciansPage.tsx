@@ -21,8 +21,8 @@ import {
 export default function BestAIToolElectriciansPage() {
   return (
     <ComparisonTemplate
-      title="Best AI Tool for Electricians 2026 | Compared"
-      description="Compare the best AI tools for UK electricians in 2026. Elec-Mate AI vs ChatGPT vs Google Gemini — BS 7671 knowledge, circuit design, job costing, RAMS generation, and trade-specific AI compared side by side."
+      title="AI for Electricians: 5 Tools Compared 2026"
+      description="AI for electricians saves time on estimates and compliance. Compare 5 trade-specific tools for circuit design, job costing, and BS 7671:2018+A4:2026 checks."
       datePublished="2026-02-10"
       dateModified="2026-02-13"
       breadcrumbs={[

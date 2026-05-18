@@ -473,8 +473,8 @@ const sections = [
           </ul>
         </div>
         <SEOAppBridge
-          title="Are you an electrician? Manage jobs and certificates with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, quoting, and invoicing. Start your 7-day free trial."
+          title="1m Extension Lead 1 Socket | Safety Tested"
+          description="1m single socket extension leads tested to BS 7671:2018+A4:2026. Heavy-duty rated for site use. Order online with next-day delivery."
           icon={FileCheck2}
         />
       </>

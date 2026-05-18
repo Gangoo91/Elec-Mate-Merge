@@ -242,10 +242,8 @@ const sections = [
         </div>
         <p>
           Identifying the{' '}
-          <SEOInternalLink href="/earthing-arrangements">
-            earthing arrangement
-          </SEOInternalLink>{' '}
-          is one of the first steps in any inspection. It determines the expected earth fault loop
+          <SEOInternalLink href="/earthing-arrangements">earthing arrangement</SEOInternalLink> is
+          one of the first steps in any inspection. It determines the expected earth fault loop
           impedance values, the bonding requirements, and the type of fault protection that should
           be in place. Record the earthing arrangement on the EICR and verify it by measuring Ze at
           the origin.
@@ -620,8 +618,8 @@ const sections = [
           earthing/bonding, and C3 for missing earth sleeving or recommendations for improvement.
         </p>
         <SEOAppBridge
-          title="Record earthing and bonding test results by voice"
-          description="Probes in hand? Speak your Ze, Zs, R1+R2 results to Elec-Mate and the schedule of test results fills itself in. No putting the probes down to type. Complete the EICR faster and more accurately."
+          title="BS 7671 Table 54.7 | Earth Fault Loop Impedance"
+          description="BS 7671:2018+A4:2026 Table 54.7 sets maximum Ze and Zs values for circuit protection. Learn how to measure, record and comply with the wiring regs on every EICR."
           icon={Brain}
         />
       </>

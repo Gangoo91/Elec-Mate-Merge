@@ -171,8 +171,8 @@ const sections = [
           method is not optional — it is a required step in every cable sizing calculation.
         </p>
         <SEOAppBridge
-          title="All reference methods built into the calculator"
-          description="Select the installation method from a dropdown and Elec-Mate pulls the correct current-carrying capacity from the right Appendix 4 table. No need to figure out which table column to use."
+          title="BS 7671 Reference Method C Cable Install"
+          description="Reference Method C clipped direct to surface — find correct current capacity in Appendix 4:2026. Fast lookup, no table confusion."
           icon={Calculator}
         />
       </>

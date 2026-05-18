@@ -514,10 +514,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   The recommended annual inspection interval means repeat business for the
                   electrician. Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to offer multi-year maintenance contracts to park operators, building predictable
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  offer multi-year maintenance contracts to park operators, building predictable
                   recurring revenue.
                 </p>
               </div>
@@ -525,8 +523,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Specialist inspection work made simple with Elec-Mate"
-          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, RCD test recording, and instant PDF export. Ideal for caravan park annual inspections. 7-day free trial."
+          title="10th Edition Caravan Park EICR Inspections"
+          description="BS 7671:2018+A4:2026 compliant EICR software for caravan parks. Record test results, generate reports in minutes. Used by 1,000+ UK electricians."
           icon={FileCheck2}
         />
       </>

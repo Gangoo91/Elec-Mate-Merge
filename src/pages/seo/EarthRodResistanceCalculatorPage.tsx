@@ -18,8 +18,8 @@ import {
 export default function EarthRodResistanceCalculatorPage() {
   return (
     <ToolTemplate
-      title="Earth Rod Resistance Calculator | TT System Tool"
-      description="Calculate earth rod resistance for TT earthing systems. Covers rod length, soil resistivity, parallel rod calculations, and achieving the required earth electrode resistance to BS 7671. Free UK electrical calculator."
+      title="Ra x Iδn ≤ 50V Calculator | BS 7671:2018+A4:2026"
+      description="Calculate Ra x Iδn ≤ 50V compliance for TT systems under BS 7671:2018+A4:2026. Instant earth electrode resistance results for safe touch voltage limits."
       datePublished="2026-01-22"
       dateModified="2026-02-13"
       breadcrumbs={[
@@ -276,10 +276,8 @@ export default function EarthRodResistanceCalculatorPage() {
                 The parallel rods must all be bonded together with a copper earth conductor, and the
                 conductor must be protected against mechanical damage and corrosion. The bonding
                 connections should be accessible for future testing. Correct{' '}
-                <SEOInternalLink href="/cable-sizing-calculator">
-                  cable sizing
-                </SEOInternalLink>{' '}
-                for the earthing conductor is essential. This is part of the overall{' '}
+                <SEOInternalLink href="/cable-sizing-calculator">cable sizing</SEOInternalLink> for
+                the earthing conductor is essential. This is part of the overall{' '}
                 <SEOInternalLink href="/tools/eicr-certificate">EICR documentation</SEOInternalLink>{' '}
                 for the installation.
               </p>

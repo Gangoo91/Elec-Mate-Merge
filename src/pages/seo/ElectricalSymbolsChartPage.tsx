@@ -596,9 +596,7 @@ const sections = [
             </li>
             <li>
               <strong>Check the earthing.</strong> Identify the{' '}
-              <SEOInternalLink href="/earthing-arrangements">
-                earthing arrangement
-              </SEOInternalLink>{' '}
+              <SEOInternalLink href="/earthing-arrangements">earthing arrangement</SEOInternalLink>{' '}
               (TN-S, TN-C-S, or TT) and trace the main earth conductor to the earthing terminal.
             </li>
             <li>
@@ -650,7 +648,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="BS EN 60617 Electrical Symbols Chart"
-          description="Join 1,000+ UK electricians producing certificates with correct BS EN 60617 symbols. Board scanner, voice test entry, AI defect coding, and instant PDF delivery. 7-day free trial."
+          description="BS EN 60617 symbols guide for UK electricians. 2026-compliant chart with 150+ standard symbols, instant PDF download, and certification support."
           icon={PenTool}
         />
       </>

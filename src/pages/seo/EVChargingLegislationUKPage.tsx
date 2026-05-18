@@ -520,8 +520,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Stay compliant with Elec-Mate EV charging certificates"
-          description="Join 1,000+ UK electricians using Elec-Mate for EV charging certificates, quoting, and job management. Every installation certificated correctly, first time. 7-day free trial."
+          title="Building Code EV Charging 2026 Compliance"
+          description="Building Regulations for EV charging installations updated 2026. Understand Part S requirements, certification, and inspection standards for UK electricians."
           icon={FileCheck2}
         />
       </>

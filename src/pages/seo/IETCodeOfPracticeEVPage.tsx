@@ -314,11 +314,9 @@ const sections = [
         <p>
           For TN-S earthing systems (where the earth and neutral are separate throughout), the open
           PEN risk does not exist, and the{' '}
-          <SEOInternalLink href="/earthing-arrangements">
-            earthing arrangement
-          </SEOInternalLink>{' '}
-          can be used directly for EV charging without additional measures. However, TN-S supplies
-          are less common in the UK — most domestic supplies are TN-C-S (PME).
+          <SEOInternalLink href="/earthing-arrangements">earthing arrangement</SEOInternalLink> can
+          be used directly for EV charging without additional measures. However, TN-S supplies are
+          less common in the UK — most domestic supplies are TN-C-S (PME).
         </p>
         <SEOAppBridge
           title="EV charger certificates with O-PEN verification"
@@ -381,9 +379,7 @@ const sections = [
           Voltage drop is frequently the limiting factor for EV charger cable sizing because of the
           long cable runs involved — the charger is often mounted on the side of a garage or at the
           end of a driveway, 20 to 40 metres from the consumer unit. Use the{' '}
-          <SEOInternalLink href="/voltage-drop-calculator">
-            voltage drop calculator
-          </SEOInternalLink>{' '}
+          <SEOInternalLink href="/voltage-drop-calculator">voltage drop calculator</SEOInternalLink>{' '}
           to verify compliance with the 5% limit (11.5 V on a 230 V single-phase circuit).
         </p>
       </>
@@ -603,8 +599,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Complete EV charger installations faster"
-          description="From cable sizing to certificate delivery, Elec-Mate handles the entire EV installation workflow on your phone. IET CoP checklist, O-PEN verification, load assessment, and instant PDF certificates. 7-day free trial."
+          title="IET Code of Practice EV Installation 5th Ed"
+          description="IET CoP 5th edition guidance for EV charger installations. BS 7671:2018+A4:2026 compliant cable sizing, load assessment, and instant PDF certificates. Free trial."
           icon={Car}
         />
       </>

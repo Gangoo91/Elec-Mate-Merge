@@ -381,14 +381,12 @@ const sections = [
           (line-to-neutral). The overall PFC recorded on the certificate should be the higher of the
           two values — typically the line-to-neutral short circuit current. The Ze is recorded
           separately in the supply characteristics section of the{' '}
-          <SEOInternalLink href="/earthing-arrangements">
-            earthing arrangements
-          </SEOInternalLink>{' '}
+          <SEOInternalLink href="/earthing-arrangements">earthing arrangements</SEOInternalLink>{' '}
           data.
         </p>
         <SEOAppBridge
-          title="PFC calculator and Ze verification"
-          description="Enter your Ze value and Elec-Mate calculates the prospective earth fault current. The EICR form validates PFC against device breaking capacities automatically. Works offline."
+          title="APCS Calculator | BS 7671:2018+A4:2026"
+          description="Calculate APCS (prospective fault current) in seconds. Verify Ze values against BS 7671:2018+A4:2026 breaking capacities. Free offline tool for EICR compliance."
           icon={Gauge}
         />
       </>

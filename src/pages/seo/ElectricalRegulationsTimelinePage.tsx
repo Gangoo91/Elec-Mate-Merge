@@ -331,11 +331,9 @@ const sections = [
         </div>
         <p>
           The introduction of{' '}
-          <SEOInternalLink href="/part-p-building-regulations">
-            Part P
-          </SEOInternalLink>{' '}
-          in 2005 was the most significant regulatory change in the modern era. It transformed
-          domestic electrical work from an unregulated activity to one requiring notification and
+          <SEOInternalLink href="/part-p-building-regulations">Part P</SEOInternalLink> in 2005 was
+          the most significant regulatory change in the modern era. It transformed domestic
+          electrical work from an unregulated activity to one requiring notification and
           certification. This single change drove the growth of competent person schemes and
           professionalised the domestic electrical sector.
         </p>
@@ -430,10 +428,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>31 July 2024 — Amendment 3.</strong> Adds new Section 530 requirements covering
-                bidirectional and unidirectional switching and protective devices. Directly relevant
-                to solar PV, battery storage, and EV charger installations where current flow can
-                reverse. Available as a free PDF supplement.
+                <strong>31 July 2024 — Amendment 3.</strong> Adds new Section 530 requirements
+                covering bidirectional and unidirectional switching and protective devices. Directly
+                relevant to solar PV, battery storage, and EV charger installations where current
+                flow can reverse. Available as a free PDF supplement.
               </span>
             </li>
           </ul>
@@ -468,7 +466,9 @@ const sections = [
           <div className="flex items-start gap-4">
             <Zap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
             <div>
-              <h4 className="font-bold text-white mb-2">A3:2024 — Section 530 Bidirectional Device Requirements</h4>
+              <h4 className="font-bold text-white mb-2">
+                A3:2024 — Section 530 Bidirectional Device Requirements
+              </h4>
               <p className="text-white text-sm leading-relaxed">
                 Where a circuit may carry current in both directions (bidirectional current flow),
                 any switching or protective device on that circuit must be suitable for
@@ -660,8 +660,8 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Never second-guess a regulation again"
-          description="AI-powered BS 7671 lookup, structured 18th Edition courses, and automated defect classification. Elec-Mate keeps you current with every regulation change. 7-day free trial."
+          title="14th Edition Wiring Regulations Timeline"
+          description="14th Edition replaced in 2008. Understand the full UK electrical regulations timeline, key dates, and what changed. Stay compliant with current standards."
           icon={Clock}
         />
       </>

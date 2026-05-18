@@ -241,9 +241,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   You are presented with a pre-built circuit containing one or more faults. You must
                   perform{' '}
-                  <SEOInternalLink href="/how-to-do-safe-isolation">
-                    safe isolation
-                  </SEOInternalLink>{' '}
+                  <SEOInternalLink href="/how-to-do-safe-isolation">safe isolation</SEOInternalLink>{' '}
                   following the correct GS 38 procedure, then systematically test the circuit to
                   identify the fault. Common faults include open circuits, reversed polarity,
                   incorrect connections, and earth faults. Assessors watch your safe isolation
@@ -418,8 +416,8 @@ const sections = [
           detailed feedback.
         </p>
         <SEOAppBridge
-          title="AM2 Simulator — Practise Every Task"
-          description="Timed exercises replicating every AM2 task: consumer unit build, ring final circuit, lighting circuit, and fault finding. AI feedback identifies your weak areas. Run full mock assessments and track your improvement over time."
+          title="AM2 Fault Finding Tips — Pass First Time"
+          description="Master AM2 fault finding with 50+ realistic scenarios. Identify faults faster, boost your pass rate, and get instant feedback on every diagnostic decision you make."
           icon={Target}
         />
       </>

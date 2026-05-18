@@ -473,7 +473,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="2nd Year Apprentice Electrician Wages 2026"
-          description="Join 1,000+ UK apprentices accelerating their qualification with Elec-Mate. Flashcards, mock exams, portfolio builder, and career tools — all from £5.99/month after your 7-day free trial."
+          description="What do 2nd year apprentices earn in 2026? Find current wage rates, pay scales, and progression benchmarks for UK electrical apprenticeships."
           icon={GraduationCap}
         />
       </>

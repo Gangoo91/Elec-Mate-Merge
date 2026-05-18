@@ -338,9 +338,7 @@ const sections = [
         </div>
         <p>
           When calculating containment fill rates, use Elec-Mate's{' '}
-          <SEOInternalLink href="/conduit-fill-calculator">
-            conduit fill calculator
-          </SEOInternalLink>{' '}
+          <SEOInternalLink href="/conduit-fill-calculator">conduit fill calculator</SEOInternalLink>{' '}
           to verify the cables fit within the maximum permitted fill percentage. Overfilled
           containment makes cable pulling difficult, can damage cable insulation, and reduces
           current-carrying capacity due to inadequate heat dissipation.
@@ -398,14 +396,14 @@ const sections = [
           </ul>
         </div>
         <p>
-          Use Elec-Mate's <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>{' '}
-          to produce a clear first fix specification and quote that details every accessory
-          position, circuit allocation, and containment requirement. Sharing this with the builder
-          and other trades at the start of the project prevents misunderstandings and keeps the
-          programme on track.
+          Use Elec-Mate's{' '}
+          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to produce a
+          clear first fix specification and quote that details every accessory position, circuit
+          allocation, and containment requirement. Sharing this with the builder and other trades at
+          the start of the project prevents misunderstandings and keeps the programme on track.
         </p>
         <SEOAppBridge
-          title="Plan and price first fix jobs accurately"
+          title="1st and 2nd fix electrical: stage guide"
           description="Elec-Mate's quoting app lets you build a detailed first fix specification with material lists, labour estimates, and professional quotes. Send the quote to the builder before you start — no surprises, no underpricing."
           icon={ClipboardCheck}
         />
