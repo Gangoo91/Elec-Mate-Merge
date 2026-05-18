@@ -1,5 +1,7 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
-import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
+import { SEOInternalLink ,
+  Network,
+} from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
 import {
@@ -82,6 +84,20 @@ const faqs = [
 ];
 
 const relatedPages: RelatedPage[] = [
+  {
+    href: '/guides/lvdc-dc-microgrid-distribution',
+    title: 'LVDC DC Microgrid Distribution',
+    description: '380V/48V DC, DC arc-flash, switchgear, BS EN 62109.',
+    icon: Zap,
+    category: 'Guide',
+  },
+  {
+    href: '/guides/structured-cabling-bs-en-50173-electricians',
+    title: 'Structured Cabling BS EN 50173',
+    description: 'Channel/permanent link, Cat6/6a/7/8, certification testing.',
+    icon: Network,
+    category: 'Guide',
+  },
   {
     href: '/guides/high-voltage-electrical-work-uk',
     title: 'High Voltage Electrical Work UK',

@@ -81,6 +81,13 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
+    href: '/guides/spd-chapter-443-a4-2026',
+    title: 'SPD Chapter 443 (A4:2026)',
+    description: 'Surge protection risk assessment, Type 1/2/3, EICR coding.',
+    icon: ShieldCheck,
+    category: 'Guide',
+  },
+  {
     href: '/guides/regulation-411-automatic-disconnection',
     title: 'Regulation 411 — ADS Explained',
     description:

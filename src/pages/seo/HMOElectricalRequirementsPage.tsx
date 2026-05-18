@@ -95,6 +95,13 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
+    href: '/guides/afdd-mandatory-hmo-care-home-a4-2026',
+    title: 'AFDD Mandatory in HMOs & Care Homes (A4:2026)',
+    description: 'BS 7671:2018+A4:2026 expanded AFDD scope. Where, when, and EICR coding.',
+    icon: ShieldCheck,
+    category: 'Guide',
+  },
+  {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
     description:

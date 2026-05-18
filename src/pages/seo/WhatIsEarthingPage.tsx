@@ -82,6 +82,13 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
+    href: '/guides/tn-c-banned-new-installations-a4-2026',
+    title: 'TN-C Banned in New Installs (A4:2026)',
+    description: 'Why TN-C is prohibited and TN-C-S/TT/TN-S alternatives.',
+    icon: AlertTriangle,
+    category: 'Guide',
+  },
+  {
     href: '/guides/how-electricity-works',
     title: 'How Electricity Works',
     description:

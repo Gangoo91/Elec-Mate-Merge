@@ -1,5 +1,7 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
-import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
+import { SEOInternalLink ,
+  CircuitBoard,
+} from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
 import {
@@ -81,6 +83,34 @@ const faqs = [
 ];
 
 const relatedPages: RelatedPage[] = [
+  {
+    href: '/guides/smart-distribution-board-iot-consumer-unit',
+    title: 'Smart Distribution Board / IoT CU',
+    description: 'Per-circuit CT, smart RCBOs, BS EN 61439 TTA, Part P.',
+    icon: CircuitBoard,
+    category: 'Guide',
+  },
+  {
+    href: '/guides/knx-wiring-installation-guide-uk',
+    title: 'KNX Wiring Installation Guide',
+    description: 'BS EN 50090, TP1 bus, topology rules, ETS commissioning.',
+    icon: Network,
+    category: 'Guide',
+  },
+  {
+    href: '/guides/bs-en-50174-data-cable-installation',
+    title: 'BS EN 50174 Data Cable Installation',
+    description: 'Pull tension, bend radius, segregation, tray fill.',
+    icon: Cable,
+    category: 'Guide',
+  },
+  {
+    href: '/guides/structured-cabling-bs-en-50173-electricians',
+    title: 'Structured Cabling BS EN 50173',
+    description: 'Channel/permanent link, Cat6/6a/7/8, certification testing.',
+    icon: Network,
+    category: 'Guide',
+  },
   {
     href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',

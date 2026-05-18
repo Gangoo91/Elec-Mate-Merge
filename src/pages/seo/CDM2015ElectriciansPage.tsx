@@ -85,6 +85,34 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
+    href: '/guides/site-induction-electrical-contractors',
+    title: 'Site Induction for Electrical Contractors',
+    description: 'Pre-start induction content and records.',
+    icon: Users,
+    category: 'Guide',
+  },
+  {
+    href: '/guides/cdm-2015-for-electricians',
+    title: 'CDM 2015 for Electricians',
+    description: 'CDM 2015 duty-holders, F10, role of electrical contractor.',
+    icon: HardHat,
+    category: 'Guide',
+  },
+  {
+    href: '/guides/electrical-rams-template-uk',
+    title: 'Electrical RAMS Template UK',
+    description: 'BS 7671 + CDM 2015 + EAWR — full RAMS template.',
+    icon: FileText,
+    category: 'Guide',
+  },
+  {
+    href: '/guides/reduced-low-voltage-110v-cte-site-supplies',
+    title: '110V CTE Construction Site Supplies',
+    description: 'BS 7375, Section 704 A4:2026, transformer ratings, EICR cycle.',
+    icon: HardHat,
+    category: 'Guide',
+  },
+  {
     href: '/guides/electricity-at-work-regulations',
     title: 'Electricity at Work Regulations',
     description:

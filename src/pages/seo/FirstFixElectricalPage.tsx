@@ -82,6 +82,13 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
+    href: '/guides/rams-for-full-rewire',
+    title: 'RAMS for Full Rewire',
+    description: 'Domestic rewire RAMS — first/second fix, dust, asbestos.',
+    icon: Wrench,
+    category: 'Guide',
+  },
+  {
     href: '/guides/second-fix-electrical',
     title: 'Second Fix Electrical',
     description:

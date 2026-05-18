@@ -89,6 +89,13 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
+    href: '/guides/reduced-low-voltage-110v-cte-site-supplies',
+    title: '110V CTE Construction Site Supplies',
+    description: 'BS 7375, Section 704 A4:2026, transformer ratings, EICR cycle.',
+    icon: HardHat,
+    category: 'Guide',
+  },
+  {
     href: '/tools/eicr-certificate',
     title: 'EICR Certificate App',
     description:

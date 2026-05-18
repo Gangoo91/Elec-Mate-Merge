@@ -1,5 +1,7 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
-import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
+import { SEOInternalLink ,
+  Power,
+} from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
 import {
@@ -81,6 +83,13 @@ const faqs = [
 ];
 
 const relatedPages: RelatedPage[] = [
+  {
+    href: '/guides/method-statement-safe-isolation',
+    title: 'Method Statement — Safe Isolation',
+    description: 'GS38 / HSR25 safe isolation method statement.',
+    icon: Power,
+    category: 'Guide',
+  },
   {
     href: '/guides/safe-isolation-procedure',
     title: 'Safe Isolation Procedure',

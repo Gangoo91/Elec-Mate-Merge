@@ -1,5 +1,7 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
-import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
+import { SEOInternalLink ,
+  CircuitBoard,
+} from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
 import {
@@ -90,6 +92,20 @@ const faqs = [
 ];
 
 const relatedPages: RelatedPage[] = [
+  {
+    href: '/guides/rams-for-consumer-unit-replacement',
+    title: 'RAMS for Consumer Unit Replacement',
+    description: 'Notifiable Part P + live-working controls.',
+    icon: FileCheck2,
+    category: 'Guide',
+  },
+  {
+    href: '/guides/smart-distribution-board-iot-consumer-unit',
+    title: 'Smart Distribution Board / IoT CU',
+    description: 'Per-circuit CT, smart RCBOs, BS EN 61439 TTA, Part P.',
+    icon: CircuitBoard,
+    category: 'Guide',
+  },
   {
     href: '/tools/eicr-certificate',
     title: 'EICR Certificate App',

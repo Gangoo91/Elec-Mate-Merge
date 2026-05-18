@@ -1,5 +1,7 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
-import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
+import { SEOInternalLink ,
+  Car,
+} from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
 import {
@@ -82,6 +84,20 @@ const faqs = [
 ];
 
 const relatedPages: RelatedPage[] = [
+  {
+    href: '/guides/v2h-bidirectional-ev-charging',
+    title: 'V2H Bidirectional EV Charging',
+    description: 'CCS, ISO 15118-20, G99, island-mode, tariff arbitrage.',
+    icon: Car,
+    category: 'Guide',
+  },
+  {
+    href: '/guides/section-722-ev-charging-a4-2026-changes',
+    title: 'Section 722 EV Charging A4:2026 Changes',
+    description: 'RDC-DD, PME, V2G — what changed in Section 722 under A4:2026.',
+    icon: Car,
+    category: 'Guide',
+  },
   {
     href: '/ev-charger-grants',
     title: 'EV Charger Grants UK',

@@ -82,6 +82,13 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
+    href: '/guides/near-miss-reporting-electricians',
+    title: 'Near-Miss Reporting for Electricians',
+    description: 'RIDDOR + near-miss culture for electrical contractors.',
+    icon: AlertTriangle,
+    category: 'Guide',
+  },
+  {
     href: '/guides/first-aid-electrical-shock',
     title: 'First Aid for Electrical Shock',
     description:

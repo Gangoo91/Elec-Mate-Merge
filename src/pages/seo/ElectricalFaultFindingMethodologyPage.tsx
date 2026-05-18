@@ -88,6 +88,13 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
+    href: '/guides/method-statement-fault-finding',
+    title: 'Method Statement — Fault Finding',
+    description: 'Fault-finding method statement for live installations.',
+    icon: Search,
+    category: 'Guide',
+  },
+  {
     href: '/guides/partial-power-loss-fault-finding',
     title: 'Partial Power Loss Fault Finding',
     description: 'Diagnosing missing phase, open circuit neutral, and failed MCB.',

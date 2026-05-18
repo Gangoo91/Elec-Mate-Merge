@@ -90,6 +90,13 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
+    href: '/guides/section-712-prosumer-a4-2026',
+    title: 'Section 712 Prosumer (A4:2026)',
+    description: 'Battery storage + solar + microgen under A4:2026.',
+    icon: Sun,
+    category: 'Guide',
+  },
+  {
     href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:

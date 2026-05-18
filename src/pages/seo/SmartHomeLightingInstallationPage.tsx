@@ -1,5 +1,7 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
-import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
+import { SEOInternalLink ,
+  Network,
+} from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
 import {
@@ -83,6 +85,41 @@ const faqs = [
 ];
 
 const relatedPages: RelatedPage[] = [
+  {
+    href: '/guides/knx-wiring-installation-guide-uk',
+    title: 'KNX Wiring Installation Guide',
+    description: 'BS EN 50090, TP1 bus, topology rules, ETS commissioning.',
+    icon: Network,
+    category: 'Guide',
+  },
+  {
+    href: '/guides/dali-lighting-control-wiring-bs-en-62386',
+    title: 'DALI Lighting Control Wiring',
+    description: 'BS EN 62386, DALI-2, D4i, segregation, commissioning.',
+    icon: Lightbulb,
+    category: 'Guide',
+  },
+  {
+    href: '/guides/poe-lighting-vs-traditional-led-wiring',
+    title: 'PoE Lighting vs Traditional LED',
+    description: 'Head-to-head — capex, efficiency, BS 7671 implications.',
+    icon: Lightbulb,
+    category: 'Guide',
+  },
+  {
+    href: '/guides/poe-plus-plus-type-4-90w-installation',
+    title: 'PoE++ Type 4 (90W) Installation Guide',
+    description: 'IEEE 802.3bt 90W PoE — cable, voltage drop, ELV implications.',
+    icon: Network,
+    category: 'Guide',
+  },
+  {
+    href: '/guides/section-715-elv-lighting-a4-2026',
+    title: 'Section 715 ELV Lighting (A4:2026)',
+    description: 'ELV lighting incl. PoE — SELV/PELV, cable, fire risk.',
+    icon: Lightbulb,
+    category: 'Guide',
+  },
   {
     href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',

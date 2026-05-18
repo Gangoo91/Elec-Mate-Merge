@@ -81,6 +81,13 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
+    href: '/guides/rams-for-full-rewire',
+    title: 'RAMS for Full Rewire',
+    description: 'Domestic rewire RAMS — first/second fix, dust, asbestos.',
+    icon: Wrench,
+    category: 'Guide',
+  },
+  {
     href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:

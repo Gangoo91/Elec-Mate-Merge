@@ -1,5 +1,9 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
-import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
+import { SEOInternalLink ,
+  FileText,
+,
+  User,
+} from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
 import {
@@ -81,6 +85,27 @@ const faqs = [
 ];
 
 const relatedPages: RelatedPage[] = [
+  {
+    href: '/guides/lone-working-electricians',
+    title: 'Lone Working for Electricians',
+    description: 'INDG73, lone-worker controls, check-in systems.',
+    icon: User,
+    category: 'Guide',
+  },
+  {
+    href: '/guides/near-miss-reporting-electricians',
+    title: 'Near-Miss Reporting for Electricians',
+    description: 'RIDDOR + near-miss culture for electrical contractors.',
+    icon: AlertTriangle,
+    category: 'Guide',
+  },
+  {
+    href: '/guides/electrical-rams-template-uk',
+    title: 'Electrical RAMS Template UK',
+    description: 'BS 7671 + CDM 2015 + EAWR — full RAMS template.',
+    icon: FileText,
+    category: 'Guide',
+  },
   {
     href: '/guides/method-statement-electricians',
     title: 'Method Statement Guide',

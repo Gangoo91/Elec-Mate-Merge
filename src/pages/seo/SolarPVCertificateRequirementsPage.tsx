@@ -87,6 +87,20 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
+    href: '/guides/rams-for-solar-pv-installation',
+    title: 'RAMS for Solar PV Installation',
+    description: 'Work at height, DC isolation, MCS, G98/G99.',
+    icon: Sun,
+    category: 'Guide',
+  },
+  {
+    href: '/guides/section-712-prosumer-a4-2026',
+    title: 'Section 712 Prosumer (A4:2026)',
+    description: 'Battery storage + solar + microgen under A4:2026.',
+    icon: Sun,
+    category: 'Guide',
+  },
+  {
     href: '/tools/solar-pv-certificate',
     title: 'Solar PV Certificate App',
     description:

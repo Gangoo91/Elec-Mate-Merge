@@ -89,6 +89,20 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
+    href: '/guides/rams-for-ev-charger-installation',
+    title: 'RAMS for EV Charger Installation',
+    description: 'Project RAMS for OZEV-grade EV charge point install.',
+    icon: Car,
+    category: 'Guide',
+  },
+  {
+    href: '/guides/section-722-ev-charging-a4-2026-changes',
+    title: 'Section 722 EV Charging A4:2026 Changes',
+    description: 'RDC-DD, PME, V2G — what changed in Section 722 under A4:2026.',
+    icon: Car,
+    category: 'Guide',
+  },
+  {
     href: '/ev-charger-certificate',
     title: 'EV Charger Certificate',
     description:
