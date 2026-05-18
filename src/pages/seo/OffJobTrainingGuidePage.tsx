@@ -240,10 +240,8 @@ const sections = [
               <h3 className="font-bold text-white text-base mb-1">Online Learning and Study</h3>
               <p className="text-white text-sm leading-relaxed">
                 Studying courses on Elec-Mate, completing quizzes, using the{' '}
-                <SEOInternalLink href="/am2-exam-preparation">
-                  flashcards tool
-                </SEOInternalLink>
-                , practising mock exams, and working through BS 7671 content. Self-directed study of
+                <SEOInternalLink href="/am2-exam-preparation">flashcards tool</SEOInternalLink>,
+                practising mock exams, and working through BS 7671 content. Self-directed study of
                 textbooks and technical resources also counts.
               </p>
             </div>
@@ -279,8 +277,7 @@ const sections = [
               <p className="text-white text-sm leading-relaxed">
                 Practising new skills in a supervised environment — safe isolation, testing
                 techniques, two-way switching wiring. Using the Elec-Mate{' '}
-                <SEOInternalLink href="/am2-exam-preparation">AM2 Simulator</SEOInternalLink>{' '}
-                or{' '}
+                <SEOInternalLink href="/am2-exam-preparation">AM2 Simulator</SEOInternalLink> or{' '}
                 <SEOInternalLink href="/guides/epa-what-to-expect">EPA Simulator</SEOInternalLink>{' '}
                 to rehearse assessment tasks.
               </p>
@@ -620,7 +617,7 @@ export default function OffJobTrainingGuidePage() {
   return (
     <GuideTemplate
       title="Off-the-Job Training Hours | Apprentice Guide UK"
-      description="What counts as off-the-job training for UK electrical apprentices, how to log evidence, and what the employer must release — apprentice-side practical guide."
+      description="What counts as off-the-job training for UK electrical apprentices, how to log evidence…"
       datePublished="2025-10-15"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

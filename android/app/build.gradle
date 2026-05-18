@@ -27,13 +27,18 @@ android {
         // from the GitHub Actions run number) and falls back to the baseline below
         // for local builds. Play Store requires a strictly increasing versionCode
         // on every upload — CI bumps this automatically so no manual edits needed.
-        versionCode System.getenv('ANDROID_VERSION_CODE') ? System.getenv('ANDROID_VERSION_CODE').toInteger() : 32
-        versionName System.getenv('ANDROID_VERSION_NAME') ?: '1.0.6'
+        versionCode System.getenv('ANDROID_VERSION_CODE') ? System.getenv('ANDROID_VERSION_CODE').toInteger() : 33
+        versionName System.getenv('ANDROID_VERSION_NAME') ?: '1.0.7'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
              // Default: https://android.googlesource.com/platform/frameworks/base/+/282e181b58cf72b6ca770dc7ca5f91f135444502/tools/aapt/AaptAssets.cpp#61
-            ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
+             // !*.gz and !*.br exclude the pre-compressed JS/HTML companions
+             // produced by Vite's compression plugin. AAPT2 collapses them to
+             // the same resource name as the uncompressed file → duplicate
+             // resource error. Useless in the Capacitor WebView anyway, since
+             // local file:// loads don't carry Content-Encoding.
+            ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~:!*.gz:!*.br'
         }
     }
     buildTypes {

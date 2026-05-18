@@ -202,6 +202,53 @@ const ElectricalSpecialisationsPage = lazy(
 );
 const ElectricalSurveyCostPage = lazy(() => import('@/pages/seo/ElectricalSurveyCostPage'));
 const ElectricalSymbolsChartPage = lazy(() => import('@/pages/seo/ElectricalSymbolsChartPage'));
+const ElectricalSwitchSymbolsPage = lazy(() => import('@/pages/seo/ElectricalSwitchSymbolsPage'));
+const ElectricalSocketSymbolsPage = lazy(() => import('@/pages/seo/ElectricalSocketSymbolsPage'));
+const ElectricalLightingSymbolsPage = lazy(
+  () => import('@/pages/seo/ElectricalLightingSymbolsPage')
+);
+const ElectricalDistributionSymbolsPage = lazy(
+  () => import('@/pages/seo/ElectricalDistributionSymbolsPage')
+);
+const ElectricalSafetySymbolsPage = lazy(() => import('@/pages/seo/ElectricalSafetySymbolsPage'));
+const ElectricalContainmentSymbolsPage = lazy(
+  () => import('@/pages/seo/ElectricalContainmentSymbolsPage')
+);
+const ElectricalEquipmentSymbolsPage = lazy(
+  () => import('@/pages/seo/ElectricalEquipmentSymbolsPage')
+);
+const ElectricalMechanicalSymbolsPage = lazy(
+  () => import('@/pages/seo/ElectricalMechanicalSymbolsPage')
+);
+const ElectricalRenewablesSymbolsPage = lazy(
+  () => import('@/pages/seo/ElectricalRenewablesSymbolsPage')
+);
+const ElectricalControlsSymbolsPage = lazy(
+  () => import('@/pages/seo/ElectricalControlsSymbolsPage')
+);
+const ElectricalArchitecturalSymbolsPage = lazy(
+  () => import('@/pages/seo/ElectricalArchitecturalSymbolsPage')
+);
+const RcdSymbolPage = lazy(() => import('@/pages/seo/RcdSymbolPage'));
+const RcboSymbolPage = lazy(() => import('@/pages/seo/RcboSymbolPage'));
+const McbSymbolPage = lazy(() => import('@/pages/seo/McbSymbolPage'));
+const SpdSymbolPage = lazy(() => import('@/pages/seo/SpdSymbolPage'));
+const TwowaySwitchSymbolPage = lazy(() => import('@/pages/seo/TwowaySwitchSymbolPage'));
+const OnewaySwitchSymbolPage = lazy(() => import('@/pages/seo/OnewaySwitchSymbolPage'));
+const IntermediateSwitchSymbolPage = lazy(() => import('@/pages/seo/IntermediateSwitchSymbolPage'));
+const DimmerSwitchSymbolPage = lazy(() => import('@/pages/seo/DimmerSwitchSymbolPage'));
+const Double13aSocketSymbolPage = lazy(() => import('@/pages/seo/Double13aSocketSymbolPage'));
+const Single13aSocketSymbolPage = lazy(() => import('@/pages/seo/Single13aSocketSymbolPage'));
+const FusedSpurSymbolPage = lazy(() => import('@/pages/seo/FusedSpurSymbolPage'));
+const SwitchedFusedSpurSymbolPage = lazy(() => import('@/pages/seo/SwitchedFusedSpurSymbolPage'));
+const IsolatorSwitchSymbolPage = lazy(() => import('@/pages/seo/IsolatorSwitchSymbolPage'));
+const EmergencyStopSymbolPage = lazy(() => import('@/pages/seo/EmergencyStopSymbolPage'));
+const SmokeDetectorSymbolPage = lazy(() => import('@/pages/seo/SmokeDetectorSymbolPage'));
+const FireAlarmSymbolPage = lazy(() => import('@/pages/seo/FireAlarmSymbolPage'));
+const BreakGlassSymbolPage = lazy(() => import('@/pages/seo/BreakGlassSymbolPage'));
+const ExitSignSymbolPage = lazy(() => import('@/pages/seo/ExitSignSymbolPage'));
+const EmergencyLightSymbolPage = lazy(() => import('@/pages/seo/EmergencyLightSymbolPage'));
+const ConsumerUnitSymbolPage = lazy(() => import('@/pages/seo/ConsumerUnitSymbolPage'));
 const ElectricalTestingCostUKPage = lazy(() => import('@/pages/seo/ElectricalTestingCostUKPage'));
 const ElectricalToolCalibrationPage = lazy(
   () => import('@/pages/seo/ElectricalToolCalibrationPage')
@@ -1296,9 +1343,15 @@ const A4EICModelFormPage = lazy(() => import('@/pages/seo/A4EICModelFormPage'));
 const A4MEIWCModelFormPage = lazy(() => import('@/pages/seo/A4MEIWCModelFormPage'));
 const CableSizeForEVChargerPage = lazy(() => import('@/pages/seo/CableSizeForEVChargerPage'));
 const EICRNoMainBondingPage = lazy(() => import('@/pages/seo/EICRNoMainBondingPage'));
-const EICRPlasticConsumerUnitHMOPage = lazy(() => import('@/pages/seo/EICRPlasticConsumerUnitHMOPage'));
-const CableSizeForElectricShowerPage = lazy(() => import('@/pages/seo/CableSizeForElectricShowerPage'));
-const CableSizeForCookerCircuitPage = lazy(() => import('@/pages/seo/CableSizeForCookerCircuitPage'));
+const EICRPlasticConsumerUnitHMOPage = lazy(
+  () => import('@/pages/seo/EICRPlasticConsumerUnitHMOPage')
+);
+const CableSizeForElectricShowerPage = lazy(
+  () => import('@/pages/seo/CableSizeForElectricShowerPage')
+);
+const CableSizeForCookerCircuitPage = lazy(
+  () => import('@/pages/seo/CableSizeForCookerCircuitPage')
+);
 const ProsumerLVInstallationPage = lazy(() => import('@/pages/seo/ProsumerLVInstallationPage'));
 const ElectricalRamsTemplatePage = lazy(() => import('@/pages/seo/ElectricalRamsTemplatePage'));
 const RAMSForEICRInspectionPage = lazy(() => import('@/pages/seo/RAMSForEICRInspectionPage'));
@@ -1354,9 +1407,7 @@ const AFDDMandatoryHMOCareHomeA4Page = lazy(
 const Section722EVChargingA4Page = lazy(() => import('@/pages/seo/Section722EVChargingA4Page'));
 const SPDChapter443A4Page = lazy(() => import('@/pages/seo/SPDChapter443A4Page'));
 const TNCBannedNewInstallsA4Page = lazy(() => import('@/pages/seo/TNCBannedNewInstallsA4Page'));
-const CableReactionToFireCcaA4Page = lazy(
-  () => import('@/pages/seo/CableReactionToFireCcaA4Page')
-);
+const CableReactionToFireCcaA4Page = lazy(() => import('@/pages/seo/CableReactionToFireCcaA4Page'));
 const Section712ProsumerA4Page = lazy(() => import('@/pages/seo/Section712ProsumerA4Page'));
 const Section715ELVLightingA4Page = lazy(() => import('@/pages/seo/Section715ELVLightingA4Page'));
 const ReducedLowVoltage110vCTEPage = lazy(() => import('@/pages/seo/ReducedLowVoltage110vCTEPage'));
@@ -1422,122 +1473,274 @@ const EICRCostReadingPage = lazy(() => import('@/pages/seo/EICRCostReadingPage')
 const EICRCostLutonPage = lazy(() => import('@/pages/seo/EICRCostLutonPage'));
 const EICRCostSwindonPage = lazy(() => import('@/pages/seo/EICRCostSwindonPage'));
 // Programmatic CU-replacement-cost-by-city pages
-const CUReplacementCostManchesterPage = lazy(() => import('@/pages/seo/CUReplacementCostManchesterPage'));
-const CUReplacementCostBirminghamPage = lazy(() => import('@/pages/seo/CUReplacementCostBirminghamPage'));
+const CUReplacementCostManchesterPage = lazy(
+  () => import('@/pages/seo/CUReplacementCostManchesterPage')
+);
+const CUReplacementCostBirminghamPage = lazy(
+  () => import('@/pages/seo/CUReplacementCostBirminghamPage')
+);
 const CUReplacementCostLeedsPage = lazy(() => import('@/pages/seo/CUReplacementCostLeedsPage'));
-const CUReplacementCostLiverpoolPage = lazy(() => import('@/pages/seo/CUReplacementCostLiverpoolPage'));
-const CUReplacementCostSheffieldPage = lazy(() => import('@/pages/seo/CUReplacementCostSheffieldPage'));
+const CUReplacementCostLiverpoolPage = lazy(
+  () => import('@/pages/seo/CUReplacementCostLiverpoolPage')
+);
+const CUReplacementCostSheffieldPage = lazy(
+  () => import('@/pages/seo/CUReplacementCostSheffieldPage')
+);
 const CUReplacementCostBristolPage = lazy(() => import('@/pages/seo/CUReplacementCostBristolPage'));
-const CUReplacementCostNewcastlePage = lazy(() => import('@/pages/seo/CUReplacementCostNewcastlePage'));
-const CUReplacementCostNottinghamPage = lazy(() => import('@/pages/seo/CUReplacementCostNottinghamPage'));
-const CUReplacementCostSouthamptonPage = lazy(() => import('@/pages/seo/CUReplacementCostSouthamptonPage'));
-const CUReplacementCostPortsmouthPage = lazy(() => import('@/pages/seo/CUReplacementCostPortsmouthPage'));
-const CUReplacementCostBrightonPage = lazy(() => import('@/pages/seo/CUReplacementCostBrightonPage'));
-const CUReplacementCostCambridgePage = lazy(() => import('@/pages/seo/CUReplacementCostCambridgePage'));
+const CUReplacementCostNewcastlePage = lazy(
+  () => import('@/pages/seo/CUReplacementCostNewcastlePage')
+);
+const CUReplacementCostNottinghamPage = lazy(
+  () => import('@/pages/seo/CUReplacementCostNottinghamPage')
+);
+const CUReplacementCostSouthamptonPage = lazy(
+  () => import('@/pages/seo/CUReplacementCostSouthamptonPage')
+);
+const CUReplacementCostPortsmouthPage = lazy(
+  () => import('@/pages/seo/CUReplacementCostPortsmouthPage')
+);
+const CUReplacementCostBrightonPage = lazy(
+  () => import('@/pages/seo/CUReplacementCostBrightonPage')
+);
+const CUReplacementCostCambridgePage = lazy(
+  () => import('@/pages/seo/CUReplacementCostCambridgePage')
+);
 const CUReplacementCostOxfordPage = lazy(() => import('@/pages/seo/CUReplacementCostOxfordPage'));
 const CUReplacementCostYorkPage = lazy(() => import('@/pages/seo/CUReplacementCostYorkPage'));
 const CUReplacementCostHullPage = lazy(() => import('@/pages/seo/CUReplacementCostHullPage'));
 const CUReplacementCostStokePage = lazy(() => import('@/pages/seo/CUReplacementCostStokePage'));
-const CUReplacementCostPlymouthPage = lazy(() => import('@/pages/seo/CUReplacementCostPlymouthPage'));
+const CUReplacementCostPlymouthPage = lazy(
+  () => import('@/pages/seo/CUReplacementCostPlymouthPage')
+);
 const CUReplacementCostExeterPage = lazy(() => import('@/pages/seo/CUReplacementCostExeterPage'));
 const CUReplacementCostNorwichPage = lazy(() => import('@/pages/seo/CUReplacementCostNorwichPage'));
-const CUReplacementCostEdinburghPage = lazy(() => import('@/pages/seo/CUReplacementCostEdinburghPage'));
+const CUReplacementCostEdinburghPage = lazy(
+  () => import('@/pages/seo/CUReplacementCostEdinburghPage')
+);
 const CUReplacementCostGlasgowPage = lazy(() => import('@/pages/seo/CUReplacementCostGlasgowPage'));
-const CUReplacementCostAberdeenPage = lazy(() => import('@/pages/seo/CUReplacementCostAberdeenPage'));
+const CUReplacementCostAberdeenPage = lazy(
+  () => import('@/pages/seo/CUReplacementCostAberdeenPage')
+);
 const CUReplacementCostDundeePage = lazy(() => import('@/pages/seo/CUReplacementCostDundeePage'));
 const CUReplacementCostCardiffPage = lazy(() => import('@/pages/seo/CUReplacementCostCardiffPage'));
 const CUReplacementCostSwanseaPage = lazy(() => import('@/pages/seo/CUReplacementCostSwanseaPage'));
 const CUReplacementCostBelfastPage = lazy(() => import('@/pages/seo/CUReplacementCostBelfastPage'));
-const CUReplacementCostMiltonKeynesPage = lazy(() => import('@/pages/seo/CUReplacementCostMiltonKeynesPage'));
+const CUReplacementCostMiltonKeynesPage = lazy(
+  () => import('@/pages/seo/CUReplacementCostMiltonKeynesPage')
+);
 const CUReplacementCostReadingPage = lazy(() => import('@/pages/seo/CUReplacementCostReadingPage'));
 const CUReplacementCostLutonPage = lazy(() => import('@/pages/seo/CUReplacementCostLutonPage'));
 const CUReplacementCostSwindonPage = lazy(() => import('@/pages/seo/CUReplacementCostSwindonPage'));
 // Trade-side pricing guides — "How to Price X as an Electrician"
 const HowToPriceEicrPage = lazy(() => import('@/pages/seo/HowToPriceEicrPage'));
-const HowToPriceConsumerUnitReplacementPage = lazy(() => import('@/pages/seo/HowToPriceConsumerUnitReplacementPage'));
-const HowToPriceEvChargerInstallPage = lazy(() => import('@/pages/seo/HowToPriceEvChargerInstallPage'));
+const HowToPriceConsumerUnitReplacementPage = lazy(
+  () => import('@/pages/seo/HowToPriceConsumerUnitReplacementPage')
+);
+const HowToPriceEvChargerInstallPage = lazy(
+  () => import('@/pages/seo/HowToPriceEvChargerInstallPage')
+);
 const HowToPriceFullRewirePage = lazy(() => import('@/pages/seo/HowToPriceFullRewirePage'));
-const HowToPriceSolarPvInstallationPage = lazy(() => import('@/pages/seo/HowToPriceSolarPvInstallationPage'));
-const HowToPriceEmergencyCalloutPage = lazy(() => import('@/pages/seo/HowToPriceEmergencyCalloutPage'));
-const HowToPriceCommercialInstallPage = lazy(() => import('@/pages/seo/HowToPriceCommercialInstallPage'));
+const HowToPriceSolarPvInstallationPage = lazy(
+  () => import('@/pages/seo/HowToPriceSolarPvInstallationPage')
+);
+const HowToPriceEmergencyCalloutPage = lazy(
+  () => import('@/pages/seo/HowToPriceEmergencyCalloutPage')
+);
+const HowToPriceCommercialInstallPage = lazy(
+  () => import('@/pages/seo/HowToPriceCommercialInstallPage')
+);
 const HowToPricePatTestingPage = lazy(() => import('@/pages/seo/HowToPricePatTestingPage'));
 const HowToPriceMinorWorksPage = lazy(() => import('@/pages/seo/HowToPriceMinorWorksPage'));
 const HowToPriceCommercialEicrPage = lazy(() => import('@/pages/seo/HowToPriceCommercialEicrPage'));
 const HowToPriceKitchenRewirePage = lazy(() => import('@/pages/seo/HowToPriceKitchenRewirePage'));
-const HowToPriceDayRateSubcontractPage = lazy(() => import('@/pages/seo/HowToPriceDayRateSubcontractPage'));
+const HowToPriceDayRateSubcontractPage = lazy(
+  () => import('@/pages/seo/HowToPriceDayRateSubcontractPage')
+);
 const HowToPriceOutOfHoursPage = lazy(() => import('@/pages/seo/HowToPriceOutOfHoursPage'));
-const HowToPriceMaintenanceContractPage = lazy(() => import('@/pages/seo/HowToPriceMaintenanceContractPage'));
-const HowToPriceSmartHomeInstallationPage = lazy(() => import('@/pages/seo/HowToPriceSmartHomeInstallationPage'));
+const HowToPriceMaintenanceContractPage = lazy(
+  () => import('@/pages/seo/HowToPriceMaintenanceContractPage')
+);
+const HowToPriceSmartHomeInstallationPage = lazy(
+  () => import('@/pages/seo/HowToPriceSmartHomeInstallationPage')
+);
 // Apprentice unit revision pages
-const UnitRevision236502Unit201Page = lazy(() => import('@/pages/seo/UnitRevision236502Unit201Page'));
-const UnitRevision236502Unit202Page = lazy(() => import('@/pages/seo/UnitRevision236502Unit202Page'));
-const UnitRevision236502Unit203Page = lazy(() => import('@/pages/seo/UnitRevision236502Unit203Page'));
-const UnitRevision236502Unit204Page = lazy(() => import('@/pages/seo/UnitRevision236502Unit204Page'));
-const UnitRevision236502Unit210Page = lazy(() => import('@/pages/seo/UnitRevision236502Unit210Page'));
-const UnitRevision236503Unit201Page = lazy(() => import('@/pages/seo/UnitRevision236503Unit201Page'));
-const UnitRevision236503Unit302Page = lazy(() => import('@/pages/seo/UnitRevision236503Unit302Page'));
-const UnitRevision236503Unit303Page = lazy(() => import('@/pages/seo/UnitRevision236503Unit303Page'));
-const UnitRevision236503Unit304Page = lazy(() => import('@/pages/seo/UnitRevision236503Unit304Page'));
-const UnitRevision236503Unit305Page = lazy(() => import('@/pages/seo/UnitRevision236503Unit305Page'));
-const UnitRevision236503Unit308Page = lazy(() => import('@/pages/seo/UnitRevision236503Unit308Page'));
-const UnitRevision236603Unit301Page = lazy(() => import('@/pages/seo/UnitRevision236603Unit301Page'));
-const UnitRevision236603Unit302Page = lazy(() => import('@/pages/seo/UnitRevision236603Unit302Page'));
-const UnitRevision236603Unit303Page = lazy(() => import('@/pages/seo/UnitRevision236603Unit303Page'));
-const UnitRevision236603Unit304Page = lazy(() => import('@/pages/seo/UnitRevision236603Unit304Page'));
-const UnitRevision236603Unit305Page = lazy(() => import('@/pages/seo/UnitRevision236603Unit305Page'));
-const UnitRevision236603Unit306Page = lazy(() => import('@/pages/seo/UnitRevision236603Unit306Page'));
+const UnitRevision236502Unit201Page = lazy(
+  () => import('@/pages/seo/UnitRevision236502Unit201Page')
+);
+const UnitRevision236502Unit202Page = lazy(
+  () => import('@/pages/seo/UnitRevision236502Unit202Page')
+);
+const UnitRevision236502Unit203Page = lazy(
+  () => import('@/pages/seo/UnitRevision236502Unit203Page')
+);
+const UnitRevision236502Unit204Page = lazy(
+  () => import('@/pages/seo/UnitRevision236502Unit204Page')
+);
+const UnitRevision236502Unit210Page = lazy(
+  () => import('@/pages/seo/UnitRevision236502Unit210Page')
+);
+const UnitRevision236503Unit201Page = lazy(
+  () => import('@/pages/seo/UnitRevision236503Unit201Page')
+);
+const UnitRevision236503Unit302Page = lazy(
+  () => import('@/pages/seo/UnitRevision236503Unit302Page')
+);
+const UnitRevision236503Unit303Page = lazy(
+  () => import('@/pages/seo/UnitRevision236503Unit303Page')
+);
+const UnitRevision236503Unit304Page = lazy(
+  () => import('@/pages/seo/UnitRevision236503Unit304Page')
+);
+const UnitRevision236503Unit305Page = lazy(
+  () => import('@/pages/seo/UnitRevision236503Unit305Page')
+);
+const UnitRevision236503Unit308Page = lazy(
+  () => import('@/pages/seo/UnitRevision236503Unit308Page')
+);
+const UnitRevision236603Unit301Page = lazy(
+  () => import('@/pages/seo/UnitRevision236603Unit301Page')
+);
+const UnitRevision236603Unit302Page = lazy(
+  () => import('@/pages/seo/UnitRevision236603Unit302Page')
+);
+const UnitRevision236603Unit303Page = lazy(
+  () => import('@/pages/seo/UnitRevision236603Unit303Page')
+);
+const UnitRevision236603Unit304Page = lazy(
+  () => import('@/pages/seo/UnitRevision236603Unit304Page')
+);
+const UnitRevision236603Unit305Page = lazy(
+  () => import('@/pages/seo/UnitRevision236603Unit305Page')
+);
+const UnitRevision236603Unit306Page = lazy(
+  () => import('@/pages/seo/UnitRevision236603Unit306Page')
+);
 const UnitRevision5357Unit022Page = lazy(() => import('@/pages/seo/UnitRevision5357Unit022Page'));
-const UnitRevision5357Unit101001Page = lazy(() => import('@/pages/seo/UnitRevision5357Unit101001Page'));
+const UnitRevision5357Unit101001Page = lazy(
+  () => import('@/pages/seo/UnitRevision5357Unit101001Page')
+);
 const UnitRevision5357Unit102Page = lazy(() => import('@/pages/seo/UnitRevision5357Unit102Page'));
-const UnitRevision5357Unit103003Page = lazy(() => import('@/pages/seo/UnitRevision5357Unit103003Page'));
-const UnitRevision5357Unit104004Page = lazy(() => import('@/pages/seo/UnitRevision5357Unit104004Page'));
-const UnitRevision5357Unit105505Page = lazy(() => import('@/pages/seo/UnitRevision5357Unit105505Page'));
+const UnitRevision5357Unit103003Page = lazy(
+  () => import('@/pages/seo/UnitRevision5357Unit103003Page')
+);
+const UnitRevision5357Unit104004Page = lazy(
+  () => import('@/pages/seo/UnitRevision5357Unit104004Page')
+);
+const UnitRevision5357Unit105505Page = lazy(
+  () => import('@/pages/seo/UnitRevision5357Unit105505Page')
+);
 const UnitRevision5357Unit106Page = lazy(() => import('@/pages/seo/UnitRevision5357Unit106Page'));
 const UnitRevision5357Unit107Page = lazy(() => import('@/pages/seo/UnitRevision5357Unit107Page'));
 const UnitRevision5357Unit109Page = lazy(() => import('@/pages/seo/UnitRevision5357Unit109Page'));
 const UnitRevision5357Unit110Page = lazy(() => import('@/pages/seo/UnitRevision5357Unit110Page'));
 const UnitRevision5357Unit113Page = lazy(() => import('@/pages/seo/UnitRevision5357Unit113Page'));
-const UnitRevision5357Unit114014Page = lazy(() => import('@/pages/seo/UnitRevision5357Unit114014Page'));
+const UnitRevision5357Unit114014Page = lazy(
+  () => import('@/pages/seo/UnitRevision5357Unit114014Page')
+);
 const UnitRevision5357Unit115Page = lazy(() => import('@/pages/seo/UnitRevision5357Unit115Page'));
 const UnitRevision5357Unit118Page = lazy(() => import('@/pages/seo/UnitRevision5357Unit118Page'));
-const UnitRevision5357Unit312212Page = lazy(() => import('@/pages/seo/UnitRevision5357Unit312212Page'));
-const UnitRevision539303Unit022Page = lazy(() => import('@/pages/seo/UnitRevision539303Unit022Page'));
-const UnitRevision539303Unit101Page = lazy(() => import('@/pages/seo/UnitRevision539303Unit101Page'));
-const UnitRevision539303Unit102Page = lazy(() => import('@/pages/seo/UnitRevision539303Unit102Page'));
-const UnitRevision539303Unit103Page = lazy(() => import('@/pages/seo/UnitRevision539303Unit103Page'));
-const UnitRevision539303Unit104Page = lazy(() => import('@/pages/seo/UnitRevision539303Unit104Page'));
-const UnitRevision539303Unit105Page = lazy(() => import('@/pages/seo/UnitRevision539303Unit105Page'));
-const UnitRevision539303Unit106Page = lazy(() => import('@/pages/seo/UnitRevision539303Unit106Page'));
-const UnitRevision539303Unit109Page = lazy(() => import('@/pages/seo/UnitRevision539303Unit109Page'));
-const UnitRevision539303Unit112Page = lazy(() => import('@/pages/seo/UnitRevision539303Unit112Page'));
-const UnitRevision539303Unit113Page = lazy(() => import('@/pages/seo/UnitRevision539303Unit113Page'));
-const UnitRevision539303Unit114Page = lazy(() => import('@/pages/seo/UnitRevision539303Unit114Page'));
-const UnitRevision539303Unit115Page = lazy(() => import('@/pages/seo/UnitRevision539303Unit115Page'));
+const UnitRevision5357Unit312212Page = lazy(
+  () => import('@/pages/seo/UnitRevision5357Unit312212Page')
+);
+const UnitRevision539303Unit022Page = lazy(
+  () => import('@/pages/seo/UnitRevision539303Unit022Page')
+);
+const UnitRevision539303Unit101Page = lazy(
+  () => import('@/pages/seo/UnitRevision539303Unit101Page')
+);
+const UnitRevision539303Unit102Page = lazy(
+  () => import('@/pages/seo/UnitRevision539303Unit102Page')
+);
+const UnitRevision539303Unit103Page = lazy(
+  () => import('@/pages/seo/UnitRevision539303Unit103Page')
+);
+const UnitRevision539303Unit104Page = lazy(
+  () => import('@/pages/seo/UnitRevision539303Unit104Page')
+);
+const UnitRevision539303Unit105Page = lazy(
+  () => import('@/pages/seo/UnitRevision539303Unit105Page')
+);
+const UnitRevision539303Unit106Page = lazy(
+  () => import('@/pages/seo/UnitRevision539303Unit106Page')
+);
+const UnitRevision539303Unit109Page = lazy(
+  () => import('@/pages/seo/UnitRevision539303Unit109Page')
+);
+const UnitRevision539303Unit112Page = lazy(
+  () => import('@/pages/seo/UnitRevision539303Unit112Page')
+);
+const UnitRevision539303Unit113Page = lazy(
+  () => import('@/pages/seo/UnitRevision539303Unit113Page')
+);
+const UnitRevision539303Unit114Page = lazy(
+  () => import('@/pages/seo/UnitRevision539303Unit114Page')
+);
+const UnitRevision539303Unit115Page = lazy(
+  () => import('@/pages/seo/UnitRevision539303Unit115Page')
+);
 // AM2 deep-dives
-const Am2SectionAApplicationOfKnowledgePage = lazy(() => import('@/pages/seo/Am2SectionAApplicationOfKnowledgePage'));
+const Am2SectionAApplicationOfKnowledgePage = lazy(
+  () => import('@/pages/seo/Am2SectionAApplicationOfKnowledgePage')
+);
 const Am2SectionBSafeIsolationPage = lazy(() => import('@/pages/seo/Am2SectionBSafeIsolationPage'));
-const Am2SectionCWiringSystemsInstallationPage = lazy(() => import('@/pages/seo/Am2SectionCWiringSystemsInstallationPage'));
-const Am2SectionDContinuityAndInsulationTestingPage = lazy(() => import('@/pages/seo/Am2SectionDContinuityAndInsulationTestingPage'));
-const Am2SectionEInitialVerificationAndPeriodicInspectionPage = lazy(() => import('@/pages/seo/Am2SectionEInitialVerificationAndPeriodicInspectionPage'));
-const Am2SectionFFaultDiagnosisPage = lazy(() => import('@/pages/seo/Am2SectionFFaultDiagnosisPage'));
-const Am2SectionGIndustryKnowledgePage = lazy(() => import('@/pages/seo/Am2SectionGIndustryKnowledgePage'));
+const Am2SectionCWiringSystemsInstallationPage = lazy(
+  () => import('@/pages/seo/Am2SectionCWiringSystemsInstallationPage')
+);
+const Am2SectionDContinuityAndInsulationTestingPage = lazy(
+  () => import('@/pages/seo/Am2SectionDContinuityAndInsulationTestingPage')
+);
+const Am2SectionEInitialVerificationAndPeriodicInspectionPage = lazy(
+  () => import('@/pages/seo/Am2SectionEInitialVerificationAndPeriodicInspectionPage')
+);
+const Am2SectionFFaultDiagnosisPage = lazy(
+  () => import('@/pages/seo/Am2SectionFFaultDiagnosisPage')
+);
+const Am2SectionGIndustryKnowledgePage = lazy(
+  () => import('@/pages/seo/Am2SectionGIndustryKnowledgePage')
+);
 // Year-by-year revision plans
-const ElectricalApprenticeYear1RevisionPlanPage = lazy(() => import('@/pages/seo/ElectricalApprenticeYear1RevisionPlanPage'));
-const ElectricalApprenticeYear2RevisionPlanPage = lazy(() => import('@/pages/seo/ElectricalApprenticeYear2RevisionPlanPage'));
-const ElectricalApprenticeYear3RevisionPlanPage = lazy(() => import('@/pages/seo/ElectricalApprenticeYear3RevisionPlanPage'));
-const ElectricalApprenticeYear4RevisionPlanPage = lazy(() => import('@/pages/seo/ElectricalApprenticeYear4RevisionPlanPage'));
+const ElectricalApprenticeYear1RevisionPlanPage = lazy(
+  () => import('@/pages/seo/ElectricalApprenticeYear1RevisionPlanPage')
+);
+const ElectricalApprenticeYear2RevisionPlanPage = lazy(
+  () => import('@/pages/seo/ElectricalApprenticeYear2RevisionPlanPage')
+);
+const ElectricalApprenticeYear3RevisionPlanPage = lazy(
+  () => import('@/pages/seo/ElectricalApprenticeYear3RevisionPlanPage')
+);
+const ElectricalApprenticeYear4RevisionPlanPage = lazy(
+  () => import('@/pages/seo/ElectricalApprenticeYear4RevisionPlanPage')
+);
 // 18th Edition exam prep + career path + OTJ
-const EighteenthEditionAmendment42026ExamPrepPage = lazy(() => import('@/pages/seo/EighteenthEditionAmendment42026ExamPrepPage'));
-const EighteenthEditionChapter41ProtectionAgainstElectricShockExamPage = lazy(() => import('@/pages/seo/EighteenthEditionChapter41ProtectionAgainstElectricShockExamPage'));
-const EighteenthEditionChapter43OvercurrentProtectionExamPage = lazy(() => import('@/pages/seo/EighteenthEditionChapter43OvercurrentProtectionExamPage'));
-const EighteenthEditionAppendix4CableCurrentRatingExamPage = lazy(() => import('@/pages/seo/EighteenthEditionAppendix4CableCurrentRatingExamPage'));
-const EcsGoldCardRequirements2026Page = lazy(() => import('@/pages/seo/EcsGoldCardRequirements2026Page'));
+const EighteenthEditionAmendment42026ExamPrepPage = lazy(
+  () => import('@/pages/seo/EighteenthEditionAmendment42026ExamPrepPage')
+);
+const EighteenthEditionChapter41ProtectionAgainstElectricShockExamPage = lazy(
+  () => import('@/pages/seo/EighteenthEditionChapter41ProtectionAgainstElectricShockExamPage')
+);
+const EighteenthEditionChapter43OvercurrentProtectionExamPage = lazy(
+  () => import('@/pages/seo/EighteenthEditionChapter43OvercurrentProtectionExamPage')
+);
+const EighteenthEditionAppendix4CableCurrentRatingExamPage = lazy(
+  () => import('@/pages/seo/EighteenthEditionAppendix4CableCurrentRatingExamPage')
+);
+const EcsGoldCardRequirements2026Page = lazy(
+  () => import('@/pages/seo/EcsGoldCardRequirements2026Page')
+);
 const JibPayScales2026Page = lazy(() => import('@/pages/seo/JibPayScales2026Page'));
 const AfterAm2WhatHappensNextPage = lazy(() => import('@/pages/seo/AfterAm2WhatHappensNextPage'));
-const ElectricianCareerProgressionUkPage = lazy(() => import('@/pages/seo/ElectricianCareerProgressionUkPage'));
-const FindingAnElectricalApprenticeshipUkPage = lazy(() => import('@/pages/seo/FindingAnElectricalApprenticeshipUkPage'));
-const OffTheJobTrainingHoursTrackingPage = lazy(() => import('@/pages/seo/OffTheJobTrainingHoursTrackingPage'));
-const OffTheJobTrainingEmployerGuidePage = lazy(() => import('@/pages/seo/OffTheJobTrainingEmployerGuidePage'));
+const ElectricianCareerProgressionUkPage = lazy(
+  () => import('@/pages/seo/ElectricianCareerProgressionUkPage')
+);
+const FindingAnElectricalApprenticeshipUkPage = lazy(
+  () => import('@/pages/seo/FindingAnElectricalApprenticeshipUkPage')
+);
+const OffTheJobTrainingHoursTrackingPage = lazy(
+  () => import('@/pages/seo/OffTheJobTrainingHoursTrackingPage')
+);
+const OffTheJobTrainingEmployerGuidePage = lazy(
+  () => import('@/pages/seo/OffTheJobTrainingEmployerGuidePage')
+);
 // Qualification hub pillar pages
 const QualHub236502Page = lazy(() => import('@/pages/seo/QualHub236502Page'));
 const QualHub236503Page = lazy(() => import('@/pages/seo/QualHub236503Page'));
@@ -1550,29 +1753,69 @@ const QualHub6103907XPage = lazy(() => import('@/pages/seo/QualHub6103907XPage')
 const QualHub8202Page = lazy(() => import('@/pages/seo/QualHub8202Page'));
 const QualHubEalNetp3Page = lazy(() => import('@/pages/seo/QualHubEalNetp3Page'));
 // Business owner / employer guides
-const StartingAnElectricalBusinessUkPage = lazy(() => import('@/pages/seo/StartingAnElectricalBusinessUkPage'));
-const HowToHireAnElectricalApprenticePage = lazy(() => import('@/pages/seo/HowToHireAnElectricalApprenticePage'));
-const NiceicVsNapitRegistrationPage = lazy(() => import('@/pages/seo/NiceicVsNapitRegistrationPage'));
-const ElectricianInsuranceBusinessUkPage = lazy(() => import('@/pages/seo/ElectricianInsuranceBusinessUkPage'));
-const ElectricalContractorMarketingGuidePage = lazy(() => import('@/pages/seo/ElectricalContractorMarketingGuidePage'));
-const CisConstructionIndustrySchemeElectriciansPage = lazy(() => import('@/pages/seo/CisConstructionIndustrySchemeElectriciansPage'));
-const ElectricalContractorVatGuidePage = lazy(() => import('@/pages/seo/ElectricalContractorVatGuidePage'));
-const ElectricianEmployeeVsSelfEmployedDecisionPage = lazy(() => import('@/pages/seo/ElectricianEmployeeVsSelfEmployedDecisionPage'));
-const ElectricalQuoteTemplateUkPage = lazy(() => import('@/pages/seo/ElectricalQuoteTemplateUkPage'));
-const ElectricalBusinessPricingStrategyPage = lazy(() => import('@/pages/seo/ElectricalBusinessPricingStrategyPage'));
+const StartingAnElectricalBusinessUkPage = lazy(
+  () => import('@/pages/seo/StartingAnElectricalBusinessUkPage')
+);
+const HowToHireAnElectricalApprenticePage = lazy(
+  () => import('@/pages/seo/HowToHireAnElectricalApprenticePage')
+);
+const NiceicVsNapitRegistrationPage = lazy(
+  () => import('@/pages/seo/NiceicVsNapitRegistrationPage')
+);
+const ElectricianInsuranceBusinessUkPage = lazy(
+  () => import('@/pages/seo/ElectricianInsuranceBusinessUkPage')
+);
+const ElectricalContractorMarketingGuidePage = lazy(
+  () => import('@/pages/seo/ElectricalContractorMarketingGuidePage')
+);
+const CisConstructionIndustrySchemeElectriciansPage = lazy(
+  () => import('@/pages/seo/CisConstructionIndustrySchemeElectriciansPage')
+);
+const ElectricalContractorVatGuidePage = lazy(
+  () => import('@/pages/seo/ElectricalContractorVatGuidePage')
+);
+const ElectricianEmployeeVsSelfEmployedDecisionPage = lazy(
+  () => import('@/pages/seo/ElectricianEmployeeVsSelfEmployedDecisionPage')
+);
+const ElectricalQuoteTemplateUkPage = lazy(
+  () => import('@/pages/seo/ElectricalQuoteTemplateUkPage')
+);
+const ElectricalBusinessPricingStrategyPage = lazy(
+  () => import('@/pages/seo/ElectricalBusinessPricingStrategyPage')
+);
 // Apprentice pathway comparisons
 const Cg2365Vs5357Vs2366Page = lazy(() => import('@/pages/seo/Cg2365Vs5357Vs2366Page'));
-const Nvq2357VsApprenticeshipStandard5357Page = lazy(() => import('@/pages/seo/Nvq2357VsApprenticeshipStandard5357Page'));
+const Nvq2357VsApprenticeshipStandard5357Page = lazy(
+  () => import('@/pages/seo/Nvq2357VsApprenticeshipStandard5357Page')
+);
 const CityAndGuildsVsEalPage = lazy(() => import('@/pages/seo/CityAndGuildsVsEalPage'));
-const TLevelVsApprenticeshipElectricalPage = lazy(() => import('@/pages/seo/TLevelVsApprenticeshipElectricalPage'));
-const DomesticInstallerVsFullElectricianPage = lazy(() => import('@/pages/seo/DomesticInstallerVsFullElectricianPage'));
-const UnitRevision234603Unit102Page = lazy(() => import('@/pages/seo/UnitRevision234603Unit102Page'));
-const UnitRevision234603Unit106Page = lazy(() => import('@/pages/seo/UnitRevision234603Unit106Page'));
-const UnitRevision234603Unit109Page = lazy(() => import('@/pages/seo/UnitRevision234603Unit109Page'));
-const UnitRevision234603Unit110Page = lazy(() => import('@/pages/seo/UnitRevision234603Unit110Page'));
-const UnitRevision234603Unit113Page = lazy(() => import('@/pages/seo/UnitRevision234603Unit113Page'));
-const UnitRevision234603Unit115Page = lazy(() => import('@/pages/seo/UnitRevision234603Unit115Page'));
-const UnitRevision234603Unit118Page = lazy(() => import('@/pages/seo/UnitRevision234603Unit118Page'));
+const TLevelVsApprenticeshipElectricalPage = lazy(
+  () => import('@/pages/seo/TLevelVsApprenticeshipElectricalPage')
+);
+const DomesticInstallerVsFullElectricianPage = lazy(
+  () => import('@/pages/seo/DomesticInstallerVsFullElectricianPage')
+);
+const UnitRevision234603Unit102Page = lazy(
+  () => import('@/pages/seo/UnitRevision234603Unit102Page')
+);
+const UnitRevision234603Unit106Page = lazy(
+  () => import('@/pages/seo/UnitRevision234603Unit106Page')
+);
+const UnitRevision234603Unit109Page = lazy(
+  () => import('@/pages/seo/UnitRevision234603Unit109Page')
+);
+const UnitRevision234603Unit110Page = lazy(
+  () => import('@/pages/seo/UnitRevision234603Unit110Page')
+);
+const UnitRevision234603Unit113Page = lazy(
+  () => import('@/pages/seo/UnitRevision234603Unit113Page')
+);
+const UnitRevision234603Unit115Page = lazy(
+  () => import('@/pages/seo/UnitRevision234603Unit115Page')
+);
+const UnitRevision234603Unit118Page = lazy(
+  () => import('@/pages/seo/UnitRevision234603Unit118Page')
+);
 const UnitRevision2357Unit311Page = lazy(() => import('@/pages/seo/UnitRevision2357Unit311Page'));
 const UnitRevision2357Unit313Page = lazy(() => import('@/pages/seo/UnitRevision2357Unit313Page'));
 const UnitRevision2357Unit315Page = lazy(() => import('@/pages/seo/UnitRevision2357Unit315Page'));
@@ -1594,13 +1837,27 @@ const UnitRevision2357Unit606Page = lazy(() => import('@/pages/seo/UnitRevision2
 const UnitRevision2357Unit607Page = lazy(() => import('@/pages/seo/UnitRevision2357Unit607Page'));
 const UnitRevision2357Unit608Page = lazy(() => import('@/pages/seo/UnitRevision2357Unit608Page'));
 const UnitRevision2357Unit609Page = lazy(() => import('@/pages/seo/UnitRevision2357Unit609Page'));
-const UnitRevision6103907XUnit18ED302Page = lazy(() => import('@/pages/seo/UnitRevision6103907XUnit18ED302Page'));
-const UnitRevision6103907XUnitTE301Page = lazy(() => import('@/pages/seo/UnitRevision6103907XUnitTE301Page'));
-const UnitRevision6103907XUnitTE303Page = lazy(() => import('@/pages/seo/UnitRevision6103907XUnitTE303Page'));
-const UnitRevision6103907XUnitTE304Page = lazy(() => import('@/pages/seo/UnitRevision6103907XUnitTE304Page'));
-const UnitRevision6103907XUnitTE306Page = lazy(() => import('@/pages/seo/UnitRevision6103907XUnitTE306Page'));
-const UnitRevision6103907XUnitTE307Page = lazy(() => import('@/pages/seo/UnitRevision6103907XUnitTE307Page'));
-const UnitRevision6103907XUnitTE308Page = lazy(() => import('@/pages/seo/UnitRevision6103907XUnitTE308Page'));
+const UnitRevision6103907XUnit18ED302Page = lazy(
+  () => import('@/pages/seo/UnitRevision6103907XUnit18ED302Page')
+);
+const UnitRevision6103907XUnitTE301Page = lazy(
+  () => import('@/pages/seo/UnitRevision6103907XUnitTE301Page')
+);
+const UnitRevision6103907XUnitTE303Page = lazy(
+  () => import('@/pages/seo/UnitRevision6103907XUnitTE303Page')
+);
+const UnitRevision6103907XUnitTE304Page = lazy(
+  () => import('@/pages/seo/UnitRevision6103907XUnitTE304Page')
+);
+const UnitRevision6103907XUnitTE306Page = lazy(
+  () => import('@/pages/seo/UnitRevision6103907XUnitTE306Page')
+);
+const UnitRevision6103907XUnitTE307Page = lazy(
+  () => import('@/pages/seo/UnitRevision6103907XUnitTE307Page')
+);
+const UnitRevision6103907XUnitTE308Page = lazy(
+  () => import('@/pages/seo/UnitRevision6103907XUnitTE308Page')
+);
 const UnitRevision8202Unit301Page = lazy(() => import('@/pages/seo/UnitRevision8202Unit301Page'));
 const UnitRevision8202Unit302Page = lazy(() => import('@/pages/seo/UnitRevision8202Unit302Page'));
 const UnitRevision8202Unit303Page = lazy(() => import('@/pages/seo/UnitRevision8202Unit303Page'));
@@ -1608,17 +1865,29 @@ const UnitRevision8202Unit304Page = lazy(() => import('@/pages/seo/UnitRevision8
 const UnitRevision8202Unit305Page = lazy(() => import('@/pages/seo/UnitRevision8202Unit305Page'));
 const UnitRevision8202Unit306Page = lazy(() => import('@/pages/seo/UnitRevision8202Unit306Page'));
 const UnitRevision8202Unit307Page = lazy(() => import('@/pages/seo/UnitRevision8202Unit307Page'));
-const UnitRevisionEALNETP3UnitETKP301Page = lazy(() => import('@/pages/seo/UnitRevisionEALNETP3UnitETKP301Page'));
-const UnitRevisionEALNETP3UnitETKP303Page = lazy(() => import('@/pages/seo/UnitRevisionEALNETP3UnitETKP303Page'));
-const UnitRevisionEALNETP3UnitETKP305Page = lazy(() => import('@/pages/seo/UnitRevisionEALNETP3UnitETKP305Page'));
-const UnitRevisionEALNETP3UnitETKP306Page = lazy(() => import('@/pages/seo/UnitRevisionEALNETP3UnitETKP306Page'));
-const UnitRevisionEALNETP3UnitETP304Page = lazy(() => import('@/pages/seo/UnitRevisionEALNETP3UnitETP304Page'));
-const UnitRevisionEALNETP3UnitETP307Page = lazy(() => import('@/pages/seo/UnitRevisionEALNETP3UnitETP307Page'));
-const UnitRevisionEALNETP3UnitN18ED31Page = lazy(() => import('@/pages/seo/UnitRevisionEALNETP3UnitN18ED31Page'));
-// PoE & Structured Cabling Hub (new pillar)
-const PoEStructuredCablingHubPage = lazy(
-  () => import('@/pages/seo/PoEStructuredCablingHubPage')
+const UnitRevisionEALNETP3UnitETKP301Page = lazy(
+  () => import('@/pages/seo/UnitRevisionEALNETP3UnitETKP301Page')
 );
+const UnitRevisionEALNETP3UnitETKP303Page = lazy(
+  () => import('@/pages/seo/UnitRevisionEALNETP3UnitETKP303Page')
+);
+const UnitRevisionEALNETP3UnitETKP305Page = lazy(
+  () => import('@/pages/seo/UnitRevisionEALNETP3UnitETKP305Page')
+);
+const UnitRevisionEALNETP3UnitETKP306Page = lazy(
+  () => import('@/pages/seo/UnitRevisionEALNETP3UnitETKP306Page')
+);
+const UnitRevisionEALNETP3UnitETP304Page = lazy(
+  () => import('@/pages/seo/UnitRevisionEALNETP3UnitETP304Page')
+);
+const UnitRevisionEALNETP3UnitETP307Page = lazy(
+  () => import('@/pages/seo/UnitRevisionEALNETP3UnitETP307Page')
+);
+const UnitRevisionEALNETP3UnitN18ED31Page = lazy(
+  () => import('@/pages/seo/UnitRevisionEALNETP3UnitN18ED31Page')
+);
+// PoE & Structured Cabling Hub (new pillar)
+const PoEStructuredCablingHubPage = lazy(() => import('@/pages/seo/PoEStructuredCablingHubPage'));
 const Section722EVChargingGuidePage = lazy(
   () => import('@/pages/seo/Section722EVChargingGuidePage')
 );
@@ -3092,6 +3361,254 @@ export function getSEORoutes() {
         element={
           <LazyRoute>
             <ElectricalSymbolsChartPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrical-switch-symbols"
+        element={
+          <LazyRoute>
+            <ElectricalSwitchSymbolsPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrical-socket-symbols"
+        element={
+          <LazyRoute>
+            <ElectricalSocketSymbolsPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrical-lighting-symbols"
+        element={
+          <LazyRoute>
+            <ElectricalLightingSymbolsPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrical-distribution-symbols"
+        element={
+          <LazyRoute>
+            <ElectricalDistributionSymbolsPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrical-safety-symbols"
+        element={
+          <LazyRoute>
+            <ElectricalSafetySymbolsPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrical-containment-symbols"
+        element={
+          <LazyRoute>
+            <ElectricalContainmentSymbolsPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrical-equipment-symbols"
+        element={
+          <LazyRoute>
+            <ElectricalEquipmentSymbolsPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrical-mechanical-symbols"
+        element={
+          <LazyRoute>
+            <ElectricalMechanicalSymbolsPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrical-renewables-symbols"
+        element={
+          <LazyRoute>
+            <ElectricalRenewablesSymbolsPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrical-controls-symbols"
+        element={
+          <LazyRoute>
+            <ElectricalControlsSymbolsPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrical-architectural-symbols"
+        element={
+          <LazyRoute>
+            <ElectricalArchitecturalSymbolsPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/rcd-symbol"
+        element={
+          <LazyRoute>
+            <RcdSymbolPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/rcbo-symbol"
+        element={
+          <LazyRoute>
+            <RcboSymbolPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/mcb-symbol"
+        element={
+          <LazyRoute>
+            <McbSymbolPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/spd-symbol"
+        element={
+          <LazyRoute>
+            <SpdSymbolPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2way-switch-symbol"
+        element={
+          <LazyRoute>
+            <TwowaySwitchSymbolPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/1way-switch-symbol"
+        element={
+          <LazyRoute>
+            <OnewaySwitchSymbolPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/intermediate-switch-symbol"
+        element={
+          <LazyRoute>
+            <IntermediateSwitchSymbolPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/dimmer-switch-symbol"
+        element={
+          <LazyRoute>
+            <DimmerSwitchSymbolPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/double-13a-socket-symbol"
+        element={
+          <LazyRoute>
+            <Double13aSocketSymbolPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/single-13a-socket-symbol"
+        element={
+          <LazyRoute>
+            <Single13aSocketSymbolPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/fused-spur-symbol"
+        element={
+          <LazyRoute>
+            <FusedSpurSymbolPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/switched-fused-spur-symbol"
+        element={
+          <LazyRoute>
+            <SwitchedFusedSpurSymbolPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/isolator-switch-symbol"
+        element={
+          <LazyRoute>
+            <IsolatorSwitchSymbolPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/emergency-stop-symbol"
+        element={
+          <LazyRoute>
+            <EmergencyStopSymbolPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/smoke-detector-symbol"
+        element={
+          <LazyRoute>
+            <SmokeDetectorSymbolPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/fire-alarm-symbol"
+        element={
+          <LazyRoute>
+            <FireAlarmSymbolPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/break-glass-symbol"
+        element={
+          <LazyRoute>
+            <BreakGlassSymbolPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/exit-sign-symbol"
+        element={
+          <LazyRoute>
+            <ExitSignSymbolPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/emergency-light-symbol"
+        element={
+          <LazyRoute>
+            <EmergencyLightSymbolPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-symbol"
+        element={
+          <LazyRoute>
+            <ConsumerUnitSymbolPage />
           </LazyRoute>
         }
       />
@@ -11257,221 +11774,1726 @@ export function getSEORoutes() {
           </LazyRoute>
         }
       />
-      <Route path="/guides/eicr-cost-manchester" element={<LazyRoute><EICRCostManchesterPage /></LazyRoute>} />
-      <Route path="/guides/eicr-cost-birmingham" element={<LazyRoute><EICRCostBirminghamPage /></LazyRoute>} />
-      <Route path="/guides/eicr-cost-leeds" element={<LazyRoute><EICRCostLeedsPage /></LazyRoute>} />
-      <Route path="/guides/eicr-cost-liverpool" element={<LazyRoute><EICRCostLiverpoolPage /></LazyRoute>} />
-      <Route path="/guides/eicr-cost-sheffield" element={<LazyRoute><EICRCostSheffieldPage /></LazyRoute>} />
-      <Route path="/guides/eicr-cost-bristol" element={<LazyRoute><EICRCostBristolPage /></LazyRoute>} />
-      <Route path="/guides/eicr-cost-newcastle" element={<LazyRoute><EICRCostNewcastlePage /></LazyRoute>} />
-      <Route path="/guides/eicr-cost-nottingham" element={<LazyRoute><EICRCostNottinghamPage /></LazyRoute>} />
-      <Route path="/guides/eicr-cost-southampton" element={<LazyRoute><EICRCostSouthamptonPage /></LazyRoute>} />
-      <Route path="/guides/eicr-cost-portsmouth" element={<LazyRoute><EICRCostPortsmouthPage /></LazyRoute>} />
-      <Route path="/guides/eicr-cost-brighton" element={<LazyRoute><EICRCostBrightonPage /></LazyRoute>} />
-      <Route path="/guides/eicr-cost-cambridge" element={<LazyRoute><EICRCostCambridgePage /></LazyRoute>} />
-      <Route path="/guides/eicr-cost-oxford" element={<LazyRoute><EICRCostOxfordPage /></LazyRoute>} />
-      <Route path="/guides/eicr-cost-york" element={<LazyRoute><EICRCostYorkPage /></LazyRoute>} />
-      <Route path="/guides/eicr-cost-hull" element={<LazyRoute><EICRCostHullPage /></LazyRoute>} />
-      <Route path="/guides/eicr-cost-stoke" element={<LazyRoute><EICRCostStokePage /></LazyRoute>} />
-      <Route path="/guides/eicr-cost-plymouth" element={<LazyRoute><EICRCostPlymouthPage /></LazyRoute>} />
-      <Route path="/guides/eicr-cost-exeter" element={<LazyRoute><EICRCostExeterPage /></LazyRoute>} />
-      <Route path="/guides/eicr-cost-norwich" element={<LazyRoute><EICRCostNorwichPage /></LazyRoute>} />
-      <Route path="/guides/eicr-cost-edinburgh" element={<LazyRoute><EICRCostEdinburghPage /></LazyRoute>} />
-      <Route path="/guides/eicr-cost-glasgow" element={<LazyRoute><EICRCostGlasgowPage /></LazyRoute>} />
-      <Route path="/guides/eicr-cost-aberdeen" element={<LazyRoute><EICRCostAberdeenPage /></LazyRoute>} />
-      <Route path="/guides/eicr-cost-dundee" element={<LazyRoute><EICRCostDundeePage /></LazyRoute>} />
-      <Route path="/guides/eicr-cost-cardiff" element={<LazyRoute><EICRCostCardiffPage /></LazyRoute>} />
-      <Route path="/guides/eicr-cost-swansea" element={<LazyRoute><EICRCostSwanseaPage /></LazyRoute>} />
-      <Route path="/guides/eicr-cost-belfast" element={<LazyRoute><EICRCostBelfastPage /></LazyRoute>} />
-      <Route path="/guides/eicr-cost-milton-keynes" element={<LazyRoute><EICRCostMiltonKeynesPage /></LazyRoute>} />
-      <Route path="/guides/eicr-cost-reading" element={<LazyRoute><EICRCostReadingPage /></LazyRoute>} />
-      <Route path="/guides/eicr-cost-luton" element={<LazyRoute><EICRCostLutonPage /></LazyRoute>} />
-      <Route path="/guides/eicr-cost-swindon" element={<LazyRoute><EICRCostSwindonPage /></LazyRoute>} />
-      <Route path="/guides/consumer-unit-replacement-cost-manchester" element={<LazyRoute><CUReplacementCostManchesterPage /></LazyRoute>} />
-      <Route path="/guides/consumer-unit-replacement-cost-birmingham" element={<LazyRoute><CUReplacementCostBirminghamPage /></LazyRoute>} />
-      <Route path="/guides/consumer-unit-replacement-cost-leeds" element={<LazyRoute><CUReplacementCostLeedsPage /></LazyRoute>} />
-      <Route path="/guides/consumer-unit-replacement-cost-liverpool" element={<LazyRoute><CUReplacementCostLiverpoolPage /></LazyRoute>} />
-      <Route path="/guides/consumer-unit-replacement-cost-sheffield" element={<LazyRoute><CUReplacementCostSheffieldPage /></LazyRoute>} />
-      <Route path="/guides/consumer-unit-replacement-cost-bristol" element={<LazyRoute><CUReplacementCostBristolPage /></LazyRoute>} />
-      <Route path="/guides/consumer-unit-replacement-cost-newcastle" element={<LazyRoute><CUReplacementCostNewcastlePage /></LazyRoute>} />
-      <Route path="/guides/consumer-unit-replacement-cost-nottingham" element={<LazyRoute><CUReplacementCostNottinghamPage /></LazyRoute>} />
-      <Route path="/guides/consumer-unit-replacement-cost-southampton" element={<LazyRoute><CUReplacementCostSouthamptonPage /></LazyRoute>} />
-      <Route path="/guides/consumer-unit-replacement-cost-portsmouth" element={<LazyRoute><CUReplacementCostPortsmouthPage /></LazyRoute>} />
-      <Route path="/guides/consumer-unit-replacement-cost-brighton" element={<LazyRoute><CUReplacementCostBrightonPage /></LazyRoute>} />
-      <Route path="/guides/consumer-unit-replacement-cost-cambridge" element={<LazyRoute><CUReplacementCostCambridgePage /></LazyRoute>} />
-      <Route path="/guides/consumer-unit-replacement-cost-oxford" element={<LazyRoute><CUReplacementCostOxfordPage /></LazyRoute>} />
-      <Route path="/guides/consumer-unit-replacement-cost-york" element={<LazyRoute><CUReplacementCostYorkPage /></LazyRoute>} />
-      <Route path="/guides/consumer-unit-replacement-cost-hull" element={<LazyRoute><CUReplacementCostHullPage /></LazyRoute>} />
-      <Route path="/guides/consumer-unit-replacement-cost-stoke" element={<LazyRoute><CUReplacementCostStokePage /></LazyRoute>} />
-      <Route path="/guides/consumer-unit-replacement-cost-plymouth" element={<LazyRoute><CUReplacementCostPlymouthPage /></LazyRoute>} />
-      <Route path="/guides/consumer-unit-replacement-cost-exeter" element={<LazyRoute><CUReplacementCostExeterPage /></LazyRoute>} />
-      <Route path="/guides/consumer-unit-replacement-cost-norwich" element={<LazyRoute><CUReplacementCostNorwichPage /></LazyRoute>} />
-      <Route path="/guides/consumer-unit-replacement-cost-edinburgh" element={<LazyRoute><CUReplacementCostEdinburghPage /></LazyRoute>} />
-      <Route path="/guides/consumer-unit-replacement-cost-glasgow" element={<LazyRoute><CUReplacementCostGlasgowPage /></LazyRoute>} />
-      <Route path="/guides/consumer-unit-replacement-cost-aberdeen" element={<LazyRoute><CUReplacementCostAberdeenPage /></LazyRoute>} />
-      <Route path="/guides/consumer-unit-replacement-cost-dundee" element={<LazyRoute><CUReplacementCostDundeePage /></LazyRoute>} />
-      <Route path="/guides/consumer-unit-replacement-cost-cardiff" element={<LazyRoute><CUReplacementCostCardiffPage /></LazyRoute>} />
-      <Route path="/guides/consumer-unit-replacement-cost-swansea" element={<LazyRoute><CUReplacementCostSwanseaPage /></LazyRoute>} />
-      <Route path="/guides/consumer-unit-replacement-cost-belfast" element={<LazyRoute><CUReplacementCostBelfastPage /></LazyRoute>} />
-      <Route path="/guides/consumer-unit-replacement-cost-milton-keynes" element={<LazyRoute><CUReplacementCostMiltonKeynesPage /></LazyRoute>} />
-      <Route path="/guides/consumer-unit-replacement-cost-reading" element={<LazyRoute><CUReplacementCostReadingPage /></LazyRoute>} />
-      <Route path="/guides/consumer-unit-replacement-cost-luton" element={<LazyRoute><CUReplacementCostLutonPage /></LazyRoute>} />
-      <Route path="/guides/consumer-unit-replacement-cost-swindon" element={<LazyRoute><CUReplacementCostSwindonPage /></LazyRoute>} />
-      <Route path="/guides/how-to-price-eicr-as-an-electrician" element={<LazyRoute><HowToPriceEicrPage /></LazyRoute>} />
-      <Route path="/guides/how-to-price-consumer-unit-replacement-as-an-electrician" element={<LazyRoute><HowToPriceConsumerUnitReplacementPage /></LazyRoute>} />
-      <Route path="/guides/how-to-price-ev-charger-install-as-an-electrician" element={<LazyRoute><HowToPriceEvChargerInstallPage /></LazyRoute>} />
-      <Route path="/guides/how-to-price-full-rewire-as-an-electrician" element={<LazyRoute><HowToPriceFullRewirePage /></LazyRoute>} />
-      <Route path="/guides/how-to-price-solar-pv-installation-as-an-electrician" element={<LazyRoute><HowToPriceSolarPvInstallationPage /></LazyRoute>} />
-      <Route path="/guides/how-to-price-emergency-callout-as-an-electrician" element={<LazyRoute><HowToPriceEmergencyCalloutPage /></LazyRoute>} />
-      <Route path="/guides/how-to-price-commercial-install-as-an-electrician" element={<LazyRoute><HowToPriceCommercialInstallPage /></LazyRoute>} />
-      <Route path="/guides/how-to-price-pat-testing-as-an-electrician" element={<LazyRoute><HowToPricePatTestingPage /></LazyRoute>} />
-      <Route path="/guides/how-to-price-minor-works-as-an-electrician" element={<LazyRoute><HowToPriceMinorWorksPage /></LazyRoute>} />
-      <Route path="/guides/how-to-price-commercial-eicr-as-an-electrician" element={<LazyRoute><HowToPriceCommercialEicrPage /></LazyRoute>} />
-      <Route path="/guides/how-to-price-kitchen-rewire-as-an-electrician" element={<LazyRoute><HowToPriceKitchenRewirePage /></LazyRoute>} />
-      <Route path="/guides/how-to-price-day-rate-subcontract-as-an-electrician" element={<LazyRoute><HowToPriceDayRateSubcontractPage /></LazyRoute>} />
-      <Route path="/guides/how-to-price-out-of-hours-as-an-electrician" element={<LazyRoute><HowToPriceOutOfHoursPage /></LazyRoute>} />
-      <Route path="/guides/how-to-price-maintenance-contract-as-an-electrician" element={<LazyRoute><HowToPriceMaintenanceContractPage /></LazyRoute>} />
-      <Route path="/guides/how-to-price-smart-home-installation-as-an-electrician" element={<LazyRoute><HowToPriceSmartHomeInstallationPage /></LazyRoute>} />
-<Route path="/guides/2365-02-unit-201-health-and-safety-in-building-services-engineering-revision" element={<LazyRoute><UnitRevision236502Unit201Page /></LazyRoute>} />
-      <Route path="/guides/2365-02-unit-202-principles-of-electrical-science-revision" element={<LazyRoute><UnitRevision236502Unit202Page /></LazyRoute>} />
-      <Route path="/guides/2365-02-unit-203-electrical-installations-technology-revision" element={<LazyRoute><UnitRevision236502Unit203Page /></LazyRoute>} />
-      <Route path="/guides/2365-02-unit-204-installation-of-wiring-systems-and-enclosures-revision" element={<LazyRoute><UnitRevision236502Unit204Page /></LazyRoute>} />
-      <Route path="/guides/2365-02-unit-210-understand-how-to-communicate-with-others-within-building-services-engineering-revision" element={<LazyRoute><UnitRevision236502Unit210Page /></LazyRoute>} />
-      <Route path="/guides/2365-03-unit-201-health-and-safety-in-building-services-engineering-revision" element={<LazyRoute><UnitRevision236503Unit201Page /></LazyRoute>} />
-      <Route path="/guides/2365-03-unit-302-principles-of-electrical-science-revision" element={<LazyRoute><UnitRevision236503Unit302Page /></LazyRoute>} />
-      <Route path="/guides/2365-03-unit-303-electrical-installations-fault-diagnosis-and-rectification-revision" element={<LazyRoute><UnitRevision236503Unit303Page /></LazyRoute>} />
-      <Route path="/guides/2365-03-unit-304-electrical-installations-inspection-testing-and-commissioning-revision" element={<LazyRoute><UnitRevision236503Unit304Page /></LazyRoute>} />
-      <Route path="/guides/2365-03-unit-305-electrical-systems-design-revision" element={<LazyRoute><UnitRevision236503Unit305Page /></LazyRoute>} />
-      <Route path="/guides/2365-03-unit-308-career-awareness-in-building-services-engineering-revision" element={<LazyRoute><UnitRevision236503Unit308Page /></LazyRoute>} />
-      <Route path="/guides/2366-03-unit-301-electrical-science-and-principles-revision" element={<LazyRoute><UnitRevision236603Unit301Page /></LazyRoute>} />
-      <Route path="/guides/2366-03-unit-302-inspection-testing-and-commissioning-of-electrotechnical-systems-and-equipment-revision" element={<LazyRoute><UnitRevision236603Unit302Page /></LazyRoute>} />
-      <Route path="/guides/2366-03-unit-303-fault-finding-and-diagnosis-revision" element={<LazyRoute><UnitRevision236603Unit303Page /></LazyRoute>} />
-      <Route path="/guides/2366-03-unit-304-electrical-design-practices-and-procedures-revision" element={<LazyRoute><UnitRevision236603Unit304Page /></LazyRoute>} />
-      <Route path="/guides/2366-03-unit-305-organising-and-overseeing-electrical-work-activities-in-buildings-revision" element={<LazyRoute><UnitRevision236603Unit305Page /></LazyRoute>} />
-      <Route path="/guides/2366-03-unit-306-understand-the-requirements-of-electrical-installations-bs-7671-2018-2022-revision" element={<LazyRoute><UnitRevision236603Unit306Page /></LazyRoute>} />
-      <Route path="/guides/5357-unit-022-understand-the-requirements-of-electrical-installations-bs-7671-2018-2022-revision" element={<LazyRoute><UnitRevision5357Unit022Page /></LazyRoute>} />
-      <Route path="/guides/5357-unit-101-001-understand-health-safety-and-environmental-considerations-revision" element={<LazyRoute><UnitRevision5357Unit101001Page /></LazyRoute>} />
-      <Route path="/guides/5357-unit-102-apply-health-safety-and-environmental-considerations-revision" element={<LazyRoute><UnitRevision5357Unit102Page /></LazyRoute>} />
-      <Route path="/guides/5357-unit-103-003-electrical-scientific-principles-and-technologies-revision" element={<LazyRoute><UnitRevision5357Unit103003Page /></LazyRoute>} />
-      <Route path="/guides/5357-unit-104-004-understand-design-and-installation-practices-and-procedures-revision" element={<LazyRoute><UnitRevision5357Unit104004Page /></LazyRoute>} />
-      <Route path="/guides/5357-unit-105-505-understand-how-to-plan-and-oversee-electrical-work-activities-revision" element={<LazyRoute><UnitRevision5357Unit105505Page /></LazyRoute>} />
-      <Route path="/guides/5357-unit-106-organise-and-oversee-the-electrical-work-environment-revision" element={<LazyRoute><UnitRevision5357Unit106Page /></LazyRoute>} />
-      <Route path="/guides/5357-unit-107-understand-terminations-and-connections-of-conductors-revision" element={<LazyRoute><UnitRevision5357Unit107Page /></LazyRoute>} />
-      <Route path="/guides/5357-unit-109-apply-design-and-installation-practices-and-procedures-revision" element={<LazyRoute><UnitRevision5357Unit109Page /></LazyRoute>} />
-      <Route path="/guides/5357-unit-110-apply-practices-and-procedures-for-maintenance-revision" element={<LazyRoute><UnitRevision5357Unit110Page /></LazyRoute>} />
-      <Route path="/guides/5357-unit-113-inspect-test-and-commission-electrical-systems-revision" element={<LazyRoute><UnitRevision5357Unit113Page /></LazyRoute>} />
-      <Route path="/guides/5357-unit-114-014-understand-fault-diagnosis-and-rectification-revision" element={<LazyRoute><UnitRevision5357Unit114014Page /></LazyRoute>} />
-      <Route path="/guides/5357-unit-115-apply-fault-diagnosis-and-rectification-revision" element={<LazyRoute><UnitRevision5357Unit115Page /></LazyRoute>} />
-      <Route path="/guides/5357-unit-118-termination-and-connection-of-conductors-revision" element={<LazyRoute><UnitRevision5357Unit118Page /></LazyRoute>} />
-      <Route path="/guides/5357-unit-312-212-inspection-testing-and-commissioning-revision" element={<LazyRoute><UnitRevision5357Unit312212Page /></LazyRoute>} />
-      <Route path="/guides/5393-03-unit-022-understand-the-requirements-for-electrical-installations-bs-7671-2018-2022-revision" element={<LazyRoute><UnitRevision539303Unit022Page /></LazyRoute>} />
-      <Route path="/guides/5393-03-unit-101-health-safety-and-environmental-considerations-in-dwellings-revision" element={<LazyRoute><UnitRevision539303Unit101Page /></LazyRoute>} />
-      <Route path="/guides/5393-03-unit-102-apply-health-safety-and-environmental-considerations-in-dwellings-revision" element={<LazyRoute><UnitRevision539303Unit102Page /></LazyRoute>} />
-      <Route path="/guides/5393-03-unit-103-electrical-scientific-principles-and-technologies-for-work-in-dwellings-revision" element={<LazyRoute><UnitRevision539303Unit103Page /></LazyRoute>} />
-      <Route path="/guides/5393-03-unit-104-design-and-installation-practices-and-procedures-for-dwellings-and-associated-buildings-revision" element={<LazyRoute><UnitRevision539303Unit104Page /></LazyRoute>} />
-      <Route path="/guides/5393-03-unit-105-practices-and-procedures-for-planning-and-overseeing-electrical-work-activities-in-dwellings-revision" element={<LazyRoute><UnitRevision539303Unit105Page /></LazyRoute>} />
-      <Route path="/guides/5393-03-unit-106-plan-and-oversee-the-electrical-work-activities-in-dwellings-revision" element={<LazyRoute><UnitRevision539303Unit106Page /></LazyRoute>} />
-      <Route path="/guides/5393-03-unit-109-apply-design-and-installation-practices-including-termination-and-connection-of-conductors-in-dwellings-revision" element={<LazyRoute><UnitRevision539303Unit109Page /></LazyRoute>} />
-      <Route path="/guides/5393-03-unit-112-practices-and-procedures-for-inspection-testing-and-commissioning-in-dwellings-revision" element={<LazyRoute><UnitRevision539303Unit112Page /></LazyRoute>} />
-      <Route path="/guides/5393-03-unit-113-inspect-test-report-and-commission-electrical-systems-in-dwellings-revision" element={<LazyRoute><UnitRevision539303Unit113Page /></LazyRoute>} />
-      <Route path="/guides/5393-03-unit-114-practices-and-procedures-for-fault-diagnosis-and-rectification-in-dwellings-revision" element={<LazyRoute><UnitRevision539303Unit114Page /></LazyRoute>} />
-      <Route path="/guides/5393-03-unit-115-apply-fault-diagnosis-and-rectification-in-dwellings-revision" element={<LazyRoute><UnitRevision539303Unit115Page /></LazyRoute>} />
-      <Route path="/guides/2346-03-unit-102-apply-health-safety-and-environmental-considerations-revision" element={<LazyRoute><UnitRevision234603Unit102Page /></LazyRoute>} />
-      <Route path="/guides/2346-03-unit-106-organise-and-oversee-the-electrical-work-environment-revision" element={<LazyRoute><UnitRevision234603Unit106Page /></LazyRoute>} />
-      <Route path="/guides/2346-03-unit-109-apply-design-and-installation-practices-and-procedures-level-revision" element={<LazyRoute><UnitRevision234603Unit109Page /></LazyRoute>} />
-      <Route path="/guides/2346-03-unit-110-apply-practices-and-procedures-for-maintenance-revision" element={<LazyRoute><UnitRevision234603Unit110Page /></LazyRoute>} />
-      <Route path="/guides/2346-03-unit-113-inspect-test-and-commission-electrical-systems-revision" element={<LazyRoute><UnitRevision234603Unit113Page /></LazyRoute>} />
-      <Route path="/guides/2346-03-unit-115-apply-fault-diagnosis-and-rectification-revision" element={<LazyRoute><UnitRevision234603Unit115Page /></LazyRoute>} />
-      <Route path="/guides/2346-03-unit-118-termination-and-connection-of-conductors-revision" element={<LazyRoute><UnitRevision234603Unit118Page /></LazyRoute>} />
-      <Route path="/guides/2357-unit-311-applying-health-and-safety-legislation-and-working-practices-installing-and-maintaining-electrotechnical-systems-and-equipment-eltp01-revision" element={<LazyRoute><UnitRevision2357Unit311Page /></LazyRoute>} />
-      <Route path="/guides/2357-unit-313-overseeing-and-organising-the-work-environment-electrical-installation-eltp03-revision" element={<LazyRoute><UnitRevision2357Unit313Page /></LazyRoute>} />
-      <Route path="/guides/2357-unit-315-planning-preparing-and-installing-wiring-systems-and-associated-equipment-in-buildings-structures-and-the-environment-eltp04-revision" element={<LazyRoute><UnitRevision2357Unit315Page /></LazyRoute>} />
-      <Route path="/guides/2357-unit-316-terminating-and-connecting-conductors-cables-and-flexible-cords-in-electrical-systems-eltp05-revision" element={<LazyRoute><UnitRevision2357Unit316Page /></LazyRoute>} />
-      <Route path="/guides/2357-unit-317-inspecting-testing-commissioning-and-certifying-electrotechnical-systems-and-equipment-in-buildings-structures-and-the-environment-eltp06-revision" element={<LazyRoute><UnitRevision2357Unit317Page /></LazyRoute>} />
-      <Route path="/guides/2357-unit-318-diagnosing-and-correcting-electrical-faults-in-electrical-systems-and-equipment-in-buildings-structures-and-the-environment-eltp07-revision" element={<LazyRoute><UnitRevision2357Unit318Page /></LazyRoute>} />
-      <Route path="/guides/2357-unit-321-understanding-the-practices-and-procedures-for-overseeing-and-organising-the-work-environment-electrical-maintenance-eltk-03a-revision" element={<LazyRoute><UnitRevision2357Unit321Page /></LazyRoute>} />
-      <Route path="/guides/2357-unit-322-understanding-the-practices-and-procedures-for-planning-and-preparing-to-maintain-electrotechnical-systems-and-equipment-eltk-09a-revision" element={<LazyRoute><UnitRevision2357Unit322Page /></LazyRoute>} />
-      <Route path="/guides/2357-unit-323-understanding-the-practices-and-procedures-for-maintaining-electrotechnical-systems-and-equipment-eltk-09-revision" element={<LazyRoute><UnitRevision2357Unit323Page /></LazyRoute>} />
-      <Route path="/guides/2357-unit-332-plan-and-prepare-to-maintain-electrotechnical-systems-and-equipment-eltp-09a-revision" element={<LazyRoute><UnitRevision2357Unit332Page /></LazyRoute>} />
-      <Route path="/guides/2357-unit-333-maintain-electrotechnical-systems-and-equipment-eltp-09-revision" element={<LazyRoute><UnitRevision2357Unit333Page /></LazyRoute>} />
-      <Route path="/guides/2357-unit-399-electrotechnical-occupational-competence-elt-oc1-revision" element={<LazyRoute><UnitRevision2357Unit399Page /></LazyRoute>} />
-      <Route path="/guides/2357-unit-601-understanding-health-and-safety-legislation-practices-and-procedures-installing-and-maintaining-electrotechnical-systems-and-equipment-eltk-01-revision" element={<LazyRoute><UnitRevision2357Unit601Page /></LazyRoute>} />
-      <Route path="/guides/2357-unit-602-understanding-environmental-legislation-working-practices-and-the-principles-of-environmental-technology-systems-eltk-02-revision" element={<LazyRoute><UnitRevision2357Unit602Page /></LazyRoute>} />
-      <Route path="/guides/2357-unit-603-understanding-the-practices-and-procedures-for-overseeing-and-organising-the-work-environment-electrical-installation-eltk03-revision" element={<LazyRoute><UnitRevision2357Unit603Page /></LazyRoute>} />
-      <Route path="/guides/2357-unit-604-understanding-the-principles-of-planning-and-selection-for-the-installation-of-electrotechnical-equipment-and-systems-in-buildings-structures-and-the-environment-eltk04a-revision" element={<LazyRoute><UnitRevision2357Unit604Page /></LazyRoute>} />
-      <Route path="/guides/2357-unit-605-understanding-the-practices-and-procedures-for-the-preparation-and-installation-of-wiring-systems-and-electrotechnical-equipment-in-buildings-structures-and-the-environment-eltk04-revision" element={<LazyRoute><UnitRevision2357Unit605Page /></LazyRoute>} />
-      <Route path="/guides/2357-unit-606-understanding-the-principles-practices-and-legislation-for-the-termination-and-connection-of-conductors-cables-and-cords-in-electrical-systems-eltk05-revision" element={<LazyRoute><UnitRevision2357Unit606Page /></LazyRoute>} />
-      <Route path="/guides/2357-unit-607-understanding-principles-practices-and-legislation-for-the-inspection-testing-commissioning-and-certification-of-electrotechnical-systems-and-equipment-in-buildings-structures-and-the-environment-eltk06-revision" element={<LazyRoute><UnitRevision2357Unit607Page /></LazyRoute>} />
-      <Route path="/guides/2357-unit-608-understanding-the-principles-practices-and-legislation-for-diagnosing-and-correcting-electrical-faults-in-electrotechnical-systems-and-equipment-in-buildings-structures-and-the-environment-eltk07-revision" element={<LazyRoute><UnitRevision2357Unit608Page /></LazyRoute>} />
-      <Route path="/guides/2357-unit-609-understanding-the-electricalprinciples-associated-with-the-design-building-installation-and-maintenance-of-electrical-equipment-and-systems-eltk08-revision" element={<LazyRoute><UnitRevision2357Unit609Page /></LazyRoute>} />
-      <Route path="/guides/610-3907-x-unit-18ED3-02-understand-the-requirements-of-electrical-installations-bs-7671-2018-2022-revision" element={<LazyRoute><UnitRevision6103907XUnit18ED302Page /></LazyRoute>} />
-      <Route path="/guides/610-3907-x-unit-TE3-01-health-safety-and-environmental-considerations-revision" element={<LazyRoute><UnitRevision6103907XUnitTE301Page /></LazyRoute>} />
-      <Route path="/guides/610-3907-x-unit-TE3-03-practices-and-procedures-for-planning-and-overseeing-electrical-work-activities-revision" element={<LazyRoute><UnitRevision6103907XUnitTE303Page /></LazyRoute>} />
-      <Route path="/guides/610-3907-x-unit-TE3-04-design-and-installation-practices-and-procedures-revision" element={<LazyRoute><UnitRevision6103907XUnitTE304Page /></LazyRoute>} />
-      <Route path="/guides/610-3907-x-unit-TE3-06-practices-and-procedures-for-inspection-testing-and-commissioning-revision" element={<LazyRoute><UnitRevision6103907XUnitTE306Page /></LazyRoute>} />
-      <Route path="/guides/610-3907-x-unit-TE3-07-practices-and-procedures-for-fault-for-diagnosis-and-rectification-revision" element={<LazyRoute><UnitRevision6103907XUnitTE307Page /></LazyRoute>} />
-      <Route path="/guides/610-3907-x-unit-TE3-08-electrical-scientific-principles-revision" element={<LazyRoute><UnitRevision6103907XUnitTE308Page /></LazyRoute>} />
-      <Route path="/guides/8202-unit-301-planning-and-overseeing-electrical-work-activities-revision" element={<LazyRoute><UnitRevision8202Unit301Page /></LazyRoute>} />
-      <Route path="/guides/8202-unit-302-principles-of-electrical-science-revision" element={<LazyRoute><UnitRevision8202Unit302Page /></LazyRoute>} />
-      <Route path="/guides/8202-unit-303-electrical-design-and-installation-practices-and-procedures-revision" element={<LazyRoute><UnitRevision8202Unit303Page /></LazyRoute>} />
-      <Route path="/guides/8202-unit-304-principles-of-inspection-testing-and-commissioning-electrical-systems-revision" element={<LazyRoute><UnitRevision8202Unit304Page /></LazyRoute>} />
-      <Route path="/guides/8202-unit-305-inspecting-testing-and-commissioning-electrical-systems-revision" element={<LazyRoute><UnitRevision8202Unit305Page /></LazyRoute>} />
-      <Route path="/guides/8202-unit-306-electrical-system-fault-diagnosis-and-rectification-revision" element={<LazyRoute><UnitRevision8202Unit306Page /></LazyRoute>} />
-      <Route path="/guides/8202-unit-307-requirements-for-electrical-installations-revision" element={<LazyRoute><UnitRevision8202Unit307Page /></LazyRoute>} />
-      <Route path="/guides/eal-netp3-unit-ETKP3-01-apply-health-safety-and-environmental-considerations-revision" element={<LazyRoute><UnitRevisionEALNETP3UnitETKP301Page /></LazyRoute>} />
-      <Route path="/guides/eal-netp3-unit-ETKP3-03-organise-and-oversee-the-electrical-work-environment-revision" element={<LazyRoute><UnitRevisionEALNETP3UnitETKP303Page /></LazyRoute>} />
-      <Route path="/guides/eal-netp3-unit-ETKP3-05-terminate-and-connect-conductors-revision" element={<LazyRoute><UnitRevisionEALNETP3UnitETKP305Page /></LazyRoute>} />
-      <Route path="/guides/eal-netp3-unit-ETKP3-06-inspect-test-and-commission-electrical-systems-revision" element={<LazyRoute><UnitRevisionEALNETP3UnitETKP306Page /></LazyRoute>} />
-      <Route path="/guides/eal-netp3-unit-ETP3-04-apply-design-and-installation-practices-and-procedures-revision" element={<LazyRoute><UnitRevisionEALNETP3UnitETP304Page /></LazyRoute>} />
-      <Route path="/guides/eal-netp3-unit-ETP3-07-apply-fault-diagnosis-and-rectification-revision" element={<LazyRoute><UnitRevisionEALNETP3UnitETP307Page /></LazyRoute>} />
-      <Route path="/guides/eal-netp3-unit-N18ED3-1-understand-the-requirements-for-electrical-installations-bs-7671-2018-revision" element={<LazyRoute><UnitRevisionEALNETP3UnitN18ED31Page /></LazyRoute>} />
-      <Route path="/guides/am2-section-a-application-of-knowledge" element={<LazyRoute><Am2SectionAApplicationOfKnowledgePage /></LazyRoute>} />
-      <Route path="/guides/am2-section-b-safe-isolation" element={<LazyRoute><Am2SectionBSafeIsolationPage /></LazyRoute>} />
-      <Route path="/guides/am2-section-c-wiring-systems-installation" element={<LazyRoute><Am2SectionCWiringSystemsInstallationPage /></LazyRoute>} />
-      <Route path="/guides/am2-section-d-continuity-and-insulation-testing" element={<LazyRoute><Am2SectionDContinuityAndInsulationTestingPage /></LazyRoute>} />
-      <Route path="/guides/am2-section-e-initial-verification-and-periodic-inspection" element={<LazyRoute><Am2SectionEInitialVerificationAndPeriodicInspectionPage /></LazyRoute>} />
-      <Route path="/guides/am2-section-f-fault-diagnosis" element={<LazyRoute><Am2SectionFFaultDiagnosisPage /></LazyRoute>} />
-      <Route path="/guides/am2-section-g-industry-knowledge" element={<LazyRoute><Am2SectionGIndustryKnowledgePage /></LazyRoute>} />
-<Route path="/guides/electrical-apprentice-year-1-revision-plan" element={<LazyRoute><ElectricalApprenticeYear1RevisionPlanPage /></LazyRoute>} />
-      <Route path="/guides/electrical-apprentice-year-2-revision-plan" element={<LazyRoute><ElectricalApprenticeYear2RevisionPlanPage /></LazyRoute>} />
-      <Route path="/guides/electrical-apprentice-year-3-revision-plan" element={<LazyRoute><ElectricalApprenticeYear3RevisionPlanPage /></LazyRoute>} />
-      <Route path="/guides/electrical-apprentice-year-4-revision-plan" element={<LazyRoute><ElectricalApprenticeYear4RevisionPlanPage /></LazyRoute>} />
-<Route path="/guides/cg-2365-vs-5357-vs-2366" element={<LazyRoute><Cg2365Vs5357Vs2366Page /></LazyRoute>} />
-      <Route path="/guides/nvq-2357-vs-apprenticeship-standard-5357" element={<LazyRoute><Nvq2357VsApprenticeshipStandard5357Page /></LazyRoute>} />
-      <Route path="/guides/city-and-guilds-vs-eal" element={<LazyRoute><CityAndGuildsVsEalPage /></LazyRoute>} />
-      <Route path="/guides/t-level-vs-apprenticeship-electrical" element={<LazyRoute><TLevelVsApprenticeshipElectricalPage /></LazyRoute>} />
-      <Route path="/guides/domestic-installer-vs-full-electrician" element={<LazyRoute><DomesticInstallerVsFullElectricianPage /></LazyRoute>} />
-<Route path="/guides/starting-an-electrical-business-uk" element={<LazyRoute><StartingAnElectricalBusinessUkPage /></LazyRoute>} />
-      <Route path="/guides/how-to-hire-an-electrical-apprentice" element={<LazyRoute><HowToHireAnElectricalApprenticePage /></LazyRoute>} />
-      <Route path="/guides/niceic-vs-napit-registration" element={<LazyRoute><NiceicVsNapitRegistrationPage /></LazyRoute>} />
-      <Route path="/guides/electrician-insurance-business-uk" element={<LazyRoute><ElectricianInsuranceBusinessUkPage /></LazyRoute>} />
-      <Route path="/guides/electrical-contractor-marketing-guide" element={<LazyRoute><ElectricalContractorMarketingGuidePage /></LazyRoute>} />
-      <Route path="/guides/cis-construction-industry-scheme-electricians" element={<LazyRoute><CisConstructionIndustrySchemeElectriciansPage /></LazyRoute>} />
-      <Route path="/guides/electrical-contractor-vat-guide" element={<LazyRoute><ElectricalContractorVatGuidePage /></LazyRoute>} />
-      <Route path="/guides/electrician-employee-vs-self-employed-decision" element={<LazyRoute><ElectricianEmployeeVsSelfEmployedDecisionPage /></LazyRoute>} />
-      <Route path="/guides/electrical-quote-template-uk" element={<LazyRoute><ElectricalQuoteTemplateUkPage /></LazyRoute>} />
-      <Route path="/guides/electrical-business-pricing-strategy" element={<LazyRoute><ElectricalBusinessPricingStrategyPage /></LazyRoute>} />
-<Route path="/guides/2365-02-complete-guide" element={<LazyRoute><QualHub236502Page /></LazyRoute>} />
-      <Route path="/guides/2365-03-complete-guide" element={<LazyRoute><QualHub236503Page /></LazyRoute>} />
-      <Route path="/guides/2366-03-complete-guide" element={<LazyRoute><QualHub236603Page /></LazyRoute>} />
-      <Route path="/guides/5357-complete-guide" element={<LazyRoute><QualHub5357Page /></LazyRoute>} />
-      <Route path="/guides/5393-03-complete-guide" element={<LazyRoute><QualHub539303Page /></LazyRoute>} />
-      <Route path="/guides/2346-03-complete-guide" element={<LazyRoute><QualHub234603Page /></LazyRoute>} />
-      <Route path="/guides/2357-complete-guide" element={<LazyRoute><QualHub2357Page /></LazyRoute>} />
-      <Route path="/guides/eal-level-3-electrotechnical-complete-guide" element={<LazyRoute><QualHub6103907XPage /></LazyRoute>} />
-      <Route path="/guides/8202-complete-guide" element={<LazyRoute><QualHub8202Page /></LazyRoute>} />
-      <Route path="/guides/eal-netp3-complete-guide" element={<LazyRoute><QualHubEalNetp3Page /></LazyRoute>} />
-<Route path="/guides/18th-edition-amendment-4-2026-exam-prep" element={<LazyRoute><EighteenthEditionAmendment42026ExamPrepPage /></LazyRoute>} />
-      <Route path="/guides/18th-edition-chapter-41-protection-against-electric-shock-exam" element={<LazyRoute><EighteenthEditionChapter41ProtectionAgainstElectricShockExamPage /></LazyRoute>} />
-      <Route path="/guides/18th-edition-chapter-43-overcurrent-protection-exam" element={<LazyRoute><EighteenthEditionChapter43OvercurrentProtectionExamPage /></LazyRoute>} />
-      <Route path="/guides/18th-edition-appendix-4-cable-current-rating-exam" element={<LazyRoute><EighteenthEditionAppendix4CableCurrentRatingExamPage /></LazyRoute>} />
-      <Route path="/guides/ecs-gold-card-requirements-2026" element={<LazyRoute><EcsGoldCardRequirements2026Page /></LazyRoute>} />
-      <Route path="/guides/jib-pay-scales-2026" element={<LazyRoute><JibPayScales2026Page /></LazyRoute>} />
-      <Route path="/guides/after-am2-what-happens-next" element={<LazyRoute><AfterAm2WhatHappensNextPage /></LazyRoute>} />
-      <Route path="/guides/electrician-career-progression-uk" element={<LazyRoute><ElectricianCareerProgressionUkPage /></LazyRoute>} />
-      <Route path="/guides/finding-an-electrical-apprenticeship-uk" element={<LazyRoute><FindingAnElectricalApprenticeshipUkPage /></LazyRoute>} />
-      <Route path="/guides/off-the-job-training-hours-tracking" element={<LazyRoute><OffTheJobTrainingHoursTrackingPage /></LazyRoute>} />
-      <Route path="/guides/off-the-job-training-employer-guide" element={<LazyRoute><OffTheJobTrainingEmployerGuidePage /></LazyRoute>} />
+      <Route
+        path="/guides/eicr-cost-manchester"
+        element={
+          <LazyRoute>
+            <EICRCostManchesterPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-birmingham"
+        element={
+          <LazyRoute>
+            <EICRCostBirminghamPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-leeds"
+        element={
+          <LazyRoute>
+            <EICRCostLeedsPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-liverpool"
+        element={
+          <LazyRoute>
+            <EICRCostLiverpoolPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-sheffield"
+        element={
+          <LazyRoute>
+            <EICRCostSheffieldPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-bristol"
+        element={
+          <LazyRoute>
+            <EICRCostBristolPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-newcastle"
+        element={
+          <LazyRoute>
+            <EICRCostNewcastlePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-nottingham"
+        element={
+          <LazyRoute>
+            <EICRCostNottinghamPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-southampton"
+        element={
+          <LazyRoute>
+            <EICRCostSouthamptonPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-portsmouth"
+        element={
+          <LazyRoute>
+            <EICRCostPortsmouthPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-brighton"
+        element={
+          <LazyRoute>
+            <EICRCostBrightonPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-cambridge"
+        element={
+          <LazyRoute>
+            <EICRCostCambridgePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-oxford"
+        element={
+          <LazyRoute>
+            <EICRCostOxfordPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-york"
+        element={
+          <LazyRoute>
+            <EICRCostYorkPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-hull"
+        element={
+          <LazyRoute>
+            <EICRCostHullPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-stoke"
+        element={
+          <LazyRoute>
+            <EICRCostStokePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-plymouth"
+        element={
+          <LazyRoute>
+            <EICRCostPlymouthPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-exeter"
+        element={
+          <LazyRoute>
+            <EICRCostExeterPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-norwich"
+        element={
+          <LazyRoute>
+            <EICRCostNorwichPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-edinburgh"
+        element={
+          <LazyRoute>
+            <EICRCostEdinburghPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-glasgow"
+        element={
+          <LazyRoute>
+            <EICRCostGlasgowPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-aberdeen"
+        element={
+          <LazyRoute>
+            <EICRCostAberdeenPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-dundee"
+        element={
+          <LazyRoute>
+            <EICRCostDundeePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-cardiff"
+        element={
+          <LazyRoute>
+            <EICRCostCardiffPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-swansea"
+        element={
+          <LazyRoute>
+            <EICRCostSwanseaPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-belfast"
+        element={
+          <LazyRoute>
+            <EICRCostBelfastPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-milton-keynes"
+        element={
+          <LazyRoute>
+            <EICRCostMiltonKeynesPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-reading"
+        element={
+          <LazyRoute>
+            <EICRCostReadingPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-luton"
+        element={
+          <LazyRoute>
+            <EICRCostLutonPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-cost-swindon"
+        element={
+          <LazyRoute>
+            <EICRCostSwindonPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-replacement-cost-manchester"
+        element={
+          <LazyRoute>
+            <CUReplacementCostManchesterPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-replacement-cost-birmingham"
+        element={
+          <LazyRoute>
+            <CUReplacementCostBirminghamPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-replacement-cost-leeds"
+        element={
+          <LazyRoute>
+            <CUReplacementCostLeedsPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-replacement-cost-liverpool"
+        element={
+          <LazyRoute>
+            <CUReplacementCostLiverpoolPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-replacement-cost-sheffield"
+        element={
+          <LazyRoute>
+            <CUReplacementCostSheffieldPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-replacement-cost-bristol"
+        element={
+          <LazyRoute>
+            <CUReplacementCostBristolPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-replacement-cost-newcastle"
+        element={
+          <LazyRoute>
+            <CUReplacementCostNewcastlePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-replacement-cost-nottingham"
+        element={
+          <LazyRoute>
+            <CUReplacementCostNottinghamPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-replacement-cost-southampton"
+        element={
+          <LazyRoute>
+            <CUReplacementCostSouthamptonPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-replacement-cost-portsmouth"
+        element={
+          <LazyRoute>
+            <CUReplacementCostPortsmouthPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-replacement-cost-brighton"
+        element={
+          <LazyRoute>
+            <CUReplacementCostBrightonPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-replacement-cost-cambridge"
+        element={
+          <LazyRoute>
+            <CUReplacementCostCambridgePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-replacement-cost-oxford"
+        element={
+          <LazyRoute>
+            <CUReplacementCostOxfordPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-replacement-cost-york"
+        element={
+          <LazyRoute>
+            <CUReplacementCostYorkPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-replacement-cost-hull"
+        element={
+          <LazyRoute>
+            <CUReplacementCostHullPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-replacement-cost-stoke"
+        element={
+          <LazyRoute>
+            <CUReplacementCostStokePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-replacement-cost-plymouth"
+        element={
+          <LazyRoute>
+            <CUReplacementCostPlymouthPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-replacement-cost-exeter"
+        element={
+          <LazyRoute>
+            <CUReplacementCostExeterPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-replacement-cost-norwich"
+        element={
+          <LazyRoute>
+            <CUReplacementCostNorwichPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-replacement-cost-edinburgh"
+        element={
+          <LazyRoute>
+            <CUReplacementCostEdinburghPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-replacement-cost-glasgow"
+        element={
+          <LazyRoute>
+            <CUReplacementCostGlasgowPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-replacement-cost-aberdeen"
+        element={
+          <LazyRoute>
+            <CUReplacementCostAberdeenPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-replacement-cost-dundee"
+        element={
+          <LazyRoute>
+            <CUReplacementCostDundeePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-replacement-cost-cardiff"
+        element={
+          <LazyRoute>
+            <CUReplacementCostCardiffPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-replacement-cost-swansea"
+        element={
+          <LazyRoute>
+            <CUReplacementCostSwanseaPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-replacement-cost-belfast"
+        element={
+          <LazyRoute>
+            <CUReplacementCostBelfastPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-replacement-cost-milton-keynes"
+        element={
+          <LazyRoute>
+            <CUReplacementCostMiltonKeynesPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-replacement-cost-reading"
+        element={
+          <LazyRoute>
+            <CUReplacementCostReadingPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-replacement-cost-luton"
+        element={
+          <LazyRoute>
+            <CUReplacementCostLutonPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-replacement-cost-swindon"
+        element={
+          <LazyRoute>
+            <CUReplacementCostSwindonPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/how-to-price-eicr-as-an-electrician"
+        element={
+          <LazyRoute>
+            <HowToPriceEicrPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/how-to-price-consumer-unit-replacement-as-an-electrician"
+        element={
+          <LazyRoute>
+            <HowToPriceConsumerUnitReplacementPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/how-to-price-ev-charger-install-as-an-electrician"
+        element={
+          <LazyRoute>
+            <HowToPriceEvChargerInstallPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/how-to-price-full-rewire-as-an-electrician"
+        element={
+          <LazyRoute>
+            <HowToPriceFullRewirePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/how-to-price-solar-pv-installation-as-an-electrician"
+        element={
+          <LazyRoute>
+            <HowToPriceSolarPvInstallationPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/how-to-price-emergency-callout-as-an-electrician"
+        element={
+          <LazyRoute>
+            <HowToPriceEmergencyCalloutPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/how-to-price-commercial-install-as-an-electrician"
+        element={
+          <LazyRoute>
+            <HowToPriceCommercialInstallPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/how-to-price-pat-testing-as-an-electrician"
+        element={
+          <LazyRoute>
+            <HowToPricePatTestingPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/how-to-price-minor-works-as-an-electrician"
+        element={
+          <LazyRoute>
+            <HowToPriceMinorWorksPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/how-to-price-commercial-eicr-as-an-electrician"
+        element={
+          <LazyRoute>
+            <HowToPriceCommercialEicrPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/how-to-price-kitchen-rewire-as-an-electrician"
+        element={
+          <LazyRoute>
+            <HowToPriceKitchenRewirePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/how-to-price-day-rate-subcontract-as-an-electrician"
+        element={
+          <LazyRoute>
+            <HowToPriceDayRateSubcontractPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/how-to-price-out-of-hours-as-an-electrician"
+        element={
+          <LazyRoute>
+            <HowToPriceOutOfHoursPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/how-to-price-maintenance-contract-as-an-electrician"
+        element={
+          <LazyRoute>
+            <HowToPriceMaintenanceContractPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/how-to-price-smart-home-installation-as-an-electrician"
+        element={
+          <LazyRoute>
+            <HowToPriceSmartHomeInstallationPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2365-02-unit-201-health-and-safety-in-building-services-engineering-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision236502Unit201Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2365-02-unit-202-principles-of-electrical-science-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision236502Unit202Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2365-02-unit-203-electrical-installations-technology-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision236502Unit203Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2365-02-unit-204-installation-of-wiring-systems-and-enclosures-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision236502Unit204Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2365-02-unit-210-understand-how-to-communicate-with-others-within-building-services-engineering-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision236502Unit210Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2365-03-unit-201-health-and-safety-in-building-services-engineering-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision236503Unit201Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2365-03-unit-302-principles-of-electrical-science-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision236503Unit302Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2365-03-unit-303-electrical-installations-fault-diagnosis-and-rectification-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision236503Unit303Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2365-03-unit-304-electrical-installations-inspection-testing-and-commissioning-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision236503Unit304Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2365-03-unit-305-electrical-systems-design-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision236503Unit305Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2365-03-unit-308-career-awareness-in-building-services-engineering-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision236503Unit308Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2366-03-unit-301-electrical-science-and-principles-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision236603Unit301Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2366-03-unit-302-inspection-testing-and-commissioning-of-electrotechnical-systems-and-equipment-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision236603Unit302Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2366-03-unit-303-fault-finding-and-diagnosis-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision236603Unit303Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2366-03-unit-304-electrical-design-practices-and-procedures-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision236603Unit304Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2366-03-unit-305-organising-and-overseeing-electrical-work-activities-in-buildings-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision236603Unit305Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2366-03-unit-306-understand-the-requirements-of-electrical-installations-bs-7671-2018-2022-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision236603Unit306Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/5357-unit-022-understand-the-requirements-of-electrical-installations-bs-7671-2018-2022-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision5357Unit022Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/5357-unit-101-001-understand-health-safety-and-environmental-considerations-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision5357Unit101001Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/5357-unit-102-apply-health-safety-and-environmental-considerations-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision5357Unit102Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/5357-unit-103-003-electrical-scientific-principles-and-technologies-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision5357Unit103003Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/5357-unit-104-004-understand-design-and-installation-practices-and-procedures-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision5357Unit104004Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/5357-unit-105-505-understand-how-to-plan-and-oversee-electrical-work-activities-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision5357Unit105505Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/5357-unit-106-organise-and-oversee-the-electrical-work-environment-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision5357Unit106Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/5357-unit-107-understand-terminations-and-connections-of-conductors-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision5357Unit107Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/5357-unit-109-apply-design-and-installation-practices-and-procedures-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision5357Unit109Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/5357-unit-110-apply-practices-and-procedures-for-maintenance-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision5357Unit110Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/5357-unit-113-inspect-test-and-commission-electrical-systems-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision5357Unit113Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/5357-unit-114-014-understand-fault-diagnosis-and-rectification-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision5357Unit114014Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/5357-unit-115-apply-fault-diagnosis-and-rectification-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision5357Unit115Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/5357-unit-118-termination-and-connection-of-conductors-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision5357Unit118Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/5357-unit-312-212-inspection-testing-and-commissioning-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision5357Unit312212Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/5393-03-unit-022-understand-the-requirements-for-electrical-installations-bs-7671-2018-2022-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision539303Unit022Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/5393-03-unit-101-health-safety-and-environmental-considerations-in-dwellings-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision539303Unit101Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/5393-03-unit-102-apply-health-safety-and-environmental-considerations-in-dwellings-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision539303Unit102Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/5393-03-unit-103-electrical-scientific-principles-and-technologies-for-work-in-dwellings-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision539303Unit103Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/5393-03-unit-104-design-and-installation-practices-and-procedures-for-dwellings-and-associated-buildings-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision539303Unit104Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/5393-03-unit-105-practices-and-procedures-for-planning-and-overseeing-electrical-work-activities-in-dwellings-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision539303Unit105Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/5393-03-unit-106-plan-and-oversee-the-electrical-work-activities-in-dwellings-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision539303Unit106Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/5393-03-unit-109-apply-design-and-installation-practices-including-termination-and-connection-of-conductors-in-dwellings-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision539303Unit109Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/5393-03-unit-112-practices-and-procedures-for-inspection-testing-and-commissioning-in-dwellings-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision539303Unit112Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/5393-03-unit-113-inspect-test-report-and-commission-electrical-systems-in-dwellings-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision539303Unit113Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/5393-03-unit-114-practices-and-procedures-for-fault-diagnosis-and-rectification-in-dwellings-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision539303Unit114Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/5393-03-unit-115-apply-fault-diagnosis-and-rectification-in-dwellings-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision539303Unit115Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2346-03-unit-102-apply-health-safety-and-environmental-considerations-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision234603Unit102Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2346-03-unit-106-organise-and-oversee-the-electrical-work-environment-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision234603Unit106Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2346-03-unit-109-apply-design-and-installation-practices-and-procedures-level-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision234603Unit109Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2346-03-unit-110-apply-practices-and-procedures-for-maintenance-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision234603Unit110Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2346-03-unit-113-inspect-test-and-commission-electrical-systems-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision234603Unit113Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2346-03-unit-115-apply-fault-diagnosis-and-rectification-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision234603Unit115Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2346-03-unit-118-termination-and-connection-of-conductors-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision234603Unit118Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2357-unit-311-applying-health-and-safety-legislation-and-working-practices-installing-and-maintaining-electrotechnical-systems-and-equipment-eltp01-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision2357Unit311Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2357-unit-313-overseeing-and-organising-the-work-environment-electrical-installation-eltp03-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision2357Unit313Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2357-unit-315-planning-preparing-and-installing-wiring-systems-and-associated-equipment-in-buildings-structures-and-the-environment-eltp04-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision2357Unit315Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2357-unit-316-terminating-and-connecting-conductors-cables-and-flexible-cords-in-electrical-systems-eltp05-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision2357Unit316Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2357-unit-317-inspecting-testing-commissioning-and-certifying-electrotechnical-systems-and-equipment-in-buildings-structures-and-the-environment-eltp06-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision2357Unit317Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2357-unit-318-diagnosing-and-correcting-electrical-faults-in-electrical-systems-and-equipment-in-buildings-structures-and-the-environment-eltp07-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision2357Unit318Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2357-unit-321-understanding-the-practices-and-procedures-for-overseeing-and-organising-the-work-environment-electrical-maintenance-eltk-03a-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision2357Unit321Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2357-unit-322-understanding-the-practices-and-procedures-for-planning-and-preparing-to-maintain-electrotechnical-systems-and-equipment-eltk-09a-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision2357Unit322Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2357-unit-323-understanding-the-practices-and-procedures-for-maintaining-electrotechnical-systems-and-equipment-eltk-09-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision2357Unit323Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2357-unit-332-plan-and-prepare-to-maintain-electrotechnical-systems-and-equipment-eltp-09a-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision2357Unit332Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2357-unit-333-maintain-electrotechnical-systems-and-equipment-eltp-09-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision2357Unit333Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2357-unit-399-electrotechnical-occupational-competence-elt-oc1-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision2357Unit399Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2357-unit-601-understanding-health-and-safety-legislation-practices-and-procedures-installing-and-maintaining-electrotechnical-systems-and-equipment-eltk-01-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision2357Unit601Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2357-unit-602-understanding-environmental-legislation-working-practices-and-the-principles-of-environmental-technology-systems-eltk-02-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision2357Unit602Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2357-unit-603-understanding-the-practices-and-procedures-for-overseeing-and-organising-the-work-environment-electrical-installation-eltk03-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision2357Unit603Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2357-unit-604-understanding-the-principles-of-planning-and-selection-for-the-installation-of-electrotechnical-equipment-and-systems-in-buildings-structures-and-the-environment-eltk04a-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision2357Unit604Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2357-unit-605-understanding-the-practices-and-procedures-for-the-preparation-and-installation-of-wiring-systems-and-electrotechnical-equipment-in-buildings-structures-and-the-environment-eltk04-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision2357Unit605Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2357-unit-606-understanding-the-principles-practices-and-legislation-for-the-termination-and-connection-of-conductors-cables-and-cords-in-electrical-systems-eltk05-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision2357Unit606Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2357-unit-607-understanding-principles-practices-and-legislation-for-the-inspection-testing-commissioning-and-certification-of-electrotechnical-systems-and-equipment-in-buildings-structures-and-the-environment-eltk06-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision2357Unit607Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2357-unit-608-understanding-the-principles-practices-and-legislation-for-diagnosing-and-correcting-electrical-faults-in-electrotechnical-systems-and-equipment-in-buildings-structures-and-the-environment-eltk07-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision2357Unit608Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2357-unit-609-understanding-the-electricalprinciples-associated-with-the-design-building-installation-and-maintenance-of-electrical-equipment-and-systems-eltk08-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision2357Unit609Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/610-3907-x-unit-18ED3-02-understand-the-requirements-of-electrical-installations-bs-7671-2018-2022-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision6103907XUnit18ED302Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/610-3907-x-unit-TE3-01-health-safety-and-environmental-considerations-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision6103907XUnitTE301Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/610-3907-x-unit-TE3-03-practices-and-procedures-for-planning-and-overseeing-electrical-work-activities-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision6103907XUnitTE303Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/610-3907-x-unit-TE3-04-design-and-installation-practices-and-procedures-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision6103907XUnitTE304Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/610-3907-x-unit-TE3-06-practices-and-procedures-for-inspection-testing-and-commissioning-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision6103907XUnitTE306Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/610-3907-x-unit-TE3-07-practices-and-procedures-for-fault-for-diagnosis-and-rectification-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision6103907XUnitTE307Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/610-3907-x-unit-TE3-08-electrical-scientific-principles-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision6103907XUnitTE308Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/8202-unit-301-planning-and-overseeing-electrical-work-activities-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision8202Unit301Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/8202-unit-302-principles-of-electrical-science-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision8202Unit302Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/8202-unit-303-electrical-design-and-installation-practices-and-procedures-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision8202Unit303Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/8202-unit-304-principles-of-inspection-testing-and-commissioning-electrical-systems-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision8202Unit304Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/8202-unit-305-inspecting-testing-and-commissioning-electrical-systems-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision8202Unit305Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/8202-unit-306-electrical-system-fault-diagnosis-and-rectification-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision8202Unit306Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/8202-unit-307-requirements-for-electrical-installations-revision"
+        element={
+          <LazyRoute>
+            <UnitRevision8202Unit307Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eal-netp3-unit-ETKP3-01-apply-health-safety-and-environmental-considerations-revision"
+        element={
+          <LazyRoute>
+            <UnitRevisionEALNETP3UnitETKP301Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eal-netp3-unit-ETKP3-03-organise-and-oversee-the-electrical-work-environment-revision"
+        element={
+          <LazyRoute>
+            <UnitRevisionEALNETP3UnitETKP303Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eal-netp3-unit-ETKP3-05-terminate-and-connect-conductors-revision"
+        element={
+          <LazyRoute>
+            <UnitRevisionEALNETP3UnitETKP305Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eal-netp3-unit-ETKP3-06-inspect-test-and-commission-electrical-systems-revision"
+        element={
+          <LazyRoute>
+            <UnitRevisionEALNETP3UnitETKP306Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eal-netp3-unit-ETP3-04-apply-design-and-installation-practices-and-procedures-revision"
+        element={
+          <LazyRoute>
+            <UnitRevisionEALNETP3UnitETP304Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eal-netp3-unit-ETP3-07-apply-fault-diagnosis-and-rectification-revision"
+        element={
+          <LazyRoute>
+            <UnitRevisionEALNETP3UnitETP307Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eal-netp3-unit-N18ED3-1-understand-the-requirements-for-electrical-installations-bs-7671-2018-revision"
+        element={
+          <LazyRoute>
+            <UnitRevisionEALNETP3UnitN18ED31Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/am2-section-a-application-of-knowledge"
+        element={
+          <LazyRoute>
+            <Am2SectionAApplicationOfKnowledgePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/am2-section-b-safe-isolation"
+        element={
+          <LazyRoute>
+            <Am2SectionBSafeIsolationPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/am2-section-c-wiring-systems-installation"
+        element={
+          <LazyRoute>
+            <Am2SectionCWiringSystemsInstallationPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/am2-section-d-continuity-and-insulation-testing"
+        element={
+          <LazyRoute>
+            <Am2SectionDContinuityAndInsulationTestingPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/am2-section-e-initial-verification-and-periodic-inspection"
+        element={
+          <LazyRoute>
+            <Am2SectionEInitialVerificationAndPeriodicInspectionPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/am2-section-f-fault-diagnosis"
+        element={
+          <LazyRoute>
+            <Am2SectionFFaultDiagnosisPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/am2-section-g-industry-knowledge"
+        element={
+          <LazyRoute>
+            <Am2SectionGIndustryKnowledgePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrical-apprentice-year-1-revision-plan"
+        element={
+          <LazyRoute>
+            <ElectricalApprenticeYear1RevisionPlanPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrical-apprentice-year-2-revision-plan"
+        element={
+          <LazyRoute>
+            <ElectricalApprenticeYear2RevisionPlanPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrical-apprentice-year-3-revision-plan"
+        element={
+          <LazyRoute>
+            <ElectricalApprenticeYear3RevisionPlanPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrical-apprentice-year-4-revision-plan"
+        element={
+          <LazyRoute>
+            <ElectricalApprenticeYear4RevisionPlanPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/cg-2365-vs-5357-vs-2366"
+        element={
+          <LazyRoute>
+            <Cg2365Vs5357Vs2366Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/nvq-2357-vs-apprenticeship-standard-5357"
+        element={
+          <LazyRoute>
+            <Nvq2357VsApprenticeshipStandard5357Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/city-and-guilds-vs-eal"
+        element={
+          <LazyRoute>
+            <CityAndGuildsVsEalPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/t-level-vs-apprenticeship-electrical"
+        element={
+          <LazyRoute>
+            <TLevelVsApprenticeshipElectricalPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/domestic-installer-vs-full-electrician"
+        element={
+          <LazyRoute>
+            <DomesticInstallerVsFullElectricianPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/starting-an-electrical-business-uk"
+        element={
+          <LazyRoute>
+            <StartingAnElectricalBusinessUkPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/how-to-hire-an-electrical-apprentice"
+        element={
+          <LazyRoute>
+            <HowToHireAnElectricalApprenticePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/niceic-vs-napit-registration"
+        element={
+          <LazyRoute>
+            <NiceicVsNapitRegistrationPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrician-insurance-business-uk"
+        element={
+          <LazyRoute>
+            <ElectricianInsuranceBusinessUkPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrical-contractor-marketing-guide"
+        element={
+          <LazyRoute>
+            <ElectricalContractorMarketingGuidePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/cis-construction-industry-scheme-electricians"
+        element={
+          <LazyRoute>
+            <CisConstructionIndustrySchemeElectriciansPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrical-contractor-vat-guide"
+        element={
+          <LazyRoute>
+            <ElectricalContractorVatGuidePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrician-employee-vs-self-employed-decision"
+        element={
+          <LazyRoute>
+            <ElectricianEmployeeVsSelfEmployedDecisionPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrical-quote-template-uk"
+        element={
+          <LazyRoute>
+            <ElectricalQuoteTemplateUkPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrical-business-pricing-strategy"
+        element={
+          <LazyRoute>
+            <ElectricalBusinessPricingStrategyPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2365-02-complete-guide"
+        element={
+          <LazyRoute>
+            <QualHub236502Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2365-03-complete-guide"
+        element={
+          <LazyRoute>
+            <QualHub236503Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2366-03-complete-guide"
+        element={
+          <LazyRoute>
+            <QualHub236603Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/5357-complete-guide"
+        element={
+          <LazyRoute>
+            <QualHub5357Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/5393-03-complete-guide"
+        element={
+          <LazyRoute>
+            <QualHub539303Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2346-03-complete-guide"
+        element={
+          <LazyRoute>
+            <QualHub234603Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/2357-complete-guide"
+        element={
+          <LazyRoute>
+            <QualHub2357Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eal-level-3-electrotechnical-complete-guide"
+        element={
+          <LazyRoute>
+            <QualHub6103907XPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/8202-complete-guide"
+        element={
+          <LazyRoute>
+            <QualHub8202Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eal-netp3-complete-guide"
+        element={
+          <LazyRoute>
+            <QualHubEalNetp3Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/18th-edition-amendment-4-2026-exam-prep"
+        element={
+          <LazyRoute>
+            <EighteenthEditionAmendment42026ExamPrepPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/18th-edition-chapter-41-protection-against-electric-shock-exam"
+        element={
+          <LazyRoute>
+            <EighteenthEditionChapter41ProtectionAgainstElectricShockExamPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/18th-edition-chapter-43-overcurrent-protection-exam"
+        element={
+          <LazyRoute>
+            <EighteenthEditionChapter43OvercurrentProtectionExamPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/18th-edition-appendix-4-cable-current-rating-exam"
+        element={
+          <LazyRoute>
+            <EighteenthEditionAppendix4CableCurrentRatingExamPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/ecs-gold-card-requirements-2026"
+        element={
+          <LazyRoute>
+            <EcsGoldCardRequirements2026Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/jib-pay-scales-2026"
+        element={
+          <LazyRoute>
+            <JibPayScales2026Page />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/after-am2-what-happens-next"
+        element={
+          <LazyRoute>
+            <AfterAm2WhatHappensNextPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/electrician-career-progression-uk"
+        element={
+          <LazyRoute>
+            <ElectricianCareerProgressionUkPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/finding-an-electrical-apprenticeship-uk"
+        element={
+          <LazyRoute>
+            <FindingAnElectricalApprenticeshipUkPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/off-the-job-training-hours-tracking"
+        element={
+          <LazyRoute>
+            <OffTheJobTrainingHoursTrackingPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/off-the-job-training-employer-guide"
+        element={
+          <LazyRoute>
+            <OffTheJobTrainingEmployerGuidePage />
+          </LazyRoute>
+        }
+      />
     </>
   );
 }

@@ -1,6 +1,7 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SymbolGallery } from '@/components/seo/SymbolGallery';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
 import {
   PenTool,
@@ -28,6 +29,7 @@ const breadcrumbs = [
 ];
 
 const tocItems = [
+  { id: 'symbol-library', label: 'Complete Symbol Library (114 symbols)' },
   { id: 'what-are-symbols', label: 'What Are Electrical Symbols?' },
   { id: 'switch-symbols', label: 'Switch Symbols' },
   { id: 'socket-symbols', label: 'Socket Outlet Symbols' },
@@ -141,6 +143,26 @@ const relatedPages: RelatedPage[] = [
 // -------------------------------------------------------------------
 
 const sections = [
+  {
+    id: 'symbol-library',
+    heading: 'The Complete BS EN 60617 Symbol Library',
+    content: (
+      <>
+        <p>
+          Below is the complete BS EN 60617 symbol set used on UK electrical installation drawings,
+          distribution board schedules, EICs, EICRs and Minor Works certificates. Each symbol is
+          grouped by category. Right-click any symbol to save the SVG, or use the Elec-Mate diagram
+          builder to drag them directly into a working drawing.
+        </p>
+        <p className="text-sm text-white/70">
+          All 114 symbols are free to use, mobile-optimised, and BS EN 60617 compliant. Click{' '}
+          <strong>Full category guide</strong> on any section to drill into per-symbol reference
+          pages with installation context, wiring rules, and BS 7671 cross-references.
+        </p>
+        <SymbolGallery />
+      </>
+    ),
+  },
   {
     id: 'what-are-symbols',
     heading: 'What Are Electrical Symbols?',

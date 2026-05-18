@@ -1,0 +1,1620 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://www.elec-mate.com/guides/electrical-symbols-chart</loc>
+    <lastmod>2026-05-18</lastmod>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/switches/1way.svg</image:loc>
+      <image:title>One-Way Switch Symbol — BS EN 60617</image:title>
+      <image:caption>One-way switch electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/switches/2way.svg</image:loc>
+      <image:title>Two-Way Switch Symbol — BS EN 60617</image:title>
+      <image:caption>Two-way switch electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/switches/intermediate.svg</image:loc>
+      <image:title>Intermediate Switch Symbol — BS EN 60617</image:title>
+      <image:caption>Intermediate switch electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/switches/dimmer.svg</image:loc>
+      <image:title>Dimmer Switch Symbol — BS EN 60617</image:title>
+      <image:caption>Dimmer switch electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/switches/double-switch.svg</image:loc>
+      <image:title>Double Switch (Two-Gang) Symbol — BS EN 60617</image:title>
+      <image:caption>Double two-gang switch electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/switches/pull-cord.svg</image:loc>
+      <image:title>Pull-Cord Switch Symbol — BS EN 60617</image:title>
+      <image:caption>Pull-cord switch electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/switches/fan-isolator.svg</image:loc>
+      <image:title>Fan Isolator (3-Pole) Symbol — BS EN 60617</image:title>
+      <image:caption>Fan isolator three-pole switch electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/switches/pir-switch.svg</image:loc>
+      <image:title>PIR Switch (Occupancy Sensor) Symbol — BS EN 60617</image:title>
+      <image:caption>PIR occupancy sensor switch electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/switches/timer-switch.svg</image:loc>
+      <image:title>Timer Switch Symbol — BS EN 60617</image:title>
+      <image:caption>Timer switch electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/switches/key-switch.svg</image:loc>
+      <image:title>Key Switch Symbol — BS EN 60617</image:title>
+      <image:caption>Key-operated switch electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/switches/emergency-stop.svg</image:loc>
+      <image:title>Emergency Stop (E-Stop) Symbol — BS EN 60617</image:title>
+      <image:caption>Emergency stop button electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/switches/isolator.svg</image:loc>
+      <image:title>Isolator (Switch-Disconnector) Symbol — BS EN 60617</image:title>
+      <image:caption>Isolator switch-disconnector electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/switches/heater-switch.svg</image:loc>
+      <image:title>Heater Switch (45A DP) Symbol — BS EN 60617</image:title>
+      <image:caption>Heater 45A double-pole switch electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/sockets/single-13a.svg</image:loc>
+      <image:title>Single 13A Socket Outlet Symbol — BS EN 60617</image:title>
+      <image:caption>Single 13A switched socket outlet electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/sockets/double-13a.svg</image:loc>
+      <image:title>Double 13A Socket Outlet Symbol — BS EN 60617</image:title>
+      <image:caption>Double 13A switched socket outlet electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/sockets/fused-spur.svg</image:loc>
+      <image:title>Fused Spur (Unswitched) Symbol — BS EN 60617</image:title>
+      <image:caption>Fused connection unit unswitched electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/sockets/switched-fused-spur.svg</image:loc>
+      <image:title>Switched Fused Spur Symbol — BS EN 60617</image:title>
+      <image:caption>Switched fused connection unit FCU electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/sockets/unswitched-spur.svg</image:loc>
+      <image:title>Unswitched Spur (Non-Fused) Symbol — BS EN 60617</image:title>
+      <image:caption>Unswitched spur outlet electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/sockets/cooker-45a.svg</image:loc>
+      <image:title>Cooker Outlet (45A) Symbol — BS EN 60617</image:title>
+      <image:caption>Cooker 45A outlet electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/sockets/shaver.svg</image:loc>
+      <image:title>Shaver Socket Symbol — BS EN 60617</image:title>
+      <image:caption>Shaver socket isolating transformer electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/sockets/usb-socket.svg</image:loc>
+      <image:title>USB Socket Symbol — BS EN 60617</image:title>
+      <image:caption>USB charging socket outlet electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/sockets/data-socket.svg</image:loc>
+      <image:title>Data Socket (RJ45) Symbol — BS EN 60617</image:title>
+      <image:caption>Data RJ45 ethernet socket electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/sockets/telephone.svg</image:loc>
+      <image:title>Telephone Socket Symbol — BS EN 60617</image:title>
+      <image:caption>Telephone master socket electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/sockets/tv-aerial.svg</image:loc>
+      <image:title>TV Aerial Socket Symbol — BS EN 60617</image:title>
+      <image:caption>TV aerial coaxial socket electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/sockets/comms-cabinet.svg</image:loc>
+      <image:title>Comms Cabinet Outlet Symbol — BS EN 60617</image:title>
+      <image:caption>Communications cabinet rack electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/sockets/ev-charger.svg</image:loc>
+      <image:title>EV Charger Outlet Symbol — BS EN 60617</image:title>
+      <image:caption>EV charger outlet point electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/sockets/outdoor-ip66.svg</image:loc>
+      <image:title>Outdoor IP66 Socket Symbol — BS EN 60617</image:title>
+      <image:caption>Outdoor weatherproof IP66 socket electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/sockets/floor-socket.svg</image:loc>
+      <image:title>Floor Socket (Floor Box) Symbol — BS EN 60617</image:title>
+      <image:caption>Floor socket floor box outlet electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/lighting/pendant.svg</image:loc>
+      <image:title>Pendant Light Symbol — BS EN 60617</image:title>
+      <image:caption>Pendant light fitting electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/lighting/ceiling-light.svg</image:loc>
+      <image:title>Ceiling Light (Flush) Symbol — BS EN 60617</image:title>
+      <image:caption>Flush ceiling light electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/lighting/downlight.svg</image:loc>
+      <image:title>Downlight (Recessed) Symbol — BS EN 60617</image:title>
+      <image:caption>Recessed downlight electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/lighting/wall-light.svg</image:loc>
+      <image:title>Wall Light Symbol — BS EN 60617</image:title>
+      <image:caption>Wall mounted light fitting electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/lighting/bulkhead.svg</image:loc>
+      <image:title>Bulkhead Light Symbol — BS EN 60617</image:title>
+      <image:caption>Bulkhead light fitting electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/lighting/outside-light.svg</image:loc>
+      <image:title>Outside Light Symbol — BS EN 60617</image:title>
+      <image:caption>Outside light external fitting electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/lighting/pir-sensor.svg</image:loc>
+      <image:title>PIR Sensor (Lighting) Symbol — BS EN 60617</image:title>
+      <image:caption>PIR motion sensor for lighting control electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/lighting/emergency-light.svg</image:loc>
+      <image:title>Emergency Light Symbol — BS EN 60617</image:title>
+      <image:caption>Emergency light non-maintained electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/lighting/twin-emergency.svg</image:loc>
+      <image:title>Twin Emergency Spot Symbol — BS EN 60617</image:title>
+      <image:caption>Twin emergency spotlight electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/lighting/exit-sign.svg</image:loc>
+      <image:title>Exit Sign Symbol — BS EN 60617</image:title>
+      <image:caption>Emergency exit sign electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/lighting/fluorescent.svg</image:loc>
+      <image:title>Fluorescent Fitting (Batten) Symbol — BS EN 60617</image:title>
+      <image:caption>Fluorescent batten light fitting electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/lighting/led-strip.svg</image:loc>
+      <image:title>LED Strip Lighting Symbol — BS EN 60617</image:title>
+      <image:caption>LED strip light electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/lighting/high-bay.svg</image:loc>
+      <image:title>High Bay Light Symbol — BS EN 60617</image:title>
+      <image:caption>High bay industrial light fitting electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/distribution/consumer-unit.svg</image:loc>
+      <image:title>Consumer Unit Symbol — BS EN 60617</image:title>
+      <image:caption>Consumer unit fuseboard electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/distribution/distribution-board.svg</image:loc>
+      <image:title>Distribution Board Symbol — BS EN 60617</image:title>
+      <image:caption>Commercial distribution board electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/distribution/sub-main-board.svg</image:loc>
+      <image:title>Sub-Main Board Symbol — BS EN 60617</image:title>
+      <image:caption>Sub-main distribution board electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/distribution/mcb.svg</image:loc>
+      <image:title>MCB (Miniature Circuit Breaker) Symbol — BS EN 60617</image:title>
+      <image:caption>MCB miniature circuit breaker electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/distribution/mccb.svg</image:loc>
+      <image:title>MCCB (Moulded Case CB) Symbol — BS EN 60617</image:title>
+      <image:caption>MCCB moulded case circuit breaker electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/distribution/rcd.svg</image:loc>
+      <image:title>RCD (Residual Current Device) Symbol — BS EN 60617</image:title>
+      <image:caption>RCD residual current device electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/distribution/rcbo.svg</image:loc>
+      <image:title>RCBO (RCD + MCB Combined) Symbol — BS EN 60617</image:title>
+      <image:caption>RCBO residual current breaker with overcurrent electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/distribution/spd.svg</image:loc>
+      <image:title>SPD (Surge Protection Device) Symbol — BS EN 60617</image:title>
+      <image:caption>SPD surge protection device electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/distribution/contactor.svg</image:loc>
+      <image:title>Contactor Symbol — BS EN 60617</image:title>
+      <image:caption>Electrical contactor electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/distribution/main-isolator.svg</image:loc>
+      <image:title>Main Switch / Isolator Symbol — BS EN 60617</image:title>
+      <image:caption>Main switch isolator electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/distribution/meter.svg</image:loc>
+      <image:title>Electricity Meter Symbol — BS EN 60617</image:title>
+      <image:caption>Electricity meter electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/distribution/changeover-switch.svg</image:loc>
+      <image:title>Changeover Switch Symbol — BS EN 60617</image:title>
+      <image:caption>Changeover switch transfer switch electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/distribution/generator-changeover.svg</image:loc>
+      <image:title>Generator Changeover (ATS) Symbol — BS EN 60617</image:title>
+      <image:caption>Generator automatic transfer switch ATS electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/distribution/busbar-chamber.svg</image:loc>
+      <image:title>Busbar Chamber Symbol — BS EN 60617</image:title>
+      <image:caption>Busbar chamber electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/smoke-detector.svg</image:loc>
+      <image:title>Smoke Detector Symbol — BS EN 60617</image:title>
+      <image:caption>Smoke detector electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/heat-detector.svg</image:loc>
+      <image:title>Heat Detector Symbol — BS EN 60617</image:title>
+      <image:caption>Heat detector electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/co-detector.svg</image:loc>
+      <image:title>CO Detector Symbol — BS EN 60617</image:title>
+      <image:caption>Carbon monoxide CO detector electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/fire-alarm.svg</image:loc>
+      <image:title>Fire Alarm Sounder Symbol — BS EN 60617</image:title>
+      <image:caption>Fire alarm sounder electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/sounder-beacon.svg</image:loc>
+      <image:title>Sounder + Beacon Symbol — BS EN 60617</image:title>
+      <image:caption>Combined sounder and beacon fire alarm electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/break-glass.svg</image:loc>
+      <image:title>Manual Call Point (Break Glass) Symbol — BS EN 60617</image:title>
+      <image:caption>Manual call point break glass fire alarm electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/emergency-call-point.svg</image:loc>
+      <image:title>Emergency Call Point (Disabled WC) Symbol — BS EN 60617</image:title>
+      <image:caption>Emergency call point disabled WC alarm electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/disabled-alarm.svg</image:loc>
+      <image:title>Disabled Refuge Alarm Symbol — BS EN 60617</image:title>
+      <image:caption>Disabled refuge alarm communication point electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/motion-detector.svg</image:loc>
+      <image:title>Motion Detector (Security) Symbol — BS EN 60617</image:title>
+      <image:caption>Motion detector intruder alarm electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/cctv.svg</image:loc>
+      <image:title>CCTV Camera Symbol — BS EN 60617</image:title>
+      <image:caption>CCTV security camera electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/access-control.svg</image:loc>
+      <image:title>Access Control Reader Symbol — BS EN 60617</image:title>
+      <image:caption>Access control card reader electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/door-entry.svg</image:loc>
+      <image:title>Door Entry Panel Symbol — BS EN 60617</image:title>
+      <image:caption>Door entry intercom panel electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/door-release.svg</image:loc>
+      <image:title>Door Release Button Symbol — BS EN 60617</image:title>
+      <image:caption>Door release button green exit button electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/bell.svg</image:loc>
+      <image:title>Bell / Door Chime Symbol — BS EN 60617</image:title>
+      <image:caption>Bell door chime electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/extractor-fan.svg</image:loc>
+      <image:title>Extractor Fan Symbol — BS EN 60617</image:title>
+      <image:caption>Extractor fan electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/thermostat.svg</image:loc>
+      <image:title>Thermostat Symbol — BS EN 60617</image:title>
+      <image:caption>Wall thermostat electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/junction-box.svg</image:loc>
+      <image:title>Junction Box Symbol — BS EN 60617</image:title>
+      <image:caption>Junction box wiring electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/containment/conduit.svg</image:loc>
+      <image:title>Conduit Symbol — BS EN 60617</image:title>
+      <image:caption>Electrical conduit containment symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/containment/trunking.svg</image:loc>
+      <image:title>Trunking Symbol — BS EN 60617</image:title>
+      <image:caption>Cable trunking containment symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/containment/busbar-trunking.svg</image:loc>
+      <image:title>Busbar Trunking Symbol — BS EN 60617</image:title>
+      <image:caption>Busbar trunking distribution containment symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/containment/cable-tray.svg</image:loc>
+      <image:title>Cable Tray Symbol — BS EN 60617</image:title>
+      <image:caption>Cable tray containment symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/containment/cable-tray-drop.svg</image:loc>
+      <image:title>Cable Tray Drop Symbol — BS EN 60617</image:title>
+      <image:caption>Cable tray drop riser containment symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/containment/floor-trunking.svg</image:loc>
+      <image:title>Floor Trunking Symbol — BS EN 60617</image:title>
+      <image:caption>Floor trunking surface containment symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/containment/underfloor-trunking.svg</image:loc>
+      <image:title>Underfloor Trunking Symbol — BS EN 60617</image:title>
+      <image:caption>Underfloor trunking buried containment symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/containment/riser.svg</image:loc>
+      <image:title>Vertical Riser Symbol — BS EN 60617</image:title>
+      <image:caption>Vertical electrical riser containment symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/containment/floor-box-multi.svg</image:loc>
+      <image:title>Floor Box (Multi-Service) Symbol — BS EN 60617</image:title>
+      <image:caption>Floor box multi-service outlet electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/equipment/motor.svg</image:loc>
+      <image:title>Electric Motor Symbol — BS EN 60617</image:title>
+      <image:caption>Electric motor electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/equipment/transformer.svg</image:loc>
+      <image:title>Transformer Symbol — BS EN 60617</image:title>
+      <image:caption>Electrical transformer step-down electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/equipment/ups.svg</image:loc>
+      <image:title>UPS (Uninterruptible Power Supply) Symbol — BS EN 60617</image:title>
+      <image:caption>UPS uninterruptible power supply electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/equipment/sub-main.svg</image:loc>
+      <image:title>Sub-Main Symbol — BS EN 60617</image:title>
+      <image:caption>Sub-main supply cable electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/equipment/fan.svg</image:loc>
+      <image:title>Industrial Fan Symbol — BS EN 60617</image:title>
+      <image:caption>Industrial extraction fan electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/equipment/pump.svg</image:loc>
+      <image:title>Pump Symbol — BS EN 60617</image:title>
+      <image:caption>Electrical pump motor electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/equipment/ahu.svg</image:loc>
+      <image:title>Air Handling Unit (AHU) Symbol — BS EN 60617</image:title>
+      <image:caption>Air handling unit AHU electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/equipment/lift.svg</image:loc>
+      <image:title>Lift / Elevator Symbol — BS EN 60617</image:title>
+      <image:caption>Lift elevator electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/equipment/panel-board.svg</image:loc>
+      <image:title>Panel Board (Motor Control Centre) Symbol — BS EN 60617</image:title>
+      <image:caption>Motor control centre MCC panel board electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/mechanical/boiler.svg</image:loc>
+      <image:title>Boiler Symbol — BS EN 60617</image:title>
+      <image:caption>Gas oil boiler electrical supply symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/mechanical/water-heater.svg</image:loc>
+      <image:title>Water Heater (Immersion) Symbol — BS EN 60617</image:title>
+      <image:caption>Electric water heater immersion electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/mechanical/panel-heater.svg</image:loc>
+      <image:title>Panel Heater Symbol — BS EN 60617</image:title>
+      <image:caption>Electric panel heater wall heater electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/mechanical/air-conditioning.svg</image:loc>
+      <image:title>Air Conditioning Unit Symbol — BS EN 60617</image:title>
+      <image:caption>Air conditioning unit split system electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/mechanical/fan-coil-unit.svg</image:loc>
+      <image:title>Fan Coil Unit (FCU) Symbol — BS EN 60617</image:title>
+      <image:caption>Fan coil unit FCU HVAC electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/mechanical/towel-rail.svg</image:loc>
+      <image:title>Electric Towel Rail Symbol — BS EN 60617</image:title>
+      <image:caption>Electric towel rail bathroom electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/mechanical/heater.svg</image:loc>
+      <image:title>Heater (General) Symbol — BS EN 60617</image:title>
+      <image:caption>Electric heater electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/mechanical/hand-dryer.svg</image:loc>
+      <image:title>Hand Dryer Symbol — BS EN 60617</image:title>
+      <image:caption>Electric hand dryer electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/renewables/solar-panel.svg</image:loc>
+      <image:title>Solar PV Panel Symbol — BS EN 60617</image:title>
+      <image:caption>Solar photovoltaic PV panel electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/renewables/inverter.svg</image:loc>
+      <image:title>PV Inverter Symbol — BS EN 60617</image:title>
+      <image:caption>Solar PV inverter DC-AC electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/renewables/battery.svg</image:loc>
+      <image:title>Battery Storage Symbol — BS EN 60617</image:title>
+      <image:caption>Battery energy storage system BESS electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/renewables/ev-distribution.svg</image:loc>
+      <image:title>EV Distribution Board Symbol — BS EN 60617</image:title>
+      <image:caption>EV charger distribution board electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/renewables/generator.svg</image:loc>
+      <image:title>Generator Symbol — BS EN 60617</image:title>
+      <image:caption>Generator backup power electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/controls/bms-controller.svg</image:loc>
+      <image:title>BMS Controller Symbol — BS EN 60617</image:title>
+      <image:caption>Building management system BMS controller electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/controls/control-panel.svg</image:loc>
+      <image:title>Control Panel Symbol — BS EN 60617</image:title>
+      <image:caption>Electrical control panel electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/controls/lighting-control.svg</image:loc>
+      <image:title>Lighting Control Module Symbol — BS EN 60617</image:title>
+      <image:caption>Lighting control module DALI KNX electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/controls/sensor.svg</image:loc>
+      <image:title>Generic Sensor Symbol — BS EN 60617</image:title>
+      <image:caption>BMS sensor occupancy temperature electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/controls/humidity-sensor.svg</image:loc>
+      <image:title>Humidity Sensor Symbol — BS EN 60617</image:title>
+      <image:caption>Humidity sensor electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/architectural/door-left.svg</image:loc>
+      <image:title>Door (Hinged Left) Symbol — BS EN 60617</image:title>
+      <image:caption>Door left-hinged architectural symbol electrical drawing</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/architectural/door-right.svg</image:loc>
+      <image:title>Door (Hinged Right) Symbol — BS EN 60617</image:title>
+      <image:caption>Door right-hinged architectural symbol electrical drawing</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/architectural/door-double.svg</image:loc>
+      <image:title>Double Door Symbol — BS EN 60617</image:title>
+      <image:caption>Double door architectural symbol electrical drawing</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/architectural/window.svg</image:loc>
+      <image:title>Window Symbol — BS EN 60617</image:title>
+      <image:caption>Window architectural symbol electrical drawing</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/architectural/stairs.svg</image:loc>
+      <image:title>Stairs Symbol — BS EN 60617</image:title>
+      <image:caption>Stairs architectural symbol electrical drawing</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/architectural/north-arrow.svg</image:loc>
+      <image:title>North Arrow Symbol — BS EN 60617</image:title>
+      <image:caption>North arrow compass orientation drawing symbol</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.elec-mate.com/guides/electrical-switch-symbols</loc>
+    <lastmod>2026-05-18</lastmod>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/switches/1way.svg</image:loc>
+      <image:title>One-Way Switch Symbol</image:title>
+      <image:caption>One-way switch electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/switches/2way.svg</image:loc>
+      <image:title>Two-Way Switch Symbol</image:title>
+      <image:caption>Two-way switch electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/switches/intermediate.svg</image:loc>
+      <image:title>Intermediate Switch Symbol</image:title>
+      <image:caption>Intermediate switch electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/switches/dimmer.svg</image:loc>
+      <image:title>Dimmer Switch Symbol</image:title>
+      <image:caption>Dimmer switch electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/switches/double-switch.svg</image:loc>
+      <image:title>Double Switch (Two-Gang) Symbol</image:title>
+      <image:caption>Double two-gang switch electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/switches/pull-cord.svg</image:loc>
+      <image:title>Pull-Cord Switch Symbol</image:title>
+      <image:caption>Pull-cord switch electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/switches/fan-isolator.svg</image:loc>
+      <image:title>Fan Isolator (3-Pole) Symbol</image:title>
+      <image:caption>Fan isolator three-pole switch electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/switches/pir-switch.svg</image:loc>
+      <image:title>PIR Switch (Occupancy Sensor) Symbol</image:title>
+      <image:caption>PIR occupancy sensor switch electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/switches/timer-switch.svg</image:loc>
+      <image:title>Timer Switch Symbol</image:title>
+      <image:caption>Timer switch electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/switches/key-switch.svg</image:loc>
+      <image:title>Key Switch Symbol</image:title>
+      <image:caption>Key-operated switch electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/switches/emergency-stop.svg</image:loc>
+      <image:title>Emergency Stop (E-Stop) Symbol</image:title>
+      <image:caption>Emergency stop button electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/switches/isolator.svg</image:loc>
+      <image:title>Isolator (Switch-Disconnector) Symbol</image:title>
+      <image:caption>Isolator switch-disconnector electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/switches/heater-switch.svg</image:loc>
+      <image:title>Heater Switch (45A DP) Symbol</image:title>
+      <image:caption>Heater 45A double-pole switch electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.elec-mate.com/guides/electrical-socket-symbols</loc>
+    <lastmod>2026-05-18</lastmod>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/sockets/single-13a.svg</image:loc>
+      <image:title>Single 13A Socket Outlet Symbol</image:title>
+      <image:caption>Single 13A switched socket outlet electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/sockets/double-13a.svg</image:loc>
+      <image:title>Double 13A Socket Outlet Symbol</image:title>
+      <image:caption>Double 13A switched socket outlet electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/sockets/fused-spur.svg</image:loc>
+      <image:title>Fused Spur (Unswitched) Symbol</image:title>
+      <image:caption>Fused connection unit unswitched electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/sockets/switched-fused-spur.svg</image:loc>
+      <image:title>Switched Fused Spur Symbol</image:title>
+      <image:caption>Switched fused connection unit FCU electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/sockets/unswitched-spur.svg</image:loc>
+      <image:title>Unswitched Spur (Non-Fused) Symbol</image:title>
+      <image:caption>Unswitched spur outlet electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/sockets/cooker-45a.svg</image:loc>
+      <image:title>Cooker Outlet (45A) Symbol</image:title>
+      <image:caption>Cooker 45A outlet electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/sockets/shaver.svg</image:loc>
+      <image:title>Shaver Socket Symbol</image:title>
+      <image:caption>Shaver socket isolating transformer electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/sockets/usb-socket.svg</image:loc>
+      <image:title>USB Socket Symbol</image:title>
+      <image:caption>USB charging socket outlet electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/sockets/data-socket.svg</image:loc>
+      <image:title>Data Socket (RJ45) Symbol</image:title>
+      <image:caption>Data RJ45 ethernet socket electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/sockets/telephone.svg</image:loc>
+      <image:title>Telephone Socket Symbol</image:title>
+      <image:caption>Telephone master socket electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/sockets/tv-aerial.svg</image:loc>
+      <image:title>TV Aerial Socket Symbol</image:title>
+      <image:caption>TV aerial coaxial socket electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/sockets/comms-cabinet.svg</image:loc>
+      <image:title>Comms Cabinet Outlet Symbol</image:title>
+      <image:caption>Communications cabinet rack electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/sockets/ev-charger.svg</image:loc>
+      <image:title>EV Charger Outlet Symbol</image:title>
+      <image:caption>EV charger outlet point electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/sockets/outdoor-ip66.svg</image:loc>
+      <image:title>Outdoor IP66 Socket Symbol</image:title>
+      <image:caption>Outdoor weatherproof IP66 socket electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/sockets/floor-socket.svg</image:loc>
+      <image:title>Floor Socket (Floor Box) Symbol</image:title>
+      <image:caption>Floor socket floor box outlet electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.elec-mate.com/guides/electrical-lighting-symbols</loc>
+    <lastmod>2026-05-18</lastmod>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/lighting/pendant.svg</image:loc>
+      <image:title>Pendant Light Symbol</image:title>
+      <image:caption>Pendant light fitting electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/lighting/ceiling-light.svg</image:loc>
+      <image:title>Ceiling Light (Flush) Symbol</image:title>
+      <image:caption>Flush ceiling light electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/lighting/downlight.svg</image:loc>
+      <image:title>Downlight (Recessed) Symbol</image:title>
+      <image:caption>Recessed downlight electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/lighting/wall-light.svg</image:loc>
+      <image:title>Wall Light Symbol</image:title>
+      <image:caption>Wall mounted light fitting electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/lighting/bulkhead.svg</image:loc>
+      <image:title>Bulkhead Light Symbol</image:title>
+      <image:caption>Bulkhead light fitting electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/lighting/outside-light.svg</image:loc>
+      <image:title>Outside Light Symbol</image:title>
+      <image:caption>Outside light external fitting electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/lighting/pir-sensor.svg</image:loc>
+      <image:title>PIR Sensor (Lighting) Symbol</image:title>
+      <image:caption>PIR motion sensor for lighting control electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/lighting/emergency-light.svg</image:loc>
+      <image:title>Emergency Light Symbol</image:title>
+      <image:caption>Emergency light non-maintained electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/lighting/twin-emergency.svg</image:loc>
+      <image:title>Twin Emergency Spot Symbol</image:title>
+      <image:caption>Twin emergency spotlight electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/lighting/exit-sign.svg</image:loc>
+      <image:title>Exit Sign Symbol</image:title>
+      <image:caption>Emergency exit sign electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/lighting/fluorescent.svg</image:loc>
+      <image:title>Fluorescent Fitting (Batten) Symbol</image:title>
+      <image:caption>Fluorescent batten light fitting electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/lighting/led-strip.svg</image:loc>
+      <image:title>LED Strip Lighting Symbol</image:title>
+      <image:caption>LED strip light electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/lighting/high-bay.svg</image:loc>
+      <image:title>High Bay Light Symbol</image:title>
+      <image:caption>High bay industrial light fitting electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.elec-mate.com/guides/electrical-distribution-symbols</loc>
+    <lastmod>2026-05-18</lastmod>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/distribution/consumer-unit.svg</image:loc>
+      <image:title>Consumer Unit Symbol</image:title>
+      <image:caption>Consumer unit fuseboard electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/distribution/distribution-board.svg</image:loc>
+      <image:title>Distribution Board Symbol</image:title>
+      <image:caption>Commercial distribution board electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/distribution/sub-main-board.svg</image:loc>
+      <image:title>Sub-Main Board Symbol</image:title>
+      <image:caption>Sub-main distribution board electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/distribution/mcb.svg</image:loc>
+      <image:title>MCB (Miniature Circuit Breaker) Symbol</image:title>
+      <image:caption>MCB miniature circuit breaker electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/distribution/mccb.svg</image:loc>
+      <image:title>MCCB (Moulded Case CB) Symbol</image:title>
+      <image:caption>MCCB moulded case circuit breaker electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/distribution/rcd.svg</image:loc>
+      <image:title>RCD (Residual Current Device) Symbol</image:title>
+      <image:caption>RCD residual current device electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/distribution/rcbo.svg</image:loc>
+      <image:title>RCBO (RCD + MCB Combined) Symbol</image:title>
+      <image:caption>RCBO residual current breaker with overcurrent electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/distribution/spd.svg</image:loc>
+      <image:title>SPD (Surge Protection Device) Symbol</image:title>
+      <image:caption>SPD surge protection device electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/distribution/contactor.svg</image:loc>
+      <image:title>Contactor Symbol</image:title>
+      <image:caption>Electrical contactor electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/distribution/main-isolator.svg</image:loc>
+      <image:title>Main Switch / Isolator Symbol</image:title>
+      <image:caption>Main switch isolator electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/distribution/meter.svg</image:loc>
+      <image:title>Electricity Meter Symbol</image:title>
+      <image:caption>Electricity meter electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/distribution/changeover-switch.svg</image:loc>
+      <image:title>Changeover Switch Symbol</image:title>
+      <image:caption>Changeover switch transfer switch electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/distribution/generator-changeover.svg</image:loc>
+      <image:title>Generator Changeover (ATS) Symbol</image:title>
+      <image:caption>Generator automatic transfer switch ATS electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/distribution/busbar-chamber.svg</image:loc>
+      <image:title>Busbar Chamber Symbol</image:title>
+      <image:caption>Busbar chamber electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.elec-mate.com/guides/electrical-safety-symbols</loc>
+    <lastmod>2026-05-18</lastmod>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/smoke-detector.svg</image:loc>
+      <image:title>Smoke Detector Symbol</image:title>
+      <image:caption>Smoke detector electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/heat-detector.svg</image:loc>
+      <image:title>Heat Detector Symbol</image:title>
+      <image:caption>Heat detector electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/co-detector.svg</image:loc>
+      <image:title>CO Detector Symbol</image:title>
+      <image:caption>Carbon monoxide CO detector electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/fire-alarm.svg</image:loc>
+      <image:title>Fire Alarm Sounder Symbol</image:title>
+      <image:caption>Fire alarm sounder electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/sounder-beacon.svg</image:loc>
+      <image:title>Sounder + Beacon Symbol</image:title>
+      <image:caption>Combined sounder and beacon fire alarm electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/break-glass.svg</image:loc>
+      <image:title>Manual Call Point (Break Glass) Symbol</image:title>
+      <image:caption>Manual call point break glass fire alarm electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/emergency-call-point.svg</image:loc>
+      <image:title>Emergency Call Point (Disabled WC) Symbol</image:title>
+      <image:caption>Emergency call point disabled WC alarm electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/disabled-alarm.svg</image:loc>
+      <image:title>Disabled Refuge Alarm Symbol</image:title>
+      <image:caption>Disabled refuge alarm communication point electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/motion-detector.svg</image:loc>
+      <image:title>Motion Detector (Security) Symbol</image:title>
+      <image:caption>Motion detector intruder alarm electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/cctv.svg</image:loc>
+      <image:title>CCTV Camera Symbol</image:title>
+      <image:caption>CCTV security camera electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/access-control.svg</image:loc>
+      <image:title>Access Control Reader Symbol</image:title>
+      <image:caption>Access control card reader electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/door-entry.svg</image:loc>
+      <image:title>Door Entry Panel Symbol</image:title>
+      <image:caption>Door entry intercom panel electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/door-release.svg</image:loc>
+      <image:title>Door Release Button Symbol</image:title>
+      <image:caption>Door release button green exit button electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/bell.svg</image:loc>
+      <image:title>Bell / Door Chime Symbol</image:title>
+      <image:caption>Bell door chime electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/extractor-fan.svg</image:loc>
+      <image:title>Extractor Fan Symbol</image:title>
+      <image:caption>Extractor fan electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/thermostat.svg</image:loc>
+      <image:title>Thermostat Symbol</image:title>
+      <image:caption>Wall thermostat electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/junction-box.svg</image:loc>
+      <image:title>Junction Box Symbol</image:title>
+      <image:caption>Junction box wiring electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.elec-mate.com/guides/electrical-containment-symbols</loc>
+    <lastmod>2026-05-18</lastmod>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/containment/conduit.svg</image:loc>
+      <image:title>Conduit Symbol</image:title>
+      <image:caption>Electrical conduit containment symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/containment/trunking.svg</image:loc>
+      <image:title>Trunking Symbol</image:title>
+      <image:caption>Cable trunking containment symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/containment/busbar-trunking.svg</image:loc>
+      <image:title>Busbar Trunking Symbol</image:title>
+      <image:caption>Busbar trunking distribution containment symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/containment/cable-tray.svg</image:loc>
+      <image:title>Cable Tray Symbol</image:title>
+      <image:caption>Cable tray containment symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/containment/cable-tray-drop.svg</image:loc>
+      <image:title>Cable Tray Drop Symbol</image:title>
+      <image:caption>Cable tray drop riser containment symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/containment/floor-trunking.svg</image:loc>
+      <image:title>Floor Trunking Symbol</image:title>
+      <image:caption>Floor trunking surface containment symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/containment/underfloor-trunking.svg</image:loc>
+      <image:title>Underfloor Trunking Symbol</image:title>
+      <image:caption>Underfloor trunking buried containment symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/containment/riser.svg</image:loc>
+      <image:title>Vertical Riser Symbol</image:title>
+      <image:caption>Vertical electrical riser containment symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/containment/floor-box-multi.svg</image:loc>
+      <image:title>Floor Box (Multi-Service) Symbol</image:title>
+      <image:caption>Floor box multi-service outlet electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.elec-mate.com/guides/electrical-equipment-symbols</loc>
+    <lastmod>2026-05-18</lastmod>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/equipment/motor.svg</image:loc>
+      <image:title>Electric Motor Symbol</image:title>
+      <image:caption>Electric motor electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/equipment/transformer.svg</image:loc>
+      <image:title>Transformer Symbol</image:title>
+      <image:caption>Electrical transformer step-down electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/equipment/ups.svg</image:loc>
+      <image:title>UPS (Uninterruptible Power Supply) Symbol</image:title>
+      <image:caption>UPS uninterruptible power supply electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/equipment/sub-main.svg</image:loc>
+      <image:title>Sub-Main Symbol</image:title>
+      <image:caption>Sub-main supply cable electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/equipment/fan.svg</image:loc>
+      <image:title>Industrial Fan Symbol</image:title>
+      <image:caption>Industrial extraction fan electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/equipment/pump.svg</image:loc>
+      <image:title>Pump Symbol</image:title>
+      <image:caption>Electrical pump motor electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/equipment/ahu.svg</image:loc>
+      <image:title>Air Handling Unit (AHU) Symbol</image:title>
+      <image:caption>Air handling unit AHU electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/equipment/lift.svg</image:loc>
+      <image:title>Lift / Elevator Symbol</image:title>
+      <image:caption>Lift elevator electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/equipment/panel-board.svg</image:loc>
+      <image:title>Panel Board (Motor Control Centre) Symbol</image:title>
+      <image:caption>Motor control centre MCC panel board electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.elec-mate.com/guides/electrical-mechanical-symbols</loc>
+    <lastmod>2026-05-18</lastmod>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/mechanical/boiler.svg</image:loc>
+      <image:title>Boiler Symbol</image:title>
+      <image:caption>Gas oil boiler electrical supply symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/mechanical/water-heater.svg</image:loc>
+      <image:title>Water Heater (Immersion) Symbol</image:title>
+      <image:caption>Electric water heater immersion electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/mechanical/panel-heater.svg</image:loc>
+      <image:title>Panel Heater Symbol</image:title>
+      <image:caption>Electric panel heater wall heater electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/mechanical/air-conditioning.svg</image:loc>
+      <image:title>Air Conditioning Unit Symbol</image:title>
+      <image:caption>Air conditioning unit split system electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/mechanical/fan-coil-unit.svg</image:loc>
+      <image:title>Fan Coil Unit (FCU) Symbol</image:title>
+      <image:caption>Fan coil unit FCU HVAC electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/mechanical/towel-rail.svg</image:loc>
+      <image:title>Electric Towel Rail Symbol</image:title>
+      <image:caption>Electric towel rail bathroom electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/mechanical/heater.svg</image:loc>
+      <image:title>Heater (General) Symbol</image:title>
+      <image:caption>Electric heater electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/mechanical/hand-dryer.svg</image:loc>
+      <image:title>Hand Dryer Symbol</image:title>
+      <image:caption>Electric hand dryer electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.elec-mate.com/guides/electrical-renewables-symbols</loc>
+    <lastmod>2026-05-18</lastmod>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/renewables/solar-panel.svg</image:loc>
+      <image:title>Solar PV Panel Symbol</image:title>
+      <image:caption>Solar photovoltaic PV panel electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/renewables/inverter.svg</image:loc>
+      <image:title>PV Inverter Symbol</image:title>
+      <image:caption>Solar PV inverter DC-AC electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/renewables/battery.svg</image:loc>
+      <image:title>Battery Storage Symbol</image:title>
+      <image:caption>Battery energy storage system BESS electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/renewables/ev-distribution.svg</image:loc>
+      <image:title>EV Distribution Board Symbol</image:title>
+      <image:caption>EV charger distribution board electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/renewables/generator.svg</image:loc>
+      <image:title>Generator Symbol</image:title>
+      <image:caption>Generator backup power electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.elec-mate.com/guides/electrical-controls-symbols</loc>
+    <lastmod>2026-05-18</lastmod>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/controls/bms-controller.svg</image:loc>
+      <image:title>BMS Controller Symbol</image:title>
+      <image:caption>Building management system BMS controller electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/controls/control-panel.svg</image:loc>
+      <image:title>Control Panel Symbol</image:title>
+      <image:caption>Electrical control panel electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/controls/lighting-control.svg</image:loc>
+      <image:title>Lighting Control Module Symbol</image:title>
+      <image:caption>Lighting control module DALI KNX electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/controls/sensor.svg</image:loc>
+      <image:title>Generic Sensor Symbol</image:title>
+      <image:caption>BMS sensor occupancy temperature electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/controls/humidity-sensor.svg</image:loc>
+      <image:title>Humidity Sensor Symbol</image:title>
+      <image:caption>Humidity sensor electrical symbol BS EN 60617</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.elec-mate.com/guides/electrical-architectural-symbols</loc>
+    <lastmod>2026-05-18</lastmod>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/architectural/door-left.svg</image:loc>
+      <image:title>Door (Hinged Left) Symbol</image:title>
+      <image:caption>Door left-hinged architectural symbol electrical drawing</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/architectural/door-right.svg</image:loc>
+      <image:title>Door (Hinged Right) Symbol</image:title>
+      <image:caption>Door right-hinged architectural symbol electrical drawing</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/architectural/door-double.svg</image:loc>
+      <image:title>Double Door Symbol</image:title>
+      <image:caption>Double door architectural symbol electrical drawing</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/architectural/window.svg</image:loc>
+      <image:title>Window Symbol</image:title>
+      <image:caption>Window architectural symbol electrical drawing</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/architectural/stairs.svg</image:loc>
+      <image:title>Stairs Symbol</image:title>
+      <image:caption>Stairs architectural symbol electrical drawing</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/architectural/north-arrow.svg</image:loc>
+      <image:title>North Arrow Symbol</image:title>
+      <image:caption>North arrow compass orientation drawing symbol</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.elec-mate.com/guides/rcd-symbol</loc>
+    <lastmod>2026-05-18</lastmod>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/distribution/rcd.svg</image:loc>
+      <image:title>RCD (Residual Current Device) — BS EN 60617 Electrical Symbol</image:title>
+      <image:caption>A Residual Current Device to BS EN 61008. Detects imbalance between live and neutral (earth-fault leakage) and trips. 30 mA RCDs provide additional protection against electric shock.</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.elec-mate.com/guides/rcbo-symbol</loc>
+    <lastmod>2026-05-18</lastmod>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/distribution/rcbo.svg</image:loc>
+      <image:title>RCBO (RCD + MCB Combined) — BS EN 60617 Electrical Symbol</image:title>
+      <image:caption>A Residual Current Breaker with Overcurrent protection to BS EN 61009. Combines RCD + MCB in one device. Each circuit has individual earth fault and overload protection.</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.elec-mate.com/guides/mcb-symbol</loc>
+    <lastmod>2026-05-18</lastmod>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/distribution/mcb.svg</image:loc>
+      <image:title>MCB (Miniature Circuit Breaker) — BS EN 60617 Electrical Symbol</image:title>
+      <image:caption>A Miniature Circuit Breaker to BS EN 60898. Protects against overload and short-circuit fault current. Types B, C and D differentiate by magnetic trip characteristic.</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.elec-mate.com/guides/spd-symbol</loc>
+    <lastmod>2026-05-18</lastmod>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/distribution/spd.svg</image:loc>
+      <image:title>SPD (Surge Protection Device) — BS EN 60617 Electrical Symbol</image:title>
+      <image:caption>A Surge Protective Device to BS EN 61643-11. Type 1 (lightning current), Type 2 (transient overvoltage), Type 3 (point of use). BS 7671 443.4 risk assessment usually requires Type 2 at origin.</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.elec-mate.com/guides/2way-switch-symbol</loc>
+    <lastmod>2026-05-18</lastmod>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/switches/2way.svg</image:loc>
+      <image:title>Two-Way Switch — BS EN 60617 Electrical Symbol</image:title>
+      <image:caption>A switch with two fixed contacts and one common, allowing control of the same load from two locations. Always used in pairs with a second 2-way switch (e.g. staircase, hall-and-landing).</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.elec-mate.com/guides/1way-switch-symbol</loc>
+    <lastmod>2026-05-18</lastmod>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/switches/1way.svg</image:loc>
+      <image:title>One-Way Switch — BS EN 60617 Electrical Symbol</image:title>
+      <image:caption>A single switch that breaks or makes the live conductor to a load from one position. The most common domestic switch — used for a single lighting circuit controlled from one location.</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.elec-mate.com/guides/intermediate-switch-symbol</loc>
+    <lastmod>2026-05-18</lastmod>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/switches/intermediate.svg</image:loc>
+      <image:title>Intermediate Switch — BS EN 60617 Electrical Symbol</image:title>
+      <image:caption>A four-terminal switch wired between two 2-way switches to give control from three or more locations. The strappers cross over inside the switch.</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.elec-mate.com/guides/dimmer-switch-symbol</loc>
+    <lastmod>2026-05-18</lastmod>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/switches/dimmer.svg</image:loc>
+      <image:title>Dimmer Switch — BS EN 60617 Electrical Symbol</image:title>
+      <image:caption>A switch with a variable resistor or electronic dimming module that controls light output. Specify type — leading-edge for incandescent, trailing-edge or LED-rated for modern LED drivers.</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.elec-mate.com/guides/double-13a-socket-symbol</loc>
+    <lastmod>2026-05-18</lastmod>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/sockets/double-13a.svg</image:loc>
+      <image:title>Double 13A Socket Outlet — BS EN 60617 Electrical Symbol</image:title>
+      <image:caption>A twin 13A switched socket — two outlets on one back box. Drawn as two semicircles back-to-back. Standard outlet for living spaces, bedrooms and offices.</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.elec-mate.com/guides/single-13a-socket-symbol</loc>
+    <lastmod>2026-05-18</lastmod>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/sockets/single-13a.svg</image:loc>
+      <image:title>Single 13A Socket Outlet — BS EN 60617 Electrical Symbol</image:title>
+      <image:caption>A single 13A switched socket to BS 1363. The basic socket symbol — a semicircle with a line indicating switched. UK standard for general-purpose socket circuits.</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.elec-mate.com/guides/fused-spur-symbol</loc>
+    <lastmod>2026-05-18</lastmod>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/sockets/fused-spur.svg</image:loc>
+      <image:title>Fused Spur (Unswitched) — BS EN 60617 Electrical Symbol</image:title>
+      <image:caption>A Fused Connection Unit (FCU) with internal fuse providing local protection for a fixed appliance. Unswitched version — no front rocker. Used where switching is not needed at the spur.</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.elec-mate.com/guides/switched-fused-spur-symbol</loc>
+    <lastmod>2026-05-18</lastmod>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/sockets/switched-fused-spur.svg</image:loc>
+      <image:title>Switched Fused Spur — BS EN 60617 Electrical Symbol</image:title>
+      <image:caption>A Fused Connection Unit with a front-panel switch + neon indicator. Allows local isolation of the fixed appliance without resorting to the consumer unit. Most common FCU type.</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.elec-mate.com/guides/isolator-switch-symbol</loc>
+    <lastmod>2026-05-18</lastmod>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/switches/isolator.svg</image:loc>
+      <image:title>Isolator (Switch-Disconnector) — BS EN 60617 Electrical Symbol</image:title>
+      <image:caption>A switching device that fully isolates a circuit or item of equipment for maintenance. Must be lockable in the OFF position per BS 7671 Section 537. Different from a functional switch.</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.elec-mate.com/guides/emergency-stop-symbol</loc>
+    <lastmod>2026-05-18</lastmod>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/switches/emergency-stop.svg</image:loc>
+      <image:title>Emergency Stop (E-Stop) — BS EN 60617 Electrical Symbol</image:title>
+      <image:caption>A latching push-button that immediately disconnects supply to dangerous equipment. Mushroom head, red on yellow background. Must be reset deliberately — twist-release or key-reset.</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.elec-mate.com/guides/smoke-detector-symbol</loc>
+    <lastmod>2026-05-18</lastmod>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/smoke-detector.svg</image:loc>
+      <image:title>Smoke Detector — BS EN 60617 Electrical Symbol</image:title>
+      <image:caption>An optical or ionisation smoke detector to BS EN 14604 (single-station, domestic) or BS 5839-1 (fire alarm system). Interlinked types signal one another via wire or RF.</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.elec-mate.com/guides/fire-alarm-symbol</loc>
+    <lastmod>2026-05-18</lastmod>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/fire-alarm.svg</image:loc>
+      <image:title>Fire Alarm Sounder — BS EN 60617 Electrical Symbol</image:title>
+      <image:caption>A fire alarm sounder to BS EN 54-3. Produces minimum 65 dB at the bedhead per BS 5839-1, with the fire-alarm tone defined in BS 5839 Annex E.</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.elec-mate.com/guides/break-glass-symbol</loc>
+    <lastmod>2026-05-18</lastmod>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/safety/break-glass.svg</image:loc>
+      <image:title>Manual Call Point (Break Glass) — BS EN 60617 Electrical Symbol</image:title>
+      <image:caption>A manual call point to BS EN 54-11. The break-glass/press-glass element used to manually trigger the fire alarm system. Sited near exits and on escape routes.</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.elec-mate.com/guides/exit-sign-symbol</loc>
+    <lastmod>2026-05-18</lastmod>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/lighting/exit-sign.svg</image:loc>
+      <image:title>Exit Sign — BS EN 60617 Electrical Symbol</image:title>
+      <image:caption>A maintained or non-maintained emergency exit sign to BS EN 1838. Indicates the direction of escape; runs on battery during mains failure for at least 3 hours per BS 5266.</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.elec-mate.com/guides/emergency-light-symbol</loc>
+    <lastmod>2026-05-18</lastmod>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/lighting/emergency-light.svg</image:loc>
+      <image:title>Emergency Light — BS EN 60617 Electrical Symbol</image:title>
+      <image:caption>A non-maintained emergency light to BS 5266. Off in normal use; switches on automatically when the mains supply fails. Tested monthly and annually per BS 5266-1.</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.elec-mate.com/guides/consumer-unit-symbol</loc>
+    <lastmod>2026-05-18</lastmod>
+    <image:image>
+      <image:loc>https://www.elec-mate.com/symbols/distribution/consumer-unit.svg</image:loc>
+      <image:title>Consumer Unit — BS EN 60617 Electrical Symbol</image:title>
+      <image:caption>A domestic consumer unit (fuseboard) to BS EN 61439-3. Houses the main switch, RCD/RCBO/MCB protective devices, and (since 2018) SPD and AFDD where required.</image:caption>
+      <image:license>https://www.elec-mate.com/terms</image:license>
+    </image:image>
+  </url>
+</urlset>

@@ -9,10 +9,9 @@ const modified = '2026-05-18';
 
 export const eicrCodeFIConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-code-fi-further-investigation',
-  title:
-    'EICR Code FI — Further Investigation Required | When to Use',
+  title: 'EICR Code FI — Further Investigation Required | When to Use',
   description:
-    'EICR code FI explained: when "further investigation required" is the right classification, and how to scope the follow-up work clearly. BS 7671:2018+A4:2026 and IET GN3 aligned.',
+    'EICR code FI explained: when "further investigation required" is the right classification, and how to scope the follow-up work clearly.',
   datePublished: published,
   dateModified: modified,
   readingTime: 9,
@@ -40,15 +39,13 @@ export const eicrCodeFIConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'FI is defined as "Further investigation required without delay." The classification indicates the inspector has identified a potential defect or non-compliance but cannot confirm the appropriate classification (C1, C2, or C3) without additional inspection or testing that was not possible during the EICR visit.',
+          text: 'FI is defined as "Further investigation required without delay." The classification indicates the inspector has identified a potential defect or non-compliance but cannot confirm the appropriate classification (C1, C2, or C3) without additional inspection or testing that was not possible during the EICR visit.',
         },
         {
           type: 'callout',
           tone: 'info',
           title: 'FI is a deferred classification, not "no defect"',
-          text:
-            'FI is not "I think there might be something." FI is "there\'s evidence of a potential defect that I cannot fully investigate today — and this needs follow-up before a safety conclusion can be drawn." If you cannot articulate WHAT to investigate, FI is the wrong code.',
+          text: 'FI is not "I think there might be something." FI is "there\'s evidence of a potential defect that I cannot fully investigate today — and this needs follow-up before a safety conclusion can be drawn." If you cannot articulate WHAT to investigate, FI is the wrong code.',
         },
       ],
     },
@@ -59,8 +56,7 @@ export const eicrCodeFIConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'FI is reserved for scenarios where the inspector cannot make a final classification within the scope of the current visit. Common legitimate uses:',
+          text: 'FI is reserved for scenarios where the inspector cannot make a final classification within the scope of the current visit. Common legitimate uses:',
         },
         {
           type: 'list',
@@ -83,8 +79,7 @@ export const eicrCodeFIConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'FI is treated as an "unsatisfactory" trigger when the potential issue relates to safety. Practically, this means:',
+          text: 'FI is treated as an "unsatisfactory" trigger when the potential issue relates to safety. Practically, this means:',
         },
         {
           type: 'list',
@@ -98,9 +93,8 @@ export const eicrCodeFIConfig: GeneratedGuideConfig = {
         {
           type: 'callout',
           tone: 'warning',
-          title: 'Don\'t use FI to delay a decision',
-          text:
-            'FI is not a "tomorrow problem" escape hatch. If the evidence at the time of inspection supports C1 or C2, use that classification — even if the inspector would like more data. FI is for genuine evidence gaps, not commercial convenience.',
+          title: "Don't use FI to delay a decision",
+          text: 'FI is not a "tomorrow problem" escape hatch. If the evidence at the time of inspection supports C1 or C2, use that classification — even if the inspector would like more data. FI is for genuine evidence gaps, not commercial convenience.',
         },
       ],
     },
@@ -111,8 +105,7 @@ export const eicrCodeFIConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'A vague FI ("further investigation recommended on socket circuit") is almost useless — the follow-up electrician has no scope, the responsible person can\'t commission the work, and the original inspector has provided no value. A good FI specifies four things:',
+          text: 'A vague FI ("further investigation recommended on socket circuit") is almost useless — the follow-up electrician has no scope, the responsible person can\'t commission the work, and the original inspector has provided no value. A good FI specifies four things:',
         },
         {
           type: 'list',
@@ -128,8 +121,7 @@ export const eicrCodeFIConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'info',
           title: 'Example of a good FI observation',
-          text:
-            '"Consumer unit at meter cupboard shows audible humming under load. No visible damage to enclosure or terminals during visual inspection. Insulation resistance test could not be performed as the property was in occupation and prior notice of isolation was not given. Further investigation required: isolate the installation overnight, perform full insulation resistance test at 500 V, inspect all consumer unit terminals for tightness and signs of overheating, and remove and inspect main switch. Work to be carried out by a competent electrician with EICR experience within 28 days."',
+          text: '"Consumer unit at meter cupboard shows audible humming under load. No visible damage to enclosure or terminals during visual inspection. Insulation resistance test could not be performed as the property was in occupation and prior notice of isolation was not given. Further investigation required: isolate the installation overnight, perform full insulation resistance test at 500 V, inspect all consumer unit terminals for tightness and signs of overheating, and remove and inspect main switch. Work to be carried out by a competent electrician with EICR experience within 28 days."',
         },
       ],
     },
@@ -140,8 +132,7 @@ export const eicrCodeFIConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'Once the further investigation is complete, the inspector (or follow-up electrician) issues a supplementary observation document that converts the FI into its final classification:',
+          text: 'Once the further investigation is complete, the inspector (or follow-up electrician) issues a supplementary observation document that converts the FI into its final classification:',
         },
         {
           type: 'list',
@@ -206,7 +197,7 @@ export const eicrCodeFIConfig: GeneratedGuideConfig = {
     {
       href: '/guides/eicr-code-c3-improvement-recommended',
       title: 'EICR Code C3 — Improvement Recommended',
-      description: 'For departures from BS 7671 that don\'t affect the overall assessment.',
+      description: "For departures from BS 7671 that don't affect the overall assessment.",
       icon: 'ClipboardCheck',
       category: 'Guide',
     },
@@ -227,12 +218,13 @@ export const eicrCodeFIConfig: GeneratedGuideConfig = {
     {
       href: '/guides/bs-7671-amendment-4-2026',
       title: 'BS 7671 Amendment 4 (2026) Summary',
-      description: 'What changed in A4:2026 — affects EICR observation recording and schedule of tests.',
+      description:
+        'What changed in A4:2026 — affects EICR observation recording and schedule of tests.',
       icon: 'BookOpen',
       category: 'Guide',
     },
   ],
   ctaHeading: 'Track FI follow-up to completion',
   ctaSubheading:
-    'Elec-Mate\'s digital EICR app supports supplementary observation tracking — original FI, follow-up work, and final classification all in one audit trail. 7-day free trial.',
+    "Elec-Mate's digital EICR app supports supplementary observation tracking — original FI, follow-up work, and final classification all in one audit trail. 7-day free trial.",
 };

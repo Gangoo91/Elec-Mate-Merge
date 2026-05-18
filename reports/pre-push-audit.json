@@ -1,15 +1,15 @@
 {
   "summary": {
-    "generatedAt": "2026-05-18T17:32:46.517Z",
-    "totalPages": 1349,
+    "generatedAt": "2026-05-18T19:57:15.251Z",
+    "totalPages": 1380,
     "byStatus": {
-      "green": 1281,
-      "amber": 66,
+      "green": 1292,
+      "amber": 86,
       "red": 2
     },
     "byAudience": {
-      "trade": 340,
-      "other": 646,
+      "trade": 347,
+      "other": 670,
       "tool": 59,
       "apprentice": 175,
       "training": 38,
@@ -19,42 +19,193 @@
     },
     "byTemplate": {
       "unknown": 366,
-      "GuideTemplate": 889,
+      "GuideTemplate": 920,
       "ToolTemplate": 43,
       "CourseTemplate": 25,
       "ComparisonTemplate": 10,
       "BusinessTemplate": 16
     },
     "wordBuckets": {
-      "tiny (<800)": 4,
-      "small (800-1500)": 122,
+      "tiny (<800)": 28,
+      "small (800-1500)": 129,
       "medium (1500-3000)": 641,
       "large (3000-5000)": 567,
       "huge (5000+)": 15
     },
     "linkBuckets": {
       "<3": 1,
-      "3-5": 34,
-      "6-9": 976,
+      "3-5": 54,
+      "6-9": 987,
       "10+": 338
     },
-    "issueCount": 4,
+    "issueCount": 35,
     "issuesByKindCount": {
-      "thin-content": 4
+      "description-too-short": 7,
+      "thin-content": 28
     },
     "topDuplicateTitles": [],
     "topDuplicateDescs": []
   },
   "issues": [
     {
+      "slug": "/guides/break-glass-symbol",
+      "kind": "description-too-short",
+      "value": "109 chars"
+    },
+    {
+      "slug": "/guides/break-glass-symbol",
+      "kind": "thin-content",
+      "value": "484 words"
+    },
+    {
       "slug": "/compare",
       "kind": "thin-content",
       "value": "624 words"
     },
     {
+      "slug": "/guides/consumer-unit-symbol",
+      "kind": "thin-content",
+      "value": "450 words"
+    },
+    {
+      "slug": "/guides/dimmer-switch-symbol",
+      "kind": "thin-content",
+      "value": "458 words"
+    },
+    {
+      "slug": "/guides/double-13a-socket-symbol",
+      "kind": "thin-content",
+      "value": "475 words"
+    },
+    {
+      "slug": "/guides/electrical-containment-symbols",
+      "kind": "description-too-short",
+      "value": "84 chars"
+    },
+    {
+      "slug": "/guides/electrical-containment-symbols",
+      "kind": "thin-content",
+      "value": "794 words"
+    },
+    {
+      "slug": "/guides/electrical-controls-symbols",
+      "kind": "thin-content",
+      "value": "777 words"
+    },
+    {
+      "slug": "/guides/electrical-equipment-symbols",
+      "kind": "thin-content",
+      "value": "791 words"
+    },
+    {
+      "slug": "/guides/electrical-lighting-symbols",
+      "kind": "description-too-short",
+      "value": "95 chars"
+    },
+    {
+      "slug": "/guides/electrical-mechanical-symbols",
+      "kind": "description-too-short",
+      "value": "80 chars"
+    },
+    {
+      "slug": "/guides/electrical-safety-symbols",
+      "kind": "description-too-short",
+      "value": "104 chars"
+    },
+    {
+      "slug": "/guides/electrical-switch-symbols",
+      "kind": "thin-content",
+      "value": "796 words"
+    },
+    {
+      "slug": "/guides/emergency-light-symbol",
+      "kind": "thin-content",
+      "value": "446 words"
+    },
+    {
+      "slug": "/guides/emergency-stop-symbol",
+      "kind": "thin-content",
+      "value": "452 words"
+    },
+    {
+      "slug": "/guides/exit-sign-symbol",
+      "kind": "thin-content",
+      "value": "461 words"
+    },
+    {
+      "slug": "/guides/fire-alarm-symbol",
+      "kind": "thin-content",
+      "value": "476 words"
+    },
+    {
+      "slug": "/guides/fused-spur-symbol",
+      "kind": "thin-content",
+      "value": "476 words"
+    },
+    {
       "slug": "/guides",
       "kind": "thin-content",
       "value": "630 words"
+    },
+    {
+      "slug": "/guides/intermediate-switch-symbol",
+      "kind": "thin-content",
+      "value": "452 words"
+    },
+    {
+      "slug": "/guides/isolator-switch-symbol",
+      "kind": "thin-content",
+      "value": "463 words"
+    },
+    {
+      "slug": "/guides/mcb-symbol",
+      "kind": "description-too-short",
+      "value": "109 chars"
+    },
+    {
+      "slug": "/guides/mcb-symbol",
+      "kind": "thin-content",
+      "value": "456 words"
+    },
+    {
+      "slug": "/guides/off-job-training-hours",
+      "kind": "description-too-short",
+      "value": "87 chars"
+    },
+    {
+      "slug": "/guides/1way-switch-symbol",
+      "kind": "thin-content",
+      "value": "461 words"
+    },
+    {
+      "slug": "/guides/rcbo-symbol",
+      "kind": "thin-content",
+      "value": "484 words"
+    },
+    {
+      "slug": "/guides/rcd-symbol",
+      "kind": "thin-content",
+      "value": "479 words"
+    },
+    {
+      "slug": "/guides/single-13a-socket-symbol",
+      "kind": "thin-content",
+      "value": "466 words"
+    },
+    {
+      "slug": "/guides/smoke-detector-symbol",
+      "kind": "thin-content",
+      "value": "469 words"
+    },
+    {
+      "slug": "/guides/spd-symbol",
+      "kind": "thin-content",
+      "value": "488 words"
+    },
+    {
+      "slug": "/guides/switched-fused-spur-symbol",
+      "kind": "thin-content",
+      "value": "467 words"
     },
     {
       "slug": "/tools",
@@ -65,6 +216,11 @@
       "slug": "/training",
       "kind": "thin-content",
       "value": "592 words"
+    },
+    {
+      "slug": "/guides/2way-switch-symbol",
+      "kind": "thin-content",
+      "value": "471 words"
     }
   ]
 }
