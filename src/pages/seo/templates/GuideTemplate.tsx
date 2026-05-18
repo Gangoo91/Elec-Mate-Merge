@@ -5,6 +5,7 @@ import { SEOKeyTakeaways } from '@/components/seo/SEOKeyTakeaways';
 import { SEOFAQAccordion } from '@/components/seo/SEOFAQAccordion';
 import { SEORelatedPages, type RelatedPage } from '@/components/seo/SEORelatedPages';
 import { RecentReviews } from '@/components/seo/RecentReviews';
+import { SEOStickyMobileCTA } from '@/components/seo/SEOStickyMobileCTA';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOSocialShare } from '@/components/seo/SEOSocialShare';
 import { SEOSocialFollow } from '@/components/seo/SEOSocialFollow';
@@ -285,6 +286,7 @@ export default function GuideTemplate({
       <SEOCTASection heading={ctaHeading} subheading={ctaSubheading} />
 
       <div className="h-24 sm:hidden" />
+      <SEOStickyMobileCTA />
     </SEOPageShell>
   );
 }

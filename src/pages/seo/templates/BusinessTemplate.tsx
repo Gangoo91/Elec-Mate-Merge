@@ -5,6 +5,7 @@ import { SEOKeyTakeaways } from '@/components/seo/SEOKeyTakeaways';
 import { SEOFAQAccordion } from '@/components/seo/SEOFAQAccordion';
 import { SEORelatedPages, type RelatedPage } from '@/components/seo/SEORelatedPages';
 import { RecentReviews } from '@/components/seo/RecentReviews';
+import { SEOStickyMobileCTA } from '@/components/seo/SEOStickyMobileCTA';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
@@ -254,6 +255,7 @@ export default function BusinessTemplate({
       <SEOCTASection heading={ctaHeading} subheading={ctaSubheading} />
 
       <div className="h-24 sm:hidden" />
+      <SEOStickyMobileCTA />
     </SEOPageShell>
   );
 }
