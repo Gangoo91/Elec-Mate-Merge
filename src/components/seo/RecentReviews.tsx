@@ -46,19 +46,11 @@ export function RecentReviews({
   }
 
   return (
-    <section
-      aria-labelledby="recent-reviews-heading"
-      className={`py-8 sm:py-12 ${className}`}
-    >
-      <h2
-        id="recent-reviews-heading"
-        className="text-2xl sm:text-3xl font-bold text-white mb-2"
-      >
+    <section aria-labelledby="recent-reviews-heading" className={`py-8 sm:py-12 ${className}`}>
+      <h2 id="recent-reviews-heading" className="text-2xl sm:text-3xl font-bold text-white mb-2">
         {heading}
       </h2>
-      <p className="text-sm text-white/70 mb-6">
-        Verified reviews from the UK App Store.
-      </p>
+      <p className="text-sm text-white/70 mb-6">Verified reviews from the UK App Store.</p>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {reviews.map((r) => (
@@ -71,16 +63,10 @@ export function RecentReviews({
             className="rounded-2xl border border-white/10 bg-white/5 p-5 flex flex-col gap-3"
           >
             <Stars rating={r.rating} />
-            <h3
-              itemProp="name"
-              className="text-base font-semibold text-white leading-snug"
-            >
+            <h3 itemProp="name" className="text-base font-semibold text-white leading-snug">
               {r.title}
             </h3>
-            <p
-              itemProp="reviewBody"
-              className="text-sm text-white/80 leading-relaxed line-clamp-6"
-            >
+            <p itemProp="reviewBody" className="text-sm text-white/80 leading-relaxed line-clamp-6">
               {r.body}
             </p>
             <footer className="mt-auto pt-2 flex items-center justify-between text-xs text-white/60">
@@ -90,7 +76,26 @@ export function RecentReviews({
               <span>Apple App Store · {r.territory}</span>
             </footer>
             <meta itemProp="datePublished" content={r.createdDate} />
-            <meta itemProp="reviewRating" content={String(r.rating)} />
+            <div
+              itemProp="reviewRating"
+              itemScope
+              itemType="https://schema.org/Rating"
+              style={{ display: 'none' }}
+            >
+              <meta itemProp="ratingValue" content={String(r.rating)} />
+              <meta itemProp="bestRating" content="5" />
+              <meta itemProp="worstRating" content="1" />
+            </div>
+            <div
+              itemProp="itemReviewed"
+              itemScope
+              itemType="https://schema.org/SoftwareApplication"
+              style={{ display: 'none' }}
+            >
+              <meta itemProp="name" content="Elec-Mate" />
+              <meta itemProp="applicationCategory" content="BusinessApplication" />
+              <meta itemProp="operatingSystem" content="iOS, Android" />
+            </div>
           </article>
         ))}
       </div>
@@ -105,9 +110,7 @@ function Stars({ rating, small = false }: { rating: number; small?: boolean }) {
       {[1, 2, 3, 4, 5].map((i) => (
         <Star
           key={i}
-          className={`${size} ${
-            i <= rating ? 'fill-yellow-400 text-yellow-400' : 'text-white/20'
-          }`}
+          className={`${size} ${i <= rating ? 'fill-yellow-400 text-yellow-400' : 'text-white/20'}`}
         />
       ))}
     </div>
