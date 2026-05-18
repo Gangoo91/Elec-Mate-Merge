@@ -490,18 +490,16 @@ function addRelatedToGeneratedConfig(src, target) {
 }
 
 function ensureIconImport(src, iconName) {
-  // src is JSX/TSX source. Check if `iconName,` is already imported from lucide-react.
-  if (new RegExp(`\\b${iconName}\\b`).test(src.split("from 'lucide-react'")[0] || '')) {
-    return src; // imported in lucide-react import
-  }
-  // Try to inject into existing lucide-react import block
-  const importRe = /import\s*\{([\s\S]*?)\}\s*from\s*['"]lucide-react['"]/;
+  // Find the lucide-react import block specifically — use [^}]*? so the match
+  // cannot span past another import's closing brace into a different import.
+  const importRe = /import\s*\{([^}]*)\}\s*from\s*['"]lucide-react['"]/;
   const m = src.match(importRe);
-  if (!m) return src; // no lucide import — caller should skip this target
+  if (!m) return null; // no lucide-react import — signal caller to skip
   const existing = m[1];
   if (new RegExp(`\\b${iconName}\\b`).test(existing)) return src;
-  // Add iconName to the import list
-  const updatedImport = m[0].replace(/\}/, `,\n  ${iconName},\n}`);
+  // Add iconName to the lucide-react import list. Consume optional trailing
+  // comma so we never produce double commas.
+  const updatedImport = m[0].replace(/,?\s*\}\s*from/, `,\n  ${iconName},\n} from`);
   return src.replace(importRe, updatedImport);
 }
 
@@ -537,10 +535,10 @@ for (const [targetSlug, cfg] of Object.entries(INBOUND_MAP)) {
       alreadyPresent++;
       continue;
     }
-    let updated = ensureIconImport(result, cfg.icon);
-    if (updated === result && !(new RegExp(`\\b${cfg.icon}\\b`).test(result.split("from 'lucide-react'")[0] || ''))) {
-      // Couldn't add icon — skip this source to avoid build break
-      log.push(`SKIP_ICON ${cfg.icon} not importable in ${sourceSlug}`);
+    const updated = ensureIconImport(result, cfg.icon);
+    if (updated === null) {
+      // No lucide-react import in source — skip rather than risk corruption
+      log.push(`SKIP_ICON ${cfg.icon} (no lucide-react import) in ${sourceSlug}`);
       skipped++;
       continue;
     }

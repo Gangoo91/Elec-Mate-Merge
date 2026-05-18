@@ -1,7 +1,5 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
-import { SEOInternalLink ,
-  Network,
-} from '@/components/seo/SEOInternalLink';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
 import {
@@ -15,6 +13,7 @@ import {
   ClipboardCheck,
   Gauge,
   Wifi,
+  Network,
 } from 'lucide-react';
 
 // -------------------------------------------------------------------
@@ -39,7 +38,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Smart home lighting systems range from simple consumer products (Philips Hue, £30 to £80 per point) to professional DALI or KNX systems (£150 to £400+ per point) — the right choice depends on the client\'s requirements for integration, reliability, and control sophistication.',
+  "Smart home lighting systems range from simple consumer products (Philips Hue, £30 to £80 per point) to professional DALI or KNX systems (£150 to £400+ per point) — the right choice depends on the client's requirements for integration, reliability, and control sophistication.",
   'Most smart lighting switches (Lutron, Shelly, Sonoff) require a neutral wire at the switch position — a requirement that is not met in older UK wiring, where switch drops carry only switched live and earth.',
   'DALI (Digital Addressable Lighting Interface) is the professional standard for commercial and high-end residential lighting control — each luminaire has an addressable digital driver and can be individually programmed.',
   'Recommended lux levels for domestic and commercial spaces are specified in CIBSE LG3 (domestic) and BS EN 12464-1 (workplace) — key levels: 300 lux at the working plane in offices, 500 lux for tasks requiring detailed work.',
@@ -130,21 +129,24 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/eic-certificate',
     title: 'EIC Certificate App',
-    description: 'Complete Electrical Installation Certificates for smart lighting installations on your phone.',
+    description:
+      'Complete Electrical Installation Certificates for smart lighting installations on your phone.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
     href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
-    description: 'Quote smart lighting installations with per-point costs, commissioning, and programming.',
+    description:
+      'Quote smart lighting installations with per-point costs, commissioning, and programming.',
     icon: Wrench,
     category: 'Tool',
   },
   {
     href: '/guides/outdoor-entertaining-area-electrical',
     title: 'Outdoor Entertaining Area Electrical',
-    description: 'Outdoor lighting IP ratings and smart control options for garden entertaining areas.',
+    description:
+      'Outdoor lighting IP ratings and smart control options for garden entertaining areas.',
     icon: Lightbulb,
     category: 'Guide',
   },
@@ -158,7 +160,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
-    description: 'Check voltage drop on long lighting circuit runs for DALI bus and 12V SELV circuits.',
+    description:
+      'Check voltage drop on long lighting circuit runs for DALI bus and 12V SELV circuits.',
     icon: Zap,
     category: 'Tool',
   },
@@ -176,9 +179,9 @@ const sections = [
       <>
         <p>
           Smart home lighting has moved from a luxury to a mainstream expectation in new-build and
-          renovation projects. The range of available systems — from £30 smart bulbs to £400-per-point
-          DALI installations — means that electricians need to understand the options well enough to
-          advise clients and specify the right system for the project.
+          renovation projects. The range of available systems — from £30 smart bulbs to
+          £400-per-point DALI installations — means that electricians need to understand the options
+          well enough to advise clients and specify the right system for the project.
         </p>
         <p>
           The electrician's role varies by system type: consumer smart bulbs require no additional
@@ -202,8 +205,8 @@ const sections = [
       <>
         <p>
           Choosing the right protocol is the most important decision in a smart lighting project.
-          The key factors are: budget, size of installation, required integration (with heating,
-          AV, security), and the client's preferred control interface.
+          The key factors are: budget, size of installation, required integration (with heating, AV,
+          security), and the client's preferred control interface.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-600/15 border border-blue-600/25 p-5">
@@ -211,8 +214,8 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Digital addressable protocol. Each luminaire has an addressable DALI driver. Used in
               commercial and high-end residential. Individual control, two-way communication, BREEAM
-              compatible. Requires DALI bus wiring (standard 2-core cable). Cost: £150 to £400+
-              per point.
+              compatible. Requires DALI bus wiring (standard 2-core cable). Cost: £150 to £400+ per
+              point.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-600/15 border border-purple-600/25 p-5">
@@ -256,36 +259,45 @@ const sections = [
     content: (
       <>
         <p>
-          The neutral wire requirement is the most common practical challenge when retrofitting smart
-          switches to an existing installation. Most smart switches need a neutral wire at the switch
-          position to power their electronics continuously. In standard UK wiring, the switch drop
-          (from the ceiling to the switch) typically contains only:
+          The neutral wire requirement is the most common practical challenge when retrofitting
+          smart switches to an existing installation. Most smart switches need a neutral wire at the
+          switch position to power their electronics continuously. In standard UK wiring, the switch
+          drop (from the ceiling to the switch) typically contains only:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Old colour code (pre-2004):</strong> Red (switched live) + bare earth — no neutral</span>
+              <span>
+                <strong>Old colour code (pre-2004):</strong> Red (switched live) + bare earth — no
+                neutral
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>New colour code (post-2004):</strong> Brown (switched live) + bare earth — no neutral</span>
+              <span>
+                <strong>New colour code (post-2004):</strong> Brown (switched live) + bare earth —
+                no neutral
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>3-core switch drop (2-way wiring):</strong> Brown, grey, black + earth — no neutral present unless specifically wired in</span>
+              <span>
+                <strong>3-core switch drop (2-way wiring):</strong> Brown, grey, black + earth — no
+                neutral present unless specifically wired in
+              </span>
             </li>
           </ul>
         </div>
         <p>
           Solutions for the neutral wire problem: (a) run a new 3-core and earth cable from a
           junction box (where the neutral is available) down to the switch position — this is the
-          cleanest solution and is required for smart dimmer switches with higher power requirements;
-          (b) use a no-neutral smart switch — these devices use a tiny leakage current through the
-          load to power themselves. They work with many LED and halogen loads but may cause flicker
-          or incomplete dimming with some LED drivers; (c) specify smart bulbs (Zigbee or WiFi) and
-          retain the existing switch wiring — the switch remains on permanently and the smart bulbs
-          are controlled by app or voice assistant only.
+          cleanest solution and is required for smart dimmer switches with higher power
+          requirements; (b) use a no-neutral smart switch — these devices use a tiny leakage current
+          through the load to power themselves. They work with many LED and halogen loads but may
+          cause flicker or incomplete dimming with some LED drivers; (c) specify smart bulbs (Zigbee
+          or WiFi) and retain the existing switch wiring — the switch remains on permanently and the
+          smart bulbs are controlled by app or voice assistant only.
         </p>
         <SEOAppBridge
           title="Design smart lighting circuits and quote accurately"
@@ -302,46 +314,61 @@ const sections = [
       <>
         <p>
           Lux level recommendations guide the lighting design and help justify the luminaire count
-          and type. Key reference documents are CIBSE LG3 (domestic), CIBSE LG7 (offices), and
-          BS EN 12464-1 (workplace lighting):
+          and type. Key reference documents are CIBSE LG3 (domestic), CIBSE LG7 (offices), and BS EN
+          12464-1 (workplace lighting):
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Living room (ambient):</strong> 50 to 150 lux</span>
+              <span>
+                <strong>Living room (ambient):</strong> 50 to 150 lux
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Living room (reading task):</strong> 300 lux at the reading plane</span>
+              <span>
+                <strong>Living room (reading task):</strong> 300 lux at the reading plane
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Kitchen worktops (task):</strong> 300 to 500 lux</span>
+              <span>
+                <strong>Kitchen worktops (task):</strong> 300 to 500 lux
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Office (general):</strong> 300 to 500 lux at desk level (BS EN 12464-1, Table 5.3)</span>
+              <span>
+                <strong>Office (general):</strong> 300 to 500 lux at desk level (BS EN 12464-1,
+                Table 5.3)
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Home office (task):</strong> 500 lux at desk surface</span>
+              <span>
+                <strong>Home office (task):</strong> 500 lux at desk surface
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Bedroom (general):</strong> 100 lux; bedside reading: 200 to 300 lux</span>
+              <span>
+                <strong>Bedroom (general):</strong> 100 lux; bedside reading: 200 to 300 lux
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Bathroom:</strong> 150 to 200 lux general; 300 to 500 lux at vanity mirror</span>
+              <span>
+                <strong>Bathroom:</strong> 150 to 200 lux general; 300 to 500 lux at vanity mirror
+              </span>
             </li>
           </ul>
         </div>
         <p>
           Scene setting allows multiple pre-programmed lighting states (scenes) to be recalled at
-          the touch of a button or via a voice command. A living room might have: "Morning" (300 lux,
-          cool white 4000K), "Evening" (150 lux, warm white 2700K), "Cinema" (30 lux, amber), and
-          "Reading" (400 lux at the reading chair, warm white). Scene programming is carried out
+          the touch of a button or via a voice command. A living room might have: "Morning" (300
+          lux, cool white 4000K), "Evening" (150 lux, warm white 2700K), "Cinema" (30 lux, amber),
+          and "Reading" (400 lux at the reading chair, warm white). Scene programming is carried out
           during commissioning and is included in the installation cost.
         </p>
       </>
@@ -353,20 +380,20 @@ const sections = [
     content: (
       <>
         <p>
-          Automatic lighting controls significantly reduce energy consumption and improve convenience.
-          The two most impactful technologies are presence detection and daylight harvesting:
+          Automatic lighting controls significantly reduce energy consumption and improve
+          convenience. The two most impactful technologies are presence detection and daylight
+          harvesting:
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <ShieldCheck className="w-6 h-6 text-yellow-400 mb-3" />
             <h3 className="font-bold text-white text-base mb-2">Presence Detection</h3>
             <p className="text-white text-sm leading-relaxed">
-              PIR (passive infrared) or microwave/radar sensors detect occupancy and switch
-              lights on when someone enters a space, off after a preset hold time when they
-              leave. PIR is suitable for areas with normal movement; radar (microwave) detects
-              minor movements and is preferred for offices and meeting rooms where occupants
-              sit still for extended periods. Combined PIR/microwave sensors provide the best
-              performance.
+              PIR (passive infrared) or microwave/radar sensors detect occupancy and switch lights
+              on when someone enters a space, off after a preset hold time when they leave. PIR is
+              suitable for areas with normal movement; radar (microwave) detects minor movements and
+              is preferred for offices and meeting rooms where occupants sit still for extended
+              periods. Combined PIR/microwave sensors provide the best performance.
             </p>
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -374,10 +401,10 @@ const sections = [
             <h3 className="font-bold text-white text-base mb-2">Daylight Harvesting</h3>
             <p className="text-white text-sm leading-relaxed">
               A photocell measures the natural daylight contribution and dims the artificial
-              lighting to maintain a constant lux level at the working plane. Most effective
-              in perimeter zones with good daylighting. Reduces lighting energy by 20 to 50%
-              in spaces with good daylight access. Requires DALI-dimable or 0-10V drivers and
-              a DALI or digital lighting controller.
+              lighting to maintain a constant lux level at the working plane. Most effective in
+              perimeter zones with good daylighting. Reduces lighting energy by 20 to 50% in spaces
+              with good daylight access. Requires DALI-dimable or 0-10V drivers and a DALI or
+              digital lighting controller.
             </p>
           </div>
         </div>
@@ -415,17 +442,18 @@ const sections = [
               <span>
                 <strong>Mid-range (Lutron Caseta, Rako, Shelly) — £80 to £150 per point</strong>.
                 Smart switches or dimmers requiring neutral wire. Scene control, dimming, and
-                scheduling. Integration with Apple Home, Google Home, Alexa. Good for new-build
-                and full renovation. Professional commissioning required for scene programming.
+                scheduling. Integration with Apple Home, Google Home, Alexa. Good for new-build and
+                full renovation. Professional commissioning required for scene programming.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>High-end (DALI, KNX, Control4, Crestron) — £150 to £400+ per point</strong>.
-                Addressable DALI drivers, dedicated bus wiring, presence detectors, daylight sensors,
-                and full commissioning by a specialist. Best for new-build, high-end residential, and
-                commercial projects. Integrates with AV, HVAC, blinds, and security systems.
+                Addressable DALI drivers, dedicated bus wiring, presence detectors, daylight
+                sensors, and full commissioning by a specialist. Best for new-build, high-end
+                residential, and commercial projects. Integrates with AV, HVAC, blinds, and security
+                systems.
               </span>
             </li>
           </ul>
@@ -439,8 +467,8 @@ const sections = [
     content: (
       <>
         <p>
-          Smart lighting is one of the most accessible routes into higher-value electrical work.
-          A competent electrician who understands neutral wire requirements, can programme basic
+          Smart lighting is one of the most accessible routes into higher-value electrical work. A
+          competent electrician who understands neutral wire requirements, can programme basic
           scenes on Lutron or Rako systems, and can install DALI bus wiring for commercial projects
           will find growing demand from both residential and commercial clients.
         </p>
@@ -449,7 +477,9 @@ const sections = [
             <div className="flex items-start gap-4">
               <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Always Check for Neutral at the Survey</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Always Check for Neutral at the Survey
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Before specifying smart switches, check whether a neutral wire is present at each
                   switch position. If it is not, price the cost of running new cables as part of the
@@ -466,8 +496,8 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Issue an EIC for New Circuits</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Where smart lighting installation involves new circuits or new cable runs (not just
-                  replacing fittings on existing circuits), an{' '}
+                  Where smart lighting installation involves new circuits or new cable runs (not
+                  just replacing fittings on existing circuits), an{' '}
                   <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificate
                   </SEOInternalLink>{' '}
@@ -483,10 +513,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Build a Commissioning Service</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Scene programming, presence detection calibration, and daylight sensor commissioning
-                  are specialist skills that command a day-rate premium over standard electrical
-                  work. Building competency in DALI and Lutron commissioning opens access to
-                  commercial and high-end residential projects.
+                  Scene programming, presence detection calibration, and daylight sensor
+                  commissioning are specialist skills that command a day-rate premium over standard
+                  electrical work. Building competency in DALI and Lutron commissioning opens access
+                  to commercial and high-end residential projects.
                 </p>
               </div>
             </div>

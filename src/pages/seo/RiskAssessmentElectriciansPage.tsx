@@ -1,9 +1,5 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
-import { SEOInternalLink ,
-  FileText,
-,
-  User,
-} from '@/components/seo/SEOInternalLink';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
 import {
@@ -19,6 +15,8 @@ import {
   CheckCircle2,
   Scale,
   Brain,
+  FileText,
+  User,
 } from 'lucide-react';
 
 // -------------------------------------------------------------------
@@ -695,9 +693,9 @@ const sections = [
           standards, and produces a professional document ready for use on site.
         </p>
         <p>
-          The <SEOInternalLink href="/rams-generator">RAMS generator tool</SEOInternalLink>{' '}
-          goes further by combining the risk assessment with a matching method statement, giving you
-          the complete RAMS package in one go. This is particularly valuable for commercial and
+          The <SEOInternalLink href="/rams-generator">RAMS generator tool</SEOInternalLink> goes
+          further by combining the risk assessment with a matching method statement, giving you the
+          complete RAMS package in one go. This is particularly valuable for commercial and
           industrial work where main contractors require RAMS before you can start on site.
         </p>
         <p>

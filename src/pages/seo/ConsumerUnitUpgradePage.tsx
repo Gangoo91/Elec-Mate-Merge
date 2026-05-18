@@ -1,7 +1,5 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
-import { SEOInternalLink ,
-  CircuitBoard,
-} from '@/components/seo/SEOInternalLink';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
 import {
@@ -20,6 +18,7 @@ import {
   Receipt,
   Flame,
   CheckCircle,
+  CircuitBoard,
 } from 'lucide-react';
 
 // -------------------------------------------------------------------

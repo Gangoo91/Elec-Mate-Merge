@@ -1,7 +1,5 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
-import { SEOInternalLink ,
-  Car,
-} from '@/components/seo/SEOInternalLink';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
 import {
@@ -14,6 +12,7 @@ import {
   BarChart2,
   Sun,
   FileCheck2,
+  Car,
 } from 'lucide-react';
 
 // -------------------------------------------------------------------

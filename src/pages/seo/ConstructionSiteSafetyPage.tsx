@@ -1,7 +1,5 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
-import { SEOInternalLink ,
-  FileText,
-} from '@/components/seo/SEOInternalLink';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
 import {
@@ -19,6 +17,7 @@ import {
   Megaphone,
   Wrench,
   Building2,
+  FileText,
 } from 'lucide-react';
 
 // -------------------------------------------------------------------

@@ -1,7 +1,5 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
-import { SEOInternalLink ,
-  Network,
-} from '@/components/seo/SEOInternalLink';
+import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
 import {
@@ -13,6 +11,7 @@ import {
   Wrench,
   Server,
   Gauge,
+  Network,
 } from 'lucide-react';
 
 // -------------------------------------------------------------------
@@ -21,7 +20,10 @@ import {
 
 const breadcrumbs = [
   { label: 'Specialist Work', href: '/guides/electrical-certificate-types-uk' },
-  { label: 'Data Centre Electrical Installation', href: '/guides/data-centre-electrical-installation' },
+  {
+    label: 'Data Centre Electrical Installation',
+    href: '/guides/data-centre-electrical-installation',
+  },
 ];
 
 const tocItems = [
@@ -54,7 +56,7 @@ const faqs = [
   {
     question: 'What is an ATS and how does it differ from an STS?',
     answer:
-      'An ATS (Automatic Transfer Switch) is a switch that automatically transfers an electrical load from its primary power source (the utility or UPS output) to a secondary source (typically a generator) when the primary source fails. The transfer time is typically 5 to 30 seconds — fast enough to be covered by UPS battery runtime. An STS (Static Transfer Switch) is a much faster transfer device that uses solid-state components (thyristors) rather than mechanical contacts to transfer between two sources. Transfer time is typically less than 4 milliseconds — within half a cycle of the mains frequency, fast enough that IT equipment does not notice the transfer. STSs are used in high-availability data centres to switch between two independent UPS systems (Path A and Path B). If Path A fails, the STS transfers the load to Path B in under 4ms. The load must meet the IT equipment\'s tolerance for momentary voltage disturbances, which is specified in the IEC 61000 series. STSs are significantly more expensive than ATSs but provide the near-instantaneous transfer that Tier IV data centres require.',
+      "An ATS (Automatic Transfer Switch) is a switch that automatically transfers an electrical load from its primary power source (the utility or UPS output) to a secondary source (typically a generator) when the primary source fails. The transfer time is typically 5 to 30 seconds — fast enough to be covered by UPS battery runtime. An STS (Static Transfer Switch) is a much faster transfer device that uses solid-state components (thyristors) rather than mechanical contacts to transfer between two sources. Transfer time is typically less than 4 milliseconds — within half a cycle of the mains frequency, fast enough that IT equipment does not notice the transfer. STSs are used in high-availability data centres to switch between two independent UPS systems (Path A and Path B). If Path A fails, the STS transfers the load to Path B in under 4ms. The load must meet the IT equipment's tolerance for momentary voltage disturbances, which is specified in the IEC 61000 series. STSs are significantly more expensive than ATSs but provide the near-instantaneous transfer that Tier IV data centres require.",
   },
   {
     question: 'What does BS EN 50600-2-2 cover for data centre electrical installations?',
@@ -62,7 +64,7 @@ const faqs = [
       'BS EN 50600-2-2 (Information technology — Data centre facilities and infrastructures — Part 2-2: Power distribution) is the European standard for electrical power distribution within data centres. It covers: power supply system design (utility intake, generator connections, UPS systems, switchgear); distribution systems (cabling, busbar, PDUs); power quality requirements; earthing and bonding; electrical protection; monitoring and control; and classification of the power distribution system in terms of availability. The standard aligns with the Uptime Institute tier concept but uses its own class (1 to 4) designation. BS EN 50600-2-2 is used alongside BS 7671 — BS 7671 governs the general electrical installation requirements; BS EN 50600-2-2 adds the data centre-specific requirements on top. In practice, data centre electrical engineers must be familiar with both standards and with the specialist requirements of UPS systems, battery strings, generator controls, and busbar systems.',
   },
   {
-    question: 'Why does cooling account for 40–60% of a data centre\'s power budget?',
+    question: "Why does cooling account for 40–60% of a data centre's power budget?",
     answer:
       'Every watt consumed by IT equipment — servers, storage, network switches — is converted to heat. That heat must be removed from the data hall and rejected to the atmosphere to maintain IT equipment at its operating temperature (typically 18–27°C inlet temperature per ASHRAE A1/A2 guidelines). The cooling system — computer room air conditioners (CRACs), computer room air handlers (CRAHs), chillers, cooling towers, dry coolers, and in-row cooling units — must handle this heat load continuously. In a large data centre, the IT load may be 10MW or more. The cooling system for that load may consume 4 to 6MW of electrical power in addition. The ratio of total facility power to IT power is expressed as PUE (Power Usage Effectiveness). A PUE of 1.0 would be perfectly efficient (all power goes to IT). Modern data centres target PUE of 1.2 to 1.4; older and less efficient facilities may have PUE of 1.6 to 2.0. Understanding PUE is important for electrical engineers on data centre projects — the cooling electrical loads are a major part of the LV distribution design.',
   },
@@ -79,7 +81,7 @@ const faqs = [
   {
     question: 'What is the role of the electrical engineer during data centre commissioning?',
     answer:
-      'Data centre commissioning is a rigorous process that tests each system component individually (Level 1), then system integration (Level 2), then complete facility-wide scenarios including simulated failures (Level 3 and Level 4). The electrical engineer\'s responsibilities during commissioning include: witnessing factory acceptance testing (FAT) of UPS systems, switchgear, and generators; overseeing installation and pre-commissioning testing of all electrical systems; coordinating the energisation sequence (utility intake → HV switchgear → transformers → LV main switchboards → UPS → distribution → IT loads); performing and witnessing all LV tests per BS 7671 (insulation resistance, continuity, earth fault loop impedance, RCD testing) for the general electrical installation; participating in integrated systems testing including simulated mains fail and UPS bypass scenarios; and reviewing and signing off the commissioning test documentation. An Electrical Installation Certificate is required for all new LV work per BS 7671, even within a data centre.',
+      "Data centre commissioning is a rigorous process that tests each system component individually (Level 1), then system integration (Level 2), then complete facility-wide scenarios including simulated failures (Level 3 and Level 4). The electrical engineer's responsibilities during commissioning include: witnessing factory acceptance testing (FAT) of UPS systems, switchgear, and generators; overseeing installation and pre-commissioning testing of all electrical systems; coordinating the energisation sequence (utility intake → HV switchgear → transformers → LV main switchboards → UPS → distribution → IT loads); performing and witnessing all LV tests per BS 7671 (insulation resistance, continuity, earth fault loop impedance, RCD testing) for the general electrical installation; participating in integrated systems testing including simulated mains fail and UPS bypass scenarios; and reviewing and signing off the commissioning test documentation. An Electrical Installation Certificate is required for all new LV work per BS 7671, even within a data centre.",
   },
 ];
 
@@ -141,8 +143,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
-    description:
-      'C&G 2391 is essential for data centre commissioning electrical testing.',
+    description: 'C&G 2391 is essential for data centre commissioning electrical testing.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -172,10 +173,9 @@ const sections = [
           installation rigour that is rewarding to work within.
         </p>
         <p>
-          This guide covers the Uptime Institute Tier classification, critical power design
-          (UPS, generators, ATS, STS), the relevant standard{' '}
-          <strong>BS EN 50600</strong>, power distribution (PDUs and busbar), earthing in data
-          centres, and M&E coordination.
+          This guide covers the Uptime Institute Tier classification, critical power design (UPS,
+          generators, ATS, STS), the relevant standard <strong>BS EN 50600</strong>, power
+          distribution (PDUs and busbar), earthing in data centres, and M&E coordination.
         </p>
       </>
     ),
@@ -213,8 +213,8 @@ const sections = [
         <p>
           Most new-build data centres target Tier III as a minimum. Hyperscaler facilities often
           build to Tier III standards but with Tier IV levels of operational discipline. The
-          electrical design for Tier III and IV requires dual-path UPS systems (Path A and Path B
-          to every rack), independent generator sets on each path, and automatic transfer capability
+          electrical design for Tier III and IV requires dual-path UPS systems (Path A and Path B to
+          every rack), independent generator sets on each path, and automatic transfer capability
           between paths.
         </p>
       </>
@@ -226,26 +226,46 @@ const sections = [
     content: (
       <>
         <p>
-          The critical power system is the heart of a data centre electrical installation. It ensures
-          that the IT load receives continuous, clean power regardless of utility supply issues.
+          The critical power system is the heart of a data centre electrical installation. It
+          ensures that the IT load receives continuous, clean power regardless of utility supply
+          issues.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Server className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>UPS (Uninterruptible Power Supply)</strong> — provides instant battery backup on utility failure, protecting the IT load until generators start. Modern large-scale data centres use modular UPS systems with N+1 or 2N module redundancy. Efficiency at full load: 95–97% (VFI double-conversion).</span>
+              <span>
+                <strong>UPS (Uninterruptible Power Supply)</strong> — provides instant battery
+                backup on utility failure, protecting the IT load until generators start. Modern
+                large-scale data centres use modular UPS systems with N+1 or 2N module redundancy.
+                Efficiency at full load: 95–97% (VFI double-conversion).
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Server className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Standby generators</strong> — diesel or gas generators start within 10–15 seconds of utility failure and carry the full data centre load within 30 seconds. Battery runtime on the UPS bridges this gap. Generator sizing includes all IT loads plus cooling, lighting, and ancillary services.</span>
+              <span>
+                <strong>Standby generators</strong> — diesel or gas generators start within 10–15
+                seconds of utility failure and carry the full data centre load within 30 seconds.
+                Battery runtime on the UPS bridges this gap. Generator sizing includes all IT loads
+                plus cooling, lighting, and ancillary services.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Server className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>ATS (Automatic Transfer Switch)</strong> — transfers the non-UPS loads (cooling, lighting, ancillary) from utility to generator supply on utility failure. Transfer time 5–30 seconds. Mechanical switching device.</span>
+              <span>
+                <strong>ATS (Automatic Transfer Switch)</strong> — transfers the non-UPS loads
+                (cooling, lighting, ancillary) from utility to generator supply on utility failure.
+                Transfer time 5–30 seconds. Mechanical switching device.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Server className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>STS (Static Transfer Switch)</strong> — transfers IT loads between two independent UPS paths in under 4 milliseconds using solid-state switching. Used in Tier III and IV for dual-path PDU switching. Much faster than an ATS but significantly more expensive.</span>
+              <span>
+                <strong>STS (Static Transfer Switch)</strong> — transfers IT loads between two
+                independent UPS paths in under 4 milliseconds using solid-state switching. Used in
+                Tier III and IV for dual-path PDU switching. Much faster than an ATS but
+                significantly more expensive.
+              </span>
             </li>
           </ul>
         </div>
@@ -266,19 +286,34 @@ const sections = [
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>BS EN 50600-1</strong> — General concepts. Defines terminology, reference models, and the availability class (1–4) framework corresponding to Tier I–IV.</span>
+              <span>
+                <strong>BS EN 50600-1</strong> — General concepts. Defines terminology, reference
+                models, and the availability class (1–4) framework corresponding to Tier I–IV.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>BS EN 50600-2-2</strong> — Power distribution. Covers utility intake, UPS, generators, distribution boards, PDUs, and earthing. The core electrical design standard for data centre power engineers.</span>
+              <span>
+                <strong>BS EN 50600-2-2</strong> — Power distribution. Covers utility intake, UPS,
+                generators, distribution boards, PDUs, and earthing. The core electrical design
+                standard for data centre power engineers.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>BS EN 50600-2-3</strong> — Environmental control. Cooling systems including CRAC, CRAH, chillers, and adiabatic cooling. Relevant to M&E coordination as cooling loads dominate the LV distribution design.</span>
+              <span>
+                <strong>BS EN 50600-2-3</strong> — Environmental control. Cooling systems including
+                CRAC, CRAH, chillers, and adiabatic cooling. Relevant to M&E coordination as cooling
+                loads dominate the LV distribution design.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>BS EN 50600-3-1</strong> — Management and operational information. Covers monitoring, DCIM (Data Centre Infrastructure Management), and operational procedures relevant to the BMS and power monitoring installations.</span>
+              <span>
+                <strong>BS EN 50600-3-1</strong> — Management and operational information. Covers
+                monitoring, DCIM (Data Centre Infrastructure Management), and operational procedures
+                relevant to the BMS and power monitoring installations.
+              </span>
             </li>
           </ul>
         </div>
@@ -291,8 +326,8 @@ const sections = [
     content: (
       <>
         <p>
-          Power Distribution Units (PDUs) distribute power from the UPS output to the IT racks.
-          The IEC 62040 series and BS EN 50600-2-2 define PDU types:
+          Power Distribution Units (PDUs) distribute power from the UPS output to the IT racks. The
+          IEC 62040 series and BS EN 50600-2-2 define PDU types:
         </p>
         <div className="grid gap-4 sm:grid-cols-3 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -315,8 +350,8 @@ const sections = [
             <h3 className="font-bold text-white text-base mb-2">Type C PDU</h3>
             <p className="text-white text-sm leading-relaxed">
               Distribution with monitoring and remote switching. Individual circuit breakers can be
-              remotely operated — enables remote reboot of servers and selective load shedding.
-              Used in high-density hyperscaler deployments.
+              remotely operated — enables remote reboot of servers and selective load shedding. Used
+              in high-density hyperscaler deployments.
             </p>
           </div>
         </div>
@@ -342,10 +377,10 @@ const sections = [
         <p>
           The traditional approach of providing "isolated earth" (IE) sockets for IT equipment —
           separate from the protective earth — is now considered outdated and potentially unsafe.
-          Current practice, consistent with BS EN 50600-2-2 and IEC guidance, uses a
-          Mesh-Bonded Signal Reference Network (MESBN) as both the protective earth and the signal
-          reference. The MESBN is a grid of conductors beneath the raised floor bonded at every
-          crossing point, providing a low-impedance path at all frequencies.
+          Current practice, consistent with BS EN 50600-2-2 and IEC guidance, uses a Mesh-Bonded
+          Signal Reference Network (MESBN) as both the protective earth and the signal reference.
+          The MESBN is a grid of conductors beneath the raised floor bonded at every crossing point,
+          providing a low-impedance path at all frequencies.
         </p>
         <SEOAppBridge
           title="Certify data centre LV installations efficiently"
@@ -369,15 +404,28 @@ const sections = [
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Chiller plant</strong> — the largest single electrical load in most data centres. Chillers, cooling towers, condenser water pumps, and dry coolers can account for 30–40% of total facility electrical power at design capacity.</span>
+              <span>
+                <strong>Chiller plant</strong> — the largest single electrical load in most data
+                centres. Chillers, cooling towers, condenser water pumps, and dry coolers can
+                account for 30–40% of total facility electrical power at design capacity.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>CRAC/CRAH units</strong> — in-room cooling units circulate chilled water or direct expansion refrigerant in the data hall. Power density: 50–150kW per CRAH unit. Large data halls have dozens of these units.</span>
+              <span>
+                <strong>CRAC/CRAH units</strong> — in-room cooling units circulate chilled water or
+                direct expansion refrigerant in the data hall. Power density: 50–150kW per CRAH
+                unit. Large data halls have dozens of these units.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Building services</strong> — lighting, security, fire suppression systems, and HVAC for office and plant rooms complete the non-IT electrical load. These loads must be on the same generator-backed supply as the cooling system but are typically not UPS-backed.</span>
+              <span>
+                <strong>Building services</strong> — lighting, security, fire suppression systems,
+                and HVAC for office and plant rooms complete the non-IT electrical load. These loads
+                must be on the same generator-backed supply as the cooling system but are typically
+                not UPS-backed.
+              </span>
             </li>
           </ul>
         </div>
@@ -399,14 +447,14 @@ const sections = [
         <p>
           Data centre projects suit electricians with strong commercial and industrial backgrounds.
           Key skills in demand include: UPS and generator installation and commissioning; cable
-          containment systems at scale; overhead busbar installation; LV switchboard assembly
-          and termination; and systematic testing and commissioning in line with BS 7671.
+          containment systems at scale; overhead busbar installation; LV switchboard assembly and
+          termination; and systematic testing and commissioning in line with BS 7671.
         </p>
         <p>
           The certification requirements for data centre work are the same as for any commercial
           electrical project — a current ECS Gold card, C&G 2391 (Inspection and Testing), and
-          ideally experience with large-scale LV distribution. Data centre projects tend to run
-          for 12 to 36 months, providing stable long-term contract opportunities.
+          ideally experience with large-scale LV distribution. Data centre projects tend to run for
+          12 to 36 months, providing stable long-term contract opportunities.
         </p>
       </>
     ),
@@ -431,7 +479,9 @@ export default function DataCentreElectricalInstallationPage() {
       heroTitle={
         <>
           Data Centre Electrical Installation:{' '}
-          <span className="text-yellow-400">Tier Classification, Critical Power, and BS EN 50600</span>
+          <span className="text-yellow-400">
+            Tier Classification, Critical Power, and BS EN 50600
+          </span>
         </>
       }
       heroSubtitle="Data centre construction is booming in the UK. This guide covers Tier I–IV redundancy design, UPS and generator critical power systems, BS EN 50600 standards, PDU types, overhead busbar, and earthing design for electrical engineers."
