@@ -603,7 +603,8 @@
         </div>
       </div>
 
-      <!-- Customer Acceptance - SAME PAGE, won't split -->
+      <!-- Customer Acceptance - ELE-985: only render when showSignatureBox is true -->
+      {% if quote.showSignatureBox %}
       <div style="page-break-inside: avoid">
         <div
           style="border: 2px solid {{ branding.primaryColor | default: '#1e40af' }}; border-radius: 10px; overflow: hidden;"
@@ -773,6 +774,7 @@
             {% endif %}
           </div>
         </div>
+      {% endif %}
 
         <!-- Footer -->
         <div class="footer">
