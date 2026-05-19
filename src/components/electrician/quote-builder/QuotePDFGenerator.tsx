@@ -271,32 +271,60 @@ export const generateQuotePDF = async (quote: Partial<Quote>, companyProfile?: C
   doc.text('QUOTE BREAKDOWN', margin, currentY);
   currentY += 15;
 
-  // Main table with line items only
-  // ELE-888 — append per-item adjustment annotation to description if set
-  const tableData =
-    quote.items?.map((item) => {
-      let descriptionWithAdjustment = item.description;
-      if (
-        typeof item.itemAdjustmentPercent === 'number' &&
-        item.itemAdjustmentPercent !== 0
-      ) {
-        const sign = item.itemAdjustmentPercent > 0 ? '+' : '';
-        const note = item.itemAdjustmentLabel
-          ? `${sign}${item.itemAdjustmentPercent}% · ${item.itemAdjustmentLabel}`
-          : `${sign}${item.itemAdjustmentPercent}%`;
-        descriptionWithAdjustment = `${item.description}\n(${note})`;
-      }
-      return [
-        descriptionWithAdjustment,
-        item.quantity.toString(),
-        `£${item.unitPrice.toFixed(2)}`,
-        `£${item.totalPrice.toFixed(2)}`,
-      ];
-    }) || [];
+  // ELE-984 — respect showMaterialsBreakdown setting.
+  // When OFF: collapse items into one summary row per category.
+  // When ON (default): show every line item individually.
+  const showBreakdown = quote.settings?.showMaterialsBreakdown !== false;
+
+  let tableData: string[][];
+  let tableHead: string[][];
+
+  if (showBreakdown) {
+    // ELE-888 — append per-item adjustment annotation to description if set
+    tableHead = [['Description', 'Qty', 'Unit Price', 'Total']];
+    tableData =
+      quote.items?.map((item) => {
+        let descriptionWithAdjustment = item.description;
+        if (
+          typeof item.itemAdjustmentPercent === 'number' &&
+          item.itemAdjustmentPercent !== 0
+        ) {
+          const sign = item.itemAdjustmentPercent > 0 ? '+' : '';
+          const note = item.itemAdjustmentLabel
+            ? `${sign}${item.itemAdjustmentPercent}% · ${item.itemAdjustmentLabel}`
+            : `${sign}${item.itemAdjustmentPercent}%`;
+          descriptionWithAdjustment = `${item.description}\n(${note})`;
+        }
+        return [
+          descriptionWithAdjustment,
+          item.quantity.toString(),
+          `£${item.unitPrice.toFixed(2)}`,
+          `£${item.totalPrice.toFixed(2)}`,
+        ];
+      }) || [];
+  } else {
+    // Collapsed view — one row per category
+    tableHead = [['Category', 'Total']];
+    const categoryLabels: Record<string, string> = {
+      labour: 'Labour',
+      materials: 'Materials',
+      equipment: 'Equipment',
+      manual: 'Other',
+    };
+    const categoryTotals: Record<string, number> = {};
+    for (const item of quote.items || []) {
+      const cat = item.category || 'manual';
+      categoryTotals[cat] = (categoryTotals[cat] || 0) + (item.totalPrice || 0);
+    }
+    tableData = Object.entries(categoryTotals).map(([cat, total]) => [
+      categoryLabels[cat] || cat,
+      `£${total.toFixed(2)}`,
+    ]);
+  }
 
   autoTable(doc, {
     startY: currentY,
-    head: [['Description', 'Qty', 'Unit Price', 'Total']],
+    head: tableHead,
     body: tableData,
     theme: 'plain',
     headStyles: {
@@ -314,12 +342,17 @@ export const generateQuotePDF = async (quote: Partial<Quote>, companyProfile?: C
       lineWidth: 0.5,
       textColor: [60, 60, 60],
     },
-    columnStyles: {
-      0: { cellWidth: 'auto', halign: 'left' },
-      1: { halign: 'center', cellWidth: 20 },
-      2: { halign: 'right', cellWidth: 30 },
-      3: { halign: 'right', fontStyle: 'bold', cellWidth: 30, textColor: [40, 40, 40] },
-    },
+    columnStyles: showBreakdown
+      ? {
+          0: { cellWidth: 'auto', halign: 'left' },
+          1: { halign: 'center', cellWidth: 20 },
+          2: { halign: 'right', cellWidth: 30 },
+          3: { halign: 'right', fontStyle: 'bold', cellWidth: 30, textColor: [40, 40, 40] },
+        }
+      : {
+          0: { cellWidth: 'auto', halign: 'left' },
+          1: { halign: 'right', fontStyle: 'bold', cellWidth: 40, textColor: [40, 40, 40] },
+        },
     margin: { left: margin, right: margin },
     tableLineColor: [220, 220, 220],
     tableLineWidth: 0.5,
