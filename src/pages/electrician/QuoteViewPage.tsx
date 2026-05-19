@@ -240,8 +240,12 @@ const QuoteViewPage = () => {
   const isExpired = quote?.expiryDate ? isPast(new Date(quote.expiryDate)) : false;
   const daysUntilExpiry = quote?.expiryDate ? differenceInDays(new Date(quote.expiryDate), new Date()) : null;
   const isAccepted = quote?.acceptance_status === 'accepted';
-  const canAccept = (quote?.status === 'sent' || quote?.status === 'pending') && !isAccepted && !quote?.invoice_raised;
-  const canConvertToInvoice = isAccepted && !quote?.invoice_raised;
+  const isRejected = quote?.acceptance_status === 'rejected';
+  // ELE-986 — allow marking accepted / converting from any quote state including
+  // draft. Users often send the PDF manually outside the app, so the quote
+  // never gets to `sent` and we'd otherwise dead-end them.
+  const canAccept = !isAccepted && !isRejected && !quote?.invoice_raised;
+  const canConvertToInvoice = !isRejected && !quote?.invoice_raised;
   const canRevert = isAccepted && !quote?.invoice_raised;
   const canSendReminder = (quote?.status === 'sent' || quote?.status === 'pending') && !isAccepted && (emailTracking?.reminder_count || 0) < 3 && !isExpired;
 
@@ -624,6 +628,23 @@ const QuoteViewPage = () => {
               <span className="text-[15px] font-medium text-white">Duplicate</span>
               <span className="text-[12px] text-white">→</span>
             </button>
+            {canAccept && (
+              <button
+                onClick={() => { setShowActionsSheet(false); handleMarkAsAccepted(); }}
+                className="w-full flex items-center justify-between h-12 px-4 rounded-xl hover:bg-white/[0.04] touch-manipulation active:scale-[0.99] transition-all"
+              >
+                <span className="text-[15px] font-medium text-emerald-400">Mark as Accepted</span>
+              </button>
+            )}
+            {canConvertToInvoice && (
+              <button
+                onClick={() => { setShowActionsSheet(false); handleConvertToInvoice(); }}
+                disabled={isConverting}
+                className="w-full flex items-center justify-between h-12 px-4 rounded-xl hover:bg-white/[0.04] touch-manipulation active:scale-[0.99] transition-all disabled:opacity-50"
+              >
+                <span className="text-[15px] font-medium text-elec-yellow">Convert to Invoice</span>
+              </button>
+            )}
             {canSendReminder && (
               <button
                 onClick={() => { setShowActionsSheet(false); handleSendReminder(); }}

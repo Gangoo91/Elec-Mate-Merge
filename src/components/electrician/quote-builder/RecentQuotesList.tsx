@@ -74,8 +74,20 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
   };
 
   const canRaiseInvoice = (quote: Quote) => {
-    const isWorkComplete = quote.tags?.includes('work_done');
-    return quote.acceptance_status === 'accepted' && isWorkComplete && !quote.invoice_raised;
+    // ELE-986 — mirror the Mark as Paid pattern from the invoice side.
+    // Don't require in-app acceptance or work_done tag; users often send the
+    // PDF manually and just need to roll it into an invoice.
+    return !quote.invoice_raised && quote.acceptance_status !== 'rejected';
+  };
+
+  const canMarkAccepted = (quote: Quote) => {
+    // Any quote that hasn't already landed in a final state — including
+    // drafts that were never sent through the app.
+    return (
+      quote.acceptance_status !== 'accepted' &&
+      quote.acceptance_status !== 'rejected' &&
+      !quote.invoice_raised
+    );
   };
 
   const hasInvoiceRaised = (quote: Quote) => {
@@ -862,10 +874,12 @@ ${companyName}`;
         getAcceptanceStatusBadge={getAcceptanceStatusBadge}
         formatCurrency={formatCurrency}
         canRaiseInvoice={canRaiseInvoice}
+        canMarkAccepted={canMarkAccepted}
         onInvoiceAction={(quote) => {
           setQuoteForInvoice(quote);
           setShowInvoiceDecision(true);
         }}
+        onMarkAccepted={(quote) => handleActionClick(quote, 'accept')}
         onMarkWorkComplete={handleMarkWorkComplete}
         onViewInvoice={handleViewInvoice}
         onDeleteQuote={handleDeleteQuote}

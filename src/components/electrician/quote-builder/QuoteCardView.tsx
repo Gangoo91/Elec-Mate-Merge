@@ -35,7 +35,9 @@ interface QuoteCardViewProps {
   getAcceptanceStatusBadge: (quote: Quote) => JSX.Element;
   formatCurrency: (amount: number) => string;
   canRaiseInvoice: (quote: Quote) => boolean;
+  canMarkAccepted?: (quote: Quote) => boolean;
   onInvoiceAction: (quote: Quote) => void;
+  onMarkAccepted?: (quote: Quote) => void;
   onMarkWorkComplete?: (quote: Quote) => void;
   onViewInvoice?: (quote: Quote) => void;
   onDeleteQuote: (quote: Quote) => void;
@@ -52,7 +54,9 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
   getAcceptanceStatusBadge,
   formatCurrency,
   canRaiseInvoice,
+  canMarkAccepted,
   onInvoiceAction,
+  onMarkAccepted,
   onMarkWorkComplete,
   onViewInvoice,
   onDeleteQuote,
@@ -352,6 +356,20 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
                           </button>
                         </div>
                       </div>
+                    )}
+
+                    {/* ELE-986 — Mark as Accepted on any non-final, non-sent quote.
+                        Hidden when the Accept/Reject pair above is already
+                        visible (canResend → quote was sent through the app). */}
+                    {!canResend(quote) && canMarkAccepted?.(quote) && onMarkAccepted && (
+                      <button
+                        onClick={() => onMarkAccepted(quote)}
+                        disabled={loadingAction === `action-${quote.id}`}
+                        className="w-full h-10 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 rounded-lg flex items-center justify-center gap-2 text-xs font-semibold disabled:opacity-50"
+                      >
+                        <Check className="h-4 w-4" />
+                        Mark as Accepted
+                      </button>
                     )}
 
                     {canRaiseInvoice(quote) && (

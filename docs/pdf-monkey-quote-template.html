@@ -193,6 +193,10 @@
             </tr>
           </thead>
           <tbody>
+            {% comment %}ELE-984 — Show Materials Breakdown toggle. When ON (default),
+            render every line item under category headers. When OFF, collapse to one
+            summary row per non-empty category with the category subtotal.{% endcomment %}
+            {% if settings.showMaterialsBreakdown %}
             {% if labourItems.size > 0 %}
             <tr>
               <td colspan="4" class="category-header"><span>●</span> Labour</td>
@@ -265,7 +269,53 @@
               <td>£{{ item.unitPrice | round: 2 }}</td>
               <td>£{{ item.totalPrice | round: 2 }}</td>
             </tr>
-            {% endfor %} {% endif %} {% if labourItems.size == 0 and materialItems.size == 0 and
+            {% endfor %} {% endif %}
+            {% else %}
+            {% comment %}Summary mode — one row per non-empty category with subtotal.{% endcomment %}
+            {% if labourItems.size > 0 %}
+            {% assign cat_total = 0 %}
+            {% for item in labourItems %}{% assign cat_total = cat_total | plus: item.totalPrice %}{% endfor %}
+            <tr>
+              <td><div class="item-desc">Labour</div></td>
+              <td class="qty-unit"></td>
+              <td></td>
+              <td>£{{ cat_total | round: 2 }}</td>
+            </tr>
+            {% endif %}
+            {% if materialItems.size > 0 %}
+            {% assign cat_total = 0 %}
+            {% for item in materialItems %}{% assign cat_total = cat_total | plus: item.totalPrice %}{% endfor %}
+            <tr>
+              <td><div class="item-desc">Materials</div></td>
+              <td class="qty-unit"></td>
+              <td></td>
+              <td>£{{ cat_total | round: 2 }}</td>
+            </tr>
+            {% endif %}
+            {% if equipmentItems.size > 0 %}
+            {% assign cat_total = 0 %}
+            {% for item in equipmentItems %}{% assign cat_total = cat_total | plus: item.totalPrice %}{% endfor %}
+            <tr>
+              <td><div class="item-desc">Equipment</div></td>
+              <td class="qty-unit"></td>
+              <td></td>
+              <td>£{{ cat_total | round: 2 }}</td>
+            </tr>
+            {% endif %}
+            {% if manualItems.size > 0 %}
+            {% assign cat_total = 0 %}
+            {% for item in manualItems %}{% assign cat_total = cat_total | plus: item.totalPrice %}{% endfor %}
+            <tr>
+              <td><div class="item-desc">Additional Items</div></td>
+              <td class="qty-unit"></td>
+              <td></td>
+              <td>£{{ cat_total | round: 2 }}</td>
+            </tr>
+            {% endif %}
+            {% endif %}
+            {% comment %}Legacy fallback — flat items list when no categorisation present.
+            Toggle has no effect here (nothing to summarise).{% endcomment %}
+            {% if labourItems.size == 0 and materialItems.size == 0 and
             equipmentItems.size == 0 and manualItems.size == 0 %} {% for item in items %}
             <tr>
               <td>
@@ -604,7 +654,11 @@
       </div>
 
       <!-- Customer Acceptance - SAME PAGE, won't split -->
+      <!-- ELE-985 — gated on quote.showSignatureBox so the toggle in Quote
+           Settings actually hides this block. Footer stays outside the gate
+           so it still renders when the signature box is off. -->
       <div style="page-break-inside: avoid">
+        {% if quote.showSignatureBox %}
         <div
           style="border: 2px solid {{ branding.primaryColor | default: '#1e40af' }}; border-radius: 10px; overflow: hidden;"
         >
@@ -773,6 +827,7 @@
             {% endif %}
           </div>
         </div>
+        {% endif %}
 
         <!-- Footer -->
         <div class="footer">
