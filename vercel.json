@@ -93,14 +93,14 @@
     }
   ],
   "rewrites": [
-    { "source": "/privacy", "destination": "/index.html" },
-    { "source": "/terms", "destination": "/index.html" },
-    { "source": "/cookies", "destination": "/index.html" },
-    { "source": "/acceptable-use", "destination": "/index.html" },
-    { "source": "/support", "destination": "/index.html" },
+    { "source": "/privacy", "destination": "/" },
+    { "source": "/terms", "destination": "/" },
+    { "source": "/cookies", "destination": "/" },
+    { "source": "/acceptable-use", "destination": "/" },
+    { "source": "/support", "destination": "/" },
     {
       "source": "/((?!assets/|api/|llms\\.txt|llms-full\\.txt|robots\\.txt|sitemap.*\\.xml|\\.well-known/|.+\\.[a-zA-Z0-9]+$).*)",
-      "destination": "/index.html"
+      "destination": "/"
     }
   ]
 }
