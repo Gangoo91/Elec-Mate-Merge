@@ -1,10 +1,10 @@
 {
   "summary": {
-    "generatedAt": "2026-05-18T19:57:15.251Z",
+    "generatedAt": "2026-05-19T19:01:44.057Z",
     "totalPages": 1380,
     "byStatus": {
-      "green": 1292,
-      "amber": 86,
+      "green": 1285,
+      "amber": 93,
       "red": 2
     },
     "byAudience": {
@@ -26,27 +26,62 @@
       "BusinessTemplate": 16
     },
     "wordBuckets": {
-      "tiny (<800)": 28,
-      "small (800-1500)": 129,
+      "tiny (<800)": 36,
+      "small (800-1500)": 121,
       "medium (1500-3000)": 641,
       "large (3000-5000)": 567,
       "huge (5000+)": 15
     },
     "linkBuckets": {
       "<3": 1,
-      "3-5": 54,
-      "6-9": 987,
+      "3-5": 61,
+      "6-9": 980,
       "10+": 338
     },
-    "issueCount": 35,
+    "issueCount": 43,
     "issuesByKindCount": {
-      "description-too-short": 7,
-      "thin-content": 28
+      "thin-content": 36,
+      "description-too-short": 7
     },
     "topDuplicateTitles": [],
     "topDuplicateDescs": []
   },
   "issues": [
+    {
+      "slug": "/guides/am2-module-1-introduction",
+      "kind": "thin-content",
+      "value": "518 words"
+    },
+    {
+      "slug": "/guides/am2-module-2-health-safety-documentation",
+      "kind": "thin-content",
+      "value": "537 words"
+    },
+    {
+      "slug": "/guides/am2-module-3-installation-tasks",
+      "kind": "thin-content",
+      "value": "540 words"
+    },
+    {
+      "slug": "/guides/am2-module-4-inspection-and-testing",
+      "kind": "thin-content",
+      "value": "516 words"
+    },
+    {
+      "slug": "/guides/am2-module-5-fault-diagnosis-and-rectification",
+      "kind": "thin-content",
+      "value": "516 words"
+    },
+    {
+      "slug": "/guides/am2-module-6-online-knowledge-test",
+      "kind": "thin-content",
+      "value": "509 words"
+    },
+    {
+      "slug": "/guides/am2-module-7-exam-strategy-and-success-tips",
+      "kind": "thin-content",
+      "value": "497 words"
+    },
     {
       "slug": "/guides/break-glass-symbol",
       "kind": "description-too-short",
@@ -85,17 +120,17 @@
     {
       "slug": "/guides/electrical-containment-symbols",
       "kind": "thin-content",
-      "value": "794 words"
+      "value": "784 words"
     },
     {
       "slug": "/guides/electrical-controls-symbols",
       "kind": "thin-content",
-      "value": "777 words"
+      "value": "767 words"
     },
     {
       "slug": "/guides/electrical-equipment-symbols",
       "kind": "thin-content",
-      "value": "791 words"
+      "value": "781 words"
     },
     {
       "slug": "/guides/electrical-lighting-symbols",
@@ -113,9 +148,14 @@
       "value": "104 chars"
     },
     {
+      "slug": "/guides/electrical-safety-symbols",
+      "kind": "thin-content",
+      "value": "793 words"
+    },
+    {
       "slug": "/guides/electrical-switch-symbols",
       "kind": "thin-content",
-      "value": "796 words"
+      "value": "786 words"
     },
     {
       "slug": "/guides/emergency-light-symbol",

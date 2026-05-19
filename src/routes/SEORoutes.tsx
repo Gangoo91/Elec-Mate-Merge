@@ -1679,25 +1679,6 @@ const UnitRevision539303Unit115Page = lazy(
   () => import('@/pages/seo/UnitRevision539303Unit115Page')
 );
 // AM2 deep-dives
-const Am2SectionAApplicationOfKnowledgePage = lazy(
-  () => import('@/pages/seo/Am2SectionAApplicationOfKnowledgePage')
-);
-const Am2SectionBSafeIsolationPage = lazy(() => import('@/pages/seo/Am2SectionBSafeIsolationPage'));
-const Am2SectionCWiringSystemsInstallationPage = lazy(
-  () => import('@/pages/seo/Am2SectionCWiringSystemsInstallationPage')
-);
-const Am2SectionDContinuityAndInsulationTestingPage = lazy(
-  () => import('@/pages/seo/Am2SectionDContinuityAndInsulationTestingPage')
-);
-const Am2SectionEInitialVerificationAndPeriodicInspectionPage = lazy(
-  () => import('@/pages/seo/Am2SectionEInitialVerificationAndPeriodicInspectionPage')
-);
-const Am2SectionFFaultDiagnosisPage = lazy(
-  () => import('@/pages/seo/Am2SectionFFaultDiagnosisPage')
-);
-const Am2SectionGIndustryKnowledgePage = lazy(
-  () => import('@/pages/seo/Am2SectionGIndustryKnowledgePage')
-);
 // Year-by-year revision plans
 const ElectricalApprenticeYear1RevisionPlanPage = lazy(
   () => import('@/pages/seo/ElectricalApprenticeYear1RevisionPlanPage')
@@ -2255,6 +2236,13 @@ const AICostEngineerPage = lazy(() => import('@/pages/seo/AICostEngineerPage'));
 const AIElectricianToolsPage = lazy(() => import('@/pages/seo/AIElectricianToolsPage'));
 const AIHealthSafetyAgentPage = lazy(() => import('@/pages/seo/AIHealthSafetyAgentPage'));
 const AM2ExamPreparationPage = lazy(() => import('@/pages/seo/AM2ExamPreparationPage'));
+const AM2Module1SEOPage = lazy(() => import('@/pages/seo/AM2Module1SEOPage'));
+const AM2Module2SEOPage = lazy(() => import('@/pages/seo/AM2Module2SEOPage'));
+const AM2Module3SEOPage = lazy(() => import('@/pages/seo/AM2Module3SEOPage'));
+const AM2Module4SEOPage = lazy(() => import('@/pages/seo/AM2Module4SEOPage'));
+const AM2Module5SEOPage = lazy(() => import('@/pages/seo/AM2Module5SEOPage'));
+const AM2Module6SEOPage = lazy(() => import('@/pages/seo/AM2Module6SEOPage'));
+const AM2Module7SEOPage = lazy(() => import('@/pages/seo/AM2Module7SEOPage'));
 const AdiabaticEquationCalculatorPage = lazy(
   () => import('@/pages/seo/AdiabaticEquationCalculatorPage')
 );
@@ -10723,6 +10711,62 @@ export function getSEORoutes() {
         element={
           <LazyRoute>
             <AM2ExamPreparationPage />
+      <Route
+        path="/guides/am2-module-1-introduction"
+        element={
+          <LazyRoute>
+            <AM2Module1SEOPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/am2-module-2-health-safety-documentation"
+        element={
+          <LazyRoute>
+            <AM2Module2SEOPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/am2-module-3-installation-tasks"
+        element={
+          <LazyRoute>
+            <AM2Module3SEOPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/am2-module-4-inspection-and-testing"
+        element={
+          <LazyRoute>
+            <AM2Module4SEOPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/am2-module-5-fault-diagnosis-and-rectification"
+        element={
+          <LazyRoute>
+            <AM2Module5SEOPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/am2-module-6-online-knowledge-test"
+        element={
+          <LazyRoute>
+            <AM2Module6SEOPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/am2-module-7-exam-strategy-and-success-tips"
+        element={
+          <LazyRoute>
+            <AM2Module7SEOPage />
+          </LazyRoute>
+        }
+      />
           </LazyRoute>
         }
       />
@@ -13118,60 +13162,25 @@ export function getSEORoutes() {
           </LazyRoute>
         }
       />
-      <Route
-        path="/guides/am2-section-a-application-of-knowledge"
-        element={
-          <LazyRoute>
-            <Am2SectionAApplicationOfKnowledgePage />
-          </LazyRoute>
+      </LazyRoute>
         }
       />
-      <Route
-        path="/guides/am2-section-b-safe-isolation"
-        element={
-          <LazyRoute>
-            <Am2SectionBSafeIsolationPage />
-          </LazyRoute>
+      </LazyRoute>
         }
       />
-      <Route
-        path="/guides/am2-section-c-wiring-systems-installation"
-        element={
-          <LazyRoute>
-            <Am2SectionCWiringSystemsInstallationPage />
-          </LazyRoute>
+      </LazyRoute>
         }
       />
-      <Route
-        path="/guides/am2-section-d-continuity-and-insulation-testing"
-        element={
-          <LazyRoute>
-            <Am2SectionDContinuityAndInsulationTestingPage />
-          </LazyRoute>
+      </LazyRoute>
         }
       />
-      <Route
-        path="/guides/am2-section-e-initial-verification-and-periodic-inspection"
-        element={
-          <LazyRoute>
-            <Am2SectionEInitialVerificationAndPeriodicInspectionPage />
-          </LazyRoute>
+      </LazyRoute>
         }
       />
-      <Route
-        path="/guides/am2-section-f-fault-diagnosis"
-        element={
-          <LazyRoute>
-            <Am2SectionFFaultDiagnosisPage />
-          </LazyRoute>
+      </LazyRoute>
         }
       />
-      <Route
-        path="/guides/am2-section-g-industry-knowledge"
-        element={
-          <LazyRoute>
-            <Am2SectionGIndustryKnowledgePage />
-          </LazyRoute>
+      </LazyRoute>
         }
       />
       <Route

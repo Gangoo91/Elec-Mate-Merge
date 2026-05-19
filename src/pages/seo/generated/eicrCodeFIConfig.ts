@@ -5,7 +5,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // FI classification rules and procedures match GN3 Section 3.
 
 const published = '2026-05-17';
-const modified = '2026-05-18';
+const modified = '2026-05-19';
 
 export const eicrCodeFIConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-code-fi-further-investigation',

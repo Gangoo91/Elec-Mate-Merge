@@ -4,7 +4,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Updated 2026-05-18.
 
 const published = '2026-05-18';
-const modified = '2026-05-18';
+const modified = '2026-05-19';
 
 export const EighteenthEditionAmendment42026ExamPrepConfig: GeneratedGuideConfig = {
   pagePath: '/guides/18th-edition-amendment-4-2026-exam-prep',
@@ -127,9 +127,9 @@ export const EighteenthEditionAmendment42026ExamPrepConfig: GeneratedGuideConfig
   ],
   relatedPages: [
     {
-      href: '/guides/am2-section-a-application-of-knowledge',
-      title: 'AM2 Section A — Application of Knowledge',
-      description: 'Related guide for qualified electricians taking or re-taking the 18th Edition (C&G 2382-23) exam.',
+      href: '/guides/am2-module-6-online-knowledge-test',
+      title: 'AM2 Module 6 — Online Knowledge Test',
+      description: 'BS 7671 + electrical science topic coverage for the AM2 online knowledge component.',
       icon: 'BookOpen',
       category: 'Guide',
     },

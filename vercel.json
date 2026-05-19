@@ -55,6 +55,41 @@
       "source": "/testing-sequence-guide",
       "destination": "/guides/testing-sequence-guide",
       "permanent": true
+    },
+    {
+      "source": "/guides/am2-section-a-application-of-knowledge",
+      "destination": "/guides/am2-module-6-online-knowledge-test",
+      "permanent": true
+    },
+    {
+      "source": "/guides/am2-section-b-safe-isolation",
+      "destination": "/guides/am2-module-2-health-safety-documentation",
+      "permanent": true
+    },
+    {
+      "source": "/guides/am2-section-c-wiring-systems-installation",
+      "destination": "/guides/am2-module-3-installation-tasks",
+      "permanent": true
+    },
+    {
+      "source": "/guides/am2-section-d-continuity-and-insulation-testing",
+      "destination": "/guides/am2-module-4-inspection-and-testing",
+      "permanent": true
+    },
+    {
+      "source": "/guides/am2-section-e-initial-verification-and-periodic-inspection",
+      "destination": "/guides/am2-module-4-inspection-and-testing",
+      "permanent": true
+    },
+    {
+      "source": "/guides/am2-section-f-fault-diagnosis",
+      "destination": "/guides/am2-module-5-fault-diagnosis-and-rectification",
+      "permanent": true
+    },
+    {
+      "source": "/guides/am2-section-g-industry-knowledge",
+      "destination": "/guides/am2-module-7-exam-strategy-and-success-tips",
+      "permanent": true
     }
   ],
   "rewrites": [

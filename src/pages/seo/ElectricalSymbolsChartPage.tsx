@@ -688,7 +688,7 @@ export default function ElectricalSymbolsChartPage() {
       title="Electrical Symbols Chart | BS EN 60617 Reference"
       description="Complete reference chart for electrical symbols used in the UK following BS EN 60617. Switch symbols, socket symbols, light symbols…"
       datePublished="2025-11-01"
-      dateModified="2026-05-18"
+      dateModified="2026-05-19"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Reference Guide"

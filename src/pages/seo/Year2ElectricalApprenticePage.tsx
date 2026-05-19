@@ -637,7 +637,7 @@ export default function Year2ElectricalApprenticePage() {
       title="Year 2 Apprentice Testing Guide | Continuity, IR, EFLI, RCD"
       description="Year 2 testing walkthrough for UK electrical apprentices. Continuity, insulation resistance, polarity, earth fault loop impedance, and RCD — every test…"
       datePublished="2025-10-01"
-      dateModified="2026-05-18"
+      dateModified="2026-05-19"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"
