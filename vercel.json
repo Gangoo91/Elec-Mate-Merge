@@ -58,37 +58,72 @@
     },
     {
       "source": "/guides/am2-section-a-application-of-knowledge",
-      "destination": "/guides/am2-module-6-online-knowledge-test",
+      "destination": "/guides/am2-section-e-online-knowledge-test",
       "permanent": true
     },
     {
       "source": "/guides/am2-section-b-safe-isolation",
-      "destination": "/guides/am2-module-2-health-safety-documentation",
+      "destination": "/guides/am2-section-c-safe-isolation",
       "permanent": true
     },
     {
       "source": "/guides/am2-section-c-wiring-systems-installation",
-      "destination": "/guides/am2-module-3-installation-tasks",
+      "destination": "/guides/am2-section-a-composite-installation",
       "permanent": true
     },
     {
       "source": "/guides/am2-section-d-continuity-and-insulation-testing",
-      "destination": "/guides/am2-module-4-inspection-and-testing",
+      "destination": "/guides/am2-section-b-inspection-testing-certification",
       "permanent": true
     },
     {
       "source": "/guides/am2-section-e-initial-verification-and-periodic-inspection",
-      "destination": "/guides/am2-module-4-inspection-and-testing",
+      "destination": "/guides/am2-section-b-inspection-testing-certification",
       "permanent": true
     },
     {
       "source": "/guides/am2-section-f-fault-diagnosis",
-      "destination": "/guides/am2-module-5-fault-diagnosis-and-rectification",
+      "destination": "/guides/am2-section-d-fault-diagnosis",
       "permanent": true
     },
     {
       "source": "/guides/am2-section-g-industry-knowledge",
-      "destination": "/guides/am2-module-7-exam-strategy-and-success-tips",
+      "destination": "/guides/am2-section-e-online-knowledge-test",
+      "permanent": true
+    },
+    {
+      "source": "/guides/am2-module-1-introduction",
+      "destination": "/guides/am2-overview-and-structure",
+      "permanent": true
+    },
+    {
+      "source": "/guides/am2-module-2-health-safety-documentation",
+      "destination": "/guides/am2-section-c-safe-isolation",
+      "permanent": true
+    },
+    {
+      "source": "/guides/am2-module-3-installation-tasks",
+      "destination": "/guides/am2-section-a-composite-installation",
+      "permanent": true
+    },
+    {
+      "source": "/guides/am2-module-4-inspection-and-testing",
+      "destination": "/guides/am2-section-b-inspection-testing-certification",
+      "permanent": true
+    },
+    {
+      "source": "/guides/am2-module-5-fault-diagnosis-and-rectification",
+      "destination": "/guides/am2-section-d-fault-diagnosis",
+      "permanent": true
+    },
+    {
+      "source": "/guides/am2-module-6-online-knowledge-test",
+      "destination": "/guides/am2-section-e-online-knowledge-test",
+      "permanent": true
+    },
+    {
+      "source": "/guides/am2-module-7-exam-strategy-and-success-tips",
+      "destination": "/guides/am2-overview-and-structure",
       "permanent": true
     }
   ],

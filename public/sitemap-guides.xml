@@ -4291,43 +4291,37 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/guides/am2-module-1-introduction</loc>
+    <loc>https://www.elec-mate.com/guides/am2-overview-and-structure</loc>
     <lastmod>2026-05-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/guides/am2-module-2-health-safety-documentation</loc>
+    <loc>https://www.elec-mate.com/guides/am2-section-a-composite-installation</loc>
     <lastmod>2026-05-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/guides/am2-module-3-installation-tasks</loc>
+    <loc>https://www.elec-mate.com/guides/am2-section-b-inspection-testing-certification</loc>
     <lastmod>2026-05-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/guides/am2-module-4-inspection-and-testing</loc>
+    <loc>https://www.elec-mate.com/guides/am2-section-c-safe-isolation</loc>
     <lastmod>2026-05-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/guides/am2-module-5-fault-diagnosis-and-rectification</loc>
+    <loc>https://www.elec-mate.com/guides/am2-section-d-fault-diagnosis</loc>
     <lastmod>2026-05-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/guides/am2-module-6-online-knowledge-test</loc>
-    <lastmod>2026-05-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/guides/am2-module-7-exam-strategy-and-success-tips</loc>
+    <loc>https://www.elec-mate.com/guides/am2-section-e-online-knowledge-test</loc>
     <lastmod>2026-05-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

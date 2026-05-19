@@ -2236,13 +2236,12 @@ const AICostEngineerPage = lazy(() => import('@/pages/seo/AICostEngineerPage'));
 const AIElectricianToolsPage = lazy(() => import('@/pages/seo/AIElectricianToolsPage'));
 const AIHealthSafetyAgentPage = lazy(() => import('@/pages/seo/AIHealthSafetyAgentPage'));
 const AM2ExamPreparationPage = lazy(() => import('@/pages/seo/AM2ExamPreparationPage'));
-const AM2Module1SEOPage = lazy(() => import('@/pages/seo/AM2Module1SEOPage'));
-const AM2Module2SEOPage = lazy(() => import('@/pages/seo/AM2Module2SEOPage'));
-const AM2Module3SEOPage = lazy(() => import('@/pages/seo/AM2Module3SEOPage'));
-const AM2Module4SEOPage = lazy(() => import('@/pages/seo/AM2Module4SEOPage'));
-const AM2Module5SEOPage = lazy(() => import('@/pages/seo/AM2Module5SEOPage'));
-const AM2Module6SEOPage = lazy(() => import('@/pages/seo/AM2Module6SEOPage'));
-const AM2Module7SEOPage = lazy(() => import('@/pages/seo/AM2Module7SEOPage'));
+const AM2OverviewSEOPage = lazy(() => import('@/pages/seo/AM2OverviewSEOPage'));
+const AM2SectionASEOPage = lazy(() => import('@/pages/seo/AM2SectionASEOPage'));
+const AM2SectionBSEOPage = lazy(() => import('@/pages/seo/AM2SectionBSEOPage'));
+const AM2SectionCSEOPage = lazy(() => import('@/pages/seo/AM2SectionCSEOPage'));
+const AM2SectionDSEOPage = lazy(() => import('@/pages/seo/AM2SectionDSEOPage'));
+const AM2SectionESEOPage = lazy(() => import('@/pages/seo/AM2SectionESEOPage'));
 const AdiabaticEquationCalculatorPage = lazy(
   () => import('@/pages/seo/AdiabaticEquationCalculatorPage')
 );
@@ -10711,62 +10710,54 @@ export function getSEORoutes() {
         element={
           <LazyRoute>
             <AM2ExamPreparationPage />
-      <Route
-        path="/guides/am2-module-1-introduction"
-        element={
-          <LazyRoute>
-            <AM2Module1SEOPage />
           </LazyRoute>
         }
       />
       <Route
-        path="/guides/am2-module-2-health-safety-documentation"
+        path="/guides/am2-overview-and-structure"
         element={
           <LazyRoute>
-            <AM2Module2SEOPage />
+            <AM2OverviewSEOPage />
           </LazyRoute>
         }
       />
       <Route
-        path="/guides/am2-module-3-installation-tasks"
+        path="/guides/am2-section-a-composite-installation"
         element={
           <LazyRoute>
-            <AM2Module3SEOPage />
+            <AM2SectionASEOPage />
           </LazyRoute>
         }
       />
       <Route
-        path="/guides/am2-module-4-inspection-and-testing"
+        path="/guides/am2-section-b-inspection-testing-certification"
         element={
           <LazyRoute>
-            <AM2Module4SEOPage />
+            <AM2SectionBSEOPage />
           </LazyRoute>
         }
       />
       <Route
-        path="/guides/am2-module-5-fault-diagnosis-and-rectification"
+        path="/guides/am2-section-c-safe-isolation"
         element={
           <LazyRoute>
-            <AM2Module5SEOPage />
+            <AM2SectionCSEOPage />
           </LazyRoute>
         }
       />
       <Route
-        path="/guides/am2-module-6-online-knowledge-test"
+        path="/guides/am2-section-d-fault-diagnosis"
         element={
           <LazyRoute>
-            <AM2Module6SEOPage />
+            <AM2SectionDSEOPage />
           </LazyRoute>
         }
       />
       <Route
-        path="/guides/am2-module-7-exam-strategy-and-success-tips"
+        path="/guides/am2-section-e-online-knowledge-test"
         element={
           <LazyRoute>
-            <AM2Module7SEOPage />
-          </LazyRoute>
-        }
-      />
+            <AM2SectionESEOPage />
           </LazyRoute>
         }
       />
@@ -13160,27 +13151,6 @@ export function getSEORoutes() {
           <LazyRoute>
             <UnitRevisionEALNETP3UnitN18ED31Page />
           </LazyRoute>
-        }
-      />
-      </LazyRoute>
-        }
-      />
-      </LazyRoute>
-        }
-      />
-      </LazyRoute>
-        }
-      />
-      </LazyRoute>
-        }
-      />
-      </LazyRoute>
-        }
-      />
-      </LazyRoute>
-        }
-      />
-      </LazyRoute>
         }
       />
       <Route
