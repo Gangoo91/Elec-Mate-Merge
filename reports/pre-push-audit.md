@@ -1,21 +1,21 @@
 # Pre-Push SEO Audit
 
-Generated: 2026-05-19T19:01:44.057Z
+Generated: 2026-05-19T20:23:24.831Z
 
 ## Overview
 
-- **Total pages**: 1380
-- **Green**: 1285 (93.1%)
-- **Amber**: 93
+- **Total pages**: 1379
+- **Green**: 1285 (93.2%)
+- **Amber**: 92
 - **Red**: 2
 
 ## By Audience
 
 - **other**: 670
-- **trade**: 347
-- **apprentice**: 175
+- **trade**: 348
+- **apprentice**: 174
 - **tool**: 59
-- **electrician-or-business**: 48
+- **electrician-or-business**: 47
 - **training**: 38
 - **local-dual**: 37
 - **comparison**: 6
@@ -23,7 +23,7 @@ Generated: 2026-05-19T19:01:44.057Z
 ## By Template
 
 - **GuideTemplate**: 920
-- **unknown**: 366
+- **unknown**: 365
 - **ToolTemplate**: 43
 - **CourseTemplate**: 25
 - **BusinessTemplate**: 16
@@ -31,8 +31,8 @@ Generated: 2026-05-19T19:01:44.057Z
 
 ## Word Count Distribution
 
-- **tiny (<800)**: 36
-- **small (800-1500)**: 121
+- **tiny (<800)**: 29
+- **small (800-1500)**: 127
 - **medium (1500-3000)**: 641
 - **large (3000-5000)**: 567
 - **huge (5000+)**: 15
@@ -40,24 +40,22 @@ Generated: 2026-05-19T19:01:44.057Z
 ## Internal Link Distribution
 
 - **<3 links**: 1
-- **3-5 links**: 61
+- **3-5 links**: 60
 - **6-9 links**: 980
 - **10+ links**: 338
 
 ## Issues Found
 
-Total issues: **43**
+Total issues: **36**
 
-| Issue | Count |
-|---|---|
-| thin-content | 36 |
-| description-too-short | 7 |
+| Issue                 | Count |
+| --------------------- | ----- |
+| thin-content          | 29    |
+| description-too-short | 7     |
 
 ## Top 10 Duplicate Titles
 
-
 ## Top 10 Duplicate Descriptions
-
 
 ## Recommended Next Actions
 

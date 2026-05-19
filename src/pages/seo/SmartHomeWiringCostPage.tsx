@@ -567,10 +567,10 @@ const sections = [
 export default function SmartHomeWiringCostPage() {
   return (
     <GuideTemplate
-      title="Smart Home Wiring Renovation Cost UK — Retrofit Pricing 2026"
-      description="Smart home wiring renovation cost UK — from £500 for a single room retrofit to £5,000+ for a whole-house rewire with Cat6, WiFi…"
+      title="Smart Home Wiring Cost UK 2026 | Cat6 Retrofit + Real Prices"
+      description="Smart home wiring cost UK 2026: single-room retrofits, whole-house Cat6 + lighting + hub installs. Real fair-margin pricing for UK electricians + clients."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-05-19"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

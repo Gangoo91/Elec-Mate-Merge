@@ -619,10 +619,10 @@ const sections = [
 export default function CableVoltDropThreePhasePage() {
   return (
     <ToolTemplate
-      title="Three Phase Voltage Drop Calculator | BS 7671 Tool"
-      description="Calculate three-phase voltage drop to BS 7671 limits. Root 3 factor, balanced and unbalanced loads, SWA and multicore cables."
+      title="Three Phase Voltage Drop Calculator | BS 7671 UK Free Tool"
+      description="Free three-phase voltage drop calculator to BS 7671: √3 factor, balanced + unbalanced loads, SWA/multicore. 3% lighting + 5% power limits checked."
       datePublished="2025-06-15"
-      dateModified="2026-05-18"
+      dateModified="2026-05-19"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="BS 7671 Compliant"

@@ -685,8 +685,8 @@ const sections = [
 export default function ElectricalSymbolsChartPage() {
   return (
     <GuideTemplate
-      title="Electrical Symbols Chart | BS EN 60617 Reference"
-      description="Complete reference chart for electrical symbols used in the UK following BS EN 60617. Switch symbols, socket symbols, light symbols…"
+      title="114 Electrical Symbols Chart UK | BS EN 60617 Free Reference"
+      description="Free 114 BS EN 60617 electrical symbols: switches, sockets, lights, RCDs, fire alarms + 7 more categories. SVG downloadable. UK electricians."
       datePublished="2025-11-01"
       dateModified="2026-05-19"
       breadcrumbs={breadcrumbs}

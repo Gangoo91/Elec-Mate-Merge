@@ -606,10 +606,10 @@ const sections = [
 export default function ZeValuesUKPage() {
   return (
     <GuideTemplate
-      title="Ze Values UK | External Earth Loop Impedance"
-      description="Expected Ze (external earth fault loop impedance) values for UK electricians: TN-S, TN-C-S, TT typical Ze, supplier limits, how to measure, fix high Ze."
+      title="Ze Values UK 2026 | TN-S, TN-C-S, TT Earth Loop Impedance"
+      description="Ze (external earth fault loop impedance) for UK electricians: TN-S, TN-C-S, TT systems, supplier limits per BS 7430, how to measure + fix high Ze."
       datePublished="2025-08-01"
-      dateModified="2026-05-18"
+      dateModified="2026-05-19"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

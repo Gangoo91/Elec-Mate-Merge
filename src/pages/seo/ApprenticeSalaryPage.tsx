@@ -85,7 +85,7 @@ const relatedPages = [
     href: '/guides/electrical-apprenticeship-guide',
     title: 'Electrical Apprenticeship Guide',
     description:
-      'Complete guide to starting and completing an electrical apprenticeship in the UK.',
+      'Apprentice electrician pay UK 2026: £6.40/hr Year 1, then £10.18-£12.21/hr by age. JIB Stage 1-4 rates £8-£15/hr explained for apprentices + employers.',
     icon: GraduationCap,
     category: 'Guide',
   },
@@ -484,10 +484,10 @@ const sections = [
 export default function ApprenticeSalaryPage() {
   return (
     <GuideTemplate
-      title="Apprentice Electrician Salary UK 2026 | Pay & Rates"
+      title="Apprentice Electrician Pay UK 2026 | £6.40-£12.21 + JIB"
       description="Complete guide to apprentice electrician pay rates in the UK for 2026. Minimum wage rates by age and year, JIB/ECS graded rates, weekly take-home pay…"
       datePublished="2025-09-10"
-      dateModified="2026-05-18"
+      dateModified="2026-05-19"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Salary Guide"

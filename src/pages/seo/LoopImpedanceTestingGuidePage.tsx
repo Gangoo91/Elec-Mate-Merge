@@ -87,7 +87,7 @@ const relatedPages: RelatedPage[] = [
     href: '/insulation-resistance-testing-guide',
     title: 'Insulation Resistance Testing Guide',
     description:
-      'Test voltages, minimum values, disconnecting components, and interpreting results.',
+      'Test earth fault loop impedance per BS 7671 + GN3: Ze, Zs, max values from Table 41.3/4, PFC, 0.8 correction. Pass/fail criteria for UK electricians.',
     icon: Zap,
     category: 'Guide',
   },
@@ -591,10 +591,10 @@ const sections = [
 export default function LoopImpedanceTestingGuidePage() {
   return (
     <GuideTemplate
-      title="Loop Impedance Testing Guide | Zs & Ze Testing BS 7671"
+      title="Earth Loop Impedance Testing | Ze + Zs to BS 7671 + GN3"
       description="Complete guide to earth fault loop impedance testing. External loop impedance (Ze), total loop impedance (Zs), prospective fault current (PFC)…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-05-19"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

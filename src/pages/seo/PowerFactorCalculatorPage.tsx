@@ -131,7 +131,7 @@ const softwareAppSchema = {
     price: '0',
     priceCurrency: 'GBP',
     description: '7-day free trial, then from £12.99/month',
-  }
+  },
 };
 
 const faqSchema = {
@@ -161,9 +161,9 @@ const howToSchema = {
 
 export default function PowerFactorCalculatorPage() {
   useSEO({
-    title: 'Power Factor Calculator | kW kVA kVAr Correction',
+    title: 'Power Factor Calculator UK 2026 | kW kVA kVAr Free Tool',
     description:
-      'Calculate power factor, convert between kW kVA and kVAr, size capacitor banks for PF correction. Free calculator built for UK electricians to BS 7671.',
+      'Free UK power factor calculator: kW↔kVA↔kVAr, cos φ, capacitor bank sizing for PF correction. Built for UK electricians + BS 7671 compliant installs.',
   });
 
   return (
@@ -670,14 +670,12 @@ export default function PowerFactorCalculatorPage() {
       </section>
 
       {/* CTA */}
-            {/* Verified App Store reviews — policy-safe SoftwareApplication aggregateRating */}
+      {/* Verified App Store reviews — policy-safe SoftwareApplication aggregateRating */}
       <section className="px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <RecentReviews />
         </div>
       </section>
-
-      
 
       {/* Related calculators — peer surface for internal-link health.
           Topic-matched via token-Jaccard against the broader SEO corpus. */}
@@ -685,14 +683,28 @@ export default function PowerFactorCalculatorPage() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-xl font-bold text-white mb-4">Related electrical calculators</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-            <SEOInternalLink href="/power-factor-correction">Power Factor Correction UK</SEOInternalLink>
-            <SEOInternalLink href="/diversity-factor-calculator">/diversity-factor-calculator</SEOInternalLink>
-            <SEOInternalLink href="/guides/no-power-to-sockets">No Power to Sockets</SEOInternalLink>
-            <SEOInternalLink href="/tools/power-consumption-calculator">Power Consumption Calculator</SEOInternalLink>
+            <SEOInternalLink href="/power-factor-correction">
+              Power Factor Correction UK
+            </SEOInternalLink>
+            <SEOInternalLink href="/diversity-factor-calculator">
+              /diversity-factor-calculator
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/no-power-to-sockets">
+              No Power to Sockets
+            </SEOInternalLink>
+            <SEOInternalLink href="/tools/power-consumption-calculator">
+              Power Consumption Calculator
+            </SEOInternalLink>
             <SEOInternalLink href="/guides/power-cut-what-to-do">Power Cut</SEOInternalLink>
-            <SEOInternalLink href="/power-surge-protection">Power Surge Protection UK</SEOInternalLink>
-            <SEOInternalLink href="/three-phase-power-calculator">/three-phase-power-calculator</SEOInternalLink>
-            <SEOInternalLink href="/guides/kitchen-island-power-supply">Kitchen Island Power Supply</SEOInternalLink>
+            <SEOInternalLink href="/power-surge-protection">
+              Power Surge Protection UK
+            </SEOInternalLink>
+            <SEOInternalLink href="/three-phase-power-calculator">
+              /three-phase-power-calculator
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/kitchen-island-power-supply">
+              Kitchen Island Power Supply
+            </SEOInternalLink>
           </div>
         </div>
       </section>

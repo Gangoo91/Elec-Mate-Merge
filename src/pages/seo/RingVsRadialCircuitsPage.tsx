@@ -456,10 +456,10 @@ const sections = [
 export default function RingVsRadialCircuitsPage() {
   return (
     <GuideTemplate
-      title="32A Ring Circuit Design & Testing Guide"
-      description="Design and test 32A ring circuits to BS 7671:2018+A4:2026. Master r1+r2 calculations, load limits, and compliance checks for domestic installations."
+      title="Ring vs Radial Circuits UK | BS 7671 Rules + When To Use"
+      description="Ring vs radial final circuits to BS 7671 A4:2026: load limits, cable size, r1+r2 testing, Appendix 15 rules. When to choose each — UK electricians."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-05-19"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Circuit Design Guide"

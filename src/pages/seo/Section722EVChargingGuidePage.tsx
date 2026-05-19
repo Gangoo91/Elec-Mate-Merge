@@ -97,7 +97,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/ev-charger-installation',
     title: 'EV Charger Installation Guide',
-    description: 'Practical step-by-step guide to installing domestic and commercial EV chargers.',
+    description:
+      'BS 7671 Section 722 EV charger installation rules: A4:2026 changes, RCD Type A + RDC-DD, PME earthing restrictions (722.411.4.1), dedicated circuits.',
     icon: Car,
     category: 'Guide',
   },
@@ -602,10 +603,10 @@ const sections = [
 export default function Section722EVChargingGuidePage() {
   return (
     <GuideTemplate
-      title="Section 722 EV Charging | BS 7671 Electric Vehicle Charging"
+      title="Section 722 EV Charging UK | BS 7671 A4:2026 RCD + PME Rules"
       description="Complete guide to Section 722 of BS 7671 — EV charger dedicated circuits, RCD types, PME earthing restrictions (722.411.4.1), earth electrodes…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-05-19"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulation Guide"

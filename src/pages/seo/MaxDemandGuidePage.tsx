@@ -90,7 +90,7 @@ const relatedPages: RelatedPage[] = [
     href: '/max-demand-calculator',
     title: 'Max Demand Calculator',
     description:
-      'Calculate max demand with automatic diversity factor application for domestic and commercial installations.',
+      'Calculate max demand for UK installs: BS 7671 + IET OSG diversity factors, ADMD, domestic 100A + commercial 3-phase worked examples. For UK electricians.',
     icon: Calculator,
     category: 'Calculator',
   },
@@ -628,10 +628,10 @@ const sections = [
 export default function MaxDemandGuidePage() {
   return (
     <GuideTemplate
-      title="Max Demand Calculation Guide | BS 7671 Method"
+      title="Max Demand Calculation UK | BS 7671 Diversity Factors + ADMD"
       description="Calculate max demand for UK electrical installations using BS 7671 diversity factors. Worked examples for domestic, commercial, and three-phase."
       datePublished="2025-03-15"
-      dateModified="2026-05-18"
+      dateModified="2026-05-19"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Technical Guide"
