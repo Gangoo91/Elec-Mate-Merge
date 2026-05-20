@@ -379,8 +379,9 @@ const sections = [
               <span>
                 <strong>Earth fault loop impedance</strong> — the measured Zs value for each circuit
                 must not exceed the maximum permitted value for the protective device. For a 32A
-                Type B circuit breaker, the maximum Zs is 1.44Ω. Exceeding this value means the
-                protective device will not operate within the required disconnection time.
+                Type B circuit breaker, the maximum Zs is 1.37Ω (using Reg 411.4.4 formula Uo × Cmin
+                / Ia, with Cmin = 0.95). Exceeding this value means the protective device will not
+                operate within the required disconnection time.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -445,9 +446,9 @@ const sections = [
           </ul>
         </div>
         <p>
-          Use the <SEOInternalLink href="/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
-          to complete the Electrical Installation Certificate on site, including the schedule of
-          test results. Generate a professional PDF and send it to the client before you leave.
+          Use the <SEOInternalLink href="/eic-certificate">Elec-Mate EIC app</SEOInternalLink> to
+          complete the Electrical Installation Certificate on site, including the schedule of test
+          results. Generate a professional PDF and send it to the client before you leave.
         </p>
       </>
     ),
@@ -488,12 +489,10 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Accurately and Win More Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to build professional extension quotes with itemised materials and labour.
-                  Homeowners commissioning extensions are quality-focused — a professional, detailed
-                  quote wins the job over a verbal estimate every time.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  build professional extension quotes with itemised materials and labour. Homeowners
+                  commissioning extensions are quality-focused — a professional, detailed quote wins
+                  the job over a verbal estimate every time.
                 </p>
               </div>
             </div>

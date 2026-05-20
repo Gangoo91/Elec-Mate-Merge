@@ -58,7 +58,7 @@ const faqs = [
   {
     question: 'What are the maximum Zs values for Type B and Type C MCBs?',
     answer:
-      'Maximum Zs values for common MCB types are published in BS 7671 Appendix 3 (and reproduced in the IET On-Site Guide Appendix B). Note: the old Appendix 3 Table 3A (time/current performance criteria for RCDs) was deleted in BS 7671:2018+A4:2026 — current Zs limits are in the updated Appendix 3 tables. For Type B MCBs at 230 V: 6 A = 7.67 Ω, 10 A = 4.60 Ω, 16 A = 2.87 Ω, 20 A = 2.30 Ω, 32 A = 1.44 Ω, 40 A = 1.15 Ω, 63 A = 0.73 Ω. Type C values are roughly half of Type B; Type D values roughly one quarter. These are corrected values at conductor operating temperature — measured Zs at ambient must be corrected using the 0.8 correction factor before comparison against the maximum.',
+      'Maximum Zs values are calculated using the BS 7671 Regulation 411.4.4 formula: Zs × Ia ≤ Uo × Cmin. Uo is the nominal line-to-earth voltage (230 V); Cmin = 0.95 (ESQCR minimum voltage factor); Ia is the instantaneous trip current of the protective device (5 × In for Type B, 10 × In for Type C, 20 × In for Type D). For Type B MCBs at 230 V (Cmin × Uo = 218.5 V), the calculated maximum Zs values are: 6 A = 7.28 Ω, 10 A = 4.37 Ω, 16 A = 2.73 Ω, 20 A = 2.19 Ω, 32 A = 1.37 Ω, 40 A = 1.09 Ω, 50 A = 0.87 Ω, 63 A = 0.69 Ω. Type C values are half of Type B (e.g. 32 A Type C = 0.68 Ω); Type D values are one quarter (e.g. 32 A Type D = 0.34 Ω). These are corrected values at conductor operating temperature — when verifying compliance from a measured reading at ambient, apply the rule from BS 7671: Zs(measured) ≤ 0.8 × (Uo / (Ia × Cmin)), i.e. the 0.8 temperature correction factor.',
   },
   {
     question: 'How do you calculate prospective fault current?',
@@ -340,18 +340,19 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Type B MCBs (BS EN 60898)</strong>: Operate at 3–5× rated current. Maximum
-                Zs (at 80°C, 230V): 6A = 7.67Ω / 10A = 4.60Ω / 16A = 2.87Ω / 20A = 2.30Ω / 32A =
-                1.44Ω / 40A = 1.15Ω / 63A = 0.73Ω.
+                <strong>Type B MCBs (BS EN 60898)</strong>: Operate at 3–5× rated current (Ia = 5 ×
+                In). Maximum Zs at 230V using Reg 411.4.4 formula (Cmin × Uo / Ia, where Cmin =
+                0.95): 6A = 7.28Ω / 10A = 4.37Ω / 16A = 2.73Ω / 20A = 2.19Ω / 32A = 1.37Ω / 40A =
+                1.09Ω / 50A = 0.87Ω / 63A = 0.69Ω.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Type C MCBs (BS EN 60898)</strong>: Operate at 5–10× rated current. Maximum
-                Zs values are half those of Type B for the same rating: 6A = 3.84Ω / 16A = 1.44Ω /
-                32A = 0.72Ω. Type C MCBs are common for motor loads and circuits with high inrush
-                currents.
+                <strong>Type C MCBs (BS EN 60898)</strong>: Operate at 5–10× rated current (Ia = 10
+                × In). Maximum Zs values are half those of Type B for the same rating: 6A = 3.64Ω /
+                16A = 1.37Ω / 32A = 0.68Ω. Type C MCBs are common for motor loads and circuits with
+                high inrush currents.
               </span>
             </li>
             <li className="flex items-start gap-3">

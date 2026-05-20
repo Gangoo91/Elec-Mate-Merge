@@ -55,7 +55,7 @@ const faqs = [
   {
     question: 'What Zs values are acceptable under BS 7671?',
     answer:
-      'Maximum permissible Zs values are given in BS 7671:2018+A4:2026 Appendix 3 Tables. The values depend on the type and rating of the protective device. For example, for a 32A Type B MCB, the maximum Zs is 1.44Ω (for a 0.4s disconnection time on a final circuit). For a 16A Type B MCB the maximum Zs is 2.87Ω. For a 6A Type B MCB the maximum Zs is 7.67Ω. BS 7671 requires that the measured Zs does not exceed the tabulated maximum at the conductor temperature assumed in the tables (typically 70°C for thermoplastic insulated cables). In practice, test instruments measure at ambient temperature, so a correction factor is applied — divide the tabulated maximum by 1.24 for copper conductors with thermoplastic insulation to get the maximum acceptable measured value at ambient temperature.',
+      'Maximum permissible Zs values are calculated using BS 7671 Regulation 411.4.4: Zs × Ia ≤ Uo × Cmin, where Uo = 230 V nominal line-to-earth and Cmin = 0.95 (ESQCR minimum voltage factor). For a 32A Type B MCB (Ia = 5 × In = 160 A): maximum Zs = (230 × 0.95) / 160 = 1.37Ω at 0.4s disconnection on a final circuit. For a 16A Type B MCB the maximum Zs is 2.73Ω. For a 6A Type B MCB the maximum Zs is 7.28Ω. These tabulated values assume conductor operating temperature (~70°C for thermoplastic cables). When verifying compliance from a measurement taken at ambient temperature, BS 7671 allows Zs(measured) ≤ 0.8 × tabulated maximum (equivalent to dividing by 1.25) — the 0.8 factor accounts for the conductor temperature rise under load.',
   },
   {
     question: 'How do I measure Zs on a live circuit?',
@@ -307,8 +307,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Table 41.4</strong> — maximum Zs for Type B MCBs to BS EN 60898 and BS EN
-                61009. At 32A, maximum Zs is 1.44Ω (0.4s). At 16A, 2.87Ω. At 6A, 7.67Ω.
+                <strong>Reg 411.4.4 (Zs × Ia ≤ Uo × Cmin, Cmin = 0.95)</strong> — maximum Zs for
+                Type B MCBs to BS EN 60898 and BS EN 61009. At 32A, maximum Zs is 1.37Ω (0.4s). At
+                16A, 2.73Ω. At 6A, 7.28Ω.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -363,9 +364,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>PASS</strong> — measured Zs (at ambient temperature) does not exceed the
-                table maximum divided by 1.24. Example: 32A Type B MCB, table maximum 1.44Ω,
-                corrected limit = 1.44 ÷ 1.24 = 1.16Ω. A measured value of 0.95Ω passes.
+                <strong>PASS</strong> — measured Zs (at ambient temperature) does not exceed 0.8 ×
+                the calculated maximum. Example: 32A Type B MCB, calculated maximum = (230 × 0.95) /
+                160 = 1.37Ω; ambient limit = 0.8 × 1.37 = 1.10Ω. A measured value of 0.95Ω passes.
               </span>
             </li>
             <li className="flex items-start gap-3">

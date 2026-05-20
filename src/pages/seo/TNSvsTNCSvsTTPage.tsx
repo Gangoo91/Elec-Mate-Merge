@@ -61,7 +61,7 @@ const faqs = [
   {
     question: 'What are typical Zs values for TN-S, TN-C-S, and TT systems?',
     answer:
-      'Earth fault loop impedance (Zs) varies significantly between the three earthing systems. For TN-C-S (PME), typical Ze is 0.20Ω to 0.35Ω, giving total Zs values of 0.4Ω to 1.0Ω for most circuits — well within the limits for Type B MCBs. For TN-S, Ze is typically 0.35Ω to 0.8Ω. For TT systems, Ze is typically 20Ω to 200Ω, making it impossible for MCBs alone to disconnect within the required time. BS 7671 Table 41.1 gives maximum Zs values: for a 32A Type B MCB at 0.4s disconnection, maximum Zs is 1.44Ω. A TT installation with Zs of 50Ω cannot achieve this — RCD protection is therefore mandatory.',
+      'Earth fault loop impedance (Zs) varies significantly between the three earthing systems. For TN-C-S (PME), typical Ze is 0.20Ω to 0.35Ω, giving total Zs values of 0.4Ω to 1.0Ω for most circuits — well within the limits for Type B MCBs. For TN-S, Ze is typically 0.35Ω to 0.8Ω. For TT systems, Ze is typically 20Ω to 200Ω, making it impossible for MCBs alone to disconnect within the required time. BS 7671 Reg 411.4.4 gives maximum Zs using Zs × Ia ≤ Uo × Cmin (Cmin = 0.95): for a 32A Type B MCB at 0.4s disconnection, maximum Zs is 1.37Ω. A TT installation with Zs of 50Ω cannot achieve this — RCD protection is therefore mandatory.',
   },
   {
     question: 'Can I use PME earth for an outbuilding, caravan, or marina?',
@@ -76,7 +76,7 @@ const faqs = [
   {
     question: 'What does Regulation 8 of the ESQCR 2002 require for PME?',
     answer:
-      'Regulation 8 of the Electricity Safety, Quality and Continuity Regulations 2002 requires that a DNO must not connect a PME earth terminal to an installation unless the owner or occupier has given written consent. The regulation also prohibits PME connections in certain situations — including where the supply is by overhead line to premises in agricultural or horticultural use. The ESQCR 2002 governs the DNO\'s responsibilities for the distribution network, including the safety of earthing arrangements. Electricians working on installations with PME supplies should ensure the supply agreement is in place and that any deviation (such as converting to TT) is properly documented and tested.',
+      "Regulation 8 of the Electricity Safety, Quality and Continuity Regulations 2002 requires that a DNO must not connect a PME earth terminal to an installation unless the owner or occupier has given written consent. The regulation also prohibits PME connections in certain situations — including where the supply is by overhead line to premises in agricultural or horticultural use. The ESQCR 2002 governs the DNO's responsibilities for the distribution network, including the safety of earthing arrangements. Electricians working on installations with PME supplies should ensure the supply agreement is in place and that any deviation (such as converting to TT) is properly documented and tested.",
   },
 ];
 
@@ -84,14 +84,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
-    description: 'Calculate cable sizes with earth fault loop impedance checks for TN and TT systems.',
+    description:
+      'Calculate cable sizes with earth fault loop impedance checks for TN and TT systems.',
     icon: Calculator,
     category: 'Tool',
   },
   {
     href: '/eic-certificate',
     title: 'EIC Certificate App',
-    description: 'Record earthing system details, Ze measurements, and MET information on EIC certificates.',
+    description:
+      'Record earthing system details, Ze measurements, and MET information on EIC certificates.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -133,8 +135,8 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          Chapter 41 sets out the disconnection time requirements for each system, and the choice
-          of earthing system directly affects whether those requirements can be met. The statutory
+          Chapter 41 sets out the disconnection time requirements for each system, and the choice of
+          earthing system directly affects whether those requirements can be met. The statutory
           framework is provided by the Electricity Safety, Quality and Continuity Regulations 2002
           (ESQCR 2002), particularly Regulation 8 for PME supplies.
         </p>
@@ -147,8 +149,8 @@ const sections = [
     content: (
       <>
         <p>
-          In a TN-S (Terra Neutral Separate) system, the neutral and protective earth conductors
-          are separate throughout the entire system — from the transformer star point to the
+          In a TN-S (Terra Neutral Separate) system, the neutral and protective earth conductors are
+          separate throughout the entire system — from the transformer star point to the
           installation. The earth connection is made at the transformer, and a dedicated earth
           conductor (often the metal sheath of the supply cable) runs to the installation.
         </p>
@@ -160,14 +162,16 @@ const sections = [
             <li>• Low Zs values achievable — MCB protection adequate for most circuits</li>
             <li>• Common in older UK installations (pre-1970s), lead-sheathed cable areas</li>
             <li>• No risk of lost neutral raising earth potential (unlike PME)</li>
-            <li>• Earth conductor must NOT be combined with the neutral anywhere in the installation</li>
+            <li>
+              • Earth conductor must NOT be combined with the neutral anywhere in the installation
+            </li>
           </ul>
         </div>
         <p>
           TN-S supplies are becoming less common as ageing lead-sheathed cable networks are
-          replaced. Where the lead sheath is the earth conductor, deterioration of the sheath
-          can increase Ze. Always measure Ze at the supply intake before commencing installation
-          work, and record it on the EIC or EICR.
+          replaced. Where the lead sheath is the earth conductor, deterioration of the sheath can
+          increase Ze. Always measure Ze at the supply intake before commencing installation work,
+          and record it on the EIC or EICR.
         </p>
       </>
     ),
@@ -178,12 +182,12 @@ const sections = [
     content: (
       <>
         <p>
-          TN-C-S (Terra Neutral Combined-Separated) is the standard earthing system for most new
-          UK domestic and commercial installations. It is universally known as PME (Protective
-          Multiple Earthing). In the supply network, the neutral and earth are combined into a
-          single PEN (Protective Earth and Neutral) conductor. At the supply cut-out or meter
-          position, the PEN conductor is split into separate neutral (N) and protective earth (PE)
-          conductors for the installation.
+          TN-C-S (Terra Neutral Combined-Separated) is the standard earthing system for most new UK
+          domestic and commercial installations. It is universally known as PME (Protective Multiple
+          Earthing). In the supply network, the neutral and earth are combined into a single PEN
+          (Protective Earth and Neutral) conductor. At the supply cut-out or meter position, the PEN
+          conductor is split into separate neutral (N) and protective earth (PE) conductors for the
+          installation.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
           <h3 className="font-bold text-white text-base mb-3">TN-C-S (PME) Characteristics</h3>
@@ -193,7 +197,9 @@ const sections = [
             <li>• Very low Zs values — fast fault disconnection with MCBs</li>
             <li>• Most common system in UK properties built after 1970</li>
             <li>• Multiple earth connections along the supply network improve fault path</li>
-            <li>• <strong>PME risk:</strong> PEN conductor break can raise earth to line voltage</li>
+            <li>
+              • <strong>PME risk:</strong> PEN conductor break can raise earth to line voltage
+            </li>
           </ul>
         </div>
         <p>
@@ -215,11 +221,11 @@ const sections = [
     content: (
       <>
         <p>
-          In a TT (Terra Terra) system, the installation earth is provided entirely by a local
-          earth electrode — there is no metallic connection to the supply network earth. Fault
-          current must flow through the soil from the installation earth electrode back to the
-          transformer earth. This high-resistance path results in much higher earth fault loop
-          impedance than TN systems.
+          In a TT (Terra Terra) system, the installation earth is provided entirely by a local earth
+          electrode — there is no metallic connection to the supply network earth. Fault current
+          must flow through the soil from the installation earth electrode back to the transformer
+          earth. This high-resistance path results in much higher earth fault loop impedance than TN
+          systems.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5 my-4">
           <div className="flex items-start gap-3">
@@ -228,21 +234,27 @@ const sections = [
               <p className="font-bold text-white mb-2">TT System: RCD Protection is Mandatory</p>
               <ul className="space-y-1 text-white text-sm">
                 <li>• Typical Ze: 20Ω to 200Ω (or higher in dry or rocky soil)</li>
-                <li>• MCBs alone CANNOT provide adequate protection — Zs too high for required disconnection time</li>
+                <li>
+                  • MCBs alone CANNOT provide adequate protection — Zs too high for required
+                  disconnection time
+                </li>
                 <li>• All circuits must be RCD protected (BS 7671 Regulation 411.5.3)</li>
                 <li>• Earth electrode resistance must satisfy Ra × IΔn ≤ 50V</li>
                 <li>• No PME risk — lost neutral does not raise earth potential</li>
-                <li>• Typical locations: rural overhead supplies, older urban properties, agricultural premises, caravan parks, marinas</li>
+                <li>
+                  • Typical locations: rural overhead supplies, older urban properties, agricultural
+                  premises, caravan parks, marinas
+                </li>
               </ul>
             </div>
           </div>
         </div>
         <p>
-          BS 7671 Regulation 411.5.3 requires that in a TT system, a residual current device must
-          be provided for circuits where the earth fault loop impedance is too high for an
-          overcurrent device to disconnect within the required time. The RCD must have a rated
-          residual operating current such that Ra × IΔn ≤ 50V, where Ra is the resistance of the
-          earth electrode and associated earth conductor.
+          BS 7671 Regulation 411.5.3 requires that in a TT system, a residual current device must be
+          provided for circuits where the earth fault loop impedance is too high for an overcurrent
+          device to disconnect within the required time. The RCD must have a rated residual
+          operating current such that Ra × IΔn ≤ 50V, where Ra is the resistance of the earth
+          electrode and associated earth conductor.
         </p>
       </>
     ),
@@ -253,10 +265,10 @@ const sections = [
     content: (
       <>
         <p>
-          The earth fault loop impedance (Zs) is the total impedance of the fault current path:
-          from the source, through the line conductor, through the fault, and back through the
-          earth conductor to the source. A lower Zs means more fault current flows, enabling
-          faster disconnection by the protective device.
+          The earth fault loop impedance (Zs) is the total impedance of the fault current path: from
+          the source, through the line conductor, through the fault, and back through the earth
+          conductor to the source. A lower Zs means more fault current flows, enabling faster
+          disconnection by the protective device.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <table className="w-full text-white text-sm">
@@ -287,10 +299,10 @@ const sections = [
           </table>
         </div>
         <p>
-          BS 7671 Table 41.1 provides maximum Zs values for different protective devices and
-          disconnection times. For a 32A Type B MCB with 0.4s disconnection (residential
-          circuits), maximum Zs is 1.44Ω. Any TT installation will have Zs far exceeding this
-          limit, confirming that RCD protection is a legal requirement, not an option.
+          BS 7671 Reg 411.4.4 sets maximum Zs using Zs × Ia ≤ Uo × Cmin (Cmin = 0.95). For a 32A
+          Type B MCB with 0.4s disconnection (residential circuits), maximum Zs is 1.37Ω. Any TT
+          installation will have Zs far exceeding this limit, confirming that RCD protection is a
+          legal requirement, not an option.
         </p>
       </>
     ),
@@ -301,11 +313,11 @@ const sections = [
     content: (
       <>
         <p>
-          PME (TN-C-S) carries a specific risk that does not exist in TN-S or TT systems: if the
-          PEN conductor breaks between the transformer and the installation, the neutral at the
-          installation is lost but the earth terminal remains connected to all metal parts. When
-          the neutral is lost, the return current must flow through the earth conductor — and the
-          full line voltage can appear on metal enclosures.
+          PME (TN-C-S) carries a specific risk that does not exist in TN-S or TT systems: if the PEN
+          conductor breaks between the transformer and the installation, the neutral at the
+          installation is lost but the earth terminal remains connected to all metal parts. When the
+          neutral is lost, the return current must flow through the earth conductor — and the full
+          line voltage can appear on metal enclosures.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -313,9 +325,9 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Caravan parks and marinas (BS 7671 Sections 708 and 721):</strong> Where
-                occupants may stand on the ground while touching metal equipment, a PME earth
-                fault is particularly dangerous. These installations must use a TT earth system
-                — not PME earth.
+                occupants may stand on the ground while touching metal equipment, a PME earth fault
+                is particularly dangerous. These installations must use a TT earth system — not PME
+                earth.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -329,10 +341,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Outbuildings and external structures:</strong> Where a detached structure
-                is also connected to metal structures in contact with the general mass of earth
-                (e.g. a greenhouse with metal poles driven into the ground), the PME risk is
-                elevated. Consider TT earthing for outbuildings.
+                <strong>Outbuildings and external structures:</strong> Where a detached structure is
+                also connected to metal structures in contact with the general mass of earth (e.g. a
+                greenhouse with metal poles driven into the ground), the PME risk is elevated.
+                Consider TT earthing for outbuildings.
               </span>
             </li>
           </ul>
@@ -340,8 +352,8 @@ const sections = [
         <p>
           Regulation 8 of the Electricity Safety, Quality and Continuity Regulations 2002 requires
           that a DNO must not connect a PME earth terminal to an installation unless the owner or
-          occupier has given written consent, and prohibits PME connections to certain categories
-          of installation including those supplied by overhead line to agricultural premises.
+          occupier has given written consent, and prohibits PME connections to certain categories of
+          installation including those supplied by overhead line to agricultural premises.
         </p>
       </>
     ),
@@ -369,25 +381,25 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>TN-S:</strong> The cut-out has a separate earth terminal, typically
-                connected to the lead sheath of the supply cable or a separate earth conductor.
-                The neutral and earth terminals are distinct. Measure Ze — values below 0.8Ω
-                suggest TN-S.
+                connected to the lead sheath of the supply cable or a separate earth conductor. The
+                neutral and earth terminals are distinct. Measure Ze — values below 0.8Ω suggest
+                TN-S.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>TT:</strong> No earth terminal on the cut-out. The installation has a
-                local earth electrode (rod, tape, or plate) connected to the MET. Measure Ze —
-                values above 10Ω confirm TT. Verify RCD protection on all circuits.
+                <strong>TT:</strong> No earth terminal on the cut-out. The installation has a local
+                earth electrode (rod, tape, or plate) connected to the MET. Measure Ze — values
+                above 10Ω confirm TT. Verify RCD protection on all circuits.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Record the earthing system type and measured Ze on the EIC or EICR. This information
-          is required on the certificate and is essential for anyone carrying out future work
-          on the installation.
+          Record the earthing system type and measured Ze on the EIC or EICR. This information is
+          required on the certificate and is essential for anyone carrying out future work on the
+          installation.
         </p>
       </>
     ),
@@ -398,10 +410,10 @@ const sections = [
     content: (
       <>
         <p>
-          Earthing system identification and Zs measurement are core competencies tested in C&G
-          2391 and examined in detail during periodic inspection work. Misidentifying the earthing
-          system can lead to incorrect protective device selection, inadequate fault protection,
-          and dangerous installations.
+          Earthing system identification and Zs measurement are core competencies tested in C&G 2391
+          and examined in detail during periodic inspection work. Misidentifying the earthing system
+          can lead to incorrect protective device selection, inadequate fault protection, and
+          dangerous installations.
         </p>
         <SEOAppBridge
           title="Record earthing details on EIC and EICR certificates"

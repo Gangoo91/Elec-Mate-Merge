@@ -1,19 +1,5 @@
 [
   {
-    "slug": "/loop-impedance-testing-guide",
-    "sourceFile": "src/pages/seo/LoopImpedanceTestingGuidePage.tsx",
-    "title": "Earth Loop Impedance Testing | Ze + Zs to BS 7671 + GN3",
-    "impressions": 4405,
-    "claims_total": 4,
-    "verified": 3,
-    "unverified": 1,
-    "score": 0.75,
-    "priority": 1101,
-    "unverified_claims": [
-      "table: Table 3A"
-    ]
-  },
-  {
     "slug": "/guides/special-locations-part-7-bs-7671",
     "sourceFile": "src/pages/seo/SpecialLocationsPart7Page.tsx",
     "title": "BS 7671 Part 7 Special Locations | Bathrooms, Pools, Sites",
@@ -23,9 +9,7 @@
     "unverified": 1,
     "score": 0.933,
     "priority": 221,
-    "unverified_claims": [
-      "section: Section 707"
-    ]
+    "unverified_claims": ["section: Section 707"]
   },
   {
     "slug": "/guides/caravan-park-electrical",
@@ -37,9 +21,7 @@
     "unverified": 1,
     "score": 0.875,
     "priority": 215,
-    "unverified_claims": [
-      "section: Section 708.411"
-    ]
+    "unverified_claims": ["section: Section 708.411"]
   },
   {
     "slug": "/guides/bs-7671-a4-2026-afdd-changes",
@@ -75,9 +57,7 @@
     "unverified": 1,
     "score": 0.875,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 41"
-    ]
+    "unverified_claims": ["section: Section 41"]
   },
   {
     "slug": "/guides/bs-7671-a4-2026-meiwc-model-form",
@@ -137,9 +117,7 @@
     "unverified": 1,
     "score": 0.857,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 722.531.2.101"
-    ]
+    "unverified_claims": ["reg: Regulation 722.531.2.101"]
   },
   {
     "slug": "/guides/afdd-arc-fault-detection",
@@ -163,9 +141,7 @@
     "unverified": 1,
     "score": 0.8,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 421.1.7.101"
-    ]
+    "unverified_claims": ["reg: Regulation 421.1.7.101"]
   },
   {
     "slug": "/ai-circuit-designer",
@@ -189,9 +165,7 @@
     "unverified": 1,
     "score": 0.75,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 21"
-    ]
+    "unverified_claims": ["section: Section 21"]
   },
   {
     "slug": "/tools/ai-commissioning-specialist",
@@ -263,9 +237,7 @@
     "unverified": 1,
     "score": 0.857,
     "priority": 0,
-    "unverified_claims": [
-      "table: Table 3A"
-    ]
+    "unverified_claims": ["table: Table 3A"]
   },
   {
     "slug": "/tools/ai-fault-diagnosis",
@@ -289,9 +261,7 @@
     "unverified": 1,
     "score": 0.75,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 526.3"
-    ]
+    "unverified_claims": ["reg: Regulation 526.3"]
   },
   {
     "slug": "/ai-health-safety-agent",
@@ -315,10 +285,7 @@
     "unverified": 2,
     "score": 0.714,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 522.6.100",
-      "reg: Regulation 522.6.101"
-    ]
+    "unverified_claims": ["reg: Regulation 522.6.100", "reg: Regulation 522.6.101"]
   },
   {
     "slug": "/tools/ai-installation-verification",
@@ -330,9 +297,7 @@
     "unverified": 1,
     "score": 0.938,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 432.1"
-    ]
+    "unverified_claims": ["reg: Regulation 432.1"]
   },
   {
     "slug": "/tools/ai-maintenance-specialist",
@@ -344,9 +309,7 @@
     "unverified": 1,
     "score": 0,
     "priority": 0,
-    "unverified_claims": [
-      "table: Table 3A"
-    ]
+    "unverified_claims": ["table: Table 3A"]
   },
   {
     "slug": "/tools/ai-method-statement-generator",
@@ -430,10 +393,7 @@
     "unverified": 2,
     "score": 0.667,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 522.6.101",
-      "reg: Regulation 522.6.103"
-    ]
+    "unverified_claims": ["reg: Regulation 522.6.101", "reg: Regulation 522.6.103"]
   },
   {
     "slug": "/guides/ai-vs-manual-electrical-design",
@@ -445,9 +405,7 @@
     "unverified": 1,
     "score": 0.875,
     "priority": 0,
-    "unverified_claims": [
-      "table: Table 2A"
-    ]
+    "unverified_claims": ["table: Table 2A"]
   },
   {
     "slug": "/guides/am2-assessment-preparation",
@@ -459,9 +417,7 @@
     "unverified": 1,
     "score": 0,
     "priority": 0,
-    "unverified_claims": [
-      "chapter: Chapter 61"
-    ]
+    "unverified_claims": ["chapter: Chapter 61"]
   },
   {
     "slug": "/am2-exam-preparation",
@@ -641,10 +597,7 @@
     "unverified": 2,
     "score": 0.714,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 705.522.7",
-      "table: Table 3A"
-    ]
+    "unverified_claims": ["reg: Regulation 705.522.7", "table: Table 3A"]
   },
   {
     "slug": "/airbnb-electrical-safety",
@@ -668,9 +621,7 @@
     "unverified": 1,
     "score": 0.833,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 710.415.2.1"
-    ]
+    "unverified_claims": ["reg: Regulation 710.415.2.1"]
   },
   {
     "slug": "/guides/annex-electrical-installation",
@@ -1018,9 +969,7 @@
     "unverified": 1,
     "score": 0.964,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 801"
-    ]
+    "unverified_claims": ["section: Section 801"]
   },
   {
     "slug": "/bs7671-observation-codes",
@@ -1032,9 +981,7 @@
     "unverified": 1,
     "score": 0.8,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 523.9"
-    ]
+    "unverified_claims": ["reg: Regulation 523.9"]
   },
   {
     "slug": "/guides/bs-7671-run-through",
@@ -1046,10 +993,7 @@
     "unverified": 2,
     "score": 0.944,
     "priority": 0,
-    "unverified_claims": [
-      "chapter: Chapter 32",
-      "chapter: Chapter 61"
-    ]
+    "unverified_claims": ["chapter: Chapter 32", "chapter: Chapter 61"]
   },
   {
     "slug": "/guides/bs-7671-section-710-medical-locations",
@@ -1073,9 +1017,7 @@
     "unverified": 1,
     "score": 0.9,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 411.3.2.3"
-    ]
+    "unverified_claims": ["reg: Regulation 411.3.2.3"]
   },
   {
     "slug": "/guides/bs-en-50174-data-cable-installation",
@@ -1087,9 +1029,7 @@
     "unverified": 1,
     "score": 0.875,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 528.1"
-    ]
+    "unverified_claims": ["section: Section 528.1"]
   },
   {
     "slug": "/guides/barn-conversion-electrics",
@@ -1137,9 +1077,7 @@
     "unverified": 1,
     "score": 0.75,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 701.753"
-    ]
+    "unverified_claims": ["reg: Regulation 701.753"]
   },
   {
     "slug": "/guides/bathroom-electrical-zones-bs7671",
@@ -1403,9 +1341,7 @@
     "unverified": 1,
     "score": 0.857,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 411.3.2.2"
-    ]
+    "unverified_claims": ["reg: Regulation 411.3.2.2"]
   },
   {
     "slug": "/guides/borrowed-neutral-explained",
@@ -1549,9 +1485,7 @@
     "unverified": 1,
     "score": 0.8,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/guides/cctv-installation-electrical-cost",
@@ -2091,9 +2025,7 @@
     "unverified": 1,
     "score": 0.8,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 523.9"
-    ]
+    "unverified_claims": ["reg: Regulation 523.9"]
   },
   {
     "slug": "/guides/cable-detector-buying-guide",
@@ -2117,9 +2049,7 @@
     "unverified": 1,
     "score": 0.875,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 526.3"
-    ]
+    "unverified_claims": ["reg: Regulation 526.3"]
   },
   {
     "slug": "/cable-management-systems",
@@ -2131,9 +2061,7 @@
     "unverified": 1,
     "score": 0.9,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 528.1"
-    ]
+    "unverified_claims": ["reg: Regulation 528.1"]
   },
   {
     "slug": "/guides/cable-reaction-to-fire-cca-a4-2026",
@@ -2205,9 +2133,7 @@
     "unverified": 1,
     "score": 0.929,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 523.9"
-    ]
+    "unverified_claims": ["reg: Regulation 523.9"]
   },
   {
     "slug": "/guides/cable-sizing-guide-bs-7671",
@@ -2231,9 +2157,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 528.1"
-    ]
+    "unverified_claims": ["reg: Regulation 528.1"]
   },
   {
     "slug": "/cable-tray-installation",
@@ -2533,9 +2457,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "chapter: Chapter 61"
-    ]
+    "unverified_claims": ["chapter: Chapter 61"]
   },
   {
     "slug": "/guides/city-guilds-2396-design-course",
@@ -2619,9 +2541,7 @@
     "unverified": 1,
     "score": 0.8,
     "priority": 0,
-    "unverified_claims": [
-      "table: Table 3A"
-    ]
+    "unverified_claims": ["table: Table 3A"]
   },
   {
     "slug": "/guides/commercial-electrician-guide",
@@ -2669,10 +2589,7 @@
     "unverified": 2,
     "score": 0.667,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 643.10",
-      "chapter: Chapter 61"
-    ]
+    "unverified_claims": ["reg: Regulation 643.10", "chapter: Chapter 61"]
   },
   {
     "slug": "/guides/compex-qualification-guide",
@@ -2864,9 +2781,7 @@
     "unverified": 1,
     "score": 0.8,
     "priority": 0,
-    "unverified_claims": [
-      "chapter: Chapter 61"
-    ]
+    "unverified_claims": ["chapter: Chapter 61"]
   },
   {
     "slug": "/guides/consumer-unit-replacement-bristol",
@@ -2914,9 +2829,7 @@
     "unverified": 1,
     "score": 0.8,
     "priority": 0,
-    "unverified_claims": [
-      "chapter: Chapter 61"
-    ]
+    "unverified_claims": ["chapter: Chapter 61"]
   },
   {
     "slug": "/guides/consumer-unit-replacement-edinburgh",
@@ -2940,9 +2853,7 @@
     "unverified": 1,
     "score": 0.75,
     "priority": 0,
-    "unverified_claims": [
-      "chapter: Chapter 61"
-    ]
+    "unverified_claims": ["chapter: Chapter 61"]
   },
   {
     "slug": "/guides/consumer-unit-replacement-glasgow",
@@ -2966,9 +2877,7 @@
     "unverified": 1,
     "score": 0.8,
     "priority": 0,
-    "unverified_claims": [
-      "chapter: Chapter 61"
-    ]
+    "unverified_claims": ["chapter: Chapter 61"]
   },
   {
     "slug": "/guides/consumer-unit-replacement-leeds",
@@ -3052,9 +2961,7 @@
     "unverified": 1,
     "score": 0.8,
     "priority": 0,
-    "unverified_claims": [
-      "chapter: Chapter 61"
-    ]
+    "unverified_claims": ["chapter: Chapter 61"]
   },
   {
     "slug": "/consumer-unit-replacement-sheffield",
@@ -3090,9 +2997,7 @@
     "unverified": 1,
     "score": 0.8,
     "priority": 0,
-    "unverified_claims": [
-      "chapter: Chapter 61"
-    ]
+    "unverified_claims": ["chapter: Chapter 61"]
   },
   {
     "slug": "/guides/consumer-unit-symbol",
@@ -3240,9 +3145,7 @@
     "unverified": 1,
     "score": 0.857,
     "priority": 0,
-    "unverified_claims": [
-      "table: Table 1A"
-    ]
+    "unverified_claims": ["table: Table 1A"]
   },
   {
     "slug": "/guides/cooker-connection-cost",
@@ -3278,9 +3181,7 @@
     "unverified": 1,
     "score": 0.875,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 523.7"
-    ]
+    "unverified_claims": ["reg: Regulation 523.7"]
   },
   {
     "slug": "/tools/customer-management-electrician",
@@ -3316,10 +3217,7 @@
     "unverified": 2,
     "score": 0.6,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 528.1",
-      "section: Section 528.1"
-    ]
+    "unverified_claims": ["reg: Regulation 528.1", "section: Section 528.1"]
   },
   {
     "slug": "/training/data-cabling",
@@ -3391,9 +3289,7 @@
     "unverified": 1,
     "score": 0.857,
     "priority": 0,
-    "unverified_claims": [
-      "chapter: Chapter 61"
-    ]
+    "unverified_claims": ["chapter: Chapter 61"]
   },
   {
     "slug": "/guides/debt-recovery-electricians",
@@ -3489,10 +3385,7 @@
     "unverified": 2,
     "score": 0,
     "priority": 0,
-    "unverified_claims": [
-      "table: Table 1A",
-      "table: Table 1B"
-    ]
+    "unverified_claims": ["table: Table 1A", "table: Table 1B"]
   },
   {
     "slug": "/guides/dividend-vs-salary-electrician",
@@ -3528,9 +3421,7 @@
     "unverified": 1,
     "score": 0.875,
     "priority": 0,
-    "unverified_claims": [
-      "table: Table 1C"
-    ]
+    "unverified_claims": ["table: Table 1C"]
   },
   {
     "slug": "/guides/domestic-installer-vs-full-electrician",
@@ -3662,9 +3553,7 @@
     "unverified": 1,
     "score": 0.9,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/guides/eic-client-handover-guide",
@@ -3724,9 +3613,7 @@
     "unverified": 1,
     "score": 0.667,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/guides/eicr-belfast",
@@ -3738,9 +3625,7 @@
     "unverified": 1,
     "score": 0.667,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/guides/eicr-birmingham",
@@ -3752,10 +3637,7 @@
     "unverified": 2,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 132.13",
-      "section: Section 631"
-    ]
+    "unverified_claims": ["reg: Regulation 132.13", "section: Section 631"]
   },
   {
     "slug": "/eicr-bradford",
@@ -3767,9 +3649,7 @@
     "unverified": 1,
     "score": 0,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 21"
-    ]
+    "unverified_claims": ["section: Section 21"]
   },
   {
     "slug": "/guides/eicr-brighton",
@@ -3781,9 +3661,7 @@
     "unverified": 1,
     "score": 0.667,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/guides/eicr-bristol",
@@ -3795,10 +3673,7 @@
     "unverified": 2,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631",
-      "section: Section 621"
-    ]
+    "unverified_claims": ["section: Section 631", "section: Section 621"]
   },
   {
     "slug": "/guides/eicr-cambridge",
@@ -3810,9 +3685,7 @@
     "unverified": 1,
     "score": 0.667,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/guides/eicr-cardiff",
@@ -3848,11 +3721,7 @@
     "unverified": 3,
     "score": 0.4,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631",
-      "section: Section 21",
-      "section: Section 612"
-    ]
+    "unverified_claims": ["section: Section 631", "section: Section 21", "section: Section 612"]
   },
   {
     "slug": "/guides/eicr-client-handover-guide",
@@ -3948,9 +3817,7 @@
     "unverified": 1,
     "score": 0.667,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 634"
-    ]
+    "unverified_claims": ["section: Section 634"]
   },
   {
     "slug": "/guides/eicr-cost-aberdeen",
@@ -4334,9 +4201,7 @@
     "unverified": 1,
     "score": 0.667,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/eicr-derby",
@@ -4348,9 +4213,7 @@
     "unverified": 1,
     "score": 0,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 21"
-    ]
+    "unverified_claims": ["section: Section 21"]
   },
   {
     "slug": "/eicr-dundee",
@@ -4398,9 +4261,7 @@
     "unverified": 1,
     "score": 0.667,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/guides/eicr-fail-rented-property",
@@ -4436,9 +4297,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 21"
-    ]
+    "unverified_claims": ["section: Section 21"]
   },
   {
     "slug": "/guides/eicr-for-landlords",
@@ -4450,9 +4309,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 21"
-    ]
+    "unverified_claims": ["section: Section 21"]
   },
   {
     "slug": "/eicr-for-new-build",
@@ -4488,9 +4345,7 @@
     "unverified": 1,
     "score": 0.8,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 634"
-    ]
+    "unverified_claims": ["section: Section 634"]
   },
   {
     "slug": "/guides/eicr-glasgow",
@@ -4502,9 +4357,7 @@
     "unverified": 1,
     "score": 0,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/eicr-harrogate",
@@ -4516,11 +4369,7 @@
     "unverified": 3,
     "score": 0.4,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631",
-      "section: Section 21",
-      "section: Section 612"
-    ]
+    "unverified_claims": ["section: Section 631", "section: Section 21", "section: Section 612"]
   },
   {
     "slug": "/eicr-hull",
@@ -4532,9 +4381,7 @@
     "unverified": 1,
     "score": 0,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 21"
-    ]
+    "unverified_claims": ["section: Section 21"]
   },
   {
     "slug": "/guides/eicr-leeds",
@@ -4546,10 +4393,7 @@
     "unverified": 2,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 132.13",
-      "section: Section 631"
-    ]
+    "unverified_claims": ["reg: Regulation 132.13", "section: Section 631"]
   },
   {
     "slug": "/guides/eicr-leicester",
@@ -4561,9 +4405,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/guides/eicr-limitations",
@@ -4587,10 +4429,7 @@
     "unverified": 2,
     "score": 0.333,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631",
-      "section: Section 621"
-    ]
+    "unverified_claims": ["section: Section 631", "section: Section 621"]
   },
   {
     "slug": "/guides/eicr-london",
@@ -4602,10 +4441,7 @@
     "unverified": 2,
     "score": 0.333,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631",
-      "section: Section 621"
-    ]
+    "unverified_claims": ["section: Section 631", "section: Section 621"]
   },
   {
     "slug": "/eicr-luton",
@@ -4617,9 +4453,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 21"
-    ]
+    "unverified_claims": ["section: Section 21"]
   },
   {
     "slug": "/guides/eicr-manchester",
@@ -4631,11 +4465,7 @@
     "unverified": 3,
     "score": 0,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 132.13",
-      "section: Section 631",
-      "section: Section 21"
-    ]
+    "unverified_claims": ["reg: Regulation 132.13", "section: Section 631", "section: Section 21"]
   },
   {
     "slug": "/eicr-middlesbrough",
@@ -4647,11 +4477,7 @@
     "unverified": 3,
     "score": 0.4,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631",
-      "section: Section 21",
-      "section: Section 612"
-    ]
+    "unverified_claims": ["section: Section 631", "section: Section 21", "section: Section 612"]
   },
   {
     "slug": "/guides/eicr-newcastle",
@@ -4663,10 +4489,7 @@
     "unverified": 2,
     "score": 0.333,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631",
-      "section: Section 621"
-    ]
+    "unverified_claims": ["section: Section 631", "section: Section 621"]
   },
   {
     "slug": "/guides/eicr-no-main-protective-bonding",
@@ -4690,9 +4513,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 21"
-    ]
+    "unverified_claims": ["section: Section 21"]
   },
   {
     "slug": "/guides/eicr-nottingham",
@@ -4704,10 +4525,7 @@
     "unverified": 2,
     "score": 0,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631",
-      "section: Section 621"
-    ]
+    "unverified_claims": ["section: Section 631", "section: Section 621"]
   },
   {
     "slug": "/guides/eicr-observation-codes-explained",
@@ -4731,9 +4549,7 @@
     "unverified": 1,
     "score": 0.667,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/guides/eicr-plastic-consumer-unit-hmo",
@@ -4757,9 +4573,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/eicr-reading",
@@ -4771,9 +4585,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 21"
-    ]
+    "unverified_claims": ["section: Section 21"]
   },
   {
     "slug": "/eicr-remediation",
@@ -4809,10 +4621,7 @@
     "unverified": 2,
     "score": 0.333,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631",
-      "section: Section 621"
-    ]
+    "unverified_claims": ["section: Section 631", "section: Section 621"]
   },
   {
     "slug": "/guides/eicr-southampton",
@@ -4824,10 +4633,7 @@
     "unverified": 2,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631",
-      "section: Section 621"
-    ]
+    "unverified_claims": ["section: Section 631", "section: Section 621"]
   },
   {
     "slug": "/eicr-stoke-on-trent",
@@ -4839,11 +4645,7 @@
     "unverified": 3,
     "score": 0.4,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631",
-      "section: Section 21",
-      "section: Section 612"
-    ]
+    "unverified_claims": ["section: Section 631", "section: Section 21", "section: Section 612"]
   },
   {
     "slug": "/eicr-sunderland",
@@ -4855,9 +4657,7 @@
     "unverified": 1,
     "score": 0,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 21"
-    ]
+    "unverified_claims": ["section: Section 21"]
   },
   {
     "slug": "/eicr-swansea",
@@ -4869,11 +4669,7 @@
     "unverified": 3,
     "score": 0.4,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631",
-      "section: Section 21",
-      "section: Section 612"
-    ]
+    "unverified_claims": ["section: Section 631", "section: Section 21", "section: Section 612"]
   },
   {
     "slug": "/eicr-tenant-rights",
@@ -4885,9 +4681,7 @@
     "unverified": 1,
     "score": 0,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 21"
-    ]
+    "unverified_claims": ["section: Section 21"]
   },
   {
     "slug": "/guides/eicr-what-to-include",
@@ -4923,11 +4717,7 @@
     "unverified": 3,
     "score": 0.4,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631",
-      "section: Section 21",
-      "section: Section 612"
-    ]
+    "unverified_claims": ["section: Section 631", "section: Section 21", "section: Section 612"]
   },
   {
     "slug": "/guides/eicr-york",
@@ -4939,9 +4729,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/guides/eicr-vs-eic-difference",
@@ -5037,9 +4825,7 @@
     "unverified": 1,
     "score": 0.75,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 722.411.3.2"
-    ]
+    "unverified_claims": ["reg: Regulation 722.411.3.2"]
   },
   {
     "slug": "/guides/ev-charger-certificate-requirements",
@@ -5063,10 +4849,7 @@
     "unverified": 2,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 722.531.2",
-      "section: Section 722.531.1"
-    ]
+    "unverified_claims": ["reg: Regulation 722.531.2", "section: Section 722.531.1"]
   },
   {
     "slug": "/ev-charger-grants",
@@ -5090,9 +4873,7 @@
     "unverified": 1,
     "score": 0.75,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 722.531.101"
-    ]
+    "unverified_claims": ["reg: Regulation 722.531.101"]
   },
   {
     "slug": "/ev-charger-installation-brighton",
@@ -5104,10 +4885,7 @@
     "unverified": 2,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 722.531.2",
-      "chapter: Chapter 61"
-    ]
+    "unverified_claims": ["reg: Regulation 722.531.2", "chapter: Chapter 61"]
   },
   {
     "slug": "/guides/ev-charger-installation-bristol",
@@ -5119,9 +4897,7 @@
     "unverified": 1,
     "score": 0.75,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 722.531.101"
-    ]
+    "unverified_claims": ["reg: Regulation 722.531.101"]
   },
   {
     "slug": "/ev-charger-installation-cambridge",
@@ -5133,9 +4909,7 @@
     "unverified": 1,
     "score": 0.75,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 722.531.101"
-    ]
+    "unverified_claims": ["reg: Regulation 722.531.101"]
   },
   {
     "slug": "/ev-charger-installation-cardiff",
@@ -5147,9 +4921,7 @@
     "unverified": 1,
     "score": 0.75,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 722.531.101"
-    ]
+    "unverified_claims": ["reg: Regulation 722.531.101"]
   },
   {
     "slug": "/guides/ev-charger-installation-cost",
@@ -5161,9 +4933,7 @@
     "unverified": 1,
     "score": 0.75,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 722.531.101"
-    ]
+    "unverified_claims": ["reg: Regulation 722.531.101"]
   },
   {
     "slug": "/guides/ev-charger-installation-edinburgh",
@@ -5187,9 +4957,7 @@
     "unverified": 1,
     "score": 0.75,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 722.531.101"
-    ]
+    "unverified_claims": ["reg: Regulation 722.531.101"]
   },
   {
     "slug": "/guides/ev-charger-installation-leeds",
@@ -5201,9 +4969,7 @@
     "unverified": 1,
     "score": 0.75,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 722.531.101"
-    ]
+    "unverified_claims": ["reg: Regulation 722.531.101"]
   },
   {
     "slug": "/guides/ev-charger-installation-liverpool",
@@ -5215,9 +4981,7 @@
     "unverified": 1,
     "score": 0.75,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 722.531.101"
-    ]
+    "unverified_claims": ["reg: Regulation 722.531.101"]
   },
   {
     "slug": "/guides/ev-charger-installation-london",
@@ -5229,9 +4993,7 @@
     "unverified": 1,
     "score": 0.75,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 722.531.101"
-    ]
+    "unverified_claims": ["reg: Regulation 722.531.101"]
   },
   {
     "slug": "/guides/ev-charger-installation-manchester",
@@ -5243,9 +5005,7 @@
     "unverified": 1,
     "score": 0.75,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 722.531.101"
-    ]
+    "unverified_claims": ["reg: Regulation 722.531.101"]
   },
   {
     "slug": "/ev-charger-installation-newcastle",
@@ -5257,9 +5017,7 @@
     "unverified": 1,
     "score": 0.75,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 722.531.101"
-    ]
+    "unverified_claims": ["reg: Regulation 722.531.101"]
   },
   {
     "slug": "/ev-charger-installation-norwich",
@@ -5271,10 +5029,7 @@
     "unverified": 2,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 722.531.2",
-      "chapter: Chapter\n                61"
-    ]
+    "unverified_claims": ["reg: Regulation 722.531.2", "chapter: Chapter\n                61"]
   },
   {
     "slug": "/ev-charger-installation-nottingham",
@@ -5286,9 +5041,7 @@
     "unverified": 1,
     "score": 0.75,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 722.531.101"
-    ]
+    "unverified_claims": ["reg: Regulation 722.531.101"]
   },
   {
     "slug": "/ev-charger-installation-oxford",
@@ -5300,10 +5053,7 @@
     "unverified": 2,
     "score": 0.6,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 722.531.2",
-      "chapter: Chapter 61"
-    ]
+    "unverified_claims": ["reg: Regulation 722.531.2", "chapter: Chapter 61"]
   },
   {
     "slug": "/guides/ev-charger-installation",
@@ -5315,9 +5065,7 @@
     "unverified": 1,
     "score": 0.75,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 722.411.3.2"
-    ]
+    "unverified_claims": ["reg: Regulation 722.411.3.2"]
   },
   {
     "slug": "/ev-charger-installation-reading",
@@ -5329,10 +5077,7 @@
     "unverified": 2,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 722.531.2",
-      "chapter: Chapter 61"
-    ]
+    "unverified_claims": ["reg: Regulation 722.531.2", "chapter: Chapter 61"]
   },
   {
     "slug": "/ev-charger-installation-sheffield",
@@ -5344,9 +5089,7 @@
     "unverified": 1,
     "score": 0.75,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 722.531.101"
-    ]
+    "unverified_claims": ["reg: Regulation 722.531.101"]
   },
   {
     "slug": "/ev-charger-installation-southampton",
@@ -5358,9 +5101,7 @@
     "unverified": 1,
     "score": 0.75,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 722.531.101"
-    ]
+    "unverified_claims": ["reg: Regulation 722.531.101"]
   },
   {
     "slug": "/ev-charger-installation-wolverhampton",
@@ -5372,10 +5113,7 @@
     "unverified": 2,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 722.531.2",
-      "chapter: Chapter 61"
-    ]
+    "unverified_claims": ["reg: Regulation 722.531.2", "chapter: Chapter 61"]
   },
   {
     "slug": "/ev-charger-installation-york",
@@ -5387,10 +5125,7 @@
     "unverified": 2,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 722.531.2",
-      "chapter: Chapter\n                61"
-    ]
+    "unverified_claims": ["reg: Regulation 722.531.2", "chapter: Chapter\n                61"]
   },
   {
     "slug": "/tools/ev-charger-load-calculator",
@@ -5414,9 +5149,7 @@
     "unverified": 1,
     "score": 0.667,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 722.531.2"
-    ]
+    "unverified_claims": ["reg: Regulation 722.531.2"]
   },
   {
     "slug": "/training/ev-charger-installation",
@@ -5440,9 +5173,7 @@
     "unverified": 1,
     "score": 0.857,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 722.537"
-    ]
+    "unverified_claims": ["reg: Regulation 722.537"]
   },
   {
     "slug": "/guides/earth-electrode-testing",
@@ -5454,9 +5185,7 @@
     "unverified": 1,
     "score": 0.75,
     "priority": 0,
-    "unverified_claims": [
-      "chapter: Chapter 61"
-    ]
+    "unverified_claims": ["chapter: Chapter 61"]
   },
   {
     "slug": "/earth-electrode-testing",
@@ -5468,9 +5197,7 @@
     "unverified": 1,
     "score": 0.875,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 542.2.3"
-    ]
+    "unverified_claims": ["reg: Regulation 542.2.3"]
   },
   {
     "slug": "/guides/earth-fault-loop-impedance-explained",
@@ -5530,9 +5257,7 @@
     "unverified": 1,
     "score": 0.8,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 411.3.2.1"
-    ]
+    "unverified_claims": ["reg: Regulation 411.3.2.1"]
   },
   {
     "slug": "/guides/earth-loop-impedance-too-high",
@@ -5568,9 +5293,7 @@
     "unverified": 1,
     "score": 0.857,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 708.411.4"
-    ]
+    "unverified_claims": ["reg: Regulation 708.411.4"]
   },
   {
     "slug": "/guides/earthing-fault-diagnosis",
@@ -5642,10 +5365,7 @@
     "unverified": 2,
     "score": 0.9,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Reg 421.1.7.101",
-      "section: Section 700"
-    ]
+    "unverified_claims": ["reg: Reg 421.1.7.101", "section: Section 700"]
   },
   {
     "slug": "/guides/18th-edition-appendix-4-cable-current-rating-exam",
@@ -5669,10 +5389,7 @@
     "unverified": 2,
     "score": 0.846,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Reg 421.1.7.101",
-      "section: Section 700"
-    ]
+    "unverified_claims": ["reg: Reg 421.1.7.101", "section: Section 700"]
   },
   {
     "slug": "/guides/18th-edition-chapter-43-overcurrent-protection-exam",
@@ -6288,9 +6005,7 @@
     "unverified": 1,
     "score": 0.938,
     "priority": 0,
-    "unverified_claims": [
-      "chapter: Chapter 32"
-    ]
+    "unverified_claims": ["chapter: Chapter 32"]
   },
   {
     "slug": "/guides/electrical-distribution-symbols",
@@ -6458,10 +6173,7 @@
     "unverified": 2,
     "score": 0.846,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 634.2",
-      "section: Section 621"
-    ]
+    "unverified_claims": ["reg: Regulation 634.2", "section: Section 621"]
   },
   {
     "slug": "/electrical-installation-conduit",
@@ -6473,11 +6185,7 @@
     "unverified": 3,
     "score": 0.667,
     "priority": 0,
-    "unverified_claims": [
-      "table: Table 5A",
-      "table: Table 5B",
-      "table: Table 5C"
-    ]
+    "unverified_claims": ["table: Table 5A", "table: Table 5B", "table: Table 5C"]
   },
   {
     "slug": "/electrical-issues-house-value",
@@ -6537,9 +6245,7 @@
     "unverified": 1,
     "score": 0,
     "priority": 0,
-    "unverified_claims": [
-      "table: Table 1A"
-    ]
+    "unverified_claims": ["table: Table 1A"]
   },
   {
     "slug": "/guides/electrical-maintenance-contract",
@@ -6563,9 +6269,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "table: Table 3A"
-    ]
+    "unverified_claims": ["table: Table 3A"]
   },
   {
     "slug": "/guides/marketing-tips-electricians",
@@ -6613,10 +6317,7 @@
     "unverified": 2,
     "score": 0.667,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 528.1",
-      "reg: Regulation 332.1"
-    ]
+    "unverified_claims": ["reg: Regulation 528.1", "reg: Regulation 332.1"]
   },
   {
     "slug": "/tools/electrical-project-cost-estimator",
@@ -6808,9 +6509,7 @@
     "unverified": 1,
     "score": 0,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 21"
-    ]
+    "unverified_claims": ["section: Section 21"]
   },
   {
     "slug": "/guides/electrical-safety-on-site",
@@ -6954,9 +6653,7 @@
     "unverified": 1,
     "score": 0.8,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/guides/electrical-survey-cost",
@@ -7028,10 +6725,7 @@
     "unverified": 2,
     "score": 0.778,
     "priority": 0,
-    "unverified_claims": [
-      "table: Table 1A",
-      "table: Table 1B"
-    ]
+    "unverified_claims": ["table: Table 1A", "table: Table 1B"]
   },
   {
     "slug": "/guides/electrical-testing-cost-uk",
@@ -7079,9 +6773,7 @@
     "unverified": 1,
     "score": 0,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 44"
-    ]
+    "unverified_claims": ["section: Section 44"]
   },
   {
     "slug": "/electrical-van-leasing",
@@ -7105,9 +6797,7 @@
     "unverified": 1,
     "score": 0.75,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 801"
-    ]
+    "unverified_claims": ["section: Section 801"]
   },
   {
     "slug": "/guides/electrical-work-in-bathroom",
@@ -7227,9 +6917,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/guides/electrician-bath",
@@ -7301,9 +6989,7 @@
     "unverified": 1,
     "score": 0,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/guides/electrician-bournemouth",
@@ -7411,9 +7097,7 @@
     "unverified": 1,
     "score": 0,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/guides/electrician-cardiff",
@@ -7473,9 +7157,7 @@
     "unverified": 1,
     "score": 0,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/electricians/chelmsford",
@@ -7487,9 +7169,7 @@
     "unverified": 1,
     "score": 0,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/electricians/cheltenham",
@@ -7501,9 +7181,7 @@
     "unverified": 1,
     "score": 0,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/electricians/chester",
@@ -7527,9 +7205,7 @@
     "unverified": 1,
     "score": 0,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/guides/electrical-contractor-guide",
@@ -7577,9 +7253,7 @@
     "unverified": 1,
     "score": 0,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/guides/electrician-day-rates-uk",
@@ -7711,9 +7385,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/electricians/grimsby",
@@ -7737,9 +7409,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/electricians/harrogate",
@@ -7751,9 +7421,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/electrician-hertfordshire",
@@ -7801,9 +7469,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/guides/electrician-insurance-business-uk",
@@ -7839,9 +7505,7 @@
     "unverified": 1,
     "score": 0.8,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 411.3.2.2"
-    ]
+    "unverified_claims": ["reg: Regulation 411.3.2.2"]
   },
   {
     "slug": "/electricians/inverness",
@@ -7877,9 +7541,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 20"
-    ]
+    "unverified_claims": ["section: Section 20"]
   },
   {
     "slug": "/guides/electrician-job-vacancies",
@@ -7915,9 +7577,7 @@
     "unverified": 1,
     "score": 0,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/guides/electrician-leeds",
@@ -7953,9 +7613,7 @@
     "unverified": 1,
     "score": 0.667,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/electrician-lincolnshire",
@@ -7991,9 +7649,7 @@
     "unverified": 1,
     "score": 0,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 20"
-    ]
+    "unverified_claims": ["section: Section 20"]
   },
   {
     "slug": "/electricians/luton",
@@ -8017,9 +7673,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/guides/electrician-manchester",
@@ -8055,9 +7709,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/guides/electrician-milton-keynes",
@@ -8189,9 +7841,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/guides/electrician-plymouth",
@@ -8383,9 +8033,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/guides/electrician-southampton",
@@ -8433,9 +8081,7 @@
     "unverified": 1,
     "score": 0.889,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Reg 411.3.2.2"
-    ]
+    "unverified_claims": ["reg: Reg 411.3.2.2"]
   },
   {
     "slug": "/electrician-suffolk",
@@ -8459,9 +8105,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/guides/electrician-swansea",
@@ -8485,9 +8129,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/guides/electrician-tax-guide-uk",
@@ -8571,9 +8213,7 @@
     "unverified": 1,
     "score": 0,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/electricians/whitehaven",
@@ -8621,9 +8261,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/guides/electrician-working-abroad-uk",
@@ -9151,9 +8789,7 @@
     "unverified": 1,
     "score": 0.9,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 526.3"
-    ]
+    "unverified_claims": ["reg: Regulation 526.3"]
   },
   {
     "slug": "/guides/flashcards-for-electrical-exams",
@@ -9273,9 +8909,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 643.10"
-    ]
+    "unverified_claims": ["reg: Regulation 643.10"]
   },
   {
     "slug": "/guides/fuse-keeps-blowing",
@@ -9299,9 +8933,7 @@
     "unverified": 1,
     "score": 0.833,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 537.5"
-    ]
+    "unverified_claims": ["reg: Regulation 537.5"]
   },
   {
     "slug": "/guides/fused-spur-symbol",
@@ -9445,9 +9077,7 @@
     "unverified": 1,
     "score": 0.833,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 710.511.1"
-    ]
+    "unverified_claims": ["reg: Regulation 710.511.1"]
   },
   {
     "slug": "/garden-lighting-fault-finding",
@@ -9567,9 +9197,7 @@
     "unverified": 1,
     "score": 0.75,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 708.312"
-    ]
+    "unverified_claims": ["reg: Regulation 708.312"]
   },
   {
     "slug": "/seo-for-electricians",
@@ -9617,9 +9245,7 @@
     "unverified": 1,
     "score": 0.667,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 257"
-    ]
+    "unverified_claims": ["section: Section 257"]
   },
   {
     "slug": "/training/hnc-electrical",
@@ -9643,9 +9269,7 @@
     "unverified": 1,
     "score": 0,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 33"
-    ]
+    "unverified_claims": ["section: Section 33"]
   },
   {
     "slug": "/guides/hair-salon-electrical-cost",
@@ -9841,9 +9465,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 710.411.6.3.1"
-    ]
+    "unverified_claims": ["reg: Regulation 710.411.6.3.1"]
   },
   {
     "slug": "/guides/hot-tub-electrical-connection",
@@ -9855,9 +9477,7 @@
     "unverified": 1,
     "score": 0.667,
     "priority": 0,
-    "unverified_claims": [
-      "chapter: Chapter 61"
-    ]
+    "unverified_claims": ["chapter: Chapter 61"]
   },
   {
     "slug": "/hotel-eicr",
@@ -9989,9 +9609,7 @@
     "unverified": 1,
     "score": 0.833,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 632.3"
-    ]
+    "unverified_claims": ["reg: Regulation 632.3"]
   },
   {
     "slug": "/guides/how-to-find-electrician-uk",
@@ -10051,9 +9669,7 @@
     "unverified": 1,
     "score": 0.667,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Reg 421.1.7.101"
-    ]
+    "unverified_claims": ["reg: Reg 421.1.7.101"]
   },
   {
     "slug": "/guides/how-to-price-day-rate-subcontract-as-an-electrician",
@@ -10245,9 +9861,7 @@
     "unverified": 1,
     "score": 0.8,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 523.9"
-    ]
+    "unverified_claims": ["reg: Regulation 523.9"]
   },
   {
     "slug": "/how-to-test-insulation-resistance",
@@ -10451,9 +10065,7 @@
     "unverified": 1,
     "score": 0.875,
     "priority": 0,
-    "unverified_claims": [
-      "chapter: Chapter 61"
-    ]
+    "unverified_claims": ["chapter: Chapter 61"]
   },
   {
     "slug": "/inspection-testing-course",
@@ -10537,9 +10149,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "chapter: Chapter 61"
-    ]
+    "unverified_claims": ["chapter: Chapter 61"]
   },
   {
     "slug": "/guides/insulation-resistance-testing-bs7671",
@@ -10551,9 +10161,7 @@
     "unverified": 1,
     "score": 0.75,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 643.8"
-    ]
+    "unverified_claims": ["reg: Regulation 643.8"]
   },
   {
     "slug": "/guides/intermediate-switch-symbol",
@@ -10673,9 +10281,7 @@
     "unverified": 1,
     "score": 0.75,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 528.1"
-    ]
+    "unverified_claims": ["section: Section 528.1"]
   },
   {
     "slug": "/guides/kitchen-electrical-regulations",
@@ -10699,9 +10305,7 @@
     "unverified": 1,
     "score": 0.889,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/guides/kitchen-island-power-supply",
@@ -10809,10 +10413,7 @@
     "unverified": 2,
     "score": 0.333,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631",
-      "section: Section 21"
-    ]
+    "unverified_claims": ["section: Section 631", "section: Section 21"]
   },
   {
     "slug": "/landlord-electrical-safety-brighton",
@@ -10824,10 +10425,7 @@
     "unverified": 2,
     "score": 0.333,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631",
-      "section: Section 21"
-    ]
+    "unverified_claims": ["section: Section 631", "section: Section 21"]
   },
   {
     "slug": "/guides/landlord-electrical-safety-bristol",
@@ -10839,10 +10437,7 @@
     "unverified": 2,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631",
-      "section: Section 21"
-    ]
+    "unverified_claims": ["section: Section 631", "section: Section 21"]
   },
   {
     "slug": "/landlord-electrical-safety-cambridge",
@@ -10854,10 +10449,7 @@
     "unverified": 2,
     "score": 0.333,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631",
-      "section: Section 21"
-    ]
+    "unverified_claims": ["section: Section 631", "section: Section 21"]
   },
   {
     "slug": "/landlord-electrical-safety-cardiff",
@@ -10869,9 +10461,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/guides/landlord-electrical-safety-edinburgh",
@@ -10883,9 +10473,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/landlord-electrical-safety-exeter",
@@ -10897,10 +10485,7 @@
     "unverified": 2,
     "score": 0.333,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631",
-      "section: Section 21"
-    ]
+    "unverified_claims": ["section: Section 631", "section: Section 21"]
   },
   {
     "slug": "/guides/landlord-electrical-safety-glasgow",
@@ -10912,9 +10497,7 @@
     "unverified": 1,
     "score": 0.75,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/guides/landlord-electrical-safety-leeds",
@@ -10926,10 +10509,7 @@
     "unverified": 2,
     "score": 0.333,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631",
-      "section: Section 21"
-    ]
+    "unverified_claims": ["section: Section 631", "section: Section 21"]
   },
   {
     "slug": "/guides/landlord-electrical-safety-liverpool",
@@ -10941,10 +10521,7 @@
     "unverified": 2,
     "score": 0.333,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631",
-      "section: Section 21"
-    ]
+    "unverified_claims": ["section: Section 631", "section: Section 21"]
   },
   {
     "slug": "/guides/landlord-electrical-safety-london",
@@ -10956,10 +10533,7 @@
     "unverified": 2,
     "score": 0.333,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631",
-      "section: Section 21"
-    ]
+    "unverified_claims": ["section: Section 631", "section: Section 21"]
   },
   {
     "slug": "/guides/landlord-electrical-safety-manchester",
@@ -10971,10 +10545,7 @@
     "unverified": 2,
     "score": 0.333,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631",
-      "section: Section 21"
-    ]
+    "unverified_claims": ["section: Section 631", "section: Section 21"]
   },
   {
     "slug": "/landlord-electrical-safety-newcastle",
@@ -10986,10 +10557,7 @@
     "unverified": 2,
     "score": 0.333,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631",
-      "section: Section 21"
-    ]
+    "unverified_claims": ["section: Section 631", "section: Section 21"]
   },
   {
     "slug": "/guides/landlord-electrical-safety-nottingham",
@@ -11001,10 +10569,7 @@
     "unverified": 2,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631",
-      "section: Section 21"
-    ]
+    "unverified_claims": ["section: Section 631", "section: Section 21"]
   },
   {
     "slug": "/landlord-electrical-safety-oxford",
@@ -11016,10 +10581,7 @@
     "unverified": 2,
     "score": 0.333,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631",
-      "section: Section 21"
-    ]
+    "unverified_claims": ["section: Section 631", "section: Section 21"]
   },
   {
     "slug": "/guides/landlord-electrical-safety",
@@ -11031,9 +10593,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 21"
-    ]
+    "unverified_claims": ["section: Section 21"]
   },
   {
     "slug": "/landlord-electrical-safety-reading",
@@ -11045,10 +10605,7 @@
     "unverified": 2,
     "score": 0.333,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631",
-      "section: Section 21"
-    ]
+    "unverified_claims": ["section: Section 631", "section: Section 21"]
   },
   {
     "slug": "/guides/landlord-electrical-safety-sheffield",
@@ -11060,10 +10617,7 @@
     "unverified": 2,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631",
-      "section: Section 21"
-    ]
+    "unverified_claims": ["section: Section 631", "section: Section 21"]
   },
   {
     "slug": "/landlord-electrical-safety-southampton",
@@ -11075,10 +10629,7 @@
     "unverified": 2,
     "score": 0.333,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631",
-      "section: Section 21"
-    ]
+    "unverified_claims": ["section: Section 631", "section: Section 21"]
   },
   {
     "slug": "/landlord-electrical-safety-wolverhampton",
@@ -11090,10 +10641,7 @@
     "unverified": 2,
     "score": 0.333,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631",
-      "section: Section 21"
-    ]
+    "unverified_claims": ["section: Section 631", "section: Section 21"]
   },
   {
     "slug": "/landlord-electrical-safety-york",
@@ -11105,10 +10653,7 @@
     "unverified": 2,
     "score": 0.333,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631",
-      "section: Section 21"
-    ]
+    "unverified_claims": ["section: Section 631", "section: Section 21"]
   },
   {
     "slug": "/training/leadership-on-site",
@@ -11168,9 +10713,7 @@
     "unverified": 1,
     "score": 0.917,
     "priority": 0,
-    "unverified_claims": [
-      "chapter: Chapter 61"
-    ]
+    "unverified_claims": ["chapter: Chapter 61"]
   },
   {
     "slug": "/guides/level-4-electrical-qualification",
@@ -11338,9 +10881,7 @@
     "unverified": 1,
     "score": 0.75,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 522.6.101"
-    ]
+    "unverified_claims": ["reg: Regulation 522.6.101"]
   },
   {
     "slug": "/guides/loft-conversion-electrics",
@@ -11361,6 +10902,18 @@
     "impressions": 0,
     "claims_total": 0,
     "verified": 0,
+    "unverified": 0,
+    "score": 1,
+    "priority": 0,
+    "unverified_claims": []
+  },
+  {
+    "slug": "/loop-impedance-testing-guide",
+    "sourceFile": "src/pages/seo/LoopImpedanceTestingGuidePage.tsx",
+    "title": "Earth Loop Impedance Testing | Ze + Zs to BS 7671 + GN3",
+    "impressions": 4405,
+    "claims_total": 4,
+    "verified": 4,
     "unverified": 0,
     "score": 1,
     "priority": 0,
@@ -11544,9 +11097,7 @@
     "unverified": 1,
     "score": 0.833,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 709.411.3.3"
-    ]
+    "unverified_claims": ["reg: Regulation 709.411.3.3"]
   },
   {
     "slug": "/guides/master-electrician-uk",
@@ -11570,10 +11121,7 @@
     "unverified": 2,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "table: Table 1B",
-      "table: Table 1A"
-    ]
+    "unverified_claims": ["table: Table 1B", "table: Table 1A"]
   },
   {
     "slug": "/guides/max-demand-calculation-guide",
@@ -11765,9 +11313,7 @@
     "unverified": 1,
     "score": 0.889,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 631.2"
-    ]
+    "unverified_claims": ["reg: Regulation 631.2"]
   },
   {
     "slug": "/guides/minor-works-certificate-what-to-include",
@@ -11791,9 +11337,7 @@
     "unverified": 1,
     "score": 0.667,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 620.3"
-    ]
+    "unverified_claims": ["reg: Regulation 620.3"]
   },
   {
     "slug": "/guides/mock-exams-electrical",
@@ -11853,9 +11397,7 @@
     "unverified": 1,
     "score": 0.667,
     "priority": 0,
-    "unverified_claims": [
-      "chapter: Chapter 61"
-    ]
+    "unverified_claims": ["chapter: Chapter 61"]
   },
   {
     "slug": "/guides/multimeter-guide-electricians",
@@ -12143,9 +11685,7 @@
     "unverified": 1,
     "score": 0,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/guides/nuclear-site-electrical-work",
@@ -12649,9 +12189,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 526.3"
-    ]
+    "unverified_claims": ["reg: Regulation 526.3"]
   },
   {
     "slug": "/guides/partial-rewire-labour-and-materials",
@@ -12807,10 +12345,7 @@
     "unverified": 2,
     "score": 0.6,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 528.1",
-      "section: Section 528.1"
-    ]
+    "unverified_claims": ["reg: Regulation 528.1", "section: Section 528.1"]
   },
   {
     "slug": "/polarity-test-guide",
@@ -12822,9 +12357,7 @@
     "unverified": 1,
     "score": 0,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 612.6"
-    ]
+    "unverified_claims": ["reg: Regulation 612.6"]
   },
   {
     "slug": "/guides/polarity-testing-guide",
@@ -12836,9 +12369,7 @@
     "unverified": 1,
     "score": 0.667,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 643.6"
-    ]
+    "unverified_claims": ["reg: Regulation 643.6"]
   },
   {
     "slug": "/guides/polarity-testing-guide-bs7671",
@@ -13006,9 +12537,7 @@
     "unverified": 1,
     "score": 0.833,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 313.1"
-    ]
+    "unverified_claims": ["reg: Regulation 313.1"]
   },
   {
     "slug": "/guides/prosumer-low-voltage-electrical-installation",
@@ -13224,9 +12753,7 @@
     "unverified": 1,
     "score": 0.875,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 722.512.2"
-    ]
+    "unverified_claims": ["reg: Regulation 722.512.2"]
   },
   {
     "slug": "/guides/rams-for-full-rewire",
@@ -13394,10 +12921,7 @@
     "unverified": 2,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 612.9",
-      "chapter: Chapter 61"
-    ]
+    "unverified_claims": ["reg: Regulation 612.9", "chapter: Chapter 61"]
   },
   {
     "slug": "/guides/rcd-testing-procedure",
@@ -13557,9 +13081,7 @@
     "unverified": 1,
     "score": 0.923,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 643.8"
-    ]
+    "unverified_claims": ["reg: Regulation 643.8"]
   },
   {
     "slug": "/guides/regulation-530-3-201",
@@ -13583,9 +13105,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 558"
-    ]
+    "unverified_claims": ["section: Section 558"]
   },
   {
     "slug": "/guides/residual-current-monitoring",
@@ -13609,9 +13129,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 631"
-    ]
+    "unverified_claims": ["section: Section 631"]
   },
   {
     "slug": "/guides/restaurant-electrical-requirements",
@@ -13623,9 +13141,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "table: Table 3A"
-    ]
+    "unverified_claims": ["table: Table 3A"]
   },
   {
     "slug": "/guides/restaurant-kitchen-electrical-cost",
@@ -13949,9 +13465,7 @@
     "unverified": 1,
     "score": 0.857,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 443.1"
-    ]
+    "unverified_claims": ["reg: Regulation 443.1"]
   },
   {
     "slug": "/guides/spd-surge-protection-guide",
@@ -14039,9 +13553,7 @@
     "unverified": 1,
     "score": 0.75,
     "priority": 0,
-    "unverified_claims": [
-      "chapter: Chapter 61"
-    ]
+    "unverified_claims": ["chapter: Chapter 61"]
   },
   {
     "slug": "/training/scaffolding-awareness",
@@ -14149,10 +13661,7 @@
     "unverified": 2,
     "score": 0.833,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 712.411",
-      "section: Section 818"
-    ]
+    "unverified_claims": ["section: Section 712.411", "section: Section 818"]
   },
   {
     "slug": "/guides/section-715-elv-lighting-a4-2026",
@@ -14164,10 +13673,7 @@
     "unverified": 2,
     "score": 0.867,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 715.512",
-      "section: Section 715.512"
-    ]
+    "unverified_claims": ["reg: Regulation 715.512", "section: Section 715.512"]
   },
   {
     "slug": "/guides/section-722-ev-charging-a4-2026-changes",
@@ -14431,9 +13937,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 559.6.1.1"
-    ]
+    "unverified_claims": ["reg: Regulation 559.6.1.1"]
   },
   {
     "slug": "/smart-lighting-control",
@@ -14493,9 +13997,7 @@
     "unverified": 1,
     "score": 0,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 21"
-    ]
+    "unverified_claims": ["section: Section 21"]
   },
   {
     "slug": "/guides/smoke-alarm-regulations-uk",
@@ -14896,9 +14398,7 @@
     "unverified": 1,
     "score": 0,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 526.3"
-    ]
+    "unverified_claims": ["reg: Regulation 526.3"]
   },
   {
     "slug": "/tools/staff-cost-calculator",
@@ -14982,9 +14482,7 @@
     "unverified": 1,
     "score": 0.75,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 528.1"
-    ]
+    "unverified_claims": ["section: Section 528.1"]
   },
   {
     "slug": "/student-house-electrical",
@@ -14996,9 +14494,7 @@
     "unverified": 1,
     "score": 0,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 21"
-    ]
+    "unverified_claims": ["section: Section 21"]
   },
   {
     "slug": "/tools/study-centre-online-courses",
@@ -15058,9 +14554,7 @@
     "unverified": 1,
     "score": 0.889,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 411.3.2.2"
-    ]
+    "unverified_claims": ["reg: Regulation 411.3.2.2"]
   },
   {
     "slug": "/guides/swimming-pool-electrical-installation",
@@ -15156,9 +14650,7 @@
     "unverified": 1,
     "score": 0.667,
     "priority": 0,
-    "unverified_claims": [
-      "table: Table 3A"
-    ]
+    "unverified_claims": ["table: Table 3A"]
   },
   {
     "slug": "/tender-writing-electrician",
@@ -15218,9 +14710,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 643.10"
-    ]
+    "unverified_claims": ["reg: Regulation 643.10"]
   },
   {
     "slug": "/guides/testing-three-phase-installation",
@@ -15292,9 +14782,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "table: Table 1A"
-    ]
+    "unverified_claims": ["table: Table 1A"]
   },
   {
     "slug": "/guides/three-phase-installation",
@@ -15414,9 +14902,7 @@
     "unverified": 1,
     "score": 0,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 643.8"
-    ]
+    "unverified_claims": ["reg: Regulation 643.8"]
   },
   {
     "slug": "/trunking-fill-calculator",
@@ -15428,9 +14914,7 @@
     "unverified": 1,
     "score": 0,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 528.1"
-    ]
+    "unverified_claims": ["reg: Regulation 528.1"]
   },
   {
     "slug": "/guides/trunking-installation-guide",
@@ -15442,9 +14926,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 528.1"
-    ]
+    "unverified_claims": ["reg: Regulation 528.1"]
   },
   {
     "slug": "/two-way-switch-wiring",
@@ -15456,9 +14938,7 @@
     "unverified": 1,
     "score": 0.667,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 514.14.1"
-    ]
+    "unverified_claims": ["reg: Regulation 514.14.1"]
   },
   {
     "slug": "/guides/2way-switch-symbol",
@@ -16094,10 +15574,7 @@
     "unverified": 2,
     "score": 0.946,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 700",
-      "chapter: Chapter 32"
-    ]
+    "unverified_claims": ["section: Section 700", "chapter: Chapter 32"]
   },
   {
     "slug": "/guides/5357-unit-101-001-understand-health-safety-and-environmental-considerations-revision",
@@ -16277,10 +15754,7 @@
     "unverified": 2,
     "score": 0.943,
     "priority": 0,
-    "unverified_claims": [
-      "section: Section 700",
-      "chapter: Chapter 32"
-    ]
+    "unverified_claims": ["section: Section 700", "chapter: Chapter 32"]
   },
   {
     "slug": "/guides/5393-03-unit-101-health-safety-and-environmental-considerations-in-dwellings-revision",
@@ -16688,11 +16162,7 @@
     "unverified": 3,
     "score": 0.4,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 825.1",
-      "reg: Regulation 826.5",
-      "reg: Regulation 825.2"
-    ]
+    "unverified_claims": ["reg: Regulation 825.1", "reg: Regulation 826.5", "reg: Regulation 825.2"]
   },
   {
     "slug": "/guides/v2h-bidirectional-ev-charging",
@@ -16788,9 +16258,7 @@
     "unverified": 1,
     "score": 0.857,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 525.1.1"
-    ]
+    "unverified_claims": ["reg: Regulation 525.1.1"]
   },
   {
     "slug": "/guides/voltage-too-high-or-low",
@@ -16898,9 +16366,7 @@
     "unverified": 1,
     "score": 0.667,
     "priority": 0,
-    "unverified_claims": [
-      "reg: Regulation 632.1"
-    ]
+    "unverified_claims": ["reg: Regulation 632.1"]
   },
   {
     "slug": "/guides/why-choose-niceic-electrician",
@@ -16996,9 +16462,7 @@
     "unverified": 1,
     "score": 0.5,
     "priority": 0,
-    "unverified_claims": [
-      "chapter: Chapter 14"
-    ]
+    "unverified_claims": ["chapter: Chapter 14"]
   },
   {
     "slug": "/guides/working-with-other-trades-electrician",
