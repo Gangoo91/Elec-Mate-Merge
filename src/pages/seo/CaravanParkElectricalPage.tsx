@@ -39,7 +39,7 @@ const keyTakeaways = [
   'BS 7671:2018+A4:2026 Section 708 is the specific section governing electrical installations in caravan parks and similar locations. Every pitch supply must comply with its requirements.',
   'Each caravan pitch must be supplied through an individual supply equipment assembly incorporating overcurrent protection, 30 mA RCD protection, and a socket outlet to IEC 60309 (CEE form).',
   'RCDs must disconnect within 40 ms at 5× the rated residual operating current. This is a life-safety requirement in the outdoor, damp environment of caravan parks.',
-  'Socket outlets must be positioned so the connecting cable from the pitch supply point to the caravan does not exceed 25 m (Regulation 708.553.1.4).',
+  'Socket outlets must be positioned so the connecting cable from the pitch supply point to the caravan does not exceed 25 m (Regulation 708.55.1.2).',
   'TT earthing is common at caravan parks. The product of the earth electrode resistance and RCD operating current must not exceed 50 V.',
   'The recommended periodic inspection interval for caravan park installations is 1 year (IET Guidance Note 3), reflecting the harsh outdoor environment and seasonal heavy use.',
 ];
@@ -63,7 +63,7 @@ const faqs = [
   {
     question: 'How close must the pitch supply point be to the caravan?',
     answer:
-      'Regulation 708.553.1.4 states that socket outlets must be positioned so the connecting cable from the pitch supply point to the caravan does not exceed 25 m in length. This limits voltage drop and ensures the caravan is within a safe distance of its supply. Pitch layouts must be designed with this 25 m limit in mind.',
+      'Regulation 708.55.1.2 states that socket outlets must be positioned so the connecting cable from the pitch supply point to the caravan does not exceed 25 m in length. This limits voltage drop and ensures the caravan is within a safe distance of its supply. Pitch layouts must be designed with this 25 m limit in mind.',
   },
   {
     question: 'What earthing system is used in caravan parks?',
@@ -298,7 +298,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>30 mA maximum IΔn</strong> — Regulation 708.411.3.3 requires each pitch
+                <strong>30 mA maximum IΔn</strong> — Regulation 411.3.3 (applied via Section 708) requires each pitch
                 supply socket outlet be protected by an RCD with a rated residual operating current
                 not exceeding 30 mA. This threshold provides protection against fatal electric
                 shock: the let-go current for most adults is around 10–15 mA, and a 30 mA RCD limits
@@ -355,7 +355,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>25 m maximum cable run</strong> — Regulation 708.553.1.4 specifies that
+                <strong>25 m maximum cable run</strong> — Regulation 708.55.1.2 specifies that
                 socket outlets must be positioned so the connecting cable from the pitch supply
                 point to the caravan does not exceed 25 m. This limit controls voltage drop and
                 prevents excessive cable lying across the site creating trip hazards.

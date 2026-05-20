@@ -44,7 +44,20 @@ const QuoteBuilderEdit = () => {
               typeof data.client_data === 'string'
                 ? JSON.parse(data.client_data)
                 : data.client_data,
-            items: typeof data.items === 'string' ? JSON.parse(data.items) : data.items,
+            items: (typeof data.items === 'string' ? JSON.parse(data.items) : data.items || []).map(
+              (item: any) => ({
+                id: item.id ?? crypto.randomUUID(),
+                category: item.category ?? 'materials',
+                unit: item.unit ?? 'each',
+                notes: item.notes ?? '',
+                description: item.description ?? '',
+                quantity: Number(item.quantity) || 0,
+                unitPrice: Number(item.unitPrice ?? item.unit_price) || 0,
+                totalPrice:
+                  Number(item.totalPrice ?? item.total) ||
+                  (Number(item.quantity) || 0) * (Number(item.unitPrice ?? item.unit_price) || 0),
+              })
+            ),
             settings: typeof data.settings === 'string' ? JSON.parse(data.settings) : data.settings,
             jobDetails: data.job_details
               ? typeof data.job_details === 'string'
@@ -208,7 +221,7 @@ const QuoteBuilderEdit = () => {
       <div className="px-4 py-4">
         <QuoteWizard
           initialQuote={quote}
-          onQuoteGenerated={() => navigate('/electrician/quote-builder')}
+          onQuoteGenerated={() => navigate('/electrician/quotes')}
         />
       </div>
     </motion.div>

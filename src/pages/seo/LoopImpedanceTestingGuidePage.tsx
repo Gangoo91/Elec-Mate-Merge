@@ -58,7 +58,7 @@ const faqs = [
   {
     question: 'What are the maximum Zs values for Type B and Type C MCBs?',
     answer:
-      'BS 7671 Appendix 3 Table 3A gives maximum Zs values at 80°C for common MCB types. For Type B MCBs at 230V: 6A = 7.67Ω, 10A = 4.60Ω, 16A = 2.87Ω, 20A = 2.30Ω, 32A = 1.44Ω, 40A = 1.15Ω, 63A = 0.73Ω. For Type C MCBs at 230V, the values are half those of Type B (e.g., 32A Type C = 0.72Ω). For Type D MCBs, the values are one quarter of Type B values. These are the corrected values at conductor operating temperature — measured Zs at ambient temperature must be corrected using the temperature correction factor.',
+      'Maximum Zs values for common MCB types are published in BS 7671 Appendix 3 (and reproduced in the IET On-Site Guide Appendix B). Note: the old Appendix 3 Table 3A (time/current performance criteria for RCDs) was deleted in BS 7671:2018+A4:2026 — current Zs limits are in the updated Appendix 3 tables. For Type B MCBs at 230 V: 6 A = 7.67 Ω, 10 A = 4.60 Ω, 16 A = 2.87 Ω, 20 A = 2.30 Ω, 32 A = 1.44 Ω, 40 A = 1.15 Ω, 63 A = 0.73 Ω. Type C values are roughly half of Type B; Type D values roughly one quarter. These are corrected values at conductor operating temperature — measured Zs at ambient must be corrected using the 0.8 correction factor before comparison against the maximum.',
   },
   {
     question: 'How do you calculate prospective fault current?',

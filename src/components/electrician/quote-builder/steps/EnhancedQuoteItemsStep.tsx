@@ -969,7 +969,7 @@ export const EnhancedQuoteItemsStep = ({
                       </p>
                     )}
                     <p className="text-[15px] font-bold text-elec-yellow shrink-0 ml-2">
-                      £{item.totalPrice.toFixed(2)}
+                      £{((item.totalPrice ?? item.quantity * item.unitPrice) || 0).toFixed(2)}
                     </p>
                   </div>
 
