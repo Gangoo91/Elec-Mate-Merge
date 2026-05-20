@@ -73,7 +73,21 @@ export function buildInvoiceSendEmail(data: InvoiceSendData): InvoiceSendEmail {
   const preheader = `${totalStr}${dueDateStr ? ` due ${dueDateStr}` : ''} · Invoice ${data.invoiceNumber}${data.jobTitle ? ` · ${data.jobTitle}` : ''}`;
 
   const greeting = `Hi <strong style="color:#0f172a">${firstName}</strong>,`;
-  const customBody = (data.customMessage || '').trim();
+  // Defensive: strip a leading greeting / trailing sign-off if the caller
+  // (e.g. the AI assistant) accidentally included one — the template adds its own.
+  const stripLeadingGreeting = (s: string) =>
+    s.replace(
+      /^\s*(hi|hello|hey|dear|good (?:morning|afternoon|evening))\b[^\n,—-]{0,40}[,—-]?\s*\n*/i,
+      ''
+    );
+  const stripTrailingSignoff = (s: string) =>
+    s
+      .replace(
+        /\n+\s*(thanks|thank you|regards|kind regards|best regards|best|cheers|yours|sincerely|warm regards|all the best)\b[^\n]{0,80}\s*$/i,
+        ''
+      )
+      .trimEnd();
+  const customBody = stripTrailingSignoff(stripLeadingGreeting((data.customMessage || '').trim()));
   const body = customBody
     ? customBody.replace(/\n/g, '<br>')
     : `Thanks for your business. Your invoice for ${data.jobTitle ? `the ${data.jobTitle.toLowerCase()}` : 'the work we completed'} is ready — full breakdown attached as a PDF. The fastest way to settle it is the button below.`;
@@ -97,7 +111,10 @@ export function buildInvoiceSendEmail(data: InvoiceSendData): InvoiceSendEmail {
   if (data.payNowUrl) {
     const microParts = ['Secure payment by card · powered by Stripe'];
     if (data.pdfAttached) microParts.push('Full PDF attached');
-    else if (data.pdfUrl) microParts.push(`<a href="${data.pdfUrl}" style="color:#64748b;text-decoration:underline;">View invoice PDF online</a>`);
+    else if (data.pdfUrl)
+      microParts.push(
+        `<a href="${data.pdfUrl}" style="color:#64748b;text-decoration:underline;">View invoice PDF online</a>`
+      );
     cta = renderButton({
       href: data.payNowUrl,
       label: `Pay ${totalStr} now`,
@@ -171,7 +188,7 @@ export function buildInvoiceSendEmail(data: InvoiceSendData): InvoiceSendEmail {
     cta,
     card: sectionsAfterCta,
     signoff,
-    trackingPixelUrl: data.trackingPixelUrl
+    trackingPixelUrl: data.trackingPixelUrl,
   });
 
   return { subject, preheader, html };

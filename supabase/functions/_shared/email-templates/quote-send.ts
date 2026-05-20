@@ -79,7 +79,23 @@ export function buildQuoteSendEmail(data: QuoteSendData): QuoteSendEmail {
 
   // Body copy — caller-supplied custom message wins, else warm default.
   const greeting = `Hi <strong style="color:#0f172a">${firstName}</strong>,`;
-  const customBody = (data.customMessage || '').trim();
+  // Defensive: strip a leading greeting if the caller (e.g. the AI assistant)
+  // accidentally included one — the template always adds its own. Match common
+  // "Hi/Hello/Hey/Dear [optional name][,/—/—] [optional blank line]" patterns.
+  const stripLeadingGreeting = (s: string) =>
+    s.replace(
+      /^\s*(hi|hello|hey|dear|good (?:morning|afternoon|evening))\b[^\n,—-]{0,40}[,—-]?\s*\n*/i,
+      ''
+    );
+  // Defensive: strip a trailing sign-off — the template adds its own "Thanks,".
+  const stripTrailingSignoff = (s: string) =>
+    s
+      .replace(
+        /\n+\s*(thanks|thank you|regards|kind regards|best regards|best|cheers|yours|sincerely|warm regards|all the best)\b[^\n]{0,80}\s*$/i,
+        ''
+      )
+      .trimEnd();
+  const customBody = stripTrailingSignoff(stripLeadingGreeting((data.customMessage || '').trim()));
   const body = customBody
     ? customBody.replace(/\n/g, '<br>')
     : `Thanks for getting in touch about ${jobLine}. I've put together the quote below — full breakdown attached as a PDF. Have a read through and let me know if you'd like to go ahead or have any questions.`;
@@ -105,7 +121,7 @@ export function buildQuoteSendEmail(data: QuoteSendData): QuoteSendEmail {
   // PDF-attached info merged into microcopy so we don't render a separate
   // redundant card for it.
   const microcopyParts = [
-    "Secure page · no account needed",
+    'Secure page · no account needed',
     data.pdfAttached ? 'Full PDF attached' : '',
   ].filter(Boolean);
   const cta = renderButton({
