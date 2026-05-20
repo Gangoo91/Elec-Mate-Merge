@@ -287,7 +287,16 @@ function genRef(prefix: string): string {
 }
 
 function normaliseLines(lines: MateLineItem[]): {
-  items: Array<{ description: string; quantity: number; unitPrice: number; total: number }>;
+  items: Array<{
+    id: string;
+    category: string;
+    unit: string;
+    notes: string;
+    description: string;
+    quantity: number;
+    unitPrice: number;
+    totalPrice: number;
+  }>;
   subtotal: number;
 } {
   let subtotal = 0;
@@ -296,9 +305,18 @@ function normaliseLines(lines: MateLineItem[]): {
     .map((l) => {
       const quantity = Number(l.quantity);
       const unitPrice = Number(l.unitPrice);
-      const total = Math.round(quantity * unitPrice * 100) / 100;
-      subtotal += total;
-      return { description: l.description.trim(), quantity, unitPrice, total };
+      const totalPrice = Math.round(quantity * unitPrice * 100) / 100;
+      subtotal += totalPrice;
+      return {
+        id: crypto.randomUUID(),
+        category: 'materials',
+        unit: 'each',
+        notes: '',
+        description: l.description.trim(),
+        quantity,
+        unitPrice,
+        totalPrice,
+      };
     });
   return { items, subtotal: Math.round(subtotal * 100) / 100 };
 }
@@ -325,7 +343,9 @@ export async function createQuote(
   const total = Math.round((subtotal + vatAmount) * 100) / 100;
 
   const expiry = new Date();
-  expiry.setDate(expiry.getDate() + (args.expiry_days && args.expiry_days > 0 ? args.expiry_days : 30));
+  expiry.setDate(
+    expiry.getDate() + (args.expiry_days && args.expiry_days > 0 ? args.expiry_days : 30)
+  );
 
   const quoteNumber = genRef('QUO');
 
@@ -398,7 +418,9 @@ export async function createInvoice(
 
   const today = new Date();
   const due = new Date();
-  due.setDate(due.getDate() + (args.payment_days && args.payment_days > 0 ? args.payment_days : 30));
+  due.setDate(
+    due.getDate() + (args.payment_days && args.payment_days > 0 ? args.payment_days : 30)
+  );
 
   const invoiceNumber = genRef('INV');
 
@@ -525,8 +547,7 @@ export async function amendQuote(
 
   // Lock items/totals if the quote has been accepted or already invoiced.
   // Notes / status / client info are still fair game.
-  const isLocked =
-    existing.acceptance_status === 'accepted' || existing.invoice_raised === true;
+  const isLocked = existing.acceptance_status === 'accepted' || existing.invoice_raised === true;
   if (isLocked && args.patch.line_items) {
     return 'Cannot amend line items — this quote is accepted or already invoiced. Issue a variation quote (new quote_number) or a credit note instead.';
   }
@@ -538,8 +559,10 @@ export async function amendQuote(
   if (args.patch.client_name !== undefined) clientPatch.name = args.patch.client_name.trim();
   if (args.patch.client_email !== undefined) clientPatch.email = args.patch.client_email.trim();
   if (args.patch.client_phone !== undefined) clientPatch.phone = args.patch.client_phone.trim();
-  if (args.patch.client_address !== undefined) clientPatch.address = args.patch.client_address.trim();
-  if (args.patch.client_postcode !== undefined) clientPatch.postcode = args.patch.client_postcode.trim();
+  if (args.patch.client_address !== undefined)
+    clientPatch.address = args.patch.client_address.trim();
+  if (args.patch.client_postcode !== undefined)
+    clientPatch.postcode = args.patch.client_postcode.trim();
   if (Object.keys(clientPatch).length > 0) {
     update.client_data = { ...(existing.client_data || {}), ...clientPatch };
   }
@@ -547,7 +570,8 @@ export async function amendQuote(
   // ─── job_details jsonb merge ───
   const jobPatch: Record<string, string> = {};
   if (args.patch.job_title !== undefined) jobPatch.title = args.patch.job_title.trim();
-  if (args.patch.job_description !== undefined) jobPatch.description = args.patch.job_description.trim();
+  if (args.patch.job_description !== undefined)
+    jobPatch.description = args.patch.job_description.trim();
   if (Object.keys(jobPatch).length > 0) {
     update.job_details = { ...(existing.job_details || {}), ...jobPatch };
   }
@@ -560,7 +584,9 @@ export async function amendQuote(
     }
     const existingSettings = (existing.settings as { vatRate?: number }) || {};
     const vatRate =
-      typeof args.patch.vat_rate === 'number' ? args.patch.vat_rate : (existingSettings.vatRate ?? 20);
+      typeof args.patch.vat_rate === 'number'
+        ? args.patch.vat_rate
+        : (existingSettings.vatRate ?? 20);
     const vatAmount = Math.round(subtotal * (vatRate / 100) * 100) / 100;
     const total = Math.round((subtotal + vatAmount) * 100) / 100;
     update.items = items;
@@ -676,8 +702,10 @@ export async function amendInvoice(
   if (args.patch.client_name !== undefined) clientPatch.name = args.patch.client_name.trim();
   if (args.patch.client_email !== undefined) clientPatch.email = args.patch.client_email.trim();
   if (args.patch.client_phone !== undefined) clientPatch.phone = args.patch.client_phone.trim();
-  if (args.patch.client_address !== undefined) clientPatch.address = args.patch.client_address.trim();
-  if (args.patch.client_postcode !== undefined) clientPatch.postcode = args.patch.client_postcode.trim();
+  if (args.patch.client_address !== undefined)
+    clientPatch.address = args.patch.client_address.trim();
+  if (args.patch.client_postcode !== undefined)
+    clientPatch.postcode = args.patch.client_postcode.trim();
   if (Object.keys(clientPatch).length > 0) {
     update.client_data = { ...(existing.client_data || {}), ...clientPatch };
   }
@@ -685,7 +713,8 @@ export async function amendInvoice(
   // ─── job_details jsonb merge ───
   const jobPatch: Record<string, string> = {};
   if (args.patch.job_title !== undefined) jobPatch.title = args.patch.job_title.trim();
-  if (args.patch.job_description !== undefined) jobPatch.description = args.patch.job_description.trim();
+  if (args.patch.job_description !== undefined)
+    jobPatch.description = args.patch.job_description.trim();
   if (Object.keys(jobPatch).length > 0) {
     update.job_details = { ...(existing.job_details || {}), ...jobPatch };
   }
@@ -697,7 +726,9 @@ export async function amendInvoice(
     }
     const existingSettings = (existing.settings as { vatRate?: number }) || {};
     const vatRate =
-      typeof args.patch.vat_rate === 'number' ? args.patch.vat_rate : (existingSettings.vatRate ?? 20);
+      typeof args.patch.vat_rate === 'number'
+        ? args.patch.vat_rate
+        : (existingSettings.vatRate ?? 20);
     const vatAmount = Math.round(subtotal * (vatRate / 100) * 100) / 100;
     const total = Math.round((subtotal + vatAmount) * 100) / 100;
     update.items = items;
@@ -731,8 +762,10 @@ export async function amendInvoice(
       update.paid_at = new Date().toISOString();
     }
   }
-  if (args.patch.payment_method !== undefined) update.payment_method = args.patch.payment_method.trim();
-  if (args.patch.payment_reference !== undefined) update.payment_reference = args.patch.payment_reference.trim();
+  if (args.patch.payment_method !== undefined)
+    update.payment_method = args.patch.payment_method.trim();
+  if (args.patch.payment_reference !== undefined)
+    update.payment_reference = args.patch.payment_reference.trim();
 
   update.updated_at = new Date().toISOString();
 
