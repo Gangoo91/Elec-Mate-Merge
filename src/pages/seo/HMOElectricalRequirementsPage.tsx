@@ -178,10 +178,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Section 257 HMOs — converted blocks</strong> — purpose-built or converted
-                blocks of flats where not all flats comply with the 1991 Building Regulations may be
-                classed as HMOs even if individually self-contained. The s257 HMO definition catches
-                many converted Victorian and Edwardian properties in England.
+                <strong>s257 HMOs (Housing Act 2004) — converted blocks</strong> — purpose-built or
+                converted blocks of flats where not all flats comply with the 1991 Building
+                Regulations may be classed as HMOs even if individually self-contained. The s257 HMO
+                definition catches many converted Victorian and Edwardian properties in England.
               </span>
             </li>
           </ul>
@@ -706,10 +706,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   HMO remedial works — consumer unit upgrades, fire alarm installations, emergency
                   lighting — are high-value jobs. Quote on site using the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>
-                  . Landlords under a 28-day remedial deadline will instruct the electrician who
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  Landlords under a 28-day remedial deadline will instruct the electrician who
                   quotes first.
                 </p>
               </div>
@@ -733,8 +731,8 @@ const sections = [
 export default function HMOElectricalRequirementsPage() {
   return (
     <GuideTemplate
-      title="HMO Electrical Requirements UK | Houses in Multiple"
-      description="Full guide to HMO electrical requirements in the UK. Mandatory licensing, EICR frequency, fire detection to BS 5839-6, emergency lighting to BS 5266-1…"
+      title="HMO Electrical Requirements 2026 | Licensing + EICR"
+      description="HMO electrical rules: 5-year EICR, BS 5839-6 fire detection, BS 5266-1 emergency lighting, PAT testing + mandatory licensing thresholds for UK landlords."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

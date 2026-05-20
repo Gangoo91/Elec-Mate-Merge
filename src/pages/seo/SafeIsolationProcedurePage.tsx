@@ -21,9 +21,9 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Safe Isolation Procedure | Step by Step Guide GS 38';
+const PAGE_TITLE = 'Safe Isolation Procedure | HSE GS 38 + LOTO 2026';
 const PAGE_DESCRIPTION =
-  'Safe isolation per HSE GS 38: step-by-step prove-test-prove, lock-off LOTO, voltage indicator rules, EAWR 1989 duties. For UK electricians.';
+  'Safe isolation per HSE GS 38 + EAWR 1989: prove-test-prove, lock-off LOTO, voltage indicator rules, fused leads + how the AM2 marks the procedure.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },

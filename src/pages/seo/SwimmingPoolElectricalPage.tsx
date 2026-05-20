@@ -738,8 +738,8 @@ const sections = [
 export default function SwimmingPoolElectricalPage() {
   return (
     <GuideTemplate
-      title="Swimming Pool Electrical Regulations | BS 7671 Section 702"
-      description="Complete guide to swimming pool electrical regulations under BS 7671 Section 702. Zone 0, 1, 2 requirements, IP ratings, SELV, supplementary bonding…"
+      title="Swimming Pool Electrics | BS 7671 Section 702 Guide"
+      description="Swimming pool electrical regs under BS 7671:2018+A4:2026 Section 702. Zones 0/1/2, SELV in Zone 0, IP ratings, supplementary bonding, 30mA RCD rules."
       datePublished="2025-04-20"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

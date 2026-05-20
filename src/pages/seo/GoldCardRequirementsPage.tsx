@@ -427,8 +427,8 @@ const sections = [
 export default function GoldCardRequirementsPage() {
   return (
     <GuideTemplate
-      title="Gold Card Requirements | ECS Gold Card Electrician Guide UK"
-      description="Complete guide to ECS Gold Card requirements for UK electricians. Qualifications needed, AM2, experience, how to apply, benefits, and pay rates."
+      title="ECS Gold Card Requirements 2026 | UK Electrician Guide"
+      description="ECS Gold Card for UK electricians: NVQ Level 3 + AM2 + 18th Edition + ECS H&S, how to apply, costs, renewal cycle and what it unlocks on site."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

@@ -537,8 +537,8 @@ export default function ElectricianWhitehavenPage() {
   return (
     <GuideTemplate
       localArea="Whitehaven"
-      title="EICR in Sellafield | BS 7671:2018+A4:2026"
-      description="EICR inspections for Sellafield nuclear contractors. BS 7671 compliant reports, 5-day turnaround, Electricity North West certified. Book now."
+      title="Whitehaven Electricians 2026 | EICR + Nuclear Site"
+      description="Whitehaven electricians for EICR, EV charging + Sellafield-area work. BS 7671:2018+A4:2026 compliant, Electricity North West certified. Book today."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

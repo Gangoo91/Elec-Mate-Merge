@@ -1,6 +1,6 @@
 # RAG-Quality Audit
 
-Generated: 2026-05-20T19:20:22.145Z
+Generated: 2026-05-20T20:17:16.497Z
 
 Universe: 1729 regs, 780 sections, 44 chapters, 19 appendices, 82 known tables
 
@@ -8,11 +8,11 @@ Pages audited: 1379
 
 ## Summary
 
-- Pages making BS 7671 claims: **720**
-- Fully grounded (100% verified): **482**
-- Partially grounded (some unverified): **206**
-- Zero grounding (all cites unverified): **32**
-- No BS 7671 claims at all: **659**
+- Pages making BS 7671 claims: **721**
+- Fully grounded (100% verified): **490**
+- Partially grounded (some unverified): **200**
+- Zero grounding (all cites unverified): **31**
+- No BS 7671 claims at all: **658**
 
 ## Worst-grounded pages (by GSC impressions × unverified fraction)
 

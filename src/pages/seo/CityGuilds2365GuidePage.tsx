@@ -99,32 +99,28 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/year-3-electrical-apprentice',
     title: 'Year 3 Apprentice Guide',
-    description:
-      'What to expect in year 3 — where Level 3 content gets demanding.',
+    description: 'What to expect in year 3 — where Level 3 content gets demanding.',
     icon: BookOpen,
     category: 'Guide',
   },
   {
     href: '/guides/electrical-science-revision',
     title: 'Electrical Science Revision',
-    description:
-      'Revise the science content covered in 2365 Level 2 and Level 3 units.',
+    description: 'Revise the science content covered in 2365 Level 2 and Level 3 units.',
     icon: Zap,
     category: 'Guide',
   },
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: '18th Edition Guide',
-    description:
-      'BS 7671 is central to the 2365 — understand the Wiring Regulations in depth.',
+    description: 'BS 7671 is central to the 2365 — understand the Wiring Regulations in depth.',
     icon: FileCheck2,
     category: 'Guide',
   },
   {
     href: '/am2-exam-preparation',
     title: 'AM2 Exam Preparation',
-    description:
-      'The practical assessment you take after completing the 2365 and NVQ.',
+    description: 'The practical assessment you take after completing the 2365 and NVQ.',
     icon: Target,
     category: 'Guide',
   },
@@ -151,15 +147,15 @@ const sections = [
         <p>
           The City & Guilds 2365 (Diploma in Electrical Installations) is the technical knowledge
           qualification for anyone training to become an electrician in the UK. It covers the theory
-          behind electrical installations: why we earth circuits, how to size cables, what the Wiring
-          Regulations require, and the science that makes it all work.
+          behind electrical installations: why we earth circuits, how to size cables, what the
+          Wiring Regulations require, and the science that makes it all work.
         </p>
         <p>
           The 2365 is one of three components needed to become a qualified electrician. The other
-          two are the NVQ (proving you can do the work in a real workplace) and the AM2 (a
-          practical assessment of your installation, testing, and fault diagnosis skills). Together,
-          these three components — plus the End-Point Assessment — form the Level 3
-          Electrotechnical Apprenticeship.
+          two are the NVQ (proving you can do the work in a real workplace) and the AM2 (a practical
+          assessment of your installation, testing, and fault diagnosis skills). Together, these
+          three components — plus the End-Point Assessment — form the Level 3 Electrotechnical
+          Apprenticeship.
         </p>
         <p>
           If you are starting an apprenticeship, you will study the 2365 at college (typically one
@@ -189,8 +185,8 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Health and safety in electrical installations. Electrical science fundamentals (Ohm's
               law, power calculations, series and parallel circuits, magnetism). Understanding
-              electrical wiring regulations (BS 7671 overview). Installation methods (clipped direct,
-              in conduit, in trunking, on tray). Cable types and selection. Terminating and
+              electrical wiring regulations (BS 7671 overview). Installation methods (clipped
+              direct, in conduit, in trunking, on tray). Cable types and selection. Terminating and
               connecting conductors. Using hand and power tools safely. Basic inspection and testing
               principles.
             </p>
@@ -199,11 +195,12 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">Level 3 — Advanced</h3>
             <p className="text-white text-sm leading-relaxed">
               Electrical installation design (maximum demand, diversity, cable sizing using Appendix
-              4, correction factors, disconnection times). Inspection and testing principles (testing
-              sequence, acceptable values, interpreting results, certificate completion). Fault
-              diagnosis and rectification (systematic fault finding, safe isolation, live testing
-              where permitted). Special locations (Part 7 of BS 7671). Advanced electrical science
-              (three-phase, power factor, impedance, transformers). Earthing arrangements in detail.
+              4, correction factors, disconnection times). Inspection and testing principles
+              (testing sequence, acceptable values, interpreting results, certificate completion).
+              Fault diagnosis and rectification (systematic fault finding, safe isolation, live
+              testing where permitted). Special locations (Part 7 of BS 7671). Advanced electrical
+              science (three-phase, power factor, impedance, transformers). Earthing arrangements in
+              detail.
             </p>
           </div>
         </div>
@@ -221,9 +218,9 @@ const sections = [
     content: (
       <>
         <p>
-          The 2365 is divided into units, each covering a specific area of knowledge. The exact
-          unit titles and numbers may vary slightly between training providers, but the core content
-          is standardised by City & Guilds.
+          The 2365 is divided into units, each covering a specific area of knowledge. The exact unit
+          titles and numbers may vary slightly between training providers, but the core content is
+          standardised by City & Guilds.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -231,9 +228,9 @@ const sections = [
               <Calendar className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Apprenticeship route</strong> — one day per week at college over 4 years.
-                Level 2 units in years 1 and 2, Level 3 units in years 3 and 4. The remaining 4
-                days are spent on site with your employer, building the practical experience for
-                your NVQ portfolio.
+                Level 2 units in years 1 and 2, Level 3 units in years 3 and 4. The remaining 4 days
+                are spent on site with your employer, building the practical experience for your NVQ
+                portfolio.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -279,8 +276,8 @@ const sections = [
               <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Multiple-choice exams</strong> — timed written exams with multiple-choice
-                questions. Typically 40 to 60 questions per exam, with a time limit of 1 to 2
-                hours. Pass mark is usually 60% to 65%. These test your theoretical knowledge of
+                questions. Typically 40 to 60 questions per exam, with a time limit of 1 to 2 hours.
+                Pass mark is usually 60% to 65%. These test your theoretical knowledge of
                 regulations, science, and installation principles.
               </span>
             </li>
@@ -335,9 +332,9 @@ const sections = [
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Level 2 practicals</strong> — installing wiring systems using different
-                methods (conduit bending and fitting, trunking installation, clipped direct cabling),
-                terminating cables at accessories and distribution boards, and basic testing
-                (continuity, insulation resistance, polarity) using a multifunction tester.
+                methods (conduit bending and fitting, trunking installation, clipped direct
+                cabling), terminating cables at accessories and distribution boards, and basic
+                testing (continuity, insulation resistance, polarity) using a multifunction tester.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -353,8 +350,8 @@ const sections = [
               <span>
                 <strong>Assessment criteria</strong> — you are assessed on safe working practices,
                 correct use of tools and equipment, quality of installation work, accuracy of test
-                results, and completion within the time limit. Safety is paramount — unsafe practices
-                can result in an automatic fail regardless of the quality of the work.
+                results, and completion within the time limit. Safety is paramount — unsafe
+                practices can result in an automatic fail regardless of the quality of the work.
               </span>
             </li>
           </ul>
@@ -373,8 +370,8 @@ const sections = [
     content: (
       <>
         <p>
-          The Level 3 Electrotechnical Apprenticeship has three main components, and the 2365 is
-          one of them:
+          The Level 3 Electrotechnical Apprenticeship has three main components, and the 2365 is one
+          of them:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -421,9 +418,7 @@ const sections = [
     heading: 'Entry Requirements',
     content: (
       <>
-        <p>
-          Entry requirements vary by training provider, but the typical requirements are:
-        </p>
+        <p>Entry requirements vary by training provider, but the typical requirements are:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -538,20 +533,20 @@ const sections = [
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">What Stayed the Same</h3>
             <p className="text-white text-sm leading-relaxed">
-              The core content is broadly similar: electrical science, health and safety, installation
-              methods, the Wiring Regulations, and inspection and testing principles. The fundamental
-              knowledge required to be a competent electrician has not changed dramatically — the
-              laws of physics remain the same.
+              The core content is broadly similar: electrical science, health and safety,
+              installation methods, the Wiring Regulations, and inspection and testing principles.
+              The fundamental knowledge required to be a competent electrician has not changed
+              dramatically — the laws of physics remain the same.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">What Changed</h3>
             <p className="text-white text-sm leading-relaxed">
               The 2365 is aligned with current apprenticeship standards and the latest edition of BS
-              7671. It places more emphasis on design, inspection and testing, and fault diagnosis at
-              Level 3. The assessment methods are updated — more practical assessments, online
-              exams, and portfolio-style evidence. The unit structure is reorganised to better map to
-              the apprenticeship standard. The 2330 is no longer available for new registrations.
+              7671. It places more emphasis on design, inspection and testing, and fault diagnosis
+              at Level 3. The assessment methods are updated — more practical assessments, online
+              exams, and portfolio-style evidence. The unit structure is reorganised to better map
+              to the apprenticeship standard. The 2330 is no longer available for new registrations.
             </p>
           </div>
         </div>
@@ -593,9 +588,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Study Between Sessions</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  One day a week at college is not enough to absorb the material. Spend 2 to 3
-                  hours per week revising between sessions. Re-read your notes, work through
-                  practice questions, and use the{' '}
+                  One day a week at college is not enough to absorb the material. Spend 2 to 3 hours
+                  per week revising between sessions. Re-read your notes, work through practice
+                  questions, and use the{' '}
                   <SEOInternalLink href="/guides/electrical-science-revision">
                     electrical science revision guide
                   </SEOInternalLink>{' '}
@@ -642,8 +637,8 @@ const sections = [
 export default function CityGuilds2365GuidePage() {
   return (
     <GuideTemplate
-      title="City & Guilds 2365 | Electrical Installation Course Guide"
-      description="Complete guide to the City & Guilds 2365 Diploma in Electrical Installations. Level 2 vs Level 3, course structure, exam format, practical assessments…"
+      title="City & Guilds 2365 Diploma 2026 | Level 2 + 3 Guide"
+      description="C&G 2365 Diploma in Electrical Installations: Level 2 vs 3 structure, unit list, exams + practicals, college routes + how it feeds NVQ + AM2."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

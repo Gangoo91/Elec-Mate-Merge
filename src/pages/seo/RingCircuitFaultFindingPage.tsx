@@ -435,9 +435,7 @@ const sections = [
         </div>
         <p>
           Elec-Mate's{' '}
-          <SEOInternalLink href="/ring-circuit-calculator">
-            ring circuit calculator
-          </SEOInternalLink>{' '}
+          <SEOInternalLink href="/ring-circuit-calculator">ring circuit calculator</SEOInternalLink>{' '}
           calculates the expected R1, R2, and R1+R2 values based on the cable size and estimated
           ring length, giving you a reference to compare your measured values against. Any
           significant deviation from the expected values points to a fault.
@@ -576,8 +574,8 @@ const sections = [
 export default function RingCircuitFaultFindingPage() {
   return (
     <GuideTemplate
-      title="Ring Circuit Fault Finding | Step-by-Step Guide"
-      description="Step-by-step guide to ring circuit fault finding. Covers open rings, bridged rings, borrowed neutrals, interconnected rings, and how to analyse R1, R2…"
+      title="Ring Circuit Fault Finding | R1+R2 + Borrowed Neutral"
+      description="Ring final circuit faults: open + bridged rings, borrowed neutrals, interconnected rings. How to read R1, R2, Rn results + diagnose using continuity."
       datePublished="2025-10-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

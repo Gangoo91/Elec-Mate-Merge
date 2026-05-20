@@ -489,8 +489,8 @@ const sections = [
 export default function ExtensionLeadSafetyPage() {
   return (
     <GuideTemplate
-      title="Extension Lead Safety UK | Safe Use of Extension Leads &"
-      description="Complete guide to safe extension lead use in the UK. Load calculations (do not exceed 13A), daisy-chaining dangers, RCD-protected leads…"
+      title="Extension Lead Safety UK | Load + Daisy-Chain Rules"
+      description="Extension lead safety: 13A load limit, why daisy-chaining is dangerous, when to use an RCD lead + the BS 1363 marks to look for before buying."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

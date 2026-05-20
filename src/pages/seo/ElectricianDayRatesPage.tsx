@@ -46,6 +46,7 @@ const keyTakeaways = [
   'Specialist electricians — testing and inspection, EV charging, data centres, hazardous areas — command day rates of £300 to £450.',
   'Your day rate must cover not just your time but also van, tools, insurance, pension, holidays, sick days, CPD, and profit margin.',
   'Elec-Mate job profitability calculator helps you set day rates that actually make money — factoring in all overheads, not just the hourly maths.',
+  'Verified regional multipliers (2026): London ×1.25, South East ×1.15, Scotland ×1.08, South West ×1.05, North West / Yorkshire ×1.02, Midlands ×1.00, Wales ×0.98, North East ×0.95, Northern Ireland ×0.92.',
 ];
 
 const faqs = [
@@ -598,7 +599,7 @@ export default function ElectricianDayRatesPage() {
     <GuideTemplate
       localArea="Day Rates Uk"
       title="Electrician Day Rates UK 2026 | What to Charge"
-      description="Complete guide to electrician day rates in the UK in 2026. Average rates by region, domestic vs commercial, experience levels, specialist premiums…"
+      description="What UK electricians charge in 2026 — domestic vs commercial day rates by region, JIB benchmarks, sole-trader vs limited co. markups + London weighting."
       datePublished="2025-07-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

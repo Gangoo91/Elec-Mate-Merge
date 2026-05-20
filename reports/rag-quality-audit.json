@@ -965,11 +965,11 @@
     "title": "BS 7671 18th Edition Guide 2026 | Wiring Regulations UK",
     "impressions": 0,
     "claims_total": 28,
-    "verified": 27,
-    "unverified": 1,
-    "score": 0.964,
+    "verified": 28,
+    "unverified": 0,
+    "score": 1,
     "priority": 0,
-    "unverified_claims": ["section: Section 801"]
+    "unverified_claims": []
   },
   {
     "slug": "/bs7671-observation-codes",
@@ -1336,12 +1336,12 @@
     "sourceFile": "src/pages/seo/BondingInBathroomPage.tsx",
     "title": "Bonding in a Bathroom | When Is It Required? UK Guide",
     "impressions": 0,
-    "claims_total": 7,
-    "verified": 6,
-    "unverified": 1,
-    "score": 0.857,
+    "claims_total": 8,
+    "verified": 8,
+    "unverified": 0,
+    "score": 1,
     "priority": 0,
-    "unverified_claims": ["reg: Regulation 411.3.2.2"]
+    "unverified_claims": []
   },
   {
     "slug": "/guides/borrowed-neutral-explained",
@@ -5169,11 +5169,11 @@
     "title": "EV Charging Regulations UK 2025 | Laws & Standards for EV",
     "impressions": 0,
     "claims_total": 7,
-    "verified": 6,
-    "unverified": 1,
-    "score": 0.857,
+    "verified": 7,
+    "unverified": 0,
+    "score": 1,
     "priority": 0,
-    "unverified_claims": ["reg: Regulation 722.537"]
+    "unverified_claims": []
   },
   {
     "slug": "/guides/earth-electrode-testing",
@@ -5279,8 +5279,8 @@
     "sourceFile": "src/pages/seo/EarthRodResistanceCalculatorPage.tsx",
     "title": "Ra x Iδn ≤ 50V Calculator | BS 7671:2026",
     "impressions": 0,
-    "claims_total": 0,
-    "verified": 0,
+    "claims_total": 1,
+    "verified": 1,
     "unverified": 0,
     "score": 1,
     "priority": 0,
@@ -7251,12 +7251,12 @@
     "sourceFile": "src/pages/seo/ElectricianCumbriaPage.tsx",
     "title": "Electrician in Cumbria | Local Electricians 2026",
     "impressions": 0,
-    "claims_total": 1,
-    "verified": 0,
-    "unverified": 1,
-    "score": 0,
+    "claims_total": 2,
+    "verified": 2,
+    "unverified": 0,
+    "score": 1,
     "priority": 0,
-    "unverified_claims": ["section: Section 631"]
+    "unverified_claims": []
   },
   {
     "slug": "/guides/electrician-day-rates-uk",
@@ -9243,12 +9243,12 @@
     "sourceFile": "src/pages/seo/HMOElectricalRequirementsPage.tsx",
     "title": "HMO Electrical Requirements UK | Houses in Multiple",
     "impressions": 0,
-    "claims_total": 3,
+    "claims_total": 2,
     "verified": 2,
-    "unverified": 1,
-    "score": 0.667,
+    "unverified": 0,
+    "score": 1,
     "priority": 0,
-    "unverified_claims": ["section: Section 257"]
+    "unverified_claims": []
   },
   {
     "slug": "/training/hnc-electrical",
@@ -12368,11 +12368,11 @@
     "title": "Polarity Testing Procedure | Complete Guide for UK",
     "impressions": 0,
     "claims_total": 3,
-    "verified": 2,
-    "unverified": 1,
-    "score": 0.667,
+    "verified": 3,
+    "unverified": 0,
+    "score": 1,
     "priority": 0,
-    "unverified_claims": ["reg: Regulation 643.6"]
+    "unverified_claims": []
   },
   {
     "slug": "/guides/polarity-testing-guide-bs7671",
@@ -13144,12 +13144,12 @@
     "sourceFile": "src/pages/seo/RestaurantElectricalRequirementsPage.tsx",
     "title": "Restaurant Electrical Requirements | Commercial Kitchen",
     "impressions": 0,
-    "claims_total": 2,
+    "claims_total": 1,
     "verified": 1,
-    "unverified": 1,
-    "score": 0.5,
+    "unverified": 0,
+    "score": 1,
     "priority": 0,
-    "unverified_claims": ["table: Table 3A"]
+    "unverified_claims": []
   },
   {
     "slug": "/guides/restaurant-kitchen-electrical-cost",

@@ -521,11 +521,11 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671:2018+A4:2026 Table 3A (Guidance Note 3, 9th Edition) recommends a maximum periodic
-          inspection interval of 5 years for commercial premises. However, the harsh environment of
-          a commercial kitchen — heat, steam, grease, water, aggressive cleaning chemicals, and
-          heavy daily use — means that deterioration occurs faster than in a typical office or
-          retail premises.
+          IET Guidance Note 3 (9th Edition) — Periodic Inspection Intervals table — recommends a
+          maximum periodic inspection interval of 5 years for commercial premises. However, the
+          harsh environment of a commercial kitchen — heat, steam, grease, water, aggressive
+          cleaning chemicals, and heavy daily use — means that deterioration occurs faster than in a
+          typical office or retail premises.
         </p>
         <p>
           Many insurers, local authorities, and fire and rescue services recommend or require a
@@ -724,8 +724,8 @@ const sections = [
 export default function RestaurantElectricalRequirementsPage() {
   return (
     <GuideTemplate
-      title="Restaurant Electrical Requirements | Commercial Kitchen"
-      description="Complete guide to restaurant electrical requirements in the UK. Three-phase supply, extract fan interlocks, commercial kitchen equipment…"
+      title="Restaurant Electrics UK | Commercial Kitchen + EICR Rules"
+      description="Restaurant electrical guide: 3-phase supply sizing, extract fan interlocks, emergency lighting (BS 5266-1), EICR frequency + commercial kitchen kit."
       datePublished="2025-06-15"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

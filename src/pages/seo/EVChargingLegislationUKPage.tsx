@@ -288,10 +288,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 722.537 — Isolation</strong> — a means of isolation must be
-                provided for the EV charging installation, capable of isolating both live conductors
-                (L and N on single-phase). This is typically provided by a double-pole MCB or
-                isolator at the consumer unit.
+                <strong>Section 537 (applied via Section 722) — Isolation</strong> — a means of
+                isolation must be provided for the EV charging installation, capable of isolating
+                both live conductors (L and N on single-phase). This is typically provided by a
+                double-pole MCB or isolator at the consumer unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -536,8 +536,8 @@ const sections = [
 export default function EVChargingLegislationUKPage() {
   return (
     <GuideTemplate
-      title="EV Charging Regulations UK 2025 | Laws & Standards for EV"
-      description="Complete guide to EV charging legislation in the UK. Electric Vehicles (Smart Charge Points) Regulations 2021, Building Regulations Part S…"
+      title="UK EV Charging Regulations 2026 | Smart Charge + Part S"
+      description="UK EV charging legislation in 2026: Smart Charge Point Regs 2021, Building Regs Part S, BS 7671 Section 722 + PME O-PEN protection rules."
       datePublished="2025-01-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

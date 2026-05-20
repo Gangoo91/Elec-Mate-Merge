@@ -46,6 +46,7 @@ const keyTakeaways = [
   'A double-pole isolator must be installed adjacent to the shower, typically a ceiling-mounted pull-cord switch rated at 45A or 50A — this provides local isolation as required by BS 7671.',
   'Electric shower installation in a bathroom is notifiable work under Part P of the Building Regulations and must be carried out by a registered competent person or notified to Building Control.',
   "Elec-Mate's cable sizing calculator handles shower circuit design including correction factors, voltage drop, and Zs verification against BS 7671 tables.",
+  'Typical UK installation cost (2026): £180–£500 per job depending on region — £270 average in the North West / Yorkshire, £285 in the West Midlands, £315 in Scotland, £375 in London. Labour time 1.5–2 hours on a straightforward swap.',
 ];
 
 const faqs = [
@@ -242,7 +243,8 @@ const sections = [
     content: (
       <>
         <p>
-          The <SEOInternalLink href="/guides/cable-sizing-guide-bs-7671">cable size</SEOInternalLink>{' '}
+          The{' '}
+          <SEOInternalLink href="/guides/cable-sizing-guide-bs-7671">cable size</SEOInternalLink>{' '}
           depends on the shower rating, the installation method, and the applicable correction
           factors. The cable must carry the full load current continuously — diversity does not
           apply to electric shower circuits because the full load operates whenever the shower is in
@@ -430,9 +432,9 @@ const sections = [
         </div>
         <p>
           When testing the completed installation, the{' '}
-          <SEOInternalLink href="/rcd-testing-guide">RCD must be tested</SEOInternalLink> at
-          rated residual operating current (30mA) and at 5x (150mA). The trip times must be within
-          300ms at 1x and 40ms at 5x.
+          <SEOInternalLink href="/rcd-testing-guide">RCD must be tested</SEOInternalLink> at rated
+          residual operating current (30mA) and at 5x (150mA). The trip times must be within 300ms
+          at 1x and 40ms at 5x.
         </p>
       </>
     ),
@@ -605,8 +607,8 @@ const sections = [
 export default function ElectricShowerInstallationPage() {
   return (
     <GuideTemplate
-      title="Electric Shower Installation | Cable Size & Circuit Guide"
-      description="Complete guide to electric shower installation in the UK. Cable sizing for 7.5kW to 12kW showers, MCB rating, pull cord vs ceiling switch…"
+      title="Electric Shower Installation | Cable + MCB Sizing 2026"
+      description="Electric shower install guide: 7.5kW–12kW cable + MCB sizing, RCD + pull-cord rules, Section 701 zoning, supplementary bonding + BS 7671 compliance."
       datePublished="2025-06-20"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

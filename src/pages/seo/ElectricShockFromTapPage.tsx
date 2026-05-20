@@ -322,12 +322,10 @@ const sections = [
         <p>
           Most modern UK domestic properties are supplied with a PME (Protective Multiple Earthing)
           system, technically known as{' '}
-          <SEOInternalLink href="/earthing-arrangements">
-            TN-C-S earthing
-          </SEOInternalLink>
-          . In this system, the DNO combines the neutral and earth conductors into a single PEN
-          (Protective Earth Neutral) conductor in the supply cable. At the property, the DNO
-          provides an earth terminal by connecting it to the neutral.
+          <SEOInternalLink href="/earthing-arrangements">TN-C-S earthing</SEOInternalLink>. In this
+          system, the DNO combines the neutral and earth conductors into a single PEN (Protective
+          Earth Neutral) conductor in the supply cable. At the property, the DNO provides an earth
+          terminal by connecting it to the neutral.
         </p>
         <p>
           This works well under normal conditions. But if the PEN conductor develops a
@@ -587,8 +585,8 @@ const sections = [
 export default function ElectricShockFromTapPage() {
   return (
     <GuideTemplate
-      title="Electric Shock from Tap | Causes & Emergency Response"
-      description="Getting an electric shock from a tap? Expert guide covering immersion heater faults, bonding failures, PME earthing problems, and what to do immediately."
+      title="Electric Shock From Tap | Causes + What to Do Now"
+      description="Tingle from a tap means a bonding or earthing fault. Immersion heater leakage, lost PEN, broken main bond — what to check + when to call an electrician."
       datePublished="2025-04-20"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

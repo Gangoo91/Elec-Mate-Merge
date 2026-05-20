@@ -506,8 +506,8 @@ const sections = [
 export default function FP200GoldCableGuidePage() {
   return (
     <GuideTemplate
-      title="FP200 Gold Fire Resistant Cable UK | Installation Guide"
-      description="Complete UK guide to FP200 Gold fire-resistant cable. BS 7629-1 compliance, 105°C temperature rating, installation requirements, clipping and support…"
+      title="FP200 Gold Fire-Resistant Cable | BS 7629-1 Install Guide"
+      description="FP200 Gold cable for fire alarms + emergency lighting: BS 7629-1, 105°C rating, clipping + support intervals, glanding + when LSF/LSZH applies."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

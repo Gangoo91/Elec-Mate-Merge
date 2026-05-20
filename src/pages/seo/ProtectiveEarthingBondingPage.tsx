@@ -634,8 +634,8 @@ const sections = [
 export default function ProtectiveEarthingBondingPage() {
   return (
     <GuideTemplate
-      title="Protective Earthing & Bonding | BS 7671 Guide"
-      description="Complete guide to protective earthing and bonding under BS 7671. Covers the main earthing terminal, main bonding conductors, 10mm and 6mm requirements…"
+      title="Protective Earthing + Bonding | BS 7671 Chapter 54"
+      description="Protective earthing + main bonding under BS 7671:2018+A4:2026 Chapter 54. MET sizing, 10mm/6mm rules, water/gas/oil bonds + when supplementary applies."
       datePublished="2025-05-20"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

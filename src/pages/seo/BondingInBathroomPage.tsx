@@ -300,7 +300,7 @@ const sections = [
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Condition 3:</strong> All circuits serving the location meet the maximum
-                disconnection times of Regulation 411.3.2.2 (0.4 seconds for 230V final circuits).
+                disconnection times of Table 41.1 (0.4 seconds for 230V TN final circuits ≤ 32 A).
                 This is verified by measuring the earth fault loop impedance (Zs) and confirming it
                 is within the{' '}
                 <SEOInternalLink href="/guides/maximum-zs-values-bs-7671">
@@ -579,8 +579,8 @@ const sections = [
 export default function BondingInBathroomPage() {
   return (
     <GuideTemplate
-      title="Bonding in a Bathroom | When Is It Required? UK Guide"
-      description="Complete guide to supplementary bonding in bathrooms under BS 7671. When bonding is required, when it can be omitted under Regulation 701.415.2…"
+      title="Bonding in a Bathroom | When It's Required (Reg 701.415.2)"
+      description="Supplementary bonding in bathrooms under BS 7671 Reg 701.415.2 — when it's required, the 3 conditions to omit it + how to test cross-bond continuity."
       datePublished="2025-05-20"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

@@ -21,8 +21,8 @@ import {
 export default function ElectricianAppForAndroidPage() {
   return (
     <ComparisonTemplate
-      title="Android Electrician Apps: 4 Tools Compared 2026"
-      description="Compare 4 Android electrician apps for certificates, EICR reports, and offline access. Elec-Mate, iCertifi, CertsApp…"
+      title="Best Electrician App for Android 2026 | 4 Tools Compared"
+      description="Best Android apps for UK electricians in 2026 — Elec-Mate, iCertifi, CertsApp + more. EICR, EIC, calculators, offline support + price compared."
       datePublished="2026-02-03"
       dateModified="2026-05-18"
       breadcrumbs={[

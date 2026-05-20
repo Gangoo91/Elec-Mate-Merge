@@ -549,8 +549,8 @@ const sections = [
 export default function ElectricalSalaryBenchmarkingPage() {
   return (
     <GuideTemplate
-      title="Electrician Salary Benchmarking UK 2025 | Pay Rates Guide"
-      description="Complete UK electrician pay rates guide for 2025. JIB grade rates (Apprentice Year 1–4, Electrician, Approved Electrician, Technician), London weighting…"
+      title="UK Electrician Salary 2026 | JIB Rates + Regional Pay"
+      description="UK electrician pay in 2026: JIB grade rates (Apprentice Yrs 1-4, Electrician, Approved, Technician), London weighting + employed vs self-employed split."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

@@ -24,9 +24,9 @@ import { Link } from 'react-router-dom';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
-const PAGE_TITLE = 'Electrical Testing Sequence | GN3 Order Explained | Elec-Mate';
+const PAGE_TITLE = 'Electrical Testing Sequence | IET GN3 Order 2026';
 const PAGE_DESCRIPTION =
-  'Correct electrical testing sequence per IET GN3 (9th Ed): continuity, IR, polarity, electrode resistance, loop impedance, PFC, functional + RCDs.';
+  'Correct dead + live test sequence per IET GN3 (9th ed): continuity, IR, polarity, Ze, Zs, PFC, RCD trip times. With results recording tips for EICs.';
 
 const faqs = [
   {

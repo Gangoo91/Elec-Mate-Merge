@@ -76,7 +76,7 @@ const faqs = [
   {
     question: 'What electrical certificates are required for Cumbria rental properties?',
     answer:
-      'Cumbrian landlords are subject to the same requirements as the rest of England: an Electrical Installation Condition Report (EICR) is required for all private rented properties under the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020. EICRs must be carried out by a qualified person, renewed at a maximum of five years (or at change of tenancy if sooner), and the report provided to tenants within 28 days. New circuit installations require an Electrical Installation Certificate (EIC) per BS 7671 Section 631. Consumer unit replacements require an EIC and must be notified under Part P of the Building Regulations in England.',
+      'Cumbrian landlords are subject to the same requirements as the rest of England: an Electrical Installation Condition Report (EICR) is required for all private rented properties under the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020. EICRs must be carried out by a qualified person, renewed at a maximum of five years (or at change of tenancy if sooner), and the report provided to tenants within 28 days. New circuit installations require an Electrical Installation Certificate (EIC) per BS 7671 Chapter 64. Consumer unit replacements require an EIC and must be notified under Part P of the Building Regulations in England.',
   },
   {
     question: 'Are there any specific challenges for electricians in rural Cumbria?',
@@ -273,7 +273,7 @@ const sections = [
                 electrical installations in England. All domestic and commercial work must comply,
                 with an Electrical Installation Certificate (EIC) required for new installations and
                 a Periodic Inspection Report (EICR) for assessments of existing installations per
-                Section 631.
+                Chapter 65.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -599,8 +599,8 @@ export default function ElectricianCumbriaPage() {
   return (
     <GuideTemplate
       localArea="Cumbria"
-      title="Electrician in Cumbria | Local Electricians 2026"
-      description="Find qualified electricians in Cumbria. Sellafield nuclear site requirements, BS 7671 and IEC 60364, Electricity North West DNO, Carlisle, Barrow…"
+      title="Cumbria Electricians 2026 | Carlisle, Barrow, Sellafield"
+      description="Cumbria electricians covering Carlisle, Barrow + Sellafield. BS 7671:2018+A4:2026 EICRs, EV chargers, nuclear-site experience. Electricity North West area."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

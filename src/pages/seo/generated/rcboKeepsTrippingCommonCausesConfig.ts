@@ -5,9 +5,9 @@ const modified = '2026-05-18';
 
 export const rcboKeepsTrippingCommonCausesConfig: GeneratedGuideConfig = {
   pagePath: '/guides/rcbo-keeps-tripping-common-causes',
-  title: 'RCBO Keeps Tripping Common Causes | Electrician Guide',
+  title: 'RCBO Keeps Tripping? | 8 Common Causes + Fixes',
   description:
-    'The most common reasons an RCBO keeps tripping, how to narrow the cause down quickly, and what to check before turning it into a quote or certificate.',
+    "RCBO won't stay in? Step-by-step diagnosis: neutral-earth fault, accumulated leakage, faulty appliance, mechanical RCBO fault, nuisance trips + how to fix.",
   datePublished: published,
   dateModified: modified,
   readingTime: 8,
@@ -32,13 +32,11 @@ export const rcboKeepsTrippingCommonCausesConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'An RCBO that trips instantly usually behaves differently from one that trips only under load or only after a few minutes. That simple detail often tells you whether you are dealing with a hard fault, leakage, or a circuit that is being asked to carry more than it should.',
+          text: 'An RCBO that trips instantly usually behaves differently from one that trips only under load or only after a few minutes. That simple detail often tells you whether you are dealing with a hard fault, leakage, or a circuit that is being asked to carry more than it should.',
         },
         {
           type: 'paragraph',
-          text:
-            'If the same circuit keeps failing after a reset, work from the symptom outward. Check what was running, what changed recently, and whether the issue follows a particular appliance, accessory, or area of the property.',
+          text: 'If the same circuit keeps failing after a reset, work from the symptom outward. Check what was running, what changed recently, and whether the issue follows a particular appliance, accessory, or area of the property.',
         },
       ],
     },
@@ -64,20 +62,17 @@ export const rcboKeepsTrippingCommonCausesConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'Check the obvious items first: the connected load, any recent changes, outdoor accessories, and anything that gets hot, wet, or heavily used. If the fault is showing up on one circuit after another on the same board, the problem may be wider than the first symptom suggests.',
+          text: 'Check the obvious items first: the connected load, any recent changes, outdoor accessories, and anything that gets hot, wet, or heavily used. If the fault is showing up on one circuit after another on the same board, the problem may be wider than the first symptom suggests.',
         },
         {
           type: 'callout',
           tone: 'info',
           title: 'Do not leave the client with a vague answer',
-          text:
-            'If the circuit needs further investigation, say so clearly. A proper note about what was found, what was tested, and what remains unresolved is better than a quick guess that will not stand up later.',
+          text: 'If the circuit needs further investigation, say so clearly. A proper note about what was found, what was tested, and what remains unresolved is better than a quick guess that will not stand up later.',
         },
         {
           type: 'paragraph',
-          text:
-            'If the issue is pointing toward a bigger condition problem rather than one simple repair, the [EICR limitations guide](/guides/eicr-limitations) is a useful companion when you need to explain why further work is being recommended.',
+          text: 'If the issue is pointing toward a bigger condition problem rather than one simple repair, the [EICR limitations guide](/guides/eicr-limitations) is a useful companion when you need to explain why further work is being recommended.',
         },
       ],
     },
@@ -87,13 +82,11 @@ export const rcboKeepsTrippingCommonCausesConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'A small local repair may be enough, but repeated trips often mean the installation needs a better long-term solution. That can mean repairing the damaged point, separating a heavy load, upgrading a weak circuit, or recommending a fuller change to the consumer unit arrangement.',
+          text: 'A small local repair may be enough, but repeated trips often mean the installation needs a better long-term solution. That can mean repairing the damaged point, separating a heavy load, upgrading a weak circuit, or recommending a fuller change to the consumer unit arrangement.',
         },
         {
           type: 'paragraph',
-          text:
-            'When the job becomes a formal report or a follow-on remedial visit, move the paperwork into the [digital EICR certificate flow](/tools/eicr-certificate) or turn it into a clear [consumer unit upgrade quote](/guides/consumer-unit-upgrade-cost-guide) rather than leaving it as a loose note.',
+          text: 'When the job becomes a formal report or a follow-on remedial visit, move the paperwork into the [digital EICR certificate flow](/tools/eicr-certificate) or turn it into a clear [consumer unit upgrade quote](/guides/consumer-unit-upgrade-cost-guide) rather than leaving it as a loose note.',
         },
       ],
     },
@@ -103,13 +96,11 @@ export const rcboKeepsTrippingCommonCausesConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text:
-            'When an RCBO keeps tripping, the temptation is to swap the device and move on. Most of the time the RCBO is fine — the fault is downstream, intermittent, or shared with a neighbouring circuit. A short, structured test sequence will narrow the cause in fifteen minutes rather than two callbacks.',
+          text: 'When an RCBO keeps tripping, the temptation is to swap the device and move on. Most of the time the RCBO is fine — the fault is downstream, intermittent, or shared with a neighbouring circuit. A short, structured test sequence will narrow the cause in fifteen minutes rather than two callbacks.',
         },
         {
           type: 'paragraph',
-          text:
-            'Start by isolating the circuit and disconnecting any load. Energise the RCBO alone. If it holds, the fault is on the load side. Reconnect each piece of fixed wiring in turn, and finally each appliance, watching for the trip. If the RCBO trips even with no load connected, the device itself is suspect — but verify by swapping to a known-good RCBO of the same rating before condemning.',
+          text: 'Start by isolating the circuit and disconnecting any load. Energise the RCBO alone. If it holds, the fault is on the load side. Reconnect each piece of fixed wiring in turn, and finally each appliance, watching for the trip. If the RCBO trips even with no load connected, the device itself is suspect — but verify by swapping to a known-good RCBO of the same rating before condemning.',
         },
         {
           type: 'list',

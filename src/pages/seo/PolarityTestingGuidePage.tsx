@@ -41,7 +41,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Polarity verification confirms that line, neutral, and earth conductors are correctly connected at every point in the installation. Reversed polarity can leave equipment energised when apparently switched off, creating a lethal shock risk.',
-  'BS 7671 Regulation 643.6 requires polarity to be verified on every circuit during initial verification — including every single-pole switching device, every socket outlet, every connection to the consumer unit, and every centre-contact lamp holder.',
+  'BS 7671 Section 643 (testing under initial verification) requires polarity to be verified on every circuit — including every single-pole switching device, every socket outlet, every connection to the consumer unit, and every centre-contact lamp holder.',
   'Polarity is verified by continuity testing during dead testing (GN3 sequence). A dedicated polarity test using a continuity instrument confirms that the line conductor is connected to the correct terminal at every accessory.',
   'Common polarity faults include crossed line and neutral at a socket outlet, line connected to the neutral terminal of a single-pole switch, and reversed connections at the consumer unit busbar or RCBO.',
   'Elec-Mate schedule of test results captures polarity verification for every circuit. The app flags any circuit where polarity is not confirmed as a deficiency requiring immediate attention.',
@@ -51,7 +51,7 @@ const faqs = [
   {
     question: 'What is polarity in electrical installations?',
     answer:
-      'Polarity in electrical installations refers to the correct connection of line (brown), neutral (blue), and earth (green/yellow) conductors at every point in the circuit. Correct polarity ensures that single-pole switching devices break the line conductor (not the neutral), that socket outlets have the line conductor connected to the correct terminal, and that centre-contact lamp holders have the line connected to the centre contact rather than the outer screw shell. If polarity is reversed, equipment that appears to be switched off may still have a live conductor connected to accessible parts, creating a serious electric shock risk. BS 7671 Regulation 643.6 requires verification of polarity during initial verification of every new installation and alteration.',
+      'Polarity in electrical installations refers to the correct connection of line (brown), neutral (blue), and earth (green/yellow) conductors at every point in the circuit. Correct polarity ensures that single-pole switching devices break the line conductor (not the neutral), that socket outlets have the line conductor connected to the correct terminal, and that centre-contact lamp holders have the line connected to the centre contact rather than the outer screw shell. If polarity is reversed, equipment that appears to be switched off may still have a live conductor connected to accessible parts, creating a serious electric shock risk. BS 7671 Section 643 requires verification of polarity during initial verification of every new installation and alteration.',
   },
   {
     question: 'How do you test polarity on a socket outlet?',
@@ -145,16 +145,16 @@ const sections = [
         </p>
         <p>
           BS 7671 Regulation 132.14.1 requires that single-pole switching devices shall be connected
-          in the line conductor only. Regulation 643.6 requires verification of polarity during
-          initial verification. These are not optional checks — they are mandatory requirements that
-          exist because reversed polarity has directly caused fatalities in the UK.
+          in the line conductor only. Section 643 requires verification of polarity during initial
+          verification. These are not optional checks — they are mandatory requirements that exist
+          because reversed polarity has directly caused fatalities in the UK.
         </p>
         <p>
           Polarity faults are more common than many electricians realise. They can occur through
           simple wiring errors during installation, through modifications by unqualified persons, or
           through deterioration of connections over time. During an{' '}
-          <SEOInternalLink href="/tools/eicr-certificate">EICR inspection</SEOInternalLink>,
-          finding reversed polarity is one of the most serious defects that can be identified. It is
+          <SEOInternalLink href="/tools/eicr-certificate">EICR inspection</SEOInternalLink>, finding
+          reversed polarity is one of the most serious defects that can be identified. It is
           typically classified as C1 (danger present) or C2 (potentially dangerous) depending on the
           specific circumstances.
         </p>
@@ -441,9 +441,9 @@ const sections = [
               <span>
                 <strong className="text-yellow-400">Initial verification</strong> — every circuit in
                 a new installation must have polarity verified before the{' '}
-                <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> is issued.
-                This includes every socket outlet, every switch, every light fitting, and every
-                fixed appliance connection.
+                <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> is issued. This
+                includes every socket outlet, every switch, every light fitting, and every fixed
+                appliance connection.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -452,10 +452,8 @@ const sections = [
                 <strong className="text-yellow-400">Additions and alterations</strong> — any new
                 circuit or modification to an existing circuit must have polarity verified. This
                 applies to{' '}
-                <SEOInternalLink href="/minor-works-certificate">
-                  minor works
-                </SEOInternalLink>{' '}
-                as well as full EIC work.
+                <SEOInternalLink href="/minor-works-certificate">minor works</SEOInternalLink> as
+                well as full EIC work.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -603,8 +601,8 @@ const sections = [
 export default function PolarityTestingGuidePage() {
   return (
     <GuideTemplate
-      title="Polarity Testing Procedure | Complete Guide for UK"
-      description="Complete guide to polarity testing for UK electricians. Why polarity matters, verification methods (visual, continuity, instrument)…"
+      title="Polarity Testing | BS 7671 Procedure + Mistakes to Avoid"
+      description="Polarity testing per BS 7671: visual + continuity + instrument checks. Why reversed polarity bypasses fusing, common ring + lighting circuit traps."
       datePublished="2025-06-15"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

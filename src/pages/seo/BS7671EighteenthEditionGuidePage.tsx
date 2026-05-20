@@ -19,9 +19,9 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'BS 7671 18th Edition Guide 2026 | Wiring Regulations UK';
+const PAGE_TITLE = 'BS 7671 18th Edition Guide | A4:2026 Changes Explained';
 const PAGE_DESCRIPTION =
-  'BS 7671:2018 — 18th Edition explained: all 7 parts, key changes from 17th Edition, A2:2022 + A4:2026 (bidirectional devices). UK electricians.';
+  'BS 7671:2018+A4:2026 — all 7 parts, key shifts since 17th Ed, A2:2022 + A4:2026 (AFDD, TN-C-S PNB, bidirectional devices, EV updates) in plain English.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -62,7 +62,7 @@ const faqs = [
   {
     question: 'What changed between the 17th and 18th Edition of BS 7671?',
     answer:
-      'The 18th Edition (BS 7671:2018) replaced the 17th Edition on 1 January 2019. The major changes include: (1) New requirements for Arc Fault Detection Devices (AFDDs) under Section 421, recommended for specific higher-risk installations. (2) Significantly expanded surge protection requirements in Section 534, requiring a risk assessment and, in many cases, installation of Type 2 SPDs. (3) A new Section 722 for Electric Vehicle Charging Installations, covering cable sizing, protection, and earthing for EV charge points. (4) Metal consumer unit enclosure requirements (Regulation 421.1.201) carried forward from Amendment 4 to the 17th Edition. (5) Updated requirements for energy efficiency in Part 8 (Section 801 to 805), addressing metering, power factor, and switching. (6) Revised RCD requirements, with Type A (or better) required for circuits likely to produce DC residual currents. (7) Strengthened requirements for installations in locations containing a bath or shower (Section 701). The 18th Edition is a substantially different document from the 17th Edition and electricians were given a one-year transition period to adopt it.',
+      'The 18th Edition (BS 7671:2018) replaced the 17th Edition on 1 January 2019. The major changes include: (1) New requirements for Arc Fault Detection Devices (AFDDs) under Section 421, recommended for specific higher-risk installations. (2) Significantly expanded surge protection requirements in Section 534, requiring a risk assessment and, in many cases, installation of Type 2 SPDs. (3) A new Section 722 for Electric Vehicle Charging Installations, covering cable sizing, protection, and earthing for EV charge points. (4) Metal consumer unit enclosure requirements (Regulation 421.1.201) carried forward from Amendment 4 to the 17th Edition. (5) Updated requirements for energy efficiency in Part 8 (Section 826), addressing metering, power factor, and switching. (6) Revised RCD requirements, with Type A (or better) required for circuits likely to produce DC residual currents. (7) Strengthened requirements for installations in locations containing a bath or shower (Section 701). The 18th Edition is a substantially different document from the 17th Edition and electricians were given a one-year transition period to adopt it.',
   },
   {
     question: 'Do I need to buy a new copy of BS 7671 for each amendment?',

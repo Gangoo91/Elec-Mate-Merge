@@ -615,8 +615,8 @@ const sections = [
 export default function FirstFixElectricalPage() {
   return (
     <GuideTemplate
-      title="First Fix Electrical | What's Involved UK Guide"
-      description="Complete guide to first fix electrical work in the UK. Cable routing, safe zones, back boxes, containment, coordination with other trades…"
+      title="First Fix Electrical | UK Guide for Sparks + Builders"
+      description="First fix electrical explained: cable routing, BS 7671 safe zones, back-box depth, prescribed routes, containment + coordinating with other trades."
       datePublished="2025-07-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

@@ -645,8 +645,8 @@ const sections = [
 export default function BathroomZoneElectricalPage() {
   return (
     <GuideTemplate
-      title="Bathroom Electric Zones: BS 7671:2018+A4:2026"
-      description="Bathroom electric zones explained: Zone 0, 1, 2 boundaries, IP ratings (IPX7/IPX4), switch placement rules. Comply with BS 7671 Section 701 safely."
+      title="Bathroom Zones 0/1/2 Explained | BS 7671 Section 701"
+      description="Bathroom electrical zones 0, 1 + 2 under BS 7671:2018+A4:2026 Section 701. IPX7/IPX4 ratings, switch placement, 30mA RCD + supplementary bonding rules."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

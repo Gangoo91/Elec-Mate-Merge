@@ -403,8 +403,8 @@ const sections = [
         <p>
           The schedule of test results on an EIC or EICR includes a dedicated column for R1+R2 (or
           r1+r2/4 for ring circuits), which must be completed for every circuit. The{' '}
-          <SEOInternalLink href="/eic-certificate">Elec-Mate EIC app</SEOInternalLink> records
-          these values and uses them to calculate Zs automatically.
+          <SEOInternalLink href="/eic-certificate">Elec-Mate EIC app</SEOInternalLink> records these
+          values and uses them to calculate Zs automatically.
         </p>
       </>
     ),
@@ -459,8 +459,8 @@ const sections = [
 export default function ContinuityTestingPage() {
   return (
     <GuideTemplate
-      title="Continuity Testing Guide for Electricians | R1+R2 and Ring"
-      description="Complete guide to continuity testing for UK electricians. Covers R1+R2 measurement, the r1+r2/4 method for ring final circuits, CPC continuity…"
+      title="Continuity Testing Guide | R1+R2 + Ring Final 2026"
+      description="Continuity testing for UK electricians: R1+R2 method, r1+r2/4 ring final check, CPC continuity, lead-resistance null + recording on the EIC schedule."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

@@ -561,8 +561,8 @@ const sections = [
 export default function NICEICvsNAPITComparisonPage() {
   return (
     <GuideTemplate
-      title="NICEIC vs NAPIT | Which Registration Scheme Is Best UK?"
-      description="Compare NICEIC and NAPIT registration for UK electricians — costs (£400–£600/year), inspection processes, consumer appeal, insurer acceptance…"
+      title="NICEIC vs NAPIT 2026 | Honest UK Scheme Comparison"
+      description="NICEIC vs NAPIT compared: 2026 scheme fees, assessment processes, insurer + Building Control acceptance, public recognition. Which suits your firm?"
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

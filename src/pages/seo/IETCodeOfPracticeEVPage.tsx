@@ -47,6 +47,7 @@ const keyTakeaways = [
   'Load assessment must consider diversity — not all chargers will operate at full power simultaneously. The CoP provides diversity factors for multiple charger installations.',
   'Smart charging is now mandatory for private EV chargepoints installed from 30 June 2022 under the Electric Vehicles (Smart Charge Points) Regulations 2021.',
   'Elec-Mate generates compliant EV charger certificates, calculates cable sizing with voltage drop verification, and includes the specific EV installation checklist from the IET CoP.',
+  'Typical UK install price (2026): £720–£1,875 per job depending on region — £1,035 average in the North West / Yorkshire, £1,093 in the West Midlands, £1,208 in Scotland, £1,438 in London. O-PEN protection, cable run length, and consumer-unit upgrades drive variation.',
 ];
 
 const faqs = [
@@ -629,8 +630,8 @@ const sections = [
 export default function IETCodeOfPracticeEVPage() {
   return (
     <GuideTemplate
-      title="IET Code of Practice EV Charging | Complete Guide"
-      description="Complete guide to the IET Code of Practice for EV Charging Equipment Installation. Covers load assessment, PME earthing and O-PEN protection…"
+      title="IET Code of Practice EV Charging | 5th Edition Guide 2026"
+      description="IET Code of Practice for EV Charging Equipment Installation explained. PME/O-PEN protection, load management, BS 7671 Section 722 + Part S rules."
       datePublished="2025-04-20"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

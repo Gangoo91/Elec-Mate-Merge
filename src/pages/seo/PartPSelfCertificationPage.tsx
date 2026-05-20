@@ -525,8 +525,8 @@ const sections = [
 export default function PartPSelfCertificationPage() {
   return (
     <GuideTemplate
-      title="Part P Self-Certification UK | Competent Person Scheme Guide"
-      description="Complete guide to Part P self-certification — what Part P covers, which work is notifiable, how competent person schemes work…"
+      title="Part P Self-Certification UK 2026 | Notifiable Work"
+      description="Part P explained for UK electricians: what's notifiable, how Competent Person Schemes (NICEIC, NAPIT, ELECSA, Stroma) work, fines for non-compliance."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

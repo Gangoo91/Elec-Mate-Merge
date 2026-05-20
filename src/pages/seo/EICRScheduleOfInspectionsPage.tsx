@@ -7,9 +7,9 @@ import { ClipboardCheck, FileCheck2, ShieldCheck, Zap, FileText, Camera, Eye } f
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'EICR Schedule of Inspections | What to Check';
+const PAGE_TITLE = 'EICR Schedule of Inspections | Appendix 6 Walk-Through';
 const PAGE_DESCRIPTION =
-  'EICR schedule of inspections per BS 7671 Appendix 6: DB equipment, wiring, current-using kit, protective measures, isolation. C2/C3 tips.';
+  'EICR Schedule of Inspections per BS 7671 Appendix 6: DB equipment, wiring, current-using kit, isolation. C1/C2/C3 coding tips + common observation traps.';
 
 const breadcrumbs = [
   { label: 'Certificates', href: '/guides/electrical-certificate-types-uk' },
@@ -36,6 +36,7 @@ const keyTakeaways = [
   'Common C2 observations include missing CPCs, absent RCD protection where required, damaged consumer unit enclosures, and lack of main protective bonding to services.',
   'Common C3 observations include absence of SPD protection, old wiring colours not re-identified, and lack of circuit charts at the distribution board.',
   'Elec-Mate has the complete Schedule of Inspections built into the EICR form matching BS 7671 Appendix 6 — tick items as you walk the installation, and any unticked items are flagged before you can complete the certificate.',
+  'Typical EICR cost in the UK (2026): £135–£500 per test — £248 average in the North West / Yorkshire, £261 in the West Midlands, £289 in Scotland, £344 in London. Standard domestic test runs 2.5 hours; complex commercial 4+ hours.',
 ];
 
 const faqs = [

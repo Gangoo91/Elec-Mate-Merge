@@ -43,6 +43,7 @@ const keyTakeaways = [
   'Specification levels range from basic (builder standard with minimum outlets) through mid-range (additional sockets, USB charging, downlights) to premium (home automation, structured wiring, underfloor heating controls, EV charger pre-wire).',
   'NHBC Standards Chapter 8.1 sets minimum requirements for electrical installations in new build homes registered with NHBC. The installation must also comply with BS 7671:2018+A4:2026.',
   'An Electrical Installation Certificate (EIC) must be issued for each dwelling, and the work must be notified under Part P of the Building Regulations.',
+  'Reference labour benchmarks (2026): full house rewire 35–55 hours / £3,500–£5,500; consumer unit change 4–6 hours / £450–£750. Use these as a sanity check when pricing a new-build first-fix package.',
 ];
 
 const faqs = [
@@ -432,10 +433,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Calculate your cost per house type (based on the outlet schedule), then quote the
                   development in phases. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
-                    quoting app
-                  </SEOInternalLink>{' '}
-                  to build per-plot pricing templates that you can replicate across the development.
+                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  build per-plot pricing templates that you can replicate across the development.
                 </p>
               </div>
             </div>
@@ -446,9 +445,8 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">EIC Templates for Each House Type</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Create an{' '}
-                  <SEOInternalLink href="/eic-certificate">EIC template</SEOInternalLink> for
-                  each house type on the development. Pre-populate the circuit schedule, design
+                  Create an <SEOInternalLink href="/eic-certificate">EIC template</SEOInternalLink>{' '}
+                  for each house type on the development. Pre-populate the circuit schedule, design
                   current, and protective device details. On second fix, you only need to enter the
                   test results for each plot — saving significant administration time.
                 </p>
@@ -486,8 +484,8 @@ const sections = [
 export default function NewBuildElectricalCostPage() {
   return (
     <GuideTemplate
-      title="Average Cost Wiring New House 2026 | UK"
-      description="What's the real cost to wire a new house in 2026? Breakdown of first fix, second fix, and labour rates per m². Get accurate pricing from £35–£85/m²."
+      title="New Build Electrical Cost Per m² UK 2026 | Real Pricing"
+      description="What it actually costs to wire a new house in 2026: £35–£85/m² breakdown — first fix, second fix, DB + DNO connection. Domestic vs spec-build pricing."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

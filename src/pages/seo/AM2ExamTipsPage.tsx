@@ -524,8 +524,8 @@ const sections = [
 export default function AM2ExamTipsPage() {
   return (
     <GuideTemplate
-      title="AM2 Exam Tips 2026 | What to Expect & How to Pass"
-      description="Complete guide to the AM2 practical assessment for UK electricians in 2026. What the AM2 tests, common failures, how to prepare, what to bring…"
+      title="AM2 Exam Tips 2026 | How to Pass First Time (NET)"
+      description="AM2 practical assessment in 2026 — the 6 NET sections, 16.5h total, common fails on Section B testing + Section C safe isolation, what to take on the day."
       datePublished="2025-06-20"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
