@@ -18,8 +18,8 @@ import {
 export default function DisconnectionTimeCalculatorPage() {
   return (
     <ToolTemplate
-      title="Disconnection Time Calculator | BS 7671 Free Tool"
-      description="Calculate disconnection times for TN and TT earthing systems to BS 7671. Verify 0.4s and 5s rules, check protective device coordination…"
+      title="Disconnection Time Calculator UK | BS 7671 0.4s + 5s Rules"
+      description="Calculate disconnection times for TN + TT systems per BS 7671: verify 0.4s socket / 5s fixed-load rules, protective device coordination. Free UK tool."
       datePublished="2026-01-20"
       dateModified="2026-05-18"
       breadcrumbs={[
@@ -76,10 +76,8 @@ export default function DisconnectionTimeCalculatorPage() {
               <p>
                 BS 7671:2018+A4:2026 sets specific disconnection time limits based on the type of
                 circuit and the{' '}
-                <SEOInternalLink href="/earthing-arrangements">
-                  earthing system
-                </SEOInternalLink>{' '}
-                in use. The fundamental requirement comes from Regulation 411.3.2, which states that
+                <SEOInternalLink href="/earthing-arrangements">earthing system</SEOInternalLink> in
+                use. The fundamental requirement comes from Regulation 411.3.2, which states that
                 protective devices must disconnect the supply within the times specified in Table
                 41.1. These times are derived from the IEC body current curves — the relationship
                 between current magnitude, duration, and the likelihood of ventricular fibrillation.

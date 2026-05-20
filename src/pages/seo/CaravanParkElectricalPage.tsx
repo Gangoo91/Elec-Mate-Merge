@@ -539,8 +539,8 @@ const sections = [
 export default function CaravanParkElectricalPage() {
   return (
     <GuideTemplate
-      title="Caravan Park Electrical Installation UK | BS 7671 Section"
-      description="Complete guide to caravan park electrical installations under BS 7671 Section 708. CEE connectors, 30 mA RCD requirements, socket outlet spacing…"
+      title="Caravan Park Electrical UK | BS 7671 Section 708 Guide"
+      description="Caravan park electrical installations to BS 7671 Section 708: CEE connectors, 30mA RCD per pitch, socket spacing, supply ratings. UK electricians."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

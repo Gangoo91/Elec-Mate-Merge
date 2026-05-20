@@ -164,12 +164,12 @@ const sections = [
         </p>
         <p>
           <strong>Regulatory changes:</strong>{' '}
-          <SEOInternalLink href="/eighteenth-edition-course">BS 7671</SEOInternalLink> is
-          amended regularly. Amendment 4 was issued in July 2024, adding requirements for
-          bidirectional and unidirectional devices (Section 530, A4:2026 addition). Amendment 4 is
-          expected in 2026. Each amendment changes how installations must be designed, installed,
-          and tested. If you are not aware of the changes, you risk non-compliant work — which can
-          fail scheme inspections, invalidate certificates, and create liability issues.
+          <SEOInternalLink href="/eighteenth-edition-course">BS 7671</SEOInternalLink> is amended
+          regularly. Amendment 4 was issued in July 2024, adding requirements for bidirectional and
+          unidirectional devices (Section 530, A4:2026 addition). Amendment 4 is expected in 2026.
+          Each amendment changes how installations must be designed, installed, and tested. If you
+          are not aware of the changes, you risk non-compliant work — which can fail scheme
+          inspections, invalidate certificates, and create liability issues.
         </p>
         <p>
           <strong>New technologies:</strong> The growth of EV charging, solar PV, battery storage,
@@ -334,9 +334,9 @@ const sections = [
         </p>
         <p>
           <strong>Inspection and Testing Update:</strong> If you hold the{' '}
-          <SEOInternalLink href="/city-guilds2391">C&G 2391</SEOInternalLink> and want to
-          stay current with testing practices, a refresher course covers the latest requirements,
-          common EICR issues, and changes introduced by Amendment 4.
+          <SEOInternalLink href="/city-guilds2391">C&G 2391</SEOInternalLink> and want to stay
+          current with testing practices, a refresher course covers the latest requirements, common
+          EICR issues, and changes introduced by Amendment 4.
         </p>
         <p>
           <strong>Emergency Lighting (BS 5266):</strong> Emergency lighting design, installation,
@@ -498,8 +498,8 @@ const sections = [
 export default function CPDForElectriciansPage() {
   return (
     <GuideTemplate
-      title="CPD for Electricians UK 2026 | Continuing Professional"
-      description="Complete guide to CPD for UK electricians in 2026. How many hours you need, what counts as CPD, popular courses…"
+      title="CPD for UK Electricians 2026 | Hours, NICEIC + NAPIT"
+      description="CPD for UK electricians 2026: required hours by scheme, what counts, popular courses, NICEIC/NAPIT requirements + free CPD options. Stay registered."
       datePublished="2025-07-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

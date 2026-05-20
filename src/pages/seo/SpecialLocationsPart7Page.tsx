@@ -175,7 +175,9 @@ const sections = [
         <p>
           Every electrician working in the UK must be familiar with Part 7. These sections are
           heavily tested in the{' '}
-          <SEOInternalLink href="/eighteenth-edition-course">C&G 2382 (18th Edition)</SEOInternalLink>{' '}
+          <SEOInternalLink href="/eighteenth-edition-course">
+            C&G 2382 (18th Edition)
+          </SEOInternalLink>{' '}
           and{' '}
           <SEOInternalLink href="/training/inspection-and-testing">
             C&G 2391 (Inspection & Testing)
@@ -712,10 +714,10 @@ const sections = [
           </ul>
         </div>
         <p>
-          Amendment 4 (A4:2026) introduces new requirements in Section 530 regarding bidirectional protective
-          devices, which is directly relevant to PV installations where power flows both into and
-          out of the consumer unit. Electricians installing or inspecting PV systems must be aware
-          of this A4:2026 addition.
+          Amendment 4 (A4:2026) introduces new requirements in Section 530 regarding bidirectional
+          protective devices, which is directly relevant to PV installations where power flows both
+          into and out of the consumer unit. Electricians installing or inspecting PV systems must
+          be aware of this A4:2026 addition.
         </p>
         <SEOAppBridge
           title="Special Locations BS 7671:2018+A4:2026"
@@ -732,8 +734,8 @@ const sections = [
       <>
         <p>
           Part 7 is one of the most examination-heavy areas of BS 7671. Whether you are studying for
-          the <SEOInternalLink href="/eighteenth-edition-course">18th Edition exam</SEOInternalLink> or
-          preparing for the{' '}
+          the <SEOInternalLink href="/eighteenth-edition-course">18th Edition exam</SEOInternalLink>{' '}
+          or preparing for the{' '}
           <SEOInternalLink href="/training/inspection-and-testing">
             C&G 2391 inspection and testing qualification
           </SEOInternalLink>
@@ -781,9 +783,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Need to size a cable for an outdoor circuit, calculate maximum Zs for a bathroom
                   circuit, or work out{' '}
-                  <SEOInternalLink href="/voltage-drop-calculator">
-                    voltage drop
-                  </SEOInternalLink>{' '}
+                  <SEOInternalLink href="/voltage-drop-calculator">voltage drop</SEOInternalLink>{' '}
                   for a long SWA run to a caravan park feeder pillar? Elec-Mate calculators handle
                   it all.
                 </p>
@@ -808,8 +808,8 @@ const sections = [
 export default function SpecialLocationsPart7Page() {
   return (
     <GuideTemplate
-      title="Special Locations Part 7 BS 7671 | Complete Guide"
-      description="Complete guide to Part 7 of BS 7671 — special locations including bathrooms (701), swimming pools (702), saunas (703), construction sites (704)…"
+      title="BS 7671 Part 7 Special Locations | Bathrooms, Pools, Sites"
+      description="BS 7671 Part 7 special locations: bathrooms (701), pools (702), saunas (703), construction sites (704), agricultural (705). Zone rules + RCD requirements."
       datePublished="2025-03-15"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

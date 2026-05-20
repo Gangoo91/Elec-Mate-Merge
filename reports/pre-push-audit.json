@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-05-19T20:23:24.831Z",
+    "generatedAt": "2026-05-20T19:01:40.243Z",
     "totalPages": 1379,
     "byStatus": {
       "green": 1285,
@@ -8,12 +8,12 @@
       "red": 2
     },
     "byAudience": {
-      "trade": 348,
-      "other": 670,
+      "trade": 350,
+      "other": 665,
       "tool": 59,
-      "apprentice": 174,
+      "apprentice": 176,
       "training": 38,
-      "electrician-or-business": 47,
+      "electrician-or-business": 48,
       "comparison": 6,
       "local-dual": 37
     },

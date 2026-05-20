@@ -620,8 +620,8 @@ const sections = [
 export default function BondingConductorsGuidePage() {
   return (
     <GuideTemplate
-      title="Bonding Conductors UK Guide | Main & Supplementary Bonding"
-      description="Complete guide to bonding conductors in UK electrical installations. Main protective bonding of gas, water and oil services…"
+      title="Bonding Conductors UK 2026 | Main + Supplementary to BS 7671"
+      description="Bonding conductors for UK installs: main protective bonding (gas/water/oil), supplementary bonding, sizing per BS 7671 Chapter 54. Worked examples."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

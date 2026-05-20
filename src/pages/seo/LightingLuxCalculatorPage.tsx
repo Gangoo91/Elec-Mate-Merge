@@ -19,8 +19,8 @@ import {
 export default function LightingLuxCalculatorPage() {
   return (
     <ToolTemplate
-      title="Lux Level Calculation Tool | Free"
-      description="Calculate lux levels for 20+ room types instantly. BS EN 12464-1 compliant illuminance values for offices, warehouses, retail. No signup required."
+      title="Lux Level Calculator UK | BS EN 12464-1 Lighting Design Tool"
+      description="Free UK lux level calculator: 20+ room types, BS EN 12464-1 illuminance values for offices, warehouses, retail, schools, residential. No signup."
       datePublished="2026-01-20"
       dateModified="2026-05-18"
       breadcrumbs={[

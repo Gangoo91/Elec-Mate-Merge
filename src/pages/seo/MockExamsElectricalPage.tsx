@@ -612,8 +612,8 @@ const sections = [
 export default function MockExamsElectricalPage() {
   return (
     <GuideTemplate
-      title="Mock Exams for Electricians | Practice Tests Online"
-      description="Mock exams for UK electricians. Practice tests for 18th Edition (C&G 2382), 2391 Inspection and Testing, AM2 practical assessment, and EPA."
+      title="Mock Exams Electrical UK | 18th Ed + 2391 + AM2 + EPA Free"
+      description="Free UK electrical mock exams: 18th Edition (C&G 2382-23), 2391 Inspection & Testing, AM2 practical, EPA. Instant feedback, no signup, apprentice tier."
       datePublished="2025-02-28"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

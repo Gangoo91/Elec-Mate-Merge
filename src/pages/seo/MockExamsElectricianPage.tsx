@@ -516,8 +516,8 @@ const relatedPages: RelatedPage[] = [
 export default function MockExamsElectricianPage() {
   return (
     <GuideTemplate
-      title="Mock Exams for Electricians | Practice Tests & Exam"
-      description="Free mock exams for UK electricians — 18th Edition (C&G 2382), 2391 Inspection and Testing, and AM2 preparation."
+      title="Mock Exams UK Electricians | 18th Edition, 2391, AM2 Free"
+      description="Free mock exams for UK electricians: 18th Edition (C&G 2382-23), 2391 Inspection & Testing, AM2 prep. Real questions, instant feedback. No signup."
       datePublished="2025-08-12"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

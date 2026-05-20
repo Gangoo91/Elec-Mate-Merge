@@ -21,8 +21,8 @@ import {
 export default function BestAIToolElectriciansPage() {
   return (
     <ComparisonTemplate
-      title="AI for Electricians: 5 Tools Tested 2026"
-      description="AI for electricians cuts estimate time by 40%. Compare 5 trade tools for circuit design, compliance checks, and job costing. Free comparison guide."
+      title="Best AI Tools for UK Electricians 2026 | 5 Apps Tested"
+      description="AI tools for UK electricians: 5 trade apps tested for circuit design, BS 7671 compliance, job costing + estimating. Real time savings + comparison."
       datePublished="2026-02-10"
       dateModified="2026-05-18"
       breadcrumbs={[

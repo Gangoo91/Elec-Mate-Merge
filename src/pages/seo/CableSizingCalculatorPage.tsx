@@ -22,9 +22,9 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 
-const PAGE_TITLE = 'Cable Sizing Calculator BS 7671 | Free Online Tool | Elec-Mate';
+const PAGE_TITLE = 'Cable Sizing Calculator UK 2026 | BS 7671 Free Tool';
 const PAGE_DESCRIPTION =
-  'Calculate cable sizes to BS 7671:2018+A4:2026 — current capacity, voltage drop, fault current, thermal limits. 70 calculators included.';
+  'Free UK cable sizing calculator to BS 7671:2018+A4:2026. Cable size, voltage drop + thermal limits in seconds. Twin & earth, SWA, singles, all methods.';
 
 const faqs = [
   {
@@ -159,7 +159,7 @@ const softwareAppSchema = {
     price: '0',
     priceCurrency: 'GBP',
     description: '7-day free trial',
-  }
+  },
 };
 
 const faqSchema = {
@@ -676,7 +676,7 @@ export default function CableSizingCalculatorPage() {
       </section>
 
       {/* CTA */}
-            {/* Verified App Store reviews — policy-safe SoftwareApplication aggregateRating */}
+      {/* Verified App Store reviews — policy-safe SoftwareApplication aggregateRating */}
       <section className="px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <RecentReviews />

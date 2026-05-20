@@ -20,8 +20,8 @@ import {
 export default function BatteryBackupCalculatorPage() {
   return (
     <ToolTemplate
-      title="Battery Backup Calculation Tool | Elec-Mate"
-      description="Calculate battery backup runtime in minutes. Size UPS capacity, assess load demand, and determine Ah requirements. Free tool for UK electricians."
+      title="Battery Backup Calculator UK | UPS Sizing + Ah Runtime Tool"
+      description="Free UK battery backup calculator: size UPS capacity, calculate runtime in minutes, determine Ah requirements for any load. Built for UK electricians."
       datePublished="2026-01-25"
       dateModified="2026-05-18"
       breadcrumbs={[

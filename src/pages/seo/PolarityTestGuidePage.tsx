@@ -603,8 +603,8 @@ const sections = [
 export default function PolarityTestGuidePage() {
   return (
     <GuideTemplate
-      title="Polarity Testing Guide UK | Electrical Polarity Test Method"
-      description="Complete guide to electrical polarity testing for UK electricians. Why polarity matters, bell and battery method, continuity tester method…"
+      title="Polarity Testing UK | BS 7671 Dead + Live Test Sequence"
+      description="Polarity testing for UK electricians: why it matters, dead test (continuity method), live test sequence, BS 7671 + GN3 procedure, what fails on EICR."
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

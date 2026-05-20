@@ -1,6 +1,6 @@
 # Pre-Push SEO Audit
 
-Generated: 2026-05-19T20:23:24.831Z
+Generated: 2026-05-20T19:01:40.243Z
 
 ## Overview
 
@@ -11,11 +11,11 @@ Generated: 2026-05-19T20:23:24.831Z
 
 ## By Audience
 
-- **other**: 670
-- **trade**: 348
-- **apprentice**: 174
+- **other**: 665
+- **trade**: 350
+- **apprentice**: 176
 - **tool**: 59
-- **electrician-or-business**: 47
+- **electrician-or-business**: 48
 - **training**: 38
 - **local-dual**: 37
 - **comparison**: 6

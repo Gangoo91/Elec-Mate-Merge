@@ -688,8 +688,8 @@ const sections = [
 export default function RadialCircuitGuidePage() {
   return (
     <GuideTemplate
-      title="Radial Circuit: Cable Size & MCB Rules 2026"
-      description="Radial circuits protect 32A loads safely. Learn cable sizing, MCB selection, and BS 7671:2018+A4:2026 design rules for domestic and commercial installs."
+      title="Radial Circuits UK 2026 | 20A + 32A Cable Size + MCB Rules"
+      description="Radial circuits for UK electricians: 20A in 2.5mm² + 32A in 4.0mm² cable, MCB selection, BS 7671 A4:2026 + Appendix 15. Domestic + commercial rules."
       datePublished="2025-06-15"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

@@ -579,8 +579,8 @@ const sections = [
 export default function CableColourCodesPage() {
   return (
     <GuideTemplate
-      title="Cable Colour Codes UK | Complete Reference for Electricians"
-      description="Complete UK cable colour code reference for electricians. Current harmonised colours (brown, blue, green/yellow), old UK colours (red, black, green)…"
+      title="UK Cable Colour Codes 2026 | New + Old Colours Reference"
+      description="UK cable colour codes: current harmonised (brown/blue/green-yellow) + pre-2004 old colours (red/black/green). What to do when joining old to new."
       datePublished="2025-05-15"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}

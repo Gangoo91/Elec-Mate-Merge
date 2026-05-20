@@ -18,9 +18,9 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Prospective Fault Current Explained | PFC Guide BS 7671';
+const PAGE_TITLE = 'Prospective Fault Current | PFC + Ipf to BS 7671 Reg 434';
 const PAGE_DESCRIPTION =
-  'Prospective fault current (PFC/Ipf) under BS 7671: what it is, why it matters, how to measure, typical values, Ze, MCB breaking capacity, Reg 434.5.';
+  'Prospective fault current (PFC/Ipf) for UK electricians: what it is, how to measure, typical UK values, MCB breaking capacity, BS 7671 Reg 434.5.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },

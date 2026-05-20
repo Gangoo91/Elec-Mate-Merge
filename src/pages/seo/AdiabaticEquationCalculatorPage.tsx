@@ -205,7 +205,7 @@ const howToSchema = {
 
 export default function AdiabaticEquationCalculatorPage() {
   useSEO({
-    title: 'Adiabatic Equation Calculator | CPC Sizing BS 7671',
+    title: 'Adiabatic Equation Calculator UK | CPC Sizing BS 7671 543.1',
     description: PAGE_DESCRIPTION,
     schema: softwareAppSchema,
   });
@@ -267,10 +267,9 @@ export default function AdiabaticEquationCalculatorPage() {
           </div>
           <AdiabaticCalculator />
           <p className="mt-4 text-sm text-white/60">
-            Want this calc and 69 others built into a mobile app, with saved projects,
-            PDF export and offline use?{' '}
-            <SEOInternalLink href="/auth/signup">Start a 7-day free trial</SEOInternalLink>
-            .
+            Want this calc and 69 others built into a mobile app, with saved projects, PDF export
+            and offline use?{' '}
+            <SEOInternalLink href="/auth/signup">Start a 7-day free trial</SEOInternalLink>.
           </p>
         </div>
       </section>

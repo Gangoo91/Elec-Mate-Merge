@@ -19,9 +19,9 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'BS 7671 Appendix 4 Tables | Current Carrying Capacity';
+const PAGE_TITLE = 'BS 7671 Appendix 4 Tables UK 2026 | Cable Capacity + mV/A/m';
 const PAGE_DESCRIPTION =
-  'BS 7671 Appendix 4 tables explained: current carrying capacity (4D1A-4J4A), voltage drop (mV/A/m), correction factors, reference methods. UK electricians.';
+  'BS 7671 Appendix 4 tables explained: current-carrying capacity (4D1A-4J4A), voltage drop (mV/A/m), correction factors, reference methods. UK electricians.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
