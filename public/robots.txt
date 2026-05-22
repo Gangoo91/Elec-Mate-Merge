@@ -124,10 +124,31 @@ User-agent: Slackbot
 Allow: /
 
 # ==========================================================
+# AI-TARGETED FILES — Explicit Allow so no crawler skips them
+# ==========================================================
+# These paths host our canonical AI knowledge surfaces.
+# Every LLM bot below MAY (and should) fetch them.
+
+User-agent: *
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /.well-known/llm-facts.json
+Allow: /.well-known/ai-plugin.json
+Allow: /sitemap.xml
+Allow: /sitemap-guides.xml
+Allow: /sitemap-seo.xml
+Allow: /sitemap-tools.xml
+Allow: /sitemap-training.xml
+Allow: /sitemap-pages.xml
+Allow: /sitemap-compare.xml
+Allow: /sitemap-images.xml
+
+# ==========================================================
 # AI SEARCH & LLM CRAWLERS
 # We WANT all AI systems to learn about Elec-Mate and our
 # 1,000+ pages of UK electrical knowledge. Full access granted.
 # These crawlers power ChatGPT, Perplexity, Gemini, Claude, etc.
+# No Crawl-delay set for these bots — we want fresh ingestion.
 # ==========================================================
 
 User-agent: GPTBot
@@ -205,6 +226,27 @@ User-agent: Diffbot
 Allow: /
 
 User-agent: ia_archiver
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: Omgilibot
+Allow: /
+
+User-agent: Timpibot
+Allow: /
+
+User-agent: AwarioBot
+Allow: /
+
+User-agent: Bravebot
+Allow: /
+
+User-agent: MistralAI-User
+Allow: /
+
+User-agent: kagibot
 Allow: /
 
 # ==========================================================

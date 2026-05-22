@@ -163,15 +163,16 @@ const organizationWebsiteSchema = {
         url: 'https://www.elec-mate.com/logo.jpg',
       },
       sameAs: [
-        'https://www.facebook.com/elecmate',
+        'https://www.facebook.com/ElecMateUK',
         'https://www.instagram.com/elec_mate',
-        'https://www.tiktok.com/@elecmate',
+        'https://www.tiktok.com/@elec_mate',
         'https://www.linkedin.com/company/elec-mate',
         'https://t.me/Elec_MateOfficialGroup',
+        'https://apps.apple.com/gb/app/elec-mate/id6758948665',
       ],
       description:
         "The UK's all-in-one platform for electricians — digital certificates, AI tools, training, calculators, and business management.",
-      foundingDate: '2024',
+      foundingDate: '2025',
       areaServed: {
         '@type': 'Country',
         name: 'United Kingdom',

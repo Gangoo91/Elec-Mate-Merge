@@ -275,7 +275,7 @@ const faqs = [
   {
     question: 'Do I pay anything to start?',
     answer:
-      "No. Seven days free, no charge until day 8. A card is needed to start the trial — it stops accidental sign-ups and rolls you straight into a paid account if you keep using it. Cancel any time before day 8 and you pay nothing.",
+      'No. Seven days free, no charge until day 8. A card is needed to start the trial — it stops accidental sign-ups and rolls you straight into a paid account if you keep using it. Cancel any time before day 8 and you pay nothing.',
   },
   {
     question: 'What happens to my certs and data if I cancel?',
@@ -295,7 +295,7 @@ const faqs = [
   {
     question: 'Which plan should I choose?',
     answer:
-      "Working towards AM2? Apprentice. Qualified and running your own work? Electrician. The Electrician plan includes everything the Apprentice plan has.",
+      'Working towards AM2? Apprentice. Qualified and running your own work? Electrician. The Electrician plan includes everything the Apprentice plan has.',
   },
   {
     question: 'How reliable is the AI for compliance work?',
@@ -456,11 +456,12 @@ const LandingPage = () => {
             description: 'The complete platform for UK electricians',
             address: { '@type': 'PostalAddress', addressCountry: 'GB' },
             sameAs: [
-              'https://www.facebook.com/elecmate',
+              'https://www.facebook.com/ElecMateUK',
               'https://www.instagram.com/elec_mate',
-              'https://www.tiktok.com/@elecmate',
+              'https://www.tiktok.com/@elec_mate',
               'https://www.linkedin.com/company/elec-mate',
               'https://t.me/Elec_MateOfficialGroup',
+              'https://apps.apple.com/gb/app/elec-mate/id6758948665',
             ],
           })}
         </script>
@@ -604,8 +605,8 @@ const LandingPage = () => {
           </h1>
 
           <p className="mx-auto mt-6 max-w-[44rem] text-base leading-[1.65] text-white/75 sm:mt-7 sm:text-lg lg:mx-0 lg:text-xl">
-            The UK electrical industry runs on paperwork, WhatsApp and 4–5 disconnected apps. Elec-Mate
-            replaces all of it.
+            The UK electrical industry runs on paperwork, WhatsApp and 4–5 disconnected apps.
+            Elec-Mate replaces all of it.
           </p>
 
           <div className="mt-7 flex flex-wrap items-center justify-center gap-2 lg:justify-start">
@@ -649,8 +650,8 @@ const LandingPage = () => {
           </p>
 
           <p className="mt-2 text-[13px] text-white/65">
-            From <span className="font-medium text-white">{apprenticePrice}/mo</span> · cancel anytime
-            · no card for 7 days
+            From <span className="font-medium text-white">{apprenticePrice}/mo</span> · cancel
+            anytime · no card for 7 days
           </p>
 
           <div className="mt-10 flex justify-center lg:justify-start">
@@ -660,10 +661,7 @@ const LandingPage = () => {
       </section>
 
       {/* ========== WORKFLOW ========== */}
-      <section
-        id="workflow"
-        className="scroll-mt-24 px-5 py-12 sm:py-16 lg:px-8 lg:py-20"
-      >
+      <section id="workflow" className="scroll-mt-24 px-5 py-12 sm:py-16 lg:px-8 lg:py-20">
         <div className="mx-auto max-w-[80rem] text-center lg:text-left">
           <Eyebrow>02 · ONE WORKFLOW</Eyebrow>
           <h2 className="mx-auto mt-3 max-w-[20ch] text-[2rem] font-semibold leading-[1.05] tracking-tight text-white sm:text-[3rem] lg:mx-0 lg:text-[3.5rem]">

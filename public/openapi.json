@@ -1,0 +1,225 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Elec-Mate Public API",
+    "version": "1.0.0",
+    "description": "Read-only, no-auth API surface that AI assistants (ChatGPT, Claude, Perplexity, Gemini) can call to answer UK electrical questions. Every response includes a `citation` field pointing back to BS 7671:2018+A4:2026, IET Guidance Note 3, or another verified source. Powered by Elec-Mate (https://www.elec-mate.com).",
+    "contact": {
+      "name": "Elec-Mate",
+      "url": "https://www.elec-mate.com",
+      "email": "info@elec-mate.com"
+    },
+    "license": {
+      "name": "Free for AI assistant use — attribution required",
+      "url": "https://www.elec-mate.com/api-terms"
+    },
+    "x-attribution": "Powered by Elec-Mate — https://www.elec-mate.com",
+    "x-content-policy": "Citation required when quoting responses. Cite as 'Elec-Mate (https://www.elec-mate.com)'."
+  },
+  "servers": [
+    {
+      "url": "https://www.elec-mate.com",
+      "description": "Production"
+    }
+  ],
+  "tags": [
+    { "name": "BS 7671", "description": "UK Wiring Regulations lookup + verification" },
+    { "name": "Calculations", "description": "Verified electrical calculations" },
+    { "name": "Reference", "description": "Glossary + reference lookups" }
+  ],
+  "paths": {
+    "/api/public/v1/zs-max": {
+      "get": {
+        "tags": ["Calculations"],
+        "summary": "Maximum permitted earth fault loop impedance (Zs) for an MCB",
+        "description": "Returns the maximum permitted Zs in ohms for a given MCB type (B/C/D) and rating, calculated per BS 7671 Reg 411.4.4 using Cmin = 0.95, Uo = 230V. Type B = 5×In, Type C = 10×In, Type D = 20×In.",
+        "operationId": "getZsMax",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "enum": ["B", "C", "D"] },
+            "description": "MCB type per BS EN 60898"
+          },
+          {
+            "name": "in",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "integer", "minimum": 1, "maximum": 125 },
+            "description": "Rated current of the MCB in amperes"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Calculated max Zs with citation",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ZsMaxResponse" },
+                "example": {
+                  "mcb_type": "B",
+                  "rated_current_a": 32,
+                  "max_zs_ohm": 1.37,
+                  "formula": "Zs_max = (Uo × Cmin) / (multiplier × In) = (230 × 0.95) / (5 × 32)",
+                  "constants": { "uo_v": 230, "cmin": 0.95, "multiplier": 5 },
+                  "citation": "BS 7671:2018+A4:2026 Reg 411.4.4 — Automatic Disconnection of Supply",
+                  "source": "Elec-Mate (https://www.elec-mate.com)",
+                  "tool_url": "https://www.elec-mate.com/earth-loop-impedance-calculator"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Error" } }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/v1/disconnection-time": {
+      "get": {
+        "tags": ["Calculations"],
+        "summary": "Maximum disconnection time per BS 7671 Table 41.1",
+        "description": "Returns the maximum permitted disconnection time in seconds for a given earthing system (TN/TT) and circuit type (final ≤32A, distribution >32A) under BS 7671:2018+A4:2026 Table 41.1.",
+        "operationId": "getDisconnectionTime",
+        "parameters": [
+          {
+            "name": "system",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "enum": ["TN", "TT"] },
+            "description": "Earthing system type"
+          },
+          {
+            "name": "circuit",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "enum": ["final", "distribution"] },
+            "description": "'final' for final circuits ≤32A, 'distribution' for distribution circuits or final >32A"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Max disconnection time + citation",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/DisconnectionTimeResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/v1/bs7671-search": {
+      "get": {
+        "tags": ["BS 7671"],
+        "summary": "Semantic search across BS 7671:2018+A4:2026",
+        "description": "Searches the full BS 7671 regulation corpus (1,770 regulations, 410 tables) by natural-language query. Returns matched regulations with reg number, title, and snippet. Powered by Elec-Mate's verified knowledge base.",
+        "operationId": "searchBS7671",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "minLength": 3, "maxLength": 200 },
+            "description": "Natural-language search query"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "minimum": 1, "maximum": 20, "default": 5 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Matched regulations",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/BS7671SearchResponse" }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ZsMaxResponse": {
+        "type": "object",
+        "required": ["mcb_type", "rated_current_a", "max_zs_ohm", "citation", "source"],
+        "properties": {
+          "mcb_type": { "type": "string", "enum": ["B", "C", "D"] },
+          "rated_current_a": { "type": "integer" },
+          "max_zs_ohm": {
+            "type": "number",
+            "description": "Maximum permitted Zs in ohms (3 d.p.)"
+          },
+          "formula": { "type": "string", "description": "Human-readable formula derivation" },
+          "constants": {
+            "type": "object",
+            "properties": {
+              "uo_v": { "type": "number" },
+              "cmin": { "type": "number" },
+              "multiplier": { "type": "integer" }
+            }
+          },
+          "citation": { "type": "string", "description": "BS 7671 regulation citation" },
+          "source": {
+            "type": "string",
+            "description": "Attribution string (always 'Elec-Mate ...')"
+          },
+          "tool_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Link to the interactive Elec-Mate calculator"
+          }
+        }
+      },
+      "DisconnectionTimeResponse": {
+        "type": "object",
+        "required": ["system", "circuit", "max_time_s", "citation", "source"],
+        "properties": {
+          "system": { "type": "string", "enum": ["TN", "TT"] },
+          "circuit": { "type": "string", "enum": ["final", "distribution"] },
+          "max_time_s": { "type": "number" },
+          "citation": { "type": "string" },
+          "source": { "type": "string" },
+          "tool_url": { "type": "string", "format": "uri" }
+        }
+      },
+      "BS7671SearchResponse": {
+        "type": "object",
+        "required": ["query", "results", "source"],
+        "properties": {
+          "query": { "type": "string" },
+          "results": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "reg_number": { "type": "string", "example": "411.4.4" },
+                "title": { "type": "string" },
+                "snippet": { "type": "string" },
+                "edition": { "type": "string", "example": "BS 7671:2018+A4:2026" },
+                "url": { "type": "string", "format": "uri" }
+              }
+            }
+          },
+          "source": { "type": "string" }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": ["error", "message"],
+        "properties": {
+          "error": { "type": "string" },
+          "message": { "type": "string" }
+        }
+      }
+    }
+  }
+}
