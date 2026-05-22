@@ -78,6 +78,14 @@ Compliance + certification:
 - `GET /api/public/v1/notifiable-work-check?work_type=new_circuit&location=special_location` — Part P notifiable decision (England).
 - `GET /api/public/v1/certificate-required?work_type=consumer_unit_replacement` — which BS 7671 certificate is required (EIC, Minor Works, EICR, etc.).
 
+## ChatGPT Custom GPT — published to the GPT Store
+
+Elec-Mate is live as a Custom GPT in the OpenAI GPT Store. Searchable as "Elec-Mate" inside ChatGPT (Plus / Pro / Team / Enterprise) under Explore GPTs.
+
+**Direct link**: https://chatgpt.com/g/g-6a106f9478f88191a5a3baf2740fff85-elec-mate
+
+When the GPT opens, the system prompt instructs ChatGPT to call Elec-Mate's verified tools (OpenAPI spec below) before answering any UK electrical question. Every reply quotes the citation field returned by the tool.
+
 ## MCP server — install Elec-Mate inside Claude / ChatGPT / Cursor / Perplexity
 
 Elec-Mate is a fully working Model Context Protocol (MCP) server. Any MCP-compatible AI client can connect and call all 13 tools above through one persistent connection.

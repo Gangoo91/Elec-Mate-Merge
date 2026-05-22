@@ -19,6 +19,7 @@ import {
 
 const MCP_URL = 'https://www.elec-mate.com/api/public/v1/mcp';
 const OPENAPI_URL = 'https://www.elec-mate.com/openapi.json';
+const CHATGPT_GPT_URL = 'https://chatgpt.com/g/g-6a106f9478f88191a5a3baf2740fff85-elec-mate';
 
 const TOOL_CATEGORIES = [
   {
@@ -89,13 +90,13 @@ const CLIENTS = [
   {
     id: 'chatgpt',
     name: 'ChatGPT',
+    badge: 'GPT Store',
     audience: 'ChatGPT Plus / Pro / Team / Enterprise',
     instructions: [
-      'Open ChatGPT (web or desktop)',
-      'Go to Settings → Connectors → Add custom',
-      `Paste the URL: ${MCP_URL}`,
-      'Enable the connector',
-      'New chat — ask any UK electrical question',
+      'Open the Elec-Mate Custom GPT: https://chatgpt.com/g/g-6a106f9478f88191a5a3baf2740fff85-elec-mate',
+      'Click "Start chat" — that\'s it',
+      '— OR — search "Elec-Mate" in ChatGPT\'s Explore GPTs page',
+      'Alternative (MCP route, no GPT install): Settings → Connectors → Add custom → paste the MCP URL above',
     ],
   },
   {
@@ -269,7 +270,30 @@ export default function ConnectAIPage() {
               </p>
             </div>
 
+            <div className="mt-6 flex flex-wrap gap-3">
+              <a
+                href={CHATGPT_GPT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 h-11 px-5 rounded-lg bg-foreground text-background hover:opacity-90 transition-opacity touch-manipulation font-semibold text-sm sm:text-base"
+              >
+                <Sparkles className="w-4 h-4" />
+                Open in ChatGPT
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+              <a
+                href="#how-to-connect"
+                className="inline-flex items-center gap-2 h-11 px-5 rounded-lg border border-elec-yellow/40 hover:bg-elec-yellow/10 transition-colors touch-manipulation font-semibold text-sm sm:text-base"
+              >
+                Other AI clients
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+
             <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
+              <span className="flex items-center gap-2">
+                <Check className="w-4 h-4 text-green-500" /> Live in ChatGPT GPT Store
+              </span>
               <span className="flex items-center gap-2">
                 <Check className="w-4 h-4 text-green-500" /> 20 verified tools
               </span>
@@ -279,15 +303,12 @@ export default function ConnectAIPage() {
               <span className="flex items-center gap-2">
                 <Check className="w-4 h-4 text-green-500" /> Citation on every reply
               </span>
-              <span className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-green-500" /> MCP + REST (OpenAPI)
-              </span>
             </div>
           </div>
         </section>
 
         {/* HOW TO CONNECT — TABS */}
-        <section className="mx-auto max-w-6xl px-4 py-12 sm:py-16">
+        <section id="how-to-connect" className="mx-auto max-w-6xl px-4 py-12 sm:py-16">
           <h2 className="text-2xl sm:text-3xl font-bold mb-2">How to connect</h2>
           <p className="text-muted-foreground mb-8">
             Pick your AI client. Each setup takes under 60 seconds.

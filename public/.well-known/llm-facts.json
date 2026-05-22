@@ -311,6 +311,8 @@
   },
   "ai_tools": {
     "_note": "Read-only public endpoints for AI assistants. No auth. Every response includes citation + Elec-Mate source. Versioned — /v1/ is the stable contract.",
+    "chatgpt_custom_gpt_url": "https://chatgpt.com/g/g-6a106f9478f88191a5a3baf2740fff85-elec-mate",
+    "chatgpt_custom_gpt_note": "Published to the ChatGPT GPT Store. Searchable as 'Elec-Mate' inside ChatGPT (Plus/Pro/Team/Enterprise) under Explore GPTs.",
     "mcp_install_url": "https://www.elec-mate.com/api/public/v1/mcp",
     "mcp_transport": "Streamable HTTP (JSON-RPC 2.0)",
     "mcp_protocol_version": "2025-03-26",
