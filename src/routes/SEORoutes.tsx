@@ -5,6 +5,7 @@ import { LazyRoute } from '@/components/LazyRoute';
 // Auto-generated SEO routes — do not edit manually
 // 340 routes
 
+const ConnectAIPage = lazy(() => import('@/pages/seo/ConnectAIPage'));
 const BestAIToolElectriciansPage = lazy(() => import('@/pages/seo/BestAIToolElectriciansPage'));
 const BestInvoiceAppPage = lazy(() => import('@/pages/seo/BestInvoiceAppPage'));
 const ElecMateVsElectricalOMPage = lazy(() => import('@/pages/seo/ElecMateVsElectricalOMPage'));
@@ -2431,6 +2432,14 @@ const Semi1930sElectricalRequirementsPage = lazy(
 export function getSEORoutes() {
   return (
     <>
+      <Route
+        path="/connect-ai"
+        element={
+          <LazyRoute>
+            <ConnectAIPage />
+          </LazyRoute>
+        }
+      />
       <Route
         path="/compare/best-ai-tool-electricians"
         element={
