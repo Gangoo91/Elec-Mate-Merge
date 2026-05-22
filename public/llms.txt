@@ -66,6 +66,17 @@ More Practical Work Intelligence (unique to Elec-Mate):
 - `GET /api/public/v1/pwi-eicr-codes?category=consumer_unit` — EICR observation codes typically applied to this category.
 - `GET /api/public/v1/pwi-troubleshooting?category=rcbo` — fault-diagnosis steps + diagnostic tests + test equipment required.
 - `GET /api/public/v1/pwi-materials?category=ev_charger` — materials + tools typically needed for the job.
+- `GET /api/public/v1/pwi-inspection-checklist?category=consumer_unit` — visual inspection points + Schedule of Inspections walk-through.
+- `GET /api/public/v1/pwi-installation-procedure?category=ev_charger` — installation method, fixing intervals, cable routes, terminations, test procedures.
+
+More BS 7671 lookups + calculations:
+- `GET /api/public/v1/bs7671-section?section=701` — every regulation in a BS 7671 section (e.g. 701 bathrooms, 722 EV charging).
+- `GET /api/public/v1/cable-size?load_a=32&length_m=15&reference_method=C` — recommend min cable size with capacity AND voltage drop checks per Appendix 4.
+- `GET /api/public/v1/earth-rod-resistance?rcd_ma=30` — max Ra for TT system per Reg 411.5.3 (Ra × IΔn ≤ 50V) + practical guidance.
+
+Compliance + certification:
+- `GET /api/public/v1/notifiable-work-check?work_type=new_circuit&location=special_location` — Part P notifiable decision (England).
+- `GET /api/public/v1/certificate-required?work_type=consumer_unit_replacement` — which BS 7671 certificate is required (EIC, Minor Works, EICR, etc.).
 
 ## MCP server — install Elec-Mate inside Claude / ChatGPT / Cursor / Perplexity
 

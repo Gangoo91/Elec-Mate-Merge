@@ -184,6 +184,86 @@
         }
       }
     },
+    "/api/public/v1/pwi-common-defects": {
+      "get": {
+        "tags": ["Practical Work Intelligence"],
+        "summary": "Top defects + mistakes + failures for a category",
+        "description": "Aggregates the most-frequent defects, installer mistakes, and in-service failures from UK electrical inspection + job records — ranked by frequency.",
+        "operationId": "getPwiCommonDefects",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "minLength": 3 }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Top defects/mistakes/failures" },
+          "404": { "description": "No data for category" }
+        }
+      }
+    },
+    "/api/public/v1/pwi-eicr-codes": {
+      "get": {
+        "tags": ["Practical Work Intelligence"],
+        "summary": "EICR observation codes typically applied for this category",
+        "description": "Returns C1/C2/C3/FI codes typically assigned for issues found in this category — bucketed by severity, with frequency.",
+        "operationId": "getPwiEicrCodes",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "minLength": 3 }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Typical codes by severity" },
+          "404": { "description": "No data for category" }
+        }
+      }
+    },
+    "/api/public/v1/pwi-troubleshooting": {
+      "get": {
+        "tags": ["Practical Work Intelligence"],
+        "summary": "Fault-diagnosis steps + diagnostic tests for a category",
+        "description": "Step-by-step troubleshooting + diagnostic test sequence + test equipment list, aggregated from UK fault-finding records.",
+        "operationId": "getPwiTroubleshooting",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "minLength": 3 }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Troubleshooting procedure" },
+          "404": { "description": "No data for category" }
+        }
+      }
+    },
+    "/api/public/v1/pwi-materials": {
+      "get": {
+        "tags": ["Practical Work Intelligence"],
+        "summary": "Materials + tools typically needed for a UK electrical job",
+        "description": "Aggregated kit list (materials + tools + cable sizes + power ratings) for the category, ranked by frequency.",
+        "operationId": "getPwiMaterials",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "minLength": 3 }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Materials + tools list" },
+          "404": { "description": "No data for category" }
+        }
+      }
+    },
     "/api/public/v1/pwi-install-time": {
       "get": {
         "tags": ["Practical Work Intelligence"],
@@ -247,9 +327,224 @@
             "schema": { "type": "string", "enum": ["C1", "C2", "C3", "FI"] }
           }
         ],
+        "responses": { "200": { "description": "Code definition" } }
+      }
+    },
+    "/api/public/v1/bs7671-section": {
+      "get": {
+        "tags": ["BS 7671"],
+        "summary": "Every regulation in a BS 7671 section",
+        "description": "Returns all BS 7671:2018+A4:2026 regulations in a specific section (e.g. 701 bathrooms, 702 swimming pools, 722 EV charging).",
+        "operationId": "getSection",
+        "parameters": [
+          {
+            "name": "section",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "pattern": "^\\d{2,3}$" },
+            "description": "2-3 digit section number"
+          }
+        ],
         "responses": {
-          "200": { "description": "Code definition" }
+          "200": { "description": "Regulations in section" },
+          "404": { "description": "Section not found" }
         }
+      }
+    },
+    "/api/public/v1/cable-size": {
+      "get": {
+        "tags": ["Calculations"],
+        "summary": "Recommend minimum cable size per BS 7671 Appendix 4",
+        "description": "Recommends a minimum cable size (mm² copper twin & earth, 70°C thermoplastic) per BS 7671:2018+A4:2026 Appendix 4. Checks BOTH current-carrying capacity (with correction factors) AND voltage drop (Reg 525 limits). Returns which check was limiting. Scope: domestic + light commercial up to 50mm². For SWA / multicore / industrial, use full design software.",
+        "operationId": "getCableSize",
+        "parameters": [
+          {
+            "name": "load_a",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "integer", "minimum": 1, "maximum": 200 },
+            "description": "Design current Ib in amperes"
+          },
+          {
+            "name": "length_m",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "integer", "minimum": 1, "maximum": 500 }
+          },
+          {
+            "name": "reference_method",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string", "enum": ["A", "B", "C"], "default": "C" },
+            "description": "A=conduit in insulating wall, B=conduit on wall, C=clipped direct"
+          },
+          {
+            "name": "ambient_c",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "minimum": 0, "maximum": 60, "default": 30 }
+          },
+          {
+            "name": "voltage",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 230 }
+          },
+          {
+            "name": "phase",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string", "enum": ["single", "three"], "default": "single" }
+          },
+          {
+            "name": "is_lighting",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "boolean", "default": false },
+            "description": "true → 3% Vd limit; false → 5%"
+          },
+          {
+            "name": "in_thermal_insulation",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "boolean", "default": false }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Recommended cable size with full working" },
+          "400": { "description": "Load exceeds 50mm² capacity — use full design software" }
+        }
+      }
+    },
+    "/api/public/v1/earth-rod-resistance": {
+      "get": {
+        "tags": ["Calculations"],
+        "summary": "Max TT earth electrode resistance per BS 7671 Reg 411.5.3",
+        "description": "Maximum permitted Ra for a TT system (Ra × IΔn ≤ 50V). Returns theoretical max + practical recommendations (200Ω NICEIC, 100Ω IET CoP for EV charging).",
+        "operationId": "getEarthRodResistance",
+        "parameters": [
+          {
+            "name": "rcd_ma",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "integer", "enum": [10, 30, 100, 300, 500, 1000] },
+            "description": "RCD rated residual operating current in mA"
+          }
+        ],
+        "responses": { "200": { "description": "Max Ra + practical guidance" } }
+      }
+    },
+    "/api/public/v1/pwi-inspection-checklist": {
+      "get": {
+        "tags": ["Practical Work Intelligence"],
+        "summary": "Visual inspection points + EICR checklist for a category",
+        "description": "Aggregates visual inspection points + structured inspection checklist items typically applied by inspectors for this category.",
+        "operationId": "getInspectionChecklist",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "minLength": 3 }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Inspection checklist" },
+          "404": { "description": "No data for category" }
+        }
+      }
+    },
+    "/api/public/v1/pwi-installation-procedure": {
+      "get": {
+        "tags": ["Practical Work Intelligence"],
+        "summary": "Installation procedure for a UK electrical job",
+        "description": "Returns installation method, fixing intervals, cable routes, termination methods, test procedures, acceptance criteria for the category — aggregated from real UK installation records.",
+        "operationId": "getInstallationProcedure",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "minLength": 3 }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Installation procedure" },
+          "404": { "description": "No data for category" }
+        }
+      }
+    },
+    "/api/public/v1/notifiable-work-check": {
+      "get": {
+        "tags": ["Reference"],
+        "summary": "Part P notifiable-work decision (England)",
+        "description": "Returns whether work is notifiable under Part P of the Building Regulations 2010 (England). Hardcoded decision tree based on Approved Document P 2013.",
+        "operationId": "getNotifiableWorkCheck",
+        "parameters": [
+          {
+            "name": "work_type",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "new_circuit",
+                "consumer_unit_replacement",
+                "circuit_addition",
+                "circuit_alteration",
+                "accessory_replacement",
+                "like_for_like_replacement",
+                "repair",
+                "elv_only"
+              ]
+            }
+          },
+          {
+            "name": "location",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["special_location", "kitchen", "garden", "outdoor", "other"]
+            }
+          }
+        ],
+        "responses": { "200": { "description": "Notifiable decision + reason" } }
+      }
+    },
+    "/api/public/v1/certificate-required": {
+      "get": {
+        "tags": ["Reference"],
+        "summary": "Which BS 7671 certificate is required for a category of work",
+        "description": "Returns the BS 7671 certificate type required (EIC, Minor Works, EICR, PAT, etc.) for the given category of UK electrical work, with the BS 7671 clause requiring it.",
+        "operationId": "getCertificateRequired",
+        "parameters": [
+          {
+            "name": "work_type",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "new_installation",
+                "new_circuit",
+                "consumer_unit_replacement",
+                "circuit_addition",
+                "circuit_alteration",
+                "accessory_replacement",
+                "periodic_inspection",
+                "change_of_use",
+                "rented_property_check",
+                "pat_testing",
+                "solar_pv",
+                "ev_charger",
+                "emergency_lighting",
+                "fire_alarm"
+              ]
+            }
+          }
+        ],
+        "responses": { "200": { "description": "Certificate advice" } }
       }
     },
     "/api/public/v1/voltage-drop": {

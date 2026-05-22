@@ -273,6 +273,214 @@ const TOOLS: ToolDef[] = [
     fetch: async (args) =>
       fetchJson(`${BASE}/eicr-code?code=${encodeURIComponent(String(args.code))}`),
   },
+  {
+    name: 'bs7671_lookup_section',
+    description:
+      'Returns every BS 7671:2018+A4:2026 regulation in a specific section (e.g. Section 701 bathrooms, 702 swimming pools, 722 EV charging, 743 PV). Use when the user asks "what are the rules for [special location]" or "give me everything in Section X".',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        section: {
+          type: 'string',
+          pattern: '^\\d{2,3}$',
+          description: '2-3 digit BS 7671 section number, e.g. 41, 411, 701, 722',
+        },
+      },
+      required: ['section'],
+    },
+    fetch: async (args) =>
+      fetchJson(`${BASE}/bs7671-section?section=${encodeURIComponent(String(args.section))}`),
+  },
+  {
+    name: 'pwi_inspection_checklist',
+    description:
+      'Visual inspection points + structured inspection checklist for an EICR or initial verification, aggregated from real UK inspection records. Use when the user asks "what should I check during X" or "EICR walk-through for Y".',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        category: {
+          type: 'string',
+          description: 'Equipment category (e.g. consumer_unit, eicr, kitchen, bathroom)',
+        },
+      },
+      required: ['category'],
+    },
+    fetch: async (args) =>
+      fetchJson(
+        `${BASE}/pwi-inspection-checklist?category=${encodeURIComponent(String(args.category))}`
+      ),
+  },
+  {
+    name: 'pwi_installation_procedure',
+    description:
+      'Installation method + fixing intervals + cable routes + termination methods + test procedures for a UK electrical job — aggregated from real UK installation records. Use when the user asks "how do I install X".',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        category: {
+          type: 'string',
+          description:
+            'Equipment category (e.g. ev_charger, consumer_unit, shower, lighting_circuit)',
+        },
+      },
+      required: ['category'],
+    },
+    fetch: async (args) =>
+      fetchJson(
+        `${BASE}/pwi-installation-procedure?category=${encodeURIComponent(String(args.category))}`
+      ),
+  },
+  {
+    name: 'calculate_earth_rod_resistance',
+    description:
+      'Maximum permitted earth electrode resistance (Ra) for a TT system per BS 7671 Reg 411.5.3 (Ra × IΔn ≤ 50V). Returns theoretical max + practical recommendations (200Ω NICEIC, 100Ω IET CoP for EV charging).',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        rcd_ma: {
+          type: 'integer',
+          enum: [10, 30, 100, 300, 500, 1000],
+          description: 'RCD rated residual operating current in milliamperes',
+        },
+      },
+      required: ['rcd_ma'],
+    },
+    fetch: async (args) => fetchJson(`${BASE}/earth-rod-resistance?rcd_ma=${Number(args.rcd_ma)}`),
+  },
+  {
+    name: 'notifiable_work_check',
+    description:
+      'Returns whether the electrical work is notifiable under Part P of the Building Regulations (England). Use when the user asks "do I need to notify this work?" or "is X Part P notifiable?"',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        work_type: {
+          type: 'string',
+          enum: [
+            'new_circuit',
+            'consumer_unit_replacement',
+            'circuit_addition',
+            'circuit_alteration',
+            'accessory_replacement',
+            'like_for_like_replacement',
+            'repair',
+            'elv_only',
+          ],
+        },
+        location: {
+          type: 'string',
+          enum: ['special_location', 'kitchen', 'garden', 'outdoor', 'other'],
+          description:
+            '"special_location" = room with bath/shower, pool, or sauna (under current Part P)',
+        },
+      },
+      required: ['work_type'],
+    },
+    fetch: async (args) => {
+      const loc = args.location ? `&location=${encodeURIComponent(String(args.location))}` : '';
+      return fetchJson(
+        `${BASE}/notifiable-work-check?work_type=${encodeURIComponent(String(args.work_type))}${loc}`
+      );
+    },
+  },
+  {
+    name: 'certificate_required',
+    description:
+      'Returns which BS 7671 certificate is required for a category of electrical work in the UK (EIC, Minor Works, EICR, PAT, etc.). Use when the user asks "what certificate do I need for X?".',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        work_type: {
+          type: 'string',
+          enum: [
+            'new_installation',
+            'new_circuit',
+            'consumer_unit_replacement',
+            'circuit_addition',
+            'circuit_alteration',
+            'accessory_replacement',
+            'periodic_inspection',
+            'change_of_use',
+            'rented_property_check',
+            'pat_testing',
+            'solar_pv',
+            'ev_charger',
+            'emergency_lighting',
+            'fire_alarm',
+          ],
+        },
+      },
+      required: ['work_type'],
+    },
+    fetch: async (args) =>
+      fetchJson(
+        `${BASE}/certificate-required?work_type=${encodeURIComponent(String(args.work_type))}`
+      ),
+  },
+  {
+    name: 'calculate_cable_size',
+    description:
+      'Recommends a minimum cable size (mm² copper twin & earth, 70°C thermoplastic) per BS 7671:2018+A4:2026 Appendix 4. Checks BOTH current-carrying capacity (after correction factors) AND voltage drop (Reg 525). Returns which check was limiting. Scope: domestic + light commercial. For SWA / multicore / industrial, use full design software.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        load_a: {
+          type: 'integer',
+          minimum: 1,
+          maximum: 200,
+          description: 'Design current Ib in amperes',
+        },
+        length_m: {
+          type: 'integer',
+          minimum: 1,
+          maximum: 500,
+          description: 'Cable run length in metres',
+        },
+        reference_method: {
+          type: 'string',
+          enum: ['A', 'B', 'C'],
+          default: 'C',
+          description:
+            'A = enclosed in conduit/trunking in thermally-insulating wall; B = enclosed in conduit/trunking on wall; C = clipped direct (most common domestic)',
+        },
+        ambient_c: {
+          type: 'integer',
+          minimum: 0,
+          maximum: 60,
+          default: 30,
+          description: 'Ambient temperature in °C',
+        },
+        voltage: { type: 'integer', minimum: 110, maximum: 415, default: 230 },
+        phase: { type: 'string', enum: ['single', 'three'], default: 'single' },
+        is_lighting: {
+          type: 'boolean',
+          default: false,
+          description: 'true → applies 3% voltage-drop limit; false → 5%',
+        },
+        in_thermal_insulation: {
+          type: 'boolean',
+          default: false,
+          description:
+            'true → cable surrounded by thermal insulation > 0.5m (applies Ci=0.5 per Reg 523.7)',
+        },
+      },
+      required: ['load_a', 'length_m'],
+    },
+    fetch: async (args) => {
+      const params = new URLSearchParams({
+        load_a: String(args.load_a),
+        length_m: String(args.length_m),
+      });
+      if (args.reference_method) params.set('reference_method', String(args.reference_method));
+      if (args.ambient_c !== undefined) params.set('ambient_c', String(args.ambient_c));
+      if (args.voltage !== undefined) params.set('voltage', String(args.voltage));
+      if (args.phase) params.set('phase', String(args.phase));
+      if (args.is_lighting !== undefined) params.set('is_lighting', String(args.is_lighting));
+      if (args.in_thermal_insulation !== undefined)
+        params.set('in_thermal_insulation', String(args.in_thermal_insulation));
+      return fetchJson(`${BASE}/cable-size?${params.toString()}`);
+    },
+  },
 ];
 
 // ----- Helpers --------------------------------------------------------------

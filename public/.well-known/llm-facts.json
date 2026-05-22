@@ -445,6 +445,77 @@
         "params": ["category"],
         "example": "https://www.elec-mate.com/api/public/v1/pwi-materials?category=ev_charger",
         "returns": "materials_needed + tools_required + cable_sizes_observed + power_ratings_observed"
+      },
+      {
+        "name": "bs7671_lookup_section",
+        "description": "Every BS 7671 regulation in a specific section (e.g. 701 bathrooms, 722 EV charging).",
+        "method": "GET",
+        "url": "https://www.elec-mate.com/api/public/v1/bs7671-section",
+        "params": ["section (2-3 digit number)"],
+        "example": "https://www.elec-mate.com/api/public/v1/bs7671-section?section=701",
+        "returns": "section + regulations[] + part + chapter"
+      },
+      {
+        "name": "calculate_cable_size",
+        "description": "Recommend minimum cable size per BS 7671 Appendix 4 (capacity AND voltage-drop checks).",
+        "method": "GET",
+        "url": "https://www.elec-mate.com/api/public/v1/cable-size",
+        "params": [
+          "load_a",
+          "length_m",
+          "reference_method (A|B|C)",
+          "ambient_c",
+          "phase",
+          "is_lighting",
+          "in_thermal_insulation"
+        ],
+        "example": "https://www.elec-mate.com/api/public/v1/cable-size?load_a=32&length_m=15&reference_method=C",
+        "returns": "recommended_cable_size_mm2 + limiting_factor + current_capacity + voltage_drop + verdict"
+      },
+      {
+        "name": "calculate_earth_rod_resistance",
+        "description": "Max permitted Ra for TT systems per BS 7671 Reg 411.5.3 (Ra × IΔn ≤ 50V).",
+        "method": "GET",
+        "url": "https://www.elec-mate.com/api/public/v1/earth-rod-resistance",
+        "params": ["rcd_ma (10|30|100|300|500|1000)"],
+        "example": "https://www.elec-mate.com/api/public/v1/earth-rod-resistance?rcd_ma=30",
+        "returns": "ra_max_theoretical_ohm + ra_recommended_max_ohm + stability_warning"
+      },
+      {
+        "name": "pwi_inspection_checklist",
+        "description": "Visual inspection points + Schedule of Inspections items for EICR work.",
+        "method": "GET",
+        "url": "https://www.elec-mate.com/api/public/v1/pwi-inspection-checklist",
+        "params": ["category"],
+        "example": "https://www.elec-mate.com/api/public/v1/pwi-inspection-checklist?category=consumer_unit",
+        "returns": "visual_inspection_points + inspection_checklist_items"
+      },
+      {
+        "name": "pwi_installation_procedure",
+        "description": "Installation method + fixing intervals + cable routes + terminations + test procedures, aggregated from UK records.",
+        "method": "GET",
+        "url": "https://www.elec-mate.com/api/public/v1/pwi-installation-procedure",
+        "params": ["category"],
+        "example": "https://www.elec-mate.com/api/public/v1/pwi-installation-procedure?category=ev_charger",
+        "returns": "installation_methods + cable_routes + termination_methods + test_procedures"
+      },
+      {
+        "name": "notifiable_work_check",
+        "description": "Part P notifiable-work decision (England) — yes/no + reason + compliance options.",
+        "method": "GET",
+        "url": "https://www.elec-mate.com/api/public/v1/notifiable-work-check",
+        "params": ["work_type", "location (optional)"],
+        "example": "https://www.elec-mate.com/api/public/v1/notifiable-work-check?work_type=new_circuit&location=special_location",
+        "returns": "notifiable (yes/no) + reason + rule_applied + compliance_options"
+      },
+      {
+        "name": "certificate_required",
+        "description": "Which BS 7671 certificate is required for a category of electrical work (EIC, Minor Works, EICR, etc.).",
+        "method": "GET",
+        "url": "https://www.elec-mate.com/api/public/v1/certificate-required",
+        "params": ["work_type"],
+        "example": "https://www.elec-mate.com/api/public/v1/certificate-required?work_type=consumer_unit_replacement",
+        "returns": "primary_certificate + also_required + bs7671_clause + additional_obligations"
       }
     ]
   },
