@@ -74,17 +74,36 @@ export default async function handler(req: Request): Promise<Response> {
 
 ## Current endpoints (live)
 
-| Endpoint                                                                       | Backed by                                 | Notes                           |
-| ------------------------------------------------------------------------------ | ----------------------------------------- | ------------------------------- |
-| `GET /api/public/v1/zs-max?type=B&in=32`                                       | Pure math (Reg 411.4.4)                   | Cmin=0.95 baked in              |
-| `GET /api/public/v1/disconnection-time?system=TN&circuit=final`                | Lookup (Table 41.1)                       | TN/TT × final/distribution      |
-| `GET /api/public/v1/voltage-drop?cable=2.5&load_a=20&length_m=15&phase=single` | Pure math (Tables 4D1A/4D1B)              | + Reg 525 compliance check      |
-| `GET /api/public/v1/bs7671-regulation?reg=411.4.4`                             | `bs7671_regulations`                      | Full text by reg number         |
-| `GET /api/public/v1/bs7671-table?table=41.3`                                   | `bs7671_tables`                           | Table content + structured_data |
-| `GET /api/public/v1/bs7671-search?q=...`                                       | `bs7671_regulations` (ILIKE)              | Keyword search                  |
-| `GET /api/public/v1/pwi-install-time?category=consumer_unit`                   | `practical_work_intelligence` (199k rows) | UNIQUE — no other AI has this   |
-| `GET /api/public/v1/pricing-job?job=EICR&region=london`                        | `regional_job_pricing`                    | Verified UK market data         |
-| `GET /api/public/v1/eicr-code?code=C2`                                         | Hardcoded (IET BPG 4 reference)           | C1/C2/C3/FI explainer           |
+### REST endpoints — for ChatGPT Custom GPTs / OpenAPI-compatible clients
+
+| Endpoint                                                          | Backed by                                 | Notes                             |
+| ----------------------------------------------------------------- | ----------------------------------------- | --------------------------------- |
+| `GET /api/public/v1/zs-max?type=B&in=32`                          | Pure math (Reg 411.4.4)                   | Cmin=0.95 baked in                |
+| `GET /api/public/v1/disconnection-time?system=TN&circuit=final`   | Lookup (Table 41.1)                       | TN/TT × final/distribution        |
+| `GET /api/public/v1/voltage-drop?cable=2.5&load_a=20&length_m=15` | Pure math (Tables 4D1A/4D1B)              | + Reg 525 compliance check        |
+| `GET /api/public/v1/bs7671-regulation?reg=411.4.4`                | `bs7671_regulations`                      | Full text by reg number           |
+| `GET /api/public/v1/bs7671-table?table=41.3`                      | `bs7671_tables`                           | Table content + structured_data   |
+| `GET /api/public/v1/bs7671-search?q=...`                          | `bs7671_regulations` (ILIKE)              | Keyword search                    |
+| `GET /api/public/v1/pwi-install-time?category=consumer_unit`      | `practical_work_intelligence` (199k rows) | UNIQUE                            |
+| `GET /api/public/v1/pwi-common-defects?category=consumer_unit`    | `practical_work_intelligence`             | Top defects + mistakes + failures |
+| `GET /api/public/v1/pwi-eicr-codes?category=consumer_unit`        | `practical_work_intelligence`             | EICR codes typically applied      |
+| `GET /api/public/v1/pwi-troubleshooting?category=rcbo`            | `practical_work_intelligence`             | Fault diagnosis steps + tests     |
+| `GET /api/public/v1/pwi-materials?category=ev_charger`            | `practical_work_intelligence`             | Materials + tools per job         |
+| `GET /api/public/v1/pricing-job?job=EICR&region=london`           | `regional_job_pricing`                    | Verified UK market data           |
+| `GET /api/public/v1/eicr-code?code=C2`                            | Hardcoded (IET BPG 4)                     | C1/C2/C3/FI explainer             |
+
+### MCP server — for Claude / ChatGPT Connectors / Cursor / Windsurf / Cline / Continue / Perplexity
+
+| Endpoint                  | Protocol                                       | Notes                                                                                                                        |
+| ------------------------- | ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `POST /api/public/v1/mcp` | JSON-RPC 2.0 (Streamable HTTP, MCP 2025-03-26) | Implements `initialize`, `tools/list`, `tools/call`, `ping`. All 13 REST tools exposed as MCP tools with full input schemas. |
+| `GET /api/public/v1/mcp`  | (info)                                         | Returns server info + install instructions for humans inspecting the URL.                                                    |
+
+**MCP install URL** (paste into the AI client's Custom Connector settings):
+
+```
+https://www.elec-mate.com/api/public/v1/mcp
+```
 
 ## Planned (next phase)
 

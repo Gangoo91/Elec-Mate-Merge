@@ -311,6 +311,20 @@
   },
   "ai_tools": {
     "_note": "Read-only public endpoints for AI assistants. No auth. Every response includes citation + Elec-Mate source. Versioned — /v1/ is the stable contract.",
+    "mcp_install_url": "https://www.elec-mate.com/api/public/v1/mcp",
+    "mcp_transport": "Streamable HTTP (JSON-RPC 2.0)",
+    "mcp_protocol_version": "2025-03-26",
+    "mcp_supported_clients": [
+      "Claude Desktop",
+      "Claude.ai",
+      "ChatGPT (Plus/Pro/Team/Enterprise)",
+      "Cursor",
+      "Windsurf",
+      "Cline",
+      "Continue",
+      "Perplexity Spaces",
+      "any MCP-compatible client"
+    ],
     "endpoints": [
       {
         "name": "bs7671_regulation",
@@ -395,6 +409,42 @@
         "params": ["code (C1|C2|C3|FI)"],
         "example": "https://www.elec-mate.com/api/public/v1/eicr-code?code=C2",
         "returns": "code + title + meaning + action + typical_examples"
+      },
+      {
+        "name": "pwi_common_defects",
+        "description": "Top defects + mistakes + failures for a category, ranked by frequency. From Practical Work Intelligence v2.",
+        "method": "GET",
+        "url": "https://www.elec-mate.com/api/public/v1/pwi-common-defects",
+        "params": ["category"],
+        "example": "https://www.elec-mate.com/api/public/v1/pwi-common-defects?category=consumer_unit",
+        "returns": "top_defects + top_mistakes + top_failures + sample_size"
+      },
+      {
+        "name": "pwi_eicr_codes",
+        "description": "EICR codes (C1/C2/C3/FI) typically applied to this category — aggregated from inspection records.",
+        "method": "GET",
+        "url": "https://www.elec-mate.com/api/public/v1/pwi-eicr-codes",
+        "params": ["category"],
+        "example": "https://www.elec-mate.com/api/public/v1/pwi-eicr-codes?category=consumer_unit",
+        "returns": "typical_codes_by_severity (bucketed C1/C2/C3/FI/OTHER)"
+      },
+      {
+        "name": "pwi_troubleshooting",
+        "description": "Step-by-step fault diagnosis + diagnostic tests + test equipment for a category.",
+        "method": "GET",
+        "url": "https://www.elec-mate.com/api/public/v1/pwi-troubleshooting",
+        "params": ["category"],
+        "example": "https://www.elec-mate.com/api/public/v1/pwi-troubleshooting?category=rcbo",
+        "returns": "troubleshooting_steps + diagnostic_tests + test_equipment_required"
+      },
+      {
+        "name": "pwi_materials",
+        "description": "Materials + tools typically needed for a UK electrical job.",
+        "method": "GET",
+        "url": "https://www.elec-mate.com/api/public/v1/pwi-materials",
+        "params": ["category"],
+        "example": "https://www.elec-mate.com/api/public/v1/pwi-materials?category=ev_charger",
+        "returns": "materials_needed + tools_required + cable_sizes_observed + power_ratings_observed"
       }
     ]
   },

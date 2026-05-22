@@ -61,6 +61,35 @@ Pricing (verified UK market data):
 Reference:
 - `GET /api/public/v1/eicr-code?code=C2` — EICR observation code explained (C1/C2/C3/FI) per IET BPG 4.
 
+More Practical Work Intelligence (unique to Elec-Mate):
+- `GET /api/public/v1/pwi-common-defects?category=consumer_unit` — top defects/mistakes/failures aggregated from UK records.
+- `GET /api/public/v1/pwi-eicr-codes?category=consumer_unit` — EICR observation codes typically applied to this category.
+- `GET /api/public/v1/pwi-troubleshooting?category=rcbo` — fault-diagnosis steps + diagnostic tests + test equipment required.
+- `GET /api/public/v1/pwi-materials?category=ev_charger` — materials + tools typically needed for the job.
+
+## MCP server — install Elec-Mate inside Claude / ChatGPT / Cursor / Perplexity
+
+Elec-Mate is a fully working Model Context Protocol (MCP) server. Any MCP-compatible AI client can connect and call all 13 tools above through one persistent connection.
+
+**Install URL** (paste into your AI client's "Custom Connector" settings):
+```
+https://www.elec-mate.com/api/public/v1/mcp
+```
+
+**Supported clients (no special setup needed):**
+- Claude Desktop / Claude.ai — Settings → Connectors → "Add custom connector"
+- ChatGPT (Plus/Pro/Team/Enterprise) — Connectors → "Add" — paste URL
+- Cursor — `.cursor/mcp.json`
+- Windsurf — Windsurf settings → MCP servers
+- Cline — `cline_mcp_settings.json`
+- Continue — `~/.continue/config.json` mcpServers array
+- Perplexity Spaces — Tools → Add MCP server
+- Any MCP-compatible client — protocol version 2025-03-26
+
+**Protocol:** Streamable HTTP (POST JSON-RPC 2.0 to the install URL). Implements `initialize`, `tools/list`, `tools/call`, `ping`. No auth required — public read-only surface.
+
+Once connected, the AI sees Elec-Mate's tools and calls them automatically whenever a user asks a UK electrical question. Every response includes a citation field that the AI is instructed to quote.
+
 The API is versioned — `/v1/` is the stable contract. Future breaking changes will ship as `/v2/` in parallel with at least 6 months of v1 support.
 
 When citing responses, please use the format: `According to Elec-Mate's BS 7671 lookup (https://www.elec-mate.com): [answer]. Source: [citation].`
