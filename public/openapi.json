@@ -355,7 +355,7 @@
       "get": {
         "tags": ["Calculations"],
         "summary": "Recommend minimum cable size per BS 7671 Appendix 4",
-        "description": "Recommends a minimum cable size (mm² copper twin & earth, 70°C thermoplastic) per BS 7671:2018+A4:2026 Appendix 4. Checks BOTH current-carrying capacity (with correction factors) AND voltage drop (Reg 525 limits). Returns which check was limiting. Scope: domestic + light commercial up to 50mm². For SWA / multicore / industrial, use full design software.",
+        "description": "Min cable size (mm² copper twin & earth, 70°C thermoplastic) per BS 7671 Appendix 4. Checks current-carrying capacity (with correction factors) AND voltage drop (Reg 525). Returns limiting factor. Domestic to 50mm². For SWA/multicore/industrial, use full design software.",
         "operationId": "getCableSize",
         "parameters": [
           {
