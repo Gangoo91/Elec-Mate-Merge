@@ -25,7 +25,12 @@
   "tags": [
     { "name": "BS 7671", "description": "UK Wiring Regulations lookup + verification" },
     { "name": "Calculations", "description": "Verified electrical calculations" },
-    { "name": "Reference", "description": "Glossary + reference lookups" }
+    {
+      "name": "Practical Work Intelligence",
+      "description": "Real-world UK electrical labour, defects, materials, troubleshooting"
+    },
+    { "name": "Pricing", "description": "Verified UK electrical job pricing by region" },
+    { "name": "Reference", "description": "Glossary, EICR codes, compliance lookups" }
   ],
   "paths": {
     "/api/public/v1/zs-max": {
@@ -115,16 +120,15 @@
     "/api/public/v1/bs7671-search": {
       "get": {
         "tags": ["BS 7671"],
-        "summary": "Semantic search across BS 7671:2018+A4:2026",
-        "description": "Searches the full BS 7671 regulation corpus (1,770 regulations, 410 tables) by natural-language query. Returns matched regulations with reg number, title, and snippet. Powered by Elec-Mate's verified knowledge base.",
+        "summary": "Keyword search across BS 7671:2018+A4:2026",
+        "description": "Searches the full BS 7671 regulation corpus (1,770 regulations, 410 tables) by keyword. Returns matched regulations with reg number, title, and snippet.",
         "operationId": "searchBS7671",
         "parameters": [
           {
             "name": "q",
             "in": "query",
             "required": true,
-            "schema": { "type": "string", "minLength": 3, "maxLength": 200 },
-            "description": "Natural-language search query"
+            "schema": { "type": "string", "minLength": 3, "maxLength": 200 }
           },
           {
             "name": "limit",
@@ -134,14 +138,160 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Matched regulations",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/BS7671SearchResponse" }
-              }
-            }
+          "200": { "description": "Matched regulations" }
+        }
+      }
+    },
+    "/api/public/v1/bs7671-regulation": {
+      "get": {
+        "tags": ["BS 7671"],
+        "summary": "Fetch a single BS 7671 regulation by number",
+        "description": "Returns the full text, title, part, chapter, section, and edition info for a specific BS 7671 regulation. Use this when you need the exact wording.",
+        "operationId": "getRegulation",
+        "parameters": [
+          {
+            "name": "reg",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "pattern": "^\\d+(\\.\\d+){0,5}$" },
+            "description": "Regulation number, e.g. 411.4.4"
           }
+        ],
+        "responses": {
+          "200": { "description": "Full regulation text" },
+          "404": { "description": "Regulation not found" }
+        }
+      }
+    },
+    "/api/public/v1/bs7671-table": {
+      "get": {
+        "tags": ["BS 7671"],
+        "summary": "Fetch a single BS 7671 table by number",
+        "description": "Returns a BS 7671 table (e.g. 41.1, 41.3, 4D5, B1) with its title, appendix, structured data (if parsed), and raw text.",
+        "operationId": "getTable",
+        "parameters": [
+          {
+            "name": "table",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "maxLength": 12 },
+            "description": "Table number, e.g. 41.3 or 4D5"
+          }
+        ],
+        "responses": {
+          "200": { "description": "Table content" },
+          "404": { "description": "Table not found" }
+        }
+      }
+    },
+    "/api/public/v1/pwi-install-time": {
+      "get": {
+        "tags": ["Practical Work Intelligence"],
+        "summary": "Typical labour time for a UK electrical job",
+        "description": "Aggregates Elec-Mate's Practical Work Intelligence v2 dataset (199k rows) to return avg/min/max/median duration in minutes, plus team size and most common skill level. Real-world UK labour data — no other AI source has this.",
+        "operationId": "getInstallTime",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "minLength": 3, "maxLength": 80 },
+            "description": "Equipment category (e.g. consumer_unit, ev_charger, lighting_circuit, rcd, eicr)"
+          }
+        ],
+        "responses": {
+          "200": { "description": "Aggregated labour time data" },
+          "404": { "description": "No data for that category" }
+        }
+      }
+    },
+    "/api/public/v1/pricing-job": {
+      "get": {
+        "tags": ["Pricing"],
+        "summary": "Verified UK pricing for an electrical job",
+        "description": "Returns avg/min/max price for a job in a region, aggregated from real UK market data. Lets AI answer 'how much for an EICR in London' with specific numbers.",
+        "operationId": "getJobPricing",
+        "parameters": [
+          {
+            "name": "job",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "minLength": 3 },
+            "description": "Job type (e.g. EICR, EV Charger, Consumer Unit, Shower, Rewire)"
+          },
+          {
+            "name": "region",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string" },
+            "description": "UK region (london, southeast, southwest, eastmidlands, westmidlands, northwest, northeast, yorkshire, scotland, wales, northernireland)"
+          }
+        ],
+        "responses": {
+          "200": { "description": "Pricing data" },
+          "404": { "description": "No pricing data for that job/region" }
+        }
+      }
+    },
+    "/api/public/v1/eicr-code": {
+      "get": {
+        "tags": ["Reference"],
+        "summary": "EICR observation code explained (C1/C2/C3/FI)",
+        "description": "Returns the IET Best Practice Guide 4 definition of an EICR classification code — what it means, the action required, and typical examples.",
+        "operationId": "getEicrCode",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "enum": ["C1", "C2", "C3", "FI"] }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Code definition" }
+        }
+      }
+    },
+    "/api/public/v1/voltage-drop": {
+      "get": {
+        "tags": ["Calculations"],
+        "summary": "Voltage drop calculation per BS 7671 Appendix 4",
+        "description": "Calculates voltage drop in volts + percent for a copper twin & earth cable using BS 7671 Table 4D1A (single-phase) or 4D1B (three-phase) mV/A/m values. Checks compliance against the 3% lighting / 5% other-circuits limits in Reg 525.",
+        "operationId": "getVoltageDrop",
+        "parameters": [
+          {
+            "name": "cable",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["1.0", "1.5", "2.5", "4", "6", "10", "16", "25", "35", "50"]
+            },
+            "description": "Conductor cross-section in mm²"
+          },
+          {
+            "name": "load_a",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "integer", "minimum": 1, "maximum": 400 },
+            "description": "Load current in amperes"
+          },
+          {
+            "name": "length_m",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "integer", "minimum": 1, "maximum": 500 },
+            "description": "Cable run length in metres"
+          },
+          {
+            "name": "phase",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string", "enum": ["single", "three"], "default": "single" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Calculated voltage drop with compliance check" }
         }
       }
     }

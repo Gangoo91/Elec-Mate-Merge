@@ -72,52 +72,50 @@ export default async function handler(req: Request): Promise<Response> {
 }
 ```
 
-## Current endpoints
+## Current endpoints (live)
 
-| Endpoint                                                        | Backed by                                   | Status  |
-| --------------------------------------------------------------- | ------------------------------------------- | ------- |
-| `GET /api/public/v1/zs-max?type=B&in=32`                        | Pure math (Reg 411.4.4)                     | ✅ live |
-| `GET /api/public/v1/disconnection-time?system=TN&circuit=final` | Lookup (Table 41.1)                         | ✅ live |
-| `GET /api/public/v1/bs7671-search?q=...`                        | Supabase `bs7671_regulations` via PostgREST | ✅ live |
+| Endpoint                                                                       | Backed by                                 | Notes                           |
+| ------------------------------------------------------------------------------ | ----------------------------------------- | ------------------------------- |
+| `GET /api/public/v1/zs-max?type=B&in=32`                                       | Pure math (Reg 411.4.4)                   | Cmin=0.95 baked in              |
+| `GET /api/public/v1/disconnection-time?system=TN&circuit=final`                | Lookup (Table 41.1)                       | TN/TT × final/distribution      |
+| `GET /api/public/v1/voltage-drop?cable=2.5&load_a=20&length_m=15&phase=single` | Pure math (Tables 4D1A/4D1B)              | + Reg 525 compliance check      |
+| `GET /api/public/v1/bs7671-regulation?reg=411.4.4`                             | `bs7671_regulations`                      | Full text by reg number         |
+| `GET /api/public/v1/bs7671-table?table=41.3`                                   | `bs7671_tables`                           | Table content + structured_data |
+| `GET /api/public/v1/bs7671-search?q=...`                                       | `bs7671_regulations` (ILIKE)              | Keyword search                  |
+| `GET /api/public/v1/pwi-install-time?category=consumer_unit`                   | `practical_work_intelligence` (199k rows) | UNIQUE — no other AI has this   |
+| `GET /api/public/v1/pricing-job?job=EICR&region=london`                        | `regional_job_pricing`                    | Verified UK market data         |
+| `GET /api/public/v1/eicr-code?code=C2`                                         | Hardcoded (IET BPG 4 reference)           | C1/C2/C3/FI explainer           |
 
-## Planned (next session — Phase 2)
+## Planned (next phase)
 
-Tools to add, mapped to existing Supabase tables:
+**BS 7671 lookups**
 
-**BS 7671 lookups** (`bs7671_regulations`, `bs7671_facets`, `bs7671_tables`)
-
-- `bs7671-regulation` — fetch a specific reg by number (full text)
-- `bs7671-table` — fetch a specific BS 7671 table (e.g. 41.3, 4D5)
 - `bs7671-section` — all regs in a section (e.g. 701, 722)
-- `bs7671-rag-search` — semantic search via embeddings (proxies to existing edge function)
+- `bs7671-rag-search` — semantic search via embeddings (proxies to existing `bs7671-rag-search` edge function)
 
-**Calculators** (mostly pure math, no DB)
+**Calculators**
 
 - `cable-size` — wraps the cable sizing logic
-- `voltage-drop` — pure math, Appendix 4
 - `earth-rod-resistance` — TT earth electrode calc
 - `diversity` — Appendix A diversity factors
 - `prospective-fault-current` — pure math
 
-**Practical Work Intelligence v2** (`practical_work_intelligence` — 199,726 rows)
+**Practical Work Intelligence v2** (still much more to surface)
 
-- `pwi-install-time` — typical_duration_minutes + team_size + skill_level
 - `pwi-common-defects` — common_defects array for a category
 - `pwi-eicr-codes` — eicr_observation_codes for a scenario
 - `pwi-troubleshooting` — troubleshooting_steps + diagnostic_tests
 - `pwi-materials` — materials_needed + tools_required
 - `pwi-inspection-checklist` — visual_inspection_points
 
-**Pricing intelligence** (`regional_job_pricing`, `job_pricing_baseline`, `regional_pricing`)
+**Pricing intelligence**
 
-- `pricing-job` — average/min/max for job_type + region
 - `pricing-baseline` — industry-baseline + estimated_hours
 - `pricing-regional-multiplier` — region multiplier
 
 **Reference / glossary**
 
 - `glossary` — UK electrical term definitions
-- `eicr-code` — C1/C2/C3/FI explanations
 - `certificate-required` — what cert for what job
 - `notifiable-work-check` — Part P decision
 
