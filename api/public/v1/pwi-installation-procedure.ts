@@ -72,13 +72,21 @@ export default async function handler(req: Request): Promise<Response> {
   const terminations: string[] = [];
   const testProcs: string[] = [];
 
+  // Defensive: arrays can contain null elements.
+  const pushStrings = (target: string[], src: unknown) => {
+    if (!Array.isArray(src)) return;
+    for (const item of src) {
+      if (typeof item === 'string' && item.length > 0) target.push(item);
+    }
+  };
+
   for (const r of result.data) {
     if (typeof r.installation_method === 'string' && r.installation_method.trim()) {
       installMethods.push(r.installation_method.trim());
     }
-    if (Array.isArray(r.cable_routes)) cableRoutes.push(...r.cable_routes);
-    if (Array.isArray(r.termination_methods)) terminations.push(...r.termination_methods);
-    if (Array.isArray(r.test_procedures)) testProcs.push(...r.test_procedures);
+    pushStrings(cableRoutes, r.cable_routes);
+    pushStrings(terminations, r.termination_methods);
+    pushStrings(testProcs, r.test_procedures);
   }
 
   if (

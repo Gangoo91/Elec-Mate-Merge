@@ -1,12 +1,14 @@
 /**
  * GET /api/public/v1/pwi-eicr-codes?category=consumer_unit
  *
- * Returns the EICR observation codes (C1/C2/C3/FI) that an inspector
- * typically applies for issues found in this category — sourced from
- * Practical Work Intelligence v2 (`eicr_observation_codes`).
+ * Returns suggested EICR observation codes (C1/C2/C3/FI) for issues
+ * typically found in this category. Derived from common_defects in
+ * Practical Work Intelligence v2 + IET BPG 4 severity heuristics
+ * (the eicr_observation_codes column in PWI is currently sparse, so
+ * we synthesise codes from the defect strings).
  *
- * Helps AI answer "what code should I give X observation" with real
- * inspector patterns, not pure guess.
+ * Powers AI answers like "what code should I give this defect?" with
+ * pattern-based suggestions.
  */
 
 import {
@@ -23,10 +25,55 @@ export const config = { runtime: 'edge' };
 
 interface PwiRow {
   equipment_category: string | null;
-  equipment_subcategory: string | null;
-  eicr_observation_codes: string[] | null;
-  common_defects: string[] | null;
+  common_defects: unknown;
   primary_topic: string | null;
+}
+
+// Severity heuristics — patterns based on IET BPG 4 (Issue 6) typical codings
+const C1_PATTERNS = [
+  /\b(live parts? (?:exposed|accessible))\b/i,
+  /\b(no earth|no earthing|missing earth)\b/i,
+  /\bdanger(?:ous)?\b/i,
+  /\b(arcing|burnt|burning|scorched)\b/i,
+  /\bbroken (?:socket|switch|accessory)\b/i,
+  /\bexposed conductor/i,
+  /\breversed polarity\b/i,
+];
+
+const C2_PATTERNS = [
+  /\b(no|missing|absent) (?:RCD|rcbo)\b/i,
+  /\b(?:no|missing|absent) (?:CPC|earth(?:ing)? conductor)\b/i,
+  /\b(?:no|missing) (?:main|supplementary) bond/i,
+  /\bdamaged (?:cable|insulation)\b/i,
+  /\bloose (?:termination|connection|tail)/i,
+  /\bzs (?:exceeds|too high|fail)/i,
+  /\bunder(?:s|-)?ized\b/i,
+  /\binsulation (?:nicked|damaged|low)/i,
+  /\b(?:over)?heating\b/i,
+];
+
+const C3_PATTERNS = [
+  /\b(no|missing|absent) (?:SPD|surge protect)/i,
+  /\b(no|missing|absent) AFDD\b/i,
+  /\b(old|original) (?:wiring )?colour/i,
+  /\b(no|missing) circuit (?:chart|labels?)/i,
+  /\bsingle-?pole switching\b/i,
+  /\bnot best practice\b/i,
+];
+
+const FI_PATTERNS = [
+  /\b(?:cannot|could not|unable to) (?:access|inspect|determine)/i,
+  /\b(?:suspected|possible) (?:damage|fault)/i,
+  /\bconcealed (?:cable|wiring)/i,
+  /\binaccessible\b/i,
+];
+
+function classify(defect: string): 'C1' | 'C2' | 'C3' | 'FI' | 'unclassified' {
+  for (const re of C1_PATTERNS) if (re.test(defect)) return 'C1';
+  for (const re of FI_PATTERNS) if (re.test(defect)) return 'FI';
+  for (const re of C2_PATTERNS) if (re.test(defect)) return 'C2';
+  for (const re of C3_PATTERNS) if (re.test(defect)) return 'C3';
+  return 'unclassified';
 }
 
 export default async function handler(req: Request): Promise<Response> {
@@ -45,8 +92,7 @@ export default async function handler(req: Request): Promise<Response> {
   const ilikeTerm = `*${escapeIlike(category)}*`;
   const result = await queryTable<PwiRow>(
     'practical_work_intelligence',
-    `select=equipment_category,equipment_subcategory,eicr_observation_codes,common_defects,primary_topic` +
-      `&eicr_observation_codes=not.is.null` +
+    `select=equipment_category,common_defects,primary_topic` +
       `&or=(equipment_category.ilike.${encodeURIComponent(ilikeTerm)},equipment_subcategory.ilike.${encodeURIComponent(ilikeTerm)},primary_topic.ilike.${encodeURIComponent(ilikeTerm)})` +
       `&limit=500`
   );
@@ -63,48 +109,44 @@ export default async function handler(req: Request): Promise<Response> {
     );
   }
 
-  const allCodes: string[] = [];
+  // Gather all defect strings (defensive — array can contain null elements)
+  const allDefects: string[] = [];
   for (const r of result.data) {
-    if (Array.isArray(r.eicr_observation_codes)) allCodes.push(...r.eicr_observation_codes);
+    if (!Array.isArray(r.common_defects)) continue;
+    for (const item of r.common_defects) {
+      if (typeof item === 'string' && item.length > 0) allDefects.push(item);
+    }
   }
 
-  if (allCodes.length === 0) {
+  if (allDefects.length === 0) {
     return jsonResponse(
       {
         error: 'not_found',
-        message: `No EICR code data matches '${category}'.`,
+        message: `No defect data matches '${category}' — cannot derive EICR codes.`,
         source: CITATION_SOURCE,
       },
       404
     );
   }
 
-  const counts: Record<string, number> = {};
-  for (const s of allCodes) {
-    const clean = s.trim().toUpperCase();
-    if (clean.length > 0) counts[clean] = (counts[clean] || 0) + 1;
+  // Dedupe + classify
+  const dedup = new Map<string, number>();
+  for (const d of allDefects) {
+    const key = d.trim();
+    dedup.set(key, (dedup.get(key) || 0) + 1);
   }
 
-  // Bucket by prefix (C1/C2/C3/FI)
-  const buckets: Record<string, Array<{ description: string; frequency: number }>> = {
+  const buckets: Record<string, Array<{ defect: string; frequency: number }>> = {
     C1: [],
     C2: [],
     C3: [],
     FI: [],
-    OTHER: [],
+    unclassified: [],
   };
 
-  for (const [code, freq] of Object.entries(counts)) {
-    const prefix = code.startsWith('C1')
-      ? 'C1'
-      : code.startsWith('C2')
-        ? 'C2'
-        : code.startsWith('C3')
-          ? 'C3'
-          : code.startsWith('FI')
-            ? 'FI'
-            : 'OTHER';
-    buckets[prefix].push({ description: code, frequency: freq });
+  for (const [defect, freq] of dedup.entries()) {
+    const code = classify(defect);
+    buckets[code].push({ defect, frequency: freq });
   }
 
   for (const k of Object.keys(buckets)) {
@@ -115,11 +157,18 @@ export default async function handler(req: Request): Promise<Response> {
   return jsonResponse({
     query_category: category,
     sample_size: result.data.length,
-    typical_codes_by_severity: buckets,
+    total_unique_defects: dedup.size,
+    suggested_eicr_codes_by_severity: {
+      C1_danger_present: buckets.C1,
+      C2_potentially_dangerous: buckets.C2,
+      C3_improvement_recommended: buckets.C3,
+      FI_further_investigation: buckets.FI,
+      unclassified: buckets.unclassified,
+    },
     notes:
-      "EICR observation codes typically applied to inspections in this category. Pattern-derived from UK electrical inspection records. Final classification is always the inspector's judgement — these are typical examples, not prescriptive.",
+      "Codes derived from common_defects via pattern matching against IET BPG 4 (Issue 6) severity heuristics — not a hard mapping. Final classification is always the inspector's judgement. The 'unclassified' bucket contains defects that didn't match any pattern; the inspector should code these on a case-by-case basis.",
     citation:
-      'Elec-Mate Practical Work Intelligence v2 + IET Best Practice Guide 4 — EICR coding patterns',
+      'Elec-Mate Practical Work Intelligence v2 — defect classification via IET Best Practice Guide 4 (Issue 6) severity heuristics',
     source: CITATION_SOURCE,
     license: LICENSE_NOTE,
     tool_url: 'https://www.elec-mate.com/guides/eicr-schedule-of-inspections',

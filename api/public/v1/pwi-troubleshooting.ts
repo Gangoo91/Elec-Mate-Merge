@@ -67,10 +67,18 @@ export default async function handler(req: Request): Promise<Response> {
   const allTests: string[] = [];
   const allEquipment: string[] = [];
 
+  // Defensive: arrays can contain null elements.
+  const pushStrings = (target: string[], src: unknown) => {
+    if (!Array.isArray(src)) return;
+    for (const item of src) {
+      if (typeof item === 'string' && item.length > 0) target.push(item);
+    }
+  };
+
   for (const r of result.data) {
-    if (Array.isArray(r.troubleshooting_steps)) allSteps.push(...r.troubleshooting_steps);
-    if (Array.isArray(r.diagnostic_tests)) allTests.push(...r.diagnostic_tests);
-    if (Array.isArray(r.test_equipment_required)) allEquipment.push(...r.test_equipment_required);
+    pushStrings(allSteps, r.troubleshooting_steps);
+    pushStrings(allTests, r.diagnostic_tests);
+    pushStrings(allEquipment, r.test_equipment_required);
   }
 
   if (allSteps.length === 0 && allTests.length === 0) {

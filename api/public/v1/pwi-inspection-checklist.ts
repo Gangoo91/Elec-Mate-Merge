@@ -66,9 +66,17 @@ export default async function handler(req: Request): Promise<Response> {
   const visualPoints: string[] = [];
   const checklistItems: string[] = [];
 
+  // Defensive: arrays can contain null elements.
+  const pushStrings = (target: string[], src: unknown) => {
+    if (!Array.isArray(src)) return;
+    for (const item of src) {
+      if (typeof item === 'string' && item.length > 0) target.push(item);
+    }
+  };
+
   for (const r of result.data) {
-    if (Array.isArray(r.visual_inspection_points)) visualPoints.push(...r.visual_inspection_points);
-    if (Array.isArray(r.inspection_checklist)) checklistItems.push(...r.inspection_checklist);
+    pushStrings(visualPoints, r.visual_inspection_points);
+    pushStrings(checklistItems, r.inspection_checklist);
   }
 
   if (visualPoints.length === 0 && checklistItems.length === 0) {

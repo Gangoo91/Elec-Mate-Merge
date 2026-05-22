@@ -70,10 +70,18 @@ export default async function handler(req: Request): Promise<Response> {
   const allMistakes: string[] = [];
   const allFailures: string[] = [];
 
+  // Defensive: array columns can contain null elements that crash s.trim() later.
+  const pushStrings = (target: string[], src: unknown) => {
+    if (!Array.isArray(src)) return;
+    for (const item of src) {
+      if (typeof item === 'string' && item.length > 0) target.push(item);
+    }
+  };
+
   for (const r of result.data) {
-    if (Array.isArray(r.common_defects)) allDefects.push(...r.common_defects);
-    if (Array.isArray(r.common_mistakes)) allMistakes.push(...r.common_mistakes);
-    if (Array.isArray(r.common_failures)) allFailures.push(...r.common_failures);
+    pushStrings(allDefects, r.common_defects);
+    pushStrings(allMistakes, r.common_mistakes);
+    pushStrings(allFailures, r.common_failures);
   }
 
   if (allDefects.length === 0 && allMistakes.length === 0 && allFailures.length === 0) {

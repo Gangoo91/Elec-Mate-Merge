@@ -69,11 +69,19 @@ export default async function handler(req: Request): Promise<Response> {
   const allCableSizes: string[] = [];
   const allPowerRatings: string[] = [];
 
+  // Defensive: arrays can contain null elements.
+  const pushStrings = (target: string[], src: unknown) => {
+    if (!Array.isArray(src)) return;
+    for (const item of src) {
+      if (typeof item === 'string' && item.length > 0) target.push(item);
+    }
+  };
+
   for (const r of result.data) {
-    if (Array.isArray(r.materials_needed)) allMaterials.push(...r.materials_needed);
-    if (Array.isArray(r.tools_required)) allTools.push(...r.tools_required);
-    if (Array.isArray(r.cable_sizes)) allCableSizes.push(...r.cable_sizes);
-    if (Array.isArray(r.power_ratings)) allPowerRatings.push(...r.power_ratings);
+    pushStrings(allMaterials, r.materials_needed);
+    pushStrings(allTools, r.tools_required);
+    pushStrings(allCableSizes, r.cable_sizes);
+    pushStrings(allPowerRatings, r.power_ratings);
   }
 
   if (allMaterials.length === 0 && allTools.length === 0) {
