@@ -42,7 +42,7 @@ const exampleQueries: ExampleQuery[] = [
 
 export function WelcomeScreen({ onSelectQuery }: WelcomeScreenProps) {
   return (
-    <div className="mx-auto w-full max-w-5xl px-1 sm:px-4 lg:px-6 py-10 sm:py-14">
+    <div className="mx-auto w-full max-w-5xl lg:max-w-6xl xl:max-w-7xl px-1 sm:px-4 lg:px-10 py-10 sm:py-14">
       {/* Hero — editorial, text-led, no tile. Internal cap on text width so
           long-line readability stays good even when the outer column widens. */}
       <motion.div

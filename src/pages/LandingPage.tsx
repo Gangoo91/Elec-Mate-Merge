@@ -409,7 +409,7 @@ const LandingPage = () => {
         />
         <meta
           name="twitter:description"
-          content="Training, AI tools, certificates & business management for UK electricians. 5 AI specialists trained on BS 7671. Start free today."
+          content="Training, AI tools, certificates & business management for UK electricians. 8 AI specialists trained on BS 7671. Start free today."
         />
         <meta name="twitter:image" content="https://www.elec-mate.com/og-image.jpg" />
 

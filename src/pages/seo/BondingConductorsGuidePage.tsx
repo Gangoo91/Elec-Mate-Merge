@@ -620,10 +620,10 @@ const sections = [
 export default function BondingConductorsGuidePage() {
   return (
     <GuideTemplate
-      title="Bonding Conductors UK 2026 | Main + Supplementary to BS 7671"
-      description="Bonding conductors for UK installs: main protective bonding (gas/water/oil), supplementary bonding, sizing per BS 7671 Chapter 54. Worked examples."
+      title="Bonding Conductor Sizes BS 7671: Main + Supplementary"
+      description="Bonding conductor sizes for UK installs: main protective bonding (gas, water, oil) and supplementary bonding to BS 7671 Table 54.5. Worked examples."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-05-22"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Wiring Guide"

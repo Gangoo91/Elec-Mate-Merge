@@ -1,6 +1,6 @@
 # Auto-generated cannibalisation redirects
-# Source: reports/seo-audit.json (run 2026-05-17T17:27:40.680Z)
-# Clusters: 15
+# Source: reports/seo-audit.json (run 2026-05-22T14:52:03.927Z)
+# Clusters: 17
 # Do not edit by hand. Regenerate via:
 #   node scripts/seo-audit/run.mjs && node scripts/seo-audit/emit-redirects.mjs
 
@@ -25,11 +25,14 @@
 # cluster: electrical-handover-documentation (guide)
 /guides/electrical-handover-documentation-guide              /guides/electrical-handover-documentation 301!
 
-# cluster: electrician-tool-insurance (tool)
+# cluster: electrician-tool-insurance (hub)
 /guides/electrician-tool-insurance                           /electrician-tool-insurance-2025 301!
 
 # cluster: electrician-working-abroad (guide)
 /guides/electrician-working-abroad-uk                        /guides/electrician-working-abroad 301!
+
+# cluster: electrician-career-progression (guide)
+/guides/electrician-career-progression-uk                    /guides/electrician-career-progression 301!
 
 # cluster: electrician-van-setup (guide)
 /guides/electrician-van-setup-guide                          /guides/electrician-van-setup 301!
@@ -46,7 +49,18 @@
 # cluster: spd-surge-protection (guide)
 /guides/spd-surge-protection-guide                           /guides/spd-surge-protection 301!
 
+# cluster: starting-an-electrical-business (tool)
+/guides/starting-an-electrical-business-uk                   /guides/starting-an-electrical-business 301!
+
 # cluster: testing-sequence (guide)
 /testing-sequence-guide                                      /guides/testing-sequence-guide 301!
 
 # --- manual rules below ---
+
+# wiring-colours-uk → cable-colour-codes-uk
+# cable-colour-codes-uk has all the traffic (955 imp/wk); wiring-colours-uk is
+# a dormant near-duplicate (0 imp/28d) that the auto-clusterer missed because
+# the slugs aren't similar enough. Consolidating to prevent further authority
+# split — cable-colour-codes-uk lost 17 positions WoW around this date.
+/guides/wiring-colours-uk                                    /guides/cable-colour-codes-uk 301!
+

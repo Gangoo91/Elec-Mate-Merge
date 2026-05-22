@@ -498,10 +498,10 @@ const sections = [
 export default function CPDForElectriciansPage() {
   return (
     <GuideTemplate
-      title="CPD for UK Electricians 2026 | Hours, NICEIC + NAPIT"
-      description="CPD for UK electricians 2026: required hours by scheme, what counts, popular courses, NICEIC/NAPIT requirements + free CPD options. Stay registered."
+      title="CPD for UK Electricians 2026: Hours, NICEIC, NAPIT"
+      description="CPD for UK electricians 2026: required hours by scheme, what counts, popular courses, NICEIC + NAPIT requirements, free CPD options. Stay registered."
       datePublished="2025-07-01"
-      dateModified="2026-05-18"
+      dateModified="2026-05-22"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="CPD Guide"

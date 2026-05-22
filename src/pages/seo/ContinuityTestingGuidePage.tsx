@@ -582,10 +582,10 @@ const sections = [
 export default function ContinuityTestingGuidePage() {
   return (
     <GuideTemplate
-      title="Continuity Testing UK | r1+rn, r2, R1+R2, Ring Final Method"
-      description="Continuity testing for UK electricians: ring final end-to-end + cross-connected, r1+rn + r2 readings, R1+R2 for Zs, CPC continuity per BS 7671 + GN3."
+      title="CPC + Ring Continuity Testing UK: r1+r2, R1+R2 Method"
+      description="Continuity testing for UK electricians: CPC test (R1+R2), ring final end-to-end + cross-connected (r1+rn / r2), acceptable values, BS 7671 + GN3 procedure."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-05-22"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

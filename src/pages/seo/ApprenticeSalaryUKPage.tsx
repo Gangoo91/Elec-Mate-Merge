@@ -238,11 +238,9 @@ const sections = [
                   You are doing productive work on site with minimal supervision. You may be running
                   small jobs on your own. You are studying for your Level 3 qualification and
                   preparing for the{' '}
-                  <SEOInternalLink href="/am2-exam-preparation">
-                    AM2 assessment
-                  </SEOInternalLink>
-                  . Your productivity is close to a qualified electrician, and your pay is stepping
-                  up accordingly.
+                  <SEOInternalLink href="/am2-exam-preparation">AM2 assessment</SEOInternalLink>.
+                  Your productivity is close to a qualified electrician, and your pay is stepping up
+                  accordingly.
                 </p>
               </div>
             </div>
@@ -597,9 +595,9 @@ const sections = [
       <>
         <p>
           Completing your apprenticeship and passing the{' '}
-          <SEOInternalLink href="/am2-exam-preparation">AM2 assessment</SEOInternalLink> is
-          the gateway to significantly higher earnings. Here is what typically happens to your
-          income after you qualify:
+          <SEOInternalLink href="/am2-exam-preparation">AM2 assessment</SEOInternalLink> is the
+          gateway to significantly higher earnings. Here is what typically happens to your income
+          after you qualify:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -659,10 +657,10 @@ const sections = [
 export default function ApprenticeSalaryUKPage() {
   return (
     <GuideTemplate
-      title="Apprentice Electrician Salary UK 2026 | Pay Rates"
-      description="Complete guide to apprentice electrician pay in the UK. NMW/NLW rates by age, Year 1 to Year 4 salary progression, JIB rates, regional variations…"
+      title="Apprentice Electrician Pay 2026: Year 1-4 Rates UK"
+      description="UK apprentice electrician pay 2026: Year 1 £14-18k, Year 4 £22-28k. NMW rates by age, JIB rates, London weighting, overtime, take-home explained."
       datePublished="2025-06-15"
-      dateModified="2026-05-18"
+      dateModified="2026-05-22"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"
@@ -673,7 +671,7 @@ export default function ApprenticeSalaryUKPage() {
           <span className="text-yellow-400">What You Will Actually Earn in 2026</span>
         </>
       }
-              noindex={true}
+      noindex={true}
       heroSubtitle="From the legal minimum wage to JIB rates, Year 1 to Year 4 progression, regional variations, and overtime — this is the complete guide to apprentice electrician pay in the UK. Know your worth from day one."
       readingTime={12}
       keyTakeaways={keyTakeaways}

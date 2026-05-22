@@ -808,10 +808,10 @@ const sections = [
 export default function SpecialLocationsPart7Page() {
   return (
     <GuideTemplate
-      title="BS 7671 Part 7 Special Locations | Bathrooms, Pools, Sites"
-      description="BS 7671 Part 7 special locations: bathrooms (701), pools (702), saunas (703), construction sites (704), agricultural (705). Zone rules + RCD requirements."
+      title="BS 7671 Special Locations List: Part 7 Sections 701-722"
+      description="Complete list of BS 7671 Part 7 special locations: bathrooms (701), pools (702), saunas (703), sites (704), agricultural (705), caravans, marinas + more."
       datePublished="2025-03-15"
-      dateModified="2026-05-18"
+      dateModified="2026-05-22"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations Guide"

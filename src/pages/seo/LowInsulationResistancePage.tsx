@@ -22,9 +22,9 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Low Insulation Resistance | Causes, Limits + Fixes';
+const PAGE_TITLE = 'Low Insulation Resistance: Causes + Fix (BS 7671)';
 const PAGE_DESCRIPTION =
-  'Insulation resistance under BS 7671: 1 MΩ floor, when <2 MΩ needs investigation, damp + nail-strike + degraded cable causes, and step-by-step diagnosis.';
+  'Low insulation resistance (BS 7671): 1 MΩ minimum, when <2 MΩ needs investigation, damp + nail-strike + degraded cable causes, step-by-step diagnosis + fix.';
 
 const breadcrumbs = [
   { label: 'Troubleshooting', href: '/guides/troubleshooting' },
@@ -615,7 +615,7 @@ export default function LowInsulationResistancePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-09-05"
-      dateModified="2026-05-18"
+      dateModified="2026-05-22"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting"

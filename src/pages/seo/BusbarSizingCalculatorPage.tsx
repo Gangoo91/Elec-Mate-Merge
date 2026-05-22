@@ -18,10 +18,10 @@ import {
 export default function BusbarSizingCalculatorPage() {
   return (
     <ToolTemplate
-      title="Busbar Sizing Calculator UK 2026 | BS 7671 Free Tool"
-      description="Free UK busbar sizing calculator: copper + aluminium ratings, voltage drop, temperature rise per BS 7671:2018+A4:2026. Three-phase + DC supported."
+      title="Busbar Calculator UK: Size + Current Rating (Free Tool)"
+      description="Free UK busbar sizing + current calculator: copper + aluminium ratings, voltage drop, temperature rise per BS 7671. Single phase, 3-phase + DC supported."
       datePublished="2026-02-01"
-      dateModified="2026-05-18"
+      dateModified="2026-05-22"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Busbar Sizing Calculator', href: '/tools/busbar-sizing-calculator' },

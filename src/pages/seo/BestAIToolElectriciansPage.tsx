@@ -21,10 +21,10 @@ import {
 export default function BestAIToolElectriciansPage() {
   return (
     <ComparisonTemplate
-      title="Best AI Tools for UK Electricians 2026 | 5 Apps Tested"
-      description="AI tools for UK electricians: 5 trade apps tested for circuit design, BS 7671 compliance, job costing + estimating. Real time savings + comparison."
+      title="Best AI Tools for UK Electricians 2026 (5 Apps Compared)"
+      description="Best AI tools for UK electricians 2026: 5 trade apps compared — circuit design, BS 7671 compliance, costing + estimating. Real-world time savings tested."
       datePublished="2026-02-10"
-      dateModified="2026-05-18"
+      dateModified="2026-05-22"
       breadcrumbs={[
         { label: 'Comparisons', href: '/compare' },
         {

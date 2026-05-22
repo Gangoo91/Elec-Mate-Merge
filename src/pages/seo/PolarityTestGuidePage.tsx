@@ -603,10 +603,10 @@ const sections = [
 export default function PolarityTestGuidePage() {
   return (
     <GuideTemplate
-      title="Polarity Testing UK | BS 7671 Dead + Live Test Sequence"
-      description="Polarity testing for UK electricians: why it matters, dead test (continuity method), live test sequence, BS 7671 + GN3 procedure, what fails on EICR."
+      title="Polarity Test UK: How to Test for Polarity (BS 7671)"
+      description="How to do a polarity test (UK): dead test (continuity method), live test sequence, common errors, BS 7671 + GN3 procedure, what fails an EICR."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-05-22"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

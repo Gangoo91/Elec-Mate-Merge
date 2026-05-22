@@ -2,13 +2,10 @@ import ConversationalSearch from '@/components/electrician-tools/ai-tools/Conver
 
 const AssistantPage = () => {
   return (
-    // Use negative margins to break out of Layout padding and fill viewport
-    // This creates a true full-screen chat experience
     <div
-      className="fixed inset-0 bg-background flex flex-col"
+      className="bg-background flex flex-col -mx-3 sm:-mx-4 md:-mx-6 lg:-mx-8 -mt-1 sm:-mt-3 md:-mt-6 -mb-4"
       style={{
-        top: 'var(--header-height, 56px)',
-        zIndex: 40,
+        height: 'calc(100vh - var(--header-height, 56px))',
       }}
     >
       <ConversationalSearch />

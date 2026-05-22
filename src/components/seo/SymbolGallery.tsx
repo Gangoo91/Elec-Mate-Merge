@@ -10,9 +10,9 @@
  *
  * Each symbol renders as an <img> referencing /public/symbols/<category>/<file>
  * so that Google Images can index each one. Alt text is SEO-targeted from the
- * manifest. Image cards sit on a card surface that doubles as in-page CTA
- * to /tools/diagram-builder for users who want to use the symbols in an
- * actual circuit drawing.
+ * manifest. Below the gallery, a yellow-accent CTA promotes the Elec-Mate Room
+ * Planner at /electrician/business/room-planner — where all 114 symbols can be
+ * dragged into a floor plan and exported as a labelled PDF.
  */
 
 import { Link } from 'react-router-dom';
@@ -69,15 +69,13 @@ function SymbolCard({ symbol }: { symbol: ElectricalSymbol }) {
       id={`symbol-${symbol.id}`}
       className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 sm:p-5 hover:border-yellow-500/30 transition-colors flex flex-col gap-3"
     >
-      <div className="bg-white rounded-xl aspect-square flex items-center justify-center p-3 sm:p-4">
+      <div className="bg-white rounded-xl w-20 h-20 sm:w-24 sm:h-24 mx-auto flex items-center justify-center p-2 sm:p-3">
         <img
           src={src}
           alt={symbol.altText}
           loading="lazy"
           decoding="async"
           className="w-full h-full object-contain"
-          width={120}
-          height={120}
         />
       </div>
       <div>
@@ -144,7 +142,7 @@ export function SymbolGallery({
       {heading && <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">{heading}</h2>}
 
       {!showGroups ? (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
           {symbols.map((s) => (
             <SymbolCard key={s.id} symbol={s} />
           ))}
@@ -169,7 +167,7 @@ export function SymbolGallery({
                   </Link>
                 </div>
                 <p className="text-sm text-white/65 mb-5 max-w-3xl">{cat.description}</p>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
                   {list.map((s) => (
                     <SymbolCard key={s.id} symbol={s} />
                   ))}
@@ -179,6 +177,36 @@ export function SymbolGallery({
           })}
         </div>
       )}
+
+      <RoomPlannerCTA />
     </section>
+  );
+}
+
+function RoomPlannerCTA() {
+  return (
+    <aside className="mt-10 rounded-2xl border border-yellow-500/30 bg-gradient-to-br from-yellow-500/[0.08] via-yellow-500/[0.04] to-transparent p-6 sm:p-8">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="max-w-2xl">
+          <p className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-yellow-400 mb-2">
+            Use these symbols in Elec-Mate
+          </p>
+          <h3 className="text-xl sm:text-2xl font-bold text-white leading-tight">
+            Drag and drop every BS EN 60617 symbol into the Room Planner
+          </h3>
+          <p className="mt-2 text-sm text-white/75 leading-relaxed">
+            The full 114-symbol library is built into the Elec-Mate Room Planner. Sketch the room,
+            drop in sockets, switches, lights and the consumer unit, then export a labelled PDF for
+            the job pack — no separate CAD software, no licence fees.
+          </p>
+        </div>
+        <Link
+          to="/electrician/business/room-planner"
+          className="shrink-0 inline-flex items-center justify-center h-11 px-5 rounded-xl bg-yellow-500 hover:bg-yellow-400 text-black font-semibold text-sm touch-manipulation transition-colors"
+        >
+          Open Room Planner →
+        </Link>
+      </div>
+    </aside>
   );
 }

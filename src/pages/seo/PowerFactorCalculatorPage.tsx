@@ -161,9 +161,9 @@ const howToSchema = {
 
 export default function PowerFactorCalculatorPage() {
   useSEO({
-    title: 'Power Factor Calculator UK 2026 | kW kVA kVAr Free Tool',
+    title: 'Power Factor Calculator (kW kVA kVAr) — Free UK Tool',
     description:
-      'Free UK power factor calculator: kW↔kVA↔kVAr, cos φ, capacitor bank sizing for PF correction. Built for UK electricians + BS 7671 compliant installs.',
+      'Free UK power factor calculator: convert between kW, kVA and kVAr, calculate cos φ, size capacitor banks for PF correction. Instant results, no signup.',
   });
 
   return (

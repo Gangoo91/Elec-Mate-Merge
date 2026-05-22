@@ -3,6 +3,13 @@
  *
  * Generates sitemap.xml from all known routes.
  * Run: node scripts/generateSitemap.mjs
+ *
+ * IMPORTANT: this sitemap is for PUBLIC marketing pages only. App routes
+ * (study-centre, electrician dashboards, employer, etc.) are disallowed in
+ * robots.txt — including them here generates 200+ GSC warnings and wastes
+ * crawl budget. Public SEO pages (/tools, /guides, /compare, /training) live
+ * in their own dedicated sitemaps (sitemap-tools.xml, sitemap-guides.xml,
+ * etc.) and must NOT be duplicated here.
  */
 
 import fs from 'fs';
@@ -11,6 +18,44 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const SITE_URL = 'https://www.elec-mate.com';
+
+// Robots.txt disallow prefixes — any URL starting with one of these is excluded
+// at the end of generation. Keeps the sitemap honest if someone adds an app
+// route to STATIC_PAGES by mistake.
+const ROBOTS_DISALLOW = [
+  '/dashboard',
+  '/electrician/',
+  '/apprentice/',
+  '/employer',
+  '/study-centre/',
+  '/profile',
+  '/settings',
+  '/walkthrough',
+  '/admin',
+  '/api',
+  '/auth/',
+  '/checkout-trial',
+  '/notifications',
+  '/customers',
+  '/subscriptions',
+  '/mental-health',
+  '/college',
+  '/elec-id',
+  '/elec-ids',
+  '/analytics',
+  '/audit',
+  '/conversations',
+  '/emails',
+  '/export',
+  '/feature-flags',
+  '/founders',
+  '/materials',
+  '/offers',
+  '/revenue',
+  '/support',
+];
+
+const isAllowed = (url) => !ROBOTS_DISALLOW.some((p) => url.startsWith(p));
 
 // Priority levels
 const PRIORITY = {
@@ -24,69 +69,14 @@ const PRIORITY = {
   OTHER: '0.5',
 };
 
-// Core static pages
+// Public marketing pages only — see header comment.
+// App routes (electrician dashboard, study-centre, employer, etc.) are
+// disallowed by robots.txt and live behind auth, so they must NOT appear here.
 const STATIC_PAGES = [
-  // Home & Auth
   { url: '/', changefreq: 'weekly', priority: PRIORITY.HOME },
   { url: '/auth', changefreq: 'monthly', priority: PRIORITY.OTHER },
   { url: '/pricing', changefreq: 'weekly', priority: PRIORITY.HUB },
-
-  // Main Hubs
-  { url: '/apprentice', changefreq: 'weekly', priority: PRIORITY.HUB },
-  { url: '/electrician', changefreq: 'weekly', priority: PRIORITY.HUB },
-  { url: '/employer', changefreq: 'weekly', priority: PRIORITY.HUB },
   { url: '/community', changefreq: 'daily', priority: PRIORITY.OTHER },
-
-  // Study Centre
-  { url: '/study-centre', changefreq: 'weekly', priority: PRIORITY.HUB },
-  { url: '/study-centre/apprentice', changefreq: 'weekly', priority: PRIORITY.HUB },
-  { url: '/study-centre/apprentice/level-2', changefreq: 'monthly', priority: PRIORITY.COURSE },
-  { url: '/study-centre/apprentice/level-3', changefreq: 'monthly', priority: PRIORITY.COURSE },
-  { url: '/study-centre/upskilling', changefreq: 'weekly', priority: PRIORITY.HUB },
-  {
-    url: '/study-centre/upskilling/18th-edition',
-    changefreq: 'monthly',
-    priority: PRIORITY.COURSE,
-  },
-  {
-    url: '/study-centre/upskilling/inspection-testing',
-    changefreq: 'monthly',
-    priority: PRIORITY.COURSE,
-  },
-  { url: '/study-centre/upskilling/pat-testing', changefreq: 'monthly', priority: PRIORITY.COURSE },
-  { url: '/study-centre/upskilling/ev-charging', changefreq: 'monthly', priority: PRIORITY.COURSE },
-  { url: '/study-centre/upskilling/solar-pv', changefreq: 'monthly', priority: PRIORITY.COURSE },
-
-  // Electrician Tools
-  { url: '/electrician/tools', changefreq: 'weekly', priority: PRIORITY.HUB },
-  { url: '/electrician/cable-calculator', changefreq: 'monthly', priority: PRIORITY.TOOL },
-  { url: '/electrician/max-demand', changefreq: 'monthly', priority: PRIORITY.TOOL },
-  { url: '/electrician/voltage-drop', changefreq: 'monthly', priority: PRIORITY.TOOL },
-  { url: '/electrician/conduit-calculator', changefreq: 'monthly', priority: PRIORITY.TOOL },
-  { url: '/electrician/trunking-calculator', changefreq: 'monthly', priority: PRIORITY.TOOL },
-  { url: '/electrician/lighting-calculator', changefreq: 'monthly', priority: PRIORITY.TOOL },
-  { url: '/electrician/power-calculator', changefreq: 'monthly', priority: PRIORITY.TOOL },
-  { url: '/electrician/fault-current', changefreq: 'monthly', priority: PRIORITY.TOOL },
-  { url: '/electrician/earth-loop', changefreq: 'monthly', priority: PRIORITY.TOOL },
-  { url: '/electrician/rcd-calculator', changefreq: 'monthly', priority: PRIORITY.TOOL },
-
-  // Certification
-  { url: '/electrician/certificates', changefreq: 'weekly', priority: PRIORITY.HUB },
-  { url: '/electrician/certificates/eicr', changefreq: 'monthly', priority: PRIORITY.CERT },
-  { url: '/electrician/certificates/eic', changefreq: 'monthly', priority: PRIORITY.CERT },
-  { url: '/electrician/certificates/minor-works', changefreq: 'monthly', priority: PRIORITY.CERT },
-
-  // AI Tools
-  { url: '/electrician/ai-designer', changefreq: 'weekly', priority: PRIORITY.TOOL },
-  { url: '/electrician/cost-engineer', changefreq: 'weekly', priority: PRIORITY.TOOL },
-
-  // Live Pricing
-  { url: '/electrician/live-pricing', changefreq: 'daily', priority: PRIORITY.HUB },
-
-  // Employer
-  { url: '/employer/job-board', changefreq: 'daily', priority: PRIORITY.OTHER },
-
-  // Legal
   { url: '/legal/privacy', changefreq: 'monthly', priority: PRIORITY.OTHER },
   { url: '/legal/terms', changefreq: 'monthly', priority: PRIORITY.OTHER },
 ];
@@ -247,16 +237,14 @@ function generateInspectionTestingRoutes() {
   return routes;
 }
 
-// Combine all routes
+// Combine all routes — only STATIC_PAGES (public marketing) make it in.
+// All course/module/section routes are auth-gated and disallowed; we keep the
+// generators below for reference / for use by other sitemap files that index
+// public marketing variants of course content (none currently).
 function getAllRoutes() {
-  return [
-    ...STATIC_PAGES,
-    ...generateLevel2Routes(),
-    ...generateLevel3Routes(),
-    ...generateAM2Routes(),
-    ...generate18thEditionRoutes(),
-    ...generateInspectionTestingRoutes(),
-  ];
+  const all = [...STATIC_PAGES];
+  // Final guard: drop anything that matches a robots.txt disallow prefix.
+  return all.filter((r) => isAllowed(r.url));
 }
 
 // Generate sitemap XML

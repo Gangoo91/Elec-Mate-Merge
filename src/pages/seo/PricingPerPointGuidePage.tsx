@@ -513,10 +513,10 @@ const sections = [
 export default function PricingPerPointGuidePage() {
   return (
     <GuideTemplate
-      title="Price Per Point Electrical UK 2026 | £80-£150 Real Rates"
+      title="Electrical Price Per Point UK 2026: £80-£150 Rates"
       description="Per-point pricing for UK electrical work 2026: £80-£150 per outlet/switch. What counts, regional variation, supply-and-fix vs labour-only rates."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-05-22"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Pricing Guide"

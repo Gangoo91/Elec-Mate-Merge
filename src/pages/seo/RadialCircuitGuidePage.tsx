@@ -688,10 +688,10 @@ const sections = [
 export default function RadialCircuitGuidePage() {
   return (
     <GuideTemplate
-      title="Radial Circuits UK 2026 | 20A + 32A Cable Size + MCB Rules"
-      description="Radial circuits for UK electricians: 20A in 2.5mm² + 32A in 4.0mm² cable, MCB selection, BS 7671 A4:2026 + Appendix 15. Domestic + commercial rules."
+      title="Radial Circuit Cable Size UK: 20A in 2.5mm² / 32A in 4mm²"
+      description="Radial circuits to BS 7671: 20A radial in 2.5mm² T&E, 32A in 4.0mm², MCB selection, A1/A2/A3 circuit types per Appendix 15. Worked examples + cable size tables."
       datePublished="2025-06-15"
-      dateModified="2026-05-18"
+      dateModified="2026-05-22"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

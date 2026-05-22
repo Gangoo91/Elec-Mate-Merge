@@ -94,6 +94,25 @@ const useSEO = (options: SEOOptions | string = {}, legacyDescription?: string) =
     // Canonical URL
     setLink('canonical', canonicalUrl);
 
+    // hreflang: every page is UK-only English. Tells Google to prefer this
+    // page for en-GB and en (default) searches, and de-prioritise it for
+    // other regions. Reduces wasted impressions from non-UK locales whose
+    // searchers are unlikely to convert on UK-regulation content (BS 7671).
+    const setAlternate = (hreflang: string, href: string) => {
+      const selector = `link[rel="alternate"][hreflang="${hreflang}"]`;
+      let element = document.querySelector(selector) as HTMLLinkElement;
+      if (!element) {
+        element = document.createElement('link');
+        element.setAttribute('rel', 'alternate');
+        element.setAttribute('hreflang', hreflang);
+        document.head.appendChild(element);
+      }
+      element.setAttribute('href', href);
+    };
+    setAlternate('en-gb', canonicalUrl);
+    setAlternate('en', canonicalUrl);
+    setAlternate('x-default', canonicalUrl);
+
     // Open Graph
     setMeta('og:title', fullTitle, true);
     setMeta('og:description', fullDescription, true);

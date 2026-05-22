@@ -37,13 +37,6 @@ export const mainNavItems: NavItem[] = [
     badgeVariant: 'new',
   },
   {
-    name: 'Mate',
-    path: '/electrician/business-ai',
-    roles: ['visitor', 'apprentice', 'electrician', 'employer', 'admin', 'beta_tester'],
-    badge: '3 days free',
-    badgeVariant: 'new',
-  },
-  {
     name: 'Employer Hub',
     path: '/employer',
     roles: ['visitor', 'apprentice', 'electrician', 'employer', 'admin', 'beta_tester'],

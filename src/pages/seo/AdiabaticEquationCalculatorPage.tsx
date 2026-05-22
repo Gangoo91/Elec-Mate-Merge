@@ -205,7 +205,7 @@ const howToSchema = {
 
 export default function AdiabaticEquationCalculatorPage() {
   useSEO({
-    title: 'Adiabatic Equation Calculator UK | CPC Sizing BS 7671 543.1',
+    title: 'Adiabatic Equation Calculator: CPC Sizing UK (Free)',
     description: PAGE_DESCRIPTION,
     schema: softwareAppSchema,
   });

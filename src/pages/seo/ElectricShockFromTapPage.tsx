@@ -585,10 +585,10 @@ const sections = [
 export default function ElectricShockFromTapPage() {
   return (
     <GuideTemplate
-      title="Electric Shock From Tap | Causes + What to Do Now"
-      description="Tingle from a tap means a bonding or earthing fault. Immersion heater leakage, lost PEN, broken main bond — what to check + when to call an electrician."
+      title="Electric Shock From a Tap? Causes + Urgent Safety Steps"
+      description="Tingle from a tap means an earthing fault. Immersion heater leakage, lost PEN, broken main bond — what to check, what to do right now, when to call an electrician."
       datePublished="2025-04-20"
-      dateModified="2026-05-18"
+      dateModified="2026-05-22"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting"

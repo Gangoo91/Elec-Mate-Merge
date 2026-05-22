@@ -38,11 +38,7 @@ interface Message {
 
 const MAX_IMAGES_PER_MESSAGE = 5;
 
-const STREAM_STAGES = [
-  'Understanding…',
-  'Retrieving regulations…',
-  'Answering…',
-] as const;
+const STREAM_STAGES = ['Understanding…', 'Retrieving regulations…', 'Answering…'] as const;
 
 import {
   SUPABASE_URL,
@@ -180,9 +176,7 @@ export default function ConversationalSearch() {
 
     // Defer one frame so the DOM has the new user bubble mounted.
     const t = window.setTimeout(() => {
-      const el = document.querySelector<HTMLElement>(
-        `[data-msg-anchor="user-${lastIdx}"]`
-      );
+      const el = document.querySelector<HTMLElement>(`[data-msg-anchor="user-${lastIdx}"]`);
       el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 40);
     return () => window.clearTimeout(t);
@@ -242,17 +236,14 @@ export default function ConversationalSearch() {
     [haptic, selectedImages.length]
   );
 
-  const removeImageAt = useCallback(
-    (index: number) => {
-      setImagePreviews((prev) => {
-        const url = prev[index];
-        if (url) URL.revokeObjectURL(url);
-        return prev.filter((_, i) => i !== index);
-      });
-      setSelectedImages((prev) => prev.filter((_, i) => i !== index));
-    },
-    []
-  );
+  const removeImageAt = useCallback((index: number) => {
+    setImagePreviews((prev) => {
+      const url = prev[index];
+      if (url) URL.revokeObjectURL(url);
+      return prev.filter((_, i) => i !== index);
+    });
+    setSelectedImages((prev) => prev.filter((_, i) => i !== index));
+  }, []);
 
   const clearImage = useCallback(() => {
     setImagePreviews((prev) => {
@@ -567,26 +558,28 @@ export default function ConversationalSearch() {
     void handleSend(lastUser.content, { replaceLastAssistant: true });
   }, [messages, haptic, handleSend]);
 
-  const handleOpenSaveSheet = useCallback((message: Message) => {
-    // Find the user question that produced this answer + any photos they attached.
-    const idx = messages.indexOf(message);
-    const userMsg =
-      idx > 0 && messages[idx - 1].role === 'user' ? messages[idx - 1] : undefined;
-    const question = userMsg?.content || '';
-    const imageUrls =
-      userMsg?.imageUrls && userMsg.imageUrls.length > 0
-        ? userMsg.imageUrls
-        : userMsg?.imageUrl
-          ? [userMsg.imageUrl]
-          : [];
-    setSaveSheet({
-      open: true,
-      answer: message.content,
-      question,
-      cited: message.citedRegulations ?? [],
-      imageUrls,
-    });
-  }, [messages]);
+  const handleOpenSaveSheet = useCallback(
+    (message: Message) => {
+      // Find the user question that produced this answer + any photos they attached.
+      const idx = messages.indexOf(message);
+      const userMsg = idx > 0 && messages[idx - 1].role === 'user' ? messages[idx - 1] : undefined;
+      const question = userMsg?.content || '';
+      const imageUrls =
+        userMsg?.imageUrls && userMsg.imageUrls.length > 0
+          ? userMsg.imageUrls
+          : userMsg?.imageUrl
+            ? [userMsg.imageUrl]
+            : [];
+      setSaveSheet({
+        open: true,
+        answer: message.content,
+        question,
+        cited: message.citedRegulations ?? [],
+        imageUrls,
+      });
+    },
+    [messages]
+  );
 
   const handleOpenSources = useCallback((message: Message) => {
     const first = message.citedRegulations?.[0];
@@ -597,11 +590,14 @@ export default function ConversationalSearch() {
     setRegulationSheet({ open: true, regulationNumber: first });
   }, []);
 
-  const handleInlineRegClick = useCallback((regNumber: string) => {
-    if (!regNumber) return;
-    setRegulationSheet({ open: true, regulationNumber: regNumber });
-    haptic.selection();
-  }, [haptic]);
+  const handleInlineRegClick = useCallback(
+    (regNumber: string) => {
+      if (!regNumber) return;
+      setRegulationSheet({ open: true, regulationNumber: regNumber });
+      haptic.selection();
+    },
+    [haptic]
+  );
 
   // Called by RegulationDetailSheet when the user wants to ask a follow-up.
   const handleRegFollowUp = useCallback(
@@ -634,9 +630,7 @@ export default function ConversationalSearch() {
     (question: string) => {
       const DRAFT_THRESHOLD = 100;
       if (input.trim().length >= DRAFT_THRESHOLD) {
-        const keep = window.confirm(
-          'Discard your current draft and use this suggestion instead?'
-        );
+        const keep = window.confirm('Discard your current draft and use this suggestion instead?');
         if (!keep) return;
       }
       void handleSend(question);
@@ -694,16 +688,16 @@ export default function ConversationalSearch() {
 
       {/* Empty state */}
       {messages.length === 0 && (
-        <ChatMessagesArea className="px-3 sm:px-6">
+        <ChatMessagesArea className="px-3 sm:px-6 lg:px-10">
           {offlineBannerVisible && (
-            <div className="mx-auto max-w-4xl pt-4">
+            <div className="mx-auto max-w-4xl lg:max-w-5xl xl:max-w-6xl pt-4">
               <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-4 py-3">
                 <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
                   Offline · showing your last {offlineCache.limit} saved answers
                 </div>
                 <p className="mt-1 text-[12px] text-white leading-relaxed">
-                  You’re offline. Elec-AI can’t stream new answers, but your
-                  recent cached answers are below.
+                  You’re offline. Elec-AI can’t stream new answers, but your recent cached answers
+                  are below.
                 </p>
               </div>
               {offlineCache.entries.length > 0 && (
@@ -737,9 +731,9 @@ export default function ConversationalSearch() {
         <ChatMessagesArea
           messagesEndRef={messagesEndRef}
           onScroll={handleScrollPosition}
-          className="px-3 sm:px-6"
+          className="px-3 sm:px-6 lg:px-10"
         >
-          <div className="mx-auto max-w-4xl py-4 sm:py-6 space-y-6 sm:space-y-8">
+          <div className="mx-auto max-w-4xl lg:max-w-5xl xl:max-w-6xl py-4 sm:py-6 space-y-6 sm:space-y-8">
             <AnimatePresence mode="popLayout">
               {messages.map((message, idx) => {
                 const isCurrentlyStreaming =
@@ -762,12 +756,13 @@ export default function ConversationalSearch() {
                         <div className="max-w-[92%] sm:max-w-[75%] min-w-0 space-y-2">
                           {(() => {
                             // Prefer the new array; fall back to legacy single.
-                            const urls =
-                              (message.imageUrls && message.imageUrls.length > 0
+                            const urls = (
+                              message.imageUrls && message.imageUrls.length > 0
                                 ? message.imageUrls
                                 : message.imageUrl
                                   ? [message.imageUrl]
-                                  : []) as string[];
+                                  : []
+                            ) as string[];
                             if (urls.length === 0) return null;
                             if (urls.length === 1) {
                               return (
@@ -825,9 +820,7 @@ export default function ConversationalSearch() {
                             }}
                             isStreaming={isCurrentlyStreaming}
                             onSaveToJob={
-                              !isCurrentlyStreaming
-                                ? () => handleOpenSaveSheet(message)
-                                : undefined
+                              !isCurrentlyStreaming ? () => handleOpenSaveSheet(message) : undefined
                             }
                             onOpenSources={
                               !isCurrentlyStreaming && message.citedRegulations?.length
@@ -880,7 +873,7 @@ export default function ConversationalSearch() {
 
       {/* Input area */}
       <ChatInputArea>
-        <div className="mx-auto w-full max-w-4xl">
+        <div className="mx-auto w-full max-w-4xl lg:max-w-5xl xl:max-w-6xl">
           {/* Compression indicator */}
           <AnimatePresence>
             {isCompressing && (

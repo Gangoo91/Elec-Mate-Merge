@@ -561,10 +561,10 @@ const sections = [
 export default function NICEICvsNAPITComparisonPage() {
   return (
     <GuideTemplate
-      title="NICEIC vs NAPIT 2026 | Honest UK Scheme Comparison"
-      description="NICEIC vs NAPIT compared: 2026 scheme fees, assessment processes, insurer + Building Control acceptance, public recognition. Which suits your firm?"
+      title="NICEIC vs NAPIT 2026: Cost, Scope, Which to Pick"
+      description="NICEIC vs NAPIT 2026 compared: registration cost, assessment process, insurer + Building Control acceptance, public recognition. Which suits your firm?"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-05-22"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Registration Guide"

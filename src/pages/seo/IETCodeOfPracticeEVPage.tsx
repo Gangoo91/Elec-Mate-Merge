@@ -630,10 +630,10 @@ const sections = [
 export default function IETCodeOfPracticeEVPage() {
   return (
     <GuideTemplate
-      title="IET Code of Practice EV Charging | 5th Edition Guide 2026"
-      description="IET Code of Practice for EV Charging Equipment Installation explained. PME/O-PEN protection, load management, BS 7671 Section 722 + Part S rules."
+      title="IET Code of Practice for EV Charging: Every UK Install Rule"
+      description="IET Code of Practice for EV Charging Equipment Installation: PME/O-PEN protection, load management, smart charging, BS 7671 Section 722 + Building Regs Part S."
       datePublished="2025-04-20"
-      dateModified="2026-05-18"
+      dateModified="2026-05-22"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EV Charging Guide"

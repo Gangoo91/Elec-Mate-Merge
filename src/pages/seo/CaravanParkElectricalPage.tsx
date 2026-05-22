@@ -298,11 +298,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>30 mA maximum IΔn</strong> — Regulation 411.3.3 (applied via Section 708) requires each pitch
-                supply socket outlet be protected by an RCD with a rated residual operating current
-                not exceeding 30 mA. This threshold provides protection against fatal electric
-                shock: the let-go current for most adults is around 10–15 mA, and a 30 mA RCD limits
-                the duration of a shock to prevent cardiac fibrillation.
+                <strong>30 mA maximum IΔn</strong> — Regulation 411.3.3 (applied via Section 708)
+                requires each pitch supply socket outlet be protected by an RCD with a rated
+                residual operating current not exceeding 30 mA. This threshold provides protection
+                against fatal electric shock: the let-go current for most adults is around 10–15 mA,
+                and a 30 mA RCD limits the duration of a shock to prevent cardiac fibrillation.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -539,10 +539,10 @@ const sections = [
 export default function CaravanParkElectricalPage() {
   return (
     <GuideTemplate
-      title="Caravan Park Electrical UK | BS 7671 Section 708 Guide"
-      description="Caravan park electrical installations to BS 7671 Section 708: CEE connectors, 30mA RCD per pitch, socket spacing, supply ratings. UK electricians."
+      title="Caravan Park Electrics: BS 7671 Section 708 Rules UK"
+      description="Caravan park electrical installations to BS 7671 Section 708: IEC 60309 CEE connectors, 30mA RCD per pitch, socket spacing, TT earthing, supply ratings."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-05-22"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Specialist Installation"

@@ -18,10 +18,10 @@ import {
 export default function EarthRodResistanceCalculatorPage() {
   return (
     <ToolTemplate
-      title="Earth Rod Resistance Calculator | Ra × IΔn ≤ 50V (TT)"
-      description="Free TT earth electrode calculator — checks Ra × IΔn ≤ 50V touch-voltage limit per BS 7671 Reg 411.5.3. Instant pass/fail for 30mA + 100mA RCDs."
+      title="Earth Electrode Resistance Calculator (TT, Free UK)"
+      description="Free earth rod / electrode resistance calculator for TT installs: checks Ra × IΔn ≤ 50V per BS 7671 Reg 411.5.3. Instant pass/fail for 30mA + 100mA RCDs."
       datePublished="2026-01-22"
-      dateModified="2026-05-18"
+      dateModified="2026-05-22"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         {

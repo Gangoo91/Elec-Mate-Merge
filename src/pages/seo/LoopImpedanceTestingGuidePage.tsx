@@ -592,10 +592,10 @@ const sections = [
 export default function LoopImpedanceTestingGuidePage() {
   return (
     <GuideTemplate
-      title="Earth Loop Impedance Testing | Ze + Zs to BS 7671 + GN3"
-      description="Complete guide to earth fault loop impedance testing. External loop impedance (Ze), total loop impedance (Zs), prospective fault current (PFC)…"
+      title="Ze vs Zs Explained: Loop Impedance Testing UK"
+      description="Difference between Ze and Zs: how to measure each, max Zs values for Type B/C MCBs, prospective fault current, BS 7671 + GN3 test procedure explained."
       datePublished="2026-03-27"
-      dateModified="2026-05-19"
+      dateModified="2026-05-22"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"
