@@ -608,10 +608,10 @@ const sections = [
 export default function ReferenceMethodsGuidePage() {
   return (
     <GuideTemplate
-      title="BS 7671 Reference Methods A-G | Cable Install Guide"
-      description="BS 7671 reference methods A-G explained — how each affects current-carrying capacity (Appendix 4). When to use 100, 102, C, D, E + thermal insulation."
+      title="BS 7671 Installation Methods: Reference Methods A-G + 100/102"
+      description="BS 7671 installation methods explained: reference methods A, B, C, D, E, F, G + numbered methods 100, 102. Current-carrying capacity from Appendix 4 tables."
       datePublished="2025-04-20"
-      dateModified="2026-05-18"
+      dateModified="2026-05-23"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Technical Guide"

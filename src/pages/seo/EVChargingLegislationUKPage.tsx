@@ -536,10 +536,10 @@ const sections = [
 export default function EVChargingLegislationUKPage() {
   return (
     <GuideTemplate
-      title="UK EV Charging Regulations 2026 | Smart Charge + Part S"
-      description="UK EV charging legislation in 2026: Smart Charge Point Regs 2021, Building Regs Part S, BS 7671 Section 722 + PME O-PEN protection rules."
+      title="Building Regs for EV Charging UK 2026 (Part S + §722)"
+      description="UK Building Regulations Part S for EV charging points 2026, Smart Charge Point Regs 2021, BS 7671 Section 722, PME / O-PEN earthing rules. Domestic + commercial."
       datePublished="2025-01-01"
-      dateModified="2026-05-18"
+      dateModified="2026-05-23"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EV Legislation Guide"

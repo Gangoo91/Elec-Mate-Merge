@@ -676,10 +676,10 @@ const sections = [
 export default function ElectricalRegulationsTimelinePage() {
   return (
     <GuideTemplate
-      title="UK Wiring Regs Timeline 1882 → A4:2026 | Every Edition"
-      description="Every UK wiring reg from the IEE 1st Edition (1882) to BS 7671:2018+A4:2026. Key changes per edition, why each amendment landed, what stayed."
+      title="UK Wiring Regulations by Edition: 14th to 18th + A4:2026"
+      description="UK Wiring Regulations editions explained: 14th (1966), 15th (1981), 16th (1991), 17th (2008), 18th (2018) + A1/A2/A3/A4:2026. Year + key changes per edition."
       datePublished="2026-01-25"
-      dateModified="2026-05-18"
+      dateModified="2026-05-23"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations"

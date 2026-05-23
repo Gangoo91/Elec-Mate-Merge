@@ -14,9 +14,9 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'NAPIT Registration + Certificates 2026 | UK Guide';
+const PAGE_TITLE = 'NAPIT Certificate UK 2026: Registration + Building Regs';
 const PAGE_DESCRIPTION =
-  'NAPIT scheme for UK electricians in 2026: scope categories, assessment, annual costs, how it compares to NICEIC + which jobs it lets you self-certify.';
+  'NAPIT certificate + registration for UK electricians 2026: scope categories, assessment, annual cost, Building Regulations compliance certificate, NICEIC comparison.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -538,7 +538,7 @@ export default function NAPICertificateGuidePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-06-20"
-      dateModified="2026-05-18"
+      dateModified="2026-05-23"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Registration Guide"

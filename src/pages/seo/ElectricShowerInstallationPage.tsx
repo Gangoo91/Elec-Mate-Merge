@@ -607,10 +607,10 @@ const sections = [
 export default function ElectricShowerInstallationPage() {
   return (
     <GuideTemplate
-      title="Electric Shower Installation | Cable + MCB Sizing 2026"
-      description="Electric shower install guide: 7.5kW–12kW cable + MCB sizing, RCD + pull-cord rules, Section 701 zoning, supplementary bonding + BS 7671 compliance."
+      title="Electric Shower Cable Size: 7.5kW-12kW (UK Install Guide)"
+      description="Cable + MCB size for UK electric showers by kW: 7.5kW→6mm²/32A, 9.5kW→6mm²/40A, 10.5kW→10mm²/45A, 12kW→10mm²/50A. RCD, pull-cord, Section 701 zoning."
       datePublished="2025-06-20"
-      dateModified="2026-05-18"
+      dateModified="2026-05-23"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"
