@@ -3,6 +3,7 @@
  */
 
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import { sendEmail } from '../_shared/mailer.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -46,26 +47,18 @@ serve(async (req: Request) => {
         'Moore Electrical'
       );
 
-      const response = await fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${resendApiKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          from: 'Moore Electrical <founder@elec-mate.com>',
-          reply_to: 'founder@elec-mate.com',
-          to: email,
-          subject: `[TEST] ${emailContent.subject}`,
-          html: emailContent.html,
-        }),
+      const result = await sendEmail({
+        from: 'Moore Electrical <founder@elec-mate.com>',
+        replyTo: 'founder@elec-mate.com',
+        to: email,
+        subject: `[TEST] ${emailContent.subject}`,
+        html: emailContent.html,
       });
 
-      if (response.ok) {
+      if (!result.error) {
         results.push({ type: reminderType, status: 'sent' });
       } else {
-        const error = await response.text();
-        results.push({ type: reminderType, status: 'failed', error });
+        results.push({ type: reminderType, status: 'failed', error: result.error.message });
       }
 
       // Small delay between emails

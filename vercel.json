@@ -109,6 +109,16 @@
   ],
   "redirects": [
     {
+      "source": "/cheatsheet.pdf",
+      "destination": "https://jtwygbeceundfgnkirof.supabase.co/storage/v1/object/public/lead-magnets/bs7671-a4-2026-cheatsheet.pdf",
+      "permanent": false
+    },
+    {
+      "source": "/cheatsheet",
+      "destination": "https://jtwygbeceundfgnkirof.supabase.co/storage/v1/object/public/lead-magnets/bs7671-a4-2026-cheatsheet.pdf",
+      "permanent": false
+    },
+    {
       "source": "/battery-storage-installation",
       "destination": "/guides/battery-storage-installation",
       "permanent": true

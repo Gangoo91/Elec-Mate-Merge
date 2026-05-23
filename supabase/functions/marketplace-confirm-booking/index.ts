@@ -11,6 +11,7 @@
 
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { sendEmail } from '../_shared/mailer.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -181,30 +182,17 @@ serve(async (req) => {
     // Email confirmation to client (if email available) — best effort
     if (clientEmail) {
       try {
-        const resendKey = Deno.env.get('RESEND_API_KEY');
-        if (resendKey) {
-          const fromName = companyProfile?.company_name || 'Elec-Mate';
-          await fetch('https://api.resend.com/emails', {
-            method: 'POST',
-            headers: {
-              Authorization: `Bearer ${resendKey}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              from: `${fromName} <bookings@elec-mate.com>`,
-              to: clientEmail,
-              subject: `Booking confirmed — ${jobTitle}`,
-              html: `<p>Hi ${clientName},</p><p>Your booking is confirmed for <strong>${new Date(hold.slot_start).toLocaleString('en-GB', { dateStyle: 'full', timeStyle: 'short' })}</strong>.</p><p>${jobTitle}${jobLocation ? ' · ' + jobLocation : ''}</p><p>A calendar invite is attached.</p>`,
-              attachments: [
-                {
-                  filename: 'booking.ics',
-                  content: btoa(icsContent),
-                  content_type: 'text/calendar; charset=UTF-8; method=REQUEST',
-                },
-              ],
-            }),
-          });
-        }
+        const fromName = companyProfile?.company_name || 'Elec-Mate';
+        const result = await sendEmail({
+          from: `${fromName} <bookings@elec-mate.com>`,
+          to: clientEmail,
+          subject: `Booking confirmed — ${jobTitle}`,
+          html: `<p>Hi ${clientName},</p><p>Your booking is confirmed for <strong>${new Date(hold.slot_start).toLocaleString('en-GB', { dateStyle: 'full', timeStyle: 'short' })}</strong>.</p><p>${jobTitle}${jobLocation ? ' · ' + jobLocation : ''}</p><p>A calendar invite is attached.</p>`,
+          attachments: [
+            { filename: 'booking.ics', content: btoa(icsContent) },
+          ],
+        });
+        if (result.error) console.error('Booking email failed (non-fatal):', result.error.message);
       } catch (emailErr) {
         console.error('Booking email failed (non-fatal):', emailErr);
       }

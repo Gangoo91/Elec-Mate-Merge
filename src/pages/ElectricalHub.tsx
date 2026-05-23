@@ -297,19 +297,45 @@ const ElectricalHubInner = () => {
       if (!user) return null;
       const { data: row } = await supabase
         .from('profiles')
-        .select('onboarding_completed')
+        .select(
+          'onboarding_completed, subscribed, free_access_granted, role, apprentice_course'
+        )
         .eq('id', user.id)
         .single();
       return { profile: row, email: user.email };
     },
   });
 
-  const onboardingProfile = profileData?.profile;
+  const onboardingProfile = profileData?.profile as
+    | {
+        onboarding_completed?: boolean | null;
+        subscribed?: boolean | null;
+        free_access_granted?: boolean | null;
+        role?: string | null;
+        apprentice_course?: string | null;
+      }
+    | null
+    | undefined;
 
   useEffect(() => {
-    if (!onboardingProfile || onboardingProfile.onboarding_completed) return;
-    const hasAccess = onboardingProfile.subscribed || onboardingProfile.free_access_granted;
-    if (!hasAccess) return;
+    if (!onboardingProfile) return;
+    const isApprentice = onboardingProfile.role === 'apprentice';
+
+    // Apprentices: trigger if they haven't picked a course yet, regardless
+    // of subscribed state — the course question gates Study Centre targeting
+    // and we want it captured on day 1, not when they finally subscribe.
+    if (isApprentice) {
+      if (onboardingProfile.apprentice_course) return;
+    } else {
+      // Business roles: keep the existing gate — only fire after they're
+      // on trial / subscribed, so we're not asking for VAT/banking from a
+      // window-shopper.
+      if (onboardingProfile.onboarding_completed) return;
+      const hasAccess =
+        onboardingProfile.subscribed || onboardingProfile.free_access_granted;
+      if (!hasAccess) return;
+    }
+
     const hasSeenWizard = sessionStorage.getItem('setup_wizard_shown');
     if (!hasSeenWizard) {
       setShowSetupWizard(true);
@@ -456,6 +482,7 @@ const ElectricalHubInner = () => {
 
       <SetupWizard
         isOpen={showSetupWizard}
+        role={onboardingProfile?.role ?? profile?.role ?? null}
         onComplete={() => setShowSetupWizard(false)}
         onSkip={() => setShowSetupWizard(false)}
       />

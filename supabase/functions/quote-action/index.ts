@@ -6,6 +6,7 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { captureException } from '../_shared/sentry.ts';
+import { sendEmail } from '../_shared/mailer.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -496,27 +497,17 @@ async function sendEmailNotification(
     </html>
   `;
 
-  const response = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${resendApiKey}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      from: 'ElecMate <Founder@elec-mate.com>',
-      replyTo: clientEmail || 'support@elec-mate.com',
-      to: [toEmail],
-      subject: subject,
-      html: html,
-    }),
+  const result = await sendEmail({
+    from: 'Elec-Mate <founder@elec-mate.com>',
+    replyTo: clientEmail || 'founder@elec-mate.com',
+    to: toEmail,
+    subject,
+    html,
   });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    console.error('Resend API error:', errorText);
+  if (result.error) {
+    console.error('Brevo send error:', result.error.message);
     throw new Error('Failed to send email notification');
   }
-
   console.log('✅ Email notification sent to electrician');
 }
 
@@ -576,23 +567,14 @@ async function sendAcceptanceConfirmationEmail(
   `;
 
   try {
-    const response = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${resendApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: 'ElecMate <Founder@elec-mate.com>',
-        to: clientEmail,
-        subject: `Quote Accepted - Next Steps | ${quote.quote_number}`,
-        html: html,
-      }),
+    const result = await sendEmail({
+      from: 'Elec-Mate <founder@elec-mate.com>',
+      to: clientEmail,
+      subject: `Quote Accepted - Next Steps | ${quote.quote_number}`,
+      html,
     });
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('Failed to send acceptance confirmation:', errorText);
+    if (result.error) {
+      console.error('Failed to send acceptance confirmation:', result.error.message);
     } else {
       console.log('✅ Acceptance confirmation email sent to client');
     }
@@ -651,23 +633,14 @@ async function sendRejectionThankYouEmail(quote: any, clientEmail: string, clien
   `;
 
   try {
-    const response = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${resendApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: 'ElecMate <Founder@elec-mate.com>',
-        to: clientEmail,
-        subject: `Thank You for Your Consideration | ${quote.quote_number}`,
-        html: html,
-      }),
+    const result = await sendEmail({
+      from: 'Elec-Mate <founder@elec-mate.com>',
+      to: clientEmail,
+      subject: `Thank You for Your Consideration | ${quote.quote_number}`,
+      html,
     });
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('Failed to send rejection thank you:', errorText);
+    if (result.error) {
+      console.error('Failed to send rejection thank you:', result.error.message);
     } else {
       console.log('✅ Rejection thank you email sent to client');
     }

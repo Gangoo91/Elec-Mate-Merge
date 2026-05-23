@@ -26,7 +26,16 @@ serve(async (req) => {
 
     // Get request body
     const body = await req.json();
-    const { priceId, mode, planId, offerCode, referralCode } = body;
+    const { priceId, mode, planId, offerCode, referralCode, winbackCouponId } = body;
+
+    // Win-back coupons created in Stripe 2026-05-23 — only these IDs are
+    // accepted via the winback deep-link path. Anything else from the
+    // client is silently ignored to stop a tampered request applying
+    // arbitrary discounts.
+    const WINBACK_COUPONS_ALLOWED: Record<string, { plan: string; label: string }> = {
+      YhLPdvFl: { plan: 'apprentice', label: 'Apprentice win-back £3.99/mo' },
+      SSmqkZGn: { plan: 'electrician', label: 'Electrician win-back £9.99/mo' },
+    };
 
     // Per-plan trial duration in days. 0 = charge immediately, no trial.
     // Mate (business-ai) gets a 3-day trial; electrician/apprentice keep 7.
@@ -197,6 +206,30 @@ serve(async (req) => {
             hasStripeId: !!offer?.stripe_promotion_code_id,
           });
         }
+      }
+    }
+
+    // ── Win-back coupon (from email deep link) ────────────────────────
+    // Only honoured if:
+    //   1. The id is in the WINBACK_COUPONS_ALLOWED list (no tampering)
+    //   2. The plan being checked out matches the coupon's plan
+    //   3. No other discount has already been locked in this request
+    // Failure to satisfy any of these is silent — we just don't apply it.
+    if (!discounts && winbackCouponId) {
+      const allowed = WINBACK_COUPONS_ALLOWED[winbackCouponId];
+      if (allowed && planBase === allowed.plan) {
+        discounts = [{ coupon: winbackCouponId }];
+        logger.info('Win-back coupon applied at checkout', {
+          coupon: winbackCouponId,
+          label: allowed.label,
+          planBase,
+        });
+      } else {
+        logger.warn('Win-back coupon ignored', {
+          coupon: winbackCouponId,
+          planBase,
+          reason: !allowed ? 'not in allow-list' : 'plan mismatch',
+        });
       }
     }
 

@@ -6,6 +6,7 @@
 
 import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
+import { sendEmail } from '../_shared/mailer.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -185,26 +186,18 @@ serve(async (req: Request) => {
     // ========================================================================
     // STEP 7: Send via Resend
     // ========================================================================
-    const response = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${resendApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: 'Elec-Mate <noreply@elec-mate.com>',
-        to: electricianEmail,
-        subject: `Scope Signed — ${propertyAddress}`,
-        html,
-      }),
+    const result = await sendEmail({
+      from: 'Elec-Mate <noreply@elec-mate.com>',
+      to: electricianEmail,
+      subject: `Scope Signed — ${propertyAddress}`,
+      html,
     });
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('❌ Resend API error:', errorText);
+    if (result.error) {
+      console.error('❌ Brevo send error:', result.error.message);
       // Non-fatal: signing is already saved, notification is best-effort
       return new Response(
-        JSON.stringify({ success: true, emailSent: false, reason: 'Resend API error' }),
+        JSON.stringify({ success: true, emailSent: false, reason: 'Brevo send error' }),
         {
           status: 200,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -212,8 +205,7 @@ serve(async (req: Request) => {
       );
     }
 
-    const result = await response.json();
-    console.log(`✅ Signing notification sent to ${electricianEmail} | Resend ID: ${result.id}`);
+    console.log(`✅ Signing notification sent to ${electricianEmail} | Brevo msgId: ${result.data?.id}`);
 
     return new Response(JSON.stringify({ success: true, emailSent: true }), {
       status: 200,

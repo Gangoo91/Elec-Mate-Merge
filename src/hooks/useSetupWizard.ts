@@ -17,6 +17,12 @@ interface SetupWizardData {
   accentColor: string;
 }
 
+interface ApprenticeProfileData {
+  apprenticeCourse: string;
+  apprenticeYear: string;
+  apprenticeCollege: string;
+}
+
 export function useSetupWizard() {
   const queryClient = useQueryClient();
 
@@ -106,6 +112,39 @@ export function useSetupWizard() {
     },
   });
 
+  // Apprentice fast-path. Writes course/year/college straight to profiles
+  // and skips the company_profiles table entirely — apprentices don't have
+  // a business yet and we shouldn't pretend they do.
+  const saveApprenticeProfile = useMutation({
+    mutationFn: async (data: ApprenticeProfileData) => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
+
+      const { error } = await supabase
+        .from('profiles')
+        .update({
+          apprentice_course: data.apprenticeCourse || null,
+          apprentice_year: data.apprenticeYear || null,
+          apprentice_college: data.apprenticeCollege?.trim() || null,
+        })
+        .eq('id', user.id);
+
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['profile'] });
+    },
+    onError: (error) => {
+      toast({
+        title: 'Failed to save',
+        description: error.message,
+        variant: 'destructive',
+      });
+    },
+  });
+
   const completeOnboarding = useMutation({
     mutationFn: async () => {
       const {
@@ -123,15 +162,17 @@ export function useSetupWizard() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['profile'] });
       toast({
-        title: 'Setup complete!',
-        description: 'You can now start creating quotes and invoices.',
+        title: "You're all set",
+        description: 'Welcome to Elec-Mate.',
       });
     },
   });
 
   return {
     saveData: saveData.mutateAsync,
+    saveApprenticeProfile: saveApprenticeProfile.mutateAsync,
     completeOnboarding: completeOnboarding.mutateAsync,
-    isLoading: saveData.isPending || completeOnboarding.isPending,
+    isLoading:
+      saveData.isPending || saveApprenticeProfile.isPending || completeOnboarding.isPending,
   };
 }

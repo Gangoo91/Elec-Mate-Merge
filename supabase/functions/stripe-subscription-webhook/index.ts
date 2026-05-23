@@ -1525,16 +1525,84 @@ serve(async (req) => {
         }
 
         if (!hasOtherActiveSub) {
-          // Check if user previously had Business AI before deactivating
+          // Read pre-cancel profile state. We need:
+          //   - business_ai_enabled → deprovision agent below
+          //   - subscription_tier   → pick the right win-back coupon/copy
+          //   - full_name           → personalise win-back emails
           const { data: preProfile } = await supabase
             .from('profiles')
-            .select('business_ai_enabled, agent_status')
+            .select('business_ai_enabled, agent_status, subscription_tier, full_name')
             .eq('id', userId)
             .single();
 
           const previouslyHadBusinessAI = preProfile?.business_ai_enabled === true;
+          const cancelledTier = preProfile?.subscription_tier ?? null;
+          const cancelledFullName = preProfile?.full_name ?? null;
 
           await updateSubscriptionStatus(userId, false, customerId, null, null);
+
+          // ── Win-back queue enqueue ─────────────────────────────────────
+          // Fire-and-forget: 3 touches (day +1, +7, +30). Failure here must
+          // not break the webhook — that would leave Stripe retrying us
+          // forever. We try, log, and move on.
+          try {
+            const trialEnd = subscription.trial_end
+              ? new Date(subscription.trial_end * 1000)
+              : null;
+            const cancelledAt = subscription.canceled_at
+              ? new Date(subscription.canceled_at * 1000)
+              : new Date();
+            const wasTrial = !!trialEnd && cancelledAt < trialEnd;
+
+            // Email lives on auth.users, not profiles
+            const { data: authUserData } = await supabase.auth.admin.getUserById(userId);
+            const email = authUserData?.user?.email ?? null;
+
+            if (!email) {
+              logger.warn('Win-back skipped — no email on auth user', { userId });
+            } else {
+              const now = cancelledAt.getTime();
+              const ONE_DAY = 24 * 60 * 60 * 1000;
+              const rows = [
+                { touch: 1, delayDays: 1 },
+                { touch: 2, delayDays: 7 },
+                { touch: 3, delayDays: 30 },
+              ].map((t) => ({
+                user_id: userId,
+                email,
+                full_name: cancelledFullName,
+                tier: cancelledTier ?? 'unknown',
+                stripe_customer_id: customerId,
+                was_trial: wasTrial,
+                cancelled_at: cancelledAt.toISOString(),
+                touch_number: t.touch,
+                scheduled_for: new Date(now + t.delayDays * ONE_DAY).toISOString(),
+                status: 'pending',
+              }));
+
+              const { error: enqueueError } = await supabase
+                .from('winback_queue')
+                .insert(rows);
+
+              if (enqueueError) {
+                logger.warn('Win-back enqueue failed (non-fatal)', {
+                  userId,
+                  error: enqueueError.message,
+                });
+              } else {
+                logger.info('Win-back queued — 3 touches', {
+                  userId,
+                  tier: cancelledTier,
+                  wasTrial,
+                });
+              }
+            }
+          } catch (winbackErr) {
+            logger.warn('Win-back enqueue threw (non-fatal)', {
+              userId,
+              error: (winbackErr as Error)?.message,
+            });
+          }
 
           // Deactivate WhatsApp agent and revoke JWT if user had Business AI
           if (previouslyHadBusinessAI) {

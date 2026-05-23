@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/dialog';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
+import { ApprenticeQuickStep } from './steps/ApprenticeQuickStep';
 import { BankDetailsStep } from './steps/BankDetailsStep';
 import { BrandingStep } from './steps/BrandingStep';
 import { CompanyNameStep } from './steps/CompanyNameStep';
@@ -22,21 +23,35 @@ interface SetupWizardProps {
   isOpen: boolean;
   onComplete: () => void;
   onSkip: () => void;
+  /**
+   * User's role from profile. Apprentices skip the company/banking/branding
+   * wizard and only answer a single course question — they're not running a
+   * business, asking for their VAT number is friction for no reason.
+   */
+  role?: string | null;
 }
 
-const STEPS = [
+const BUSINESS_STEPS = [
   { id: 'company', title: 'Company', component: CompanyNameStep },
   { id: 'contact', title: 'Contact', component: ContactDetailsStep },
   { id: 'banking', title: 'Banking', component: BankDetailsStep },
   { id: 'branding', title: 'Branding', component: BrandingStep },
 ];
 
-export function SetupWizard({ isOpen, onComplete, onSkip }: SetupWizardProps) {
+const APPRENTICE_STEPS = [
+  { id: 'apprentice', title: 'Your course', component: ApprenticeQuickStep },
+];
+
+export function SetupWizard({ isOpen, onComplete, onSkip, role }: SetupWizardProps) {
+  const isApprentice = role === 'apprentice';
+  const STEPS = isApprentice ? APPRENTICE_STEPS : BUSINESS_STEPS;
+
   const [currentStep, setCurrentStep] = useState(0);
-  const { saveData, completeOnboarding, isLoading } = useSetupWizard();
+  const { saveData, saveApprenticeProfile, completeOnboarding, isLoading } = useSetupWizard();
   const isMobile = useMediaQuery('(max-width: 640px)');
 
   const [formData, setFormData] = useState({
+    // Business fields (electrician / employer)
     companyName: '',
     email: '',
     phone: '',
@@ -49,11 +64,28 @@ export function SetupWizard({ isOpen, onComplete, onSkip }: SetupWizardProps) {
     logoFile: null as File | null,
     primaryColor: '#FFDB58',
     accentColor: '#1F2937',
+
+    // Apprentice fast-path fields
+    apprenticeCourse: '',
+    apprenticeYear: '',
+    apprenticeCollege: '',
   });
+
+  const persistCurrentStep = async () => {
+    if (isApprentice) {
+      await saveApprenticeProfile({
+        apprenticeCourse: formData.apprenticeCourse,
+        apprenticeYear: formData.apprenticeYear,
+        apprenticeCollege: formData.apprenticeCollege,
+      });
+    } else {
+      await saveData(formData);
+    }
+  };
 
   const handleNext = async () => {
     try {
-      await saveData(formData);
+      await persistCurrentStep();
       setCurrentStep((prev) => Math.min(prev + 1, STEPS.length - 1));
     } catch (error) {
       console.error('Failed to save data:', error);
@@ -75,7 +107,7 @@ export function SetupWizard({ isOpen, onComplete, onSkip }: SetupWizardProps) {
 
   const handleComplete = async () => {
     try {
-      await saveData(formData);
+      await persistCurrentStep();
       await completeOnboarding();
       onComplete();
     } catch (error) {
@@ -99,35 +131,39 @@ export function SetupWizard({ isOpen, onComplete, onSkip }: SetupWizardProps) {
             Welcome to <span className="text-yellow-400">Elec-Mate.</span>
           </h2>
           <p className="mt-2 text-[14px] leading-[1.6] text-white sm:text-[15px]">
-            Four quick steps so your certificates, quotes and invoices are ready to send.
+            {isApprentice
+              ? 'One quick question so we can line up the right tests, flashcards and AI mentor for your level.'
+              : 'Four quick steps so your certificates, quotes and invoices are ready to send.'}
           </p>
 
-          {/* Progress bar — matches SignUp StepBar */}
-          <div className="mt-7">
-            <div className="flex gap-2">
-              {STEPS.map((s, i) => (
-                <div key={s.id} className="flex-1">
-                  <div className="h-[3px] overflow-hidden rounded-full bg-white/[0.10]">
-                    <motion.div
-                      className="h-full rounded-full bg-yellow-400"
-                      initial={false}
-                      animate={{
-                        width: i < currentStep ? '100%' : i === currentStep ? '50%' : '0%',
-                      }}
-                      transition={{ duration: 0.3, ease: 'easeOut' }}
-                    />
+          {/* Progress bar — hidden when there's only one step (apprentice fast-path) */}
+          {STEPS.length > 1 && (
+            <div className="mt-7">
+              <div className="flex gap-2">
+                {STEPS.map((s, i) => (
+                  <div key={s.id} className="flex-1">
+                    <div className="h-[3px] overflow-hidden rounded-full bg-white/[0.10]">
+                      <motion.div
+                        className="h-full rounded-full bg-yellow-400"
+                        initial={false}
+                        animate={{
+                          width: i < currentStep ? '100%' : i === currentStep ? '50%' : '0%',
+                        }}
+                        transition={{ duration: 0.3, ease: 'easeOut' }}
+                      />
+                    </div>
+                    <span
+                      className={`mt-2 block text-center text-[12px] font-medium transition-colors sm:text-[13px] ${
+                        i === currentStep ? 'text-yellow-400' : 'text-white'
+                      }`}
+                    >
+                      {s.title}
+                    </span>
                   </div>
-                  <span
-                    className={`mt-2 block text-center text-[12px] font-medium transition-colors sm:text-[13px] ${
-                      i === currentStep ? 'text-yellow-400' : 'text-white'
-                    }`}
-                  >
-                    {s.title}
-                  </span>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
 
@@ -178,7 +214,7 @@ export function SetupWizard({ isOpen, onComplete, onSkip }: SetupWizardProps) {
                 Saving
               </>
             ) : isLastStep ? (
-              'Finish setup'
+              isApprentice ? "Let's go" : 'Finish setup'
             ) : (
               'Next'
             )}

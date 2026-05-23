@@ -12,6 +12,7 @@ import {
 import FeatureComparison from '@/components/subscriptions/FeatureComparison';
 import SubscriptionFAQ from '@/components/subscriptions/SubscriptionFAQ';
 import SupportSection from '@/components/subscriptions/SupportSection';
+import { CancelFlow } from '@/components/subscription/CancelFlow';
 import { useRevenueCat } from '@/hooks/useRevenueCat';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/components/ui/use-toast';
@@ -70,7 +71,37 @@ const Subscriptions = () => {
   const [searchParams] = useSearchParams();
   const wasCancelled = searchParams.get('cancelled') === '1';
 
+  // ── Win-back deep link ────────────────────────────────────────────────
+  // Email CTAs from the win-back sequence (touch 2 / touch 3) land here
+  // with ?winback=apprentice|electrician. We surface a banner and pre-load
+  // the coupon so checkout pre-applies it automatically.
+  const winbackParam = searchParams.get('winback');
+  const winbackCoupon: { id: string; tier: string; newPrice: string } | null =
+    winbackParam === 'apprentice'
+      ? { id: 'YhLPdvFl', tier: 'apprentice', newPrice: '£3.99' }
+      : winbackParam === 'electrician'
+        ? { id: 'SSmqkZGn', tier: 'electrician', newPrice: '£9.99' }
+        : null;
+
+  // Annual is the default — saves the user ~17% (≈2 months free), locks in
+  // cash flow and mechanically cuts churn vs monthly. Toggle still surfaced
+  // for users who want monthly.
+  // Monthly is the default — at our stage maximising trial starts beats
+  // optimising LTV. Yearly stays one tap away with "Save 2 months" badge
+  // so it's discoverable, but the entry friction is the lowest possible.
+  // Revisit defaulting to yearly once activation + churn are healthy.
   const [billing, setBilling] = useState<'monthly' | 'yearly'>('monthly');
+
+  // Cancel-prevention flow state. We look up the user's stripe sub id on
+  // demand (via get-billing-context) the moment they click "Cancel" so we
+  // don't have to keep it in client state in the meantime.
+  const [cancelFlow, setCancelFlow] = useState<{
+    open: boolean;
+    subscriptionId: string | null;
+    tier: string | null;
+    managedBy: 'stripe' | 'apple' | 'google' | 'unknown' | null;
+  }>({ open: false, subscriptionId: null, tier: null, managedBy: null });
+  const [isPreparingCancel, setIsPreparingCancel] = useState(false);
   const [isPortalLoading, setIsPortalLoading] = useState(false);
   const [isLoading, setIsLoading] = useState<Record<string, boolean>>({});
   const [waitlistJoined, setWaitlistJoined] = useState<Record<WaitlistPlan, boolean>>({
@@ -250,8 +281,14 @@ const Subscriptions = () => {
       }
 
       // Path B: brand new subscriber → standard Stripe checkout.
+      // If we arrived via a win-back deep link AND the plan matches the
+      // discounted tier, pass the coupon id through so create-checkout
+      // applies it as a `discounts: [{ coupon }]` at session create time.
+      const winbackCouponId =
+        winbackCoupon && planId.startsWith(winbackCoupon.tier) ? winbackCoupon.id : undefined;
+
       const { data, error } = await supabase.functions.invoke('create-checkout', {
-        body: { priceId, mode: 'subscription', planId, offerCode },
+        body: { priceId, mode: 'subscription', planId, offerCode, winbackCouponId },
       });
       if (error) throw new Error(error.message);
       if (data?.url) {
@@ -281,6 +318,79 @@ const Subscriptions = () => {
       });
     } finally {
       setIsLoading((prev) => ({ ...prev, [planId]: false }));
+    }
+  };
+
+  // ── Cancel-prevention flow ────────────────────────────────────────────────
+  // Looks up the user's active Stripe sub on demand and opens the CancelFlow
+  // modal. For App Store / Play Store subscriptions we cannot cancel from the
+  // server — redirect the user to their device's subscription manager instead.
+  const handleStartCancel = async () => {
+    try {
+      setIsPreparingCancel(true);
+
+      // Founder / free-access grant — there's no billing to cancel. Show
+      // a clear message instead of the generic "no active sub" error.
+      if (profile?.free_access_granted) {
+        toast({
+          title: "You're on free access",
+          description:
+            "There's no billing to cancel — you've been granted full access. Email founder@elec-mate.com if you want it revoked.",
+        });
+        return;
+      }
+
+      if (isNative) {
+        const platform = Capacitor.getPlatform();
+        const url =
+          platform === 'ios'
+            ? 'https://apps.apple.com/account/subscriptions'
+            : 'https://play.google.com/store/account/subscriptions';
+        openExternalUrl(url);
+        toast({
+          title: 'Cancel from your device',
+          description:
+            platform === 'ios'
+              ? "Apple needs you to cancel from Settings → Apple ID → Subscriptions. We've opened it for you."
+              : "Google needs you to cancel from Play Store → Subscriptions. We've opened it for you.",
+        });
+        return;
+      }
+
+      const { data, error } = await supabase.functions.invoke('get-billing-context');
+      if (error) throw new Error(error.message);
+      if (!data?.ok) throw new Error(data?.error || 'Could not load your billing info');
+
+      if (!data.has_active_subscription || !data.subscription_id) {
+        // No live Stripe sub. Two common cases:
+        //  - User cancelled previously and the UI is stale
+        //  - User subscribed via the mobile store and we can't see the sub from web
+        toast({
+          title: 'No active web subscription',
+          description:
+            data.stripe_customer_id
+              ? 'Your previous subscription has already ended. If you think this is wrong, email founder@elec-mate.com.'
+              : "If you subscribed through the iOS or Android app, cancel from your device's subscription manager. Otherwise email founder@elec-mate.com.",
+          variant: 'destructive',
+        });
+        return;
+      }
+
+      setCancelFlow({
+        open: true,
+        subscriptionId: data.subscription_id,
+        tier: data.tier ?? subscriptionTier ?? null,
+        managedBy: data.managed_by ?? 'stripe',
+      });
+    } catch (err) {
+      console.error('[Subscriptions] start cancel failed', err);
+      toast({
+        title: 'Could not start cancellation',
+        description: err instanceof Error ? err.message : 'Please try again',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsPreparingCancel(false);
     }
   };
 
@@ -432,6 +542,24 @@ const Subscriptions = () => {
           </p>
         )}
 
+        {/* Win-back deep-link banner */}
+        {winbackCoupon && !isSubscribed && (
+          <div className="rounded-2xl border border-yellow-400/40 bg-gradient-to-br from-yellow-400/[0.10] via-yellow-400/[0.04] to-transparent px-5 py-4">
+            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-yellow-300">
+              Welcome back
+            </p>
+            <p className="mt-1.5 text-[16px] sm:text-[17px] font-semibold leading-snug text-white">
+              Your win-back price of{' '}
+              <span className="text-yellow-400">{winbackCoupon.newPrice}/month</span> is locked in.
+            </p>
+            <p className="mt-1 text-[13px] leading-relaxed text-white/70">
+              Pick the{' '}
+              <span className="capitalize">{winbackCoupon.tier}</span> plan below — the discount
+              applies automatically at checkout and stays for as long as you stay subscribed.
+            </p>
+          </div>
+        )}
+
         {/* Where-to-manage notice */}
         <div className="rounded-xl border border-blue-500/20 bg-blue-500/[0.06] px-4 py-3">
           <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-blue-300 mb-1">
@@ -494,6 +622,45 @@ const Subscriptions = () => {
                   </Button>
                 </div>
               </div>
+
+              {/* Subtle cancel link — discoverable, never adversarial.
+                  Hidden for free-access (founder grant) users since there's
+                  nothing to cancel — they'd get a confusing toast. */}
+              {!profile?.free_access_granted && (
+                <div className="mt-5 pt-5 border-t border-white/[0.06] flex items-center justify-between gap-4">
+                  <p className="text-[12px] text-white/45 leading-relaxed">
+                    Not feeling it? You can cancel any time — we&apos;ll keep your data safe.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={handleStartCancel}
+                    disabled={isPreparingCancel}
+                    className="touch-manipulation text-[13px] font-medium text-red-300/85 hover:text-red-300 disabled:opacity-50 whitespace-nowrap"
+                  >
+                    {isPreparingCancel ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      'Cancel subscription'
+                    )}
+                  </button>
+                </div>
+              )}
+
+              {/* Free-access notice in place of the cancel link */}
+              {profile?.free_access_granted && (
+                <div className="mt-5 pt-5 border-t border-white/[0.06]">
+                  <p className="text-[12px] text-white/55 leading-relaxed">
+                    You&apos;re on free access — no billing to cancel.{' '}
+                    <a
+                      href="mailto:founder@elec-mate.com?subject=Revoke%20free%20access"
+                      className="text-elec-yellow hover:underline"
+                    >
+                      Email founder@elec-mate.com
+                    </a>{' '}
+                    to revoke it.
+                  </p>
+                </div>
+              )}
             </div>
           </section>
         )}
@@ -548,7 +715,7 @@ const Subscriptions = () => {
           </div>
         )}
 
-        {/* Billing toggle — clean, non-sticky */}
+        {/* Billing toggle — annual is the default & most popular choice */}
         <div className="flex flex-col items-center gap-3">
           <div className="inline-flex items-center p-1 rounded-full border border-white/10 bg-white/[0.03]">
             <button
@@ -578,14 +745,20 @@ const Subscriptions = () => {
                 className={cn(
                   'text-[10px] font-bold px-1.5 py-0.5 rounded',
                   billing === 'yearly'
-                    ? 'bg-green-500/20 text-green-700'
+                    ? 'bg-green-500/25 text-green-300'
                     : 'bg-green-500/15 text-green-400'
                 )}
               >
-                −17%
+                Save 2 months
               </span>
             </button>
           </div>
+          {billing === 'yearly' && (
+            <p className="text-[12px] text-white/65 flex items-center gap-1.5">
+              <span className="inline-block h-1 w-1 rounded-full bg-green-400" />
+              Most sparks choose annual — costs less, fewer bills to chase
+            </p>
+          )}
         </div>
 
         {/* Row 1: Apprentice · Electrician · Mate */}
@@ -715,6 +888,24 @@ const Subscriptions = () => {
         <SubscriptionFAQ />
         <SupportSection />
       </div>
+
+      {/* ═════════ CANCEL-PREVENTION FLOW ═════════════════════════ */}
+      <CancelFlow
+        isOpen={cancelFlow.open}
+        subscriptionId={cancelFlow.subscriptionId}
+        tier={cancelFlow.tier}
+        firstName={profile?.full_name?.split(' ')[0] ?? null}
+        onClose={() =>
+          setCancelFlow({ open: false, subscriptionId: null, tier: null, managedBy: null })
+        }
+        onStayed={() => {
+          // Refetch so the new (discounted) price reflects in the UI.
+          window.location.reload();
+        }}
+        onCancelled={() => {
+          window.location.href = '/dashboard';
+        }}
+      />
 
       {/* ═════════ MATE PHONE-CAPTURE SHEET ═══════════════════════ */}
       <Sheet open={matePhoneSheetOpen} onOpenChange={setMatePhoneSheetOpen}>

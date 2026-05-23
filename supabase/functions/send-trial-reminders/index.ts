@@ -8,6 +8,7 @@
 
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { sendEmail as brevoSendEmail } from '../_shared/mailer.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -19,84 +20,137 @@ const TRIAL_DAYS = 7;
 const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');
 const FROM_EMAIL = 'Elec-Mate <noreply@elec-mate.com>';
 
+// Day-1 nudge is sent from the founder address so replies land in his
+// inbox — the whole point of this email is to invite conversation, not
+// to bounce off noreply@.
+const FOUNDER_FROM = 'Andrew at Elec-Mate <founder@elec-mate.com>';
+const FOUNDER_REPLY_TO = 'founder@elec-mate.com';
+
 interface EmailTemplate {
   subject: string;
   html: string;
+  text?: string;
+  from?: string;
+  replyTo?: string;
 }
 
+/**
+ * Day-1 nudge.
+ *
+ * REWRITTEN 2026-05-23. The previous version pitched the launch price 24h
+ * in. The new version pushes activation — the single biggest leak in the
+ * funnel is that 80% of new signups never generate a single cert. Get them
+ * to ship one and trial→paid follows naturally.
+ *
+ * Founder voice. One CTA. Plain text fallback. Reply-to inbox.
+ */
 function getWelcome24hEmail(firstName: string): EmailTemplate {
+  // NB: ampersands are escaped (&amp;) when inlined into href attributes
+  // below — raw & between query params makes Gmail strip the link.
+  const ctaUrl = 'https://www.elec-mate.com/electrician/inspection-testing?utm_source=email&utm_medium=lifecycle&utm_campaign=day1_activation';
+  const ctaHref = ctaUrl.replace(/&/g, '&amp;');
+  const safeName = firstName?.trim() || 'mate';
+
   return {
-    subject: 'Welcome to Elec-Mate! Lock in your launch price',
+    subject: 'Make your first cert in 90 seconds, ' + safeName,
+    from: FOUNDER_FROM,
+    replyTo: FOUNDER_REPLY_TO,
+    text: [
+      `Hi ${safeName},`,
+      '',
+      "Andrew here — I'm a working sparky and I built Elec-Mate because I was sick of bouncing between five apps to bill one job.",
+      '',
+      "You signed up yesterday. Today I want to help you generate your first certificate. It takes about 90 seconds. Once you've done one, you'll see how the whole app works:",
+      '',
+      ctaUrl,
+      '',
+      "If something's confusing or broken, just hit reply on this email. It goes straight to me. I read every one and usually reply the same day.",
+      '',
+      "Andrew",
+      "Founder, Elec-Mate",
+      '',
+      "P.S. Most sparks who do their first cert in the first 48 hours stick around. The trick is getting that first one shipped before the trial ends — the rest takes care of itself.",
+    ].join('\n'),
     html: `
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Make your first cert in 90 seconds</title>
 </head>
-<body style="margin: 0; padding: 0; background-color: #0a0a0a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+<body style="margin: 0; padding: 0; background-color: #0a0a0a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #e4e4e7;">
+  <span style="display:none !important; visibility:hidden; mso-hide:all; font-size:1px; color:#0a0a0a; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden;">
+    90 seconds to ship your first EICR — Andrew (Elec-Mate founder) shows you how.
+  </span>
   <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #0a0a0a;">
     <tr>
-      <td align="center" style="padding: 40px 20px;">
-        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width: 600px; background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%); border-radius: 16px; overflow: hidden; border: 1px solid #333;">
+      <td align="center" style="padding: 32px 16px;">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width: 560px; background-color: #111111; border-radius: 16px; overflow: hidden; border: 1px solid #262626;">
 
-          <!-- Header -->
+          <!-- Header / Logo -->
           <tr>
-            <td style="padding: 32px 24px; text-align: center; border-bottom: 1px solid #333;">
-              <h1 style="margin: 0; font-size: 28px; font-weight: 700; color: #facc15;">⚡ Elec-Mate</h1>
+            <td style="padding: 32px 28px 12px; text-align: center;">
+              <img src="https://www.elec-mate.com/logo.jpg" alt="Elec-Mate" width="120" style="display: block; margin: 0 auto; max-width: 120px; height: auto; border: 0;" />
             </td>
           </tr>
 
-          <!-- Content -->
+          <!-- Body -->
           <tr>
-            <td style="padding: 32px 24px;">
-              <h2 style="margin: 0 0 16px; font-size: 24px; font-weight: 600; color: #ffffff;">Welcome, ${firstName}!</h2>
+            <td style="padding: 16px 28px 8px;">
+              <h1 style="margin: 0 0 20px; font-size: 26px; font-weight: 700; line-height: 1.2; color: #ffffff; letter-spacing: -0.01em;">
+                Make your first cert in 90 seconds, ${safeName}.
+              </h1>
 
-              <p style="margin: 0 0 20px; font-size: 16px; line-height: 1.6; color: #a1a1aa;">
-                Thanks for joining Elec-Mate. You now have <strong style="color: #facc15;">7 days of full access</strong> to explore everything:
+              <p style="margin: 0 0 18px; font-size: 16px; line-height: 1.65; color: #ffffff;">
+                Andrew here — I built Elec-Mate because I was sick of bouncing between five apps to bill one job.
               </p>
 
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 24px;">
+              <p style="margin: 0 0 28px; font-size: 16px; line-height: 1.65; color: #ffffff;">
+                You signed up yesterday. Today I want to help you ship your first certificate. Takes about 90 seconds, and once you've done one you'll see how the whole app fits together.
+              </p>
+
+              <!-- Single CTA -->
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 28px;">
                 <tr>
-                  <td style="padding: 12px 16px; background: rgba(250, 204, 21, 0.1); border-radius: 8px; border-left: 3px solid #facc15;">
-                    <p style="margin: 0; font-size: 14px; color: #ffffff;">
-                      ✓ EICR & Electrical Certificates<br>
-                      ✓ AI-Powered Tools & Calculators<br>
-                      ✓ Quote & Invoice Builder<br>
-                      ✓ Study Centre & Training
+                  <td align="center">
+                    <a href="${ctaHref}" style="display: inline-block; padding: 16px 32px; background-color: #facc15; color: #0a0a0a; text-decoration: none; font-weight: 700; font-size: 16px; border-radius: 12px; letter-spacing: -0.01em;">
+                      Start my first cert →
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Founder note -->
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin: 8px 0 24px;">
+                <tr>
+                  <td style="padding: 18px 20px; background-color: rgba(250, 204, 21, 0.06); border-left: 3px solid #facc15; border-radius: 8px;">
+                    <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #ffffff;">
+                      <strong style="color: #facc15;">Stuck on anything?</strong> Just hit reply. This email goes straight to my inbox — I read every one and usually reply the same day.
                     </p>
                   </td>
                 </tr>
               </table>
 
-              <div style="padding: 20px; background: linear-gradient(135deg, #facc15 0%, #f59e0b 100%); border-radius: 12px; text-align: center; margin-bottom: 24px;">
-                <p style="margin: 0 0 8px; font-size: 14px; font-weight: 600; color: #000000; text-transform: uppercase;">Launch Price - Limited Time</p>
-                <p style="margin: 0; font-size: 32px; font-weight: 700; color: #000000;">£6.99<span style="font-size: 16px; font-weight: 400;">/month</span></p>
-                <p style="margin: 8px 0 0; font-size: 13px; color: #000000;">Or £69.99/year (save 17%)</p>
-              </div>
-
-              <p style="margin: 0 0 24px; font-size: 14px; color: #71717a; text-align: center;">
-                This price won't last forever. Lock it in before your trial ends!
+              <p style="margin: 0 0 4px; font-size: 16px; line-height: 1.65; color: #ffffff;">
+                Andrew
+              </p>
+              <p style="margin: 0 0 24px; font-size: 14px; line-height: 1.5; color: #ffffff;">
+                Founder, Elec-Mate
               </p>
 
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
-                <tr>
-                  <td align="center">
-                    <a href="https://elec-mate.com/subscriptions" style="display: inline-block; padding: 16px 32px; background: linear-gradient(135deg, #facc15 0%, #f59e0b 100%); color: #000000; text-decoration: none; font-weight: 600; font-size: 16px; border-radius: 10px;">
-                      Subscribe & Save
-                    </a>
-                  </td>
-                </tr>
-              </table>
+              <p style="margin: 0 0 4px; font-size: 14px; line-height: 1.65; color: #ffffff;">
+                <strong style="color: #facc15;">P.S.</strong> Most sparks who ship their first cert in the first 48 hours stick around. The trick is getting that first one done before the trial ends — the rest takes care of itself.
+              </p>
             </td>
           </tr>
 
           <!-- Footer -->
           <tr>
-            <td style="padding: 24px; border-top: 1px solid #333; text-align: center;">
-              <p style="margin: 0; font-size: 13px; color: #71717a;">
-                Questions? Just reply to this email.<br>
-                <a href="https://elec-mate.com" style="color: #facc15; text-decoration: none;">elec-mate.com</a>
+            <td style="padding: 24px 28px 28px;">
+              <p style="margin: 0; font-size: 12px; line-height: 1.5; color: #ffffff; text-align: center;">
+                You're getting this because you started a 7-day free trial of Elec-Mate.<br>
+                <a href="https://www.elec-mate.com" style="color: #ffffff; text-decoration: underline;">elec-mate.com</a>
               </p>
             </td>
           </tr>
@@ -283,37 +337,22 @@ function getTrialEndedEmail(firstName: string): EmailTemplate {
 }
 
 async function sendEmail(to: string, template: EmailTemplate): Promise<boolean> {
-  if (!RESEND_API_KEY) {
-    console.error('RESEND_API_KEY not configured');
+  // Brevo via _shared/mailer.ts shim. Resend was banned at domain level —
+  // Brevo is the sole supported provider. Per-template from/replyTo still
+  // honoured (founder-voice emails route replies to founder@elec-mate.com).
+  const result = await brevoSendEmail({
+    from: template.from ?? FROM_EMAIL,
+    to,
+    subject: template.subject,
+    html: template.html,
+    text: template.text,
+    replyTo: template.replyTo,
+  });
+  if (result.error) {
+    console.error('Brevo send error:', result.error.message);
     return false;
   }
-
-  try {
-    const response = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${RESEND_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: FROM_EMAIL,
-        to: [to],
-        subject: template.subject,
-        html: template.html,
-      }),
-    });
-
-    if (!response.ok) {
-      const error = await response.json();
-      console.error('Resend API error:', error);
-      return false;
-    }
-
-    return true;
-  } catch (error) {
-    console.error('Error sending email:', error);
-    return false;
-  }
+  return true;
 }
 
 serve(async (req) => {
