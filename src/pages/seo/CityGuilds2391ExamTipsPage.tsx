@@ -293,9 +293,12 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Practise the practical assessment with the EPA simulator"
-          description="Elec-Mate's EPA simulator walks you through a simulated inspection and testing practical — safe isolation, test sequence, result recording…"
+          title="Free C&G 2391 mock exam — 300-question bank"
+          description="Sit a free 2391 Inspection & Testing mock exam now: 30 random questions from a 300-question bank, 90-minute timer. Covers initial verification, periodic inspection, EICR coding, RCD testing, GN3 procedures. No sign-up."
           icon={Wrench}
+          ctaText="Start the 2391 mock exam →"
+          ctaHref="/mock-exams/2391-inspection-testing"
+          showStoreBadges={false}
         />
       </>
     ),

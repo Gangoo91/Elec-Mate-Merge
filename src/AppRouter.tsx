@@ -5,6 +5,7 @@ import { LazyRoute } from '@/components/LazyRoute';
 import { lazyWithRetry } from '@/utils/lazyWithRetry';
 import { useAuth } from '@/contexts/AuthContext';
 import { getSEORoutes } from '@/routes/SEORoutes';
+import MockExamRoutes from '@/routes/MockExamRoutes';
 import { SentryErrorBoundary } from '@/components/common/SentryErrorBoundary';
 
 // Core components that should load immediately (small, critical path)
@@ -55,9 +56,7 @@ const InvoiceMarkPaid = lazy(() => import('@/pages/public/InvoiceMarkPaid'));
 // so we share one availability source + UX. Old /book-slot/:quoteId
 // route kept around as a redirect target so already-sent emails / Stripe
 // success_urls that reference the old path don't 404.
-const BookingSlotPickerRedirect = lazy(
-  () => import('@/pages/public/BookingSlotRedirect')
-);
+const BookingSlotPickerRedirect = lazy(() => import('@/pages/public/BookingSlotRedirect'));
 const ForCollegesPage = lazy(() => import('@/pages/public/ForCollegesPage'));
 const LaTeXPDFGeneratorPage = lazy(() => import('@/pages/LaTeXPDFGeneratorPage'));
 const InvoiceQuoteBuilder = lazy(() => import('@/pages/electrician/InvoiceQuoteBuilder'));
@@ -1373,6 +1372,9 @@ const AppRouter = () => {
 
         {/* SEO Pages — Additional (from SEORoutes.tsx) */}
         {getSEORoutes()}
+
+        {/* Free mock exam hub — public, unauthenticated, 25 pages + hub. */}
+        <Route path="/mock-exams/*" element={<MockExamRoutes />} />
 
         {/* Legacy/Direct Access Routes - Redirect to proper paths */}
         <Route

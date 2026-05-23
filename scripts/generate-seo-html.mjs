@@ -25,6 +25,9 @@ const ROOT = join(__dirname, '..');
 const DIST = join(ROOT, 'dist');
 const SEO_ROUTES_FILE = join(ROOT, 'src/routes/SEORoutes.tsx');
 const SEO_PAGES_DIR = join(ROOT, 'src/pages/seo');
+const MOCK_EXAM_ROUTES_FILE = join(ROOT, 'src/routes/MockExamRoutes.tsx');
+const MOCK_EXAM_PAGES_DIR = join(ROOT, 'src/pages/mock-exams');
+const MOCK_EXAM_PREFIX = '/mock-exams';
 const BASE_URL = 'https://www.elec-mate.com';
 
 // ---------------------------------------------------------------------------
@@ -53,6 +56,24 @@ while ((match = routeRegex.exec(routesSource)) !== null) {
 
 console.log(`Found ${routeEntries.length} SEO routes in SEORoutes.tsx`);
 
+// Also parse MockExamRoutes.tsx. Its routes are relative (no leading slash)
+// because they're mounted under /mock-exams/* in AppRouter — prepend that.
+if (existsSync(MOCK_EXAM_ROUTES_FILE)) {
+  const mockSrc = readFileSync(MOCK_EXAM_ROUTES_FILE, 'utf-8');
+  let m;
+  // Match <Route path="X" element={wrap(ComponentName)} />
+  // and the special index route: <Route index element={wrap(HubPage)} />.
+  const mockRouteRegex = /<Route\s+(?:path="([^"]+)"|index)\s+element=\{wrap\((\w+)\)\}/g;
+  let mockCount = 0;
+  while ((m = mockRouteRegex.exec(mockSrc)) !== null) {
+    const sub = m[1]; // undefined for `index`
+    const path = sub ? `${MOCK_EXAM_PREFIX}/${sub}` : MOCK_EXAM_PREFIX;
+    routeEntries.push({ path, componentName: m[2] });
+    mockCount++;
+  }
+  console.log(`Found ${mockCount} mock-exam routes in MockExamRoutes.tsx`);
+}
+
 // ---------------------------------------------------------------------------
 // 3. Build a map of componentName → source file path
 //    Component names in SEORoutes.tsx map to files in src/pages/seo/
@@ -63,6 +84,12 @@ for (const file of seoFiles) {
   // File name without extension = component name (by convention)
   const name = file.replace('.tsx', '');
   fileMap.set(name, join(SEO_PAGES_DIR, file));
+}
+// Also map the mock-exam pages
+if (existsSync(MOCK_EXAM_PAGES_DIR)) {
+  for (const file of readdirSync(MOCK_EXAM_PAGES_DIR).filter((f) => f.endsWith('.tsx'))) {
+    fileMap.set(file.replace('.tsx', ''), join(MOCK_EXAM_PAGES_DIR, file));
+  }
 }
 
 // Also build from the lazy import lines for exact mapping:
@@ -88,6 +115,7 @@ const TEMPLATE_NAMES = [
   'ToolTemplate',
   'CourseTemplate',
   'BusinessTemplate',
+  'PublicMockExamPage',
 ];
 
 function extractMetadata(filePath) {
@@ -305,6 +333,111 @@ function generateHtml(templateHtml, { path: routePath, title, description }) {
   return html;
 }
 
+/**
+ * Inject extra JSON-LD schema blocks (LearningResource + BreadcrumbList +
+ * FAQPage) just before </head>. Helmet only renders client-side; for fast
+ * first-crawl indexing we need these in the static HTML too.
+ */
+function injectExtraSchemas(html, schemas) {
+  if (!schemas || schemas.length === 0) return html;
+  const blocks = schemas
+    .map((s) => `  <script type="application/ld+json">${JSON.stringify(s)}</script>`)
+    .join('\n');
+  return html.replace('</head>', `${blocks}\n  </head>`);
+}
+
+/**
+ * Build the mock-exam-specific JSON-LD schemas. We pre-render
+ * LearningResource (rich snippet eligibility), BreadcrumbList (sitelinks),
+ * and a basic FAQPage (PAA box capture) using only the page metadata —
+ * Quiz schema with sample questions still renders client-side via Helmet
+ * because pulling them in JS would mean parsing TypeScript banks here.
+ */
+function buildMockExamSchemas({ url, title, description, slug, isHub }) {
+  const schemas = [];
+  // LearningResource — the headline schema for a free educational resource
+  schemas.push({
+    '@context': 'https://schema.org',
+    '@type': 'LearningResource',
+    name: title,
+    description,
+    url,
+    learningResourceType: isHub ? 'Resource list' : 'Quiz',
+    educationalLevel: 'professional',
+    teaches: title,
+    isAccessibleForFree: true,
+    inLanguage: 'en-GB',
+    provider: {
+      '@type': 'Organization',
+      name: 'Elec-Mate',
+      url: BASE_URL,
+    },
+  });
+  // BreadcrumbList — Home > Mock Exams > Page
+  if (isHub) {
+    schemas.push({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
+        { '@type': 'ListItem', position: 2, name: 'Mock Exams', item: `${BASE_URL}/mock-exams` },
+      ],
+    });
+  } else {
+    schemas.push({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
+        { '@type': 'ListItem', position: 2, name: 'Mock Exams', item: `${BASE_URL}/mock-exams` },
+        { '@type': 'ListItem', position: 3, name: title, item: url },
+      ],
+    });
+  }
+  // FAQPage — basic, exam-format Q&As reusable across every page
+  if (!isHub) {
+    schemas.push({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: `Is the ${title.replace(/Free|Mock Exam|2026|UK/gi, '').trim() || 'mock exam'} free?`,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Yes. This mock exam is 100% free with no sign-up required. Questions are pulled at random from a substantial question bank, with worked answer explanations on every question after submit.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Can I retake the mock exam?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Yes — every attempt picks a different random selection of questions from the bank, so each retake gives you new questions. No limit on retakes.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Does the score on this mock exam count towards the real qualification?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'No. This is independent practice material for revision purposes only. To gain the actual qualification you need to take the real assessment through an approved provider.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'What happens if I get a question wrong?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'After you submit the exam you see your overall score, a per-topic breakdown bar chart, and a worked explanation on every question — including why the correct answer is right.',
+          },
+        },
+      ],
+    });
+  }
+  return schemas;
+}
+
 // ---------------------------------------------------------------------------
 // 6. Main — iterate routes, extract metadata, write files
 // ---------------------------------------------------------------------------
@@ -333,11 +466,27 @@ for (const { path: routePath, componentName } of routeEntries) {
     fallback++;
   }
 
-  const html = generateHtml(template, {
+  let html = generateHtml(template, {
     path: routePath,
     title,
     description,
   });
+
+  // Mock-exam routes get extra schemas (LearningResource, BreadcrumbList,
+  // FAQPage) baked into the static HTML for first-crawl indexability.
+  const isMockExam = routePath === MOCK_EXAM_PREFIX || routePath.startsWith(`${MOCK_EXAM_PREFIX}/`);
+  if (isMockExam && title && description) {
+    const slug = routePath === MOCK_EXAM_PREFIX ? '' : routePath.slice(MOCK_EXAM_PREFIX.length + 1);
+    const url = `${BASE_URL}${routePath}`;
+    const schemas = buildMockExamSchemas({
+      url,
+      title: `${title} | Elec-Mate`,
+      description,
+      slug,
+      isHub: routePath === MOCK_EXAM_PREFIX,
+    });
+    html = injectExtraSchemas(html, schemas);
+  }
 
   // Write to dist/{path}/index.html
   const outDir = join(DIST, routePath);

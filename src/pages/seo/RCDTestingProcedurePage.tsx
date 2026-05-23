@@ -22,9 +22,9 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'RCD Testing Procedure | How to Test RCDs BS 7671';
+const PAGE_TITLE = 'RCD Trip Times UK 2026: 30mA, 100mA, 300mA (A4:2026)';
 const PAGE_DESCRIPTION =
-  'RCD testing procedure per BS 7671: half-rated (no trip), 1× (<300 ms), 5× (<40 ms for 30 mA), ramp, half-cycle, 0°/180°, time-delay, discrimination.';
+  'RCD trip times under BS 7671 A4:2026 Reg 643.7.3: 300 ms max for general type, 130-500 ms for Type S. Plus 30/100/300 mA, Type AC restriction, what changed in A4:2026.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -505,8 +505,8 @@ const sections = [
         <p>
           RCD test results are recorded on the schedule of test results attached to the{' '}
           <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-          <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>. For each RCD, you
-          must record the type (RCCB, RCBO, socket-outlet), the rated residual operating current
+          <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>. For each RCD, you must
+          record the type (RCCB, RCBO, socket-outlet), the rated residual operating current
           (typically 30 mA), and the trip times at each test level.
         </p>
         <p>

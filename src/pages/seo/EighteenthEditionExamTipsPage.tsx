@@ -330,9 +330,12 @@ const sections = [
           </ul>
         </div>
         <SEOAppBridge
-          title="Study smarter with the Elec-Mate study planner"
-          description="Elec-Mate's AI-powered study planner builds a personalised revision schedule for the 18th Edition exam."
+          title="Free 18th Edition (BS 7671 A4:2026) mock exam — start now"
+          description="Take a free 18th Edition mock exam right now: 30 questions from a 300-question bank, 60-minute timer, 70% pass mark. Covers Chapter 41 protection, RCDs, Section 722 EV charging, AFDDs, supplementary bonding, A4:2026 changes. No sign-up needed."
           icon={Brain}
+          ctaText="Start the 18th Edition mock →"
+          ctaHref="/mock-exams/18th-edition-bs-7671"
+          showStoreBadges={false}
         />
       </>
     ),

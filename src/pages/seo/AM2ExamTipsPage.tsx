@@ -416,9 +416,12 @@ const sections = [
           detailed feedback.
         </p>
         <SEOAppBridge
-          title="AM2 Fault Finding Tips — 2026 Pass Guide"
-          description="AM2 fault finding holding you back? Learn 50+ diagnostic scenarios to spot faults faster and pass first time. Real exam conditions, instant feedback."
+          title="Free AM2 online knowledge test mock — start now"
+          description="Sit a free AM2 Section E (online knowledge test) mock right now: 25 random questions, 60-minute timer, 70% pass mark. Covers H&S, BS 7671, safe isolation, inspection & testing, fault diagnosis. No sign-up."
           icon={Target}
+          ctaText="Start the AM2 online mock →"
+          ctaHref="/mock-exams/am2-online-knowledge-test"
+          showStoreBadges={false}
         />
       </>
     ),

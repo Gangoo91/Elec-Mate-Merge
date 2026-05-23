@@ -112,9 +112,12 @@ const sections = [
           , make mock exams the cornerstone of your revision.
         </p>
         <SEOAppBridge
-          title="2391 Mock Exam: Free Multiple Choice Tests"
-          description="Free 2391 mock exams with 100+ multiple choice questions. Instant marking, detailed answers, and progress tracking to pass first time."
+          title="Take free mock exams now — no sign-up needed"
+          description="25 free working mock exams: 18th Edition (300 Qs), 2391 (300 Qs), AM2 online (177 Qs), Level 2 + 3 by unit, plus 10 trade certs (CSCS, IPAF, PASMA, first aid, asbestos, working at height + more). Random selection each attempt, instant marking with worked answers."
           icon={BrainCircuit}
+          ctaText="Browse all 25 free mock exams →"
+          ctaHref="/mock-exams"
+          showStoreBadges={false}
         />
       </>
     ),

@@ -313,3 +313,4 @@ Sitemap: https://www.elec-mate.com/sitemap-training.xml
 Sitemap: https://www.elec-mate.com/sitemap-pages.xml
 Sitemap: https://www.elec-mate.com/sitemap-compare.xml
 Sitemap: https://www.elec-mate.com/sitemap-images.xml
+Sitemap: https://www.elec-mate.com/sitemap-mock-exams.xml

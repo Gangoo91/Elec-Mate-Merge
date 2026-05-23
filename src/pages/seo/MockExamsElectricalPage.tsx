@@ -260,9 +260,12 @@ const sections = [
           quickly. Tab your copy of BS 7671 for fast access to the sections you use most often.
         </p>
         <SEOAppBridge
-          title="18th Edition mock exams on your phone"
-          description="Elec-Mate's study centre includes mock exams for the C&G 2382, with detailed explanations linked to specific BS 7671 regulation numbers."
+          title="Free 18th Edition mock exam — 300 questions, no sign-up"
+          description="Take a free 18th Edition BS 7671 mock exam right now: 30 random questions from a 300-question bank, 60-minute timer, worked explanations on every answer linked to BS 7671 regulation numbers. Includes A4:2026 amendment topics."
           icon={Brain}
+          ctaText="Start the 18th Edition mock exam →"
+          ctaHref="/mock-exams/18th-edition-bs-7671"
+          showStoreBadges={false}
         />
       </>
     ),
