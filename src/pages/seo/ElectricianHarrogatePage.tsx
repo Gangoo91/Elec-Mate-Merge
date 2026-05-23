@@ -471,6 +471,7 @@ const sections = [
 export default function ElectricianHarrogatePage() {
   return (
     <GuideTemplate
+      noindex={true}
       localArea="Harrogate"
       title="Electrician in Harrogate | Local Electricians 2026"
       description="Find qualified electricians in Harrogate. NICEIC and NAPIT registered, Part P compliant. Yorkshire rates, Victorian property rewires, EICRs, EV chargers…"

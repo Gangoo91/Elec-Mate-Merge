@@ -465,6 +465,7 @@ const sections = [
 export default function ElectricianSunderlandPage() {
   return (
     <GuideTemplate
+      noindex={true}
       localArea="Sunderland"
       title="Electrician in Sunderland | Local Electricians 2026"
       description="Find qualified electricians in Sunderland. Part P compliance, Northern Powergrid DNO, NICEIC and NAPIT registered electricians, EICR costs…"

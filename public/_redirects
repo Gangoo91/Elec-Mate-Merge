@@ -64,3 +64,17 @@
 # split — cable-colour-codes-uk lost 17 positions WoW around this date.
 /guides/wiring-colours-uk                                    /guides/cable-colour-codes-uk 301!
 
+# polarity trio → /polarity-test-guide (canonical, rewritten 2026-05-22)
+# /polarity-test-guide        : 2,875 imp / 0.28% CTR / pos 9.0
+# /guides/polarity-testing-guide      : 702 imp / 0.71% CTR / pos 9.3  (dup)
+# /guides/polarity-testing-guide-bs7671: 0 imp (orphan)
+# Auto-clusterer missed both pairs; consolidating recovers ~700 imp/mo.
+/guides/polarity-testing-guide                               /polarity-test-guide 301!
+/guides/polarity-testing-guide-bs7671                        /polarity-test-guide 301!
+
+# continuity duplicate → /continuity-testing-guide (canonical, rewritten 2026-05-22)
+# /continuity-testing-guide                  : 2,305 imp / pos 7.7  (canonical)
+# /guides/continuity-testing-r1-r2           : 564 imp / pos 11.8   (KEEP — wins R1+R2-specific queries)
+# /guides/continuity-testing-electricians-guide: 518 imp / pos 9.6  (duplicate)
+/guides/continuity-testing-electricians-guide                /continuity-testing-guide 301!
+

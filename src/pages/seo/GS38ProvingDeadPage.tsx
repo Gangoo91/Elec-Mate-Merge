@@ -560,10 +560,10 @@ const sections = [
 export default function GS38ProvingDeadPage() {
   return (
     <GuideTemplate
-      title="GS 38 Proving Dead | HSE Test Equipment Rules 2026"
-      description="HSE Guidance Note GS 38 (4th ed) explained: voltage indicator + proving unit rules, 2-pole testers, 4 mm probe-tip limit, fused leads, prove-test-prove."
+      title="GS 38 Test Leads + Probes: HSE Rules for Proving Dead"
+      description="HSE GS 38 (4th ed) for UK electricians: 2-pole voltage indicator, proving unit, 4 mm probe tip + 500 mA HBC fused leads, prove-test-prove procedure, CAT III/IV."
       datePublished="2025-06-01"
-      dateModified="2026-05-18"
+      dateModified="2026-05-23"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

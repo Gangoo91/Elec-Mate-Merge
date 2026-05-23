@@ -466,6 +466,7 @@ const sections = [
 export default function ElectricianSloughPage() {
   return (
     <GuideTemplate
+      noindex={true}
       localArea="Slough"
       title="Electrician in Slough | Local Electricians 2026"
       description="Find qualified electricians in Slough. NICEIC and NAPIT registered, Part P compliant. South East rates, EICRs, consumer unit upgrades…"

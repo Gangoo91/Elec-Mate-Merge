@@ -459,6 +459,7 @@ const sections = [
 export default function ElectricianSwindonPage() {
   return (
     <GuideTemplate
+      noindex={true}
       localArea="Swindon"
       title="Electrician in Swindon | Local Electricians 2026"
       description="Find qualified electricians in Swindon. NICEIC and NAPIT registered, Part P compliant. Typical costs, EICRs, consumer unit upgrades, EV chargers…"

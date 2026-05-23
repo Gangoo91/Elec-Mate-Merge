@@ -465,6 +465,7 @@ const sections = [
 export default function ElectricianCheltenhamPage() {
   return (
     <GuideTemplate
+      noindex={true}
       localArea="Cheltenham"
       title="Electrician in Cheltenham | Local Electricians 2026"
       description="Find qualified electricians in Cheltenham. Part P compliance, NGED DNO, listed building consent, Regency property rewiring, EICR costs…"

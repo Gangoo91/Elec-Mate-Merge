@@ -507,6 +507,7 @@ const sections = [
 export default function ElectricianBradfordPage() {
   return (
     <GuideTemplate
+      noindex={true}
       localArea="Bradford"
       title="Electrician Bradford | Find Qualified Electricians in"
       description="Find qualified electricians in Bradford. NICEIC and NAPIT registered, Part P compliant. Bradford electrician rates, EICRs for landlords…"

@@ -510,6 +510,7 @@ const sections = [
 export default function ElectricianHuddersfieldPage() {
   return (
     <GuideTemplate
+      noindex={true}
       localArea="Huddersfield"
       title="Electrician Huddersfield | Local Electricians Huddersfield"
       description="Find qualified electricians in Huddersfield. NICEIC and NAPIT registered, Part P compliant. EICRs for landlords and HMOs, consumer unit replacement…"

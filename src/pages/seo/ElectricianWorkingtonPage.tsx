@@ -525,6 +525,7 @@ const sections = [
 export default function ElectricianWorkingtonPage() {
   return (
     <GuideTemplate
+      noindex={true}
       localArea="Workington"
       title="Electrician in Workington | Local Electricians 2026"
       description="Find qualified electricians in Workington, Cumbria. Industrial and chemical electrical work, Sellafield proximity, Electricity North West DNO…"

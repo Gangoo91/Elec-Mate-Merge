@@ -528,6 +528,7 @@ const sections = [
 export default function ElectricianChesterPage() {
   return (
     <GuideTemplate
+      noindex={true}
       localArea="Chester"
       title="Electrician in Chester | Local Electricians 2026"
       description="Find qualified electricians in Chester. Part P compliance, NICEIC registered, listed building electrical work, EICR for landlords…"

@@ -469,6 +469,7 @@ const sections = [
 export default function ElectricianPrestonPage() {
   return (
     <GuideTemplate
+      noindex={true}
       localArea="Preston"
       title="Electrician in Preston | Local Electricians 2026"
       description="Find qualified electricians in Preston. Part P compliance, NICEIC registered, EICR for HMO landlords, consumer unit replacement, rewiring…"

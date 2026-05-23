@@ -488,6 +488,7 @@ const sections = [
 export default function ElectricianWarringtonPage() {
   return (
     <GuideTemplate
+      noindex={true}
       localArea="Warrington"
       title="Electrician in Warrington | Local Electricians 2026"
       description="Find qualified electricians in Warrington. Part P compliance, NICEIC registered, EICR for landlords, commercial electrical work…"

@@ -473,6 +473,7 @@ const sections = [
 export default function ElectricianLutonPage() {
   return (
     <GuideTemplate
+      noindex={true}
       localArea="Luton"
       title="Electrician in Luton | Local Electricians 2026"
       description="Find qualified electricians in Luton. Part P compliance, NICEIC registered, EICR for landlords and HMOs, consumer unit replacement…"

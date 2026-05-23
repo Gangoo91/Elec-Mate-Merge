@@ -439,6 +439,7 @@ const sections = [
 export default function ElectricianMaidstonePage() {
   return (
     <GuideTemplate
+      noindex={true}
       localArea="Maidstone"
       title="Electrician in Maidstone | Local Electricians 2026"
       description="Find qualified electricians in Maidstone. NICEIC and NAPIT registered, Part P compliant. South East rates, EICRs, consumer unit upgrades, EV chargers…"

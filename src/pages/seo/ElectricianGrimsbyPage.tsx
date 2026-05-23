@@ -530,6 +530,7 @@ const sections = [
 export default function ElectricianGrimsbyPage() {
   return (
     <GuideTemplate
+      noindex={true}
       localArea="Grimsby"
       title="Electrician Grimsby | Find Electricians in Grimsby &"
       description="Find qualified electricians in Grimsby + Cleethorpes: NICEIC and NAPIT registered, Part P compliant, BS 7671:2018+A4:2026 trained. Local prices."

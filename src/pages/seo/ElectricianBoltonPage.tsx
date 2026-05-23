@@ -515,6 +515,7 @@ const sections = [
 export default function ElectricianBoltonPage() {
   return (
     <GuideTemplate
+      noindex={true}
       localArea="Bolton"
       title="Electrician in Bolton | Local Electricians 2026"
       description="Find qualified electricians in Bolton. NICEIC and NAPIT registered, Part P compliant. Typical costs, consumer unit upgrades, EICRs, rewires…"

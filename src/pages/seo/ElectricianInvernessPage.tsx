@@ -521,6 +521,7 @@ const sections = [
 export default function ElectricianInvernessPage() {
   return (
     <GuideTemplate
+      noindex={true}
       localArea="Inverness"
       title="Electrician in Inverness | Local Electricians 2026"
       description="Find qualified electricians in Inverness. Scottish Building Standards (not Part P), SSEN DNO, TT earthing, Highland property rewires, EICRs…"

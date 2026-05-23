@@ -451,6 +451,7 @@ const sections = [
 export default function ElectricianColchesterPage() {
   return (
     <GuideTemplate
+      noindex={true}
       localArea="Colchester"
       title="Electrician in Colchester | Local Electricians 2026"
       description="Find qualified electricians in Colchester. NICEIC and NAPIT registered, Part P compliant. South East rates, EICRs, listed building work, HMO compliance…"

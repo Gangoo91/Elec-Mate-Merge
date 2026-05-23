@@ -475,6 +475,7 @@ const sections = [
 export default function ElectricianRotherhamPage() {
   return (
     <GuideTemplate
+      noindex={true}
       localArea="Rotherham"
       title="Electrician in Rotherham | Local Electricians 2026"
       description="Find qualified electricians in Rotherham. Part P compliance, NICEIC registered, EICR for landlords, consumer unit replacement, house rewiring…"

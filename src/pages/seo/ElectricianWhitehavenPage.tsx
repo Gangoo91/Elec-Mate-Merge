@@ -536,6 +536,7 @@ const sections = [
 export default function ElectricianWhitehavenPage() {
   return (
     <GuideTemplate
+      noindex={true}
       localArea="Whitehaven"
       title="Whitehaven Electricians 2026 | EICR + Nuclear Site"
       description="Whitehaven electricians for EICR, EV charging + Sellafield-area work. BS 7671:2018+A4:2026 compliant, Electricity North West certified. Book today."

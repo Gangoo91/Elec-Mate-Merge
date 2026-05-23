@@ -21,9 +21,9 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Safe Isolation Procedure | HSE GS 38 + LOTO 2026';
+const PAGE_TITLE = 'Safe Isolation Procedure UK: 10-Step Prove-Test-Prove';
 const PAGE_DESCRIPTION =
-  'Safe isolation per HSE GS 38 + EAWR 1989: prove-test-prove, lock-off LOTO, voltage indicator rules, fused leads + how the AM2 marks the procedure.';
+  '10-step safe isolation for UK electricians: prove-test-prove, lock-off (LOTO), GS 38 leads, BS 7671 Reg 537.2.4, EAWR 1989 Reg 14. AM2 marking criteria included.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -651,7 +651,7 @@ export default function SafeIsolationProcedurePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2024-10-01"
-      dateModified="2026-05-18"
+      dateModified="2026-05-23"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Hub"

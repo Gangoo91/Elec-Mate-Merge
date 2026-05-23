@@ -486,6 +486,7 @@ const sections = [
 export default function ElectricianBlackpoolPage() {
   return (
     <GuideTemplate
+      noindex={true}
       localArea="Blackpool"
       title="Electrician in Blackpool | Local Electricians 2026"
       description="Find qualified electricians in Blackpool. Part P compliance, NICEIC registered, EICR for guesthouses and HMOs, guesthouse rewiring…"

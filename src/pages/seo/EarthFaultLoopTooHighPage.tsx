@@ -21,9 +21,9 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE = 'Zs Too High? | BS 7671 Table 41.3 + Fault Diagnosis';
+const PAGE_TITLE = 'Zs Too High: Causes + How to Fix (BS 7671 Table 41.3)';
 const PAGE_DESCRIPTION =
-  'Earth fault loop impedance over the BS 7671 Table 41.3/41.4 limits — root causes (high Ze, long runs, loose joints), how to diagnose and how to fix.';
+  'High earth fault loop impedance (Zs) over Table 41.3 / 41.4 max: high Ze, long runs, loose joints, hot conductors. Step-by-step diagnosis + 6 fixes for UK electricians.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -477,7 +477,7 @@ export default function EarthFaultLoopTooHighPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-09-20"
-      dateModified="2026-05-18"
+      dateModified="2026-05-23"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting"

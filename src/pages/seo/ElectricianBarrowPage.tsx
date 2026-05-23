@@ -561,6 +561,7 @@ const sections = [
 export default function ElectricianBarrowPage() {
   return (
     <GuideTemplate
+      noindex={true}
       localArea="Barrow In Furness"
       title="Electrician in Barrow-in-Furness | Local Electricians 2026"
       description="Find qualified electricians in Barrow-in-Furness, Cumbria. BAE Systems submarine facility, defence and marine electrical work, security clearances…"

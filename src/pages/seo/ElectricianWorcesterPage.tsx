@@ -436,6 +436,7 @@ const sections = [
 export default function ElectricianWorcesterPage() {
   return (
     <GuideTemplate
+      noindex={true}
       localArea="Worcester"
       title="Electrician in Worcester | Local Electricians 2026"
       description="Find qualified electricians in Worcester. Part P compliance, NGED DNO, NICEIC and NAPIT registered electricians, EICR for landlords…"

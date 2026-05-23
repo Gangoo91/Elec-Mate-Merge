@@ -466,6 +466,7 @@ const sections = [
 export default function ElectricianGuildfordPage() {
   return (
     <GuideTemplate
+      noindex={true}
       localArea="Guildford"
       title="Electrician in Guildford | Local Electricians 2026"
       description="Find qualified electricians in Guildford. NICEIC and NAPIT registered, Part P compliant. Premium Surrey rates, large house rewires, EICRs, HMO work…"

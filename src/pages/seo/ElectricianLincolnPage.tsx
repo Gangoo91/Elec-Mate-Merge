@@ -474,6 +474,7 @@ const sections = [
 export default function ElectricianLincolnPage() {
   return (
     <GuideTemplate
+      noindex={true}
       localArea="Lincoln"
       title="Electrician in Lincoln | Local Electricians 2026"
       description="Find qualified electricians in Lincoln. Part P compliance, Northern Powergrid DNO, NICEIC and NAPIT registered electricians…"

@@ -447,6 +447,7 @@ const sections = [
 export default function ElectricianPeterboroughPage() {
   return (
     <GuideTemplate
+      noindex={true}
       localArea="Peterborough"
       title="Electrician in Peterborough | Local Electricians 2026"
       description="Find qualified electricians in Peterborough. Part P compliance, UK Power Networks DNO, NICEIC and NAPIT registered electricians, EICR for landlords…"

@@ -526,6 +526,7 @@ const sections = [
 export default function ElectricianCarlislePage() {
   return (
     <GuideTemplate
+      noindex={true}
       localArea="Carlisle"
       title="Electrician in Carlisle | Local Electricians 2026"
       description="Find qualified electricians in Carlisle, Cumbria. Part P, cross-border Scottish work, Electricity North West DNO, flood-affected properties…"

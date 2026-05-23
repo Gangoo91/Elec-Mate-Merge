@@ -495,6 +495,7 @@ const sections = [
 export default function ElectricianAberdeenPage() {
   return (
     <GuideTemplate
+      noindex={true}
       localArea="Aberdeen"
       title="Electrician in Aberdeen | Local Electricians 2026"
       description="Find qualified electricians in Aberdeen. Scottish Building Standards, SSEN DNO, SELECT registration, granite property rewiring…"

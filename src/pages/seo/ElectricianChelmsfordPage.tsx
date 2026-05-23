@@ -449,6 +449,7 @@ const sections = [
 export default function ElectricianChelmsfordPage() {
   return (
     <GuideTemplate
+      noindex={true}
       localArea="Chelmsford"
       title="Electrician in Chelmsford | Local Electricians 2026"
       description="Find qualified electricians in Chelmsford. NICEIC and NAPIT registered, Part P compliant. South East rates, EICRs, consumer unit upgrades, EV chargers…"
