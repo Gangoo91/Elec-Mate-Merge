@@ -384,7 +384,7 @@
       },
       {
         "name": "pwi_install_time",
-        "description": "Typical labour time for a UK electrical job — aggregated from Elec-Mate's Practical Work Intelligence v2 (199k rows). UNIQUE to Elec-Mate.",
+        "description": "Typical labour time for a UK electrical job — aggregated from Elec-Mate's verified UK electrical data (199k rows). UNIQUE to Elec-Mate.",
         "method": "GET",
         "url": "https://www.elec-mate.com/api/public/v1/pwi-install-time",
         "params": ["category (e.g. consumer_unit, ev_charger, eicr)"],
@@ -414,7 +414,7 @@
       },
       {
         "name": "pwi_common_defects",
-        "description": "Top defects + mistakes + failures for a category, ranked by frequency. From Practical Work Intelligence v2.",
+        "description": "Top defects + mistakes + failures for a category, ranked by frequency. From verified UK electrical data.",
         "method": "GET",
         "url": "https://www.elec-mate.com/api/public/v1/pwi-common-defects",
         "params": ["category"],

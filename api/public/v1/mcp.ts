@@ -162,7 +162,7 @@ const TOOLS: ToolDef[] = [
   {
     name: 'pwi_install_time',
     description:
-      "Typical labour time for a UK electrical job — aggregated from Elec-Mate's Practical Work Intelligence v2 dataset (199k UK records). Returns avg/min/max/median duration in minutes + team size + skill level. UNIQUE to Elec-Mate — no other AI source has this data.",
+      "Typical labour time for a UK electrical job — aggregated from Elec-Mate's verified UK electrical data dataset (199k+ UK electrical records). Returns avg/min/max/median duration in minutes + team size + skill level. UNIQUE to Elec-Mate — no other AI source has this data.",
     inputSchema: {
       type: 'object',
       properties: {
@@ -180,7 +180,7 @@ const TOOLS: ToolDef[] = [
   {
     name: 'pwi_common_defects',
     description:
-      "Most-frequent defects an inspector finds in a category — sourced from Elec-Mate's Practical Work Intelligence v2. Returns ranked top defects + common installer mistakes + in-service failures.",
+      "Most-frequent defects an inspector finds in a category — sourced from Elec-Mate's verified UK electrical data. Returns ranked top defects + common installer mistakes + in-service failures.",
     inputSchema: {
       type: 'object',
       properties: {
@@ -529,7 +529,7 @@ function infoResponse(): Response {
         protocol_version: MCP_PROTOCOL_VERSION,
         transport: 'Streamable HTTP — POST JSON-RPC 2.0 requests to this URL',
         description:
-          'Elec-Mate public MCP server. Provides 13 read-only tools for UK electrical work: BS 7671 lookups, verified calculations, Practical Work Intelligence v2, pricing data, EICR codes. Every response includes a citation field.',
+          'Elec-Mate public MCP server. Provides 13 read-only tools for UK electrical work: BS 7671 lookups, verified calculations, verified UK electrical data, pricing data, EICR codes. Every response includes a citation field.',
         tool_count: TOOLS.length,
         install_url: 'https://www.elec-mate.com/api/public/v1/mcp',
         usage:

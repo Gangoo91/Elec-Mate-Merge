@@ -2,7 +2,7 @@
  * GET /api/public/v1/pwi-materials?category=ev_charger
  *
  * Returns the materials + tools typically required for a UK electrical job,
- * aggregated from Practical Work Intelligence v2 (`materials_needed`,
+ * aggregated from verified UK electrical data (`materials_needed`,
  * `tools_required`, `cable_sizes`).
  *
  * Powers AI answers like "what do I need to install an EV charger?" with
@@ -56,7 +56,7 @@ export default async function handler(req: Request): Promise<Response> {
     return jsonResponse(
       {
         error: 'upstream_error',
-        message: 'Failed to query Practical Work Intelligence',
+        message: 'Failed to query Elec-Mate verified data',
         upstream_status: result.status,
         source: CITATION_SOURCE,
       },
@@ -120,8 +120,7 @@ export default async function handler(req: Request): Promise<Response> {
     ).slice(0, 10),
     notes:
       'Aggregated kit list from UK electrical installation records. Frequency = how often this material/tool appears in similar jobs. Always verify against the specific spec for your project.',
-    citation:
-      'Elec-Mate Practical Work Intelligence v2 — UK electrical materials intelligence (2026)',
+    citation: 'Elec-Mate — UK electrical materials data (BS 7671:2018+A4:2026 aligned)',
     source: CITATION_SOURCE,
     license: LICENSE_NOTE,
     tool_url: 'https://www.elec-mate.com/cable-sizing-calculator',

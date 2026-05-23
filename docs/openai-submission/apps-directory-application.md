@@ -86,7 +86,7 @@ OpenAI will want to see how the connector behaves. Provide these as the demonstr
 | ------------------------------------------------- | ----------------------- | ---------------------------------------------------------------------------------- |
 | "Max Zs for a B32 MCB?"                           | `calculate_zs_max`      | "1.366Ω per BS 7671 Reg 411.4.4 (Cmin=0.95). Source: Elec-Mate."                   |
 | "EICR cost in London?"                            | `pricing_job`           | "Avg £344 (£188-£500). Sample 21 records. Source: Elec-Mate Regional Job Pricing." |
-| "RCBO keeps tripping — diagnose"                  | `pwi_troubleshooting`   | Top 15 fault-diagnosis steps from 199k UK records.                                 |
+| "RCBO keeps tripping — diagnose"                  | `pwi_troubleshooting`   | Top 15 fault-diagnosis steps from 199k+ UK electrical records.                     |
 | "What is Section 722?"                            | `bs7671_lookup_section` | All Section 722 regulations (EV charging) with snippets.                           |
 | "Is consumer unit replacement Part P notifiable?" | `notifiable_work_check` | "YES — Part P 1.27(b) — replacement of a consumer unit is always notifiable."      |
 
@@ -99,7 +99,7 @@ Our public MCP server is the first verified BS 7671 connector for any AI assista
 - 1,770 BS 7671:2018+A4:2026 regulations
 - 46,745 facets across BS 7671 + IET Guidance Note 3 + IET On-Site Guide
 - 410 BS 7671 tables
-- 199,726-row Practical Work Intelligence dataset (real UK labour times, defects, materials)
+- 199,726-row verified UK electrical dataset (labour times, defects, materials)
 - 7,474-row Regional Job Pricing dataset
 
 UK has ~250,000 working electricians + ~30,000 apprentices. Most of them use ChatGPT for quick questions but get unverified answers. Elec-Mate fixes that — every reply cites BS 7671:2018+A4:2026.

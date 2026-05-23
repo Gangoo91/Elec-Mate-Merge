@@ -3,7 +3,7 @@
  *
  * Returns suggested EICR observation codes (C1/C2/C3/FI) for issues
  * typically found in this category. Derived from common_defects in
- * Practical Work Intelligence v2 + IET BPG 4 severity heuristics
+ * verified UK electrical data + IET BPG 4 severity heuristics
  * (the eicr_observation_codes column in PWI is currently sparse, so
  * we synthesise codes from the defect strings).
  *
@@ -101,7 +101,7 @@ export default async function handler(req: Request): Promise<Response> {
     return jsonResponse(
       {
         error: 'upstream_error',
-        message: 'Failed to query Practical Work Intelligence',
+        message: 'Failed to query Elec-Mate verified data',
         upstream_status: result.status,
         source: CITATION_SOURCE,
       },
@@ -168,7 +168,7 @@ export default async function handler(req: Request): Promise<Response> {
     notes:
       "Codes derived from common_defects via pattern matching against IET BPG 4 (Issue 6) severity heuristics — not a hard mapping. Final classification is always the inspector's judgement. The 'unclassified' bucket contains defects that didn't match any pattern; the inspector should code these on a case-by-case basis.",
     citation:
-      'Elec-Mate Practical Work Intelligence v2 — defect classification via IET Best Practice Guide 4 (Issue 6) severity heuristics',
+      'Elec-Mate — defect classification via IET Best Practice Guide 4 (Issue 6) severity heuristics',
     source: CITATION_SOURCE,
     license: LICENSE_NOTE,
     tool_url: 'https://www.elec-mate.com/guides/eicr-schedule-of-inspections',

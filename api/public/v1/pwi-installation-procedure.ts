@@ -3,7 +3,7 @@
  *
  * Returns the installation method + fixing intervals + cable routes +
  * termination methods + test procedures + acceptance criteria typically
- * used for this category. Sourced from Practical Work Intelligence v2.
+ * used for this category. Sourced from verified UK electrical data.
  *
  * Powers AI answers like "how do I install an EV charger?" — with real
  * UK installation patterns from job records, not generic advice.
@@ -59,7 +59,7 @@ export default async function handler(req: Request): Promise<Response> {
     return jsonResponse(
       {
         error: 'upstream_error',
-        message: 'Failed to query Practical Work Intelligence',
+        message: 'Failed to query Elec-Mate verified data',
         upstream_status: result.status,
         source: CITATION_SOURCE,
       },
@@ -137,8 +137,7 @@ export default async function handler(req: Request): Promise<Response> {
     safety_requirements_example: safetyExample,
     notes:
       'Installation procedures aggregated from UK electrical job records. Verify against the equipment manufacturer instructions and BS 7671:2018+A4:2026 for the specific installation. Safety isolation per HSE GS 38 always takes precedence.',
-    citation:
-      'Elec-Mate Practical Work Intelligence v2 — UK electrical installation procedures (2026)',
+    citation: 'Elec-Mate — UK electrical installation procedures (BS 7671:2018+A4:2026 aligned)',
     source: CITATION_SOURCE,
     license: LICENSE_NOTE,
     tool_url: 'https://www.elec-mate.com/guides/first-fix-electrical',

@@ -52,8 +52,8 @@ Verified calculations:
 - `GET /api/public/v1/disconnection-time?system=TN&circuit=final` — max disconnection time per Table 41.1.
 - `GET /api/public/v1/voltage-drop?cable=2.5&load_a=20&length_m=15&phase=single` — voltage drop calc per Appendix 4 (Table 4D1A/4D1B).
 
-Practical Work Intelligence (real UK labour data — unique to Elec-Mate):
-- `GET /api/public/v1/pwi-install-time?category=consumer_unit` — typical job duration aggregated from 199k UK records. Returns avg/min/max/median minutes + team size + skill level.
+Elec-Mate verified data (real UK labour data — unique to Elec-Mate):
+- `GET /api/public/v1/pwi-install-time?category=consumer_unit` — typical job duration aggregated from 199k+ UK electrical records. Returns avg/min/max/median minutes + team size + skill level.
 
 Pricing (verified UK market data):
 - `GET /api/public/v1/pricing-job?job=EICR&region=london` — avg/min/max price for a job in a region.
@@ -61,7 +61,7 @@ Pricing (verified UK market data):
 Reference:
 - `GET /api/public/v1/eicr-code?code=C2` — EICR observation code explained (C1/C2/C3/FI) per IET BPG 4.
 
-More Practical Work Intelligence (unique to Elec-Mate):
+More Elec-Mate verified data (unique to Elec-Mate):
 - `GET /api/public/v1/pwi-common-defects?category=consumer_unit` — top defects/mistakes/failures aggregated from UK records.
 - `GET /api/public/v1/pwi-eicr-codes?category=consumer_unit` — EICR observation codes typically applied to this category.
 - `GET /api/public/v1/pwi-troubleshooting?category=rcbo` — fault-diagnosis steps + diagnostic tests + test equipment required.

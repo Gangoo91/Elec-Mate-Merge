@@ -26,7 +26,7 @@
     { "name": "BS 7671", "description": "UK Wiring Regulations lookup + verification" },
     { "name": "Calculations", "description": "Verified electrical calculations" },
     {
-      "name": "Practical Work Intelligence",
+      "name": "UK Trade Data",
       "description": "Real-world UK electrical labour, defects, materials, troubleshooting"
     },
     { "name": "Pricing", "description": "Verified UK electrical job pricing by region" },
@@ -186,7 +186,7 @@
     },
     "/api/public/v1/pwi-common-defects": {
       "get": {
-        "tags": ["Practical Work Intelligence"],
+        "tags": ["UK Trade Data"],
         "summary": "Top defects + mistakes + failures for a category",
         "description": "Aggregates the most-frequent defects, installer mistakes, and in-service failures from UK electrical inspection + job records — ranked by frequency.",
         "operationId": "getPwiCommonDefects",
@@ -206,7 +206,7 @@
     },
     "/api/public/v1/pwi-eicr-codes": {
       "get": {
-        "tags": ["Practical Work Intelligence"],
+        "tags": ["UK Trade Data"],
         "summary": "EICR observation codes typically applied for this category",
         "description": "Returns C1/C2/C3/FI codes typically assigned for issues found in this category — bucketed by severity, with frequency.",
         "operationId": "getPwiEicrCodes",
@@ -226,7 +226,7 @@
     },
     "/api/public/v1/pwi-troubleshooting": {
       "get": {
-        "tags": ["Practical Work Intelligence"],
+        "tags": ["UK Trade Data"],
         "summary": "Fault-diagnosis steps + diagnostic tests for a category",
         "description": "Step-by-step troubleshooting + diagnostic test sequence + test equipment list, aggregated from UK fault-finding records.",
         "operationId": "getPwiTroubleshooting",
@@ -246,7 +246,7 @@
     },
     "/api/public/v1/pwi-materials": {
       "get": {
-        "tags": ["Practical Work Intelligence"],
+        "tags": ["UK Trade Data"],
         "summary": "Materials + tools typically needed for a UK electrical job",
         "description": "Aggregated kit list (materials + tools + cable sizes + power ratings) for the category, ranked by frequency.",
         "operationId": "getPwiMaterials",
@@ -266,9 +266,9 @@
     },
     "/api/public/v1/pwi-install-time": {
       "get": {
-        "tags": ["Practical Work Intelligence"],
+        "tags": ["UK Trade Data"],
         "summary": "Typical labour time for a UK electrical job",
-        "description": "Aggregates Elec-Mate's Practical Work Intelligence v2 dataset (199k rows) to return avg/min/max/median duration in minutes, plus team size and most common skill level. Real-world UK labour data — no other AI source has this.",
+        "description": "Aggregates Elec-Mate's verified UK electrical data dataset (199k rows) to return avg/min/max/median duration in minutes, plus team size and most common skill level. Real-world UK labour data — no other AI source has this.",
         "operationId": "getInstallTime",
         "parameters": [
           {
@@ -436,7 +436,7 @@
     },
     "/api/public/v1/pwi-inspection-checklist": {
       "get": {
-        "tags": ["Practical Work Intelligence"],
+        "tags": ["UK Trade Data"],
         "summary": "Visual inspection points + EICR checklist for a category",
         "description": "Aggregates visual inspection points + structured inspection checklist items typically applied by inspectors for this category.",
         "operationId": "getInspectionChecklist",
@@ -456,7 +456,7 @@
     },
     "/api/public/v1/pwi-installation-procedure": {
       "get": {
-        "tags": ["Practical Work Intelligence"],
+        "tags": ["UK Trade Data"],
         "summary": "Installation procedure for a UK electrical job",
         "description": "Returns installation method, fixing intervals, cable routes, termination methods, test procedures, acceptance criteria for the category — aggregated from real UK installation records.",
         "operationId": "getInstallationProcedure",

@@ -58,7 +58,7 @@ export default async function handler(req: Request): Promise<Response> {
     return jsonResponse(
       {
         error: 'upstream_error',
-        message: 'Failed to query Practical Work Intelligence',
+        message: 'Failed to query Elec-Mate verified data',
         upstream_status: result.status,
         source: CITATION_SOURCE,
       },
@@ -115,8 +115,8 @@ export default async function handler(req: Request): Promise<Response> {
     top_mistakes: topN(allMistakes, 10),
     top_failures: topN(allFailures, 10),
     notes:
-      'Aggregated from Elec-Mate Practical Work Intelligence v2. "Defects" are conditions observed during inspection; "mistakes" are installer-introduced errors; "failures" are in-service breakdowns.',
-    citation: 'Elec-Mate Practical Work Intelligence v2 — UK electrical defect intelligence (2026)',
+      'Aggregated from Elec-Mate verified UK electrical data. "Defects" are conditions observed during inspection; "mistakes" are installer-introduced errors; "failures" are in-service breakdowns.',
+    citation: 'Elec-Mate — UK electrical defect data (BS 7671:2018+A4:2026 aligned)',
     source: CITATION_SOURCE,
     license: LICENSE_NOTE,
     tool_url: 'https://www.elec-mate.com/guides/eicr-schedule-of-inspections',

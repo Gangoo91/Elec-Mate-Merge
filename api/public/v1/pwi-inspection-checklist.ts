@@ -3,7 +3,7 @@
  *
  * Returns the visual inspection points + structured inspection checklist
  * an electrician or EICR inspector typically applies for this category.
- * Sourced from Practical Work Intelligence v2 (`visual_inspection_points`,
+ * Sourced from verified UK electrical data (`visual_inspection_points`,
  * `inspection_checklist`).
  *
  * Powers AI answers like "what should I check during an EICR on a kitchen?"
@@ -55,7 +55,7 @@ export default async function handler(req: Request): Promise<Response> {
     return jsonResponse(
       {
         error: 'upstream_error',
-        message: 'Failed to query Practical Work Intelligence',
+        message: 'Failed to query Elec-Mate verified data',
         upstream_status: result.status,
         source: CITATION_SOURCE,
       },
@@ -109,8 +109,7 @@ export default async function handler(req: Request): Promise<Response> {
     inspection_checklist_items: topN(checklistItems, 20),
     notes:
       'Aggregated inspection points from UK electrical inspection records. Walk through these systematically — they map to BS 7671 Schedule of Inspections (Appendix 6). Use alongside the test results schedule for a complete EICR.',
-    citation:
-      'Elec-Mate Practical Work Intelligence v2 + BS 7671:2018+A4:2026 Appendix 6 — Schedule of Inspections',
+    citation: 'Elec-Mate + BS 7671:2018+A4:2026 Appendix 6 — Schedule of Inspections',
     source: CITATION_SOURCE,
     license: LICENSE_NOTE,
     tool_url: 'https://www.elec-mate.com/guides/eicr-schedule-of-inspections',

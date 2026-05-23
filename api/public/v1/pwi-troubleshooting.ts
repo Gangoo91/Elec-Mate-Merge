@@ -55,7 +55,7 @@ export default async function handler(req: Request): Promise<Response> {
     return jsonResponse(
       {
         error: 'upstream_error',
-        message: 'Failed to query Practical Work Intelligence',
+        message: 'Failed to query Elec-Mate verified data',
         upstream_status: result.status,
         source: CITATION_SOURCE,
       },
@@ -114,8 +114,7 @@ export default async function handler(req: Request): Promise<Response> {
     ).slice(0, 12),
     notes:
       'Aggregated diagnostic procedures from UK electrical fault-finding records. Order is suggested — actual sequence depends on symptoms, access, and safe-isolation requirements.',
-    citation:
-      'Elec-Mate Practical Work Intelligence v2 — UK electrical fault diagnosis intelligence (2026)',
+    citation: 'Elec-Mate — UK electrical fault diagnosis data (BS 7671:2018+A4:2026 aligned)',
     source: CITATION_SOURCE,
     license: LICENSE_NOTE,
     tool_url: 'https://www.elec-mate.com/guides/safe-isolation-procedure',

@@ -62,7 +62,7 @@ export default async function handler(req: Request): Promise<Response> {
     return jsonResponse(
       {
         error: 'upstream_error',
-        message: 'Failed to query Practical Work Intelligence',
+        message: 'Failed to query Elec-Mate verified data',
         upstream_status: result.status,
         source: CITATION_SOURCE,
       },
@@ -121,8 +121,8 @@ export default async function handler(req: Request): Promise<Response> {
     team_size: avgTeamSize,
     most_common_skill_level: mostCommonSkill,
     notes:
-      'Aggregated from Elec-Mate Practical Work Intelligence v2 — labour intelligence derived from UK electrical job records. Use as a sanity-check baseline; actual time varies by complexity, access, and site conditions.',
-    citation: 'Elec-Mate Practical Work Intelligence v2 — UK electrical labour benchmarks (2026)',
+      'Aggregated from Elec-Mate verified UK electrical data — labour data derived from UK electrical job records. Use as a sanity-check baseline; actual time varies by complexity, access, and site conditions.',
+    citation: 'Elec-Mate — UK electrical labour benchmarks (BS 7671:2018+A4:2026 aligned)',
     source: CITATION_SOURCE,
     license: LICENSE_NOTE,
     tool_url: 'https://www.elec-mate.com/job-profitability-calculator',
