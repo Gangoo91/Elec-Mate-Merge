@@ -75,19 +75,26 @@ const TOOLS: ToolDef[] = [
   {
     name: 'bs7671_search',
     description:
-      'Keyword search across all 1,770 BS 7671:2018+A4:2026 regulations. Returns matched regulations with reg number, title, and snippet. Use when the user asks a natural-language question about UK Wiring Regulations.',
+      "Search Elec-Mate's canonical UK electrical content store — 46k+ verified chunks across BS 7671:2018+A4:2026 + IET Guidance Note 3 (9th Ed) + IET On-Site Guide (9th Ed). Returns content snippet, facet type, primary topic, document type, linked regulation_id. Optional `doc` filter (bs7671 | gn3 | osg). Much richer than a regulation-index search — use this for natural-language questions when you don't know the exact reg number.",
     inputSchema: {
       type: 'object',
       properties: {
         q: { type: 'string', description: 'Search query (3-200 chars)' },
         limit: { type: 'integer', minimum: 1, maximum: 20, default: 5 },
+        doc: {
+          type: 'string',
+          enum: ['bs7671', 'gn3', 'osg'],
+          description:
+            'Optional: limit to one document. bs7671 = BS 7671 itself, gn3 = IET Guidance Note 3 (Inspection & Testing), osg = IET On-Site Guide. Omit to search all three.',
+        },
       },
       required: ['q'],
     },
     fetch: async (args) => {
       const q = encodeURIComponent(String(args.q));
       const limit = args.limit ? `&limit=${Number(args.limit)}` : '';
-      return fetchJson(`${BASE}/bs7671-search?q=${q}${limit}`);
+      const doc = args.doc ? `&doc=${encodeURIComponent(String(args.doc))}` : '';
+      return fetchJson(`${BASE}/bs7671-search?q=${q}${limit}${doc}`);
     },
   },
   {
