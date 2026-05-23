@@ -120,8 +120,8 @@
     "/api/public/v1/bs7671-search": {
       "get": {
         "tags": ["BS 7671"],
-        "summary": "Keyword search across BS 7671:2018+A4:2026",
-        "description": "Searches the full BS 7671 regulation corpus (1,770 regulations, 410 tables) by keyword. Returns matched regulations with reg number, title, and snippet.",
+        "summary": "Search BS 7671 + IET GN3 + IET On-Site Guide (46k+ chunks)",
+        "description": "Searches the canonical UK electrical content store: BS 7671:2018+A4:2026 + IET Guidance Note 3 (9th Ed) + IET On-Site Guide (9th Ed). Returns content snippet, facet type, primary topic, document type, and linked regulation_id.",
         "operationId": "searchBS7671",
         "parameters": [
           {
@@ -135,10 +135,18 @@
             "in": "query",
             "required": false,
             "schema": { "type": "integer", "minimum": 1, "maximum": 20, "default": 5 }
+          },
+          {
+            "name": "doc",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string", "enum": ["bs7671", "gn3", "osg"] },
+            "description": "Optional document filter. Omit to search all 3."
           }
         ],
         "responses": {
-          "200": { "description": "Matched regulations" }
+          "200": { "description": "Matched content chunks" },
+          "404": { "description": "No matches" }
         }
       }
     },
