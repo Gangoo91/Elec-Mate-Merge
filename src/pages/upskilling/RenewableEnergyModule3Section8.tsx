@@ -23,7 +23,7 @@ const inlineChecks = [
   {
     id: 'm3s8-712-scope',
     question:
-      'BS 7671 Section 712 is the regulatory framework for PV electrical installations. What\'s its scope?',
+      "BS 7671 Section 712 is the regulatory framework for PV electrical installations. What's its scope?",
     options: [
       'Just the modules',
       'The DC side of grid-connected PV installations — from module up to and including the AC-side connection to the building installation. Covers selection / erection requirements: voltage / current sizing, fire and lightning protection, bonding and earthing, isolation, marking and labelling, fault protection, commissioning evidence. Does NOT cover wider building installation rules (those are in BS 7671 main body) but interacts with them at the AC-side boundary',
@@ -36,13 +36,12 @@ const inlineChecks = [
   },
   {
     id: 'm3s8-712-512',
-    question:
-      'Where does Reg 712.512.2.1 fit in the design / install workflow?',
+    question: 'Where does Reg 712.512.2.1 fit in the design / install workflow?',
     options: [
       'Only at handover',
-      'At design (Module 3 Section 1 — site irradiance assessment) AND install (Module 3 Section 3 — 70-100 mm standoff for natural convection cooling). The reg makes the installer responsible for adequate heat dissipation under site\'s maximum solar radiation. Evidence path: site irradiance assessment + manufacturer mounting spec + as-installed standoff dimension + cert evidence bundle records all three',
+      "At design (Module 3 Section 1 — site irradiance assessment) AND install (Module 3 Section 3 — 70-100 mm standoff for natural convection cooling). The reg makes the installer responsible for adequate heat dissipation under site's maximum solar radiation. Evidence path: site irradiance assessment + manufacturer mounting spec + as-installed standoff dimension + cert evidence bundle records all three",
       'Never applies in UK',
-      'Customer\'s preference',
+      "Customer's preference",
     ],
     correctIndex: 1,
     explanation:
@@ -50,8 +49,7 @@ const inlineChecks = [
   },
   {
     id: 'm3s8-712-433',
-    question:
-      'Where does Reg 712.433.101.1 fit in the design / install workflow?',
+    question: 'Where does Reg 712.433.101.1 fit in the design / install workflow?',
     options: [
       'Customer satisfaction',
       'At design (Module 3 Section 2 — inverter MPPT sizing). Sets the V_oc_max / Upc_max / Isc_max determination basis. Two paths: (a) manufacturer temperature coefficient + site temperature extremes; (b) conservative defaults V_oc_max = 1.2 × V_oc_stc, I_sc_max = 1.25 × I_sc_stc. Used in the three voltage-rule checks against inverter datasheet. Cert evidence bundle records the calculation methodology and result',
@@ -78,8 +76,7 @@ const inlineChecks = [
   },
   {
     id: 'm3s8-712-421',
-    question:
-      'Where does Reg 712.421 fit in the design / install workflow?',
+    question: 'Where does Reg 712.421 fit in the design / install workflow?',
     options: [
       'Not applicable',
       'Throughout — design (cable spec BS EN 50618 / 62930, connector spec BS EN 62852, isolator spec BS EN 60947-3); install (matched-brand MC4, manufacturer-torque crimping, correct flashing-tile, secure DC isolator placement); commissioning (functional test of isolator under load per BS EN 62446-1). Reg 712.421 = protection against fire caused by electrical equipment on the DC side. The PWI common-mistakes that violate this regulation are the most-flagged DC-side audit findings',
@@ -92,10 +89,9 @@ const inlineChecks = [
   },
   {
     id: 'm3s8-712-542',
-    question:
-      'Where do Reg 712.542.102 and Reg 712.521.102 fit in the design / install workflow?',
+    question: 'Where do Reg 712.542.102 and Reg 712.521.102 fit in the design / install workflow?',
     options: [
-      'Customer\'s preference',
+      "Customer's preference",
       'Reg 712.542.102 (functional bonding): at design (Module 3 Section 5 — check module manufacturer requirement and inverter galvanic isolation; single-point bonding only if both conditions met); install (route single bonding conductor from specified DC polarity to building MET). Reg 712.521.102 (lightning loop): at design (route DC + bonding side-by-side); install (cables strapped together / same conduit, minimising enclosed area)',
       'AC side only',
       'No application',
@@ -107,7 +103,7 @@ const inlineChecks = [
   {
     id: 'm3s8-cert-bundle',
     question:
-      'The cert evidence bundle is the audit trail for the install life. What\'s its structure?',
+      "The cert evidence bundle is the audit trail for the install life. What's its structure?",
     options: [
       'No structure',
       '(1) MCS MIS 3002 design pack — site survey, yield modelling, schematic, schedule, MPPT calculations, cable sizing, string-fuse inequality, customer info pack. (2) Install photographs — DC, AC, mounting, flashing, labels, isolator placements. (3) BS EN 62446-1 commissioning records and SoTR. (4) MCS certificate. (5) EREC G98 / G99 / G100 application / approval / notification. (6) DNO confirmation. (7) Customer handover pack signed by customer. Archived for 25 years. Reference for MCS audit, EICR-style periodic inspection, and customer service',
@@ -152,12 +148,12 @@ const quizQuestions = [
   {
     id: 3,
     question:
-      'An MCS auditor reviews a 12-month-old PV install. The cert evidence bundle is incomplete — missing the inverter MPPT calculations from the design pack. What\'s the audit finding?',
+      "An MCS auditor reviews a 12-month-old PV install. The cert evidence bundle is incomplete — missing the inverter MPPT calculations from the design pack. What's the audit finding?",
     options: [
       'Pass',
       'Major finding — Reg 712.433.101.1 not evidenced. The MCS MIS 3002 design pack must explicitly show the inverter MPPT sizing calculations (three voltage checks per Reg 712.433.101.1, plus current checks). Rectification: produce the calculations retrospectively (with the as-installed string and inverter), evidence against Reg 712.433.101.1, update the design pack, re-issue the cert evidence bundle. Customer informed about the rectification',
       'No issue',
-      'Customer\'s fault',
+      "Customer's fault",
     ],
     correctAnswer: 1,
     explanation:
@@ -166,7 +162,7 @@ const quizQuestions = [
   {
     id: 4,
     question:
-      'A 5-year-old PV install is being inspected after a customer report of inverter failure. The cert evidence bundle reveals: A4:2026 isn\'t referenced (install pre-dates A4); Reg 551.7.1(d) isn\'t addressed (single-RCD CU). Is this a finding?',
+      "A 5-year-old PV install is being inspected after a customer report of inverter failure. The cert evidence bundle reveals: A4:2026 isn't referenced (install pre-dates A4); Reg 551.7.1(d) isn't addressed (single-RCD CU). Is this a finding?",
     options: [
       'Always a finding',
       'Not a finding for the original install — at the time of install, A4:2026 wasn\'t in force; the install complies with the regs effective at that date. The inspector MAY flag the arrangement as a "Code C2 — Potentially Dangerous" for the customer\'s information, recommending CU upgrade at next opportunity. The inverter failure investigation continues — root cause may be unrelated (component failure, lightning damage, etc.) or related (source-side RCD trip created hazardous conditions). Cert evidence bundle and EICR record the findings transparently',
@@ -175,12 +171,12 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'Existing installs comply with the regs at their install date. A4:2026 doesn\'t apply retroactively. The inspector MAY flag the single-RCD-CU + PV arrangement as Code C2 (Potentially Dangerous) for the customer\'s information — recommending CU upgrade at next opportunity. The inverter failure investigation proceeds: identify root cause (failed component, lightning damage, source-side RCD trip aggravation, etc.); rectify; record in updated cert evidence bundle. The EICR documents the findings transparently for the customer\'s informed decision.',
+      "Existing installs comply with the regs at their install date. A4:2026 doesn't apply retroactively. The inspector MAY flag the single-RCD-CU + PV arrangement as Code C2 (Potentially Dangerous) for the customer's information — recommending CU upgrade at next opportunity. The inverter failure investigation proceeds: identify root cause (failed component, lightning damage, source-side RCD trip aggravation, etc.); rectify; record in updated cert evidence bundle. The EICR documents the findings transparently for the customer's informed decision.",
   },
   {
     id: 5,
     question:
-      'IET CoP for Grid-Connected Solar PV Installations — what\'s its relationship to BS 7671 Section 712?',
+      "IET CoP for Grid-Connected Solar PV Installations — what's its relationship to BS 7671 Section 712?",
     options: [
       'They contradict each other',
       'Complementary. BS 7671 Section 712 sets the regulatory framework — what the install must achieve. The IET CoP (5th edition) operationalises Section 712 into the day-to-day install workflow — worked examples, decision charts, design-pack templates, troubleshooting, photo records. The MCS MIS 3002 design pack typically references both. The cert evidence bundle archives compliance evidence per both. Section 712 + IET CoP together = the full UK PV install standard',
@@ -194,7 +190,7 @@ const quizQuestions = [
   {
     id: 6,
     question:
-      'A new PV install in 2026 must satisfy both BS 7671:2018+A4:2026 (regulatory) and MCS MIS 3002 (scheme). What\'s in common, and what\'s different?',
+      "A new PV install in 2026 must satisfy both BS 7671:2018+A4:2026 (regulatory) and MCS MIS 3002 (scheme). What's in common, and what's different?",
     options: [
       'Identical',
       'BS 7671:2018+A4:2026 = the legal regulatory framework for the electrical install (what the install must achieve to be safe and compliant). MCS MIS 3002 = the scheme requirements for grant-funded PV installs (the design pack contents, audit trail, customer information). They overlap (the design pack contents are largely the same — sizing calculations, schematic, schedule, commissioning records), but MCS MIS 3002 adds: scheme-specific reporting, MCS cert issuance, customer information pack format, MCS audit process. Both must be satisfied for a typical grant-funded install',
@@ -212,7 +208,7 @@ const quizQuestions = [
     options: [
       'None',
       '(1) MCS MIS 3002 design pack — for the as-designed inputs (orientation, kWp, modules, inverter, string topology, V_oc / I_sc design values); (2) Install photographs — for the as-installed configuration (DC routing, AC connection, mounting, labels); (3) BS EN 62446-1 SoTR — for the baseline commissioning measurements (continuity, polarity, V_oc / I_sc, IR, functional tests). Inspector measures current values and compares against the SoTR baseline. Deviations identify degradation, faults, or operational issues',
-      'Customer\'s opinion only',
+      "Customer's opinion only",
       'No documents needed',
     ],
     correctAnswer: 1,
@@ -222,11 +218,11 @@ const quizQuestions = [
   {
     id: 8,
     question:
-      'The competent installer\'s end-to-end Section 712 workflow integrates all regs. What\'s the workflow sequence?',
+      "The competent installer's end-to-end Section 712 workflow integrates all regs. What's the workflow sequence?",
     options: [
       'No workflow',
       'Design (712.433.101.1 sizing; 712.431.101 fuse inequality; 712.512.2.1 site irradiance; 712.542.102 bonding decision); Install (712.421 cable + connectors + isolator; 712.512.2.1 standoff; 712.521.102 routing; 712.542.102 single-point bonding); Commissioning (BS EN 62446-1 SoTR confirming all regs); Handover (cert evidence bundle for MCS audit + customer + future EICR); Periodic (5-yearly inspection vs SoTR baseline). Each stage cross-references the regs and the operational source (IET CoP)',
-      'Customer\'s choice only',
+      "Customer's choice only",
       'Random order',
     ],
     correctAnswer: 1,
@@ -242,14 +238,15 @@ const faqs = [
       'Section 712 will evolve in the 19th Edition (currently planned for late-2020s) to reflect emerging UK PV practice — larger arrays, more complex multi-MPPT topologies, integration with BESS (Chapter 57 also evolving) and prosumer arrangements (Chapter 82 added in A4:2026). Expected directions: more explicit rapid-shutdown / arc-fault requirements; refined Type B RCD criteria with the growth of transformerless-with-internal-DC-management inverters; tighter integration with BESS for the prosumer use case; energy-efficiency requirements (Appendix 17 planned to become Part 8). Exact timing and content not yet published; the 19th Edition development is ongoing through 2026-2028.',
   },
   {
-    question: 'What\'s the difference between Section 712, the IET CoP, and MCS MIS 3002?',
+    question: "What's the difference between Section 712, the IET CoP, and MCS MIS 3002?",
     answer:
       'Three different documents with overlapping scope: (1) BS 7671 Section 712 — the legal regulatory framework (what the install must achieve to be safe and compliant); (2) IET CoP for Grid-Connected Solar PV Installations — the operational guidance (how to achieve compliance, with worked examples, decision charts, templates); (3) MCS MIS 3002 — the scheme requirements (additional reporting, audit trail, customer information for grant-funded installs). All three referenced by a competent UK PV install workflow. The cert evidence bundle archives compliance evidence per all three.',
   },
   {
-    question: 'How does the cert evidence bundle support customer ownership transfer (e.g. house sale)?',
+    question:
+      'How does the cert evidence bundle support customer ownership transfer (e.g. house sale)?',
     answer:
-      'When a property with PV is sold, the cert evidence bundle transfers to the new owner. The bundle provides: (1) install spec (kWp, modules, inverter, mounting); (2) commissioning baseline (BS EN 62446-1 SoTR); (3) MCS certificate (for property EPC value); (4) DNO confirmation (for SEG export continuity); (5) warranty details. EICR-style periodic inspection at the time of sale (or shortly after) uses the bundle to verify install condition. Property valuation typically reflects the PV install (positive value contribution) on the basis of the bundle\'s documentation.',
+      "When a property with PV is sold, the cert evidence bundle transfers to the new owner. The bundle provides: (1) install spec (kWp, modules, inverter, mounting); (2) commissioning baseline (BS EN 62446-1 SoTR); (3) MCS certificate (for property EPC value); (4) DNO confirmation (for SEG export continuity); (5) warranty details. EICR-style periodic inspection at the time of sale (or shortly after) uses the bundle to verify install condition. Property valuation typically reflects the PV install (positive value contribution) on the basis of the bundle's documentation.",
   },
   {
     question: 'What happens at the end of the 25-year nominal life of a PV install?',
@@ -269,12 +266,12 @@ const faqs = [
   {
     question: 'How does the bundle support insurance claims?',
     answer:
-      'Customer\'s insurance covering the property typically requires evidence that the PV install was professionally designed and commissioned. The cert evidence bundle provides: (1) MCS certificate (the install was scheme-compliant); (2) DNO notification / approval (the install was registered); (3) BS EN 62446-1 SoTR (the install was commissioned correctly); (4) install photographs (the install matches the design); (5) ongoing periodic inspection records. Insurance claim — e.g. lightning damage, fire — requires the bundle as the basis. Without the bundle, claim processing is significantly harder.',
+      "Customer's insurance covering the property typically requires evidence that the PV install was professionally designed and commissioned. The cert evidence bundle provides: (1) MCS certificate (the install was scheme-compliant); (2) DNO notification / approval (the install was registered); (3) BS EN 62446-1 SoTR (the install was commissioned correctly); (4) install photographs (the install matches the design); (5) ongoing periodic inspection records. Insurance claim — e.g. lightning damage, fire — requires the bundle as the basis. Without the bundle, claim processing is significantly harder.",
   },
   {
     question: 'What if the original installer has gone out of business — who maintains the bundle?',
     answer:
-      'Customer maintains the bundle (or the property\'s current owner). The bundle is the customer\'s archive. If the original installer has gone out of business, the customer should: (1) verify they have a complete copy of the bundle; (2) make multiple-format copies (paper + digital); (3) reference the MCS scheme database (MCS holds the cert reference); (4) reference the DNO confirmation (DNO holds the notification record). Future maintenance / inspection contractors work from the customer\'s bundle. The cert evidence bundle\'s value increases over time as the original install team becomes less accessible.',
+      "Customer maintains the bundle (or the property's current owner). The bundle is the customer's archive. If the original installer has gone out of business, the customer should: (1) verify they have a complete copy of the bundle; (2) make multiple-format copies (paper + digital); (3) reference the MCS scheme database (MCS holds the cert reference); (4) reference the DNO confirmation (DNO holds the notification record). Future maintenance / inspection contractors work from the customer's bundle. The cert evidence bundle's value increases over time as the original install team becomes less accessible.",
   },
   {
     question: 'How does Module 4 (diverters, off-grid, hybrid) build on Module 3?',
@@ -335,7 +332,10 @@ export default function RenewableEnergyModule3Section8() {
             initialVisibleCount={3}
           />
 
-          <Pullquote>Section 712 is the regulation. IET CoP is the workflow. MCS MIS 3002 is the scheme. Cert bundle is the audit trail.</Pullquote>
+          <Pullquote>
+            Section 712 is the regulation. IET CoP is the workflow. MCS MIS 3002 is the scheme. Cert
+            bundle is the audit trail.
+          </Pullquote>
 
           <ContentEyebrow>Section 712 mapped to the workflow</ContentEyebrow>
 
@@ -346,44 +346,255 @@ export default function RenewableEnergyModule3Section8() {
           >
             <p>Section 712 regs by workflow stage:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li><strong className="text-white">712.433.101.1 (V_oc_max / Upc_max / Isc_max determination)</strong> — design stage (Section 2). Conservative defaults 1.2 / 1.25 OR manufacturer temperature coefficient + site extremes. Used in inverter MPPT sizing (three voltage rules) and DC cable sizing</li>
-              <li><strong className="text-white">712.431.101 (string-protection condition)</strong> — design stage (Section 2). Above 2 strings: protection required where 1.35 × I_mod_max_ocer &lt; (Ns-1) × I_sc_max IS MET. Explicit: 1 or 2 strings never need protection</li>
-              <li><strong className="text-white">712.431.102 (string-protection requirement)</strong> — design stage. Where Reg 712.431.101 mandates protection, devices specified per Reg 712.432.103 (gPV per BS EN 60269-6 / fuse-combination per BS EN 60947-3 / DC-MCBs per BS EN 60947-2 / 60898-2 / IEC 60898-3)</li>
-              <li><strong className="text-white">712.421 (fire protection)</strong> — throughout. Design: cable per Reg 712.521.1041 (BS EN 50618), connectors per Reg 712.526.101 (BS EN 62852), isolator BS EN 60947-3. Install: compatible MC4 pairs, manufacturer-torque, flashing-tile, cables NOT directly on roof surface, notices per Reg 712.514.102 / 103. Commissioning: functional test of isolator under load + IMD verification</li>
-              <li><strong className="text-white">712.512.2.1 (thermal arrangement)</strong> — design + install. Design: site irradiance assessment (Section 1). Install: 70-100 mm standoff (Section 3) + manufacturer mounting spec</li>
-              <li><strong className="text-white">712.542.102 (functional bonding)</strong> — design + install. Design: check module manufacturer requirement and inverter galvanic isolation. Install: single-point bonding only when both conditions met</li>
-              <li><strong className="text-white">712.521.102 (lightning loop minimisation)</strong> — design + install. Design: route DC + bonding side-by-side. Install: cables strapped together or in same conduit, minimising enclosed area</li>
-              <li><strong className="text-white">712.410.101 (DC side energised when AC disconnected)</strong> — install + commissioning + handover. Drives Reg 712.514.102 / 712.514.103 notice content; drives DC-isolator requirement</li>
-              <li><strong className="text-white">712.412.101 (Class II insulation on DC side)</strong> — design + install. Drives cable selection per Reg 712.521.1041 (BS EN 50618 single-core, etc.)</li>
-              <li><strong className="text-white">712.421.101.1 / 712.538.101 (Insulation Monitoring Device)</strong> — install + commissioning. IMD per BS EN 61557-8 mandatory; usually inverter-integrated per BS EN 62109-2 — manufacturer datasheet evidences</li>
-              <li><strong className="text-white">712.432 / 712.432.101 / 712.432.102 / 712.432.103 (protective device characteristics)</strong> — design. Sizing 1.1 × I_sc_max &lt; I_n ≤ I_mod_max_ocer; both polarities protected; blocking diodes NOT acceptable; devices gPV (BS EN 60269-6) / fuse-combination (BS EN 60947-3) / DC-MCBs (BS EN 60947-2 / 60898-2 / IEC 60898-3)</li>
-              <li><strong className="text-white">712.433.1 / 712.433.103 (overload protection omission)</strong> — design. Overload may be omitted when cable CCC ≥ 1.25 × I_sc_stc at any location</li>
-              <li><strong className="text-white">712.433.104 (AC supply cable)</strong> — design. AC cable OCPD basis: max AC current or 1.1 × rated AC if not specified</li>
-              <li><strong className="text-white">712.511.101 / 712.511.102 / 712.511.103 (equipment standards)</strong> — design + handover. Modules per BS EN 61215; inverters per BS EN 62109-1 / -2; combiner boxes per BS EN [IEC] 61439 (or BS EN 60670-24 residential)</li>
-              <li><strong className="text-white">712.512.102 (outdoor enclosures)</strong> — install. IP44 + IK07 minimum per BS EN 60529 / 62262</li>
-              <li><strong className="text-white">712.514.101 / 712.514.102 / 712.514.103 (notices)</strong> — install + handover. Instruction notice at origin / metering / CU; "SOLAR DC — Live parts can remain energized after isolation" at each DC access point; "Isolate both AC and DC sides before servicing" on inverter</li>
-              <li><strong className="text-white">712.521.1041 (DC cable selection)</strong> — install. H1Z2Z2-K to BS EN 50618 OR insulated single-core in conduit; cables NOT directly on roof surface</li>
-              <li><strong className="text-white">712.523.101 (cable design ambient)</strong> — design. 70°C ambient for cables under PV modules</li>
-              <li><strong className="text-white">712.526.1 / 712.526.101 (connectors)</strong> — install. Compatible pairs (recommended manufacturer check) per BS EN 62852:2015+A1:2020; key/tool isolation if accessible to ordinary persons</li>
-              <li><strong className="text-white">712.531.3.5.1 (RCD type for PV AC supply circuit)</strong> — design. Type B per BS EN 62423 or BS EN 60947-2 default, with three exceptions: (a) inverter simple AC/DC separation; (b) transformer-winding separation; (c) manufacturer states Type B not required. Cross-refs Reg 531.3.3 (general rule restricting Type AC)</li>
-              <li><strong className="text-white">712.534.101 / 712.534.102 / 712.534.102.1 / 712.534.102.4 (SPDs)</strong> — design + install. DC SPDs per BS EN 61643-31; Type 2 default; Type 1 where direct-strike LPS separation not maintained; minimum I_n = 5 kA; LPS separation per BS EN 62305-3</li>
-              <li><strong className="text-white">712.537.2.2.104 (lockable non-breaking devices)</strong> — install. Devices without breaking capacity (e.g. SPDs) shall be locked against inadvertent operation</li>
-              <li><strong className="text-white">712.542.101 (equipotential bonding of PV metal structures)</strong> — install. Mounting structures + metal cable management bonded; aluminium requires corrosion-protected terminations</li>
-              <li><strong className="text-white">712.542.3.101 (functional bonding conductor)</strong> — install. Minimum 4 mm² copper equivalent (insulated or bare)</li>
-              <li><strong className="text-white">712.6.101 (inspection and testing)</strong> — commissioning. Authorises BS EN 62446 series commissioning workflow; SoTR records the result</li>
-              <li><strong className="text-white">712.1 (scope)</strong> — design. Section 712 covers PV generators (a) supplying an installation not connected to the public grid, (b) in parallel with the grid, or (c) as an alternative to the grid. NOTE: stand-alone (off-grid) PV power supply systems are &ldquo;under consideration&rdquo; — Section 712 does NOT yet fully cover them. Off-grid PV (covered in Module 4) draws additional design discipline from manufacturer specs and the IET CoP</li>
-              <li><strong className="text-white">712.410.102 (permitted DC protective measures)</strong> — design. On the DC side, ONE of: (a) double or reinforced insulation per Section 412; OR (b) extra-low voltage (SELV / PELV) per Section 414. Typical UK domestic PV uses (a) Class II — V_oc_max far exceeds the 120 V DC SELV/PELV limit of Reg 712.414.1.1</li>
-              <li><strong className="text-white">712.410.3.5 / 712.410.3.6 (protective measures NOT permitted)</strong> — design. The following protective measures SHALL NOT be used on the DC side: obstacles and placing out of reach (Section 417); non-conducting location (Reg 418.1); earth-free local equipotential bonding (Reg 418.2); electrical separation for the supply of more than one item of current-using equipment (Reg 418.3). Practical implication: typical UK PV must use Class II (Reg 712.412.101) — the alternatives are excluded</li>
-              <li><strong className="text-white">712.414.1.1 / 712.414.4.5 (SELV / PELV constraints)</strong> — design. If SELV / PELV is chosen, U_oc_max ≤ 120 V DC and basic protection required where nominal V &gt; 30 V DC. Typical UK domestic PV (V_oc_max 400-600 V) is OUTSIDE the SELV / PELV envelope — Class II (Reg 712.412.101) is the operational choice</li>
-              <li><strong className="text-white">712.2 (functional bonding disconnect device)</strong> — install. Where functional bonding per Reg 712.542.102 is applied, the automatic disconnecting device in the functional bonding conductor is sized per the Reg 712.2 table: ≤25 kW = 1 A; >25-50 kW = 2 A; >50-100 kW = 3 A; >100-250 kW = 4 A; >250 kW = 5 A</li>
-              <li><strong className="text-white">712.312.2 (DC live-conductor earthing permission)</strong> — design. Earthing of one DC live conductor permitted with at least simple separation between AC and DC; the foundational reg behind functional bonding (712.542.102). NOTE: corrosion prevention per BS EN 13636 / BS EN 15112</li>
-              <li><strong className="text-white">712.421.101 / 712.421.101.2 (functional-earthing fault interruption)</strong> — install. Where functional earthing applied to a DC live conductor, means provided to interrupt fault current; the automatic disconnecting device per Reg 712.2 satisfies this</li>
-              <li><strong className="text-white">712.444.4.2.14 (general loop minimisation)</strong> — install. General reg: area of all wiring loops shall be as small as possible. Reg 712.521.102 is the PV-specific implementation of this principle</li>
-              <li><strong className="text-white">712.512.101 (blocking diodes)</strong> — design. If blocking diodes used (for polarity, NOT overcurrent per Reg 712.432.102): reverse voltage ≥ 2 × U_oc_max of string; rated current ≥ 1.1 × I_sc_max; connected in series with PV strings</li>
-              <li><strong className="text-white">712.533.101 (bidirectional OCPDs)</strong> — design. DC-side overcurrent protective devices SHALL be bidirectional. Voltage U_e ≥ U_oc_max; breaking capacity ≥ I_sc_max of array</li>
-              <li><strong className="text-white">712.534.102.2 + Table 712.1 (SPD U_imp selection)</strong> — design. Where manufacturer info not provided, rated impulse withstand voltage U_imp selected from Table 712.1 by V_oc_max</li>
-              <li><strong className="text-white">712.551 (parallel-operation requirements)</strong> — design. Additional requirements where the generating set operates in parallel with other sources including the public distribution network</li>
-              <li><strong className="text-white">Wider BS 7671 (interacts with Section 712)</strong> — Reg 551.7.1(c) bidirectional protective device (A4:2026 NEW); Reg 551.7.1(d) source connection (A4:2026 NEW); Reg 531.3.3 general RCD type rule (cross-ref from 712.531.3.5.1); Reg 722.411.4.1 PME exception removed (A4:2026); TN-C-S (PNB) supply terminology (A4:2026)</li>
+              <li>
+                <strong className="text-white">
+                  712.433.101.1 (V_oc_max / Upc_max / Isc_max determination)
+                </strong>{' '}
+                — design stage (Section 2). Conservative defaults 1.2 / 1.25 OR manufacturer
+                temperature coefficient + site extremes. Used in inverter MPPT sizing (three voltage
+                rules) and DC cable sizing
+              </li>
+              <li>
+                <strong className="text-white">712.431.101 (string-protection condition)</strong> —
+                design stage (Section 2). Above 2 strings: protection required where 1.35 ×
+                I_mod_max_ocer &lt; (Ns-1) × I_sc_max IS MET. Explicit: 1 or 2 strings never need
+                protection
+              </li>
+              <li>
+                <strong className="text-white">712.431.102 (string-protection requirement)</strong>{' '}
+                — design stage. Where Reg 712.431.101 mandates protection, devices specified per Reg
+                712.432.103 (gPV per BS EN 60269-6 / fuse-combination per BS EN 60947-3 / DC-MCBs
+                per BS EN 60947-2 / 60898-2 / IEC 60898-3)
+              </li>
+              <li>
+                <strong className="text-white">712.421 (fire protection)</strong> — throughout.
+                Design: cable per Reg 712.521.1041 (BS EN 50618), connectors per Reg 712.526.101 (BS
+                EN 62852), isolator BS EN 60947-3. Install: compatible MC4 pairs,
+                manufacturer-torque, flashing-tile, cables NOT directly on roof surface, notices per
+                Reg 712.514.102 / 103. Commissioning: functional test of isolator under load + IMD
+                verification
+              </li>
+              <li>
+                <strong className="text-white">712.512.2.1 (thermal arrangement)</strong> — design +
+                install. Design: site irradiance assessment (Section 1). Install: 70-100 mm standoff
+                (Section 3) + manufacturer mounting spec
+              </li>
+              <li>
+                <strong className="text-white">712.542.102 (functional bonding)</strong> — design +
+                install. Design: check module manufacturer requirement and inverter galvanic
+                isolation. Install: single-point bonding only when both conditions met
+              </li>
+              <li>
+                <strong className="text-white">712.521.102 (lightning loop minimisation)</strong> —
+                design + install. Design: route DC + bonding side-by-side. Install: cables strapped
+                together or in same conduit, minimising enclosed area
+              </li>
+              <li>
+                <strong className="text-white">
+                  712.410.101 (DC side energised when AC disconnected)
+                </strong>{' '}
+                — install + commissioning + handover. Drives Reg 712.514.102 / 712.514.103 notice
+                content; drives DC-isolator requirement
+              </li>
+              <li>
+                <strong className="text-white">712.412.101 (Class II insulation on DC side)</strong>{' '}
+                — design + install. Drives cable selection per Reg 712.521.1041 (BS EN 50618
+                single-core, etc.)
+              </li>
+              <li>
+                <strong className="text-white">
+                  712.421.101.1 / 712.538.101 (Insulation Monitoring Device)
+                </strong>{' '}
+                — install + commissioning. IMD per BS EN 61557-8 mandatory; usually
+                inverter-integrated per BS EN 62109-2 — manufacturer datasheet evidences
+              </li>
+              <li>
+                <strong className="text-white">
+                  712.432 / 712.432.101 / 712.432.102 / 712.432.103 (protective device
+                  characteristics)
+                </strong>{' '}
+                — design. Sizing 1.1 × I_sc_max &lt; I_n ≤ I_mod_max_ocer; both polarities
+                protected; blocking diodes NOT acceptable; devices gPV (BS EN 60269-6) /
+                fuse-combination (BS EN 60947-3) / DC-MCBs (BS EN 60947-2 / 60898-2 / IEC 60898-3)
+              </li>
+              <li>
+                <strong className="text-white">
+                  712.433.1 / 712.433.103 (overload protection omission)
+                </strong>{' '}
+                — design. Overload may be omitted when cable CCC ≥ 1.25 × I_sc_stc at any location
+              </li>
+              <li>
+                <strong className="text-white">712.433.104 (AC supply cable)</strong> — design. AC
+                cable OCPD basis: max AC current or 1.1 × rated AC if not specified
+              </li>
+              <li>
+                <strong className="text-white">
+                  712.511.101 / 712.511.102 / 712.511.103 (equipment standards)
+                </strong>{' '}
+                — design + handover. Modules per BS EN 61215; inverters per BS EN 62109-1 / -2;
+                combiner boxes per BS EN [IEC] 61439 (or BS EN 60670-24 residential)
+              </li>
+              <li>
+                <strong className="text-white">712.512.102 (outdoor enclosures)</strong> — install.
+                IP44 + IK07 minimum per BS EN 60529 / 62262
+              </li>
+              <li>
+                <strong className="text-white">
+                  712.514.101 / 712.514.102 / 712.514.103 (notices)
+                </strong>{' '}
+                — install + handover. Instruction notice at origin / metering / CU; "SOLAR DC — Live
+                parts can remain energized after isolation" at each DC access point; "Isolate both
+                AC and DC sides before servicing" on inverter
+              </li>
+              <li>
+                <strong className="text-white">712.521.1041 (DC cable selection)</strong> — install.
+                H1Z2Z2-K to BS EN 50618 OR insulated single-core in conduit; cables NOT directly on
+                roof surface
+              </li>
+              <li>
+                <strong className="text-white">712.523.101 (cable design ambient)</strong> — design.
+                70°C ambient for cables under PV modules
+              </li>
+              <li>
+                <strong className="text-white">712.526.1 / 712.526.101 (connectors)</strong> —
+                install. Compatible pairs (recommended manufacturer check) per BS EN
+                62852:2015+A1:2020; key/tool isolation if accessible to ordinary persons
+              </li>
+              <li>
+                <strong className="text-white">
+                  712.531.3.5.1 (RCD type for PV AC supply circuit)
+                </strong>{' '}
+                — design. Type B per BS EN 62423 or BS EN 60947-2 default, with three exceptions:
+                (a) inverter simple AC/DC separation; (b) transformer-winding separation; (c)
+                manufacturer states Type B not required. Cross-refs Reg 531.3.3 (general rule
+                restricting Type AC)
+              </li>
+              <li>
+                <strong className="text-white">
+                  712.534.101 / 712.534.102 / 712.534.102.1 / 712.534.102.4 (SPDs)
+                </strong>{' '}
+                — design + install. DC SPDs per BS EN 61643-31; Type 2 default; Type 1 where
+                direct-strike LPS separation not maintained; minimum I_n = 5 kA; LPS separation per
+                BS EN 62305-3
+              </li>
+              <li>
+                <strong className="text-white">
+                  712.537.2.2.104 (lockable non-breaking devices)
+                </strong>{' '}
+                — install. Devices without breaking capacity (e.g. SPDs) shall be locked against
+                inadvertent operation
+              </li>
+              <li>
+                <strong className="text-white">
+                  712.542.101 (equipotential bonding of PV metal structures)
+                </strong>{' '}
+                — install. Mounting structures + metal cable management bonded; aluminium requires
+                corrosion-protected terminations
+              </li>
+              <li>
+                <strong className="text-white">712.542.3.101 (functional bonding conductor)</strong>{' '}
+                — install. Minimum 4 mm² copper equivalent (insulated or bare)
+              </li>
+              <li>
+                <strong className="text-white">712.6.101 (inspection and testing)</strong> —
+                commissioning. Authorises BS EN 62446 series commissioning workflow; SoTR records
+                the result
+              </li>
+              <li>
+                <strong className="text-white">712.1 (scope)</strong> — design. Section 712 covers
+                PV generators (a) supplying an installation not connected to the public grid, (b) in
+                parallel with the grid, or (c) as an alternative to the grid. NOTE: stand-alone
+                (off-grid) PV power supply systems are &ldquo;under consideration&rdquo; — Section
+                712 does NOT yet fully cover them. Off-grid PV (covered in Module 4) draws
+                additional design discipline from manufacturer specs and the IET CoP
+              </li>
+              <li>
+                <strong className="text-white">
+                  712.410.102 (permitted DC protective measures)
+                </strong>{' '}
+                — design. On the DC side, ONE of: (a) double or reinforced insulation per Section
+                412; OR (b) extra-low voltage (SELV / PELV) per Section 414. Typical UK domestic PV
+                uses (a) Class II — V_oc_max far exceeds the 120 V DC SELV/PELV limit of Reg
+                712.414.1.1
+              </li>
+              <li>
+                <strong className="text-white">
+                  712.410.3.5 / 712.410.3.6 (protective measures NOT permitted)
+                </strong>{' '}
+                — design. The following protective measures SHALL NOT be used on the DC side:
+                obstacles and placing out of reach (Section 417); non-conducting location (Reg
+                418.1); earth-free local equipotential bonding (Reg 418.2); electrical separation
+                for the supply of more than one item of current-using equipment (Reg 418.3).
+                Practical implication: typical UK PV must use Class II (Reg 712.412.101) — the
+                alternatives are excluded
+              </li>
+              <li>
+                <strong className="text-white">
+                  712.414.1.1 / 712.414.4.5 (SELV / PELV constraints)
+                </strong>{' '}
+                — design. If SELV / PELV is chosen, U_oc_max ≤ 120 V DC and basic protection
+                required where nominal V &gt; 30 V DC. Typical UK domestic PV (V_oc_max 400-600 V)
+                is OUTSIDE the SELV / PELV envelope — Class II (Reg 712.412.101) is the operational
+                choice
+              </li>
+              <li>
+                <strong className="text-white">712.2 (functional bonding disconnect device)</strong>{' '}
+                — install. Where functional bonding per Reg 712.542.102 is applied, the automatic
+                disconnecting device in the functional bonding conductor is sized per the Reg 712.2
+                table: ≤25 kW = 1 A; &gt;25-50 kW = 2 A; &gt;50-100 kW = 3 A; &gt;100-250 kW = 4 A;
+                &gt;250 kW = 5 A
+              </li>
+              <li>
+                <strong className="text-white">
+                  712.312.2 (DC live-conductor earthing permission)
+                </strong>{' '}
+                — design. Earthing of one DC live conductor permitted with at least simple
+                separation between AC and DC; the foundational reg behind functional bonding
+                (712.542.102). NOTE: corrosion prevention per BS EN 13636 / BS EN 15112
+              </li>
+              <li>
+                <strong className="text-white">
+                  712.421.101 / 712.421.101.2 (functional-earthing fault interruption)
+                </strong>{' '}
+                — install. Where functional earthing applied to a DC live conductor, means provided
+                to interrupt fault current; the automatic disconnecting device per Reg 712.2
+                satisfies this
+              </li>
+              <li>
+                <strong className="text-white">712.444.4.2.14 (general loop minimisation)</strong> —
+                install. General reg: area of all wiring loops shall be as small as possible. Reg
+                712.521.102 is the PV-specific implementation of this principle
+              </li>
+              <li>
+                <strong className="text-white">712.512.101 (blocking diodes)</strong> — design. If
+                blocking diodes used (for polarity, NOT overcurrent per Reg 712.432.102): reverse
+                voltage ≥ 2 × U_oc_max of string; rated current ≥ 1.1 × I_sc_max; connected in
+                series with PV strings
+              </li>
+              <li>
+                <strong className="text-white">712.533.101 (bidirectional OCPDs)</strong> — design.
+                DC-side overcurrent protective devices SHALL be bidirectional. Voltage U_e ≥
+                U_oc_max; breaking capacity ≥ I_sc_max of array
+              </li>
+              <li>
+                <strong className="text-white">
+                  712.534.102.2 + Table 712.1 (SPD U_imp selection)
+                </strong>{' '}
+                — design. Where manufacturer info not provided, rated impulse withstand voltage
+                U_imp selected from Table 712.1 by V_oc_max
+              </li>
+              <li>
+                <strong className="text-white">712.551 (parallel-operation requirements)</strong> —
+                design. Additional requirements where the generating set operates in parallel with
+                other sources including the public distribution network
+              </li>
+              <li>
+                <strong className="text-white">Wider BS 7671 (interacts with Section 712)</strong> —
+                Reg 551.7.1(c) bidirectional protective device (A4:2026 NEW); Reg 551.7.1(d) source
+                connection (A4:2026 NEW); Reg 531.3.3 general RCD type rule (cross-ref from
+                712.531.3.5.1); Reg 722.411.4.1 PME exception removed (A4:2026); TN-C-S (PNB) supply
+                terminology (A4:2026)
+              </li>
             </ul>
           </ConceptBlock>
 
@@ -408,7 +619,9 @@ export default function RenewableEnergyModule3Section8() {
 
           <ContentEyebrow>A4:2026 changes affecting PV</ContentEyebrow>
 
-          <Pullquote>Reg 551.7.1(d) source connection. Chapter 82 PEIs. Type B default. TN-C-S (PNB).</Pullquote>
+          <Pullquote>
+            Reg 551.7.1(d) source connection. Chapter 82 PEIs. Type B default. TN-C-S (PNB).
+          </Pullquote>
 
           <ConceptBlock
             title="The A4:2026 changes that affect PV install design"
@@ -417,13 +630,55 @@ export default function RenewableEnergyModule3Section8() {
           >
             <p>Key A4:2026 changes affecting PV:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li><strong className="text-white">Reg 551.7.1(d) — source connection rule (NEW)</strong>: PV / BESS inverter must NOT be on the load side of an RCD protecting the rest of the installation. Triggers dedicated RCBO, split-load CU, or all-RCBO CU. Detailed in Section 6</li>
-              <li><strong className="text-white">Chapter 82 — Prosumer\'s Electrical Installations (PEIs) (NEW)</strong>: regulatory framework for installations that BOTH consume and generate / store electricity. Covers integration of PV + BESS + EV charging + grid in a single &ldquo;prosumer&rdquo; install. Detailed in Module 1 Section 2 and Module 10</li>
-              <li><strong className="text-white">Chapter 57 — Stationary secondary batteries (NEW)</strong>: regulatory framework for batteries in electrical installations. Detailed in Module 5 (BESS)</li>
-              <li><strong className="text-white">Reg 531.3.3 — RCD Type AC restriction (UPDATED in A4:2026)</strong>: Type AC RCDs shall only be used to serve fixed equipment where it is KNOWN the load current contains no DC components. For PV inverter circuits specifically, the PV-specific rule is Reg 712.531.3.5.1 — Type B default per BS EN 62423 or BS EN 60947-2, with three exceptions: (a) inverter provides simple separation between AC and DC; (b) separate transformer windings between inverter and RCD; (c) inverter manufacturer states Type B not required. Detailed in Section 6</li>
-              <li><strong className="text-white">Appendix 17 — Energy efficiency (NEW)</strong>: planning framework for energy-efficient install design. Planned to become Part 8 in 19th Edition</li>
-              <li><strong className="text-white">TN-C-S (PNB) terminology (UPDATED)</strong>: UK PME supplies now formally termed "TN-C-S (PNB)" — Protective Neutral Bonded. Functional behaviour unchanged; terminology aligned with international IEC convention</li>
-              <li><strong className="text-white">Reg 722.411.4.1 PME exception (REMOVED)</strong>: A3\'s "reasonably practicable" exception to the PME requirement for EV charging was removed in A4. Detailed in Module 6 (EV charging)</li>
+              <li>
+                <strong className="text-white">
+                  Reg 551.7.1(d) — source connection rule (NEW)
+                </strong>
+                : PV / BESS inverter must NOT be on the load side of an RCD protecting the rest of
+                the installation. Triggers dedicated RCBO, split-load CU, or all-RCBO CU. Detailed
+                in Section 6
+              </li>
+              <li>
+                <strong className="text-white">
+                  Chapter 82 — Prosumer\'s Electrical Installations (PEIs) (NEW)
+                </strong>
+                : regulatory framework for installations that BOTH consume and generate / store
+                electricity. Covers integration of PV + BESS + EV charging + grid in a single
+                &ldquo;prosumer&rdquo; install. Detailed in Module 1 Section 2 and Module 10
+              </li>
+              <li>
+                <strong className="text-white">
+                  Chapter 57 — Stationary secondary batteries (NEW)
+                </strong>
+                : regulatory framework for batteries in electrical installations. Detailed in Module
+                5 (BESS)
+              </li>
+              <li>
+                <strong className="text-white">
+                  Reg 531.3.3 — RCD Type AC restriction (UPDATED in A4:2026)
+                </strong>
+                : Type AC RCDs shall only be used to serve fixed equipment where it is KNOWN the
+                load current contains no DC components. For PV inverter circuits specifically, the
+                PV-specific rule is Reg 712.531.3.5.1 — Type B default per BS EN 62423 or BS EN
+                60947-2, with three exceptions: (a) inverter provides simple separation between AC
+                and DC; (b) separate transformer windings between inverter and RCD; (c) inverter
+                manufacturer states Type B not required. Detailed in Section 6
+              </li>
+              <li>
+                <strong className="text-white">Appendix 17 — Energy efficiency (NEW)</strong>:
+                planning framework for energy-efficient install design. Planned to become Part 8 in
+                19th Edition
+              </li>
+              <li>
+                <strong className="text-white">TN-C-S (PNB) terminology (UPDATED)</strong>: UK PME
+                supplies now formally termed "TN-C-S (PNB)" — Protective Neutral Bonded. Functional
+                behaviour unchanged; terminology aligned with international IEC convention
+              </li>
+              <li>
+                <strong className="text-white">Reg 722.411.4.1 PME exception (REMOVED)</strong>:
+                A3\'s "reasonably practicable" exception to the PME requirement for EV charging was
+                removed in A4. Detailed in Module 6 (EV charging)
+              </li>
             </ul>
           </ConceptBlock>
 
@@ -431,7 +686,9 @@ export default function RenewableEnergyModule3Section8() {
 
           <ContentEyebrow>The cert evidence bundle — structure and purpose</ContentEyebrow>
 
-          <Pullquote>Seven sections. 25-year archive. The audit trail for the install life.</Pullquote>
+          <Pullquote>
+            Seven sections. 25-year archive. The audit trail for the install life.
+          </Pullquote>
 
           <ConceptBlock
             title="Cert evidence bundle — what it is and what it does"
@@ -440,13 +697,41 @@ export default function RenewableEnergyModule3Section8() {
           >
             <p>Cert evidence bundle structure:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li><strong className="text-white">1. MCS MIS 3002 design pack</strong> — site survey, yield modelling, single-line schematic, component schedule, MPPT calculations, cable sizing, string-fuse inequality, customer information pack content</li>
-              <li><strong className="text-white">2. Install photographs</strong> — DC routing, AC routing, mounting + flashing-tile, modules + frame bonding, MC4 connector + crimping, isolator placements + labelling, all labels (residual-energy warnings, isolator labels)</li>
-              <li><strong className="text-white">3. BS EN 62446-1 commissioning records</strong> — continuity, polarity, V_oc / I_sc per string (with test conditions), I-V curve (where measured), IR test (test voltage + measured + conditions), functional tests of isolators and protective devices. Schedule of Test Results signed off</li>
-              <li><strong className="text-white">4. MCS certificate</strong> — issued after install completion. Feeds the EPC and property valuation</li>
-              <li><strong className="text-white">5. EREC G98 / G99 / G100 documents</strong> — G98 notification (for ≤16 A installs); G99 application + DNO approval letter (for >16 A); G100 verification testing record (for export-limited installs)</li>
-              <li><strong className="text-white">6. DNO confirmation</strong> — DNO\'s confirmation of receipt and acceptance of the G98 / G99 notification</li>
-              <li><strong className="text-white">7. Customer handover pack</strong> — operating manual, maintenance schedule, warranty details, emergency contacts, scheduled inspection reminders. Customer signs receipt</li>
+              <li>
+                <strong className="text-white">1. MCS MIS 3002 design pack</strong> — site survey,
+                yield modelling, single-line schematic, component schedule, MPPT calculations, cable
+                sizing, string-fuse inequality, customer information pack content
+              </li>
+              <li>
+                <strong className="text-white">2. Install photographs</strong> — DC routing, AC
+                routing, mounting + flashing-tile, modules + frame bonding, MC4 connector +
+                crimping, isolator placements + labelling, all labels (residual-energy warnings,
+                isolator labels)
+              </li>
+              <li>
+                <strong className="text-white">3. BS EN 62446-1 commissioning records</strong> —
+                continuity, polarity, V_oc / I_sc per string (with test conditions), I-V curve
+                (where measured), IR test (test voltage + measured + conditions), functional tests
+                of isolators and protective devices. Schedule of Test Results signed off
+              </li>
+              <li>
+                <strong className="text-white">4. MCS certificate</strong> — issued after install
+                completion. Feeds the EPC and property valuation
+              </li>
+              <li>
+                <strong className="text-white">5. EREC G98 / G99 / G100 documents</strong> — G98
+                notification (for ≤16 A installs); G99 application + DNO approval letter (for &gt;16
+                A); G100 verification testing record (for export-limited installs)
+              </li>
+              <li>
+                <strong className="text-white">6. DNO confirmation</strong> — DNO\'s confirmation of
+                receipt and acceptance of the G98 / G99 notification
+              </li>
+              <li>
+                <strong className="text-white">7. Customer handover pack</strong> — operating
+                manual, maintenance schedule, warranty details, emergency contacts, scheduled
+                inspection reminders. Customer signs receipt
+              </li>
             </ul>
           </ConceptBlock>
 
@@ -457,12 +742,37 @@ export default function RenewableEnergyModule3Section8() {
           >
             <p>Bundle use cases:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li><strong className="text-white">MCS audit</strong> — random sample of installs; auditor reads design pack against BS 7671 Section 712 + MCS MIS 3002; gaps trigger major findings requiring rectification</li>
-              <li><strong className="text-white">EICR-style periodic inspection (typically 5-yearly for PV)</strong> — inspector reads SoTR baseline; measures current values; compares; identifies degradation / faults / operational issues</li>
-              <li><strong className="text-white">Customer service / fault investigation</strong> — fault diagnosis references the design pack, SoTR baseline, install photographs to localise the root cause efficiently</li>
-              <li><strong className="text-white">Property ownership transfer</strong> — bundle transfers to new owner; supports property valuation (PV cert + EPC) and continuity of SEG export tariff</li>
-              <li><strong className="text-white">Insurance claim</strong> — bundle evidences professional design and install; supports claim for lightning damage, fire, or other insured loss</li>
-              <li><strong className="text-white">End-of-life decision (year 25-30)</strong> — bundle informs repower / replace / continue decision</li>
+              <li>
+                <strong className="text-white">MCS audit</strong> — random sample of installs;
+                auditor reads design pack against BS 7671 Section 712 + MCS MIS 3002; gaps trigger
+                major findings requiring rectification
+              </li>
+              <li>
+                <strong className="text-white">
+                  EICR-style periodic inspection (typically 5-yearly for PV)
+                </strong>{' '}
+                — inspector reads SoTR baseline; measures current values; compares; identifies
+                degradation / faults / operational issues
+              </li>
+              <li>
+                <strong className="text-white">Customer service / fault investigation</strong> —
+                fault diagnosis references the design pack, SoTR baseline, install photographs to
+                localise the root cause efficiently
+              </li>
+              <li>
+                <strong className="text-white">Property ownership transfer</strong> — bundle
+                transfers to new owner; supports property valuation (PV cert + EPC) and continuity
+                of SEG export tariff
+              </li>
+              <li>
+                <strong className="text-white">Insurance claim</strong> — bundle evidences
+                professional design and install; supports claim for lightning damage, fire, or other
+                insured loss
+              </li>
+              <li>
+                <strong className="text-white">End-of-life decision (year 25-30)</strong> — bundle
+                informs repower / replace / continue decision
+              </li>
             </ul>
           </ConceptBlock>
 
@@ -477,7 +787,9 @@ export default function RenewableEnergyModule3Section8() {
 
           <SectionRule />
 
-          <ContentEyebrow>BS 7671 Section 712 + IET CoP + MCS MIS 3002 — the full UK PV install standard</ContentEyebrow>
+          <ContentEyebrow>
+            BS 7671 Section 712 + IET CoP + MCS MIS 3002 — the full UK PV install standard
+          </ContentEyebrow>
 
           <Pullquote>Three documents. One competent workflow.</Pullquote>
 
@@ -488,15 +800,31 @@ export default function RenewableEnergyModule3Section8() {
           >
             <p>The three documents in detail:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li><strong className="text-white">BS 7671:2018+A4:2026 Section 712</strong> — regulatory framework. Legal requirements for safe and compliant PV electrical installations. What the install MUST achieve. Currently A4:2026 (effective 15 April 2026). Next major update: 19th Edition (planned late-2020s)</li>
-              <li><strong className="text-white">IET Code of Practice for Grid-Connected Solar PV Installations (5th edition)</strong> — operational guidance. Worked examples, decision charts, design-pack templates, troubleshooting, photo / record discipline. HOW to achieve compliance. Expected next edition to reflect A4:2026 changes</li>
-              <li><strong className="text-white">MCS MIS 3002</strong> — scheme requirements for grant-funded installs. Design pack contents, audit trail, customer information pack format, MCS audit process, contractor competency requirements. The grant-funded install ADDITIONS to Section 712 + IET CoP</li>
+              <li>
+                <strong className="text-white">BS 7671:2018+A4:2026 Section 712</strong> —
+                regulatory framework. Legal requirements for safe and compliant PV electrical
+                installations. What the install MUST achieve. Currently A4:2026 (effective 15 April
+                2026). Next major update: 19th Edition (planned late-2020s)
+              </li>
+              <li>
+                <strong className="text-white">
+                  IET Code of Practice for Grid-Connected Solar PV Installations (5th edition)
+                </strong>{' '}
+                — operational guidance. Worked examples, decision charts, design-pack templates,
+                troubleshooting, photo / record discipline. HOW to achieve compliance. Expected next
+                edition to reflect A4:2026 changes
+              </li>
+              <li>
+                <strong className="text-white">MCS MIS 3002</strong> — scheme requirements for
+                grant-funded installs. Design pack contents, audit trail, customer information pack
+                format, MCS audit process, contractor competency requirements. The grant-funded
+                install ADDITIONS to Section 712 + IET CoP
+              </li>
             </ul>
             <p>
-              The three combine into a coherent workflow: design per Section 712 +
-              IET CoP + MCS MIS 3002; install per Section 712 + IET CoP; commission
-              per Section 712 + IET CoP + BS EN 62446-1; archive per MCS MIS 3002.
-              The cert evidence bundle is the unified archive.
+              The three combine into a coherent workflow: design per Section 712 + IET CoP + MCS MIS
+              3002; install per Section 712 + IET CoP; commission per Section 712 + IET CoP + BS EN
+              62446-1; archive per MCS MIS 3002. The cert evidence bundle is the unified archive.
             </p>
           </ConceptBlock>
 
@@ -504,7 +832,9 @@ export default function RenewableEnergyModule3Section8() {
 
           <ContentEyebrow>19th Edition outlook</ContentEyebrow>
 
-          <Pullquote>The next major revision after A4:2026 — late-2020s. Direction known; detail TBD.</Pullquote>
+          <Pullquote>
+            The next major revision after A4:2026 — late-2020s. Direction known; detail TBD.
+          </Pullquote>
 
           <ConceptBlock
             title="What the 19th Edition is likely to bring for PV"
@@ -513,12 +843,38 @@ export default function RenewableEnergyModule3Section8() {
           >
             <p>Likely 19th Edition direction for PV:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li><strong className="text-white">Explicit rapid-shutdown / arc-fault requirements</strong> — currently optional in UK; some markets (US NEC, Germany) mandate. 19th Edition may codify UK rapid-shutdown for new installs</li>
-              <li><strong className="text-white">Refined Type B RCD criteria</strong> — with the growth of transformerless-with-internal-DC-management inverters, the three permitted exceptions in Reg 712.531.3.5.1 (and the general Reg 531.3.3 rule) may be refined</li>
-              <li><strong className="text-white">Tighter BESS / prosumer integration</strong> — Chapter 57 (BESS) and Chapter 82 (PEIs) added in A4:2026 will mature in 19th Edition with more integrated cross-references and design workflows</li>
-              <li><strong className="text-white">Energy efficiency — Appendix 17 → Part 8</strong> — A4:2026\'s Appendix 17 planned to become a full Part 8 in 19th Edition. Energy-efficiency design requirements will become more prominent</li>
-              <li><strong className="text-white">Updates to IET CoP for Grid-Connected Solar PV Installations</strong> — likely 6th edition aligned with 19th Edition publication</li>
-              <li><strong className="text-white">MCS MIS 3002 evolution</strong> — likely additions for prosumer / BESS / EV-coupled installs; refined audit criteria</li>
+              <li>
+                <strong className="text-white">
+                  Explicit rapid-shutdown / arc-fault requirements
+                </strong>{' '}
+                — currently optional in UK; some markets (US NEC, Germany) mandate. 19th Edition may
+                codify UK rapid-shutdown for new installs
+              </li>
+              <li>
+                <strong className="text-white">Refined Type B RCD criteria</strong> — with the
+                growth of transformerless-with-internal-DC-management inverters, the three permitted
+                exceptions in Reg 712.531.3.5.1 (and the general Reg 531.3.3 rule) may be refined
+              </li>
+              <li>
+                <strong className="text-white">Tighter BESS / prosumer integration</strong> —
+                Chapter 57 (BESS) and Chapter 82 (PEIs) added in A4:2026 will mature in 19th Edition
+                with more integrated cross-references and design workflows
+              </li>
+              <li>
+                <strong className="text-white">Energy efficiency — Appendix 17 → Part 8</strong> —
+                A4:2026\'s Appendix 17 planned to become a full Part 8 in 19th Edition.
+                Energy-efficiency design requirements will become more prominent
+              </li>
+              <li>
+                <strong className="text-white">
+                  Updates to IET CoP for Grid-Connected Solar PV Installations
+                </strong>{' '}
+                — likely 6th edition aligned with 19th Edition publication
+              </li>
+              <li>
+                <strong className="text-white">MCS MIS 3002 evolution</strong> — likely additions
+                for prosumer / BESS / EV-coupled installs; refined audit criteria
+              </li>
             </ul>
           </ConceptBlock>
 
@@ -564,7 +920,7 @@ export default function RenewableEnergyModule3Section8() {
             points={[
               'BS 7671 Section 712 is the regulatory framework for UK PV electrical installations. Covers DC side from module to AC-side connection.',
               'Section 712 + IET CoP for Grid-Connected Solar PV Installations + MCS MIS 3002 = the full UK PV install standard. Three documents, one competent workflow.',
-              'A4:2026 changes affecting PV: Reg 551.7.1(c)/(d) source-connection rules (NEW); Chapter 82 Prosumer\'s Electrical Installations (NEW); Chapter 57 Stationary Secondary Batteries (NEW); Reg 531.3.3 Type AC restriction (UPDATED); the PV-specific Reg 712.531.3.5.1 sets Type B default with three exceptions; Appendix 17 energy efficiency (planned Part 8 in 19th Edition); Reg 722.411.4.1 PME exception removed; TN-C-S (PNB) terminology update.',
+              "A4:2026 changes affecting PV: Reg 551.7.1(c)/(d) source-connection rules (NEW); Chapter 82 Prosumer's Electrical Installations (NEW); Chapter 57 Stationary Secondary Batteries (NEW); Reg 531.3.3 Type AC restriction (UPDATED); the PV-specific Reg 712.531.3.5.1 sets Type B default with three exceptions; Appendix 17 energy efficiency (planned Part 8 in 19th Edition); Reg 722.411.4.1 PME exception removed; TN-C-S (PNB) terminology update.",
               'Every Section 712 reg maps to a design / install / commissioning stage: 712.433.101.1 (sizing); 712.431.101 / 102 (fuses); 712.421 (fire — throughout); 712.512.2.1 (thermal); 712.542.102 (bonding); 712.521.102 (lightning loop).',
               'Cert evidence bundle structure: (1) MCS MIS 3002 design pack; (2) install photographs; (3) BS EN 62446-1 commissioning records + SoTR; (4) MCS certificate; (5) EREC G98/G99/G100 documents; (6) DNO confirmation; (7) customer handover pack. Archived 25 years, multi-format.',
               'Bundle used over install life for: MCS audit (sample), EICR-style periodic inspection (5-yearly), customer service / fault investigation, ownership transfer, insurance claim, end-of-life decision.',
@@ -594,9 +950,7 @@ export default function RenewableEnergyModule3Section8() {
             </button>
             <button
               type="button"
-              onClick={() =>
-                navigate('/electrician/upskilling/renewable-energy-module-4')
-              }
+              onClick={() => navigate('/electrician/upskilling/renewable-energy-module-4')}
               className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
             >
               <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">

@@ -26,7 +26,7 @@ const inlineChecks = [
       'A UK rural off-grid PV install (5 kWp + 25 kWh battery, design autonomy 3 days). When is generator backup recommended?',
     options: [
       'Never',
-      'For full-year occupation in regions with low December PSH (typically Scotland, Northern Ireland, North Wales, upland Lakes/Pennines). Recommended whenever: (a) load is critical (medical equipment, vulnerable resident); (b) winter cloud cover routinely exceeds the design autonomy (5-7+ consecutive cloud days happens in UK winters); (c) customer can\'t accept any outage. Optional for seasonal / holiday properties where customer accepts winter shutdown',
+      "For full-year occupation in regions with low December PSH (typically Scotland, Northern Ireland, North Wales, upland Lakes/Pennines). Recommended whenever: (a) load is critical (medical equipment, vulnerable resident); (b) winter cloud cover routinely exceeds the design autonomy (5-7+ consecutive cloud days happens in UK winters); (c) customer can't accept any outage. Optional for seasonal / holiday properties where customer accepts winter shutdown",
       'Always required',
       'Only for commercial',
     ],
@@ -46,7 +46,7 @@ const inlineChecks = [
     ],
     correctIndex: 1,
     explanation:
-      'UK off-grid generator fuel choice: DIESEL is the dominant choice — high energy density, long shelf life (with stabiliser, 12-24 months), reliable in winter cold (with glow plug systems), well-established service network. LPG is the second choice — cleaner burning, suitable for indoor / near-building installation, fuel doesn\'t degrade like diesel. PETROL is the third choice but rare for off-grid backup — short fuel shelf life (3-6 months with stabiliser), more volatile storage, harder cold start. Generator selection: 5-10 kVA typical UK off-grid; brands like Pramac, Honda, Yamaha, Cummins are common.',
+      "UK off-grid generator fuel choice: DIESEL is the dominant choice — high energy density, long shelf life (with stabiliser, 12-24 months), reliable in winter cold (with glow plug systems), well-established service network. LPG is the second choice — cleaner burning, suitable for indoor / near-building installation, fuel doesn't degrade like diesel. PETROL is the third choice but rare for off-grid backup — short fuel shelf life (3-6 months with stabiliser), more volatile storage, harder cold start. Generator selection: 5-10 kVA typical UK off-grid; brands like Pramac, Honda, Yamaha, Cummins are common.",
   },
   {
     id: 'm4s3-auto-start',
@@ -60,7 +60,7 @@ const inlineChecks = [
     ],
     correctIndex: 1,
     explanation:
-      'Off-grid auto-start typically driven by battery SoC: start at 20-30% SoC; stop at 70-90% SoC (not 100% — leave headroom for any PV that\'s producing during the day, otherwise the PV would have nothing to charge into). Modern systems (Victron Cerbo GX with auto-gen-start; Studer Xcom-GSM; Sigenergy SigenStor) also support trigger by: low battery voltage (backup safety); load too high for inverter alone (assisted-output mode); scheduled exercise run; manual start. Customer\'s app shows real-time status; cert evidence bundle records the configured thresholds.',
+      "Off-grid auto-start typically driven by battery SoC: start at 20-30% SoC; stop at 70-90% SoC (not 100% — leave headroom for any PV that's producing during the day, otherwise the PV would have nothing to charge into). Modern systems (Victron Cerbo GX with auto-gen-start; Studer Xcom-GSM; Sigenergy SigenStor) also support trigger by: low battery voltage (backup safety); load too high for inverter alone (assisted-output mode); scheduled exercise run; manual start. Customer's app shows real-time status; cert evidence bundle records the configured thresholds.",
   },
   {
     id: 'm4s3-ats-panel',
@@ -69,7 +69,7 @@ const inlineChecks = [
     options: [
       'Nothing',
       'The ATS is the electrical switch that transfers the property load between the inverter output (PV+battery primary) and the generator output (backup). When the generator starts, ATS senses generator V/freq stable, transfers load from inverter to generator. When generator stops, ATS transfers back to inverter. In integrated hybrid inverters (Victron Multiplus, Studer Xtender), the ATS function is INSIDE the inverter — no separate ATS panel needed. In split installs with separate inverter + generator, an external ATS panel is fitted',
-      'Customer\'s phone',
+      "Customer's phone",
       'A type of MCB',
     ],
     correctIndex: 1,
@@ -95,10 +95,10 @@ const inlineChecks = [
     question:
       'How does BS 7671 Section 551 (generating sets) apply to an off-grid PV install with generator backup?',
     options: [
-      'Doesn\'t apply',
-      'Section 551 applies to BOTH the PV+battery generating set (Reg 551.1.1(d) PV + (e) batteries) AND the diesel/LPG generator (551.1.1(a) combustion engines). Reg 551.2.2: prospective short-circuit / earth fault assessed for each source / combination. Reg 551.2.3: capacity / operating characteristics handle each source\'s load + V/freq protection. Reg 551.4.1: fault protection for each source. Reg 551.6: precautions against parallel operation between sources where parallel is not intended (typical off-grid: ATS transfers load, never parallels grid and gen)',
+      "Doesn't apply",
+      "Section 551 applies to BOTH the PV+battery generating set (Reg 551.1.1(d) PV + (e) batteries) AND the diesel/LPG generator (551.1.1(a) combustion engines). Reg 551.2.2: prospective short-circuit / earth fault assessed for each source / combination. Reg 551.2.3: capacity / operating characteristics handle each source's load + V/freq protection. Reg 551.4.1: fault protection for each source. Reg 551.6: precautions against parallel operation between sources where parallel is not intended (typical off-grid: ATS transfers load, never parallels grid and gen)",
       'Only one applies',
-      'Customer\'s choice',
+      "Customer's choice",
     ],
     correctIndex: 1,
     explanation:
@@ -111,7 +111,7 @@ const inlineChecks = [
     options: [
       'None',
       'Multiple frameworks: (a) Noise — UK domestic noise nuisance law via Environmental Protection Act 1990; local council bylaws on permitted hours; typical limits 50-55 dB at boundary 3am-7am, 60-65 dB daytime; (b) Emissions — Air Quality (Standards) Regulations 2010; some areas have smoke-control zones restricting diesel/wood burning; (c) Fuel storage — Petroleum (Consolidation) Regulations 2014 for petrol; HSE guidance for diesel; (d) Planning — generator enclosures may need planning permission if visible / large',
-      'Customer\'s discretion',
+      "Customer's discretion",
       'No regulations',
     ],
     correctIndex: 1,
@@ -138,7 +138,7 @@ const quizQuestions = [
   {
     id: 1,
     question:
-      'Off-grid customer\'s 5 kWp PV + 25 kWh LFP battery system. Daily load 6 kWh. December PSH 1.0. Worst-case 7 consecutive cloudy days expected once per winter. Generator sizing recommendation?',
+      "Off-grid customer's 5 kWp PV + 25 kWh LFP battery system. Daily load 6 kWh. December PSH 1.0. Worst-case 7 consecutive cloudy days expected once per winter. Generator sizing recommendation?",
     options: [
       '20 kVA',
       '5 kVA — enough to fully recharge the battery within reasonable run-time + supply the property load during charge. Worked: bulk charging needs ~3-4 kW continuous to fast-charge 25 kWh LFP within 6-8 hours; property load 0.5-1.0 kW typical; generator output 4-5 kW continuous handles both. Brand: Pramac, Cummins, Honda EU65 with silenced canopy. Auto-start tied to battery SoC threshold (e.g. start at 20% SoC, stop at 80%). Fuel: diesel preferred',
@@ -152,26 +152,26 @@ const quizQuestions = [
   {
     id: 2,
     question:
-      'Off-grid generator runs for 2 hours during deep winter to recharge battery. Customer asks why generator doesn\'t fully charge to 100% SoC.',
+      "Off-grid generator runs for 2 hours during deep winter to recharge battery. Customer asks why generator doesn't fully charge to 100% SoC.",
     options: [
       'Generator faulty',
-      'Auto-stop typically configured at 70-90% SoC (NOT 100%). Reason: the battery should retain HEADROOM to absorb any PV that\'s generating during the day. If charged to 100% by generator, any PV produced thereafter has nowhere to go and is wasted. By stopping at ~80% SoC, the system leaves room for PV to charge the battery to 100% later — maximising PV utilisation, minimising generator runtime. Cert evidence bundle records the threshold setting',
+      "Auto-stop typically configured at 70-90% SoC (NOT 100%). Reason: the battery should retain HEADROOM to absorb any PV that's generating during the day. If charged to 100% by generator, any PV produced thereafter has nowhere to go and is wasted. By stopping at ~80% SoC, the system leaves room for PV to charge the battery to 100% later — maximising PV utilisation, minimising generator runtime. Cert evidence bundle records the threshold setting",
       'Battery is broken',
-      'Customer\'s fault',
+      "Customer's fault",
     ],
     correctAnswer: 1,
     explanation:
-      'Generator auto-stop at partial SoC is INTENTIONAL — leaves headroom for PV. Stop at 100% means PV produced after generator-stop is wasted (battery can\'t absorb). Stop at 80% means PV produced afterwards charges the battery from 80% → 100%, capturing free solar energy. Trade-off: stopping too low (e.g. 60%) wastes generator efficiency (lots of generator runtime needed to top up); stopping too high (e.g. 95%) wastes solar capture. 70-90% is the typical sweet spot, location-dependent. Customer-configurable per the inverter app; cert evidence bundle records.',
+      "Generator auto-stop at partial SoC is INTENTIONAL — leaves headroom for PV. Stop at 100% means PV produced after generator-stop is wasted (battery can't absorb). Stop at 80% means PV produced afterwards charges the battery from 80% → 100%, capturing free solar energy. Trade-off: stopping too low (e.g. 60%) wastes generator efficiency (lots of generator runtime needed to top up); stopping too high (e.g. 95%) wastes solar capture. 70-90% is the typical sweet spot, location-dependent. Customer-configurable per the inverter app; cert evidence bundle records.",
   },
   {
     id: 3,
     question:
-      'Off-grid install with diesel generator. Customer reports the generator won\'t start in cold January morning. Diagnosis priority?',
+      "Off-grid install with diesel generator. Customer reports the generator won't start in cold January morning. Diagnosis priority?",
     options: [
       'Replace generator',
       'Diesel cold-start issues are common in UK winter. Diagnostic priority: (1) battery health — cranking battery (separate from the off-grid PV battery) may be low / sulfated; (2) glow plug system — pre-heat may be failing; (3) fuel quality — diesel "waxing" in extreme cold (-5°C and below) clogs filter; winter-grade diesel or anti-waxing additive needed; (4) air filter blockage; (5) coolant level. Replace generator only after diagnostic. Most issues fix-able with simple maintenance',
       'Buy new battery',
-      'Customer\'s fault',
+      "Customer's fault",
     ],
     correctAnswer: 1,
     explanation:
@@ -194,10 +194,10 @@ const quizQuestions = [
   {
     id: 5,
     question:
-      'Customer\'s off-grid generator runs in PowerAssist parallel mode with the Victron Multiplus inverter. EICR-style inspection. What additional BS 7671 regs apply?',
+      "Customer's off-grid generator runs in PowerAssist parallel mode with the Victron Multiplus inverter. EICR-style inspection. What additional BS 7671 regs apply?",
     options: [
       'Same as switched-alternative',
-      'Reg 551.7 parallel-operation requirements: Reg 551.7.1(c) NEW A4:2026 bidirectional protective device required where energy flow is bidirectional (the protective device must operate in either direction); Reg 551.7.4 automatic disconnection on V/freq deviation; Reg 551.7.5 prevent connection during loss/deviation; Reg 551.7.6 means of isolation. The inverter\'s built-in transfer/parallel logic typically handles these; the cert evidence bundle records the inverter manufacturer\'s compliance statement against Reg 551.7',
+      "Reg 551.7 parallel-operation requirements: Reg 551.7.1(c) NEW A4:2026 bidirectional protective device required where energy flow is bidirectional (the protective device must operate in either direction); Reg 551.7.4 automatic disconnection on V/freq deviation; Reg 551.7.5 prevent connection during loss/deviation; Reg 551.7.6 means of isolation. The inverter's built-in transfer/parallel logic typically handles these; the cert evidence bundle records the inverter manufacturer's compliance statement against Reg 551.7",
       'No regs apply',
       'Only the inverter',
     ],
@@ -226,7 +226,7 @@ const quizQuestions = [
     options: [
       'No isolation needed',
       'Reg 551.2.4: provision for isolation per Chapter 46 + Section 537 for EACH source / combination of sources. Reg 551.4.3.3.3: where static convertor (inverter) is part of the install, means of isolation on BOTH SIDES (DC and AC). For generator: separate isolator at the generator output AC terminals (BS EN 60947-3 switch-disconnector). The ATS panel itself provides switching but separate isolation per source is mandatory for safe maintenance work',
-      'Customer\'s choice',
+      "Customer's choice",
       'Only one isolator',
     ],
     correctAnswer: 1,
@@ -236,12 +236,12 @@ const quizQuestions = [
   {
     id: 8,
     question:
-      'Off-grid customer\'s generator: 5 kVA Pramac diesel, used 4 hours/month average. Maintenance schedule recommendation?',
+      "Off-grid customer's generator: 5 kVA Pramac diesel, used 4 hours/month average. Maintenance schedule recommendation?",
     options: [
       'No maintenance',
       'Service intervals per manufacturer (Pramac typical): oil + filter change every 100-200 hours OR annually; air filter every 200-400 hours OR annually; fuel filter every 200 hours; battery test annually; spark arrestor / muffler check annually; coolant change every 2-3 years; fuel polishing if tank ≥500L. At 48 hours/year usage, time-based (annual) intervals are the binding constraint. Customer / contractor maintenance log records each service. The cert evidence bundle includes the maintenance schedule',
       'Every day',
-      'Customer\'s preference',
+      "Customer's preference",
     ],
     correctAnswer: 1,
     explanation:
@@ -253,7 +253,7 @@ const faqs = [
   {
     question: 'How loud are off-grid backup generators in practice?',
     answer:
-      'Modern silenced canopy diesel generators (Pramac, Cummins, Honda) achieve ~50-55 dB at 7m — quieter than typical urban traffic. UK domestic noise limits at property boundary: 50-55 dB nighttime, 60-65 dB daytime per local council bylaws + Environmental Protection Act 1990. Practical mitigation: site generator 5-10m from neighbouring properties; acoustic enclosure around the generator (additional 5-10 dB attenuation); planted screening; ventilation that doesn\'t compromise acoustic performance. Cert evidence bundle records the as-installed noise assessment.',
+      "Modern silenced canopy diesel generators (Pramac, Cummins, Honda) achieve ~50-55 dB at 7m — quieter than typical urban traffic. UK domestic noise limits at property boundary: 50-55 dB nighttime, 60-65 dB daytime per local council bylaws + Environmental Protection Act 1990. Practical mitigation: site generator 5-10m from neighbouring properties; acoustic enclosure around the generator (additional 5-10 dB attenuation); planted screening; ventilation that doesn't compromise acoustic performance. Cert evidence bundle records the as-installed noise assessment.",
   },
   {
     question: 'What fuel storage volume is typical for UK off-grid?',
@@ -286,7 +286,7 @@ const faqs = [
       'Technically yes — but inefficient. The generator generates electricity from diesel (~30% efficiency on a modern diesel); the EV converts AC back to DC battery charge (~90% efficiency); net ~27% efficiency from diesel to EV battery. For comparison, off-grid PV→battery→EV is ~75-80% efficient (free PV input). The generator route makes sense only when PV is consistently insufficient AND EV charging is essential (e.g. rural off-grid working remotely with EV daily commute). Most off-grid customers prioritise PV+battery for EV; generator for emergency backup only.',
   },
   {
-    question: 'What\'s the typical operating cost of off-grid generator backup?',
+    question: "What's the typical operating cost of off-grid generator backup?",
     answer:
       'UK 2025-2026: diesel ~£1.40-1.60/L. Modern 5 kVA generator consumes ~1.0-1.5 L/hr at full load. So fuel cost per kWh produced: roughly £0.30-0.50/kWh — much higher than UK grid import (~£0.28/kWh). Generator is INSURANCE, not primary supply — used a few tens of hours per year, totalling £100-500/year fuel cost. Plus maintenance £150-400/year. Total ownership: ~£250-900/year for typical UK rural off-grid backup generator. The economic case is "outage avoidance" — quantified against the cost of unreliable supply for the customer.',
   },
@@ -301,8 +301,7 @@ export default function RenewableEnergyModule4Section3() {
   const navigate = useNavigate();
 
   useSEO({
-    title:
-      'Off-grid backup & generator integration | Renewable Energy 4.3 | Elec-Mate',
+    title: 'Off-grid backup & generator integration | Renewable Energy 4.3 | Elec-Mate',
     description:
       'Off-grid PV install backup — diesel / LPG / petrol generator selection, auto-start logic, ATS panels, three-stage charging, BS 7671 Section 551 generating-set regs, noise / emissions / fuel storage frameworks, and the cold-weather sizing for heat pump load.',
   });
@@ -349,7 +348,10 @@ export default function RenewableEnergyModule4Section3() {
             initialVisibleCount={3}
           />
 
-          <Pullquote>Generator is insurance, not primary. Auto-start at 20-30%. Auto-stop at 70-90%. Diesel dominant. Section 551 applies.</Pullquote>
+          <Pullquote>
+            Generator is insurance, not primary. Auto-start at 20-30%. Auto-stop at 70-90%. Diesel
+            dominant. Section 551 applies.
+          </Pullquote>
 
           <ContentEyebrow>When generator backup is needed</ContentEyebrow>
 
@@ -360,18 +362,36 @@ export default function RenewableEnergyModule4Section3() {
           >
             <p>Criteria favouring generator backup:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li><strong className="text-white">Full-year occupation</strong> — vs seasonal cottages where winter shutdown is acceptable</li>
-              <li><strong className="text-white">Critical loads</strong> — medical equipment, security, vulnerable customer, agricultural process — outage unacceptable</li>
-              <li><strong className="text-white">Northern UK location</strong> — Scotland, Northern Ireland, N England — winter PSH 0.5-1.0 makes extended-cloud-day events more likely to exceed battery autonomy</li>
-              <li><strong className="text-white">Heat-pump heating</strong> — electric heat in cold spells dramatically increases the autonomy gap (covered in Q6)</li>
-              <li><strong className="text-white">EV charging required year-round</strong> — daily commute or essential vehicle use</li>
-              <li><strong className="text-white">Customer outage intolerance</strong> — even partial outage unacceptable (working from home, business continuity)</li>
+              <li>
+                <strong className="text-white">Full-year occupation</strong> — vs seasonal cottages
+                where winter shutdown is acceptable
+              </li>
+              <li>
+                <strong className="text-white">Critical loads</strong> — medical equipment,
+                security, vulnerable customer, agricultural process — outage unacceptable
+              </li>
+              <li>
+                <strong className="text-white">Northern UK location</strong> — Scotland, Northern
+                Ireland, N England — winter PSH 0.5-1.0 makes extended-cloud-day events more likely
+                to exceed battery autonomy
+              </li>
+              <li>
+                <strong className="text-white">Heat-pump heating</strong> — electric heat in cold
+                spells dramatically increases the autonomy gap (covered in Q6)
+              </li>
+              <li>
+                <strong className="text-white">EV charging required year-round</strong> — daily
+                commute or essential vehicle use
+              </li>
+              <li>
+                <strong className="text-white">Customer outage intolerance</strong> — even partial
+                outage unacceptable (working from home, business continuity)
+              </li>
             </ul>
             <p>
-              Generator typically runs LIGHTLY when sized correctly — 20-50
-              hours/year for typical UK rural off-grid. Cost per year ~£250-900
-              total ownership (fuel + maintenance + amortised purchase). The
-              insurance value (avoided outage cost, customer satisfaction)
+              Generator typically runs LIGHTLY when sized correctly — 20-50 hours/year for typical
+              UK rural off-grid. Cost per year ~£250-900 total ownership (fuel + maintenance +
+              amortised purchase). The insurance value (avoided outage cost, customer satisfaction)
               typically exceeds the operating cost.
             </p>
           </ConceptBlock>
@@ -391,14 +411,39 @@ export default function RenewableEnergyModule4Section3() {
           >
             <p>Diesel pros / cons:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li><strong className="text-white">PRO Energy density</strong> — ~10 kWh/L gross; ~3.5 kWh/L useful electrical output at ~35% efficiency on modern Stage V diesel</li>
-              <li><strong className="text-white">PRO Fuel shelf life</strong> — 12-24 months with stabiliser in suitable tank (vs petrol 3-6 months)</li>
-              <li><strong className="text-white">PRO Cold-weather start</strong> — glow plug pre-heat enables reliable -20°C+ starts (rare in UK but happens in N Scotland)</li>
-              <li><strong className="text-white">PRO UK service network</strong> — generator service contractors widely available; parts in stock</li>
-              <li><strong className="text-white">CON Emissions</strong> — particulates + NOx; restricted in some smoke-control zones</li>
-              <li><strong className="text-white">CON Storage</strong> — bunded tank required for >200L; HSE guidance for diesel storage</li>
-              <li><strong className="text-white">CON Cold-weather fuel</strong> — diesel "waxing" at -5°C and below blocks filter; winter-grade diesel or stabiliser needed</li>
-              <li><strong className="text-white">CON Carbon footprint</strong> — fossil fuel; conflicts with renewable-energy narrative for some customers</li>
+              <li>
+                <strong className="text-white">PRO Energy density</strong> — ~10 kWh/L gross; ~3.5
+                kWh/L useful electrical output at ~35% efficiency on modern Stage V diesel
+              </li>
+              <li>
+                <strong className="text-white">PRO Fuel shelf life</strong> — 12-24 months with
+                stabiliser in suitable tank (vs petrol 3-6 months)
+              </li>
+              <li>
+                <strong className="text-white">PRO Cold-weather start</strong> — glow plug pre-heat
+                enables reliable -20°C+ starts (rare in UK but happens in N Scotland)
+              </li>
+              <li>
+                <strong className="text-white">PRO UK service network</strong> — generator service
+                contractors widely available; parts in stock
+              </li>
+              <li>
+                <strong className="text-white">CON Emissions</strong> — particulates + NOx;
+                restricted in some smoke-control zones
+              </li>
+              <li>
+                <strong className="text-white">CON Storage</strong> — bunded tank required for
+                &gt;200L; HSE guidance for diesel storage
+              </li>
+              <li>
+                <strong className="text-white">CON Cold-weather fuel</strong> — diesel
+                &ldquo;waxing&rdquo; at -5°C and below blocks filter; winter-grade diesel or
+                stabiliser needed
+              </li>
+              <li>
+                <strong className="text-white">CON Carbon footprint</strong> — fossil fuel;
+                conflicts with renewable-energy narrative for some customers
+              </li>
             </ul>
           </ConceptBlock>
 
@@ -409,14 +454,39 @@ export default function RenewableEnergyModule4Section3() {
           >
             <p>LPG pros / cons:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li><strong className="text-white">PRO Clean burning</strong> — much lower particulates / smoke than diesel; suitable for smoke-control areas</li>
-              <li><strong className="text-white">PRO Indoor-safe option</strong> — with proper ventilation, LPG generators can be in plant rooms / outhouses</li>
-              <li><strong className="text-white">PRO Long fuel shelf life</strong> — LPG doesn\'t degrade like diesel; years of storage OK</li>
-              <li><strong className="text-white">PRO Existing LPG infrastructure</strong> — rural properties with LPG for heating can integrate with the same supply</li>
-              <li><strong className="text-white">CON Lower energy density</strong> — larger fuel tank needed for equivalent runtime</li>
-              <li><strong className="text-white">CON Bottled vs bulk</strong> — bottled LPG (47kg cylinders) needs frequent swaps; bulk LPG tank (1-5T) requires significant capital + planning</li>
-              <li><strong className="text-white">CON Pressure regulation</strong> — LPG generators need pressure regulator + safety devices; more complex than diesel</li>
-              <li><strong className="text-white">CON Cold-weather pressure drop</strong> — LPG vapour pressure drops in extreme cold; vaporiser may be needed</li>
+              <li>
+                <strong className="text-white">PRO Clean burning</strong> — much lower particulates
+                / smoke than diesel; suitable for smoke-control areas
+              </li>
+              <li>
+                <strong className="text-white">PRO Indoor-safe option</strong> — with proper
+                ventilation, LPG generators can be in plant rooms / outhouses
+              </li>
+              <li>
+                <strong className="text-white">PRO Long fuel shelf life</strong> — LPG doesn\'t
+                degrade like diesel; years of storage OK
+              </li>
+              <li>
+                <strong className="text-white">PRO Existing LPG infrastructure</strong> — rural
+                properties with LPG for heating can integrate with the same supply
+              </li>
+              <li>
+                <strong className="text-white">CON Lower energy density</strong> — larger fuel tank
+                needed for equivalent runtime
+              </li>
+              <li>
+                <strong className="text-white">CON Bottled vs bulk</strong> — bottled LPG (47kg
+                cylinders) needs frequent swaps; bulk LPG tank (1-5T) requires significant capital +
+                planning
+              </li>
+              <li>
+                <strong className="text-white">CON Pressure regulation</strong> — LPG generators
+                need pressure regulator + safety devices; more complex than diesel
+              </li>
+              <li>
+                <strong className="text-white">CON Cold-weather pressure drop</strong> — LPG vapour
+                pressure drops in extreme cold; vaporiser may be needed
+              </li>
             </ul>
           </ConceptBlock>
 
@@ -427,10 +497,23 @@ export default function RenewableEnergyModule4Section3() {
           >
             <p>Petrol typical scenario:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li><strong className="text-white">Portable generator for occasional use</strong> — Honda EU22i / EU30i for camping, events, occasional power. Not for permanent off-grid backup</li>
-              <li><strong className="text-white">Fuel issues</strong> — petrol degrades quickly (3-6 months with stabiliser, weeks without); gumming up carburettor</li>
-              <li><strong className="text-white">Storage hazard</strong> — petrol volatile; Petroleum Consolidation Regulations 2014 restrict large storage</li>
-              <li><strong className="text-white">Cold-start</strong> — choke + manual priming needed; not as reliable as diesel + glow plug</li>
+              <li>
+                <strong className="text-white">Portable generator for occasional use</strong> —
+                Honda EU22i / EU30i for camping, events, occasional power. Not for permanent
+                off-grid backup
+              </li>
+              <li>
+                <strong className="text-white">Fuel issues</strong> — petrol degrades quickly (3-6
+                months with stabiliser, weeks without); gumming up carburettor
+              </li>
+              <li>
+                <strong className="text-white">Storage hazard</strong> — petrol volatile; Petroleum
+                Consolidation Regulations 2014 restrict large storage
+              </li>
+              <li>
+                <strong className="text-white">Cold-start</strong> — choke + manual priming needed;
+                not as reliable as diesel + glow plug
+              </li>
             </ul>
           </ConceptBlock>
 
@@ -445,7 +528,9 @@ export default function RenewableEnergyModule4Section3() {
 
           <ContentEyebrow>Auto-start logic & ATS panels</ContentEyebrow>
 
-          <Pullquote>Auto-start at 20-30% SoC. Auto-stop at 70-90% SoC. Hybrid inverter handles transfer.</Pullquote>
+          <Pullquote>
+            Auto-start at 20-30% SoC. Auto-stop at 70-90% SoC. Hybrid inverter handles transfer.
+          </Pullquote>
 
           <ConceptBlock
             title="Auto-start triggers and stop conditions"
@@ -454,18 +539,48 @@ export default function RenewableEnergyModule4Section3() {
           >
             <p>Common auto-start triggers:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li><strong className="text-white">Battery SoC threshold (primary)</strong> — typically 20-30% SoC. Below this, generator starts. Lower threshold (15%) trades SoC headroom for less generator runtime; higher (35%) gives more SoC headroom but more generator runtime</li>
-              <li><strong className="text-white">Battery V threshold (backup)</strong> — backup if SoC calculation is unreliable; triggers at 48V for 48V system / 230V for 230V system (typical low-V trip levels)</li>
-              <li><strong className="text-white">Load too high (assisted-output)</strong> — when load exceeds inverter capability, generator starts to share the load (PowerAssist / Quick Assist mode)</li>
-              <li><strong className="text-white">Scheduled exercise</strong> — monthly run for 30-60 minutes to keep diesel cycled, lubricants moving, battery cranking</li>
-              <li><strong className="text-white">Manual start</strong> — customer-initiated via app or physical button</li>
+              <li>
+                <strong className="text-white">Battery SoC threshold (primary)</strong> — typically
+                20-30% SoC. Below this, generator starts. Lower threshold (15%) trades SoC headroom
+                for less generator runtime; higher (35%) gives more SoC headroom but more generator
+                runtime
+              </li>
+              <li>
+                <strong className="text-white">Battery V threshold (backup)</strong> — backup if SoC
+                calculation is unreliable; triggers at 48V for 48V system / 230V for 230V system
+                (typical low-V trip levels)
+              </li>
+              <li>
+                <strong className="text-white">Load too high (assisted-output)</strong> — when load
+                exceeds inverter capability, generator starts to share the load (PowerAssist / Quick
+                Assist mode)
+              </li>
+              <li>
+                <strong className="text-white">Scheduled exercise</strong> — monthly run for 30-60
+                minutes to keep diesel cycled, lubricants moving, battery cranking
+              </li>
+              <li>
+                <strong className="text-white">Manual start</strong> — customer-initiated via app or
+                physical button
+              </li>
             </ul>
             <p>Common auto-stop conditions:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li><strong className="text-white">SoC reached target</strong> — typically 70-90% SoC. Stops BEFORE 100% to leave headroom for any PV that produces during the day</li>
-              <li><strong className="text-white">Maximum run-time</strong> — safety cap (e.g. 8 hours continuous) to limit fuel consumption / generator wear</li>
-              <li><strong className="text-white">Fault detection</strong> — overheat, low oil, low fuel, V/freq excursion — generator stops with alarm</li>
-              <li><strong className="text-white">Manual stop</strong> — customer-initiated via app</li>
+              <li>
+                <strong className="text-white">SoC reached target</strong> — typically 70-90% SoC.
+                Stops BEFORE 100% to leave headroom for any PV that produces during the day
+              </li>
+              <li>
+                <strong className="text-white">Maximum run-time</strong> — safety cap (e.g. 8 hours
+                continuous) to limit fuel consumption / generator wear
+              </li>
+              <li>
+                <strong className="text-white">Fault detection</strong> — overheat, low oil, low
+                fuel, V/freq excursion — generator stops with alarm
+              </li>
+              <li>
+                <strong className="text-white">Manual stop</strong> — customer-initiated via app
+              </li>
             </ul>
           </ConceptBlock>
 
@@ -476,10 +591,27 @@ export default function RenewableEnergyModule4Section3() {
           >
             <p>ATS operating modes:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li><strong className="text-white">Switched-alternative</strong> — generator and inverter alternate; never operate in parallel. ATS detects active source and switches load. Reg 551.6 precautions against unintended parallel</li>
-              <li><strong className="text-white">PowerAssist / parallel mode</strong> — generator and inverter operate in parallel during peak loads. Reg 551.7 applies including 551.7.1(c) bidirectional protective device. More complex but supports higher transient loads</li>
-              <li><strong className="text-white">Transfer time</strong> — typical 20-200 ms break-before-make switching. Modern static-switch ATS achieves &lt;10 ms (effectively seamless for non-critical loads)</li>
-              <li><strong className="text-white">Sync requirements</strong> — for make-before-break or parallel operation, generator V/freq must match inverter (within typical 5% V, 0.5 Hz). Static converter handles synchronisation</li>
+              <li>
+                <strong className="text-white">Switched-alternative</strong> — generator and
+                inverter alternate; never operate in parallel. ATS detects active source and
+                switches load. Reg 551.6 precautions against unintended parallel
+              </li>
+              <li>
+                <strong className="text-white">PowerAssist / parallel mode</strong> — generator and
+                inverter operate in parallel during peak loads. Reg 551.7 applies including
+                551.7.1(c) bidirectional protective device. More complex but supports higher
+                transient loads
+              </li>
+              <li>
+                <strong className="text-white">Transfer time</strong> — typical 20-200 ms
+                break-before-make switching. Modern static-switch ATS achieves &lt;10 ms
+                (effectively seamless for non-critical loads)
+              </li>
+              <li>
+                <strong className="text-white">Sync requirements</strong> — for make-before-break or
+                parallel operation, generator V/freq must match inverter (within typical 5% V, 0.5
+                Hz). Static converter handles synchronisation
+              </li>
             </ul>
           </ConceptBlock>
 
@@ -496,7 +628,9 @@ export default function RenewableEnergyModule4Section3() {
 
           <ContentEyebrow>Three-stage charging</ContentEyebrow>
 
-          <Pullquote>Bulk → Absorption → Float. LFP compresses stages; lead-acid uses all three.</Pullquote>
+          <Pullquote>
+            Bulk → Absorption → Float. LFP compresses stages; lead-acid uses all three.
+          </Pullquote>
 
           <ConceptBlock
             title="The three-stage charge profile"
@@ -505,16 +639,32 @@ export default function RenewableEnergyModule4Section3() {
           >
             <p>The three stages explained:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li><strong className="text-white">BULK</strong> — constant CURRENT charging at maximum rate (typically 0.5C to 1.0C for LFP; 0.1-0.2C for lead-acid). Battery V rises as SoC increases. Continues until V reaches absorption setpoint</li>
-              <li><strong className="text-white">ABSORPTION</strong> — constant VOLTAGE at absorption setpoint. Current naturally tapers as battery approaches full. For LFP: brief (10-30 minutes typical). For lead-acid: 1-3 hours typical (slower chemistry)</li>
-              <li><strong className="text-white">FLOAT</strong> — constant V at lower setpoint to maintain SoC against self-discharge. For lead-acid: float V ~2.25V/cell (13.5V for 12V). For LFP: typically OMITTED — LFP self-discharge is &lt;3%/month; sit at absorption end-point</li>
-              <li><strong className="text-white">EQUALISATION</strong> (lead-acid only) — periodic over-charge to equalise individual cell voltages; typically monthly. Modern LFP doesn\'t need equalisation</li>
+              <li>
+                <strong className="text-white">BULK</strong> — constant CURRENT charging at maximum
+                rate (typically 0.5C to 1.0C for LFP; 0.1-0.2C for lead-acid). Battery V rises as
+                SoC increases. Continues until V reaches absorption setpoint
+              </li>
+              <li>
+                <strong className="text-white">ABSORPTION</strong> — constant VOLTAGE at absorption
+                setpoint. Current naturally tapers as battery approaches full. For LFP: brief (10-30
+                minutes typical). For lead-acid: 1-3 hours typical (slower chemistry)
+              </li>
+              <li>
+                <strong className="text-white">FLOAT</strong> — constant V at lower setpoint to
+                maintain SoC against self-discharge. For lead-acid: float V ~2.25V/cell (13.5V for
+                12V). For LFP: typically OMITTED — LFP self-discharge is &lt;3%/month; sit at
+                absorption end-point
+              </li>
+              <li>
+                <strong className="text-white">EQUALISATION</strong> (lead-acid only) — periodic
+                over-charge to equalise individual cell voltages; typically monthly. Modern LFP
+                doesn\'t need equalisation
+              </li>
             </ul>
             <p>
-              The hybrid inverter / charge controller handles stage transitions
-              automatically. BMS communicates with charge controller via CAN bus or
-              Modbus to specify the chemistry-appropriate setpoints. Cert evidence
-              bundle records the configured profile.
+              The hybrid inverter / charge controller handles stage transitions automatically. BMS
+              communicates with charge controller via CAN bus or Modbus to specify the
+              chemistry-appropriate setpoints. Cert evidence bundle records the configured profile.
             </p>
           </ConceptBlock>
 
@@ -524,7 +674,10 @@ export default function RenewableEnergyModule4Section3() {
 
           <ContentEyebrow>BS 7671 Section 551 / 712 regulatory framework</ContentEyebrow>
 
-          <Pullquote>Sources separately + combinations. Reg 551.2.4 isolation per source. Reg 551.6 parallel prevention.</Pullquote>
+          <Pullquote>
+            Sources separately + combinations. Reg 551.2.4 isolation per source. Reg 551.6 parallel
+            prevention.
+          </Pullquote>
 
           <ConceptBlock
             title="Section 551 generating-set regs for off-grid + generator"
@@ -533,16 +686,54 @@ export default function RenewableEnergyModule4Section3() {
           >
             <p>Section 551 application to off-grid + generator:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
-              <li><strong className="text-white">Reg 551.1.1</strong> — generating sets include (a) combustion engines, (d) PV cells, (e) batteries. All three apply to typical off-grid + backup</li>
-              <li><strong className="text-white">Reg 551.2.2</strong> — prospective short-circuit / earth fault assessed for each source / combination of sources. PV+battery alone, generator alone, PV+battery+generator parallel — three scenarios</li>
-              <li><strong className="text-white">Reg 551.2.3</strong> — capacity / operating characteristics ensure no danger on load connection / disconnection due to V/freq deviation. Automatic disconnection on V/freq excursion</li>
-              <li><strong className="text-white">Reg 551.2.4</strong> — isolation per Chapter 46 + Section 537 for EACH source / combination. Means generator isolator, inverter AC isolator, battery DC isolator all required separately</li>
-              <li><strong className="text-white">Reg 551.4.1</strong> — fault protection for each source / combination. Different fault paths exist for each operating mode</li>
-              <li><strong className="text-white">Reg 551.4.3.2</strong> — switched-alternative to grid: ADS shall not rely on grid earthing; suitable means of earthing provided. For off-grid (no grid): generating set provides the reference earth via the inverter or generator</li>
-              <li><strong className="text-white">Reg 551.4.3.3.3</strong> — static convertor (inverter): means of isolation on BOTH sides (DC and AC)</li>
-              <li><strong className="text-white">Reg 551.5</strong> — overcurrent protection near generator terminals</li>
-              <li><strong className="text-white">Reg 551.6</strong> — precautions against parallel operation where parallel NOT intended. Electrical / mechanical / electromechanical interlock between sources. Standard switched-alternative ATS provides this</li>
-              <li><strong className="text-white">Reg 551.7</strong> — parallel-operation requirements where parallel IS intended. Reg 551.7.1(c) NEW A4:2026 bidirectional protective device. Reg 551.7.4-6 V/freq protection, disconnect on loss/deviation, isolation</li>
+              <li>
+                <strong className="text-white">Reg 551.1.1</strong> — generating sets include (a)
+                combustion engines, (d) PV cells, (e) batteries. All three apply to typical off-grid
+                + backup
+              </li>
+              <li>
+                <strong className="text-white">Reg 551.2.2</strong> — prospective short-circuit /
+                earth fault assessed for each source / combination of sources. PV+battery alone,
+                generator alone, PV+battery+generator parallel — three scenarios
+              </li>
+              <li>
+                <strong className="text-white">Reg 551.2.3</strong> — capacity / operating
+                characteristics ensure no danger on load connection / disconnection due to V/freq
+                deviation. Automatic disconnection on V/freq excursion
+              </li>
+              <li>
+                <strong className="text-white">Reg 551.2.4</strong> — isolation per Chapter 46 +
+                Section 537 for EACH source / combination. Means generator isolator, inverter AC
+                isolator, battery DC isolator all required separately
+              </li>
+              <li>
+                <strong className="text-white">Reg 551.4.1</strong> — fault protection for each
+                source / combination. Different fault paths exist for each operating mode
+              </li>
+              <li>
+                <strong className="text-white">Reg 551.4.3.2</strong> — switched-alternative to
+                grid: ADS shall not rely on grid earthing; suitable means of earthing provided. For
+                off-grid (no grid): generating set provides the reference earth via the inverter or
+                generator
+              </li>
+              <li>
+                <strong className="text-white">Reg 551.4.3.3.3</strong> — static convertor
+                (inverter): means of isolation on BOTH sides (DC and AC)
+              </li>
+              <li>
+                <strong className="text-white">Reg 551.5</strong> — overcurrent protection near
+                generator terminals
+              </li>
+              <li>
+                <strong className="text-white">Reg 551.6</strong> — precautions against parallel
+                operation where parallel NOT intended. Electrical / mechanical / electromechanical
+                interlock between sources. Standard switched-alternative ATS provides this
+              </li>
+              <li>
+                <strong className="text-white">Reg 551.7</strong> — parallel-operation requirements
+                where parallel IS intended. Reg 551.7.1(c) NEW A4:2026 bidirectional protective
+                device. Reg 551.7.4-6 V/freq protection, disconnect on loss/deviation, isolation
+              </li>
             </ul>
           </ConceptBlock>
 
