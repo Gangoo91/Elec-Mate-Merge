@@ -55,6 +55,45 @@ export async function queryTable<T = unknown>(
 }
 
 /**
+ * Call a Supabase Postgres RPC (a SQL function exposed via PostgREST).
+ *
+ * Used for hybrid vector + BM25 search RPCs like `search_bs7671_v3` and
+ * `search_practical_work_v2` — far better recall than the ILIKE substring
+ * search used by `queryTable()`.
+ *
+ * Example:
+ *   rpcCall<BS7671Row[]>('search_bs7671_v3', {
+ *     query_text: 'earth fault loop impedance',
+ *     match_count: 5,
+ *   })
+ */
+export async function rpcCall<TResp = unknown>(
+  functionName: string,
+  params: Record<string, unknown>
+): Promise<{ ok: true; data: TResp } | { ok: false; status: number; error: string }> {
+  const url = `${SUPABASE_URL}/rest/v1/rpc/${functionName}`;
+  try {
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { ...DEFAULT_HEADERS, 'Content-Type': 'application/json' },
+      body: JSON.stringify(params),
+    });
+    if (!res.ok) {
+      const text = await res.text().catch(() => '');
+      return { ok: false, status: res.status, error: text.slice(0, 200) };
+    }
+    const data = (await res.json()) as TResp;
+    return { ok: true, data };
+  } catch (err) {
+    return {
+      ok: false,
+      status: 500,
+      error: err instanceof Error ? err.message : 'Unknown fetch error',
+    };
+  }
+}
+
+/**
  * Call a Supabase Edge Function (e.g. for RAG / vector search).
  * Body is sent as JSON; response is parsed as JSON.
  */

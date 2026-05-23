@@ -502,6 +502,24 @@
         "returns": "installation_methods + cable_routes + termination_methods + test_procedures"
       },
       {
+        "name": "pwi_semantic_search",
+        "description": "Free-text hybrid BM25+RRF search across 199k+ UK install/maintenance records. Returns rows with BS 7671 reg cross-refs, tools, safety jsonb, common mistakes, troubleshooting, duration, skill level. Use when the question is shaped like a job.",
+        "method": "GET",
+        "url": "https://www.elec-mate.com/api/public/v1/pwi-semantic-search",
+        "params": ["q", "limit (optional, 1-15)"],
+        "example": "https://www.elec-mate.com/api/public/v1/pwi-semantic-search?q=install+three+phase+rcd&limit=5",
+        "returns": "ranked rows with full job context (equipment_category, bs7671_regulations, tools, safety_requirements, common_mistakes, troubleshooting_steps, acceptance_criteria, typical_duration_minutes)"
+      },
+      {
+        "name": "pwi_job_pack",
+        "description": "Complete UK electrical job profile in one call — aggregates top matching records into install method + tools + safety_requirements + acceptance_criteria + BS 7671 reg refs + duration + skill level + common mistakes + troubleshooting + common defects. Either category or q required.",
+        "method": "GET",
+        "url": "https://www.elec-mate.com/api/public/v1/pwi-job-pack",
+        "params": ["category (optional)", "q (optional, free-text)"],
+        "example": "https://www.elec-mate.com/api/public/v1/pwi-job-pack?category=ev_charger",
+        "returns": "job_pack object (primary_topic, installation_method, typical_duration_minutes, tools_required, bs7671_regulations, safety_requirements, acceptance_criteria, common_mistakes, troubleshooting_steps, common_defects)"
+      },
+      {
         "name": "notifiable_work_check",
         "description": "Part P notifiable-work decision (England) — yes/no + reason + compliance options.",
         "method": "GET",

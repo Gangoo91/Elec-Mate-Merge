@@ -6,7 +6,7 @@
  *
  * Lets Claude Desktop, ChatGPT Connectors, Perplexity, Cursor, Windsurf,
  * Cline, Continue, and any MCP-compatible client install Elec-Mate as
- * a tool source. Once connected, the model can call our 13 public tools
+ * a tool source. Once connected, the model can call our 22 public tools
  * to answer UK electrical questions with verified BS 7671 citations.
  *
  * Direct install URL for users:
@@ -336,6 +336,48 @@ const TOOLS: ToolDef[] = [
       fetchJson(
         `${BASE}/pwi-installation-procedure?category=${encodeURIComponent(String(args.category))}`
       ),
+  },
+  {
+    name: 'pwi_semantic_search',
+    description:
+      "Free-text hybrid search across 199k+ verified UK electrical install/maintenance records (Elec-Mate's labour-intelligence corpus). Use this when the question is shaped like a job — 'how do I install/test/replace X' or 'what's involved in Y'. Returns rich rows with equipment_category + subcategory, BS 7671 reg cross-refs, tools_required, safety_requirements (jsonb), common_mistakes, troubleshooting_steps, typical_duration_minutes, skill_level. Much better than the narrow pwi_* category tools when the user's phrasing is open-ended.",
+    inputSchema: {
+      type: 'object',
+      properties: {
+        q: { type: 'string', description: 'Natural-language job description (3-200 chars)' },
+        limit: { type: 'integer', minimum: 1, maximum: 15, default: 5 },
+      },
+      required: ['q'],
+    },
+    fetch: async (args) => {
+      const q = encodeURIComponent(String(args.q));
+      const limit = args.limit ? `&limit=${Number(args.limit)}` : '';
+      return fetchJson(`${BASE}/pwi-semantic-search?q=${q}${limit}`);
+    },
+  },
+  {
+    name: 'pwi_job_pack',
+    description:
+      "Complete job profile in one call — aggregated across the top matching practical-work records. Returns install method + tools + materials + safety_requirements + acceptance_criteria + BS 7671 reg refs + typical duration + skill level + common mistakes + troubleshooting + common defects, all together. Use when the user asks 'how do I do X' or 'what do I need to install Y'. Either provide a `category` (e.g. consumer_unit, ev_charger) or a free-text `q`. One round-trip vs 7 separate pwi_* calls.",
+    inputSchema: {
+      type: 'object',
+      properties: {
+        category: {
+          type: 'string',
+          description: 'Equipment category (e.g. consumer_unit, ev_charger, rcd, lighting_circuit)',
+        },
+        q: {
+          type: 'string',
+          description: 'Free-text alternative when category is unknown (3-200 chars)',
+        },
+      },
+    },
+    fetch: async (args) => {
+      const params = new URLSearchParams();
+      if (args.category) params.set('category', String(args.category));
+      if (args.q) params.set('q', String(args.q));
+      return fetchJson(`${BASE}/pwi-job-pack?${params.toString()}`);
+    },
   },
   {
     name: 'calculate_earth_rod_resistance',

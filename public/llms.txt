@@ -68,6 +68,8 @@ More Elec-Mate verified data (unique to Elec-Mate):
 - `GET /api/public/v1/pwi-materials?category=ev_charger` — materials + tools typically needed for the job.
 - `GET /api/public/v1/pwi-inspection-checklist?category=consumer_unit` — visual inspection points + Schedule of Inspections walk-through.
 - `GET /api/public/v1/pwi-installation-procedure?category=ev_charger` — installation method, fixing intervals, cable routes, terminations, test procedures.
+- `GET /api/public/v1/pwi-semantic-search?q=install+three+phase+rcd` — free-text hybrid search across 199k+ records; returns rows with BS 7671 reg refs, tools, safety jsonb, common mistakes, duration, skill level. Use for open-ended "how do I do X" questions.
+- `GET /api/public/v1/pwi-job-pack?category=ev_charger` — complete job profile in one call: install method + tools + safety + acceptance criteria + BS 7671 reg refs + duration + common mistakes + troubleshooting. Either `category` or `q` required.
 
 More BS 7671 lookups + calculations:
 - `GET /api/public/v1/bs7671-section?section=701` — every regulation in a BS 7671 section (e.g. 701 bathrooms, 722 EV charging).

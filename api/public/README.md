@@ -126,6 +126,8 @@ https://www.elec-mate.com/api/public/v1/mcp
 - `pwi-troubleshooting` — troubleshooting_steps + diagnostic_tests
 - `pwi-materials` — materials_needed + tools_required
 - `pwi-inspection-checklist` — visual_inspection_points
+- `pwi-semantic-search` — free-text hybrid BM25+RRF across 199k+ rows via `search_practical_work_v2` RPC
+- `pwi-job-pack` — aggregated full job profile (install method + tools + safety jsonb + acceptance criteria + BS 7671 reg refs + duration + common mistakes + troubleshooting) in one call
 
 **Pricing intelligence**
 

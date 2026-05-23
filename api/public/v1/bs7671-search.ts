@@ -1,16 +1,21 @@
 /**
  * GET /api/public/v1/bs7671-search?q=earth+fault+loop&limit=5&doc=bs7671
  *
- * Searches across BS 7671:2018+A4:2026 + IET Guidance Note 3 (9th ed) +
- * IET On-Site Guide (9th ed) — 46k+ canonical content chunks.
+ * Searches Elec-Mate's canonical UK electrical content store:
+ *   BS 7671:2018+A4:2026 + IET Guidance Note 3 (9th ed) + IET On-Site Guide
+ *   (9th ed) — 46,745 verified chunks, all with full-text + vector embeddings.
  *
- * Uses the verified Elec-Mate content store (was previously a thin
- * regulation-index search; now hits the full canonical corpus).
+ * Primary path: `search_bs7671_v3` RPC — hybrid BM25 + RRF over the facets
+ * corpus. Far better recall than ILIKE substring matching: catches
+ * morphological variants, term frequency, related concepts.
+ *
+ * Fallback path: if the RPC fails (timeout, permissions), drops back to ILIKE
+ * across content / primary_topic / context_prefix so the endpoint stays up.
  *
  * Query params:
- *   q     — keyword (3-200 chars, required)
+ *   q     — keyword / natural-language query (3-200 chars, required)
  *   limit — 1-20 results, default 5
- *   doc   — optional filter: 'bs7671' | 'gn3' | 'osg' (default = all)
+ *   doc   — optional filter: 'bs7671' | 'gn3' | 'osg' (default = all three)
  */
 
 import {
@@ -22,20 +27,30 @@ import {
   LICENSE_NOTE,
   parseEnum,
 } from '../../_lib/util';
-import { queryTable, escapeIlike } from '../../_lib/supabase';
+import { queryTable, rpcCall, escapeIlike } from '../../_lib/supabase';
 
 export const config = { runtime: 'edge' };
 
 interface FacetRow {
-  id: string;
+  facet_id?: string;
+  id?: string;
   regulation_id: string | null;
+  reg_number?: string | null;
+  reg_title?: string | null;
   document_type: string | null;
   facet_type: string | null;
   primary_topic: string | null;
   content: string | null;
   context_prefix: string | null;
   keywords: string[] | null;
-  confidence_score: number | null;
+  bs7671_zones?: string[] | null;
+  equipment_category?: string | null;
+  protection_method?: string | null;
+  confidence_score?: number | null;
+  rrf_score?: number | null;
+  vector_score?: number | null;
+  bm25_score?: number | null;
+  retrieval_source?: string | null;
 }
 
 const DOC_TYPES = ['bs7671', 'gn3', 'osg'] as const;
@@ -80,30 +95,48 @@ export default async function handler(req: Request): Promise<Response> {
     return errorResponse("Query param 'q' must be at most 200 characters");
   }
 
-  const ilikeTerm = `*${escapeIlike(q)}*`;
-  const docFilter = doc ? `&document_type=eq.${encodeURIComponent(doc)}` : '';
-  const queryString =
-    `select=id,regulation_id,document_type,facet_type,primary_topic,content,context_prefix,keywords,confidence_score` +
-    `&or=(content.ilike.${encodeURIComponent(ilikeTerm)},primary_topic.ilike.${encodeURIComponent(ilikeTerm)},context_prefix.ilike.${encodeURIComponent(ilikeTerm)})` +
-    docFilter +
-    `&order=confidence_score.desc.nullslast` +
-    `&limit=${limit}`;
+  // ── Primary: hybrid BM25 + RRF via search_bs7671_v3 ───────────────────────
+  const rpcResult = await rpcCall<FacetRow[]>('search_bs7671_v3', {
+    query_text: q,
+    document_types: doc ? [doc] : null,
+    match_count: limit,
+    expand_graph: false,
+  });
 
-  const result = await queryTable<FacetRow>('bs7671_facets', queryString);
+  let rows: FacetRow[];
+  let retrieval = 'hybrid_bm25_rrf';
 
-  if (!result.ok) {
-    return jsonResponse(
-      {
-        error: 'upstream_error',
-        message: 'Failed to query Elec-Mate verified content store',
-        upstream_status: result.status,
-        source: CITATION_SOURCE,
-      },
-      502
+  if (rpcResult.ok && Array.isArray(rpcResult.data) && rpcResult.data.length > 0) {
+    rows = rpcResult.data;
+  } else {
+    // ── Fallback: ILIKE substring across content / topic / prefix ────────
+    retrieval = 'ilike_fallback';
+    const ilikeTerm = `*${escapeIlike(q)}*`;
+    const docFilter = doc ? `&document_type=eq.${encodeURIComponent(doc)}` : '';
+    const fallback = await queryTable<FacetRow>(
+      'bs7671_facets',
+      `select=id,regulation_id,document_type,facet_type,primary_topic,content,context_prefix,keywords,confidence_score` +
+        `&or=(content.ilike.${encodeURIComponent(ilikeTerm)},primary_topic.ilike.${encodeURIComponent(ilikeTerm)},context_prefix.ilike.${encodeURIComponent(ilikeTerm)})` +
+        docFilter +
+        `&order=confidence_score.desc.nullslast` +
+        `&limit=${limit}`
     );
+
+    if (!fallback.ok) {
+      return jsonResponse(
+        {
+          error: 'upstream_error',
+          message: 'Failed to query Elec-Mate verified content store',
+          upstream_status: fallback.status,
+          source: CITATION_SOURCE,
+        },
+        502
+      );
+    }
+    rows = fallback.data;
   }
 
-  if (result.data.length === 0) {
+  if (rows.length === 0) {
     return jsonResponse(
       {
         error: 'not_found',
@@ -114,21 +147,24 @@ export default async function handler(req: Request): Promise<Response> {
     );
   }
 
-  const results = result.data.map((r) => ({
+  const results = rows.map((r) => ({
     document_type: r.document_type,
     document_label: docTypeLabel(r.document_type),
     facet_type: r.facet_type,
     primary_topic: r.primary_topic,
+    reg_number: r.reg_number ?? null,
+    reg_title: r.reg_title ?? null,
     snippet: snippet(r.content, q),
     context: r.context_prefix?.slice(0, 200) || null,
     keywords: Array.isArray(r.keywords) ? r.keywords.slice(0, 8) : null,
+    equipment_category: r.equipment_category ?? null,
+    bs7671_zones: Array.isArray(r.bs7671_zones) ? r.bs7671_zones : null,
     regulation_id: r.regulation_id,
-    confidence_score: r.confidence_score,
+    score: r.rrf_score ?? r.confidence_score ?? null,
   }));
 
-  // Surface which document(s) the matches came from
   const docCounts: Record<string, number> = {};
-  for (const r of result.data) {
+  for (const r of rows) {
     const k = r.document_type || 'unknown';
     docCounts[k] = (docCounts[k] || 0) + 1;
   }
@@ -136,11 +172,12 @@ export default async function handler(req: Request): Promise<Response> {
   return jsonResponse({
     query: q,
     document_filter: doc || 'all',
+    retrieval_method: retrieval,
     result_count: results.length,
     matched_documents: docCounts,
     results,
     notes:
-      'Searches the canonical content store: BS 7671:2018+A4:2026 + IET Guidance Note 3 (9th Ed) + IET On-Site Guide (9th Ed) — 46k+ verified chunks. Filter to one document via doc=bs7671|gn3|osg. For the full text of a specific regulation, call bs7671-regulation?reg=<number>.',
+      'Hybrid BM25 + reciprocal rank fusion across the canonical content store: BS 7671:2018+A4:2026 + IET Guidance Note 3 (9th Ed) + IET On-Site Guide (9th Ed) — 46k+ verified chunks. Filter to one document via doc=bs7671|gn3|osg. For the full text of a specific regulation, call bs7671-regulation?reg=<number>.',
     citation: 'Elec-Mate — BS 7671:2018+A4:2026 + IET Guidance Note 3 + IET On-Site Guide',
     source: CITATION_SOURCE,
     license: LICENSE_NOTE,

@@ -482,6 +482,56 @@
         }
       }
     },
+    "/api/public/v1/pwi-semantic-search": {
+      "get": {
+        "tags": ["UK Trade Data"],
+        "summary": "Free-text hybrid search across 199k UK electrical install records",
+        "description": "Hybrid BM25+RRF search across Elec-Mate's verified practical-work corpus. Returns rows with BS 7671 reg cross-refs, tools, safety jsonb, common mistakes, troubleshooting steps, duration, skill level. Use for open-ended job-shaped questions.",
+        "operationId": "getPwiSemanticSearch",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "minLength": 3, "maxLength": 200 }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": { "type": "integer", "minimum": 1, "maximum": 15, "default": 5 }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Ranked job records" },
+          "404": { "description": "No matches" }
+        }
+      }
+    },
+    "/api/public/v1/pwi-job-pack": {
+      "get": {
+        "tags": ["UK Trade Data"],
+        "summary": "Complete UK electrical job profile in one call",
+        "description": "Aggregates top matching practical-work records into a single job pack: install method, tools, safety_requirements, acceptance_criteria, BS 7671 reg refs, duration, skill, common mistakes, troubleshooting. Either category or q required.",
+        "operationId": "getPwiJobPack",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "query",
+            "schema": { "type": "string", "maxLength": 80 }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "schema": { "type": "string", "minLength": 3, "maxLength": 200 }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Aggregated job pack" },
+          "400": { "description": "Neither category nor q provided" },
+          "404": { "description": "No matches" }
+        }
+      }
+    },
     "/api/public/v1/notifiable-work-check": {
       "get": {
         "tags": ["Reference"],
