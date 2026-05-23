@@ -273,6 +273,88 @@ serve(async (req) => {
         `Updated profile ${app_user_id}: subscribed=${subscribed}, tier=${subscriptionTier}, business_ai=${isBusinessAiTier}, is_trial=${isTrial}`
       );
 
+      // ── Win-back queue enqueue (mobile cancellations) ──────────────
+      // Mirrors the Stripe webhook behaviour for App Store / Play Store
+      // cancellations. Only fires on events that truly revoke access:
+      //   - CANCELLATION where subscribed flipped to false
+      //   - EXPIRATION (sub ran out without renewal)
+      // Skips BILLING_ISSUE (dunning's job) and SUBSCRIPTION_PAUSED.
+      //
+      // Idempotency: only enqueue if there's no winback row for this user
+      // in the last 7 days — prevents double-enqueue when CANCELLATION
+      // fires first then EXPIRATION fires at period end.
+      const shouldEnqueueWinback =
+        !subscribed && (type === 'CANCELLATION' || type === 'EXPIRATION');
+
+      if (shouldEnqueueWinback) {
+        try {
+          const { data: recentWinback } = await supabase
+            .from('winback_queue')
+            .select('id')
+            .eq('user_id', app_user_id)
+            .gte('cancelled_at', new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString())
+            .limit(1);
+
+          if (recentWinback && recentWinback.length > 0) {
+            console.log(
+              `[winback] Skipping enqueue for ${app_user_id} — recent winback row exists`
+            );
+          } else {
+            const { data: authUserForWb } = await supabase.auth.admin.getUserById(app_user_id);
+            const email = authUserForWb?.user?.email ?? null;
+
+            if (!email) {
+              console.warn(`[winback] No email for ${app_user_id} — cannot enqueue`);
+            } else {
+              const { data: wbProfile } = await supabase
+                .from('profiles')
+                .select('full_name, subscription_tier')
+                .eq('id', app_user_id)
+                .single();
+
+              const cancelledAt = new Date();
+              const ONE_DAY = 24 * 60 * 60 * 1000;
+              const wbRows = [
+                { touch: 1, delayDays: 1 },
+                { touch: 2, delayDays: 7 },
+                { touch: 3, delayDays: 30 },
+              ].map((t) => ({
+                user_id: app_user_id,
+                email,
+                full_name: wbProfile?.full_name ?? null,
+                tier: wbProfile?.subscription_tier ?? subscriptionTier ?? 'unknown',
+                stripe_customer_id: null, // mobile sub — no stripe customer
+                was_trial: !!isTrial,
+                cancelled_at: cancelledAt.toISOString(),
+                touch_number: t.touch,
+                scheduled_for: new Date(
+                  cancelledAt.getTime() + t.delayDays * ONE_DAY
+                ).toISOString(),
+                status: 'pending',
+              }));
+
+              const { error: enqueueError } = await supabase.from('winback_queue').insert(wbRows);
+
+              if (enqueueError) {
+                console.warn(
+                  `[winback] Enqueue failed for ${app_user_id} (non-fatal):`,
+                  enqueueError.message
+                );
+              } else {
+                console.log(
+                  `[winback] Queued 3 touches for ${app_user_id} (type=${type}, was_trial=${isTrial})`
+                );
+              }
+            }
+          }
+        } catch (wbErr) {
+          console.warn(
+            `[winback] Enqueue threw for ${app_user_id} (non-fatal):`,
+            (wbErr as Error)?.message
+          );
+        }
+      }
+
       // Fire Meta CAPI event for in-app purchase events (iOS/Android)
       // INITIAL_PURCHASE = Subscribe (or StartTrial if period_type === TRIAL)
       // RENEWAL = Subscribe
