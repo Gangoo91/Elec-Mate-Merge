@@ -592,7 +592,7 @@ export default function RenewableEnergyModule3Section7() {
           />
 
           <CommonMistake
-            title="Polarity tested visually only — installer reads "+" labels, doesn\'t multimeter-verify"
+            title="Polarity tested visually only — installer reads &ldquo;+&rdquo; labels, doesn\'t multimeter-verify"
             whatHappens="Installer relies on the &ldquo;+&rdquo; / &ldquo;-&rdquo; labels on cables and connectors for polarity verification. One cable was mis-labelled at manufacture (or a previous installer); the inverter is energised with reverse polarity. Inverter destroyed instantly; warranty void; £1,500-£2,500 replacement cost."
             doInstead="Always multimeter-verify polarity at every interface BEFORE energisation. Red probe on positive, black on negative; positive voltage confirms correct polarity. Labels can be wrong; measurements don\'t lie. The SoTR records the measured polarity per interface."
           />

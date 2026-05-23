@@ -454,7 +454,7 @@ export default function RenewableEnergyModule3Section6() {
 
           <ContentEyebrow>EREC G98 / G99 / G100 — the DNO workflow</ContentEyebrow>
 
-          <Pullquote>G98 fit-and-notify ≤16 A. G99 apply-and-wait >16 A. G100 limits export.</Pullquote>
+          <Pullquote>G98 fit-and-notify ≤16 A. G99 apply-and-wait &gt;16 A. G100 limits export.</Pullquote>
 
           <ConceptBlock
             title="EREC G98 — fit-and-notify (≤16 A single-phase)"

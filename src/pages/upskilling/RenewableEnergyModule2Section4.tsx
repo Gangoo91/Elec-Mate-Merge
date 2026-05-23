@@ -1,611 +1,784 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  Pullquote,
+  DiagramPlaceholder,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
-const RenewableEnergyModule2Section4 = () => {
+const inlineChecks = [
+  {
+    id: 'm2s4-what-is-mppt',
+    question:
+      'What does MPPT (Maximum Power Point Tracking) do?',
+    options: [
+      'Tracks the sun across the sky to point the panels',
+      'Continuously adjusts the operating voltage of the PV string to keep it at the maximum power point (MPP) on the I-V curve — where V × I is at maximum. As irradiance and temperature change throughout the day, the MPP shifts; MPPT tracks it in real time',
+      'Mechanically tilts the panels',
+      'Switches the array off at night',
+    ],
+    correctIndex: 1,
+    explanation:
+      'MPPT is an electronic control function in the inverter (or charge controller / power optimiser). It continuously adjusts the operating point of the PV string by varying the DC voltage drawn from the array, finding the V_mp where the I-V curve product V × I is at maximum. Irradiance changes shift the I-V curve up and down; temperature changes shift V_oc and V_mp horizontally. Without MPPT, the array operates at whatever the battery / load voltage demands — typically well off the MPP, losing 10–30% of available power.',
+  },
+  {
+    id: 'm2s4-mpp-position',
+    question:
+      'On a PV module I-V curve, where is the Maximum Power Point (MPP)?',
+    options: [
+      'At V_oc (right-hand end, current = 0)',
+      'At the "knee" of the I-V curve — where V × I is at maximum. The MPP is at V_mp on the voltage axis and I_mp on the current axis. Both V_mp and I_mp are typically below their respective open-circuit / short-circuit values',
+      'At I_sc (top, voltage = 0)',
+      'At the intersection of V_oc and I_sc',
+    ],
+    correctIndex: 1,
+    explanation:
+      'The MPP sits at the &ldquo;knee&rdquo; of the I-V curve — the point where the curve transitions from the relatively flat current-source region (near I_sc) to the relatively steep voltage-source region (near V_oc). At MPP, V × I is at its maximum. For a typical modern 60-cell 400 W module with V_oc 41.6 V and I_sc 12.5 A at STC, V_mp ≈ 34.0 V and I_mp ≈ 11.8 A — V_mp sits at ~82% of V_oc and I_mp sits at ~94% of I_sc. I_mp is always below I_sc on a real I-V curve. The MPPT\'s job is to operate the array at this knee continuously.',
+  },
+  {
+    id: 'm2s4-mpp-shifts',
+    question:
+      'What causes the MPP to move during a day?',
+    options: [
+      'The MPP is fixed by the module',
+      'Irradiance (W/m²) shifts the whole I-V curve up and down — higher irradiance, higher I_sc, higher MPP power. Temperature shifts V_oc and V_mp horizontally — hotter cells, lower V_oc and V_mp. The MPP moves continuously as the day progresses',
+      'Only nightfall affects it',
+      'Only cloud cover affects it',
+    ],
+    correctIndex: 1,
+    explanation:
+      'Two variables drive MPP motion. Irradiance scales I_sc roughly linearly — bright sun, high I_sc, high MPP power; cloud cover, lower I_sc, lower MPP power. Temperature shifts V_oc and V_mp via the temperature coefficient — hot cells, lower V_oc and V_mp; cold cells, higher V_oc and V_mp. As irradiance and temperature change minute-by-minute through the day, the MPP shifts in both dimensions. The MPPT algorithm continuously seeks the moving MPP — typically updating several times per second.',
+  },
+  {
+    id: 'm2s4-perturb-and-observe',
+    question:
+      'The perturb-and-observe (P&O) MPPT algorithm is the most common implementation. How does it work?',
+    options: [
+      'It measures the module datasheet and uses the V_mp value',
+      'It perturbs the operating voltage by a small step in one direction, measures whether power increased or decreased, and continues stepping in the direction of increasing power until power starts decreasing — at which point it reverses direction. The algorithm continuously oscillates around the MPP',
+      'It uses GPS to track the sun position',
+      'It is a manual adjustment',
+    ],
+    correctIndex: 1,
+    explanation:
+      'Perturb-and-observe is the simplest and most common MPPT algorithm. The controller perturbs the operating voltage by a small step (typically 0.5–1 V on a residential inverter), measures whether array power increased or decreased, and steps again in the direction of increasing power. When the perturbation causes power to decrease, the algorithm reverses direction. The result: the operating voltage oscillates within a small range around the MPP, with the average sitting very close to V_mp. Modern P&O implementations refine the step size adaptively to track fast-changing conditions while minimising steady-state oscillation losses.',
+  },
+  {
+    id: 'm2s4-incremental-conductance',
+    question:
+      'Incremental conductance MPPT is an alternative algorithm to perturb-and-observe. What\'s the principle?',
+    options: [
+      'It is identical to P&O',
+      'It uses the property that at the MPP, dP/dV = 0 (the power-vs-voltage slope is zero). Equivalently dI/dV = -I/V at MPP. The algorithm tracks dI/dV against -I/V in real time and adjusts operating voltage to satisfy the equality — typically faster and more accurate under rapidly changing irradiance than P&O',
+      'It only works on monocrystalline cells',
+      'It requires GPS data',
+    ],
+    correctIndex: 1,
+    explanation:
+      'Incremental conductance MPPT uses the mathematical property of the I-V curve at MPP. At the maximum power point, the slope of the P-V curve is zero (dP/dV = 0), which translates to dI/dV = -I/V. The algorithm measures dI and dV continuously, compares dI/dV against -I/V, and adjusts the operating point to satisfy the equality. Under rapidly changing irradiance (passing clouds, partial shade), incremental conductance tracks the new MPP faster than P&O\'s step-and-observe approach. Trade-off: more computationally demanding, more sensitive to measurement noise.',
+  },
+  {
+    id: 'm2s4-multi-mppt',
+    question:
+      'Why do modern residential hybrid inverters typically have 2 or 3 MPPT inputs?',
+    options: [
+      'Just for flexibility',
+      'Each MPPT input operates one string independently at its own MPP. Multi-MPPT lets the installer design strings for different orientations, different shading conditions, or different module counts — each string optimised separately. Without multi-MPPT, mismatched strings would have to be combined and dragged to the weakest string\'s operating point',
+      'They are decorative',
+      'For redundancy only',
+    ],
+    correctIndex: 1,
+    explanation:
+      'Multi-MPPT architecture solves the mismatch problem from Section 2.3 by giving each string its own optimiser. South-facing string into MPPT 1; east-facing string into MPPT 2; each tracks its own MPP independent of the other. The mismatch losses that would occur if both strings were combined into one MPPT are eliminated. Most modern residential hybrid inverters have 2 MPPTs; commercial inverters typically have 3–6 MPPTs. The architectural choice between single-MPPT and multi-MPPT design is driven by the array geometry (single orientation = single MPPT viable; multi-orientation = multi-MPPT required).',
+  },
+  {
+    id: 'm2s4-mppt-range-design',
+    question:
+      'When sizing a PV string against an inverter\'s MPPT input, three voltage parameters must align. What are they?',
+    options: [
+      'Just the V_oc',
+      'Cold-morning string V_oc < inverter absolute maximum DC input (covered in Section 2.3); hot-day string V_mp > inverter MPPT minimum voltage (else the inverter can\'t operate the string at MPP); cool-condition string V_mp < inverter MPPT maximum voltage (else the inverter is forced to operate the string off-MPP at the upper end)',
+      'Only the I_sc matters',
+      'Only the power rating',
+    ],
+    correctIndex: 1,
+    explanation:
+      'Three MPPT voltage rules govern PV string-to-inverter compatibility. (1) Cold-morning V_oc must be below the inverter\'s absolute maximum DC input — protects against over-voltage damage. (2) Hot-day V_mp must remain above the inverter\'s MPPT minimum voltage — without this, the inverter cannot operate at MPP during peak production hours. (3) Cool-condition V_mp must remain below the inverter\'s MPPT maximum voltage — without this, the inverter is forced to operate off-MPP at the upper end of its range. All three calculations are mandatory parts of an MCS-compliant PV design pack.',
+  },
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+    question:
+      'A PV string with V_oc 540 V at STC and V_mp 440 V at STC connects to a hybrid inverter with MPPT range 100–500 V and absolute maximum DC input 600 V. On a hot summer day, V_mp drops to ~370 V (due to temperature coefficient). On a cold winter morning, V_oc rises to ~590 V. Is the design compatible across the operating envelope?',
+    options: [
+      'No — outside MPPT range',
+      'Yes — cold-morning V_oc 590 V < 600 V inverter absolute maximum (with 10 V margin); hot-day V_mp 370 V > 100 V MPPT minimum; cool-condition V_mp 440 V (STC) < 500 V MPPT maximum. All three voltage rules satisfied across the operating envelope',
+      'Only at STC',
+      'Cannot tell',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The three MPPT voltage checks: cold-morning V_oc (590 V) vs inverter Vmax (600 V) — passes with margin. Hot-day V_mp (370 V) vs MPPT min (100 V) — passes comfortably. Cool-condition V_mp (440 V) vs MPPT max (500 V) — passes. The string is compatible across the operating envelope. The 10 V margin on cold-morning V_oc is the minimum acceptable; 20+ V margin is the safer design. This three-check method is mandatory on every MCS MIS 3002 design pack.',
+  },
+  {
+    id: 2,
+    question:
+      'Without MPPT, a PV array connected directly to a 24 V battery operates at approximately what voltage? And what does that cost in yield?',
+    options: [
+      'At V_mp — no loss',
+      'At the battery voltage (~24–28 V depending on charge state) — well below typical V_mp values (130 V for a 4-module 24 V battery system would be impossible; for a smaller array sized at ~30 V V_mp, operating at 24 V means operating well left of MPP, losing 20–40% of available power',
+      'At V_oc — maximum',
+      'At zero volts',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A PWM (Pulse-Width Modulation) charge controller connects the array directly to the battery — the array operates at whatever voltage the battery dictates, well below V_mp for almost all module configurations. The result: 20–40% of available array power is lost as the operating point sits left of MPP. MPPT charge controllers solve this by stepping the array voltage down to the battery voltage via a DC-DC converter, while operating the array at V_mp. For any meaningful off-grid system, MPPT is worth the higher controller cost — the yield gain pays back the difference quickly.',
+  },
+  {
+    id: 3,
+    question:
+      'Perturb-and-observe (P&O) MPPT exhibits a characteristic behaviour at steady state. What is it?',
+    options: [
+      'Exact MPP operation with no oscillation',
+      'Small oscillation around the MPP — the operating voltage steps continuously back and forth across the MPP, never settling exactly at V_mp. The result is a small steady-state loss (typically 0.5–2% depending on step size) compared to a hypothetical perfect-tracking algorithm',
+      'Random voltage jumps',
+      'Total shutdown',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'P&O\'s perturb-and-observe action produces continuous small oscillation around the MPP — the operating voltage swings within a few volts of V_mp at each tracking cycle. Smaller step sizes reduce the oscillation but slow the response to fast-changing conditions (passing clouds). Adaptive-step P&O implementations vary the step size based on the rate of change — larger steps under fast irradiance changes, smaller steps under steady-state — minimising both tracking error and steady-state oscillation loss. Modern hybrid inverters typically achieve &gt;99% MPPT efficiency.',
+  },
+  {
+    id: 4,
+    question:
+      'A customer with a two-pitch roof (south and east) considers single-MPPT vs dual-MPPT inverter options. The single-MPPT inverter is £200 cheaper. The dual-MPPT inverter handles the two strings separately. Across a 25-year install life, which is the better choice?',
+    options: [
+      'Single-MPPT — save the £200',
+      'Dual-MPPT — eliminates the mismatch loss between the two orientations. Annual yield gain is typically 5–15% on a multi-orientation array. Over 25 years at typical UK PV economics, the cumulative additional yield is worth £1,500–£3,500 — far exceeding the £200 inverter cost differential',
+      'Either is equivalent',
+      'Manual switching between the two strings',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The dual-MPPT inverter\'s additional cost pays back many times over on a multi-orientation install. Mismatch losses on a single-MPPT array combining south and east orientations are typically 10–20% during peak-mismatch periods, and 5–15% on an annual basis. The cumulative cost of the lost yield over 25 years vastly exceeds the inverter price differential. Always specify multi-MPPT on multi-orientation arrays — the &ldquo;save £200 on the inverter&rdquo; option is the most expensive line item on the install over its life.',
+  },
+  {
+    id: 5,
+    question:
+      'A PV string commissions in summer and operates correctly. The first cold sunny February morning, the inverter trips on over-voltage. Most likely root cause:',
+    options: [
+      'Module failure',
+      'Cold-morning V_oc calculation was not done at design time. STC V_oc was below the inverter\'s absolute maximum, but cold-morning V_oc (10–15% above STC due to the temperature coefficient) exceeds the limit. The string is one module too long for the inverter\'s cold-day operating envelope',
+      'Inverter firmware bug',
+      'Customer overloaded the system',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'This failure pattern is the most-common UK PV design error in action — the cold-morning V_oc calculation skipped at design time, surfaced as an inverter over-voltage trip on the first cold sunny morning post-install. The fix: reduce the string by one module (and verify the resulting hot-day V_mp still exceeds the MPPT minimum). The diagnostic: pull the cold-morning V_oc value from the inverter log alongside the cell temperature. Section 2.3\'s worked example walks the calculation; MIS 3002 mandates it in the design pack.',
+  },
+  {
+    id: 6,
+    question:
+      'Module-level MPPT via microinverters or power optimisers (Section 2.5 covers in detail) — what advantage do they offer over string-level MPPT?',
+    options: [
+      'Lower cost',
+      'Module-level MPPT operates each module at its own MPP, eliminating string-level mismatch losses entirely. Each module produces its maximum regardless of partial shade, orientation differences, or module age variation. The trade-off is per-module hardware cost and additional electronic components per install',
+      'Higher voltage',
+      'Mechanical tracking of the sun',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Module-level MPPT (via microinverters or DC power optimisers) is the architectural answer to severe mismatch scenarios — heavy partial shading, complex roof geometries, multi-orientation arrays, mixed-vintage modules in the same array. Each module operates at its own MPP regardless of conditions on other modules. The cost: additional hardware per module (~£30–60 for a power optimiser, ~£100–150 for a microinverter on UK pricing) and the install labour overhead. For installs where string-level MPPT loses meaningful yield, module-level MPPT pays back; for clean single-orientation south-facing arrays, string-level MPPT is the cost-effective choice.',
+  },
+  {
+    id: 7,
+    question:
+      'Why does incremental conductance MPPT typically outperform perturb-and-observe under rapidly changing irradiance (passing clouds)?',
+    options: [
+      'It uses GPS data',
+      'P&O\'s step-and-observe approach takes 2–3 perturbation cycles to recognise a new MPP after a step-change in irradiance. Incremental conductance directly evaluates the MPP condition (dI/dV = -I/V) in one measurement cycle and adjusts immediately. The difference matters most on UK partial-cloud days where irradiance changes 5–10 times per minute',
+      'Both algorithms are identical in performance',
+      'P&O cannot work under cloud',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Under rapidly changing irradiance (passing cumulus clouds, partial shade moving across the array), P&O can momentarily &ldquo;confuse&rdquo; the irradiance change for a power change due to its own perturbation — causing tracking errors. Incremental conductance evaluates the I-V curve mathematics directly in one measurement cycle, identifying the new MPP without the ambiguity. On UK installs where irradiance variability is the norm (cloud-passes happen many times per hour), incremental conductance can capture 1–3% more annual energy than P&O. Most modern inverters use enhanced P&O variants or hybrid algorithms; pure incremental conductance is less common but appears in some premium-tier inverters.',
+  },
+  {
+    id: 8,
+    question:
+      'A small off-grid PV system uses a PWM charge controller into a 12 V battery bank. The customer asks whether upgrading to an MPPT controller is worthwhile. The right professional advice:',
+    options: [
+      'PWM is fine — no upgrade needed',
+      'MPPT upgrade typically recovers 20–40% additional annual energy vs PWM, because PWM forces the array to operate at the battery voltage (well below V_mp). The MPPT controller cost differential (typically £80–150 vs PWM) is recovered in 1–3 years on most off-grid systems. The upgrade is worthwhile on any system above a few hundred watts',
+      'MPPT only works on grid-tied systems',
+      'PWM has higher efficiency than MPPT',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'PWM controllers operate the array at the battery voltage, losing 20–40% of available array power compared to MPP operation. MPPT controllers run the array at V_mp and step the voltage down to the battery via a DC-DC converter, capturing the full array power. On any off-grid system above ~100 W array capacity, the MPPT upgrade pays back in 1–3 years through additional energy harvested. For very small systems (under 50 W) the cost differential may not pay back; for typical &gt; 500 W off-grid PV, MPPT is the standard. The customer\'s question deserves a yes recommendation backed by the cost-benefit calculation.',
+  },
+];
+
+const faqs = [
+  {
+    question:
+      'How does the inverter actually adjust the PV string operating voltage?',
+    answer:
+      'The grid-tied inverter has a DC-DC converter stage (typically a boost converter) that controls the voltage seen at the PV string terminals independently of the downstream DC bus voltage. The MPPT controller commands the DC-DC duty cycle to set the input voltage; the boost converter steps the voltage to whatever the inverter\'s internal DC bus requires (typically 400–800 V). As the MPPT commands a different input voltage, the duty cycle adjusts and the operating point on the I-V curve moves. The inverter then converts the DC bus to AC at grid frequency for export.',
+  },
+  {
+    question:
+      'How fast does MPPT actually update?',
+    answer:
+      'Modern inverter MPPT updates several times per second (typical cycle 100–500 ms). Under steady-state conditions the operating point oscillates within a small range around V_mp at this update rate. Under fast irradiance changes (cloud passes), the algorithm tracks the new MPP within 1–3 cycles (typically &lt; 2 seconds for the worst cases). The update rate is a trade-off: too slow and the algorithm misses fast-changing conditions; too fast and steady-state oscillation losses grow. Modern adaptive algorithms vary the update rate based on conditions.',
+  },
+  {
+    question:
+      'Do MPPT efficiencies on inverter datasheets matter?',
+    answer:
+      'Yes. The MPPT efficiency on a datasheet (typically &gt; 99% for modern residential inverters) is the fraction of available array power the inverter actually captures vs the theoretical MPP. A 99.5% MPPT efficiency means 0.5% of available energy is lost in the tracking process (oscillation around MPP, occasional tracking lag). The remaining inverter loss is the DC-AC conversion efficiency (typically 96–98%). Total inverter efficiency = MPPT efficiency × conversion efficiency, usually quoted as European efficiency or CEC efficiency on the datasheet. Both matter for annual yield calculation.',
+  },
+  {
+    question:
+      'Why does the MPPT range matter when selecting an inverter?',
+    answer:
+      'The MPPT range defines the voltage window within which the inverter can operate the string at MPP. If the string\'s V_mp falls below MPPT min (e.g. on a very hot summer day), the inverter cannot operate at MPP — it operates at MPPT min, losing yield. If the string\'s V_mp rises above MPPT max (cool conditions on a long string), the inverter operates at MPPT max, off-MPP at the upper end. The design check is to verify V_mp stays within MPPT range across the operating temperature envelope, which means picking the right string length for the inverter\'s specific MPPT range.',
+  },
+  {
+    question:
+      'Can MPPT track multiple MPPs (e.g. under partial shading)?',
+    answer:
+      'A standard MPPT (P&O or incremental conductance) tracks the global MPP — the highest point on the P-V curve. Under partial shading the curve can have multiple local MPPs (one for each bypass-diode-isolated sub-string), and a standard MPPT can get stuck on a lower local MPP, missing the higher global MPP. Modern inverters implement &ldquo;global MPPT scan&rdquo; functions that periodically sweep the full V range to find the true global maximum. For severe partial shading scenarios, module-level optimisation (microinverters / power optimisers) is the cleaner solution — each module has its own MPPT, eliminating the partial-shade ambiguity.',
+  },
+  {
+    question:
+      'What\'s the difference between &ldquo;peak efficiency&rdquo; and &ldquo;European efficiency&rdquo; on an inverter datasheet?',
+    answer:
+      'Peak efficiency is the inverter\'s best-case efficiency at one specific operating point (typically around 50% of rated power). European efficiency (sometimes called &ldquo;Euro efficiency&rdquo;) is a weighted average across multiple load points, weighted to reflect typical European solar conditions — more time at part-load than at full power. Euro efficiency is a better predictor of real-world annual energy capture. CEC efficiency (the California Energy Commission equivalent) is weighted differently to reflect sunnier conditions. For UK installs, Euro efficiency is the more relevant figure. Modern residential inverters achieve 96–98% Euro efficiency.',
+  },
+  {
+    question:
+      'Does MPPT change anything for the cert evidence bundle or the BS 7671 design?',
+    answer:
+      'MPPT itself is an inverter function — not a BS 7671 design requirement. What BS 7671 requires is the string design that produces V_oc within the inverter absolute maximum (Section 2.3 cold-morning calculation) and V_mp within the MPPT range. The cert evidence bundle records the inverter\'s MPPT specifications (range, number of MPPTs, MPPT efficiency) as part of the design pack — these inform the string-to-inverter compatibility check. The IET CoP for Grid-Connected Solar PV Installations provides the operational methodology.',
+  },
+  {
+    question:
+      'Will adding a power optimiser to one module in a string improve the rest?',
+    answer:
+      'No — power optimisers and microinverters work as a system. A single module-level optimiser on a string-level system doesn\'t materially help. To get the module-level MPPT benefit, the whole array must be optimised module-by-module (each module gets a power optimiser, the string into the optimised inverter; OR each module gets a microinverter, no string inverter). Retrofitting one optimiser is rarely worth the cost. The design choice is at the architecture level, not the per-module level.',
+  },
+  {
+    question:
+      'What MPPT specifications matter most when comparing inverters?',
+    answer:
+      'Five MPPT specifications. (1) MPPT voltage range (the V_mp window the inverter can operate within). (2) Number of MPPTs (1, 2, or 3 for residential; up to 6+ for commercial). (3) MPPT efficiency (typically &gt; 99% on modern inverters). (4) Maximum DC input voltage per MPPT (drives the cold-day V_oc limit). (5) Maximum DC input current per MPPT (drives the per-string current limit and how many strings can connect in parallel to a single MPPT). The MPPT design verification — string V_oc and V_mp across the operating temperature envelope vs the inverter\'s MPPT envelope — uses all five values.',
+  },
+];
+
+export default function RenewableEnergyModule2Section4() {
+  const navigate = useNavigate();
+
   useSEO({
-    title: 'Mounting Systems & Structural Considerations | Solar PV',
+    title:
+      'MPPT — Maximum Power Point Tracking | Renewable Energy 2.4 | Elec-Mate',
     description:
-      'Understanding roof and ground mounting systems with structural analysis and engineering requirements.',
+      'Maximum Power Point Tracking — the algorithm that continuously adjusts PV string voltage to operate at maximum power. I-V and P-V curves, perturb-and-observe vs incremental conductance, multi-MPPT inverter architecture, and MPPT range matching against the string operating envelope.',
   });
 
-  const quizQuestions = [
-    {
-      question: 'What is the additional roof loading for ballasted mounting systems?',
-      options: [
-        '5-10 kg/m squared',
-        '15-25 kg/m squared',
-        '30-40 kg/m squared',
-        '50-60 kg/m squared',
-      ],
-      correctAnswer: 1,
-      explanation:
-        'Ballasted systems add 15-25 kg/m squared additional roof loading to hold panels in place without penetrations.',
-    },
-    {
-      question: 'Which mounting method is best for flat roofs?',
-      options: [
-        'Penetrative with tile hooks',
-        'Ballasted or fixed',
-        'Standing seam clamping',
-        'Ground screws',
-      ],
-      correctAnswer: 1,
-      explanation:
-        'Flat membrane roofs are ideally suited for ballasted or fixed mounting systems.',
-    },
-    {
-      question: 'What is the basic wind speed range in inland UK areas?',
-      options: ['15-18 m/s', '22-24 m/s', '28-30 m/s', '32-35 m/s'],
-      correctAnswer: 1,
-      explanation:
-        'Inland UK areas have basic wind speeds of 22-24 m/s according to BS EN 1991-1-4.',
-    },
-    {
-      question: 'Which aluminium alloy is commonly used for mounting systems?',
-      options: ['2024-T3', '6061-T6', '7075-T6', '5052-H32'],
-      correctAnswer: 1,
-      explanation:
-        '6061-T6 and 6063-T5 aluminium alloys are commonly used for their strength-to-weight ratio and corrosion resistance.',
-    },
-    {
-      question: 'What should fastener material be for coastal installations?',
-      options: [
-        'Zinc-plated steel',
-        '304 stainless steel',
-        '316 stainless steel minimum',
-        'Galvanised steel',
-      ],
-      correctAnswer: 2,
-      explanation:
-        'Coastal installations require 316 stainless steel minimum for fasteners to resist salt corrosion.',
-    },
-    {
-      question: 'What is the typical ground snow load range in the UK?',
-      options: [
-        '0.1-0.2 kN/m squared',
-        '0.4-1.0 kN/m squared',
-        '1.5-2.0 kN/m squared',
-        '2.5-3.0 kN/m squared',
-      ],
-      correctAnswer: 1,
-      explanation:
-        'UK ground snow loads typically range from 0.4-1.0 kN/m squared depending on altitude.',
-    },
-    {
-      question: 'What foundation type requires minimal excavation?',
-      options: ['Concrete footings', 'Driven piles', 'Ground screws', 'Helical piles'],
-      correctAnswer: 2,
-      explanation:
-        'Ground screws offer a minimal excavation alternative for ground-mounted systems.',
-    },
-    {
-      question: 'What anodising thickness is recommended for marine environments?',
-      options: ['10 micrometres', '15 micrometres', '25 micrometres', '50 micrometres'],
-      correctAnswer: 2,
-      explanation:
-        '25 micrometres hard anodised finish is recommended for coastal/marine installations.',
-    },
-    {
-      question: 'When is a chartered structural engineer required?',
-      options: [
-        'All installations',
-        'Systems over 4kWp',
-        'Systems over 50kWp or complex',
-        'Only listed buildings',
-      ],
-      correctAnswer: 2,
-      explanation:
-        'Systems over 50kWp or complex installations require full structural analysis by a chartered structural engineer.',
-    },
-    {
-      question: 'What causes galvanic corrosion in mounting systems?',
-      options: [
-        'UV exposure',
-        'Thermal cycling',
-        'Direct contact between dissimilar metals',
-        'Chemical exposure',
-      ],
-      correctAnswer: 2,
-      explanation:
-        'Galvanic corrosion occurs when dissimilar metals are in direct contact in the presence of an electrolyte.',
-    },
-  ];
-
   return (
-    <div className="bg-[#1a1a1a]">
-      {/* Minimal Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="max-w-4xl mx-auto px-4 h-14 flex items-center">
-          <Button
-            variant="ghost"
-            size="sm"
-            className="text-white hover:text-white hover:bg-white/10 -ml-2"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            type="button"
+            onClick={() => navigate('../renewable-energy-module-2')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="/electrician/upskilling/renewable-energy-module-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Module 2
+          </button>
 
-      <div className="max-w-4xl mx-auto px-4 py-8 pb-24">
-        {/* Header */}
-        <div className="mb-8 text-center">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-elec-yellow/10 mb-4">
-            <Zap className="w-6 h-6 text-elec-yellow" />
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Mounting Systems &amp; Structural Considerations
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Roof &amp; Ground Mounting Engineering
-          </p>
-        </div>
-
-        {/* Quick Summary */}
-        <div className="grid grid-cols-2 gap-3 mb-8">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <div className="text-elec-yellow text-xs font-medium uppercase tracking-wide mb-1">
-              Ballast Weight
-            </div>
-            <div className="text-white font-semibold">15-25 kg/m²</div>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <div className="text-elec-yellow text-xs font-medium uppercase tracking-wide mb-1">
-              UK Wind Speed
-            </div>
-            <div className="text-white font-semibold">22-29 m/s</div>
-          </div>
-        </div>
-
-        {/* Learning Outcomes */}
-        <div className="mb-8 p-4 rounded-lg bg-white/5 border border-white/10">
-          <h2 className="text-white font-semibold mb-3">Learning Outcomes</h2>
-          <div className="space-y-2">
-            <div className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span className="text-white text-sm">
-                Understand roof vs ground mount advantages and disadvantages
-              </span>
-            </div>
-            <div className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span className="text-white text-sm">
-                Consider wind, snow, and uplift forces in structural design
-              </span>
-            </div>
-            <div className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span className="text-white text-sm">
-                Select proper anchoring methods and materials for different applications
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* Section 01 */}
-        <div className="mb-8">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Roof Mounting Systems
-          </h2>
-          <div className="space-y-4 text-white leading-relaxed">
-            <p>
-              Roof-mounted systems are the most common solar installation type. Bad mounting equals
-              system failure - structural soundness is non-negotiable in solar design.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <h4 className="text-white font-medium mb-2">Penetrative Mounting</h4>
-                <ul className="text-sm space-y-1">
-                  <li>
-                    • <strong className="text-white">Method:</strong> Bolts penetrate roof
-                  </li>
-                  <li>
-                    • <strong className="text-white">Advantages:</strong> Strong, cost-effective
-                  </li>
-                  <li>
-                    • <strong className="text-white">Materials:</strong> Stainless bolts, EPDM
-                  </li>
-                  <li>
-                    • <strong className="text-white">Key:</strong> Proper waterproofing
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <h4 className="text-white font-medium mb-2">Ballasted Mounting</h4>
-                <ul className="text-sm space-y-1">
-                  <li>
-                    • <strong className="text-white">Method:</strong> Weight holds system
-                  </li>
-                  <li>
-                    • <strong className="text-white">Advantages:</strong> No penetrations
-                  </li>
-                  <li>
-                    • <strong className="text-white">Weight:</strong> 15-25 kg/m² loading
-                  </li>
-                  <li>
-                    • <strong className="text-white">Key:</strong> Adequate roof capacity
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <h4 className="text-white font-medium mb-2">Roof Type Considerations:</h4>
-              <ul className="text-sm space-y-1">
-                <li>
-                  • <strong className="text-white">Concrete tile:</strong> Penetrative with tile
-                  hooks, locate rafters
-                </li>
-                <li>
-                  • <strong className="text-white">Clay tile:</strong> Fragile - tile replacement or
-                  specialist fixings
-                </li>
-                <li>
-                  • <strong className="text-white">Metal/standing seam:</strong> Clamp-on systems,
-                  no penetrations
-                </li>
-                <li>
-                  • <strong className="text-white">Flat membrane:</strong> Ballasted or fixed,
-                  protect membrane
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <InlineCheck
-          question="What is the additional roof loading for ballasted mounting systems?"
-          options={['5-10 kg/m squared', '15-25 kg/m squared', '30-40 kg/m squared']}
-          correctIndex={1}
-          explanation="Ballasted systems add 15-25 kg/m squared to hold panels in place without penetrating the roof."
-        />
-
-        {/* Section 02 */}
-        <div className="mb-8 mt-8">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Wind Load Calculations (BS EN 1991)
-          </h2>
-          <div className="space-y-4 text-white leading-relaxed">
-            <p>
-              Wind loading is often the governing design factor for solar mounting systems. BS EN
-              1991-1-4 provides the framework for wind load calculations in the UK.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <h4 className="text-white font-medium mb-2">Key Wind Factors</h4>
-                <ul className="text-sm space-y-1">
-                  <li>
-                    • <strong className="text-white">Basic speed:</strong> 21-29 m/s in UK
-                  </li>
-                  <li>
-                    • <strong className="text-white">Terrain:</strong> Affects exposure
-                  </li>
-                  <li>
-                    • <strong className="text-white">Building height:</strong> Higher = more load
-                  </li>
-                  <li>
-                    • <strong className="text-white">Panel position:</strong> Edge/corner zones
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <h4 className="text-white font-medium mb-2">Critical Load Cases</h4>
-                <ul className="text-sm space-y-1">
-                  <li>
-                    • <strong className="text-white">Uplift:</strong> Negative pressure lifts
-                  </li>
-                  <li>
-                    • <strong className="text-white">Positive:</strong> Wind pushing down
-                  </li>
-                  <li>
-                    • <strong className="text-white">Lateral:</strong> Horizontal forces
-                  </li>
-                  <li>
-                    • <strong className="text-white">Edge effects:</strong> Higher loads
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <h4 className="text-white font-medium mb-2">UK Design Wind Speeds:</h4>
-              <div className="grid grid-cols-3 gap-3 text-sm">
-                <div>
-                  <p className="font-medium text-white">Inland</p>
-                  <p>22-24 m/s</p>
-                </div>
-                <div>
-                  <p className="font-medium text-white">Coastal</p>
-                  <p>26-28 m/s</p>
-                </div>
-                <div>
-                  <p className="font-medium text-white">Scotland/Exposed</p>
-                  <p>Up to 29 m/s</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <InlineCheck
-          question="What is the basic wind speed range in inland UK areas?"
-          options={['15-18 m/s', '22-24 m/s', '28-30 m/s']}
-          correctIndex={1}
-          explanation="Inland UK areas have basic wind speeds of 22-24 m/s according to BS EN 1991-1-4."
-        />
-
-        {/* Section 03 */}
-        <div className="mb-8 mt-8">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Structural Material Selection
-          </h2>
-          <div className="space-y-4 text-white leading-relaxed">
-            <p>
-              Material selection affects system longevity, maintenance requirements, and structural
-              performance.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <h4 className="text-white font-medium mb-2">Aluminium Systems</h4>
-                <ul className="text-sm space-y-1">
-                  <li>• Lightweight, corrosion resistant</li>
-                  <li>• 6061-T6, 6063-T5 alloys</li>
-                  <li>• Good strength-to-weight ratio</li>
-                  <li>• 25+ year lifespan</li>
-                  <li>• Higher cost, lower maintenance</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <h4 className="text-white font-medium mb-2">Steel Systems</h4>
-                <ul className="text-sm space-y-1">
-                  <li>• High strength, lower cost</li>
-                  <li>• Galvanised or stainless</li>
-                  <li>• Requires protective coatings</li>
-                  <li>• Heavier than aluminium</li>
-                  <li>• Ground mount preferred</li>
-                </ul>
-              </div>
-            </div>
-            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <h4 className="text-white font-medium mb-2">Material Compatibility:</h4>
-              <ul className="text-sm space-y-1">
-                <li>
-                  • <strong className="text-white">Galvanic corrosion:</strong> Avoid dissimilar
-                  metal contact
-                </li>
-                <li>
-                  • <strong className="text-white">Fasteners:</strong> Match material to structure
-                  (stainless preferred)
-                </li>
-                <li>
-                  • <strong className="text-white">Coastal:</strong> 316 stainless, 25μm anodising,
-                  marine-grade
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <InlineCheck
-          question="Which fastener material is required for coastal installations?"
-          options={['Zinc-plated steel', '304 stainless steel', '316 stainless steel minimum']}
-          correctIndex={2}
-          explanation="Coastal installations require 316 stainless steel minimum to resist salt corrosion."
-        />
-
-        {/* Section 04 */}
-        <div className="mb-8 mt-8">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Ground Mount Systems
-          </h2>
-          <div className="space-y-4 text-white leading-relaxed">
-            <p>
-              Ground-mounted systems offer flexibility in orientation and tilt but require
-              foundation design and site preparation.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <h4 className="text-white font-medium mb-2">Foundation Types</h4>
-                <ul className="text-sm space-y-1">
-                  <li>
-                    • <strong className="text-white">Concrete footings:</strong> Most robust
-                  </li>
-                  <li>
-                    • <strong className="text-white">Driven piles:</strong> Steel posts
-                  </li>
-                  <li>
-                    • <strong className="text-white">Helical piles:</strong> Difficult soils
-                  </li>
-                  <li>
-                    • <strong className="text-white">Ground screws:</strong> Minimal excavation
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <h4 className="text-white font-medium mb-2">Ground Mount Advantages</h4>
-                <ul className="text-sm space-y-1">
-                  <li>• Optimal orientation possible</li>
-                  <li>• Easy maintenance access</li>
-                  <li>• Better air circulation/cooling</li>
-                  <li>• Easy to expand</li>
-                  <li>• Tracking options available</li>
-                </ul>
-              </div>
-            </div>
-            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <h4 className="text-white font-medium mb-2">Site Considerations:</h4>
-              <ul className="text-sm space-y-1">
-                <li>
-                  • <strong className="text-white">Soil conditions:</strong> Geotechnical survey for
-                  large systems
-                </li>
-                <li>
-                  • <strong className="text-white">Drainage:</strong> Prevent water pooling
-                </li>
-                <li>
-                  • <strong className="text-white">Access:</strong> Maintenance vehicle routes
-                </li>
-                <li>
-                  • <strong className="text-white">Security:</strong> Fencing and anti-theft
-                  measures
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        {/* Section 05 */}
-        <div className="mb-8 mt-8">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Structural Assessment Requirements
-          </h2>
-          <div className="space-y-4 text-white leading-relaxed">
-            <p>
-              The level of structural assessment required depends on system size, complexity, and
-              building type.
-            </p>
-            <div className="space-y-2">
-              <div className="p-3 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 flex justify-between items-center">
-                <span className="text-white font-medium">&lt; 4kWp domestic</span>
-                <span className="text-sm">Basic check by installer</span>
-              </div>
-              <div className="p-3 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 flex justify-between items-center">
-                <span className="text-white font-medium">4-50kWp commercial</span>
-                <span className="text-sm">Structural engineer review</span>
-              </div>
-              <div className="p-3 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 flex justify-between items-center">
-                <span className="text-white font-medium">&gt; 50kWp or complex</span>
-                <span className="text-sm">Chartered engineer required</span>
-              </div>
-              <div className="p-3 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 flex justify-between items-center">
-                <span className="text-white font-medium">Listed buildings</span>
-                <span className="text-sm">Conservation specialist</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Practical Guidance */}
-        <div className="mb-8 p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
-          <h3 className="text-white font-semibold mb-3">Practical Guidance</h3>
-          <div className="space-y-2 text-white text-sm">
-            <p>
-              <strong className="text-white">Always locate rafters:</strong> Use a stud finder or
-              measure from roof void before drilling any penetrations.
-            </p>
-            <p>
-              <strong className="text-white">Waterproofing is critical:</strong> Use proper EPDM
-              flashings, butyl tape, and sealants - failures cause expensive water damage.
-            </p>
-            <p>
-              <strong className="text-white">Leave safety margins:</strong> Design for 900V when
-              1000V is the limit; account for worst-case wind and snow combinations.
-            </p>
-          </div>
-        </div>
-
-        {/* FAQs */}
-        <div className="mb-8">
-          <h2 className="text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
-          <div className="space-y-3">
-            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <h4 className="text-white font-medium mb-2">Can any roof support solar panels?</h4>
-              <p className="text-white text-sm">
-                Most roofs can support solar, but older or weaker structures may need reinforcement.
-                Always assess roof age, condition, and loading capacity before installation.
-              </p>
-            </div>
-            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <h4 className="text-white font-medium mb-2">
-                What causes roof leaks after solar installation?
-              </h4>
-              <p className="text-white text-sm">
-                Improper waterproofing of penetrations, damaged tiles during installation, or failed
-                sealants over time. Using proper flashing systems and quality sealants prevents most
-                issues.
-              </p>
-            </div>
-            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <h4 className="text-white font-medium mb-2">
-                Why is edge mounting more challenging?
-              </h4>
-              <p className="text-white text-sm">
-                Wind loads increase significantly near building edges due to wind flow patterns.
-                Edge and corner zones can experience 2-3 times higher loads than central areas.
-              </p>
-            </div>
-            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <h4 className="text-white font-medium mb-2">
-                When should I choose ground mount over roof mount?
-              </h4>
-              <p className="text-white text-sm">
-                Consider ground mount when roof orientation is poor, structural capacity is limited,
-                shading is unavoidable, or you need tracking systems. Also preferred for large
-                commercial installations.
-              </p>
-            </div>
-            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <h4 className="text-white font-medium mb-2">How do I prevent galvanic corrosion?</h4>
-              <p className="text-white text-sm">
-                Use isolation materials between dissimilar metals, specify compatible fasteners
-                (stainless with aluminium is acceptable), and use appropriate coatings for steel
-                components.
-              </p>
-            </div>
-            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <h4 className="text-white font-medium mb-2">
-                What is the warranty period for mounting systems?
-              </h4>
-              <p className="text-white text-sm">
-                Quality mounting systems offer 10-25 year warranties. Match mounting system warranty
-                to panel warranty - the structure should outlast the panels it supports.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Quiz */}
-        <div className="mb-8">
-          <Quiz
-            title="Section 4 Quiz: Mounting Systems"
-            questions={quizQuestions}
-            passingScore={70}
+          <PageHero
+            eyebrow="Module 2 · Section 4 · BS 7671:2018+A4:2026"
+            title="MPPT — Maximum Power Point Tracking"
+            description="The algorithm that continuously adjusts PV string voltage to operate at maximum power. I-V and P-V curves, perturb-and-observe vs incremental conductance, multi-MPPT inverter architecture, and MPPT range matching."
+            tone="yellow"
           />
-        </div>
 
-        {/* Bottom Navigation */}
-        <div className="flex justify-between items-center pt-6 border-t border-white/10">
-          <Button
-            variant="ghost"
-            className="text-white hover:text-white hover:bg-white/10"
-            asChild
+          <TLDR
+            points={[
+              'MPPT (Maximum Power Point Tracking) is the electronic control function that continuously adjusts the PV string operating voltage to keep it at the maximum power point on the I-V curve, where V × I is at maximum.',
+              'The MPP shifts continuously as irradiance and temperature change. Irradiance scales I_sc roughly linearly; temperature shifts V_oc and V_mp via the temperature coefficient. The MPPT algorithm tracks the moving MPP in real time.',
+              'Two common MPPT algorithms: perturb-and-observe (P&O — step the operating voltage and observe whether power increased, repeat) and incremental conductance (use dI/dV = -I/V at MPP to track directly). P&O is simpler; incremental conductance handles fast-changing conditions better.',
+              'Multi-MPPT inverter architecture (2–3 MPPTs typical on residential hybrid inverters; 3–6+ on commercial) lets the installer connect strings of different orientations or characteristics independently — eliminating string-level mismatch losses.',
+              'MPPT range matching against string operating envelope is mandatory: cold-morning V_oc < inverter absolute maximum, hot-day V_mp > MPPT minimum, cool-condition V_mp < MPPT maximum. All three calculations are mandatory parts of an MCS-compliant design pack.',
+            ]}
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              'Explain what MPPT does and why operating a PV array at MPP captures 20–40% more energy than operating at the battery / load voltage.',
+              'Locate the MPP on an I-V curve and describe how it moves with irradiance and temperature changes.',
+              'Distinguish the perturb-and-observe and incremental conductance MPPT algorithms and identify when each is preferable.',
+              'Apply multi-MPPT inverter architecture to multi-orientation arrays, partial-shade scenarios, and mixed-string designs.',
+              'Run the three MPPT voltage rules at string design stage — cold-morning V_oc, hot-day V_mp, cool-condition V_mp.',
+              'Read inverter datasheet MPPT specifications (range, number of MPPTs, MPPT efficiency, maximum DC input voltage and current per MPPT) and apply them to the string compatibility check.',
+            ]}
+            initialVisibleCount={3}
+          />
+
+          <Pullquote>The MPP moves. The MPPT chases it.</Pullquote>
+
+          <ContentEyebrow>What MPPT does — and why it matters</ContentEyebrow>
+
+          <ConceptBlock
+            title="The Maximum Power Point — and why operating off it costs yield"
+            plainEnglish="Every PV string has a single operating point — V_mp and I_mp — where the product V × I is at maximum. MPPT is the electronic function that keeps the inverter operating the string at this point, continuously, as conditions change."
+            onSite="Without MPPT, the array operates at whatever voltage the load or battery imposes — typically well below V_mp. The lost power is the difference between V_mp × I_mp at MPP and V_actual × I_actual at the off-MPP operating point. 20–40% yield loss is typical for non-MPPT operation."
           >
-            <Link to="../section-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold"
-            asChild
+            <p>The Maximum Power Point on the I-V curve:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Sits at the &ldquo;knee&rdquo; of the I-V curve</strong>
+                {' '}— where the curve transitions from current-source behaviour (near
+                I_sc) to voltage-source behaviour (near V_oc)
+              </li>
+              <li>
+                <strong className="text-white">Voltage at MPP: V_mp</strong> — typically
+                ~80% of V_oc for crystalline silicon (e.g. 33.3 V for a module with 41.6
+                V V_oc)
+              </li>
+              <li>
+                <strong className="text-white">Current at MPP: I_mp</strong> — typically
+                ~92–96% of I_sc (e.g. 11.8 A for a module with 12.5 A I_sc). I_mp is
+                always strictly less than I_sc on a real I-V curve — the MPP sits below
+                I_sc on the current axis
+              </li>
+              <li>
+                <strong className="text-white">Power at MPP: P_max = V_mp × I_mp</strong>
+                {' '}— this is the module\'s nameplate power at STC
+              </li>
+            </ul>
+            <p>How conditions change the MPP:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Irradiance changes</strong> — scale I_sc
+                roughly linearly. Brighter sun, higher I_sc, higher MPP power, V_mp
+                changes only slightly
+              </li>
+              <li>
+                <strong className="text-white">Temperature changes</strong> — shift V_oc
+                and V_mp via the temperature coefficient. Hot cells, lower V_oc and V_mp;
+                cold cells, higher V_oc and V_mp
+              </li>
+              <li>
+                <strong className="text-white">Partial shading</strong> — bypass diodes
+                engage on shaded sub-strings, creating multiple local MPPs on the P-V
+                curve. The MPPT must find the global maximum
+              </li>
+              <li>
+                <strong className="text-white">Module degradation</strong> — gradual
+                long-term shift; MPPT tracks it without issue
+              </li>
+            </ul>
+            <p>
+              The MPPT algorithm runs in the inverter (for grid-tied PV) or the charge
+              controller (for off-grid PV with batteries). It commands the DC-DC
+              converter stage in the inverter to vary the PV string operating voltage,
+              measures the resulting power, and adjusts to find or maintain V_mp.
+            </p>
+          </ConceptBlock>
+
+          <DiagramPlaceholder
+            caption="The I-V and P-V curves overlaid — showing the MPP at the &ldquo;knee&rdquo; on the I-V curve and as the peak on the P-V curve. Three I-V curves at three irradiance levels (1000, 700, 400 W/m²) and three temperature levels (25°C, 45°C, 65°C cell temp) — illustrating how the MPP moves with conditions. Annotated with V_mp, I_mp, P_max at each operating point."
+            filename="renewable/m2s4-mpp-position.png"
+          />
+
+          <DiagramPlaceholder
+            caption="Engineering Mindset video — &lsquo;MPPT explained&rsquo; or &lsquo;How MPPT solar charge controllers work&rsquo;. Animated walk-through of the I-V curve, the MPP, and the perturb-and-observe algorithm. Recommended companion to this section."
+            filename="renewable/m2s4-engineering-mindset-mppt-video.placeholder"
+          />
+
+          <InlineCheck {...inlineChecks[0]} />
+
+          <InlineCheck {...inlineChecks[1]} />
+
+          <InlineCheck {...inlineChecks[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Perturb-and-observe — the workhorse MPPT algorithm</ContentEyebrow>
+
+          <Pullquote>Step. Measure. Repeat. The perturb-and-observe algorithm in three words.</Pullquote>
+
+          <ConceptBlock
+            title="How P&O works — and why it\'s the dominant MPPT algorithm"
+            plainEnglish="P&O perturbs the operating voltage by a small step, measures whether array power went up or down, and steps again in the direction of increasing power. When power starts decreasing, the algorithm reverses. The result: continuous oscillation around the MPP."
+            onSite="The simplicity of P&O is its strength. It needs only an input voltage measurement and an input power measurement — no derivatives, no curve fitting, no calibration. The trade-off is the steady-state oscillation around MPP, which costs a small fraction of a percent in steady-state operation."
           >
-            <Link to="../section-5">Next Section</Link>
-          </Button>
-        </div>
+            <p>The P&O algorithm cycle:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Step 1</strong> — Measure current array
+                power P_k at operating voltage V_k
+              </li>
+              <li>
+                <strong className="text-white">Step 2</strong> — Perturb V by a small
+                step (typically ΔV ≈ 0.5–1 V on a residential inverter)
+              </li>
+              <li>
+                <strong className="text-white">Step 3</strong> — Measure new array power
+                P_(k+1) at new operating voltage V_(k+1) = V_k + ΔV
+              </li>
+              <li>
+                <strong className="text-white">Step 4</strong> — Compare. If P_(k+1) &gt;
+                P_k, the perturbation moved toward MPP — continue in same direction. If
+                P_(k+1) &lt; P_k, reverse direction (next perturbation will be -ΔV)
+              </li>
+              <li>
+                <strong className="text-white">Step 5</strong> — Repeat — the algorithm
+                cycle typically runs at 5–10 Hz (100–200 ms per cycle)
+              </li>
+            </ul>
+            <p>Adaptive P&O refinements in modern inverters:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Variable step size</strong> — larger ΔV
+                under fast-changing conditions (cloud transitions), smaller ΔV under
+                steady-state — reducing oscillation loss
+              </li>
+              <li>
+                <strong className="text-white">Global MPPT scan</strong> — periodic full
+                V_oc-to-V_min sweep to find the global MPP under partial shade (where
+                local maxima from bypass-diode-isolated sub-strings can trap a simple P&O
+                algorithm)
+              </li>
+              <li>
+                <strong className="text-white">Cloud-detection logic</strong> — distinguish
+                between a P&O perturbation effect and a real irradiance change, to avoid
+                mis-tracking during cloud transitions
+              </li>
+            </ul>
+            <p>
+              Modern P&O implementations achieve &gt; 99% MPPT efficiency under
+              steady-state conditions and &gt; 98% under typical UK partial-cloud
+              variability. The remaining 1–2% loss is the cost of the algorithm\'s
+              tracking method; a hypothetical perfect-tracking algorithm would be the
+              benchmark, never achievable in practice.
+            </p>
+          </ConceptBlock>
+
+          <DiagramPlaceholder
+            caption="P&O algorithm flowchart — measure P, perturb V, measure new P, compare, step in direction of increasing power, repeat. Annotated with typical step sizes (0.5–1 V) and cycle rates (5–10 Hz). Alongside a P-V curve showing the operating point oscillating within a small range around MPP — the characteristic steady-state P&O behaviour."
+            filename="renewable/m2s4-perturb-and-observe.png"
+          />
+
+          <InlineCheck {...inlineChecks[3]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Incremental conductance — the mathematical alternative</ContentEyebrow>
+
+          <ConceptBlock
+            title="Incremental conductance — using dI/dV to find MPP directly"
+            plainEnglish="At the MPP, the slope dP/dV is zero — power is at its maximum. This translates to dI/dV = -I/V at MPP. Incremental conductance measures dI and dV continuously and adjusts V to satisfy the equality directly."
+            onSite="Incremental conductance is preferred where rapid irradiance changes matter (partial cloud, complex shading patterns) — it tracks new MPPs faster than P&O. Trade-off: more computationally demanding, more sensitive to measurement noise."
+          >
+            <p>The mathematical foundation:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">At MPP</strong> — dP/dV = 0 (the slope of
+                the P-V curve is zero at the peak)
+              </li>
+              <li>
+                <strong className="text-white">Differentiation</strong> — P = V × I, so
+                dP/dV = I + V × dI/dV
+              </li>
+              <li>
+                <strong className="text-white">At MPP</strong> — dP/dV = 0 means I + V ×
+                dI/dV = 0, which gives dI/dV = -I/V
+              </li>
+              <li>
+                <strong className="text-white">Algorithm</strong> — measure dI and dV
+                between consecutive samples, compute the ratio, compare to -I/V. If
+                dI/dV &gt; -I/V, we are below MPP voltage — increase V. If dI/dV &lt;
+                -I/V, we are above MPP voltage — decrease V. If dI/dV = -I/V (within
+                tolerance), we are at MPP — hold
+              </li>
+            </ul>
+            <p>Comparison with P&O:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Tracking speed</strong> — incremental
+                conductance reaches the new MPP in 1 measurement cycle after a step-change
+                in irradiance; P&O takes 2–3 cycles
+              </li>
+              <li>
+                <strong className="text-white">Steady-state oscillation</strong> —
+                incremental conductance can hold exactly at MPP (no oscillation needed);
+                P&O always oscillates by ±ΔV
+              </li>
+              <li>
+                <strong className="text-white">Computation</strong> — incremental
+                conductance requires division and derivative calculation; P&O requires
+                only comparison
+              </li>
+              <li>
+                <strong className="text-white">Noise sensitivity</strong> — incremental
+                conductance is more sensitive to current and voltage measurement noise
+                (the dI/dV calculation amplifies noise)
+              </li>
+            </ul>
+            <p>
+              Most residential inverters use enhanced P&O variants for the simpler
+              implementation. Some premium inverters use incremental conductance or
+              hybrid algorithms combining both — using P&O for steady-state and
+              incremental conductance during rapid changes. For UK partial-cloud
+              conditions, the choice rarely makes more than a 1–2% annual yield
+              difference between well-implemented algorithms.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...inlineChecks[4]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Multi-MPPT architecture — and why it matters</ContentEyebrow>
+
+          <Pullquote>One MPPT per orientation. One MPPT per shade pattern. One MPPT per design constraint.</Pullquote>
+
+          <ConceptBlock
+            title="Why modern hybrid inverters have 2 or 3 MPPTs"
+            plainEnglish="Multi-MPPT solves the string mismatch problem from Section 2.3 architecturally. Each MPPT operates one string independently at its own MPP. South-facing string into MPPT 1; east-facing string into MPPT 2; each tracks its own MPP without dragging the other."
+            onSite="The architectural decision at design stage: how many strings does the array geometry need? One orientation, no shade variation, identical module count: single MPPT viable. Multi-orientation, mixed shade, mixed module count: multi-MPPT required. Most modern residential hybrid inverters have 2 MPPTs as standard."
+          >
+            <p>Multi-MPPT inverter configurations:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Single MPPT</strong> — all strings combine
+                into one MPPT input. Viable for single-orientation arrays with matched
+                strings. Common on entry-level and lowest-cost inverters.
+              </li>
+              <li>
+                <strong className="text-white">Dual MPPT</strong> — two independent
+                MPPTs, typically with one or more parallel strings per MPPT. Standard on
+                modern residential hybrid inverters. Handles two-orientation roofs and
+                some partial-shade variation.
+              </li>
+              <li>
+                <strong className="text-white">Triple MPPT</strong> — three independent
+                MPPTs on the same inverter. More flexibility for complex roof geometries
+                or premium / commercial installs.
+              </li>
+              <li>
+                <strong className="text-white">Six+ MPPTs</strong> — commercial-scale
+                inverters with many independent inputs. Each input may host multiple
+                parallel strings, all operating at the same MPPT.
+              </li>
+            </ul>
+            <p>The design decision flow:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Single orientation, single roof pitch,
+                no shade</strong> — single MPPT is adequate
+              </li>
+              <li>
+                <strong className="text-white">Two orientations</strong> — dual MPPT
+                eliminates the orientation mismatch loss
+              </li>
+              <li>
+                <strong className="text-white">Two orientations + partial shade</strong>
+                {' '}— dual MPPT plus possible module-level optimisation
+              </li>
+              <li>
+                <strong className="text-white">Three or more orientations</strong> —
+                triple MPPT inverter, or module-level optimisation (microinverters /
+                power optimisers)
+              </li>
+              <li>
+                <strong className="text-white">Heavy partial shading on any
+                orientation</strong> — module-level optimisation regardless of inverter
+                count
+              </li>
+            </ul>
+            <p>
+              The cost differential between single and dual MPPT inverters is typically
+              £150–300 on residential pricing. The yield gain from eliminating
+              orientation mismatch on a multi-orientation array is typically £100–200
+              per year. The payback is 1–3 years; the 25-year value is substantial.
+              Always specify multi-MPPT on multi-orientation installs.
+            </p>
+          </ConceptBlock>
+
+          <DiagramPlaceholder
+            caption="Multi-MPPT inverter architecture — dual-MPPT inverter with two independent strings. String 1 (south, 10 modules) into MPPT 1; String 2 (east, 4 modules) into MPPT 2. Each MPPT tracks its own string independently. Diagram shows the internal block structure: per-MPPT DC-DC converter, common DC bus, single DC-AC inverter stage, grid connection."
+            filename="renewable/m2s4-multi-mppt-architecture.png"
+          />
+
+          <InlineCheck {...inlineChecks[5]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>MPPT range matching — the design-stage compatibility check</ContentEyebrow>
+
+          <Pullquote>Cold-morning V_oc below absolute max. Hot-day V_mp above MPPT min. Cool V_mp below MPPT max.</Pullquote>
+
+          <ConceptBlock
+            title="The three MPPT voltage rules — every design pack must verify"
+            plainEnglish="Three voltage checks govern PV string-to-inverter compatibility. Each addresses a different operating-condition extreme. Together they verify the string operates correctly across the year\'s operating envelope."
+            onSite="The cert evidence bundle for an MCS-compliant PV install includes all three calculations. Missing any one is a design pack incompleteness that surfaces at MCS audit or at the first cold-morning trip / hot-day yield collapse."
+          >
+            <p>The three voltage rules:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Rule 1 — Cold-morning V_oc &lt; inverter
+                absolute maximum DC input voltage</strong> (with margin). String V_oc
+                rises with falling temperature; cold-morning V_oc can be 8–15% above STC.
+                Exceeding the inverter limit risks over-voltage damage. Covered in Section
+                2.3.
+              </li>
+              <li>
+                <strong className="text-white">Rule 2 — Hot-day V_mp &gt; inverter MPPT
+                minimum voltage</strong>. String V_mp falls with rising temperature; on
+                a hot UK roof V_mp can drop 8–15% below STC. If V_mp falls below MPPT
+                min, the inverter cannot track at MPP and yield drops during peak
+                production hours.
+              </li>
+              <li>
+                <strong className="text-white">Rule 3 — Cool-condition V_mp &lt; inverter
+                MPPT maximum voltage</strong>. On cool days V_mp sits closer to its STC
+                value; on long strings this can approach the MPPT max. Exceeding MPPT
+                max forces the inverter to operate off-MPP at the upper end.
+              </li>
+            </ul>
+            <p>The calculation pattern (per rule):</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>Module datasheet value at STC (V_oc or V_mp)</li>
+              <li>Module temperature coefficient (V_oc or V_mp coefficient, typically -0.25 to -0.35 %/°C)</li>
+              <li>Site design temperature (minimum cell temp for Rule 1, maximum cell temp for Rule 2, design typical for Rule 3)</li>
+              <li>Temperature delta from STC reference (25°C)</li>
+              <li>Scaled module voltage at the design temperature</li>
+              <li>Multiplied by number of modules in series for string-level value</li>
+              <li>Compared against the inverter\'s relevant limit</li>
+            </ul>
+            <p>
+              Margin: 5–10% headroom on each rule is good practice. The cert evidence
+              bundle records each calculation with the inputs used; MCS audit samples
+              the design pack and looks for all three calculations completed.
+            </p>
+          </ConceptBlock>
+
+          <DiagramPlaceholder
+            caption="The three MPPT voltage rules visualised — operating envelope chart showing the inverter\'s voltage limits (absolute max, MPPT max, MPPT min) on the vertical axis, and temperature on the horizontal axis. The string\'s operating voltage band (V_mp at min temp through V_mp at max temp; V_oc at min temp) overlaid — must fit within the inverter\'s envelope at all operating temperatures with margin."
+            filename="renewable/m2s4-mppt-voltage-rules.png"
+          />
+
+          <InlineCheck {...inlineChecks[6]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>What it looks like in the wild</ContentEyebrow>
+
+          <Scenario
+            title="A 6 kWp install with one south-facing roof and one east-facing roof"
+            situation="A customer with a south-facing main roof pitch (10 modules fit) and an east-facing extension roof (5 modules fit) asks for a 6 kWp PV install. 15 × 400 W modules total. Available hybrid inverters: a single-MPPT model (£1,200) and a dual-MPPT model (£1,450)."
+            whatToDo="Specify the dual-MPPT inverter. String 1: 10 modules on south pitch into MPPT 1 — design pack runs the three voltage rules against MPPT 1\'s range. String 2: 5 modules on east pitch into MPPT 2 — design pack runs the three voltage rules against MPPT 2\'s range. Each string operates at its own MPP across the day; the morning peak captured by the east string and the midday-afternoon peak captured by the south string add directly. Modelled annual yield improvement vs single-MPPT configuration: ~8–12% (mismatch loss eliminated). Over 25 years at typical UK PV economics, the additional yield is worth £2,500–£4,000 — vastly exceeding the £250 inverter price differential. The cert evidence bundle records the two-string architecture, the per-MPPT voltage rule checks, and the inverter MPPT specifications."
+            whyItMatters="The £250 inverter saving on the single-MPPT alternative is the most expensive line item on the install\'s 25-year life. The mismatch losses on a single-MPPT multi-orientation array compound year after year. The dual-MPPT decision pays back many times over. This scenario is one of the most common UK domestic PV configurations, and the dual-MPPT call is almost always correct."
+          />
+
+          <Scenario
+            title="A hot UK summer afternoon — string V_mp drops below MPPT minimum"
+            situation="An 8-module string on a south-facing UK roof commissions in autumn and works correctly through winter. On the first 30°C UK summer afternoon, cell temperatures reach 65°C. The customer\'s monitoring shows the inverter\'s reported DC voltage stuck at 130 V (the MPPT minimum on this inverter) while array output sits at ~50% of expected for the conditions."
+            whatToDo="Diagnose: hot-day V_mp has dropped below the inverter\'s MPPT minimum. The inverter is operating at MPPT min, not at the string\'s actual V_mp — losing yield. Calculation check: 8 modules × STC V_mp 33.3 V = 266 V at STC. At 65°C (40°C above STC reference) with V_mp coefficient -0.35%/°C: V_mp scales by (1 - 40 × 0.0035) = 0.86, so hot-day V_mp = 266 × 0.86 = 229 V. But wait — that\'s still above 130 V MPPT minimum. Need to re-check the calculation or look for a fault. Investigation: one module in the string has failed in a way that holds its V_mp at near-zero (a faulty cell short-circuit); the rest-of-string V_mp = 7 × 33.3 × 0.86 = 200 V. Still above MPPT min. The 130 V inverter reading suggests another issue — possibly two failed modules, or a string-level wiring fault. Diagnostic: isolate the string, test each module\'s V_oc individually, check for the fault location."
+            whyItMatters="MPPT operating-point diagnostics are part of the post-install troubleshooting toolkit. The combination of inverter monitoring data plus module-level V_oc testing localises faults that aren\'t visible from the inverter alone. The commissioning baseline (Section 2.3) becomes the comparison point — current V_oc readings vs baseline V_oc readings localise the affected module(s)."
+          />
+
+          <CommonMistake
+            title="Specifying a single-MPPT inverter on a multi-orientation array to save cost"
+            whatHappens="An installer quotes a multi-orientation install with a single-MPPT inverter to come in below a competitor\'s price. The customer accepts. The array commissions and works. Mismatch losses between the orientations drag the annual yield down by 10–15% vs the modelled PVGIS expectation. The customer queries the underperformance; the installer attempts to explain &ldquo;system efficiency&rdquo;; the customer remains dissatisfied; the EICR at 5 years flags the architecture as a design choice rather than a fault. The customer\'s 25-year energy loss is many times the inverter price differential."
+            doInstead="Always specify multi-MPPT on multi-orientation installs. The cost differential is £150–300; the 25-year yield value is £2,500–£4,500 on a typical UK install. The PWI install pattern flags this — modules at different orientations need separate MPPTs, not combined strings. MIS 3002 design pack expects the multi-MPPT architecture on multi-orientation arrays; specifying single-MPPT on a multi-orientation array is a design pack red flag."
+          />
+
+          <CommonMistake
+            title="Skipping the hot-day V_mp calculation in the design pack"
+            whatHappens="The installer completes the cold-morning V_oc check (the high-profile one) but skips the hot-day V_mp check against the MPPT minimum. The string V_mp at the design maximum cell temperature falls below the inverter\'s MPPT minimum. On hot summer afternoons the inverter operates at MPPT min, not at MPP — losing 10–20% during peak production hours. The customer\'s annual yield falls below modelled expectations by 3–5% (averaged across the year)."
+            doInstead="All three MPPT voltage rules must be checked in the design pack — cold-morning V_oc (Rule 1), hot-day V_mp (Rule 2), cool-condition V_mp (Rule 3). MIS 3002 mandates the full three-rule check. The hot-day V_mp check is the most-skipped; the cold-morning V_oc check gets attention because it\'s the catastrophic-failure mode (inverter damage), while the hot-day V_mp issue manifests as yield loss not catastrophe."
+          />
+
+          <CommonMistake
+            title="Treating the MPPT inverter as a black box without understanding its limits"
+            whatHappens="The installer specifies an inverter by P_max rating alone without checking the MPPT range. The string V_oc at STC fits within the inverter\'s absolute maximum (so Rule 1 passes), but the inverter\'s MPPT range is narrow and the string V_mp on cool days sits at the MPPT max. The inverter operates off-MPP at the upper end of its range, losing 5–8% during cool-condition peak production. The yield loss is invisible to the customer (it looks like normal seasonal variation) but real."
+            doInstead="Read the inverter datasheet for all five MPPT specifications: range, number of MPPTs, MPPT efficiency, maximum DC input voltage per MPPT, maximum DC input current per MPPT. Run the three voltage rules against the actual MPPT range, not just the absolute maximum. The inverter MPPT range is the operating window; staying inside it across the temperature envelope is the design discipline."
+          />
+
+          <InlineCheck {...inlineChecks[1]} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'MPPT (Maximum Power Point Tracking) is the electronic function that continuously adjusts PV string operating voltage to operate at the maximum power point — where V × I is at maximum. Without MPPT, arrays lose 20–40% of available power.',
+              'The MPP sits at the &ldquo;knee&rdquo; of the I-V curve at V_mp and I_mp. The MPP shifts continuously with irradiance (scales I_sc) and temperature (shifts V_oc and V_mp).',
+              'Perturb-and-observe (P&O) is the dominant MPPT algorithm — simple, robust, achieves &gt; 99% MPPT efficiency in modern implementations. Continuous small oscillation around MPP is the characteristic steady-state behaviour.',
+              'Incremental conductance is the mathematical alternative — uses dI/dV = -I/V at MPP to track directly. Faster under rapid irradiance changes; more sensitive to measurement noise; less common in mainstream residential inverters.',
+              'Multi-MPPT inverter architecture (2–3 MPPTs typical on modern residential hybrid inverters) eliminates string mismatch losses by operating each string independently. Mandatory on multi-orientation arrays; cost differential pays back in 1–3 years.',
+              'Three MPPT voltage rules at design stage: cold-morning V_oc < inverter absolute maximum (Rule 1, Section 2.3); hot-day V_mp > MPPT minimum (Rule 2); cool-condition V_mp < MPPT maximum (Rule 3). MCS-compliant design packs check all three.',
+              'PWM charge controllers (off-grid) operate the array at battery voltage — losing 20–40% vs MPPT controllers. MPPT controllers pay back in 1–3 years on any system above ~100 W array capacity.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <Quiz questions={quizQuestions} title="Section 4 · Knowledge check" />
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              type="button"
+              onClick={() =>
+                navigate('/electrician/upskilling/renewable-energy-module-2-section-3')
+              }
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Section 2.3
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Strings and arrays
+              </div>
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                navigate('/electrician/upskilling/renewable-energy-module-2-section-5')
+              }
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next section <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                2.5 Inverter topologies
+              </div>
+            </button>
+          </div>
+        </PageFrame>
       </div>
     </div>
   );
-};
-
-export default RenewableEnergyModule2Section4;
+}

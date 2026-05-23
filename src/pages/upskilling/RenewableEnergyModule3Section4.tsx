@@ -486,7 +486,7 @@ export default function RenewableEnergyModule3Section4() {
 
           <ContentEyebrow>DC-side protective devices — Reg 712.431 / 712.432</ContentEyebrow>
 
-          <Pullquote>gPV fuses OR DC-rated MCBs. Both polarities. Blocking diodes ≠ protection. Sized 1.1 × I_sc_max < I_n ≤ I_mod_max_ocer.</Pullquote>
+          <Pullquote>gPV fuses OR DC-rated MCBs. Both polarities. Blocking diodes ≠ protection. Sized 1.1 × I_sc_max &lt; I_n ≤ I_mod_max_ocer.</Pullquote>
 
           <ConceptBlock
             title="When DC-side overcurrent protection is required"
