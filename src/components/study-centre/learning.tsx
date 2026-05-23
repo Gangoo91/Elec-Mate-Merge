@@ -373,6 +373,55 @@ export function SectionRule() {
   return <hr className="border-0 h-px bg-white/[0.06] my-2" />;
 }
 
+/* ── Pullquote — short anchor phrase for memorability ─────────────── */
+
+interface PullquoteProps {
+  children: ReactNode;
+  className?: string;
+}
+
+export function Pullquote({ children, className }: PullquoteProps) {
+  return (
+    <blockquote
+      className={cn(
+        'relative my-3 pl-4 sm:pl-5 border-l-2 border-elec-yellow/60',
+        className
+      )}
+    >
+      <p className="text-[15px] sm:text-[16px] font-medium italic text-white/95 leading-snug tracking-tight">
+        {children}
+      </p>
+    </blockquote>
+  );
+}
+
+/* ── DiagramPlaceholder — marks where an authored diagram will go ──── */
+
+interface DiagramPlaceholderProps {
+  caption: string;
+  filename: string;
+  className?: string;
+}
+
+export function DiagramPlaceholder({ caption, filename, className }: DiagramPlaceholderProps) {
+  return (
+    <figure
+      className={cn(
+        'rounded-2xl bg-white/[0.02] border border-dashed border-white/[0.12] p-5 sm:p-6 text-center space-y-2',
+        className
+      )}
+    >
+      <div className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-white/55">
+        Diagram
+      </div>
+      <figcaption className="text-[13.5px] text-white/85 leading-relaxed">
+        {caption}
+      </figcaption>
+      <div className="text-[11px] text-white/35 font-mono">{filename}</div>
+    </figure>
+  );
+}
+
 /* ── Re-export the existing AM2LearningOutcomes (already editorial) ─ */
 
 export { AM2LearningOutcomes as LearningOutcomes } from '@/components/apprentice-courses/AM2LearningOutcomes';

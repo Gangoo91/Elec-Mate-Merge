@@ -1,754 +1,818 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  Pullquote,
+  DiagramPlaceholder,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE = 'Wind Generation Principles and Power Curves - Renewable Energy Module 3';
-const DESCRIPTION =
-  'Learn the science behind wind energy conversion, power curves, capacity factors, and turbine performance evaluation for UK renewable energy installations.';
-
-const quickCheckQuestions = [
+const inlineChecks = [
   {
-    id: 'wind-betz-limit',
+    id: 'm3s1-uk-resource',
     question:
-      'What is the maximum theoretical efficiency that a wind turbine can achieve (Betz limit)?',
-    options: ['45.3%', '59.3%', '75.5%', '85.0%'],
-    correctIndex: 1,
-    explanation:
-      'The Betz limit states that no wind turbine can capture more than 59.3% of the kinetic energy in wind. Modern turbines typically achieve 35-45% under optimal conditions.',
-  },
-  {
-    id: 'wind-power-relationship',
-    question: 'How does wind power relate to wind speed?',
+      'What is the typical UK PV annual yield in kWh per kWp installed for a well-designed south-facing array?',
     options: [
-      'Linear relationship (doubles with speed)',
-      'Square relationship (quadruples when speed doubles)',
-      'Cubic relationship (increases 8x when speed doubles)',
-      'Logarithmic relationship',
+      '300–500 kWh/kWp/year',
+      'Approximately 850–1,100 kWh/kWp/year across the UK — south-east England typically at the upper end (~1,050–1,100), Scotland at the lower end (~850–950). PVGIS-modelled yield is the operational reference; the figure already includes performance ratio derating',
+      '5,000 kWh/kWp/year',
+      '100 kWh/kWp/year',
     ],
-    correctIndex: 2,
-    explanation:
-      'Wind power has a cubic relationship with wind speed (P proportional to V cubed). This means doubling wind speed increases available power by 8 times, making site selection critical.',
-  },
-  {
-    id: 'wind-cut-in-speed',
-    question: 'What is the typical cut-in wind speed for modern commercial wind turbines?',
-    options: ['1-2 m/s', '3-4 m/s', '6-7 m/s', '10-12 m/s'],
     correctIndex: 1,
     explanation:
-      'Most modern commercial wind turbines have a cut-in speed of 3-4 m/s, which is when they begin generating electricity. Below this speed, wind energy cannot overcome system losses.',
+      'Real-world UK PV installs deliver 850–1,100 kWh per kWp installed per year on a well-designed south-facing array with 30–40° tilt. The geographical variation tracks solar resource — south-east England (~1,050–1,100), midlands (~950–1,000), northern England / Wales (~900–950), Scotland (~850–950). PVGIS (the European Commission JRC tool) is the operational reference for modelled yield; the figure is the realistic post-derating expectation, not the STC nameplate.',
   },
   {
-    id: 'wind-capacity-factor',
-    question: 'What capacity factor do UK offshore wind farms typically achieve?',
-    options: ['15-25%', '25-35%', '40-50%', '60-70%'],
-    correctIndex: 2,
+    id: 'm3s1-azimuth',
+    question:
+      'For maximum annual yield in the UK, what is the optimal PV array azimuth (compass orientation)?',
+    options: [
+      'North-facing (0° / 360°)',
+      'South-facing (180°). East (90°) loses ~15–20% vs south; west (270°) loses ~15–20% vs south. North-facing is roughly 50%+ loss — typically not viable',
+      'East-facing only',
+      'Any direction works equally',
+    ],
+    correctIndex: 1,
     explanation:
-      'UK offshore wind farms typically achieve 40-50% capacity factors due to consistent, strong offshore winds. Onshore installations typically achieve 25-35%.',
+      'South-facing (azimuth 180°) maximises annual yield in the northern hemisphere because the sun spends most of the day in the southern sky. East- or west-facing arrays produce well (~80–85% of south-facing) but with different daily profiles — east peaks in the morning, west peaks in the afternoon. North-facing PV in the UK loses ~50% or more vs south-facing and is rarely commercially viable for grid-tied installs.',
+  },
+  {
+    id: 'm3s1-tilt',
+    question:
+      'For UK latitudes, what is the optimal PV array tilt for annual yield?',
+    options: [
+      'Vertical (90°)',
+      'Approximately 30–40° tilt — matches the latitude-appropriate average solar elevation across the year. Flatter tilts favour summer; steeper tilts favour winter. Typical UK roof pitches (30–45°) are often close to optimal',
+      'Flat (0°)',
+      '60–70° for all latitudes',
+    ],
+    correctIndex: 1,
+    explanation:
+      'The annual-yield optimum tilt approximates the site latitude × 0.7–0.9 — for UK latitudes (50–58°N), this gives 30–40°. Flatter tilts capture more summer sun (high-elevation midday) but miss winter (low-elevation); steeper tilts do the opposite. The 30–40° range balances the annual sum. UK roof pitches are typically 30–45°, often close to optimal; the practical loss from sub-optimal tilt is usually 5–10% vs the theoretical optimum.',
+  },
+  {
+    id: 'm3s1-shading-impact',
+    question:
+      'A chimney casts a shadow over 2 modules in a 12-module string for 3 hours per day. What is the realistic impact on string yield without module-level optimisation?',
+    options: [
+      'Loss proportional to shaded area — about 16%',
+      'Much higher loss than the shaded area alone. The bypass-diode bypass on the affected sub-strings means an entire 20-cell sub-string (1/3 of each shaded module) is bypassed during the shade window — typically 30–40% loss during the 3-hour window, or 10–15% annualised. Module-level optimisation (Section 2.5) recovers most of this',
+      'Zero impact — bypass diodes solve it',
+      'Total string failure',
+    ],
+    correctIndex: 1,
+    explanation:
+      'Partial shading on a series string is more damaging than proportional to the shaded area. Bypass diodes (Section 2.2) limit the damage but bypass the entire affected sub-string (typically 20 cells per diode on a 60-cell module). For a 2-module shade affecting one sub-string per module, ~6.7% of the module is in shadow but ~33% of each module\'s output is lost during the shade window. Total string yield loss in the shade window can reach 30–40%; annualised across the day, ~10–15%. Module-level optimisation (microinverters or power optimisers) recovers most of this loss.',
+  },
+  {
+    id: 'm3s1-performance-ratio',
+    question:
+      'PVGIS yield modelling applies a performance ratio (PR) to scale from STC nameplate to real-world yield. What is the typical PR for a well-designed UK install, and what does it account for?',
+    options: [
+      'PR = 1.0 — no derating',
+      'PR typically 0.75–0.85 for a well-designed UK install. Accounts for temperature derate, soiling losses, mismatch losses, inverter conversion losses, DC and AC cable losses, and the difference between STC and real operating conditions. PR below 0.70 indicates a poorly-designed or degraded install',
+      'PR = 0.20',
+      'PR = 1.50 — performance gain',
+    ],
+    correctIndex: 1,
+    explanation:
+      'Performance ratio (PR) is the ratio of actual annual yield to the theoretical maximum that the STC nameplate × annual irradiance would predict. PR captures all the real-world losses: temperature derate (typically the largest single loss — 5–10%), soiling (1–3%), mismatch (1–3%), inverter conversion (3–5%), DC and AC cable losses (1–3%), inverter standby and downtime (1–2%). A well-designed UK install achieves PR ≈ 0.80; PR below 0.70 signals design or maintenance problems. The cert evidence bundle records the modelled PR used in the design pack.',
+  },
+  {
+    id: 'm3s1-712-512',
+    question:
+      'BS 7671 Reg 712.512.2.1 sets a requirement on installer responsibility for site conditions. What does it require?',
+    options: [
+      'Nothing site-specific',
+      'PV modules shall be installed in such a way that there is adequate heat dissipation under the conditions of maximum solar radiation for the site. The installer must record the site\'s maximum solar radiation assessment and evidence that the install meets the manufacturer\'s thermal specifications for those conditions',
+      'Modules must be water-cooled',
+      'Only for sites above 500 m altitude',
+    ],
+    correctIndex: 1,
+    explanation:
+      'Reg 712.512.2.1 makes the installer responsible for the site-specific thermal assessment. The standard practical translation: the 70–100 mm standoff above the roof (Section 2.6) plus the manufacturer\'s mounting spec. For high-altitude / low-latitude sites where irradiance can exceed typical UK levels, the assessment must reflect that — additional cooling arrangement may be required. The cert evidence bundle records the site\'s max solar radiation assumption and the resulting mounting / cooling arrangement.',
+  },
+  {
+    id: 'm3s1-pvgis-modelling',
+    question:
+      'For an MCS MIS 3002 design pack, what tool is typically used for PV yield modelling, and what inputs does it need?',
+    options: [
+      'Manual calculation only',
+      'PVGIS (European Commission JRC tool) or equivalent (PVsyst, HelioScope). Inputs: location (postcode or coordinates), array azimuth and tilt, module type and nameplate, shading factor, and performance ratio assumption. Output: modelled annual and monthly yield in kWh',
+      'Customer\'s gut feeling',
+      'Just the inverter datasheet',
+    ],
+    correctIndex: 1,
+    explanation:
+      'PVGIS is the free, widely-used PV yield modelling tool. It pulls long-term irradiance data from satellite measurements for any UK location, applies the user\'s array configuration (azimuth, tilt, module nameplate, system losses), and returns the modelled annual yield in kWh. MCS MIS 3002 design pack expects the PVGIS modelling (or equivalent commercial tool like PVsyst for larger systems) as part of the design evidence. The cert evidence bundle includes the PVGIS report or screenshot.',
   },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: 'What is a power curve primarily used for in wind energy?',
+    question:
+      'A customer in southern England with a south-facing roof, 30° tilt, no shading, wants a 5 kWp install. Modelled annual yield?',
     options: [
-      'To measure wind direction changes',
-      'To predict electrical output at different wind speeds',
-      'To calculate maintenance costs',
-      'To determine blade rotation speed',
+      '~500 kWh/year',
+      'Approximately 5,000–5,500 kWh/year (PVGIS-modelled, performance ratio ~0.80). Southern England with south-facing 30° tilt is close to the UK optimum; a well-designed install delivers ~1,000–1,100 kWh per kWp installed',
+      '50,000 kWh/year',
+      'No yield — too far north',
     ],
     correctAnswer: 1,
     explanation:
-      'A power curve shows the relationship between wind speed and electrical power output, allowing engineers to predict energy generation and assess turbine performance under various wind conditions.',
+      'Southern England + south-facing + 30° tilt + no shading is close to the UK theoretical optimum. PVGIS-modelled annual yield typically 1,000–1,100 kWh per kWp installed; for a 5 kWp array that gives 5,000–5,500 kWh per year. The figure includes PR derating; STC nameplate alone would predict ~5,200–5,700 kWh without losses. Customer self-consumption + SEG export should be modelled separately to inform the financial case.',
   },
   {
     id: 2,
-    question: 'What is the power equation for wind energy extraction?',
+    question:
+      'A customer with an east-west split roof (50/50) wants PV across both sides. Compared with an equivalent capacity on south-only, what\'s the realistic yield?',
     options: [
-      'P = V x A',
-      'P = 0.5 x rho x A x V squared',
-      'P = 0.5 x rho x A x V cubed x Cp',
-      'P = mass x acceleration',
+      'Same yield',
+      'East-west split typically delivers ~85–90% of equivalent south-only yield (each side captures less than south-facing, but the combined profile is flatter across the day and may better match household consumption). PVGIS models each side separately and sums; the design pack records the per-side modelling',
+      'Triple the yield',
+      'Zero yield from east-west',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
-      'The wind power equation is P = 0.5 x rho x A x V cubed x Cp, where rho is air density, A is swept area, V is wind speed, and Cp is the power coefficient.',
+      'East-west arrays trade peak yield for daily profile flatness. Each side individually produces ~80–85% of south-facing; combined the array typically delivers ~85–90% of equivalent south-only yield. The flatter daily profile (morning east peak + afternoon west peak vs single midday south peak) often matches household consumption better — improving self-consumption ratio and reducing reliance on battery storage. PVGIS models each orientation independently.',
   },
   {
     id: 3,
-    question: "What does 'capacity factor' represent in wind generation?",
+    question:
+      'The PWI common-mistakes list flags &ldquo;ignoring shading from nearby objects&rdquo; as a high-frequency error. What\'s the survey-stage discipline to avoid it?',
     options: [
-      'Maximum power output of the turbine',
-      'Ratio of actual energy output to theoretical maximum over a period',
-      'Number of turbines in a wind farm',
-      'Wind speed measurement accuracy',
+      'Just look at the sky',
+      'Walk the proposed array area at survey, identify shading sources (trees, chimneys, neighbouring buildings, distant horizon), use a shade-analysis tool (SunEye, Solmetric, mobile apps) to capture the annual shading pattern objectively, and produce a shading factor for the design pack. Plan architectural mitigation (multi-MPPT or module-level optimisation per Section 2.5) where shading is meaningful',
+      'Tell the customer to remove all trees',
+      'Use ground-mount instead',
     ],
     correctAnswer: 1,
     explanation:
-      'Capacity factor is the ratio of actual energy output to the theoretical maximum if the turbine operated at rated power continuously. UK offshore wind farms typically achieve 40-50% capacity factors.',
+      'Shading survey discipline is a Module 1 Section 6 standing item. The competent surveyor walks the proposed array area, identifies shading sources, tracks the shading pattern across day and year using a shade-analysis tool, and produces an objective shading factor (typically expressed as a percentage of total annual irradiance lost to shade). The factor feeds the PVGIS / equivalent modelling. Architectural mitigation (multi-MPPT inverter or module-level optimisation) recovers most shading losses on heavily-shaded arrays.',
   },
   {
     id: 4,
-    question: 'How does blade length affect energy capture in wind turbines?',
+    question:
+      'A customer in Scotland with a 30° south-facing roof wants 6 kWp. The expected annual yield is materially lower than a comparable south-east England install. By how much, approximately?',
     options: [
-      'Longer blades capture less energy due to weight',
-      'Blade length has no effect on energy capture',
-      'Longer blades sweep a larger area, capturing more wind energy',
-      'Shorter blades are always more efficient',
+      'Same yield',
+      'Roughly 10–20% lower — Scotland\'s solar resource is ~10–15% below south-east England due to higher latitude and more cloud cover. A 6 kWp Scottish install typically delivers ~5,100–5,500 kWh/year vs ~6,000–6,500 kWh/year for the same array in the south-east. Still commercially viable; the PVGIS model captures the location precisely',
+      'Triple the yield',
+      'Half the yield',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
-      'Longer blades sweep a larger circular area, following the relationship Power proportional to D squared (where D is rotor diameter). Modern offshore turbines use blades over 100m long to maximise energy capture.',
+      'Scotland\'s solar resource is ~10–15% below south-east England — higher latitude (lower solar elevation) and higher annual cloud cover. The PVGIS model handles location precisely; the customer\'s expected yield is set by the modelling, not by a national average. Scottish PV installs remain commercially viable — the unit cost is similar to England, the yield is ~85–90% of the south-east, and the SEG / Home Energy Scotland framework supports the commercial case.',
   },
   {
     id: 5,
-    question: 'What happens when wind speed exceeds the cut-out speed?',
+    question:
+      'Performance ratio (PR) on a UK install is modelled at 0.80 in the design pack. After 12 months of operation, the customer\'s measured PR is 0.72. Most likely cause:',
     options: [
-      'The turbine generates maximum power',
-      'The turbine shuts down for safety protection',
-      'Power output continues to increase',
-      'The turbine switches to backup power',
+      'Modelling error',
+      'Performance below modelled — investigation candidates include soiling (dust / leaves / bird droppings reducing transmittance), shading not captured in the original model, module degradation (uncommon at year 1), inverter underperformance, or DC / AC cable losses higher than assumed. EICR-style inspection finds the cause',
+      'Customer is using too much electricity',
+      'Sun is broken',
     ],
     correctAnswer: 1,
     explanation:
-      'Above cut-out speed (typically 20-25 m/s), turbines automatically shut down to prevent damage from excessive forces. Advanced systems use blade pitching and braking to safely stop rotation.',
+      'A measured PR significantly below modelled is the customer\'s performance fault investigation trigger. Common causes: soiling (clean the array — UK installs often need 1–2 cleans per year in dusty or bird-active locations); previously-unidentified shading; inverter MPPT operating off-MPP (string sizing fault); DC fault at module or connector level; degraded module (rare at year 1). The competent contractor diagnoses with module-level V_oc / I_sc readings against the commissioning baseline (Section 2.3).',
   },
   {
     id: 6,
-    question: 'What effect does air density have on wind turbine output?',
+    question:
+      'BS 7671 Reg 712.512.2.1 sets a requirement on installer responsibility for the site\'s &ldquo;maximum solar radiation&rdquo;. What does this mean in practice for a UK install?',
     options: [
-      'No effect on output',
-      'Denser air provides more power',
-      'Denser air reduces power output',
-      'Only affects blade rotation speed',
+      'No practical impact',
+      'The installer records the assessed maximum solar radiation for the site (typically ~1,000 W/m² for STC, may be higher for high-altitude or unobstructed sites) and evidences that the install meets the manufacturer\'s thermal spec at that irradiance. The 70–100 mm roof standoff is the standard mitigation; the cert evidence bundle records the assessment',
+      'PV is prohibited in high-irradiance sites',
+      'Only manual cooling permitted',
     ],
     correctAnswer: 1,
     explanation:
-      'Denser air provides more kinetic energy and therefore more power. Cold air is denser than warm air, which is why wind turbines often perform better in winter conditions.',
+      'Reg 712.512.2.1 makes the installer responsible for the site-specific thermal assessment. For typical UK domestic sites, maximum solar radiation is the STC reference 1,000 W/m² — and the standard 70–100 mm standoff plus manufacturer mounting spec satisfies the requirement. For high-altitude sites, low-latitude sites (less relevant for the UK), or sites with high reflective ground (snow cover, water surfaces) the irradiance assessment may need to reflect higher peak values. The cert evidence bundle captures the assessment and the resulting mounting arrangement.',
   },
   {
     id: 7,
-    question: 'What is the typical rated wind speed for commercial wind turbines?',
-    options: ['5-8 m/s', '12-16 m/s', '20-25 m/s', '30-35 m/s'],
+    question:
+      'A residential PV install proposes 4 kWp on a south-facing roof of 25° tilt with a chimney casting partial shade on 2 modules from 2–4 pm in summer. PVGIS modelling without shading shows 4,400 kWh/year. With shading factored?',
+    options: [
+      'Identical 4,400 kWh',
+      'Likely 4,000–4,200 kWh/year after the shading factor — 5–10% annual loss from the partial shade on the affected modules. The exact figure depends on the bypass-diode arrangement and whether module-level optimisation is specified. Module-level optimisation (microinverters or power optimisers — Section 2.5) recovers most of the loss',
+      'Zero yield',
+      'Double the yield',
+    ],
     correctAnswer: 1,
     explanation:
-      'Rated wind speed is typically 12-16 m/s for commercial turbines. At this speed, the turbine achieves its maximum rated power output and uses pitch control to maintain constant power at higher speeds.',
+      'Partial shading from a chimney on 2 of 12 modules during the peak production window typically costs 5–10% of annual yield on a string-level architecture. Module-level optimisation (microinverters or power optimisers) recovers most of the loss — typically reducing the annual hit to 1–2%. PVGIS includes a shading factor input that can be tuned to match the actual shading topology; the design pack records the input and the resulting modelled yield.',
   },
   {
     id: 8,
-    question: 'What does wind shear describe?',
+    question:
+      'PVGIS is the standard PV yield modelling tool for UK MCS-funded installs. What is it, and what makes it the operational reference?',
     options: [
-      'Turbine blade stress',
-      'Change in wind speed with height above ground',
-      'Wind direction variability',
-      'Turbine foundation forces',
+      'A paid commercial product',
+      'Photovoltaic Geographical Information System — a free online tool maintained by the European Commission Joint Research Centre. Pulls long-term irradiance data from satellite measurements for any European location. Open data, transparent methodology, widely cross-checked against measured PV installs. MCS MIS 3002 design packs commonly use PVGIS output as the modelled yield evidence',
+      'A government regulator',
+      'Customer\'s preference',
     ],
     correctAnswer: 1,
     explanation:
-      'Wind shear describes how wind speed increases with height above ground. This is why taller turbines access stronger winds. The shear exponent is typically 0.1-0.2 offshore and 0.2-0.4 onshore.',
-  },
-  {
-    id: 9,
-    question: 'What is the purpose of Maximum Power Point Tracking (MPPT) in wind turbines?',
-    options: [
-      'Track wind direction',
-      'Optimise rotor speed for maximum power extraction',
-      'Monitor grid frequency',
-      'Calculate maintenance schedules',
-    ],
-    correctAnswer: 1,
-    explanation:
-      'MPPT optimises rotor speed to extract maximum power at each wind speed by maintaining the optimal tip speed ratio, ensuring the turbine operates at peak efficiency across the operating range.',
-  },
-  {
-    id: 10,
-    question: 'What information does a wind rose diagram provide?',
-    options: [
-      'Only wind speed data',
-      'Wind direction and frequency distribution',
-      'Turbine power output curves',
-      'Monthly energy production',
-    ],
-    correctAnswer: 1,
-    explanation:
-      'A wind rose shows the frequency and strength of winds from different directions at a site, essential for turbine placement and yaw system design to maximise energy capture.',
+      'PVGIS (Photovoltaic Geographical Information System) is the European Commission JRC\'s free PV yield modelling tool. Long-term satellite-derived irradiance data, open methodology, transparent algorithm — the de facto operational reference for UK PV yield modelling. Free at <code>re.jrc.ec.europa.eu/pvg_tools</code>. Commercial alternatives (PVsyst, HelioScope) offer more design features for larger commercial installs but PVGIS is the standard for residential and small commercial. The cert evidence bundle typically includes the PVGIS report or screenshot.',
   },
 ];
 
 const faqs = [
   {
-    question: 'Why is the cubic relationship between wind speed and power so important?',
+    question:
+      'What is "Peak Sun Hours" (PSH) and how does it relate to PV yield?',
     answer:
-      'The cubic relationship means small changes in wind speed create large changes in power output. A site with 8 m/s average wind produces nearly 2.4 times more energy than a 6 m/s site. This makes accurate wind resource assessment critical for project viability and explains why offshore locations with higher winds are increasingly attractive despite higher costs.',
+      'Peak Sun Hours (PSH) is the daily average number of hours of equivalent full STC irradiance (1,000 W/m²) that the site receives. UK PSH varies geographically — ~2.5–3.0 PSH/day in south-east England, ~2.0–2.5 PSH/day in midlands, ~1.5–2.0 PSH/day in Scotland (annual average). Yield estimate: PV array kWp × PSH × 365 × performance ratio = annual kWh. PSH is a simplified metric; PVGIS uses the underlying hourly irradiance data and is more accurate.',
   },
   {
-    question: 'How do modern turbines maintain constant power above rated wind speed?',
+    question:
+      'How accurate is PVGIS modelling vs measured yield?',
     answer:
-      'Above rated wind speed, turbines use active pitch control to rotate the blades, reducing the angle of attack and limiting power capture. This keeps power output constant at rated capacity while protecting the turbine from excessive mechanical loads until cut-out speed is reached.',
+      'For a well-designed UK install with accurate PVGIS inputs (orientation, tilt, shading factor, performance ratio), modelled yield typically matches measured yield within ±5% over a 12-month period. Larger deviations indicate either modelling input errors (incorrect shading factor, wrong tilt, missing system losses) or operational issues (soiling, partial faults, inverter underperformance). PVGIS is well-validated against measured installs across Europe; the modelling methodology is published and peer-reviewed.',
   },
   {
-    question: 'What factors affect air density at a wind farm site?',
+    question:
+      'Does the UK PV resource degrade significantly with cloud cover?',
     answer:
-      'Air density varies with altitude (decreasing approximately 1.2% per 100m elevation), temperature (cold air is denser), humidity (moist air is slightly less dense), and atmospheric pressure. These factors are corrected when applying manufacturer power curves to specific site conditions.',
+      'UK cloud cover reduces direct irradiance but the diffuse irradiance component remains significant — PV cells respond to both direct and diffuse light. Heavy cloud cover reduces irradiance to ~10–20% of clear-sky values; thin cloud reduces it to ~50–70%. UK annual cloud cover is high (~60% average), which is why UK PV yield is lower than southern Europe — but the diffuse component keeps annual yield commercially viable. PVGIS includes both direct and diffuse irradiance in its modelling.',
   },
   {
-    question: 'How is Annual Energy Production (AEP) calculated for a wind farm?',
+    question:
+      'How does seasonal yield vary across the UK?',
     answer:
-      "AEP is calculated by combining the site's wind speed distribution (typically Weibull) with the turbine power curve, then applying loss factors for wake effects, electrical losses, availability, and environmental factors. P50 represents expected production while P90 (90% exceedance probability) is typically used for financing.",
+      'UK PV yield is highly seasonal — June typically delivers 4–6× the yield of December. April–September accounts for ~75% of annual yield; October–March accounts for ~25%. The high temperature in summer reduces module efficiency (Section 2.1 temperature coefficient), but the long days and high irradiance dominate the annual sum. The April-vs-July paradox (Section 2.1) — April sometimes outperforms July on a per-module basis due to lower cell temperatures — is real but doesn\'t change the overall summer dominance.',
   },
   {
-    question: 'What causes wake effects in wind farms and how are they managed?',
+    question:
+      'What\'s the optimal tilt for an off-grid / wintertime-priority install?',
     answer:
-      'Wake effects occur when upstream turbines reduce wind speed and increase turbulence for downstream turbines. Wake losses typically range from 5-15% depending on spacing and layout. Modern wind farm design uses computational fluid dynamics and operational wake steering to minimise these effects.',
+      'For installs that prioritise wintertime production (off-grid systems where winter battery autonomy matters more than peak summer yield), a steeper tilt — typically 50–60° at UK latitudes — captures more low-elevation winter sun. The trade-off is reduced summer yield (the array is too steep for the high midday summer sun). Grid-tied installs targeting annual yield should use the 30–40° optimum; off-grid installs prioritising winter should use the steeper tilt.',
   },
   {
-    question: 'Why do offshore wind farms achieve higher capacity factors than onshore?',
+    question:
+      'How significant is the temperature derate at typical UK summer roof conditions?',
     answer:
-      'Offshore locations benefit from higher average wind speeds (20-40% higher than onshore), lower turbulence due to smooth sea surface, and more consistent wind patterns. Combined with larger turbines uncontrained by transport limitations, offshore farms achieve 45-55% capacity factors compared to 25-35% onshore.',
+      'On a typical UK summer day, ambient temperature 20–25°C, cell temperature on a properly-mounted roof reaches 45–55°C (10–15°C above ambient with 70–100 mm standoff cooling; higher without proper standoff). At a P_max temperature coefficient of -0.4 %/°C, the temperature delta from STC 25°C drives ~8–12% power reduction during peak summer hours. The annual average derate is smaller (~3–5%) because cool spring and autumn days partially compensate. The 70–100 mm standoff (Section 2.6 and Module 3 Section 3) is the standard mitigation.',
+  },
+  {
+    question:
+      'How does Reg 712.512.2.1 interact with the manufacturer\'s mounting spec on a high-altitude UK site?',
+    answer:
+      'Reg 712.512.2.1 requires the installer to ensure adequate heat dissipation under conditions of maximum solar radiation for the site. For a high-altitude UK site (e.g. above 500 m in the Scottish Highlands), irradiance can exceed sea-level values by 5–10% — slightly higher cell operating temperatures. The installer\'s response: read the manufacturer\'s mounting spec for the upper end of the rated operating temperature range, verify the 70–100 mm standoff still delivers adequate cooling, and record the assessment in the cert evidence bundle. For most UK sites the standard mitigation is sufficient.',
+  },
+  {
+    question:
+      'What\'s the practical workflow for capturing shading at survey stage?',
+    answer:
+      'Three steps. (1) Walk the proposed array area at survey, photograph all shading sources (trees, chimneys, neighbouring buildings, distant horizon). (2) Use a shade-analysis tool — purpose-built (SunEye, Solmetric SunEye 210), mobile-app-based (Sun Surveyor, PV Optimize), or manual using a clinometer / azimuth measurement and shading-template overlay. (3) Produce a shading factor (typically 0.95–1.00 for unshaded, dropping to 0.85–0.90 for moderate shading, 0.70–0.85 for heavy shading) that feeds the PVGIS / equivalent yield modelling. The cert evidence bundle captures the tool output and the resulting factor.',
+  },
+  {
+    question:
+      'How does the IET Code of Practice for Grid-Connected Solar PV Installations cover yield modelling and shading?',
+    answer:
+      'The IET CoP for Grid-Connected Solar PV Installations (currently 5th edition) is the operational complement to BS 7671 Section 712. It covers shading survey methodology, performance ratio estimation, the inputs and outputs expected from yield modelling tools, and the cross-reference to MIS 3002 design pack requirements. GN3 cross-references the IET CoP for the detailed PV inspection-and-test procedures. The cert evidence bundle on an MCS-funded install typically references both the IET CoP and the PVGIS / equivalent modelling output.',
   },
 ];
 
-const RenewableEnergyModule3Section1 = () => {
-  useSEO({ title: TITLE, description: DESCRIPTION });
+export default function RenewableEnergyModule3Section1() {
+  const navigate = useNavigate();
+
+  useSEO({
+    title:
+      'Irradiance, orientation, tilt & shading | Renewable Energy 3.1 | Elec-Mate',
+    description:
+      'The PV design foundations — UK solar resource, azimuth and tilt effects on yield, shading topology analysis, PVGIS modelling, performance ratio derating, and the BS 7671 Reg 712.512.2.1 site-radiation responsibility.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            type="button"
+            onClick={() => navigate('../renewable-energy-module-3')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="/electrician/upskilling/renewable-energy-module-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
+            <ArrowLeft className="h-4 w-4" /> Module 3
+          </button>
+
+          <PageHero
+            eyebrow="Module 3 · Section 1 · BS 7671:2018+A4:2026"
+            title="Irradiance, orientation, tilt & shading"
+            description="The PV design foundations — UK solar resource, azimuth and tilt effects, shading topology analysis, PVGIS modelling, performance ratio derating, and the BS 7671 Reg 712.512.2.1 site-radiation responsibility."
+            tone="yellow"
+          />
+
+          <TLDR
+            points={[
+              'UK PV annual yield typically 850–1,100 kWh per kWp installed for a south-facing array — south-east England at the upper end, Scotland at the lower end. PVGIS is the standard yield modelling tool and the operational reference for MCS MIS 3002 design packs.',
+              'Optimal azimuth is south-facing (180°); east / west typically lose 15–20% vs south; north loses ~50%+. Optimal tilt is 30–40° for UK latitudes; typical UK roof pitches (30–45°) are often close to optimal.',
+              'Performance ratio (PR) typically 0.75–0.85 for well-designed UK installs — captures temperature derate, soiling, mismatch, inverter losses, cable losses. PR below 0.70 signals design or maintenance issues.',
+              'Shading topology is a survey-stage discipline — identify sources, track across day and season, produce a shading factor for the design model. Module-level optimisation (microinverters / power optimisers from Section 2.5) recovers most shading losses.',
+              'BS 7671 Reg 712.512.2.1 makes the installer responsible for ensuring adequate heat dissipation under the site\'s maximum solar radiation conditions. The 70–100 mm standoff plus manufacturer mounting spec is the standard mitigation.',
+            ]}
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              'Estimate UK PV annual yield for any site using PVGIS or equivalent tools — south-facing, east-west split, and shaded arrays.',
+              'Apply the azimuth and tilt optima for UK installs and quantify the loss from sub-optimal orientations.',
+              'Model the performance ratio (PR) for a UK install and identify the loss components that contribute to it.',
+              'Run a shading topology survey — identify sources, track across day and season, produce an objective shading factor.',
+              'Apply BS 7671 Reg 712.512.2.1 site-radiation responsibility through the 70–100 mm standoff and manufacturer mounting spec.',
+              'Read PVGIS modelling output as the operational evidence for MCS MIS 3002 design packs and the cert evidence bundle.',
+            ]}
+            initialVisibleCount={3}
+          />
+
+          <Pullquote>South-facing, 30–40° tilt, no shade — the UK PV theoretical optimum.</Pullquote>
+
+          <ContentEyebrow>The UK solar resource — what we\'re working with</ContentEyebrow>
+
+          <ConceptBlock
+            title="UK PV yield by geography — the realistic expectation"
+            plainEnglish="UK PV produces 850–1,100 kWh per kWp installed per year on a well-designed south-facing array. The geographical variation tracks solar resource: south-east England at the top, Scotland at the bottom."
+            onSite="PVGIS is the operational tool. Plug in the postcode, the array azimuth and tilt, the module type, the system losses. The output is the modelled annual and monthly yield in kWh. Used directly in the MCS MIS 3002 design pack."
+          >
+            <p>UK PV annual yield ranges by region:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">South-east England</strong> (Kent, Sussex,
+                London) — 1,050–1,100 kWh/kWp/year. The UK\'s highest solar resource
+                region.
+              </li>
+              <li>
+                <strong className="text-white">South-west England, Wales</strong> — 1,000–1,050
+                kWh/kWp/year. Slightly higher cloud cover than the south-east.
+              </li>
+              <li>
+                <strong className="text-white">Midlands</strong> — 950–1,000 kWh/kWp/year.
+              </li>
+              <li>
+                <strong className="text-white">Northern England</strong> — 900–950
+                kWh/kWp/year.
+              </li>
+              <li>
+                <strong className="text-white">Scotland</strong> — 850–950 kWh/kWp/year.
+                Higher latitude (lower solar elevation) and higher annual cloud cover.
+                Still commercially viable.
+              </li>
+            </ul>
+            <p>
+              These figures assume a well-designed south-facing 30–40° tilt install with
+              minimal shading and a performance ratio around 0.80. The PVGIS model
+              handles each location precisely from satellite-derived long-term irradiance
+              data; the customer\'s modelled yield is set by the modelling, not by a
+              national average.
+            </p>
+          </ConceptBlock>
+
+          <DiagramPlaceholder
+            caption="UK PV yield heat map — colour-coded annual yield in kWh/kWp/year across England, Scotland, Wales and Northern Ireland. Highest values in south-east England (1,050–1,100); lowest in northern Scotland (850–900). Annotated with the PVGIS source data and the typical performance ratio assumption."
+            filename="renewable/m3s1-uk-yield-heatmap.png"
+          />
+
+          <InlineCheck {...inlineChecks[0]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Orientation (azimuth) and tilt — the two design variables</ContentEyebrow>
+
+          <Pullquote>South for peak yield. East-west for daily-profile match. North rarely viable.</Pullquote>
+
+          <ConceptBlock
+            title="Azimuth — orientation effect on yield"
+            plainEnglish="In the UK (northern hemisphere) the sun spends most of the day in the southern sky. South-facing arrays maximise annual yield. East and west lose ~15–20% vs south. North-facing loses ~50%+ — rarely commercially viable."
+            onSite="The UK roof landscape dictates orientation more than design preference. South-facing roofs are the optimal target; east-west splits are common and viable; north-facing-only customers are typically directed to ground-mount or BIPV alternatives."
+          >
+            <p>Annual yield by azimuth (relative to south-facing = 100%):</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>South (180°) — 100% (reference)</li>
+              <li>SE / SW (135° / 225°) — 96–98%</li>
+              <li>E / W (90° / 270°) — 80–85%</li>
+              <li>NE / NW (45° / 315°) — 60–70%</li>
+              <li>North (0° / 360°) — 45–55%</li>
+            </ul>
+            <p>
+              East-west split arrays (modules across both sides of a typical UK roof
+              ridge) are common — each side individually produces ~80–85% of south-facing,
+              but the combined array delivers ~85–90% of equivalent south-only capacity
+              with a flatter daily profile. The flatter profile (morning east peak +
+              afternoon west peak vs single midday south peak) often matches household
+              consumption better — improving self-consumption ratio.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Tilt — and why 30–40° is the UK optimum"
+            plainEnglish="Tilt approximates the average solar elevation across the year. For UK latitudes, 30–40° balances summer (high sun) and winter (low sun)."
+            onSite="UK domestic roofs are typically 30–45° pitch — close to optimal. The practical loss from following the existing roof pitch rather than optimising is usually 5–10% vs theoretical optimum. Modifying the roof structure to chase the theoretical optimum is rarely justified."
+          >
+            <p>Tilt-effect rules of thumb for UK installs:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">0° (flat)</strong> — 90–93% of optimum.
+                Common on flat roofs with ballasted frames; can rotate modules to face
+                south on the frame
+              </li>
+              <li>
+                <strong className="text-white">15–25° (low pitch)</strong> — 95–98% of
+                optimum. Favours summer slightly; loses some winter
+              </li>
+              <li>
+                <strong className="text-white">30–40° (standard UK roof pitch)</strong> —
+                99–100% of optimum
+              </li>
+              <li>
+                <strong className="text-white">45–55° (steep)</strong> — 97–99% of optimum.
+                Favours winter slightly; loses some summer
+              </li>
+              <li>
+                <strong className="text-white">60–70° (very steep, off-grid winter-
+                priority)</strong> — 85–90% of annual optimum, but better winter
+                performance for off-grid systems where battery autonomy matters
+              </li>
+              <li>
+                <strong className="text-white">90° (vertical)</strong> — 65–75% of optimum.
+                Used for BIPV façades and similar architectural-led installs
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <DiagramPlaceholder
+            caption="Azimuth and tilt yield polar diagram — circular plot showing annual yield as a percentage of optimum across all azimuth and tilt combinations. South-facing 30–40° at the centre at 100%. East / west at ~80–85%. North-facing at ~45–55%. Practical UK roof pitch range (30–45°) highlighted as the &lsquo;sweet spot&rsquo; band."
+            filename="renewable/m3s1-azimuth-tilt-polar.png"
+          />
+
+          <InlineCheck {...inlineChecks[1]} />
+
+          <InlineCheck {...inlineChecks[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Shading topology — the survey-stage discipline</ContentEyebrow>
+
+          <Pullquote>Shading is the silent yield-killer. Survey it properly or lose 10–30%.</Pullquote>
+
+          <ConceptBlock
+            title="Shading sources and their impact on PV yield"
+            plainEnglish="Anything that blocks sunlight from the array reduces yield. Trees, chimneys, neighbouring buildings, distant horizon objects. The impact is often disproportionate to the shaded area because of bypass-diode behaviour on series strings."
+            onSite="The competent surveyor walks the proposed array area at survey, identifies every shading source, tracks how shadows move across the day and seasons, and produces an objective shading factor. The factor feeds the PVGIS modelling. Architectural mitigation (multi-MPPT or module-level optimisation) follows from the analysis."
+          >
+            <p>Common shading sources on UK installs:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Trees</strong> — seasonal variation
+                (deciduous vs evergreen), morning vs afternoon shade direction, growth
+                over the install\'s 25-year life
+              </li>
+              <li>
+                <strong className="text-white">Chimneys</strong> — small footprint but
+                cast long shadows in early morning and late afternoon, particularly in
+                winter
+              </li>
+              <li>
+                <strong className="text-white">Neighbouring buildings</strong> — fixed
+                in position; predictable shadow pattern; particularly relevant for
+                installs in urban / suburban density
+              </li>
+              <li>
+                <strong className="text-white">Self-shading</strong> — the roof itself
+                (dormers, gables) or array-on-array shading (front rows shading back
+                rows on flat-roof tilted installs)
+              </li>
+              <li>
+                <strong className="text-white">Distant horizon</strong> — hills, larger
+                buildings in the distance — relevant at low solar elevation (winter
+                mornings / late afternoons)
+              </li>
+            </ul>
+            <p>The disproportionate impact of partial shading:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                A single shaded cell can trigger bypass-diode bypass of the entire
+                20-cell sub-string (Section 2.2) — losing 1/3 of the module\'s output
+                rather than the shaded fraction
+              </li>
+              <li>
+                Series-string mismatch from shaded modules drags the unshaded modules to
+                the lower current — losing more than the shaded area alone (Section 2.3)
+              </li>
+              <li>
+                A 2-module shade on a 12-module string can cost 30–40% during the shade
+                window — 10–15% annualised
+              </li>
+              <li>
+                Module-level optimisation (microinverters or power optimisers — Section
+                2.5) recovers most of the loss by operating each module at its own MPP
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Shade analysis tools — capturing the topology objectively"
+            plainEnglish="Hand-waving the shading at survey produces unreliable yield estimates. Objective tools — purpose-built or mobile-app-based — capture the annual shading pattern numerically and feed the PVGIS modelling."
+            onSite="Three tool categories used in UK PV surveys: dedicated hardware (SunEye, Solmetric SunEye 210); mobile apps (Sun Surveyor, PV Optimize, HelioScope mobile); manual methods (clinometer + azimuth measurement + shading-template overlay). Each produces a shading factor expressed as a percentage of total annual irradiance retained."
+          >
+            <p>The shading-factor methodology:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Stand at the array location</strong> —
+                ideally at the lower edge of the proposed array (the most-shaded point)
+              </li>
+              <li>
+                <strong className="text-white">Capture the sky horizon</strong> — point
+                the tool at the full sky hemisphere and identify the horizon line
+                including all obstructions (trees, buildings, chimneys)
+              </li>
+              <li>
+                <strong className="text-white">Overlay the annual sun path</strong> — the
+                tool calculates the sun\'s position across all hours of all days at the
+                site latitude
+              </li>
+              <li>
+                <strong className="text-white">Compute the shading factor</strong> — the
+                ratio of unshaded annual irradiance to clear-sky annual irradiance.
+                Typical values: 0.95–1.00 for unshaded; 0.85–0.95 for light shading;
+                0.70–0.85 for moderate; below 0.70 for heavy shading (module-level
+                optimisation mandatory)
+              </li>
+              <li>
+                <strong className="text-white">Feed into PVGIS</strong> — the system
+                losses input on PVGIS accepts a shading-factor-equivalent &ldquo;system
+                losses&rdquo; percentage
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <DiagramPlaceholder
+            caption="Shading topology example — fish-eye sky view from a proposed array location showing horizon obstructions (trees, neighbouring building, chimney) overlaid with the annual sun path. The shaded portion of the sun path (where obstructions cross the path) represents the lost annual irradiance. Shading factor calculated as 1 minus the shaded portion."
+            filename="renewable/m3s1-shading-topology.png"
+          />
+
+          <InlineCheck {...inlineChecks[3]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Performance ratio — STC nameplate to real-world yield</ContentEyebrow>
+
+          <Pullquote>Performance ratio is where the STC nameplate meets the UK weather.</Pullquote>
+
+          <ConceptBlock
+            title="What performance ratio captures — and what good looks like"
+            plainEnglish="STC nameplate × annual irradiance × performance ratio = annual yield. PR captures all the losses between the lab and the cert: temperature, soiling, mismatch, inverter, cables."
+            onSite="A well-designed UK install achieves PR ≈ 0.80. PR below 0.70 signals problems — design fault, install fault, or operational issue. The PR is recorded in the MCS MIS 3002 design pack as the modelling assumption; the cert evidence bundle compares modelled vs measured after the first year of operation."
+          >
+            <p>The performance ratio loss components on a typical UK install:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Temperature derate</strong> — typically 5–10%
+                annual average loss. Largest single PR component. The 70–100 mm standoff
+                discipline (Section 2.6) is the standard mitigation
+              </li>
+              <li>
+                <strong className="text-white">Soiling</strong> — typically 1–3% annual
+                average. Dust, pollen, bird droppings, leaves. Cleaning frequency 1–2
+                times per year on typical UK domestic installs
+              </li>
+              <li>
+                <strong className="text-white">Mismatch losses</strong> — typically 1–3%
+                on a well-designed install. Higher on multi-orientation or mixed-module
+                arrays without multi-MPPT or module-level optimisation
+              </li>
+              <li>
+                <strong className="text-white">Inverter conversion losses</strong> —
+                typically 3–5%. Modern inverters achieve 96–98% Euro efficiency
+              </li>
+              <li>
+                <strong className="text-white">DC cable losses</strong> — typically 1–2%
+                on a well-sized install
+              </li>
+              <li>
+                <strong className="text-white">AC cable losses</strong> — typically 1–2%
+                from inverter to consumer unit
+              </li>
+              <li>
+                <strong className="text-white">Inverter standby and downtime</strong> —
+                typically 1–2% from inverter not operating at low irradiance or scheduled
+                maintenance
+              </li>
+            </ul>
+            <p>
+              The sum of these losses gives the overall PR. A typical UK install: 100%
+              × (1 − 0.075 − 0.02 − 0.02 − 0.04 − 0.015 − 0.015 − 0.015) ≈ 0.80.
+              Real-world measured PR depends on the specific install, the local
+              conditions, and the maintenance regime.
+            </p>
+          </ConceptBlock>
+
+          <DiagramPlaceholder
+            caption="Performance ratio waterfall diagram — starting from 100% STC nameplate, subtracting each loss component (temperature, soiling, mismatch, inverter, DC cable, AC cable, downtime) to arrive at the realistic PR of ~0.80 for a well-designed UK install. Each loss component labelled with the typical percentage."
+            filename="renewable/m3s1-pr-waterfall.png"
+          />
+
+          <InlineCheck {...inlineChecks[4]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>BS 7671 Reg 712.512.2.1 — site-radiation responsibility</ContentEyebrow>
+
+          <ConceptBlock
+            title="The installer\'s thermal assessment for the site"
+            plainEnglish="BS 7671 makes the installer responsible for ensuring the install handles the site\'s maximum solar radiation condition. For most UK sites this is the STC reference 1,000 W/m²; for high-altitude or low-latitude sites it can be higher."
+            onSite="The standard mitigation for most UK installs is the 70–100 mm standoff above the roof + the manufacturer\'s mounting spec. For unusual sites (high altitude, reflective surroundings, low latitude) the assessment may require additional cooling arrangements."
+          >
+            <p>The assessment workflow per Reg 712.512.2.1:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Site irradiance assessment</strong> —
+                record the assessed maximum solar radiation for the site. For most UK
+                domestic sites, ~1,000 W/m² (STC reference). For high-altitude / low-
+                latitude / reflective-surroundings sites, may be higher
+              </li>
+              <li>
+                <strong className="text-white">Module thermal spec</strong> — read the
+                manufacturer\'s spec for module operating temperature at the site\'s
+                maximum solar radiation. Modules typically rated for cell temperatures
+                up to ~85°C
+              </li>
+              <li>
+                <strong className="text-white">Mounting arrangement</strong> — verify
+                the install meets the manufacturer\'s mounting spec at the site\'s
+                maximum solar radiation. 70–100 mm standoff above the roof for natural
+                convection cooling is the standard discipline
+              </li>
+              <li>
+                <strong className="text-white">Cert evidence bundle</strong> — record
+                the site\'s max solar radiation assumption, the manufacturer\'s mounting
+                spec, the as-installed mounting arrangement, and the resulting
+                expected cell temperature range
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 · Reg 712.512.2.1 — adequate heat dissipation at site\'s maximum solar radiation"
+            clause="As specified by the manufacturer, the PV modules shall be installed in such a way that there is adequate heat dissipation under the conditions of maximum solar radiation for the site. The installer shall record the assessed maximum solar radiation for the site and evidence that installed clearances and mounting meet the manufacturer\'s thermal specifications for those conditions."
+            meaning="Reg 712.512.2.1 makes the installer responsible for the site-specific thermal assessment. The 70–100 mm standoff plus manufacturer mounting spec is the standard mitigation for typical UK sites. High-altitude, low-latitude, or reflective-surroundings sites may require additional assessment and mitigation. The cert evidence bundle records the assessment."
+          />
+
+          <InlineCheck {...inlineChecks[5]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>PVGIS — the operational modelling tool</ContentEyebrow>
+
+          <Pullquote>PVGIS is the operational reference. Free, open, well-validated.</Pullquote>
+
+          <ConceptBlock
+            title="PVGIS workflow — from postcode to modelled yield"
+            plainEnglish="PVGIS (Photovoltaic Geographical Information System) is the European Commission JRC\'s free online tool. Plug in the location, the array configuration, the system losses. Get back the modelled annual yield in kWh, plus the monthly breakdown."
+            onSite="PVGIS is at re.jrc.ec.europa.eu/pvg_tools. Free. Required input: location (postcode or GPS), array peak power (kWp), orientation (azimuth), tilt, system losses (percentage). Output: annual and monthly yield in kWh, plus optional financial calculations. Used directly in the MCS MIS 3002 design pack."
+          >
+            <p>The PVGIS workflow:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Step 1 — Location</strong>: enter the
+                postcode or GPS coordinates. PVGIS pulls the long-term satellite-derived
+                irradiance data for that location
+              </li>
+              <li>
+                <strong className="text-white">Step 2 — System configuration</strong>:
+                enter the array kWp, azimuth (0–360°), tilt (0–90°), and tracking type
+                (typically &ldquo;fixed&rdquo; for residential)
+              </li>
+              <li>
+                <strong className="text-white">Step 3 — System losses</strong>: enter the
+                expected system losses as a percentage (typically 14–20% for a
+                well-designed UK install, captures the inverse of the performance ratio)
+              </li>
+              <li>
+                <strong className="text-white">Step 4 — Output</strong>: PVGIS returns
+                the modelled annual yield in kWh, the monthly breakdown, the daily
+                profile by month, and the optional financial calculations (LCoE, payback)
+              </li>
+              <li>
+                <strong className="text-white">Step 5 — Save the report</strong>: PVGIS
+                provides a CSV / PDF export. The cert evidence bundle includes the
+                report as the modelling evidence
+              </li>
+            </ul>
+            <p>
+              Alternative commercial tools (PVsyst, HelioScope) offer more advanced
+              features for larger commercial installs — detailed shading topology,
+              per-string modelling, financial analysis with battery storage. For
+              typical residential MCS-funded installs, PVGIS is sufficient and the
+              standard reference.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...inlineChecks[6]} />
+
+          <InlineCheck {...inlineChecks[7]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>What it looks like in the wild</ContentEyebrow>
+
+          <Scenario
+            title="A customer asks &lsquo;will PV work on my north-east-facing roof?&rsquo;"
+            situation="A customer with no south, south-east, south-west, east, or west-facing roof space asks whether PV makes sense on their north-east-facing main roof (azimuth ~45°)."
+            whatToDo="Honest yield modelling. PVGIS the north-east orientation: typical UK yield 60–70% of equivalent south-facing capacity. For a 4 kWp install: modelled yield ~2,500–3,000 kWh/year (vs ~4,000–4,400 for south-facing). The customer\'s expected savings reflect the lower yield; the financial case is materially weaker but not necessarily non-viable. Alternative considerations: (a) is there ANY south-facing roof space (even small)? (b) is ground-mount feasible in the garden? (c) is BIPV on a south-facing wall feasible? If genuinely north-east-only, present the modelled yield and the financial case honestly; the customer\'s informed decision is captured as a customer-acknowledged risk in the survey (Module 1 Section 6). Some customers will proceed regardless on environmental / energy-independence grounds; others will decline."
+            whyItMatters="Yield modelling at survey-stage prevents the &ldquo;disappointed customer at year 1&rdquo; failure mode. North-east-only PV installs are real but the customer expectation must be set against the modelled yield, not against the optimistic south-facing comparison. The honest survey converts the customer\'s preferred outcome into the realistic project plan."
+          />
+
+          <Scenario
+            title="A customer in Aberdeen vs a customer in Brighton — the geographical reality"
+            situation="Two customers, both with 5 kWp south-facing 30° tilt installs, no shading. One in Aberdeen (Scotland, latitude ~57°N); one in Brighton (south coast England, latitude ~50.8°N)."
+            whatToDo="PVGIS modelling each. Aberdeen: typical annual yield ~4,250–4,750 kWh (~850–950 kWh/kWp). Brighton: typical annual yield ~5,250–5,500 kWh (~1,050–1,100 kWh/kWp). The Aberdeen install delivers ~80–85% of the Brighton install\'s yield. The cost of installation is similar (or slightly higher in Aberdeen for transport / labour reasons). The customer\'s expected payback is therefore longer in Aberdeen than Brighton — but the install remains commercially viable in both locations, and the funding gates (SEG, BUS-equivalent in Scotland via Home Energy Scotland) work in both. The customer\'s decision is informed by the location-specific yield modelling, not by a UK-average figure."
+            whyItMatters="UK PV viability varies geographically. Customers in northern locations sometimes assume PV won\'t work for them; customers in southern locations sometimes overestimate the yield. The PVGIS modelling at the exact location is the honest answer. The cert evidence bundle captures the modelling for both the customer record and the future EICR diagnostic baseline."
+          />
+
+          <CommonMistake
+            title="Specifying PV without an objective shading analysis at survey"
+            whatHappens="An installer visits a site with a nearby tree casting morning shade on the proposed array. The shade is noted as &ldquo;some morning shade&rdquo; in the survey but not analysed objectively. PVGIS modelling uses the default 14% system losses (no extra shading factor). The install commissions and underperforms the modelled yield by 15–20%. The customer queries the underperformance after 6 months. Investigation reveals the morning shade is more significant than the survey captured. Customer dispute follows."
+            doInstead="Use a shade-analysis tool (SunEye, Solmetric, mobile app, or manual clinometer-and-template method). Produce an objective shading factor at survey stage. Feed it into PVGIS as the system losses input. The modelled yield reflects the actual shading reality; the customer\'s expectations are set against the realistic figure. Where shading is meaningful, propose module-level optimisation as part of the design (Section 2.5) to recover most of the loss."
+          />
+
+          <CommonMistake
+            title="Sizing the install against STC nameplate, ignoring the performance ratio"
+            whatHappens="An installer quotes &ldquo;5 kWp will deliver 5,000 kWh per year&rdquo; — treating 1 hour of full STC irradiance per kWp times 1,000 hours annual as the calculation basis. After install, the actual yield is ~4,000 kWh — 20% below the quoted figure. The customer assumes the install is underperforming and disputes."
+            doInstead="Yield modelling must apply performance ratio. The realistic UK yield for a 5 kWp south-facing well-sited install is 4,500–5,500 kWh per year (depending on location and PR). The honest survey gives the PVGIS-modelled figure, not the STC-nameplate-times-hours calculation. Customer expectations match the modelled reality."
+          />
+
+          <CommonMistake
+            title="Forgetting Reg 712.512.2.1 site-radiation assessment on the cert"
+            whatHappens="An installer completes a high-altitude Scottish install without recording the site-radiation assessment in the cert evidence bundle. The MCS audit at year 1 flags the missing assessment as a major finding — the cert doesn\'t evidence compliance with Reg 712.512.2.1. Rectification requires retrospective documentation of the assumed irradiance, the manufacturer\'s thermal spec, and the as-installed mounting arrangement."
+            doInstead="Record the site\'s assumed maximum solar radiation, the manufacturer\'s mounting spec, and the as-installed mounting arrangement in the cert evidence bundle at install stage. For typical UK sites the assessment is straightforward — 1,000 W/m² STC reference, manufacturer\'s standard mounting spec, 70–100 mm standoff per Section 2.6. For unusual sites the assessment captures the site-specific reasoning."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'UK PV annual yield typically 850–1,100 kWh per kWp installed for a south-facing array. South-east England at the top, Scotland at the bottom. PVGIS is the operational modelling tool.',
+              'Optimal azimuth is south (180°); east / west loses ~15–20%; north loses ~50%+. Optimal tilt is 30–40°; UK roof pitches are typically close to optimal.',
+              'Performance ratio (PR) typically 0.75–0.85 for well-designed UK installs. Captures temperature, soiling, mismatch, inverter and cable losses. PR below 0.70 signals problems.',
+              'Shading topology is a survey-stage discipline — identify sources, track across day and season, produce an objective shading factor. Module-level optimisation recovers most shading losses.',
+              'BS 7671 Reg 712.512.2.1 makes the installer responsible for adequate heat dissipation at the site\'s maximum solar radiation. 70–100 mm standoff + manufacturer mounting spec is the standard mitigation.',
+              'PVGIS is the free European Commission JRC tool — long-term satellite-derived irradiance data, the operational reference for UK MCS MIS 3002 design packs.',
+              'East-west split arrays deliver ~85–90% of equivalent south-only capacity but with a flatter daily profile that often matches household consumption better.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <Quiz questions={quizQuestions} title="Section 1 · Knowledge check" />
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              type="button"
+              onClick={() => navigate('/electrician/upskilling/renewable-energy-module-3')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Module 3
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Module overview
+              </div>
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                navigate('/electrician/upskilling/renewable-energy-module-3-section-2')
+              }
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next section <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                3.2 PV system sizing
+              </div>
+            </button>
+          </div>
+        </PageFrame>
       </div>
-
-      <article className="px-4 sm:px-6 py-8 sm:py-12 max-w-4xl mx-auto">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 3 Section 1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Wind Generation Principles and Power Curves
-          </h1>
-          <p className="text-white">
-            Understanding wind energy conversion, power curve analysis, and turbine performance
-            assessment
-          </p>
-        </header>
-
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1">
-              <li>
-                <strong>Betz limit:</strong> 59.3% max theoretical efficiency
-              </li>
-              <li>
-                <strong>Power:</strong> Proportional to wind speed cubed
-              </li>
-              <li>
-                <strong>Cut-in:</strong> 3-4 m/s typical for modern turbines
-              </li>
-              <li>
-                <strong>Cut-out:</strong> 20-25 m/s for safety protection
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">UK Performance</p>
-            <ul className="text-sm text-white space-y-1">
-              <li>
-                <strong>Onshore:</strong> 25-35% capacity factor
-              </li>
-              <li>
-                <strong>Offshore:</strong> 40-50% capacity factor
-              </li>
-              <li>
-                <strong>Best offshore:</strong> &gt;55% at optimal sites
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Understand fundamental principles of wind energy conversion',
-              'Learn to interpret power curves and performance metrics',
-              'Calculate capacity factors and energy yields',
-              'Apply the Betz limit to real-world turbine efficiency',
-              'Understand environmental factors affecting performance',
-              'Evaluate advanced control systems and grid integration',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <hr className="border-white/5 mb-12" />
-
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Aerodynamic Principles of Wind Energy
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Wind turbines convert kinetic energy from moving air into rotational mechanical energy
-              through aerodynamic principles. The rotating blades drive a generator to produce
-              electricity.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Betz's Law and Theoretical Limits:
-              </p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>Maximum efficiency:</strong> 59.3% (Betz limit) of wind energy can
-                  theoretically be extracted
-                </li>
-                <li>
-                  <strong>Real-world efficiency:</strong> Modern turbines achieve 35-45% under
-                  optimal conditions
-                </li>
-                <li>
-                  <strong>Key insight:</strong> Power increases with the cube of wind speed
-                </li>
-                <li>
-                  <strong>Swept area importance:</strong> Doubling blade length quadruples power
-                  capture potential
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-sm font-medium text-white mb-2">Wind Energy Formula:</p>
-              <p className="text-white text-sm mb-2">
-                <strong>P = 0.5 x rho x A x V cubed x Cp</strong>
-              </p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>P:</strong> Power output (Watts)
-                </li>
-                <li>
-                  <strong>rho:</strong> Air density (kg/m cubed) - varies with altitude,
-                  temperature, humidity
-                </li>
-                <li>
-                  <strong>A:</strong> Swept area (m squared) - pi x radius squared
-                </li>
-                <li>
-                  <strong>V:</strong> Wind speed (m/s) - most critical factor due to cubic
-                  relationship
-                </li>
-                <li>
-                  <strong>Cp:</strong> Power coefficient - efficiency factor (max 0.593)
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Lift and Drag Forces:</p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>Angle of attack:</strong> Critical for optimising lift-to-drag ratio
-                </li>
-                <li>
-                  <strong>Pitch control:</strong> Active blade angle adjustment for performance
-                  optimisation
-                </li>
-                <li>
-                  <strong>Tip speed ratio:</strong> Optimal relationship between blade tip speed and
-                  wind speed
-                </li>
-                <li>
-                  <strong>Stall prevention:</strong> Managing airflow separation at high angles of
-                  attack
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Understanding Power Curves
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Power curves are fundamental tools for predicting wind turbine performance across
-              different wind conditions. They show the relationship between wind speed and
-              electrical output.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Cut-in Wind Speed (3-4 m/s typical):
-              </p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>Minimum speed for electricity generation to begin</li>
-                <li>Below cut-in, turbine remains stationary to avoid wear</li>
-                <li>Automated systems monitor wind conditions for start-up</li>
-                <li>Grid synchronisation occurs before power export</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Rated Wind Speed (12-16 m/s typical):
-              </p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>Turbine achieves rated (maximum) electrical output</li>
-                <li>Blade pitch control begins active angle adjustment</li>
-                <li>Output maintained constant despite higher wind speeds</li>
-                <li>Design optimisation matched to local wind resource</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">
-                Cut-out Wind Speed (20-25 m/s typical):
-              </p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>Emergency shutdown sequence activates for safety protection</li>
-                <li>Mechanical and aerodynamic braking systems engage</li>
-                <li>Blade feathering reduces aerodynamic load</li>
-                <li>Wind must drop below reset threshold before restart</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Environmental Factors Affecting Performance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Multiple environmental factors significantly influence wind turbine performance and
-              must be considered in system design and energy prediction.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Air Density Effects:</p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>Altitude impact:</strong> Density decreases approximately 1.2% per 100m
-                  elevation
-                </li>
-                <li>
-                  <strong>Temperature effect:</strong> Cold air is denser, providing more power
-                </li>
-                <li>
-                  <strong>Humidity influence:</strong> Moist air is less dense than dry air
-                </li>
-                <li>
-                  <strong>Seasonal variation:</strong> Winter typically provides higher air density
-                </li>
-                <li>
-                  <strong>Correction factors:</strong> Power curves adjusted for local conditions
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Wind Shear and Turbulence:</p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>Wind shear:</strong> Speed increases with height above ground
-                </li>
-                <li>
-                  <strong>Shear exponent:</strong> Typically 0.1-0.2 for offshore, 0.2-0.4 onshore
-                </li>
-                <li>
-                  <strong>Turbulence intensity:</strong> Affects fatigue loading and performance
-                </li>
-                <li>
-                  <strong>Wake effects:</strong> Downstream turbines experience reduced wind
-                </li>
-                <li>
-                  <strong>Site assessment:</strong> Detailed wind measurement campaigns required
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Capacity Factor and Yield Assessment
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Capacity factor and energy yield assessments are critical metrics for evaluating wind
-              project viability and predicting long-term performance.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Capacity Factor Analysis:</p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>Definition:</strong> Actual output divided by maximum possible output
-                </li>
-                <li>
-                  <strong>UK onshore:</strong> Typically 25-35% capacity factor
-                </li>
-                <li>
-                  <strong>UK offshore:</strong> 40-50% capacity factor achievable
-                </li>
-                <li>
-                  <strong>Best-in-class:</strong> &gt;55% for optimal offshore locations
-                </li>
-                <li>
-                  <strong>Calculation period:</strong> Usually assessed over full annual cycle
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Energy Yield Metrics:</p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>Annual Energy Production (AEP):</strong> Total yearly generation in MWh
-                </li>
-                <li>
-                  <strong>Specific yield:</strong> kWh per kW installed capacity per year
-                </li>
-                <li>
-                  <strong>Load factor:</strong> Average load as percentage of peak capacity
-                </li>
-                <li>
-                  <strong>Availability factor:</strong> Operational uptime percentage (95-98%
-                  typical)
-                </li>
-                <li>
-                  <strong>Performance ratio:</strong> Actual versus predicted performance
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-sm font-medium text-elec-yellow mb-2">
-                Case Study: Hornsea One Offshore Wind Farm
-              </p>
-              <p className="text-white text-sm mb-2">
-                Located 120km off the Yorkshire coast, Hornsea One demonstrates modern UK offshore
-                performance:
-              </p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>174 x Siemens Gamesa 7MW turbines (1,218MW total capacity)</li>
-                <li>42% average capacity factor (2020-2022)</li>
-                <li>4,500 GWh annual generation - powers &gt;1 million UK homes</li>
-                <li>&gt;97% availability through predictive maintenance</li>
-                <li>Winter capacity factors often exceed 60%</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Advanced Control Systems
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Modern wind turbines employ sophisticated control systems to optimise performance,
-              protect equipment, and provide essential grid services.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Active Power Control:</p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>Maximum Power Point Tracking (MPPT):</strong> Optimising rotor speed for
-                  each wind condition
-                </li>
-                <li>
-                  <strong>Pitch control:</strong> Individual blade angle adjustment for optimal
-                  energy capture
-                </li>
-                <li>
-                  <strong>Torque control:</strong> Generator load management for smooth operation
-                </li>
-                <li>
-                  <strong>Wind following:</strong> Yaw system continuously tracks wind direction
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Grid Integration Features:</p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>Power quality:</strong> Low harmonic distortion to grid standards
-                </li>
-                <li>
-                  <strong>Voltage support:</strong> Reactive power provision for grid stability
-                </li>
-                <li>
-                  <strong>Frequency response:</strong> Grid stability services during demand changes
-                </li>
-                <li>
-                  <strong>Fault ride-through:</strong> Staying connected during grid disturbances
-                </li>
-                <li>
-                  <strong>Curtailment capability:</strong> Rapid power reduction when required
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Condition Monitoring:</p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>Vibration analysis:</strong> Early detection of mechanical issues
-                </li>
-                <li>
-                  <strong>Temperature monitoring:</strong> Thermal management for critical
-                  components
-                </li>
-                <li>
-                  <strong>Oil analysis:</strong> Gearbox and bearing condition assessment
-                </li>
-                <li>
-                  <strong>Performance trends:</strong> Degradation tracking and prediction
-                </li>
-                <li>
-                  <strong>Remote diagnostics:</strong> 24/7 monitoring and analysis from control
-                  centres
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                When Assessing Wind Sites
-              </h3>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  Consider the cubic relationship - small wind speed differences have large energy
-                  impacts
-                </li>
-                <li>
-                  Account for air density variations based on site altitude and typical temperatures
-                </li>
-                <li>Evaluate wind shear to determine optimal hub height for the site</li>
-                <li>Assess turbulence intensity for turbine class selection</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                When Interpreting Power Curves
-              </h3>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>Always apply site-specific air density corrections to manufacturer curves</li>
-                <li>Consider turbulence adjustments for sites with TI &gt;15%</li>
-                <li>Account for blade icing effects in colder climates</li>
-                <li>Verify actual performance against warranted curves during operation</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>Ignoring cubic relationship</strong> - small measurement errors become
-                  large energy errors
-                </li>
-                <li>
-                  <strong>Using uncorrected power curves</strong> - site conditions differ from
-                  standard test conditions
-                </li>
-                <li>
-                  <strong>Underestimating wake losses</strong> - downstream turbines can lose 10-15%
-                  production
-                </li>
-                <li>
-                  <strong>Overlooking availability</strong> - even 95% availability means 438 hours
-                  downtime per year
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/renewable-energy-module-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../section-2">
-              Next Section
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
     </div>
   );
-};
-
-export default RenewableEnergyModule3Section1;
+}
