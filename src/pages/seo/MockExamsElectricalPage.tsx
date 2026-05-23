@@ -615,10 +615,10 @@ const sections = [
 export default function MockExamsElectricalPage() {
   return (
     <GuideTemplate
-      title="Mock Exams Electrical UK | 18th Ed + 2391 + AM2 + EPA Free"
-      description="Free UK electrical mock exams: 18th Edition (C&G 2382-23), 2391 Inspection & Testing, AM2 practical, EPA. Instant feedback, no signup, apprentice tier."
+      title="Electrical Exam Revision Strategy: 18th Ed, 2391, AM2, EPA"
+      description="How to revise for UK electrical qualifications using mock exams effectively: study schedule, weak-area technique, exam-day strategy, common pitfalls. Plus where to take each free mock test."
       datePublished="2025-02-28"
-      dateModified="2026-05-18"
+      dateModified="2026-05-23"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Exam Preparation"

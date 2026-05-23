@@ -589,10 +589,10 @@ const sections = [
 export default function AM2SimulatorGuidePage() {
   return (
     <GuideTemplate
-      title="AM2 Simulator | Practice Assessment Tool"
-      description="Prepare for the AM2 practical assessment with timed practice scenarios, cable termination guides, testing procedure walkthroughs…"
+      title="AM2 Practical Simulator: Timed Scenarios + Fault Diagnosis"
+      description="In-app AM2 practical simulator (separate from the online knowledge test mock): timed scenarios, cable termination practice, full testing-sequence walkthrough, fault diagnosis trainer."
       datePublished="2025-06-15"
-      dateModified="2026-05-18"
+      dateModified="2026-05-23"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Tool"

@@ -519,10 +519,10 @@ const relatedPages: RelatedPage[] = [
 export default function MockExamsElectricianPage() {
   return (
     <GuideTemplate
-      title="Mock Exams UK Electricians | 18th Edition, 2391, AM2 Free"
-      description="Free mock exams for UK electricians: 18th Edition (C&G 2382-23), 2391 Inspection & Testing, AM2 prep. Real questions, instant feedback. No signup."
+      title="How to Revise for Electrician Exams: 18th Ed, 2391, AM2"
+      description="Step-by-step revision strategy for UK electrician exams: how mock exams work, what to revise, study schedules, exam-day technique, common traps + which mock test to take when."
       datePublished="2025-08-12"
-      dateModified="2026-05-18"
+      dateModified="2026-05-23"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Exam Preparation"
