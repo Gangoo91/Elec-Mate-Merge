@@ -47,6 +47,10 @@ function getSymbolsToRender({
 }
 
 function buildImageObjectSchemas(symbols: ElectricalSymbol[]) {
+  // Google's Licensable Images rich result requires copyrightNotice +
+  // acquireLicensePage in addition to license. Without these the images
+  // don't qualify for the "Licensable" badge in Google Image search and
+  // GSC raises Image Metadata warnings (one per ImageObject).
   return symbols.map((s) => ({
     '@context': 'https://schema.org',
     '@type': 'ImageObject',
@@ -54,9 +58,12 @@ function buildImageObjectSchemas(symbols: ElectricalSymbol[]) {
     description: s.altText,
     contentUrl: `${BASE}/symbols/${s.file}`,
     encodingFormat: 'image/svg+xml',
-    license: 'https://www.elec-mate.com/terms',
+    license: `${BASE}/legal/terms`,
+    acquireLicensePage: `${BASE}/legal/terms`,
+    copyrightNotice: '© Elec-Mate Ltd. Free to use with attribution.',
+    copyrightHolder: { '@type': 'Organization', name: 'Elec-Mate Ltd', url: BASE },
     creditText: 'Elec-Mate',
-    creator: { '@type': 'Organization', name: 'Elec-Mate', url: BASE },
+    creator: { '@type': 'Organization', name: 'Elec-Mate Ltd', url: BASE },
   }));
 }
 
