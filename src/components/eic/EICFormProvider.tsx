@@ -14,6 +14,8 @@ import { useReportId } from '@/hooks/useReportId';
 import { useToast } from '@/hooks/use-toast';
 import { useAppReview } from '@/hooks/useAppReview';
 import AppReviewPromptSheet from '@/components/AppReviewPromptSheet';
+import { useReferralPrompt } from '@/hooks/useReferralPrompt';
+import ReferralShareSheet from '@/components/referrals/ReferralShareSheet';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -109,6 +111,11 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
   const location = useLocation();
   const queryClient = useQueryClient();
   const { recordPositiveAction, showReviewPrompt, handleRate, handleDismiss } = useAppReview();
+  const {
+    recordPositiveAction: recordReferralAction,
+    showReferralPrompt,
+    handleClose: handleReferralClose,
+  } = useReferralPrompt();
   const lastSaveErrorToastRef = useRef<number>(0);
 
   // Capture customer data from navigation state
@@ -1082,6 +1089,7 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
       });
 
       recordPositiveAction();
+      recordReferralAction();
     }
 
     queryClient.invalidateQueries({ queryKey: ['recent-certificates'] });
@@ -1198,6 +1206,11 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
           open={showReviewPrompt}
           onRate={handleRate}
           onDismiss={handleDismiss}
+        />
+        <ReferralShareSheet
+          open={showReferralPrompt}
+          onOpenChange={(open) => !open && handleReferralClose()}
+          context="post_cert_success"
         />
       </CertificatePhotoProvider>
     </EICFormContext.Provider>

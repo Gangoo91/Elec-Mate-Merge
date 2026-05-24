@@ -362,6 +362,14 @@ self.addEventListener('notificationclick', (event: NotificationEvent) => {
           ? `/employer?section=quotes`
           : `/electrician/invoices/${data.invoiceId || ''}/view`;
       break;
+    case 'invoices_overdue':
+      // Aggregated multi-invoice digest push — open the dashboard so the
+      // user sees all unpaid in one list.
+      url =
+        role === 'employer'
+          ? `/employer?section=quotes`
+          : `/electrician/quote-invoice-dashboard`;
+      break;
     case 'application':
       url =
         role === 'employer'

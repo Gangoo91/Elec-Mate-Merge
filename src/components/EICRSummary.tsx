@@ -57,6 +57,8 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptic } from '@/hooks/useHaptic';
 import { useAppReview } from '@/hooks/useAppReview';
 import AppReviewPromptSheet from '@/components/AppReviewPromptSheet';
+import { useReferralPrompt } from '@/hooks/useReferralPrompt';
+import ReferralShareSheet from '@/components/referrals/ReferralShareSheet';
 import {
   createQuoteFromCertificate,
   createInvoiceFromCertificate,
@@ -97,6 +99,11 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
   const isMobile = useIsMobile();
   const haptic = useHaptic();
   const { recordPositiveAction, showReviewPrompt, handleRate, handleDismiss } = useAppReview();
+  const {
+    recordPositiveAction: recordReferralAction,
+    showReferralPrompt,
+    handleClose: handleReferralClose,
+  } = useReferralPrompt();
   const [isJsonOpen, setIsJsonOpen] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
@@ -511,6 +518,8 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
 
       // Prompt for App Store review after a positive win
       recordPositiveAction();
+      // Separately track for referral prompt (different threshold + cooldown)
+      recordReferralAction();
 
       // Check if customer already exists in pool
       const existingCustomer = customers.find(
@@ -1564,6 +1573,11 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
         }}
       />
       <AppReviewPromptSheet open={showReviewPrompt} onRate={handleRate} onDismiss={handleDismiss} />
+      <ReferralShareSheet
+        open={showReferralPrompt}
+        onOpenChange={(open) => !open && handleReferralClose()}
+        context="post_cert_success"
+      />
     </div>
   );
 };

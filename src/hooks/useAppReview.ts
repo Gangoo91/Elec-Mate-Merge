@@ -27,10 +27,14 @@ import { InAppReview } from '@capacitor-community/in-app-review';
 import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 
 const STORAGE_KEY = 'elec_mate_app_review';
-const MIN_ACTIONS_BEFORE_PROMPT = 3;
-const MIN_DAYS_BETWEEN_PROMPTS = 90;
+// Gates loosened 2026-05-23. Previous (3 actions / 7 days first-use / 90 day
+// cooldown) was too conservative — only 5 App Store reviews accumulated.
+// New gates strike at first success (peak satisfaction) but still respect
+// Apple's hard cap of 3 prompts per 365-day window.
+const MIN_ACTIONS_BEFORE_PROMPT = 1;
+const MIN_DAYS_BETWEEN_PROMPTS = 60;
 const MAX_PROMPTS_PER_YEAR = 3;
-const MIN_DAYS_SINCE_FIRST_USE = 7;
+const MIN_DAYS_SINCE_FIRST_USE = 2;
 
 interface ReviewState {
   positiveActionCount: number;

@@ -17,6 +17,55 @@ import { closeTopOverlay } from '@/lib/overlay-stack';
 // sign-in so the moment isn't lost to the auth redirect.
 const PENDING_SHARE_INTENT_KEY = 'pending_share_intent';
 
+// localStorage key for ANY deep-link destination from a push tapped while
+// logged out. Without this, the auth gate redirected the user to /dashboard
+// after signin and the original deep link (cert / invoice / quote / etc.)
+// was silently lost — which is why Andrew reported "clicking notifications
+// just takes me to signup." Consumed after next successful sign-in.
+const PENDING_DEEP_LINK_KEY = 'pending_push_deep_link';
+
+/**
+ * Pure helper — given a push notification's `data` payload, decide what
+ * in-app URL the user should land on. Returns null if the payload doesn't
+ * map to any known destination (caller can decide whether to no-op or
+ * fall through to a default like /dashboard).
+ *
+ * Mirrors the resolution logic in `navigateFromNotification` below — kept
+ * in sync so the same destination is computed whether we navigate now
+ * (logged-in user) or stash for later (logged-out user).
+ */
+function resolvePushDestinationUrl(
+  data: Record<string, string> | undefined,
+  role?: string
+): string | null {
+  if (!data) return null;
+  const r = role || data?.role || '';
+
+  if (data.action === 'open_tasks' || data.type === 'task') return '/electrician/tasks';
+  if (data.type === 'study') return '/electrician/study-centre';
+  if (data.type === 'mental_health') return '/electrician/mental-health';
+  if (data.type === 'assessment') return '/electrician/study-centre/apprentice';
+  if (data.type === 'briefing') return '/dashboard';
+  if (data.type === 'certificate') return '/electrician/inspection-testing';
+  if (data.type === 'invoices_overdue')
+    return r === 'employer'
+      ? '/employer?section=quotes'
+      : '/electrician/quote-invoice-dashboard';
+  if (data.type === 'peer' && data.conversationId)
+    return `/electrician/mental-health?tab=mates&conversation=${data.conversationId}`;
+  if (data.conversationId) return `/electrician/messages?conversation=${data.conversationId}`;
+  if (data.quoteId)
+    return r === 'employer'
+      ? '/employer?section=quotes'
+      : `/electrician/quotes/view/${data.quoteId}`;
+  if (data.invoiceId)
+    return r === 'employer'
+      ? '/employer?section=quotes'
+      : `/electrician/invoices/${data.invoiceId}/view`;
+  if (data.deep_link) return data.deep_link;
+  return null;
+}
+
 /**
  * Fire the system share sheet for a logged-in user's referral link. Uses the
  * same copy as `useReferralShare` in /settings?tab=referrals so the message
@@ -308,40 +357,30 @@ export function useNativePushNotifications() {
       return;
     }
 
-    if (data?.action === 'open_tasks' || data?.type === 'task') {
-      nav('/electrician/tasks');
-    } else if (data?.type === 'study') {
-      nav('/electrician/study-centre');
-    } else if (data?.type === 'mental_health') {
-      nav('/electrician/mental-health');
-    } else if (data?.type === 'assessment') {
-      nav('/electrician/study-centre/apprentice');
-    } else if (data?.type === 'briefing') {
-      nav('/dashboard');
-    } else if (data?.type === 'certificate') {
-      nav('/electrician/inspection-testing');
-    } else if (data?.type === 'peer' && data?.conversationId) {
-      nav(`/electrician/mental-health?tab=mates&conversation=${data.conversationId}`);
-    } else if (data?.conversationId) {
-      nav(`/electrician/messages?conversation=${data.conversationId}`);
-    } else if (data?.quoteId) {
-      nav(
-        role === 'employer'
-          ? '/employer?section=quotes'
-          : `/electrician/quotes/view/${data.quoteId}`
-      );
-    } else if (data?.invoiceId) {
-      nav(
-        role === 'employer'
-          ? '/employer?section=quotes'
-          : `/electrician/invoices/${data.invoiceId}/view`
-      );
-    } else if (data?.deep_link) {
-      // Generic fallback — any push that sets a `deep_link` in its data
-      // payload will be routed to that path even if no specific `type`
-      // matches above.
-      nav(data.deep_link);
-    }
+    // Resolve where the push WANTS to go, then check auth. If the user is
+    // signed in we navigate immediately. If not, we stash the destination
+    // and send them to signin — after a successful auth state change, the
+    // consumePendingIntent effect below replays the deep link so the user
+    // lands on the intended screen (cert / invoice / quote / etc.) instead
+    // of being dumped on /dashboard.
+    const url = resolvePushDestinationUrl(data, role);
+    if (!url) return;
+
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user?.id) {
+        nav(url);
+      } else {
+        try {
+          localStorage.setItem(
+            PENDING_DEEP_LINK_KEY,
+            JSON.stringify({ url, ts: Date.now() })
+          );
+        } catch {
+          /* ignore — fallback to plain signin nav */
+        }
+        nav('/auth/signin');
+      }
+    });
   }, []);
 
   // Consume any pending "share the referral link" intent saved when the user
@@ -356,6 +395,31 @@ export function useNativePushNotifications() {
     if (!isNative) return;
 
     const consumePendingIntent = async (userId: string) => {
+      // ── Pending DEEP-LINK intent ─────────────────────────────────────
+      // Higher priority than share — if the user tapped (say) an invoice
+      // push while logged out, we want to drop them on that invoice,
+      // not the share sheet.
+      try {
+        const rawLink = localStorage.getItem(PENDING_DEEP_LINK_KEY);
+        if (rawLink) {
+          const parsed = JSON.parse(rawLink) as { url: string; ts?: number };
+          const stale = parsed.ts && Date.now() - parsed.ts > 15 * 60 * 1000;
+          // Clear first so a failure doesn't cause an infinite retry loop
+          localStorage.removeItem(PENDING_DEEP_LINK_KEY);
+          if (!stale && typeof parsed.url === 'string' && parsed.url.startsWith('/')) {
+            navigateRef.current(parsed.url);
+            return; // don't also fire a share intent on the same tap
+          }
+        }
+      } catch {
+        try {
+          localStorage.removeItem(PENDING_DEEP_LINK_KEY);
+        } catch {
+          /* ignore */
+        }
+      }
+
+      // ── Pending SHARE intent (referral push) ────────────────────────
       let raw: string | null = null;
       try {
         raw = localStorage.getItem(PENDING_SHARE_INTENT_KEY);
