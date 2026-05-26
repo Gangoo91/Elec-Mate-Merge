@@ -506,7 +506,7 @@ export default function RenewableEnergyModule6Section4() {
           <ConceptBlock
             title="Isolation discipline"
             plainEnglish="Standard BS 7671 isolation requirements apply. The dedicated RCBO in the CU is the primary isolation point; some installs add a separate AC isolator near the wallbox (especially for outdoor installs) per Reg 537. Clear labelling per Reg 514.x at both ends."
-            onSite="Label the dedicated CU way clearly (e.g. "EV CHARGER — Garage Drive"). Mark the wallbox AC supply side with the same circuit ID. If a separate isolator is fitted, label it consistently. Customer education at handover: where the isolator is, how to use it in emergency."
+            onSite="Label the dedicated CU way clearly (e.g. “EV CHARGER — Garage Drive”). Mark the wallbox AC supply side with the same circuit ID. If a separate isolator is fitted, label it consistently. Customer education at handover: where the isolator is, how to use it in emergency."
           >
             <p>Isolation arrangement details:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">

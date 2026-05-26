@@ -368,7 +368,7 @@ export default function RenewableEnergyModule6Section1() {
 
           <ConceptBlock
             title="Mode 3 — dedicated wallbox (UK 2025-26 default)"
-            plainEnglish="Mode 3 = a dedicated charging station (wallbox) installed on its own dedicated final circuit. The wallbox houses the CP/PP signalling, the contactor, the protective devices and the Type 2 socket or tethered Type 2 connector. The customer’s cable is "dumb" — just conductors and Type 2 plugs at each end. Charges at 7 kW single-phase (32 A) up to 22 kW three-phase (32 A × 3)."
+            plainEnglish="Mode 3 = a dedicated charging station (wallbox) installed on its own dedicated final circuit. The wallbox houses the CP/PP signalling, the contactor, the protective devices and the Type 2 socket or tethered Type 2 connector. The customer’s cable is “dumb” — just conductors and Type 2 plugs at each end. Charges at 7 kW single-phase (32 A) up to 22 kW three-phase (32 A × 3)."
             onSite="Mode 3 is the entire body of work for §6.4 (cable, RCBO, dedicated final circuit) through §6.7 (smart charging). Every UK domestic wallbox install in 2025-26 is Mode 3. Brand examples (alphabetical, no endorsement): Andersen, Easee, EO Charging, Hypervolt, MyEnergi Zappi, Ohme, PodPoint, Wallbox."
           >
             <p>What makes a Mode 3 install distinct:</p>
