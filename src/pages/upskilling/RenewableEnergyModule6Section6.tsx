@@ -36,8 +36,7 @@ const inlineChecks = [
   },
   {
     id: 'm6s6-cp-signal',
-    question:
-      'What is the Control Pilot (CP) signal in a Mode 3 install?',
+    question: 'What is the Control Pilot (CP) signal in a Mode 3 install?',
     options: [
       'Mains voltage AC',
       'A ±12 V signal between the wallbox and the vehicle, PWM duty-cycle modulated. The duty cycle communicates the maximum available current (e.g. 53% duty = 32 A). The CP signal coordinates contactor closure, current limit announcement, charging-in-progress monitoring, and error states',
@@ -50,8 +49,7 @@ const inlineChecks = [
   },
   {
     id: 'm6s6-pp-signal',
-    question:
-      'What does the Proximity Pilot (PP) signal communicate?',
+    question: 'What does the Proximity Pilot (PP) signal communicate?',
     options: [
       'Same as CP',
       'PP is a resistance-coded signal in the Type 2 cable that identifies the cable’s current rating to the wallbox. The cable contains a resistor between PP and PE whose value encodes the maximum current capacity (e.g. 1.5 kΩ = 13 A; 680 Ω = 20 A; 220 Ω = 32 A; 100 Ω = 63 A). The wallbox reads PP to ensure it doesn’t exceed the cable’s rating regardless of CP duty cycle',
@@ -64,8 +62,7 @@ const inlineChecks = [
   },
   {
     id: 'm6s6-tethered-vs-untethered',
-    question:
-      'Tethered vs untethered wallbox — what’s the install consideration?',
+    question: 'Tethered vs untethered wallbox — what’s the install consideration?',
     options: [
       'No difference',
       'Tethered = cable permanently attached to wallbox (manufacturer-supplied, integrated PP rating, cable holster on wallbox). Customer convenience: just plug into vehicle. Cable limited to single rating. Untethered = socket on wallbox; customer brings their own Type 2 cable (typical 5 m, kept in vehicle boot). Flexibility: customer can match cable rating to vehicle. Lower install cost. UK 2025-26: ~50/50 split; tethered preferred by less technical customers',
@@ -93,8 +90,7 @@ const quizQuestions = [
       'CP/PP signalling diagnostics first. The wallbox’s display / app typically shows the signalling state. Common diagnoses: (1) CP not transitioning to 6 V = vehicle not ready (battery full, vehicle firmware paused, charge schedule active); (2) PP unreadable = damaged cable resistor, dirty connector pins; (3) firmware mismatch = wallbox or vehicle firmware update needed (manufacturer support); (4) charge schedule = wallbox waiting for off-peak window (smart-charging regs M6.7). Power-side diagnostics (CB tripped, RCBO not closed) come second. Manufacturer support line is the next step where signalling reveals nothing obvious.',
   },
   {
-    question:
-      'BS EN IEC 62196-2:2022 — what changed from the 2017 edition?',
+    question: 'BS EN IEC 62196-2:2022 — what changed from the 2017 edition?',
     options: [
       'Nothing',
       'The 2022 edition supersedes the 2017 edition with updated dimensional + interchangeability requirements + clarifications. UK installer practice: when verifying wallbox conformity, check the manufacturer DoC cites the current 2022 edition. Reg 722 cross-references the latest edition. Most 2025-26 wallboxes declare 2022 edition; some older inventory may still cite 2017',
@@ -171,7 +167,8 @@ const faqs = [
       'Two reasons. (1) Vehicle’s on-board charger has a maximum AC charge rate — some EVs cap at 11 kW (3-phase 16 A) or 22 kW (3-phase 32 A) regardless of wallbox capability; UK single-phase 7.4 kW is the maximum the AC side can deliver anyway. (2) DLM is throttling — household load high, wallbox limits available current via CP. Customer education: charging speed is the LOWER of (vehicle max AC rate, wallbox rate, cable PP rating, DLM-available current). Cert evidence bundle records the wallbox + cable rating; vehicle rate is customer-side.',
   },
   {
-    question: 'How does the wallbox prevent the customer from accidentally pulling out the connector?',
+    question:
+      'How does the wallbox prevent the customer from accidentally pulling out the connector?',
     answer:
       'The Type 2 connector includes a mechanical latch that engages when plugged in. While the wallbox’s contactor is closed (charging in progress), the latch is locked and the connector cannot be pulled. To disconnect: customer presses unlock on the vehicle (key fob or app, depending on model); vehicle signals to wallbox "OK to disconnect" via CP; wallbox opens contactor; latch releases; customer can pull the connector. The whole sequence prevents arcing on disconnect (which would damage the connector pins). Some wallboxes also have a manual emergency-release on the wallbox itself.',
   },
@@ -181,7 +178,7 @@ const faqs = [
       'Three layers, in order of priority: (1) Vehicle-side scheduling — most EVs have an in-vehicle scheduler ("charge between 02:00-05:00 on weekdays"); (2) Wallbox-side scheduling via the manufacturer app — overrides or coordinates with vehicle scheduler; (3) Tariff-side smart scheduling — Octopus Intelligent Go reads vehicle state + tariff windows + coordinates via the wallbox’s API. UK 2025-26 reality: most customers use a combination of vehicle scheduler + tariff smart-charging integration; manufacturer wallbox app is the override. Section 6.7 covers tariff integration in depth.',
   },
   {
-    question: 'What\'s the typical lifespan of a Type 2 connector / cable?',
+    question: "What's the typical lifespan of a Type 2 connector / cable?",
     answer:
       'BS EN IEC 62196-2 specifies 10,000 mating cycles for the connector. UK 2025-26 daily charging customer plugs in ~365 times per year × 10 years = ~3,650 cycles — well within rating. Real-world failure modes: cable bend stress at the connector end (most common failure point); connector pin wear after many years; cable sheath UV degradation; physical damage from vehicles running over loose cable. Practical service life: 7-10 years for typical UK domestic usage with reasonable cable care. Tethered wallbox cables replace at 7-10 years; customer untethered cables similar.',
   },
@@ -191,7 +188,8 @@ export default function RenewableEnergyModule6Section6() {
   const navigate = useNavigate();
 
   useSEO({
-    title: 'Connector, CP/PP signalling & dynamic load management | Renewable Energy 6.6 | Elec-Mate',
+    title:
+      'Connector, CP/PP signalling & dynamic load management | Renewable Energy 6.6 | Elec-Mate',
     description:
       'BS EN IEC 62196-2:2022 Type 2 connector standard. Tethered vs untethered wallbox decision. Control Pilot (CP) PWM signalling per BS EN 61851-1. Proximity Pilot (PP) resistance coding for cable rating. Dynamic Load Management (DLM) coordination via CP duty cycle.',
   });
@@ -243,7 +241,8 @@ export default function RenewableEnergyModule6Section6() {
           />
 
           <Pullquote>
-            Type 2 plug looks simple. The signalling underneath is what makes Mode 3 a system instead of a socket.
+            Type 2 plug looks simple. The signalling underneath is what makes Mode 3 a system
+            instead of a socket.
           </Pullquote>
 
           <ContentEyebrow>Type 2 connector and the BS EN IEC 62196-2:2022 standard</ContentEyebrow>
@@ -256,44 +255,37 @@ export default function RenewableEnergyModule6Section6() {
             <p>Type 2 connector details:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
               <li>
-                <strong className="text-white">7 pins</strong> — L1, L2, L3
-                (three phases), N (neutral), PE (protective earth), CP
-                (Control Pilot ±12 V signalling), PP (Proximity Pilot
-                resistance-coded cable rating)
+                <strong className="text-white">7 pins</strong> — L1, L2, L3 (three phases), N
+                (neutral), PE (protective earth), CP (Control Pilot ±12 V signalling), PP (Proximity
+                Pilot resistance-coded cable rating)
               </li>
               <li>
-                <strong className="text-white">Single-phase use</strong> —
-                L1 + N + PE + CP + PP active; L2 + L3 unused. UK 2025-26
-                domestic 7 kW wallbox single-phase
+                <strong className="text-white">Single-phase use</strong> — L1 + N + PE + CP + PP
+                active; L2 + L3 unused. UK 2025-26 domestic 7 kW wallbox single-phase
               </li>
               <li>
-                <strong className="text-white">Three-phase use</strong> —
-                L1 + L2 + L3 + N + PE + CP + PP all active. UK 2025-26
-                three-phase 22 kW wallbox (rare domestic, common commercial
-                / fleet — M7 scope)
+                <strong className="text-white">Three-phase use</strong> — L1 + L2 + L3 + N + PE + CP
+                + PP all active. UK 2025-26 three-phase 22 kW wallbox (rare domestic, common
+                commercial / fleet — M7 scope)
               </li>
               <li>
-                <strong className="text-white">Current rating</strong> —
-                BS EN IEC 62196-2 connector rated up to 63 A. PP signalling
-                identifies the cable’s rating (13 / 20 / 32 / 63 A);
+                <strong className="text-white">Current rating</strong> — BS EN IEC 62196-2 connector
+                rated up to 63 A. PP signalling identifies the cable’s rating (13 / 20 / 32 / 63 A);
                 the lower of cable / wallbox / vehicle limits charge speed
               </li>
               <li>
-                <strong className="text-white">Mechanical latch</strong> —
-                connector locks into vehicle inlet while charging.
-                Prevents accidental unplug and arcing on disconnect
+                <strong className="text-white">Mechanical latch</strong> — connector locks into
+                vehicle inlet while charging. Prevents accidental unplug and arcing on disconnect
               </li>
               <li>
-                <strong className="text-white">Standard
-                  family</strong> — BS EN IEC 62196-1 (general); -2 (AC
-                accessories — Type 2); -3 (DC accessories — CCS Combo 2 for
-                Mode 4 DC fast)
+                <strong className="text-white">Standard family</strong> — BS EN IEC 62196-1
+                (general); -2 (AC accessories — Type 2); -3 (DC accessories — CCS Combo 2 for Mode 4
+                DC fast)
               </li>
               <li>
                 <strong className="text-white">2022 edition</strong>
-                supersedes 2017. Reputable UK 2025-26 wallboxes declare
-                BS EN IEC 62196-2:2022 conformity. Reg 722.421.1.7.201
-                AFDD exception requires this declaration
+                supersedes 2017. Reputable UK 2025-26 wallboxes declare BS EN IEC 62196-2:2022
+                conformity. Reg 722.421.1.7.201 AFDD exception requires this declaration
               </li>
             </ul>
           </ConceptBlock>
@@ -311,7 +303,8 @@ export default function RenewableEnergyModule6Section6() {
           <ContentEyebrow>Tethered vs untethered — the install decision</ContentEyebrow>
 
           <Pullquote>
-            Tethered = wallbox carries the cable. Untethered = customer carries the cable. Both compliant; customer preference drives the choice.
+            Tethered = wallbox carries the cable. Untethered = customer carries the cable. Both
+            compliant; customer preference drives the choice.
           </Pullquote>
 
           <ConceptBlock
@@ -322,38 +315,30 @@ export default function RenewableEnergyModule6Section6() {
             <p>Tethered considerations:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
               <li>
-                <strong className="text-white">Customer
-                  convenience</strong> — plug into vehicle, charge,
-                stow cable. No cable to remember
+                <strong className="text-white">Customer convenience</strong> — plug into vehicle,
+                charge, stow cable. No cable to remember
               </li>
               <li>
-                <strong className="text-white">Cable rating
-                  fixed</strong> — typically 32 A for 7 kW wallboxes.
-                Factory-matched to wallbox capability
+                <strong className="text-white">Cable rating fixed</strong> — typically 32 A for 7 kW
+                wallboxes. Factory-matched to wallbox capability
               </li>
               <li>
-                <strong className="text-white">Length
-                  trade-off</strong> — 5 m typical; 7 m for some
-                models. Customer’s parking position must reach
-                from wallbox
+                <strong className="text-white">Length trade-off</strong> — 5 m typical; 7 m for some
+                models. Customer’s parking position must reach from wallbox
               </li>
               <li>
-                <strong className="text-white">Damage
-                  repair</strong> — manufacturer-specific. Some
-                replaceable connector heads; some full cable
-                replacement; some full wallbox replacement
+                <strong className="text-white">Damage repair</strong> — manufacturer-specific. Some
+                replaceable connector heads; some full cable replacement; some full wallbox
+                replacement
               </li>
               <li>
-                <strong className="text-white">UK brands
-                  (typical)</strong> — Andersen A2, Hypervolt Home 3,
-                MyEnergi Zappi (tethered variant), PodPoint Solo
-                Tethered, EO Mini Pro 3 Tethered
+                <strong className="text-white">UK brands (typical)</strong> — Andersen A2, Hypervolt
+                Home 3, MyEnergi Zappi (tethered variant), PodPoint Solo Tethered, EO Mini Pro 3
+                Tethered
               </li>
               <li>
-                <strong className="text-white">Cert evidence
-                  bundle</strong> — records wallbox SKU (tethered
-                variant), cable length, cable rating, manufacturer
-                serial number
+                <strong className="text-white">Cert evidence bundle</strong> — records wallbox SKU
+                (tethered variant), cable length, cable rating, manufacturer serial number
               </li>
             </ul>
           </ConceptBlock>
@@ -366,44 +351,36 @@ export default function RenewableEnergyModule6Section6() {
             <p>Untethered considerations:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
               <li>
-                <strong className="text-white">Customer
-                  cable</strong> — kept in vehicle boot; typical
-                domestic cable 5 m 32 A; emergency cable 1-3 m 13 A
+                <strong className="text-white">Customer cable</strong> — kept in vehicle boot;
+                typical domestic cable 5 m 32 A; emergency cable 1-3 m 13 A
               </li>
               <li>
-                <strong className="text-white">Lower wallbox
-                  cost</strong> — ~£50-100 less than tethered
-                equivalent
+                <strong className="text-white">Lower wallbox cost</strong> — ~£50-100 less than
+                tethered equivalent
               </li>
               <li>
-                <strong className="text-white">Cable
-                  flexibility</strong> — customer can buy longer
-                cable, higher-rating, or specialist (e.g. coiled
-                cable for tight parking)
+                <strong className="text-white">Cable flexibility</strong> — customer can buy longer
+                cable, higher-rating, or specialist (e.g. coiled cable for tight parking)
               </li>
               <li>
-                <strong className="text-white">Cable
-                  rating</strong> — PP signalling reads the cable’s
-                resistor; wallbox caps its CP duty cycle accordingly.
-                13 A cable on a 32 A wallbox → charge limited to 13 A
+                <strong className="text-white">Cable rating</strong> — PP signalling reads the
+                cable’s resistor; wallbox caps its CP duty cycle accordingly. 13 A cable on a 32 A
+                wallbox → charge limited to 13 A
               </li>
               <li>
-                <strong className="text-white">UK brands
-                  (untethered variants)</strong> — PodPoint Solo
-                Universal, Wallbox Pulsar Plus, EO Mini Pro 3
-                Universal, Easee Home, Tesla Wall Connector Gen 3
+                <strong className="text-white">UK brands (untethered variants)</strong> — PodPoint
+                Solo Universal, Wallbox Pulsar Plus, EO Mini Pro 3 Universal, Easee Home, Tesla Wall
+                Connector Gen 3
               </li>
               <li>
-                <strong className="text-white">Cable storage</strong>
-                — customer keeps cable in vehicle; wallbox socket
-                covered when not in use (manufacturer-supplied
-                socket cap or cover)
+                <strong className="text-white">Cable storage</strong>— customer keeps cable in
+                vehicle; wallbox socket covered when not in use (manufacturer-supplied socket cap or
+                cover)
               </li>
               <li>
-                <strong className="text-white">Cert evidence
-                  bundle</strong> — records wallbox SKU (untethered
-                variant); customer cable not part of install scope
-                (customer responsibility)
+                <strong className="text-white">Cert evidence bundle</strong> — records wallbox SKU
+                (untethered variant); customer cable not part of install scope (customer
+                responsibility)
               </li>
             </ul>
           </ConceptBlock>
@@ -421,56 +398,46 @@ export default function RenewableEnergyModule6Section6() {
           <ConceptBlock
             title="Control Pilot (CP) — the brain of the Mode 3 protocol"
             plainEnglish="Control Pilot is the ±12 V PWM signal between wallbox and vehicle that coordinates the entire charging sequence. The signal communicates: vehicle detection, vehicle readiness, max available current (via PWM duty cycle), charging in progress, faults, and disconnection. Without a healthy CP, no power flows."
-            onSite="CP diagnostics are essential when troubleshooting "wallbox won’t charge" complaints. The wallbox’s app or display typically shows the CP voltage state. Manufacturer support can interpret unusual CP behaviour."
+            onSite="CP diagnostics are essential when troubleshooting “wallbox won’t charge” complaints. The wallbox’s app or display typically shows the CP voltage state. Manufacturer support can interpret unusual CP behaviour."
           >
             <p>CP signalling sequence:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
               <li>
-                <strong className="text-white">No vehicle (open
-                  circuit)</strong> — CP voltage at +12 V, no PWM. Wallbox
-                contactor open
+                <strong className="text-white">No vehicle (open circuit)</strong> — CP voltage at
+                +12 V, no PWM. Wallbox contactor open
               </li>
               <li>
-                <strong className="text-white">Vehicle plugged
-                  in</strong> — vehicle adds resistance to CP-PE; CP
-                voltage drops to +9 V. Wallbox detects "vehicle attached".
-                PWM begins announcing available current
+                <strong className="text-white">Vehicle plugged in</strong> — vehicle adds resistance
+                to CP-PE; CP voltage drops to +9 V. Wallbox detects "vehicle attached". PWM begins
+                announcing available current
               </li>
               <li>
-                <strong className="text-white">Vehicle ready to
-                  charge</strong> — vehicle further drops CP to +6 V
-                signalling "ready". Wallbox closes contactor; AC flows;
-                charging begins
+                <strong className="text-white">Vehicle ready to charge</strong> — vehicle further
+                drops CP to +6 V signalling "ready". Wallbox closes contactor; AC flows; charging
+                begins
               </li>
               <li>
-                <strong className="text-white">Charging in
-                  progress</strong> — CP remains at ±6 V with PWM. Vehicle
-                draws up to the PWM-announced current limit
+                <strong className="text-white">Charging in progress</strong> — CP remains at ±6 V
+                with PWM. Vehicle draws up to the PWM-announced current limit
               </li>
               <li>
-                <strong className="text-white">Vehicle
-                  unplugged</strong> — CP returns to +12 V. Wallbox opens
-                contactor within milliseconds. Power removed
+                <strong className="text-white">Vehicle unplugged</strong> — CP returns to +12 V.
+                Wallbox opens contactor within milliseconds. Power removed
               </li>
               <li>
-                <strong className="text-white">Fault state</strong> —
-                CP voltage outside the normal ±12 V / ±9 V / ±6 V
-                states. Wallbox enters fault mode; display / app shows
-                error code; contactor open
+                <strong className="text-white">Fault state</strong> — CP voltage outside the normal
+                ±12 V / ±9 V / ±6 V states. Wallbox enters fault mode; display / app shows error
+                code; contactor open
               </li>
               <li>
-                <strong className="text-white">PWM duty cycle =
-                  current</strong> — IEC 61851-1 Annex A: 53% = 32 A;
-                40% = 24 A; 25% = 16 A; 16% = 10 A; 9% = 6 A (minimum
-                Mode 3 charge rate). Wallbox modulates the duty
-                cycle in real time for DLM
+                <strong className="text-white">PWM duty cycle = current</strong> — IEC 61851-1 Annex
+                A: 53% = 32 A; 40% = 24 A; 25% = 16 A; 16% = 10 A; 9% = 6 A (minimum Mode 3 charge
+                rate). Wallbox modulates the duty cycle in real time for DLM
               </li>
               <li>
-                <strong className="text-white">±12 V swing</strong> —
-                CP is a bipolar signal. Positive half-cycle signals
-                charging state; negative half-cycle is for vehicle
-                acknowledgement timing. The bipolar nature also
-                provides electrical safety isolation
+                <strong className="text-white">±12 V swing</strong> — CP is a bipolar signal.
+                Positive half-cycle signals charging state; negative half-cycle is for vehicle
+                acknowledgement timing. The bipolar nature also provides electrical safety isolation
               </li>
             </ul>
           </ConceptBlock>
@@ -483,32 +450,29 @@ export default function RenewableEnergyModule6Section6() {
             <p>Standard PP resistance codes (BS EN 61851-1 Annex B):</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
               <li>
-                <strong className="text-white">1.5 kΩ</strong> — cable
-                rated 13 A (small emergency / travel cables)
+                <strong className="text-white">1.5 kΩ</strong> — cable rated 13 A (small emergency /
+                travel cables)
               </li>
               <li>
-                <strong className="text-white">680 Ω</strong> — cable
-                rated 20 A
+                <strong className="text-white">680 Ω</strong> — cable rated 20 A
               </li>
               <li>
-                <strong className="text-white">220 Ω</strong> — cable
-                rated 32 A (most common UK domestic cable)
+                <strong className="text-white">220 Ω</strong> — cable rated 32 A (most common UK
+                domestic cable)
               </li>
               <li>
-                <strong className="text-white">100 Ω</strong> — cable
-                rated 63 A (commercial / fleet)
+                <strong className="text-white">100 Ω</strong> — cable rated 63 A (commercial /
+                fleet)
               </li>
               <li>
-                <strong className="text-white">PP failure
-                  modes</strong> — damaged resistor inside cable
-                connector body; cable read as no-PP-signal; wallbox
-                won’t charge or charges at lowest safe rate
+                <strong className="text-white">PP failure modes</strong> — damaged resistor inside
+                cable connector body; cable read as no-PP-signal; wallbox won’t charge or charges at
+                lowest safe rate
               </li>
               <li>
-                <strong className="text-white">Diagnostic</strong> —
-                check PP-to-PE resistance with multimeter at the
-                cable end; should match one of the standard codes.
-                Out-of-range = damaged cable, replace
+                <strong className="text-white">Diagnostic</strong> — check PP-to-PE resistance with
+                multimeter at the cable end; should match one of the standard codes. Out-of-range =
+                damaged cable, replace
               </li>
             </ul>
           </ConceptBlock>
@@ -530,49 +494,40 @@ export default function RenewableEnergyModule6Section6() {
             <p>DLM signalling sequence:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
               <li>
-                <strong className="text-white">Initial charge
-                  start</strong> — wallbox sets CP to announce full
-                available current (e.g. 53% PWM = 32 A); vehicle
-                begins drawing
+                <strong className="text-white">Initial charge start</strong> — wallbox sets CP to
+                announce full available current (e.g. 53% PWM = 32 A); vehicle begins drawing
               </li>
               <li>
-                <strong className="text-white">Household load
-                  rises</strong> — electric shower starts; wallbox’s
-                CT clamp reads increased household current; calculation
-                says less available for EV (e.g. 16 A); wallbox
-                modulates CP PWM to 25% duty (16 A); vehicle reads new
-                limit and reduces draw within sub-second
+                <strong className="text-white">Household load rises</strong> — electric shower
+                starts; wallbox’s CT clamp reads increased household current; calculation says less
+                available for EV (e.g. 16 A); wallbox modulates CP PWM to 25% duty (16 A); vehicle
+                reads new limit and reduces draw within sub-second
               </li>
               <li>
-                <strong className="text-white">Household load
-                  falls</strong> — shower stops; CT reads reduced
-                household current; wallbox calculates more available
-                (32 A again); CP PWM increases to 53%; vehicle ramps
-                draw back up
+                <strong className="text-white">Household load falls</strong> — shower stops; CT
+                reads reduced household current; wallbox calculates more available (32 A again); CP
+                PWM increases to 53%; vehicle ramps draw back up
               </li>
               <li>
-                <strong className="text-white">Minimum charge
-                  rate</strong> — IEC 61851-1 sets 6 A as the minimum
-                Mode 3 charge rate. If DLM calculation would require
-                less than 6 A, the wallbox pauses charging entirely
-                (CP held at vehicle-detected state without PWM
-                signalling current). Vehicle waits. When more current
-                becomes available, charging resumes
+                <strong className="text-white">Minimum charge rate</strong> — IEC 61851-1 sets 6 A
+                as the minimum Mode 3 charge rate. If DLM calculation would require less than 6 A,
+                the wallbox pauses charging entirely (CP held at vehicle-detected state without PWM
+                signalling current). Vehicle waits. When more current becomes available, charging
+                resumes
               </li>
               <li>
-                <strong className="text-white">Coordination</strong>
-                — sub-second cycle. Vehicle doesn’t experience
-                abrupt changes; the on-board charger adjusts smoothly.
-                No customer-visible disruption
+                <strong className="text-white">Coordination</strong>— sub-second cycle. Vehicle
+                doesn’t experience abrupt changes; the on-board charger adjusts smoothly. No
+                customer-visible disruption
               </li>
             </ul>
           </ConceptBlock>
 
           <Scenario
             title="Customer reports wallbox won’t start charging"
-            situation="Customer calls: plugged the EV in, the wallbox shows green ready light, but no charging is happening. EV displays "waiting for charging" message. Customer has tried unplugging and re-plugging twice."
-            whatToDo="Signalling diagnostic first, not power-side. Open the wallbox manufacturer app — should show CP state. Common CP-side causes: (1) vehicle’s built-in scheduler is active — set to charge only off-peak (e.g. 02:00-05:00 on Octopus Intelligent Go); customer plugged in at 18:00, vehicle waiting until 02:00. Check vehicle scheduler. (2) PP signal showing no-cable-detected; manufacturer app reports cable error; try a different cable. (3) Vehicle firmware paused charging (over-temperature, battery management). Vehicle support line. (4) Wallbox firmware mismatch with vehicle firmware (recent OTA on either side); manufacturer support for firmware reset. (5) Tariff-side smart scheduling holding back; check Octopus app. Power-side checks (CB tripped, RCBO open) come after signalling diagnostics. Most "won’t charge" calls resolve as scheduler / signalling, not power."
-            whyItMatters="UK 2025-26 reality: most "won’t charge" customer support calls are signalling or scheduler problems, not electrical faults. The wallbox is healthy, the cable is healthy, the supply is healthy — but the CP signalling is in a state the customer doesn’t expect. Customer education at handover should cover the scheduler logic (vehicle scheduler + wallbox app + tariff smart-charging) so the customer knows where to look first."
+            situation="Customer calls: plugged the EV in, the wallbox shows green ready light, but no charging is happening. EV displays “waiting for charging” message. Customer has tried unplugging and re-plugging twice."
+            whatToDo="Signalling diagnostic first, not power-side. Open the wallbox manufacturer app — should show CP state. Common CP-side causes: (1) vehicle’s built-in scheduler is active — set to charge only off-peak (e.g. 02:00-05:00 on Octopus Intelligent Go); customer plugged in at 18:00, vehicle waiting until 02:00. Check vehicle scheduler. (2) PP signal showing no-cable-detected; manufacturer app reports cable error; try a different cable. (3) Vehicle firmware paused charging (over-temperature, battery management). Vehicle support line. (4) Wallbox firmware mismatch with vehicle firmware (recent OTA on either side); manufacturer support for firmware reset. (5) Tariff-side smart scheduling holding back; check Octopus app. Power-side checks (CB tripped, RCBO open) come after signalling diagnostics. Most “won’t charge” calls resolve as scheduler / signalling, not power."
+            whyItMatters="UK 2025-26 reality: most “won’t charge” customer support calls are signalling or scheduler problems, not electrical faults. The wallbox is healthy, the cable is healthy, the supply is healthy — but the CP signalling is in a state the customer doesn’t expect. Customer education at handover should cover the scheduler logic (vehicle scheduler + wallbox app + tariff smart-charging) so the customer knows where to look first."
           />
 
           <CommonMistake
@@ -611,7 +566,9 @@ export default function RenewableEnergyModule6Section6() {
           <div className="grid grid-cols-2 gap-3 pt-2">
             <button
               type="button"
-              onClick={() => navigate('/electrician/upskilling/renewable-energy-module-6-section-5')}
+              onClick={() =>
+                navigate('/electrician/upskilling/renewable-energy-module-6-section-5')
+              }
               className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
             >
               <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">

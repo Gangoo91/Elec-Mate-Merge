@@ -22,8 +22,7 @@ import useSEO from '@/hooks/useSEO';
 const inlineChecks = [
   {
     id: 'm6s8-part-6-applies',
-    question:
-      'Part 6 of BS 7671 (Inspection and Testing) — does it apply to EV charging circuits?',
+    question: 'Part 6 of BS 7671 (Inspection and Testing) — does it apply to EV charging circuits?',
     options: [
       'No, Section 722 replaces Part 6',
       'Yes — Part 6 (Chapters 64 and 65) sets the inspection and testing framework for all installations. Section 722 adds EV-specific requirements; the Part 6 procedures (visual inspection, IR test at 500 V DC with 1 MΩ minimum, RCD test, ADS verification) all apply to EV circuits',
@@ -36,8 +35,7 @@ const inlineChecks = [
   },
   {
     id: 'm6s8-rdc-dd-test',
-    question:
-      'How is the RDC-DD (6 mA DC residual detector) tested at commissioning?',
+    question: 'How is the RDC-DD (6 mA DC residual detector) tested at commissioning?',
     options: [
       'No test available',
       'Manufacturer-specific built-in self-test. Most wallboxes have a "PEN test" or "DC fault test" mode in the app that injects a simulated 6 mA DC fault and verifies the wallbox’s internal contactor opens within milliseconds. Verify the test result + record in the cert evidence bundle. Standard third-party RCD testers cannot test RDC-DD (they test the upstream Type A RCD only)',
@@ -80,8 +78,7 @@ const inlineChecks = [
 
 const quizQuestions = [
   {
-    question:
-      'Commissioning a new UK 2025-26 EV wallbox install. Which test sequence is correct?',
+    question: 'Commissioning a new UK 2025-26 EV wallbox install. Which test sequence is correct?',
     options: [
       'Just energise and check it works',
       'Sequence: (1) Part 6 visual inspection per Chapter 64 schedule; (2) IR test at 500 V DC live-to-PE — 1 MΩ minimum per Table 64; (3) Post-connection 250 V DC test per Reg 643.3.3 — 1 MΩ minimum; (4) RCD trip-time test using Type B-capable instrument (Reg 643.1) — RCBO operates per Reg 411; (5) ADS verification — Zs ≤ Table 41.3 value for the RCBO type and rating; (6) Manufacturer-specific tests: OPDD self-test, RDC-DD self-test, CP/PP signalling check, BS EN 61851 functional test (manufacturer-defined); (7) SCP Regulations 2021 verification: default off-peak schedule active, randomised delay enabled. Each step recorded in cert evidence bundle',
@@ -145,8 +142,7 @@ const quizQuestions = [
       'Visible thermal damage at the Type 2 connector end = C2 (potential danger, urgent remediation). Causes: (1) customer using a wrong-rated cable (e.g. 13 A cable being driven at 32 A — PP signalling should prevent this but if PP resistor damaged, doesn’t); (2) poor connection at the connector head (intermittent contact during plug-in/out cycles develops high resistance + heating); (3) imminent connector failure. Remediation: replace the cable; verify wallbox’s PP signal interpretation is correct; check the wallbox’s contactor and CP signalling for correct sequencing. Customer education: keep cable in good condition, don’t use damaged cables, don’t leave the connector in muddy / debris-prone environments.',
   },
   {
-    question:
-      'How often should an EV wallbox be EICR-inspected after install?',
+    question: 'How often should an EV wallbox be EICR-inspected after install?',
     options: [
       'Never',
       'The wider electrical installation’s EICR interval applies (typically 10 years for domestic, 5 years for landlord rental properties under the Electrical Safety Standards in the Private Rented Sector Regulations 2020). The EV wallbox itself = part of the installation. Manufacturer may recommend annual service for the smart functionality (BMS-style log review, firmware updates, RDC-DD self-test) — separate from the statutory EICR. Cert evidence bundle records the recommended intervals',
@@ -181,7 +177,8 @@ const faqs = [
       'Wallbox typical service life 7-15 years in UK 2025-26 (varies by manufacturer + exposure). At end-of-life: (1) isolate at the dedicated RCBO; (2) remove the wallbox + cable (tethered) or wallbox alone (untethered); (3) record removal date + reason in cert evidence bundle; (4) recycle the wallbox (WEEE — electronic equipment recycling); (5) install the replacement wallbox per Sections 6.1-6.7; (6) re-commission per this section. Cert evidence bundle for the new install replaces / supplements the original. Old wallbox’s SCP-Regs configuration cleared (cloud account closed).',
   },
   {
-    question: 'Can the customer or another electrician do EICR-level work on the wallbox themselves?',
+    question:
+      'Can the customer or another electrician do EICR-level work on the wallbox themselves?',
     answer:
       'Customer can do user-level tasks: keep clean, inspect cable, test the integral test button (if present), report issues. Cannot open the wallbox or do electrical work. Another electrician can do EICR, replacement, modifications — subject to Part 6 competence requirements (Reg 641.6 — competent skilled persons). Best-practice: stay with the original installer for service / warranty work where possible; otherwise an EV-trained electrician with Type B-capable test instruments is the right choice. Cert evidence bundle records all subsequent work.',
   },
@@ -243,10 +240,13 @@ export default function RenewableEnergyModule6Section8() {
           />
 
           <Pullquote>
-            Commissioning is where Section 722 stops being a regulation and starts being a working install. Get the test sequence right and the EICR five years later is straightforward.
+            Commissioning is where Section 722 stops being a regulation and starts being a working
+            install. Get the test sequence right and the EICR five years later is straightforward.
           </Pullquote>
 
-          <ContentEyebrow>The commissioning sequence — Part 6 + Section 722 + SCP Regulations 2021</ContentEyebrow>
+          <ContentEyebrow>
+            The commissioning sequence — Part 6 + Section 722 + SCP Regulations 2021
+          </ContentEyebrow>
 
           <ConceptBlock
             title="The canonical commissioning sequence"
@@ -256,62 +256,50 @@ export default function RenewableEnergyModule6Section8() {
             <p>The 10-step sequence:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
               <li>
-                <strong className="text-white">1. Part 6 visual
-                  inspection</strong> — Chapter 64 schedule; check
-                wiring, terminations, labelling, IP / IK ratings;
-                cable type and route; isolation point location +
-                accessibility
+                <strong className="text-white">1. Part 6 visual inspection</strong> — Chapter 64
+                schedule; check wiring, terminations, labelling, IP / IK ratings; cable type and
+                route; isolation point location + accessibility
               </li>
               <li>
-                <strong className="text-white">2. IR test at 500 V
-                  DC</strong> — Reg 643.3 + Table 64; minimum 1 MΩ
-                live-to-PE on the AC final circuit
+                <strong className="text-white">2. IR test at 500 V DC</strong> — Reg 643.3 + Table
+                64; minimum 1 MΩ live-to-PE on the AC final circuit
               </li>
               <li>
-                <strong className="text-white">3. Post-connection 250 V
-                  DC test</strong> — Reg 643.3.3; minimum 1 MΩ after
-                connecting equipment back into the circuit
+                <strong className="text-white">3. Post-connection 250 V DC test</strong> — Reg
+                643.3.3; minimum 1 MΩ after connecting equipment back into the circuit
               </li>
               <li>
-                <strong className="text-white">4. RCD trip-time
-                  test</strong> — Reg 643.7 using Type B-capable
-                instrument; verify trip-time within Reg 411 limits
+                <strong className="text-white">4. RCD trip-time test</strong> — Reg 643.7 using Type
+                B-capable instrument; verify trip-time within Reg 411 limits
               </li>
               <li>
-                <strong className="text-white">5. ADS
-                  verification</strong> — Zs measured at wallbox ≤
-                Table 41.3 value for the RCBO type and rating; site
-                limit per GN3 0.80 factor
+                <strong className="text-white">5. ADS verification</strong> — Zs measured at wallbox
+                ≤ Table 41.3 value for the RCBO type and rating; site limit per GN3 0.80 factor
               </li>
               <li>
-                <strong className="text-white">6. OPDD
-                  self-test</strong> — Reg 722.411.4(d) compliance;
-                wallbox’s built-in "PEN test" mode simulates lost
-                PEN; verify contactor opens within milliseconds
+                <strong className="text-white">6. OPDD self-test</strong> — Reg 722.411.4(d)
+                compliance; wallbox’s built-in "PEN test" mode simulates lost PEN; verify contactor
+                opens within milliseconds
               </li>
               <li>
-                <strong className="text-white">7. RDC-DD
-                  self-test</strong> — Reg 722.531 + BS EN IEC 62955
-                compliance; wallbox’s built-in test injects 6 mA
-                DC; verify contactor opens
+                <strong className="text-white">7. RDC-DD self-test</strong> — Reg 722.531 + BS EN
+                IEC 62955 compliance; wallbox’s built-in test injects 6 mA DC; verify contactor
+                opens
               </li>
               <li>
-                <strong className="text-white">8. CP/PP signalling
-                  check</strong> — plug a test cable / vehicle; verify
-                CP transitions through ±12 V → ±9 V → ±6 V; verify PP
-                rating reading matches cable label
+                <strong className="text-white">8. CP/PP signalling check</strong> — plug a test
+                cable / vehicle; verify CP transitions through ±12 V → ±9 V → ±6 V; verify PP rating
+                reading matches cable label
               </li>
               <li>
-                <strong className="text-white">9. BS EN 61851
-                  functional test</strong> — manufacturer-defined; typically
-                a charge initiation + brief draw + clean disconnect
+                <strong className="text-white">9. BS EN 61851 functional test</strong> —
+                manufacturer-defined; typically a charge initiation + brief draw + clean disconnect
                 sequence to verify the full charging protocol
               </li>
               <li>
-                <strong className="text-white">10. SCP Regulations 2021
-                  verification</strong> — default off-peak schedule
-                active and configured; randomised delay enabled;
-                security DoC reviewed
+                <strong className="text-white">10. SCP Regulations 2021 verification</strong> —
+                default off-peak schedule active and configured; randomised delay enabled; security
+                DoC reviewed
               </li>
             </ul>
           </ConceptBlock>
@@ -338,46 +326,39 @@ export default function RenewableEnergyModule6Section8() {
             <p>OZEV / EVCS Grant Scheme considerations:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
               <li>
-                <strong className="text-white">Customer eligibility (UK
-                  2025-26)</strong> — leaseholder of a flat; tenant
-                (with landlord permission); landlord (separate grant);
-                ineligible: most owner-occupiers (eligibility narrowed
-                in 2022 to focus on multi-occupancy + rental)
+                <strong className="text-white">Customer eligibility (UK 2025-26)</strong> —
+                leaseholder of a flat; tenant (with landlord permission); landlord (separate grant);
+                ineligible: most owner-occupiers (eligibility narrowed in 2022 to focus on
+                multi-occupancy + rental)
               </li>
               <li>
-                <strong className="text-white">Grant amount</strong> —
-                £350-£500 per chargepoint typically (varies by tier).
-                Verify current scheme rules at install time
+                <strong className="text-white">Grant amount</strong> — £350-£500 per chargepoint
+                typically (varies by tier). Verify current scheme rules at install time
               </li>
               <li>
-                <strong className="text-white">Installer
-                  accreditation</strong> — installation company must
-                hold OZEV accreditation; individual installers under
-                the company’s accreditation umbrella
+                <strong className="text-white">Installer accreditation</strong> — installation
+                company must hold OZEV accreditation; individual installers under the company’s
+                accreditation umbrella
               </li>
               <li>
-                <strong className="text-white">Installer
-                  obligations</strong> — install meets BS 7671 / Section
-                722 + SCP Regulations 2021 + manufacturer DoC; chargepoint
-                model approved on the OZEV product list
+                <strong className="text-white">Installer obligations</strong> — install meets BS
+                7671 / Section 722 + SCP Regulations 2021 + manufacturer DoC; chargepoint model
+                approved on the OZEV product list
               </li>
               <li>
-                <strong className="text-white">Claim
-                  process</strong> — customer applies via OZEV portal;
-                installer claims via OZEV system against the customer
-                invoice; grant deducted from customer’s install cost
+                <strong className="text-white">Claim process</strong> — customer applies via OZEV
+                portal; installer claims via OZEV system against the customer invoice; grant
+                deducted from customer’s install cost
               </li>
               <li>
-                <strong className="text-white">Cert evidence
-                  bundle</strong> — OZEV claim reference + customer
-                eligibility evidence + installer accreditation
-                certificate + chargepoint model approval evidence
+                <strong className="text-white">Cert evidence bundle</strong> — OZEV claim reference
+                + customer eligibility evidence + installer accreditation certificate + chargepoint
+                model approval evidence
               </li>
               <li>
-                <strong className="text-white">Customer-side
-                  documentation</strong> — OZEV grant receipt + amount
-                deducted from invoice + scheme reference. Customer
-                keeps for tax / accounting / future-resale evidence
+                <strong className="text-white">Customer-side documentation</strong> — OZEV grant
+                receipt + amount deducted from invoice + scheme reference. Customer keeps for tax /
+                accounting / future-resale evidence
               </li>
             </ul>
           </ConceptBlock>
@@ -390,56 +371,45 @@ export default function RenewableEnergyModule6Section8() {
             <p>Customer handover pack contents:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
               <li>
-                <strong className="text-white">Install identity</strong>
-                — wallbox manufacturer, model, serial number, install
-                date, installer company + accreditation
+                <strong className="text-white">Install identity</strong>— wallbox manufacturer,
+                model, serial number, install date, installer company + accreditation
               </li>
               <li>
-                <strong className="text-white">Section 722
-                  compliance</strong> — earthing-tree route (b/c/d/e
-                per Reg 722.411.4); RCD architecture (Type B or Type A
-                + RDC-DD); AFDD decision (exception under Reg
-                722.421.1.7.201); BS EN 61851 + 62196-2 + 62955 DoCs
+                <strong className="text-white">Section 722 compliance</strong> — earthing-tree route
+                (b/c/d/e per Reg 722.411.4); RCD architecture (Type B or Type A + RDC-DD); AFDD
+                decision (exception under Reg 722.421.1.7.201); BS EN 61851 + 62196-2 + 62955 DoCs
               </li>
               <li>
-                <strong className="text-white">SCP Regulations 2021
-                  compliance</strong> — default off-peak schedule active;
-                randomised delay enabled; security + data privacy DoCs
+                <strong className="text-white">SCP Regulations 2021 compliance</strong> — default
+                off-peak schedule active; randomised delay enabled; security + data privacy DoCs
               </li>
               <li>
-                <strong className="text-white">Commissioning test
-                  results</strong> — IR test values; RCD trip-time; ADS
-                Zs; OPDD self-test result; RDC-DD self-test result;
-                BS EN 61851 functional test result
+                <strong className="text-white">Commissioning test results</strong> — IR test values;
+                RCD trip-time; ADS Zs; OPDD self-test result; RDC-DD self-test result; BS EN 61851
+                functional test result
               </li>
               <li>
-                <strong className="text-white">Operating
-                  instructions</strong> — how to plug in / unplug;
-                default off-peak schedule + override; tariff
-                integration if applicable; manufacturer app credentials;
-                emergency procedures
+                <strong className="text-white">Operating instructions</strong> — how to plug in /
+                unplug; default off-peak schedule + override; tariff integration if applicable;
+                manufacturer app credentials; emergency procedures
               </li>
               <li>
-                <strong className="text-white">Warranty +
-                  support</strong> — manufacturer warranty period and
-                terms; warranty registration confirmation; manufacturer
-                support contact; installer support contact
+                <strong className="text-white">Warranty + support</strong> — manufacturer warranty
+                period and terms; warranty registration confirmation; manufacturer support contact;
+                installer support contact
               </li>
               <li>
-                <strong className="text-white">EICR
-                  interval</strong> — recommended interval per BS 7671
-                + statutory requirements (PRS Regs for landlords);
-                manufacturer service interval if separate
+                <strong className="text-white">EICR interval</strong> — recommended interval per BS
+                7671 + statutory requirements (PRS Regs for landlords); manufacturer service
+                interval if separate
               </li>
               <li>
-                <strong className="text-white">OZEV / EVCS
-                  documentation</strong> — grant claim + amount deducted
-                (if applicable)
+                <strong className="text-white">OZEV / EVCS documentation</strong> — grant claim +
+                amount deducted (if applicable)
               </li>
               <li>
-                <strong className="text-white">Photographs</strong> —
-                install location, mounting, cable entry, CU way,
-                warning labels. Index into the cert evidence bundle
+                <strong className="text-white">Photographs</strong> — install location, mounting,
+                cable entry, CU way, warning labels. Index into the cert evidence bundle
               </li>
             </ul>
           </ConceptBlock>
@@ -453,7 +423,8 @@ export default function RenewableEnergyModule6Section8() {
           <ContentEyebrow>EICR pattern for EV chargers</ContentEyebrow>
 
           <Pullquote>
-            Year-5 EICR is the install’s first big test. The cert evidence bundle from install day is the reconstruction key.
+            Year-5 EICR is the install’s first big test. The cert evidence bundle from install day
+            is the reconstruction key.
           </Pullquote>
 
           <ConceptBlock
@@ -464,68 +435,52 @@ export default function RenewableEnergyModule6Section8() {
             <p>The EICR procedure:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
               <li>
-                <strong className="text-white">Visual
-                  inspection</strong> — wallbox condition, cable
-                condition, isolator condition, label / notice
-                integrity, mounting integrity, ventilation
-                clearances
+                <strong className="text-white">Visual inspection</strong> — wallbox condition, cable
+                condition, isolator condition, label / notice integrity, mounting integrity,
+                ventilation clearances
               </li>
               <li>
-                <strong className="text-white">Functional
-                  test</strong> — energise wallbox via CU; verify
-                normal operation; observe CP signalling and
-                indication lights; brief charge to verify contactor
-                operation
+                <strong className="text-white">Functional test</strong> — energise wallbox via CU;
+                verify normal operation; observe CP signalling and indication lights; brief charge
+                to verify contactor operation
               </li>
               <li>
-                <strong className="text-white">Part 6 IR
-                  test</strong> — Reg 643.3; live-to-PE on AC final
-                circuit; verify Table 64 acceptance criteria still
-                met
+                <strong className="text-white">Part 6 IR test</strong> — Reg 643.3; live-to-PE on AC
+                final circuit; verify Table 64 acceptance criteria still met
               </li>
               <li>
-                <strong className="text-white">RCD trip-time
-                  test</strong> — Reg 643.7 with Type B-capable
-                instrument; compare to install-day baseline; flag
-                significant drift
+                <strong className="text-white">RCD trip-time test</strong> — Reg 643.7 with Type
+                B-capable instrument; compare to install-day baseline; flag significant drift
               </li>
               <li>
-                <strong className="text-white">ADS Zs check</strong>
-                — measure Zs; compare to install-day baseline; verify
-                still within Table 41.3 limits
+                <strong className="text-white">ADS Zs check</strong>— measure Zs; compare to
+                install-day baseline; verify still within Table 41.3 limits
               </li>
               <li>
-                <strong className="text-white">OPDD self-test
-                  re-run</strong> — wallbox built-in test mode; verify
-                contactor opens correctly
+                <strong className="text-white">OPDD self-test re-run</strong> — wallbox built-in
+                test mode; verify contactor opens correctly
               </li>
               <li>
-                <strong className="text-white">RDC-DD self-test
-                  re-run</strong> — wallbox built-in test mode; verify
-                6 mA DC fault detection still working
+                <strong className="text-white">RDC-DD self-test re-run</strong> — wallbox built-in
+                test mode; verify 6 mA DC fault detection still working
               </li>
               <li>
-                <strong className="text-white">Cable / connector
-                  inspection</strong> — visible damage; thermal
-                discolouration at connector ends; PP resistor still
-                reading correctly (multimeter test if uncertain)
+                <strong className="text-white">Cable / connector inspection</strong> — visible
+                damage; thermal discolouration at connector ends; PP resistor still reading
+                correctly (multimeter test if uncertain)
               </li>
               <li>
-                <strong className="text-white">Warning label
-                  presence</strong> — Reg 722.6.8 / OPDD reset label /
-                wallbox identification labels still legible
+                <strong className="text-white">Warning label presence</strong> — Reg 722.6.8 / OPDD
+                reset label / wallbox identification labels still legible
               </li>
               <li>
-                <strong className="text-white">SCP-Regs verification
-                  (where applicable)</strong> — default off-peak
-                schedule still active; randomised delay still
-                configured
+                <strong className="text-white">SCP-Regs verification (where applicable)</strong> —
+                default off-peak schedule still active; randomised delay still configured
               </li>
               <li>
-                <strong className="text-white">Document
-                  findings</strong> — cert evidence bundle entry for the
-                EICR; coding (C1/C2/C3/FI) for each finding;
-                comparison to install-day baseline
+                <strong className="text-white">Document findings</strong> — cert evidence bundle
+                entry for the EICR; coding (C1/C2/C3/FI) for each finding; comparison to install-day
+                baseline
               </li>
             </ul>
           </ConceptBlock>
@@ -557,7 +512,7 @@ export default function RenewableEnergyModule6Section8() {
 
           <CommonMistake
             title="Using a non-Type-B-capable instrument for the RCD trip-time test"
-            whatHappens="Installer commissions a new wallbox with Type B RCBO upstream; uses an older Megger MFT1502 (Type AC / A only) for the trip-time test. The instrument reports a "pass" because it tests with AC waveform — but the Type B RCD’s smooth-DC fault detection cannot be tested with that instrument. Cert evidence bundle records a test result that doesn’t actually verify the Type B function. Reg 643.1 BS EN 61557 compliance violated."
+            whatHappens="Installer commissions a new wallbox with Type B RCBO upstream; uses an older Megger MFT1502 (Type AC / A only) for the trip-time test. The instrument reports a “pass” because it tests with AC waveform — but the Type B RCD’s smooth-DC fault detection cannot be tested with that instrument. Cert evidence bundle records a test result that doesn’t actually verify the Type B function. Reg 643.1 BS EN 61557 compliance violated."
             doInstead="Use a Type B-capable instrument for any EV install with Type B RCD architecture. Reg 643.1 requires BS EN 61557 compliance; the EV-specific test profile demands the instrument can generate the smooth-DC fault waveform. Megger MFT1731, Fluke 1664 FC, Kewtech KT64DL, Robin RDC-DD-100 etc. are Type B-capable. Older MFT1502 / MFT1721 / similar are NOT. Installer responsibility: own / rent Type B-capable kit for any EV commissioning work. Cert evidence bundle records the instrument used."
           />
 
@@ -586,7 +541,9 @@ export default function RenewableEnergyModule6Section8() {
           <div className="grid grid-cols-2 gap-3 pt-2">
             <button
               type="button"
-              onClick={() => navigate('/electrician/upskilling/renewable-energy-module-6-section-7')}
+              onClick={() =>
+                navigate('/electrician/upskilling/renewable-energy-module-6-section-7')
+              }
               className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
             >
               <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">

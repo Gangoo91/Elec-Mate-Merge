@@ -36,8 +36,7 @@ const inlineChecks = [
   },
   {
     id: 'm6s2-pen-in-tn',
-    question:
-      'Reg 722.312.2.1 — what does it specifically prohibit on an EV charging circuit?',
+    question: 'Reg 722.312.2.1 — what does it specifically prohibit on an EV charging circuit?',
     options: [
       'Any RCD',
       'A circuit supplying charging equipment for electric vehicles in a TN system shall not include a PEN conductor. The combined PEN (neutral + earth in one conductor) is forbidden on the dedicated EV circuit; separate L, N and PE conductors required throughout',
@@ -50,8 +49,7 @@ const inlineChecks = [
   },
   {
     id: 'm6s2-opdd-function',
-    question:
-      'OPDD (Open PEN Detection Device) — what does it do?',
+    question: 'OPDD (Open PEN Detection Device) — what does it do?',
     options: [
       'Detects open windows',
       'Continuously monitors L-N voltage and L-N-PE voltage relationships; on detecting an open PEN condition (voltage anomaly indicating the supply earth has been lost), the OPDD opens contactors to disconnect both L and N from the EV charging equipment, isolating the vehicle from the hazardous earth before fault current can flow',
@@ -166,17 +164,19 @@ const faqs = [
       'The PEN conductor in a TN-C-S (PME) supply carries both neutral current and earth current combined. If the PEN opens (broken cable, supply transformer fault, lightning damage), the property side of the break loses its earth reference. Local loads continue to draw current; the L-N voltage redistributes across the un-broken side; the property’s "earth" (now disconnected from the supply earth) drifts toward L-N voltage. Anything connected to that local earth — including a charging EV via its PE wire — rises to ~115-230 V above true earth. Outdoors, where the customer can be simultaneously in contact with the EV and true earth (wet ground, garden tap, metalwork), the path through their body completes the circuit. Shock current is limited only by the customer’s body resistance and the local earth path — typically 50-200 mA, well above the fatal threshold. RCDs upstream may not detect the fault because the local earth is no longer a reference — the RCD is blind to the imbalance. The OPDD route works because the OPDD watches the L-N-PE voltage relationships and disconnects before the customer can experience the hazard.',
   },
   {
-    question: 'How does the installer determine the supply earthing arrangement (TN-S vs TN-C-S / PME)?',
+    question:
+      'How does the installer determine the supply earthing arrangement (TN-S vs TN-C-S / PME)?',
     answer:
       'Step 1: visual inspection at the supply intake / Henley block. PME / TN-C-S typically has a label "Protective Multiple Earthing" or "PME" on the supply head. TN-S has a separate earth conductor from the supply head terminating at the MET. Step 2: confirm with the DNO if uncertain — they have records. Step 3: measure with appropriate test equipment per Section 6 of On-Site Guide. Caution: some installations are labelled "TN-S" but are actually TN-C-S that has been mis-recorded; if the customer’s property dates from before ~1990 in an urban area, this misidentification is common. The conservative install assumes TN-C-S unless DNO + visual + test all agree it’s TN-S — invoke Reg 722.411.4 by default.',
   },
   {
-    question: 'Why doesn\'t the standard 30 mA RCD on the EV circuit catch the lost-PEN fault?',
+    question: "Why doesn't the standard 30 mA RCD on the EV circuit catch the lost-PEN fault?",
     answer:
       'A 30 mA RCD detects current imbalance between L and N — i.e. earth fault current flowing OUT through some path other than the N conductor. In a lost-PEN event, the local L-N current path is still intact; the imbalance the RCD looks for is not produced. The customer takes the shock from the rising local earth through their body to true earth, but the RCD’s measurement point (in the consumer unit) sees no L-N imbalance because the body current isn’t closing back through the supply N. RCD blind. This is why Reg 722.411.4 specifically requires one of (b)-(e) alternatives — RCD protection alone is not the answer. OPDD / TT / TN-S all address the lost-PEN scenario directly.',
   },
   {
-    question: 'Can the customer have multiple wallboxes on the same install? How does Reg 722.411.4 scale?',
+    question:
+      'Can the customer have multiple wallboxes on the same install? How does Reg 722.411.4 scale?',
     answer:
       'Multiple wallboxes — each circuit is separately compliant with Reg 722.411.4. Common UK 2025-26 patterns: (1) two single-phase wallboxes on a multi-EV household — each on its own dedicated final circuit with its own OPDD; (2) two wallboxes sharing a dedicated TT electrode — possible but requires care that the TT electrode’s Ra and the protective device coordination still meet Reg 411 disconnection times for the combined load. (3) DLM (Dynamic Load Management) across two wallboxes — covered in §6.6. Each wallbox is its own Section 722 circuit; the earthing-tree decision applies separately to each.',
   },
@@ -243,7 +243,8 @@ export default function RenewableEnergyModule6Section2() {
           />
 
           <Pullquote>
-            Get the earthing tree right or the customer might pay with their life. This is the section where regulation meets reality.
+            Get the earthing tree right or the customer might pay with their life. This is the
+            section where regulation meets reality.
           </Pullquote>
 
           <ContentEyebrow>The PME hazard and why outdoor EV makes it acute</ContentEyebrow>
@@ -256,41 +257,37 @@ export default function RenewableEnergyModule6Section2() {
             <p>The lost-PEN fault sequence:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
               <li>
-                <strong className="text-white">1. PEN opens upstream</strong> — broken
-                supply cable (groundworks damage, road repair, age-related cable failure),
-                supply transformer fault, lightning damage to overhead cable, vandalism.
-                Rare but real
+                <strong className="text-white">1. PEN opens upstream</strong> — broken supply cable
+                (groundworks damage, road repair, age-related cable failure), supply transformer
+                fault, lightning damage to overhead cable, vandalism. Rare but real
               </li>
               <li>
-                <strong className="text-white">2. Property loses earth reference</strong>
-                — the property side of the open PEN is no longer connected to the
-                supply transformer earth. The local loads continue to draw current; the
-                neutral can no longer return to the transformer
+                <strong className="text-white">2. Property loses earth reference</strong>— the
+                property side of the open PEN is no longer connected to the supply transformer
+                earth. The local loads continue to draw current; the neutral can no longer return to
+                the transformer
               </li>
               <li>
-                <strong className="text-white">3. Earth potential rises</strong> — the
-                property’s "earth" rises toward L-N voltage (typically 50-230 V
-                above true earth, depending on local load distribution and any leakage
-                paths)
+                <strong className="text-white">3. Earth potential rises</strong> — the property’s
+                "earth" rises toward L-N voltage (typically 50-230 V above true earth, depending on
+                local load distribution and any leakage paths)
               </li>
               <li>
-                <strong className="text-white">4. EV body rises with the local
-                  earth</strong> — the EV’s PE wire connects vehicle body to local
-                earth, which now sits at hazardous voltage. The vehicle is electrically
-                "live" relative to true earth
+                <strong className="text-white">4. EV body rises with the local earth</strong> — the
+                EV’s PE wire connects vehicle body to local earth, which now sits at hazardous
+                voltage. The vehicle is electrically "live" relative to true earth
               </li>
               <li>
-                <strong className="text-white">5. Person completes the circuit</strong>
-                — outdoors, the customer / passer-by touches the vehicle and is also in
-                contact with true earth (wet ground, garden tap, surrounding
-                metalwork). Shock current flows through their body, typically 50-200
-                mA — well above the fatal threshold
+                <strong className="text-white">5. Person completes the circuit</strong>— outdoors,
+                the customer / passer-by touches the vehicle and is also in contact with true earth
+                (wet ground, garden tap, surrounding metalwork). Shock current flows through their
+                body, typically 50-200 mA — well above the fatal threshold
               </li>
               <li>
-                <strong className="text-white">RCD blind</strong> — the standard 30 mA
-                RCD on the circuit looks for L-N imbalance. The shock-current path
-                doesn’t close back through the property’s N — it closes through
-                true earth. The RCD sees no imbalance and does not operate
+                <strong className="text-white">RCD blind</strong> — the standard 30 mA RCD on the
+                circuit looks for L-N imbalance. The shock-current path doesn’t close back through
+                the property’s N — it closes through true earth. The RCD sees no imbalance and does
+                not operate
               </li>
             </ul>
           </ConceptBlock>
@@ -305,10 +302,13 @@ export default function RenewableEnergyModule6Section2() {
 
           <SectionRule />
 
-          <ContentEyebrow>The four alternative routes — (b) TN-S, (c) TT, (d) OPDD, (e) equivalent</ContentEyebrow>
+          <ContentEyebrow>
+            The four alternative routes — (b) TN-S, (c) TT, (d) OPDD, (e) equivalent
+          </ContentEyebrow>
 
           <Pullquote>
-            (d) OPDD dominates UK 2025-26 domestic install. (c) TT is the no-OPDD fallback. (b) TN-S is rare. (e) is novel.
+            (d) OPDD dominates UK 2025-26 domestic install. (c) TT is the no-OPDD fallback. (b) TN-S
+            is rare. (e) is novel.
           </Pullquote>
 
           <ConceptBlock
@@ -319,30 +319,27 @@ export default function RenewableEnergyModule6Section2() {
             <p>How TN-S is identified:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
               <li>
-                <strong className="text-white">Visual at service head</strong> —
-                separate earth conductor coming from the supply cable’s armouring
-                or a separate dedicated earth wire; no "PME" label
+                <strong className="text-white">Visual at service head</strong> — separate earth
+                conductor coming from the supply cable’s armouring or a separate dedicated earth
+                wire; no "PME" label
               </li>
               <li>
-                <strong className="text-white">DNO confirmation</strong> — the DNO
-                holds records of the supply’s earthing arrangement; phone or web
-                portal for the local DNO confirms
+                <strong className="text-white">DNO confirmation</strong> — the DNO holds records of
+                the supply’s earthing arrangement; phone or web portal for the local DNO confirms
               </li>
               <li>
-                <strong className="text-white">Testing</strong> — appropriate
-                supply-side testing per OSG Section 6; confirms the supply earth is
-                separate from neutral throughout
+                <strong className="text-white">Testing</strong> — appropriate supply-side testing
+                per OSG Section 6; confirms the supply earth is separate from neutral throughout
               </li>
               <li>
-                <strong className="text-white">UK 2025-26 reality</strong> — TN-S is
-                rare; most domestic supplies are TN-C-S (PME). When TN-S is
-                genuinely present, EV install proceeds with the standard supply
-                earth — Reg 722.411.4 doesn’t apply because the PEN hazard
-                doesn’t exist
+                <strong className="text-white">UK 2025-26 reality</strong> — TN-S is rare; most
+                domestic supplies are TN-C-S (PME). When TN-S is genuinely present, EV install
+                proceeds with the standard supply earth — Reg 722.411.4 doesn’t apply because the
+                PEN hazard doesn’t exist
               </li>
               <li>
-                <strong className="text-white">Cert evidence bundle</strong> — records
-                the supply type confirmation, ideally with DNO reference
+                <strong className="text-white">Cert evidence bundle</strong> — records the supply
+                type confirmation, ideally with DNO reference
               </li>
             </ul>
           </ConceptBlock>
@@ -355,35 +352,31 @@ export default function RenewableEnergyModule6Section2() {
             <p>TT electrode design considerations:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
               <li>
-                <strong className="text-white">Electrode</strong> — typically 1.2 m
-                to 2.4 m earth rod, driven into native soil. Multiple rods in
-                parallel where single rod can’t achieve the manufacturer’s
-                Ra target. Earth mat as alternative on rocky / paved sites
+                <strong className="text-white">Electrode</strong> — typically 1.2 m to 2.4 m earth
+                rod, driven into native soil. Multiple rods in parallel where single rod can’t
+                achieve the manufacturer’s Ra target. Earth mat as alternative on rocky / paved
+                sites
               </li>
               <li>
-                <strong className="text-white">Ra measurement</strong> — measured at
-                install + recorded; typical UK 2025-26 target Ra ≤ 200 Ω for a 30
-                mA RCD to achieve adequate ADS. Wallbox manufacturer may specify a
-                tighter target
+                <strong className="text-white">Ra measurement</strong> — measured at install +
+                recorded; typical UK 2025-26 target Ra ≤ 200 Ω for a 30 mA RCD to achieve adequate
+                ADS. Wallbox manufacturer may specify a tighter target
               </li>
               <li>
-                <strong className="text-white">Separation from PME</strong> — the
-                TT electrode must be electrically isolated from the property’s
-                MET. Practical separation: at least 1-2 m physical distance from
-                buried PME services; the EV circuit’s PE wire does NOT bond
+                <strong className="text-white">Separation from PME</strong> — the TT electrode must
+                be electrically isolated from the property’s MET. Practical separation: at least 1-2
+                m physical distance from buried PME services; the EV circuit’s PE wire does NOT bond
                 back to the MET
               </li>
               <li>
-                <strong className="text-white">RCD ADS coordination</strong> — the
-                EV circuit’s 30 mA RCD must operate within the Reg 411
-                disconnection time against the electrode’s Ra. With Ra ≤ 200
-                Ω and 30 mA RCD, the touch voltage is limited and ADS is met
+                <strong className="text-white">RCD ADS coordination</strong> — the EV circuit’s 30
+                mA RCD must operate within the Reg 411 disconnection time against the electrode’s
+                Ra. With Ra ≤ 200 Ω and 30 mA RCD, the touch voltage is limited and ADS is met
               </li>
               <li>
-                <strong className="text-white">When to choose</strong> — wallbox
-                model doesn’t include OPDD; customer’s preferred kit
-                doesn’t support OPDD; site has specific earth-electrode
-                advantages (e.g. existing electrode for other circuits); customer
+                <strong className="text-white">When to choose</strong> — wallbox model doesn’t
+                include OPDD; customer’s preferred kit doesn’t support OPDD; site has specific
+                earth-electrode advantages (e.g. existing electrode for other circuits); customer
                 preference for the visible electrode approach
               </li>
             </ul>
@@ -397,38 +390,33 @@ export default function RenewableEnergyModule6Section2() {
             <p>OPDD operating principle:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
               <li>
-                <strong className="text-white">Continuous monitoring</strong> — OPDD
-                measures L-N voltage and the L-PE / N-PE voltage relationships
-                multiple times per second. Healthy supply: L-N ≈ 230 V, L-PE ≈ 230
-                V, N-PE ≈ 0 V
+                <strong className="text-white">Continuous monitoring</strong> — OPDD measures L-N
+                voltage and the L-PE / N-PE voltage relationships multiple times per second. Healthy
+                supply: L-N ≈ 230 V, L-PE ≈ 230 V, N-PE ≈ 0 V
               </li>
               <li>
-                <strong className="text-white">Lost-PEN detection</strong> — on open
-                PEN, the local "earth" drifts; the N-PE voltage rises (or L-PE
-                voltage falls). OPDD detects the anomaly within milliseconds
+                <strong className="text-white">Lost-PEN detection</strong> — on open PEN, the local
+                "earth" drifts; the N-PE voltage rises (or L-PE voltage falls). OPDD detects the
+                anomaly within milliseconds
               </li>
               <li>
-                <strong className="text-white">Disconnect both L and N</strong> — on
-                detection, the OPDD operates internal contactors to disconnect both
-                L and N from the wallbox output. The vehicle is electrically
-                isolated from the now-hazardous local earth
+                <strong className="text-white">Disconnect both L and N</strong> — on detection, the
+                OPDD operates internal contactors to disconnect both L and N from the wallbox
+                output. The vehicle is electrically isolated from the now-hazardous local earth
               </li>
               <li>
-                <strong className="text-white">Auto-reset</strong> — most OPDD
-                designs auto-reset when supply integrity is restored; some require
-                manual reset. Manufacturer-specific
+                <strong className="text-white">Auto-reset</strong> — most OPDD designs auto-reset
+                when supply integrity is restored; some require manual reset. Manufacturer-specific
               </li>
               <li>
-                <strong className="text-white">Brand examples (UK 2025-26)</strong> —
-                OPDD as standard in MyEnergi Zappi, Hypervolt, Andersen,
-                certain Wallbox and EO Charging models. Confirm via manufacturer
-                DoC + datasheet
+                <strong className="text-white">Brand examples (UK 2025-26)</strong> — OPDD as
+                standard in MyEnergi Zappi, Hypervolt, Andersen, certain Wallbox and EO Charging
+                models. Confirm via manufacturer DoC + datasheet
               </li>
               <li>
-                <strong className="text-white">Cost advantage over TT</strong> — no
-                earth rod to drive (saves £100-300 in groundworks), no Ra test, no
-                separate electrode coordination. The OPDD is integrated into the
-                wallbox cost
+                <strong className="text-white">Cost advantage over TT</strong> — no earth rod to
+                drive (saves £100-300 in groundworks), no Ra test, no separate electrode
+                coordination. The OPDD is integrated into the wallbox cost
               </li>
             </ul>
           </ConceptBlock>
@@ -441,20 +429,18 @@ export default function RenewableEnergyModule6Section2() {
             <p>Where (e) might appear:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
               <li>
-                <strong className="text-white">Novel topologies</strong> — e.g.
-                isolating transformer arrangements that don’t fit (c) or (d)
-                neatly; specific marina / camping site contexts addressed by
-                Section 709
+                <strong className="text-white">Novel topologies</strong> — e.g. isolating
+                transformer arrangements that don’t fit (c) or (d) neatly; specific marina / camping
+                site contexts addressed by Section 709
               </li>
               <li>
-                <strong className="text-white">Future-proofing</strong> — Reg
-                722.411.4(e) is a deliberate safety net for arrangements not
-                anticipated in the 2026 text
+                <strong className="text-white">Future-proofing</strong> — Reg 722.411.4(e) is a
+                deliberate safety net for arrangements not anticipated in the 2026 text
               </li>
               <li>
-                <strong className="text-white">Documentation burden</strong> — (e)
-                requires a detailed safety case in the cert evidence bundle. Most
-                installers default to (b), (c) or (d) where any fit the site
+                <strong className="text-white">Documentation burden</strong> — (e) requires a
+                detailed safety case in the cert evidence bundle. Most installers default to (b),
+                (c) or (d) where any fit the site
               </li>
             </ul>
           </ConceptBlock>
@@ -482,37 +468,34 @@ export default function RenewableEnergyModule6Section2() {
             <p>What to record:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
               <li>
-                <strong className="text-white">Supply type</strong> — TN-S, TN-C-S
-                (PME), or TT — confirmed via DNO + visual + test
+                <strong className="text-white">Supply type</strong> — TN-S, TN-C-S (PME), or TT —
+                confirmed via DNO + visual + test
               </li>
               <li>
-                <strong className="text-white">Chosen alternative</strong> — (b), (c),
-                (d) or (e) per Reg 722.411.4
+                <strong className="text-white">Chosen alternative</strong> — (b), (c), (d) or (e)
+                per Reg 722.411.4
               </li>
               <li>
-                <strong className="text-white">Route (d) OPDD evidence</strong> —
-                wallbox manufacturer DoC citing OPDD conformity to Reg 722.411.4(d);
-                datasheet with OPDD spec
+                <strong className="text-white">Route (d) OPDD evidence</strong> — wallbox
+                manufacturer DoC citing OPDD conformity to Reg 722.411.4(d); datasheet with OPDD
+                spec
               </li>
               <li>
-                <strong className="text-white">Route (c) TT evidence</strong> — earth
-                electrode type and location, Ra measurement with date and
-                instrument, separation from PME MET, RCD ADS calculation
+                <strong className="text-white">Route (c) TT evidence</strong> — earth electrode type
+                and location, Ra measurement with date and instrument, separation from PME MET, RCD
+                ADS calculation
               </li>
               <li>
-                <strong className="text-white">Route (b) TN-S evidence</strong> — DNO
-                confirmation of TN-S supply, visual inspection report, supply test
-                results
+                <strong className="text-white">Route (b) TN-S evidence</strong> — DNO confirmation
+                of TN-S supply, visual inspection report, supply test results
               </li>
               <li>
-                <strong className="text-white">Route (e) equivalent evidence</strong>
-                — detailed safety case explaining how the arrangement provides
-                equivalent protection
+                <strong className="text-white">Route (e) equivalent evidence</strong>— detailed
+                safety case explaining how the arrangement provides equivalent protection
               </li>
               <li>
-                <strong className="text-white">Photographs</strong> — service head,
-                wallbox install, electrode if (c). Reduces future EICR reconstruction
-                burden
+                <strong className="text-white">Photographs</strong> — service head, wallbox install,
+                electrode if (c). Reduces future EICR reconstruction burden
               </li>
             </ul>
           </ConceptBlock>
@@ -545,7 +528,7 @@ export default function RenewableEnergyModule6Section2() {
 
           <CommonMistake
             title="Assuming the supply is TN-S because the older property label says TN-S"
-            whatHappens="Pre-1990 urban property has a "TN-S" label at the supply head — the install team takes this at face value and proceeds with the EV install on the assumption that Reg 722.411.4 doesn’t apply (because TN-S has no PEN). In reality, the supply was upgraded to TN-C-S (PME) 15 years ago without the label being changed. The customer is left with a Reg 722.411.4 non-compliant install."
+            whatHappens="Pre-1990 urban property has a “TN-S” label at the supply head — the install team takes this at face value and proceeds with the EV install on the assumption that Reg 722.411.4 doesn’t apply (because TN-S has no PEN). In reality, the supply was upgraded to TN-C-S (PME) 15 years ago without the label being changed. The customer is left with a Reg 722.411.4 non-compliant install."
             doInstead="Don’t trust supply-head labels alone on older properties. Confirm via DNO records (phone or web portal) AND visual inspection of the actual supply head AND appropriate testing per OSG Section 6. UK 2025-26 reality: many older urban supplies labelled TN-S were actually upgraded to TN-C-S over time without label changes. Conservative install assumes TN-C-S unless all three confirmations agree TN-S. Cert evidence bundle records the supply type confirmation from each source — multiple sources of agreement reduce future EICR uncertainty."
           />
 
@@ -574,7 +557,9 @@ export default function RenewableEnergyModule6Section2() {
           <div className="grid grid-cols-2 gap-3 pt-2">
             <button
               type="button"
-              onClick={() => navigate('/electrician/upskilling/renewable-energy-module-6-section-1')}
+              onClick={() =>
+                navigate('/electrician/upskilling/renewable-energy-module-6-section-1')
+              }
               className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
             >
               <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">

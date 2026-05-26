@@ -36,8 +36,7 @@ const inlineChecks = [
   },
   {
     id: 'm6s7-default-off-peak',
-    question:
-      'What is the "default off-peak charging" requirement?',
+    question: 'What is the "default off-peak charging" requirement?',
     options: [
       'No charging during peak',
       'The chargepoint must be PRE-CONFIGURED at install to default to charging only during off-peak hours (08:00-11:00 and 16:00-22:00 EXCLUDED in the default; charging permitted outside these hours). Customer can override on the device for an individual session, but the device returns to off-peak default. Aim: shift EV charging away from grid peak demand without customer-side intervention',
@@ -50,8 +49,7 @@ const inlineChecks = [
   },
   {
     id: 'm6s7-randomised-delay',
-    question:
-      'What is the "randomised delay" requirement?',
+    question: 'What is the "randomised delay" requirement?',
     options: [
       'No delay',
       'When a charging schedule begins (off-peak window opens), the chargepoint must wait a RANDOM duration of up to 600 seconds (10 minutes default) before actually starting to draw current. Prevents the entire UK’s EVs all simultaneously drawing at 23:30:00 sharp, which would create a synchronised grid demand spike. Customer can override delay for an individual session',
@@ -64,8 +62,7 @@ const inlineChecks = [
   },
   {
     id: 'm6s7-tariff-octopus-go',
-    question:
-      'Octopus Intelligent Go EV tariff — what is the typical UK 2025-26 structure?',
+    question: 'Octopus Intelligent Go EV tariff — what is the typical UK 2025-26 structure?',
     options: [
       'Same rate all day',
       'Cheap rate ~7p/kWh between 23:30 and 05:30 (6-hour window); standard rate ~27p/kWh outside that window (varies). The "Intelligent" element: Octopus integrates with the customer’s EV / wallbox to schedule charging within the cheap window. Customer can charge at any time but at very different rates',
@@ -243,10 +240,13 @@ export default function RenewableEnergyModule6Section7() {
           />
 
           <Pullquote>
-            BS 7671 makes the install safe. The SCP Regulations make the install smart. Customer handover education ties them together.
+            BS 7671 makes the install safe. The SCP Regulations make the install smart. Customer
+            handover education ties them together.
           </Pullquote>
 
-          <ContentEyebrow>UK Electric Vehicles (Smart Charge Points) Regulations 2021</ContentEyebrow>
+          <ContentEyebrow>
+            UK Electric Vehicles (Smart Charge Points) Regulations 2021
+          </ContentEyebrow>
 
           <ConceptBlock
             title="What the SCP Regulations 2021 require"
@@ -256,45 +256,35 @@ export default function RenewableEnergyModule6Section7() {
             <p>The four main requirement areas:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
               <li>
-                <strong className="text-white">1. Default off-peak
-                  charging</strong> — chargepoint pre-configured to NOT
-                charge during peak hours (08:00-11:00 and 16:00-22:00
-                Monday-Friday); permitted outside these hours. Customer
-                can override per-session
+                <strong className="text-white">1. Default off-peak charging</strong> — chargepoint
+                pre-configured to NOT charge during peak hours (08:00-11:00 and 16:00-22:00
+                Monday-Friday); permitted outside these hours. Customer can override per-session
               </li>
               <li>
-                <strong className="text-white">2. Randomised
-                  delay</strong> — when a charging schedule begins, the
-                chargepoint waits a random duration (up to 600 seconds /
-                10 minutes) before drawing current. Prevents
-                synchronised UK-wide demand spikes
+                <strong className="text-white">2. Randomised delay</strong> — when a charging
+                schedule begins, the chargepoint waits a random duration (up to 600 seconds / 10
+                minutes) before drawing current. Prevents synchronised UK-wide demand spikes
               </li>
               <li>
-                <strong className="text-white">3. Security</strong> —
-                cybersecurity measures aligned with recognised standards
-                (typically BS EN IEC 63110 series for EV charging
-                communications and UK NCSC IoT security guidance).
-                Protects against grid-attack / data-exfiltration /
-                firmware-tampering threats
+                <strong className="text-white">3. Security</strong> — cybersecurity measures aligned
+                with recognised standards (typically BS EN IEC 63110 series for EV charging
+                communications and UK NCSC IoT security guidance). Protects against grid-attack /
+                data-exfiltration / firmware-tampering threats
               </li>
               <li>
-                <strong className="text-white">4. Data privacy</strong>
-                — UK GDPR compliance for any customer data processed by
-                the chargepoint or its cloud services. Manufacturer
+                <strong className="text-white">4. Data privacy</strong>— UK GDPR compliance for any
+                customer data processed by the chargepoint or its cloud services. Manufacturer
                 privacy notice required
               </li>
               <li>
-                <strong className="text-white">Statutory not BS
-                  7671</strong> — these are UK Government regulations
-                under SI 2021/1467, separate from BS 7671. Both
-                frameworks apply to UK domestic EV install
+                <strong className="text-white">Statutory not BS 7671</strong> — these are UK
+                Government regulations under SI 2021/1467, separate from BS 7671. Both frameworks
+                apply to UK domestic EV install
               </li>
               <li>
-                <strong className="text-white">Cert evidence
-                  bundle</strong> — manufacturer DoC for SCP-Regs
-                compliance; verification at commissioning that default
-                off-peak schedule is active and randomised delay is
-                enabled
+                <strong className="text-white">Cert evidence bundle</strong> — manufacturer DoC for
+                SCP-Regs compliance; verification at commissioning that default off-peak schedule is
+                active and randomised delay is enabled
               </li>
             </ul>
           </ConceptBlock>
@@ -316,7 +306,8 @@ export default function RenewableEnergyModule6Section7() {
           <ContentEyebrow>UK 2025-26 EV tariffs and their match to install</ContentEyebrow>
 
           <Pullquote>
-            Tariff = when and how cheaply the customer charges. Wallbox = the kit that delivers it. Match them carefully at handover.
+            Tariff = when and how cheaply the customer charges. Wallbox = the kit that delivers it.
+            Match them carefully at handover.
           </Pullquote>
 
           <ConceptBlock
@@ -327,45 +318,35 @@ export default function RenewableEnergyModule6Section7() {
             <p>Intelligent Go install considerations:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
               <li>
-                <strong className="text-white">Vehicle compatibility</strong>
-                — Octopus integrates with most major EV OEMs via their
-                APIs (Tesla, VW Group, Volvo, Renault, Polestar, BMW,
-                Hyundai, Kia, etc.); also via OCPP-compatible wallboxes
+                <strong className="text-white">Vehicle compatibility</strong>— Octopus integrates
+                with most major EV OEMs via their APIs (Tesla, VW Group, Volvo, Renault, Polestar,
+                BMW, Hyundai, Kia, etc.); also via OCPP-compatible wallboxes
               </li>
               <li>
-                <strong className="text-white">Wallbox
-                  compatibility</strong> — Ohme (built around Octopus
-                tariff integration), MyEnergi Zappi, Wallbox Pulsar
-                Plus, Hypervolt, EO Charging, Easee, Tesla Wall
-                Connector — all support Intelligent Go integration in
-                UK 2025-26
+                <strong className="text-white">Wallbox compatibility</strong> — Ohme (built around
+                Octopus tariff integration), MyEnergi Zappi, Wallbox Pulsar Plus, Hypervolt, EO
+                Charging, Easee, Tesla Wall Connector — all support Intelligent Go integration in UK
+                2025-26
               </li>
               <li>
-                <strong className="text-white">Customer
-                  setup</strong> — Octopus app + manufacturer wallbox
-                app linked; vehicle credentials entered; cheap window
-                configured (matches default tariff window); SCP-Regs
-                default off-peak active
+                <strong className="text-white">Customer setup</strong> — Octopus app + manufacturer
+                wallbox app linked; vehicle credentials entered; cheap window configured (matches
+                default tariff window); SCP-Regs default off-peak active
               </li>
               <li>
-                <strong className="text-white">Charging
-                  behaviour</strong> — vehicle plugged in any time of
-                day; charging delayed to start within the cheap window
-                automatically. Customer-facing display shows "waiting
-                for cheap rate"
+                <strong className="text-white">Charging behaviour</strong> — vehicle plugged in any
+                time of day; charging delayed to start within the cheap window automatically.
+                Customer-facing display shows "waiting for cheap rate"
               </li>
               <li>
-                <strong className="text-white">Override</strong> —
-                customer can charge immediately if needed (e.g.
-                "drive in 2 hours"); Octopus charges at the
-                higher rate for that session
+                <strong className="text-white">Override</strong> — customer can charge immediately
+                if needed (e.g. "drive in 2 hours"); Octopus charges at the higher rate for that
+                session
               </li>
               <li>
-                <strong className="text-white">Annual
-                  savings</strong> — typical UK 50 km/day driver
-                consuming ~3,000 kWh/year through wallbox: ~£300-£600
-                saved vs flat-rate import. Higher mileage drivers save
-                more
+                <strong className="text-white">Annual savings</strong> — typical UK 50 km/day driver
+                consuming ~3,000 kWh/year through wallbox: ~£300-£600 saved vs flat-rate import.
+                Higher mileage drivers save more
               </li>
             </ul>
           </ConceptBlock>
@@ -378,36 +359,26 @@ export default function RenewableEnergyModule6Section7() {
             <p>Flux install considerations:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
               <li>
-                <strong className="text-white">Tariff
-                  geometry</strong> — three hours cheap import (02:00-
-                05:00); three hours peak export (16:00-19:00); standard
-                rate other hours
+                <strong className="text-white">Tariff geometry</strong> — three hours cheap import
+                (02:00- 05:00); three hours peak export (16:00-19:00); standard rate other hours
               </li>
               <li>
-                <strong className="text-white">PV + BESS sweet
-                  spot</strong> — PV charges BESS during day (free);
-                BESS discharges to loads / exports during 16:00-19:00
-                peak (sells at 33p/kWh); EV charges from grid during
-                02:00-05:00 cheap window (12p/kWh)
+                <strong className="text-white">PV + BESS sweet spot</strong> — PV charges BESS
+                during day (free); BESS discharges to loads / exports during 16:00-19:00 peak (sells
+                at 33p/kWh); EV charges from grid during 02:00-05:00 cheap window (12p/kWh)
               </li>
               <li>
-                <strong className="text-white">EV-only on
-                  Flux</strong> — customer with EV but no PV / BESS:
-                Intelligent Go is cheaper than Flux for pure EV
-                charging (7p vs 12p)
+                <strong className="text-white">EV-only on Flux</strong> — customer with EV but no PV
+                / BESS: Intelligent Go is cheaper than Flux for pure EV charging (7p vs 12p)
               </li>
               <li>
-                <strong className="text-white">Wallbox
-                  config</strong> — set charge window to 02:00-05:00
-                with randomised delay; SCP-Regs default off-peak
-                naturally aligns
+                <strong className="text-white">Wallbox config</strong> — set charge window to
+                02:00-05:00 with randomised delay; SCP-Regs default off-peak naturally aligns
               </li>
               <li>
-                <strong className="text-white">Annual savings
-                  vs flat rate</strong> — prosumer household
-                ~£800-£1,200/year vs flat-rate import + standard SEG
-                export. Variance depends on PV size, BESS size, EV
-                mileage
+                <strong className="text-white">Annual savings vs flat rate</strong> — prosumer
+                household ~£800-£1,200/year vs flat-rate import + standard SEG export. Variance
+                depends on PV size, BESS size, EV mileage
               </li>
             </ul>
           </ConceptBlock>
@@ -420,83 +391,65 @@ export default function RenewableEnergyModule6Section7() {
             <p>Cosy specifics:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
               <li>
-                <strong className="text-white">Twin cheap
-                  windows</strong> — morning ~04:00-07:00 and afternoon
-                ~13:00-16:00. Heat pump runs through both, batching its
-                heat production
+                <strong className="text-white">Twin cheap windows</strong> — morning ~04:00-07:00
+                and afternoon ~13:00-16:00. Heat pump runs through both, batching its heat
+                production
               </li>
               <li>
-                <strong className="text-white">Expensive
-                  evening</strong> — ~40p/kWh 16:00-19:00. Customer
-                avoids drawing during this window
+                <strong className="text-white">Expensive evening</strong> — ~40p/kWh 16:00-19:00.
+                Customer avoids drawing during this window
               </li>
               <li>
-                <strong className="text-white">EV
-                  scheduling</strong> — wallbox configured for the
-                morning window (overnight + early morning). Some
-                customers two-cycle (morning + afternoon) for
-                long-distance days
+                <strong className="text-white">EV scheduling</strong> — wallbox configured for the
+                morning window (overnight + early morning). Some customers two-cycle (morning +
+                afternoon) for long-distance days
               </li>
               <li>
-                <strong className="text-white">Tariff vs
-                  rate</strong> — Cosy not as cheap per kWh as
-                Intelligent Go (13p vs 7p) but designed for
-                multi-cycle heat-pump households where the twin
-                windows fit the pattern
+                <strong className="text-white">Tariff vs rate</strong> — Cosy not as cheap per kWh
+                as Intelligent Go (13p vs 7p) but designed for multi-cycle heat-pump households
+                where the twin windows fit the pattern
               </li>
               <li>
-                <strong className="text-white">Customer
-                  decision</strong> — Intelligent Go = cheapest pure EV;
-                Cosy = best for heat pump + EV combination
+                <strong className="text-white">Customer decision</strong> — Intelligent Go =
+                cheapest pure EV; Cosy = best for heat pump + EV combination
               </li>
             </ul>
           </ConceptBlock>
 
           <ConceptBlock
-            title="PV-tracking ("solar diverter") functionality"
+            title="PV-tracking (“solar diverter”) functionality"
             plainEnglish="Some wallboxes can monitor the household’s PV generation and dynamically match the EV charge rate to the PV surplus. When PV is exporting (more generation than household consumption), the wallbox uses the surplus for EV charging instead of letting it export at low SEG rate."
             onSite="UK customers with PV + EV but no BESS often want this functionality. CT clamp on incoming tails reads grid import / export direction. When exporting, the wallbox throttles the EV charge to match the surplus — typically minimum charge rate 6 A (1.4 kW per BS EN 61851 Mode 3 minimum) — so the EV charges only on free PV. When PV insufficient, wallbox either stops charging or supplements from grid (configurable)."
           >
             <p>PV-tracking install considerations:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
               <li>
-                <strong className="text-white">Brand
-                  availability</strong> — MyEnergi Zappi (UK pioneer
-                of this feature); Hypervolt Home 3 Pro; Wallbox
-                Pulsar Plus (with eco mode); Easee Home (with
-                Equalizer); EO Mini Pro 3 (some variants)
+                <strong className="text-white">Brand availability</strong> — MyEnergi Zappi (UK
+                pioneer of this feature); Hypervolt Home 3 Pro; Wallbox Pulsar Plus (with eco mode);
+                Easee Home (with Equalizer); EO Mini Pro 3 (some variants)
               </li>
               <li>
-                <strong className="text-white">CT clamp on
-                  tails</strong> — required for PV-tracking. Reads
-                household import / export direction. Same hardware
-                serves DLM
+                <strong className="text-white">CT clamp on tails</strong> — required for
+                PV-tracking. Reads household import / export direction. Same hardware serves DLM
               </li>
               <li>
-                <strong className="text-white">Operating
-                  modes</strong> — typical: ECO (charges only on
-                surplus PV); ECO+ (charges on surplus + small grid
-                top-up if PV insufficient); FAST (ignores PV, charges
-                full rate)
+                <strong className="text-white">Operating modes</strong> — typical: ECO (charges only
+                on surplus PV); ECO+ (charges on surplus + small grid top-up if PV insufficient);
+                FAST (ignores PV, charges full rate)
               </li>
               <li>
-                <strong className="text-white">Customer
-                  benefit</strong> — self-consumed PV vs exported.
-                ~25p/kWh import avoided vs 5-15p SEG export = ~10-20p/kWh
-                net benefit. Over a year, can be £100-£400 saving for
-                customer with PV + EV
+                <strong className="text-white">Customer benefit</strong> — self-consumed PV vs
+                exported. ~25p/kWh import avoided vs 5-15p SEG export = ~10-20p/kWh net benefit.
+                Over a year, can be £100-£400 saving for customer with PV + EV
               </li>
               <li>
-                <strong className="text-white">Combination
-                  with tariff</strong> — PV-tracking during day +
-                Intelligent Go / Flux at night. The wallbox switches
-                automatically: day = follow PV; night = follow
-                cheap-window
+                <strong className="text-white">Combination with tariff</strong> — PV-tracking during
+                day + Intelligent Go / Flux at night. The wallbox switches automatically: day =
+                follow PV; night = follow cheap-window
               </li>
               <li>
-                <strong className="text-white">Cert evidence
-                  bundle</strong> — CT clamp installation + PV-tracking
-                configuration + customer handover education
+                <strong className="text-white">Cert evidence bundle</strong> — CT clamp installation
+                + PV-tracking configuration + customer handover education
               </li>
             </ul>
           </ConceptBlock>
@@ -561,7 +514,9 @@ export default function RenewableEnergyModule6Section7() {
           <div className="grid grid-cols-2 gap-3 pt-2">
             <button
               type="button"
-              onClick={() => navigate('/electrician/upskilling/renewable-energy-module-6-section-6')}
+              onClick={() =>
+                navigate('/electrician/upskilling/renewable-energy-module-6-section-6')
+              }
               className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
             >
               <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
